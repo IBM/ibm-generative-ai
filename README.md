@@ -7,6 +7,25 @@ IBM Generative AI is a Python library built on the REST interface of IBM Workben
 
 Python API Documentation: [link](#)
 
+## <a name='TableofContents'></a>Table of Contents
+
+<!-- vscode-markdown-toc -->
+* [Table of Contents](#table-of-contents)
+* [Installation](#installation)
+* [Gen AI Endpoint](#gen-ai-endpoint)
+    * [Example](#example)
+* [Examples](#examples)
+    * [Async Example](#async-example)
+    * [Synchronous Example](#synchronous-example)
+* [Tips and Troubleshooting](#tips-and-troubleshooting)
+    * [Enabling Logs](#enabling-logs)
+    * [Experimenting with a Large Number of Prompts](#many-prompts)
+* [Extensions](#extensions)
+    * [LangChain Extension](#langchain-extension)
+* [Support](#support)
+* [Contribution Guide](#contribution-guide)
+* [Authors](#authors)
+
 <!-- vscode-markdown-toc-config
 	numbering=false
 	autoSave=true
