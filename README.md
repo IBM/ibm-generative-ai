@@ -5,8 +5,6 @@ IBM Generative AI is a Python library built on the REST interface of IBM Workben
 
 *This is an early access library and requires inventation to use https://workbench.res.ibm.com.*
 
-Python API Documentation: [link](#)
-
 ## <a name='TableofContents'></a>Table of Contents
 
 <!-- vscode-markdown-toc -->
