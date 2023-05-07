@@ -1,0 +1,8 @@
+apiVersion: v0
+name: synth-animal
+content: |
+  Please generate synthetic data about {{animal}}.
+  1,{{species1}},{{location1}},{{length1}},{{dob1}}
+  2,{{species2}},{{location2}},{{length2}},{{dob2}}
+  3,{{species3}},{{location3}},{{length3}},{{dob3}}
+  4,

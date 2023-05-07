@@ -1,0 +1,4 @@
+apiVersion: v0
+name: story
+content: |
+  Once upon a time at {{company}} there was a {{person}}. This {{person}} had ambitious but logical ideas.

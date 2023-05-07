@@ -1,0 +1,9 @@
+apiVersion: v0
+name: captial-qa
+content: |
+  Country: Germany
+  Capital: Berlin
+  Country: USA
+  Capital: Washington
+  Country: {{country}}
+  Capital:

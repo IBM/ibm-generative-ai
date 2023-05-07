@@ -1,0 +1,25 @@
+# flake8: noqa
+apiVersion: v0
+name: instruction
+content: |
+  1. Instruction: {{instruction1}}
+  1. Input: {{input1}}
+  1. Output: {{output1}}
+
+  2. Instruction: {{instruction2}}
+  2. Input: {{input2}}
+  2. Output: {{output2}}
+
+  3. Instruction: {{instruction3}}
+  3. Input: {{input3}}
+  3. Output: {{output3}}
+
+  4. Instruction: {{instruction4}}
+  4. Input: {{input4}}
+  4. Output: {{output4}}
+
+  5. Instruction: {{instruction5}}
+  5. Input: {{input5}}
+  5. Output: {{output5}}
+
+  6.

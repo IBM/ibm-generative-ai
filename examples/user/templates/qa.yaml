@@ -1,0 +1,8 @@
+apiVersion: v0
+name: qa
+content: |
+  Please answer questions about {{subject}}.
+  1,{{q1}},{{a1}},
+  2,{{q2}},{{a2}},
+  3,{{q3}},{{a3}},
+  4,

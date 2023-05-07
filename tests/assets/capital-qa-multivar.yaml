@@ -1,0 +1,9 @@
+apiVersion: v0
+name: captial-qa
+content: |
+  Country: {{country1}}
+  Capital: {{capital1}}
+  Country: {{country2}}
+  Capital: {{capital2}}
+  Country: {{country3}}
+  Capital:
