@@ -13,6 +13,12 @@ from genai.model import Credentials, Model
 from genai.prompt_pattern import PromptPattern
 from genai.schemas import GenerateParams, ModelType
 
+#
+# In this demo, the following dataset was used:
+#
+# Gorman KB, Williams TD, Fraser WR (2014) "Ecological Sexual Dimorphism and Environmental Variability within a Community of Antarctic Penguins (Genus Pygoscelis)." PLoS ONE 9(3): e90081. doi:10.1371/journal.pone.0090081 # noqa
+
+
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
 load_dotenv()
