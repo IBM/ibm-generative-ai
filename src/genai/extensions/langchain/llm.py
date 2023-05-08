@@ -8,7 +8,7 @@ try:
     from langchain.llms.base import LLM
     from langchain.llms.utils import enforce_stop_tokens
 except ImportError:
-    raise ImportError("Could not import langchain: Please install ibm-genai[langchain] extension.")
+    raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")
 
 from genai import Credentials, Model
 from genai.schemas import GenerateParams, ModelType

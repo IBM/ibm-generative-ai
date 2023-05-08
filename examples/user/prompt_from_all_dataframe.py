@@ -1,7 +1,11 @@
 import os
 import pathlib
 
-import pandas as pd
+try:
+    import pandas as pd
+except ImportError:
+    raise ImportError("Could not import pandas: Please install ibm-generative-ai[pandas] extension.")
+
 from dotenv import load_dotenv
 
 import genai.extensions.pandas  # noqa: F401

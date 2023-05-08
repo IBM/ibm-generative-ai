@@ -1,7 +1,7 @@
 try:
     from datasets import Dataset
 except ImportError:
-    raise ImportError("Could not import HuggingFace Datasets: Please install ibm-genai[datasets] extension.")
+    raise ImportError("Could not import HuggingFace Datasets: Please install ibm-generative-ai[huggingface] extension.")
 
 from genai.prompt_pattern import PromptPattern
 from genai.utils.extensions import register_promptpattern_accessor

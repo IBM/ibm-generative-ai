@@ -1,8 +1,12 @@
 import os
 
 from dotenv import load_dotenv
-from langchain import PromptTemplate
-from langchain.chains import LLMChain, SimpleSequentialChain
+
+try:
+    from langchain import PromptTemplate
+    from langchain.chains import LLMChain, SimpleSequentialChain
+except ImportError:
+    raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")
 
 from genai.extensions.langchain import LangChainInterface
 from genai.model import Credentials
