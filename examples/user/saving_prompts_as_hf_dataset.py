@@ -7,6 +7,17 @@ import requests
 import genai.extensions.huggingface  # noqa
 from genai.prompt_pattern import PromptPattern
 
+#
+# Adult dataset in the following example was obtained from UCI Machine
+# Learning repository. The full Bibtex citation is as follows:
+#
+# @misc{Dua:2019 ,
+# author = "Dua, Dheeru and Graff, Casey",
+# year = "2017",
+# title = "{UCI} Machine Learning Repository",
+# url = "http://archive.ics.uci.edu/ml",
+# institution = "University of California, Irvine, School of Information and Computer Sciences" }
+
 
 def get_dataset(datafile):
     url = "https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data"
