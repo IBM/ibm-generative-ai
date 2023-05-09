@@ -1,9 +1,9 @@
 # IBM Generative AI Python SDK
 
 
-IBM Generative AI is a Python library built on the REST interface of IBM Workbench to bring IBM Gen AI into Python programs and to also extend with useful operations and types.
+This is the Python SDK for IBM Workbench to bring IBM Generative AI into Python programs and to also extend it with useful operations and types.
 
-*This is an early access library and requires invitation to use https://workbench.res.ibm.com.*
+*This is an early access library and requires invitation to use the technical preview of [watsonx.ai](https://watsonx.ai/). You can join the waitlist by visiting. https://www.ibm.com/products/watsonx-ai.*
 
 ## <a name='TableofContents'></a>Table of Contents
 
