@@ -32,6 +32,7 @@ class RequestHandler:
             headers = {
                 "Content-Type": "application/json",
                 "Authorization": f"Bearer {key}",
+                "x-request-origin": "python-sdk",
             }
 
             json_data = {}
