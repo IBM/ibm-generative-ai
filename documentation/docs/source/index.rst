@@ -1,9 +1,5 @@
-|genai| GENAI
+GENAI
 ==================================
-
-.. |genai| image:: _static/bam_pie.svg
-    :width: 60
-    :alt: GENAI!
 
 GENAI (pronounced "GEN AI") is a Python library built on the REST interface of GENAI to bring GENAI into Python programs and to also extend GENAI with useful operations and types.
 
