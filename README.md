@@ -1,7 +1,7 @@
 # IBM Generative AI Python SDK
 
 
-This is the Python SDK for IBM Workbench to bring IBM Generative AI into Python programs and to also extend it with useful operations and types.
+This is the Python SDK for IBM Foundation Models Studio to bring IBM Generative AI into Python programs and to also extend it with useful operations and types.
 
 *This is an early access library and requires invitation to use the technical preview of [watsonx.ai](https://watsonx.ai/). You can join the waitlist by visiting. https://www.ibm.com/products/watsonx-ai.*
 
@@ -204,7 +204,7 @@ logging.getLogger("genai").setLevel(logging.DEBUG)
 Example log message from GENAI:
 
 ```log
-DEBUG:genai.model:Model Created:  Model: bigscience/bloomz, endpoint: https://workbench-api.res.ibm.com/v1/
+DEBUG:genai.model:Model Created:  Model: google/flan-t5-xxl, endpoint: https://workbench-api.res.ibm.com/v1/
 ```
 
 Example of directing genai logs to a file:
