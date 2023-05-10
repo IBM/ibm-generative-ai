@@ -21,7 +21,6 @@ author = "IBM Research"
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
-    # "sphinxemoji.sphinxemoji",
     "sphinx.ext.autosummary",
     "sphinx.ext.autosectionlabel",
 ]

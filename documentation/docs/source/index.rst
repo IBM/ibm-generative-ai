@@ -7,7 +7,7 @@ GENAI (pronounced "GEN AI") is a Python library built on the REST interface of G
 
     This project is under active development.
 
-    |:round_pushpin:| Comments? Ideas? Suggestions? `Please fill out this form! <https://airtable.com/shrUO9mmRjhpJWzTC>`_  |:round_pushpin:|
+    Comments? Ideas? Suggestions? `Please fill out this form! <https://airtable.com/shrUO9mmRjhpJWzTC>`_
 
 
 .. toctree::
