@@ -5,10 +5,6 @@ This is the Python SDK for IBM Foundation Models Studio to bring IBM Generative 
 
 This is an early access library and requires invitation to use the technical preview of `watsonx.ai <https://watsonx.ai/>`_. You can join the waitlist by visiting https://www.ibm.com/products/watsonx-ai.
 
-.. note::
-
-    This project is under active development.
-
 
 .. toctree::
    :maxdepth: 3
