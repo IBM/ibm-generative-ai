@@ -1,6 +1,0 @@
-Country: Germany
-Capital: Berlin
-Country: USA
-Capital: Washington
-Country: Taiwan
-Capital:
