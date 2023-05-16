@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
 
-    <!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
+    <!-- Generated with Sphinx 6.2.1 and Furo 2023.03.27 -->
         <title>GENAI Package - GENAI documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     
     
@@ -257,7 +257,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="genai.Metadata.accept_terms_of_use">
 <span class="sig-name descname"><span class="pre">accept_terms_of_use</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="genai.schemas.responses.html#genai.schemas.responses.TermsOfUse" title="genai.schemas.responses.TermsOfUse"><span class="pre">TermsOfUse</span></a></span></span><a class="headerlink" href="#genai.Metadata.accept_terms_of_use" title="Permalink to this definition">#</a></dt>
-<dd><p>Accepts the terms of use on BAM.</p>
+<dd><p>Accepts the terms of use on GENAI.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Terms of Use Data</p>
@@ -298,7 +298,7 @@ Items are returned in reverse chronological order.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="genai.Model.generate">
 <span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="genai.prompt.prompt_pattern.html#genai.prompt_pattern.PromptPattern" title="genai.prompt_pattern.PromptPattern"><span class="pre">genai.prompt_pattern.PromptPattern</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="genai.schemas.responses.html#genai.schemas.responses.GenerateResponse" title="genai.schemas.responses.GenerateResponse"><span class="pre">genai.schemas.responses.GenerateResponse</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#genai.Model.generate" title="Permalink to this definition">#</a></dt>
-<dd><p>The generate endpoint is the centerpiece of the BAM alpha.
+<dd><p>The generate endpoint is the centerpiece of the GENAI alpha.
 It provides a simplified and flexible, yet powerful interface to the supported
 models as a service. Given a text prompt as inputs, and required parameters
 the selected model (model_id) will generate a completion text as generated_text.</p>
@@ -318,7 +318,7 @@ the selected model (model_id) will generate a completion text as generated_text.
 <dl class="py method">
 <dt class="sig sig-object py" id="genai.Model.generate_as_completed">
 <span class="sig-name descname"><span class="pre">generate_as_completed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="genai.prompt.prompt_pattern.html#genai.prompt_pattern.PromptPattern" title="genai.prompt_pattern.PromptPattern"><span class="pre">genai.prompt_pattern.PromptPattern</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="genai.schemas.responses.html#genai.schemas.responses.GenerateResponse" title="genai.schemas.responses.GenerateResponse"><span class="pre">GenerateResponse</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#genai.Model.generate_as_completed" title="Permalink to this definition">#</a></dt>
-<dd><p>The generate endpoint is the centerpiece of the BAM alpha.
+<dd><p>The generate endpoint is the centerpiece of the GENAI alpha.
 It provides a simplified and flexible, yet powerful interface to the supported
 models as a service. Given a text prompt as inputs, and required parameters
 the selected model (model_id) will generate a completion text as generated_text.</p>
@@ -335,7 +335,7 @@ the selected model (model_id) will generate a completion text as generated_text.
 <dl class="py method">
 <dt class="sig sig-object py" id="genai.Model.generate_async">
 <span class="sig-name descname"><span class="pre">generate_async</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="genai.prompt.prompt_pattern.html#genai.prompt_pattern.PromptPattern" title="genai.prompt_pattern.PromptPattern"><span class="pre">genai.prompt_pattern.PromptPattern</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ordered</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="genai.schemas.responses.html#genai.schemas.responses.GenerateResult" title="genai.schemas.responses.GenerateResult"><span class="pre">GenerateResult</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="genai.schemas.responses.html#genai.schemas.responses.GenerateResult" title="genai.schemas.responses.GenerateResult"><span class="pre">GenerateResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#genai.Model.generate_async" title="Permalink to this definition">#</a></dt>
-<dd><p>The generate endpoint is the centerpiece of the BAM alpha.
+<dd><p>The generate endpoint is the centerpiece of the GENAI alpha.
 It provides a simplified and flexible, yet powerful interface to the supported
 models as a service. Given a text prompt as inputs, and required parameters
 the selected model (model_id) will generate a completion text as generated_text.
@@ -699,10 +699,7 @@ If n is -1 and strategy is Random, a GenAiException is raised.</p></li>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="genai.exceptions.html">Exceptions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="genai.exceptions.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="genai.exceptions.bam_exception.html">GENAI Exceptions</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="genai.exceptions.bam_exception.html#genai.exceptions.bam_exception.GenAiException"><code class="docutils literal notranslate"><span class="pre">GenAiException</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="genai.exceptions.bam_exception.html">GENAI Exceptions</a></li>
 </ul>
 </li>
 </ul>
