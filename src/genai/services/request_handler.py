@@ -2,6 +2,7 @@ import logging
 
 import httpx
 
+from genai._version import version
 from genai.services.connection_manager import ConnectionManager
 
 logger = logging.getLogger(__name__)
@@ -32,6 +33,7 @@ class RequestHandler:
             headers = {
                 "Content-Type": "application/json",
                 "Authorization": f"Bearer {key}",
+                "x-request-origin": f"python-sdk/{version}",
             }
 
             json_data = {}
