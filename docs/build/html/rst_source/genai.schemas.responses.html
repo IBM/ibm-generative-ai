@@ -1,0 +1,805 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Token" href="genai.schemas.token_params.html" /><link rel="prev" title="Models" href="genai.schemas.models.html" />
+
+    <!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
+        <title>Responses - GENAI documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">GENAI  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  
+  <span class="sidebar-brand-text">GENAI  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Content:</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="modules.html">GENAI</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="genai.credentials.html">Credentials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.metadata.html">Metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.model.html">Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="genai.services.html">Services</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="genai.services.request_handler.html">Request Handler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.services.service_interface.html">Service Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="genai.schemas.html">Schemas</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="genai.schemas.descriptions.html">Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.schemas.generate_params.html">Generate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.schemas.history_params.html">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.schemas.models.html">Models</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.schemas.token_params.html">Token</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="genai.prompt.html">Prompts</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="genai.prompt.quickstart.html">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.prompt.quickstart.basics.html">Basic Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.prompt.quickstart.annexe.html">Annexe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.prompt.prompt_pattern.html">Prompts Pattern</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="genai.exceptions.html">Exceptions</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="genai.exceptions.bam_exception.html">GENAI Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html">Alice Bob QA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#alice-bob-talk">Alice Bob Talk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#async-callback">Async Callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#async-greetings">Async Greetings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#complete-my-code">Complete My Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#country-capital-qa">Country Capital QA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#explain-my-code">Explain my Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#many-greetings">Many Greetings</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="module-genai.schemas.responses">
+<span id="responses"></span><h1>Responses<a class="headerlink" href="#module-genai.schemas.responses" title="Permalink to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="genai.schemas.responses.ErrorExtensionState">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genai.schemas.responses.</span></span><span class="sig-name descname"><span class="pre">ErrorExtensionState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instancePath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#genai.schemas.responses.ErrorExtensionStateParam" title="genai.schemas.responses.ErrorExtensionStateParam"><span class="pre">ErrorExtensionStateParam</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">extra_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genai.schemas.responses.ErrorExtensionState" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#genai.schemas.responses.GenAiResponseModel" title="genai.schemas.responses.GenAiResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenAiResponseModel</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.ErrorExtensionState.instancePath">
+<span class="sig-name descname"><span class="pre">instancePath</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#genai.schemas.responses.ErrorExtensionState.instancePath" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.ErrorExtensionState.params">
+<span class="sig-name descname"><span class="pre">params</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#genai.schemas.responses.ErrorExtensionStateParam" title="genai.schemas.responses.ErrorExtensionStateParam"><span class="pre">ErrorExtensionStateParam</span></a></em><a class="headerlink" href="#genai.schemas.responses.ErrorExtensionState.params" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genai.schemas.responses.ErrorExtensionStateParam">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genai.schemas.responses.</span></span><span class="sig-name descname"><span class="pre">ErrorExtensionStateParam</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comparison</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">extra_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genai.schemas.responses.ErrorExtensionStateParam" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#genai.schemas.responses.GenAiResponseModel" title="genai.schemas.responses.GenAiResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenAiResponseModel</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.ErrorExtensionStateParam.comparison">
+<span class="sig-name descname"><span class="pre">comparison</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#genai.schemas.responses.ErrorExtensionStateParam.comparison" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.ErrorExtensionStateParam.limit">
+<span class="sig-name descname"><span class="pre">limit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#genai.schemas.responses.ErrorExtensionStateParam.limit" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genai.schemas.responses.ErrorExtensions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genai.schemas.responses.</span></span><span class="sig-name descname"><span class="pre">ErrorExtensions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#genai.schemas.responses.ErrorExtensionState" title="genai.schemas.responses.ErrorExtensionState"><span class="pre">genai.schemas.responses.ErrorExtensionState</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">extra_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genai.schemas.responses.ErrorExtensions" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#genai.schemas.responses.GenAiResponseModel" title="genai.schemas.responses.GenAiResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenAiResponseModel</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.ErrorExtensions.code">
+<span class="sig-name descname"><span class="pre">code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#genai.schemas.responses.ErrorExtensions.code" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.ErrorExtensions.state">
+<span class="sig-name descname"><span class="pre">state</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#genai.schemas.responses.ErrorExtensionState" title="genai.schemas.responses.ErrorExtensionState"><span class="pre">genai.schemas.responses.ErrorExtensionState</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#genai.schemas.responses.ErrorExtensions.state" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genai.schemas.responses.ErrorResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genai.schemas.responses.</span></span><span class="sig-name descname"><span class="pre">ErrorResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extensions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#genai.schemas.responses.ErrorExtensions" title="genai.schemas.responses.ErrorExtensions"><span class="pre">ErrorExtensions</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">extra_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genai.schemas.responses.ErrorResponse" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#genai.schemas.responses.GenAiResponseModel" title="genai.schemas.responses.GenAiResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenAiResponseModel</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.ErrorResponse.error">
+<span class="sig-name descname"><span class="pre">error</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#genai.schemas.responses.ErrorResponse.error" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.ErrorResponse.extensions">
+<span class="sig-name descname"><span class="pre">extensions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#genai.schemas.responses.ErrorExtensions" title="genai.schemas.responses.ErrorExtensions"><span class="pre">ErrorExtensions</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#genai.schemas.responses.ErrorResponse.extensions" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.ErrorResponse.message">
+<span class="sig-name descname"><span class="pre">message</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#genai.schemas.responses.ErrorResponse.message" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.ErrorResponse.status_code">
+<span class="sig-name descname"><span class="pre">status_code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#genai.schemas.responses.ErrorResponse.status_code" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenAiResponseModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genai.schemas.responses.</span></span><span class="sig-name descname"><span class="pre">GenAiResponseModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">extra_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genai.schemas.responses.GenAiResponseModel" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genai.schemas.responses.</span></span><span class="sig-name descname"><span class="pre">GenerateResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="genai.schemas.models.html#genai.schemas.models.ModelType" title="genai.schemas.models.ModelType"><span class="pre">ModelType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#genai.schemas.responses.GenerateResult" title="genai.schemas.responses.GenerateResult"><span class="pre">GenerateResult</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">extra_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genai.schemas.responses.GenerateResponse" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#genai.schemas.responses.GenAiResponseModel" title="genai.schemas.responses.GenAiResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenAiResponseModel</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateResponse.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span></em><a class="headerlink" href="#genai.schemas.responses.GenerateResponse.created_at" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateResponse.model_id">
+<span class="sig-name descname"><span class="pre">model_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="genai.schemas.models.html#genai.schemas.models.ModelType" title="genai.schemas.models.ModelType"><span class="pre">ModelType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#genai.schemas.responses.GenerateResponse.model_id" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateResponse.results">
+<span class="sig-name descname"><span class="pre">results</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#genai.schemas.responses.GenerateResult" title="genai.schemas.responses.GenerateResult"><span class="pre">GenerateResult</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#genai.schemas.responses.GenerateResponse.results" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genai.schemas.responses.</span></span><span class="sig-name descname"><span class="pre">GenerateResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generated_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generated_token_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_token_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_reason</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generated_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#genai.schemas.responses.GeneratedToken" title="genai.schemas.responses.GeneratedToken"><span class="pre">genai.schemas.responses.GeneratedToken</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">extra_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genai.schemas.responses.GenerateResult" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#genai.schemas.responses.GenAiResponseModel" title="genai.schemas.responses.GenAiResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenAiResponseModel</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateResult.generated_text">
+<span class="sig-name descname"><span class="pre">generated_text</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#genai.schemas.responses.GenerateResult.generated_text" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateResult.generated_token_count">
+<span class="sig-name descname"><span class="pre">generated_token_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#genai.schemas.responses.GenerateResult.generated_token_count" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateResult.generated_tokens">
+<span class="sig-name descname"><span class="pre">generated_tokens</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#genai.schemas.responses.GeneratedToken" title="genai.schemas.responses.GeneratedToken"><span class="pre">genai.schemas.responses.GeneratedToken</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#genai.schemas.responses.GenerateResult.generated_tokens" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateResult.input_text">
+<span class="sig-name descname"><span class="pre">input_text</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#genai.schemas.responses.GenerateResult.input_text" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateResult.input_token_count">
+<span class="sig-name descname"><span class="pre">input_token_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#genai.schemas.responses.GenerateResult.input_token_count" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateResult.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#genai.schemas.responses.GenerateResult.seed" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateResult.stop_reason">
+<span class="sig-name descname"><span class="pre">stop_reason</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#genai.schemas.responses.GenerateResult.stop_reason" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateStreamResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genai.schemas.responses.</span></span><span class="sig-name descname"><span class="pre">GenerateStreamResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generated_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generated_token_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_token_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_reason</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generated_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#genai.schemas.responses.GeneratedToken" title="genai.schemas.responses.GeneratedToken"><span class="pre">genai.schemas.responses.GeneratedToken</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">extra_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genai.schemas.responses.GenerateStreamResponse" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#genai.schemas.responses.GenAiResponseModel" title="genai.schemas.responses.GenAiResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenAiResponseModel</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateStreamResponse.generated_text">
+<span class="sig-name descname"><span class="pre">generated_text</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#genai.schemas.responses.GenerateStreamResponse.generated_text" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateStreamResponse.generated_token_count">
+<span class="sig-name descname"><span class="pre">generated_token_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#genai.schemas.responses.GenerateStreamResponse.generated_token_count" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateStreamResponse.generated_tokens">
+<span class="sig-name descname"><span class="pre">generated_tokens</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#genai.schemas.responses.GeneratedToken" title="genai.schemas.responses.GeneratedToken"><span class="pre">genai.schemas.responses.GeneratedToken</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#genai.schemas.responses.GenerateStreamResponse.generated_tokens" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateStreamResponse.input_text">
+<span class="sig-name descname"><span class="pre">input_text</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#genai.schemas.responses.GenerateStreamResponse.input_text" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateStreamResponse.input_token_count">
+<span class="sig-name descname"><span class="pre">input_token_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#genai.schemas.responses.GenerateStreamResponse.input_token_count" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateStreamResponse.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#genai.schemas.responses.GenerateStreamResponse.seed" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.GenerateStreamResponse.stop_reason">
+<span class="sig-name descname"><span class="pre">stop_reason</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#genai.schemas.responses.GenerateStreamResponse.stop_reason" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genai.schemas.responses.GeneratedToken">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genai.schemas.responses.</span></span><span class="sig-name descname"><span class="pre">GeneratedToken</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logprob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">extra_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genai.schemas.responses.GeneratedToken" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#genai.schemas.responses.GenAiResponseModel" title="genai.schemas.responses.GenAiResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenAiResponseModel</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.GeneratedToken.logprob">
+<span class="sig-name descname"><span class="pre">logprob</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#genai.schemas.responses.GeneratedToken.logprob" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.GeneratedToken.text">
+<span class="sig-name descname"><span class="pre">text</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#genai.schemas.responses.GeneratedToken.text" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genai.schemas.responses.HistoryResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genai.schemas.responses.</span></span><span class="sig-name descname"><span class="pre">HistoryResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#genai.schemas.responses.HistoryResult" title="genai.schemas.responses.HistoryResult"><span class="pre">HistoryResult</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">totalCount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">extra_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genai.schemas.responses.HistoryResponse" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#genai.schemas.responses.GenAiResponseModel" title="genai.schemas.responses.GenAiResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenAiResponseModel</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.HistoryResponse.results">
+<span class="sig-name descname"><span class="pre">results</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#genai.schemas.responses.HistoryResult" title="genai.schemas.responses.HistoryResult"><span class="pre">HistoryResult</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#genai.schemas.responses.HistoryResponse.results" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.HistoryResponse.totalCount">
+<span class="sig-name descname"><span class="pre">totalCount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#genai.schemas.responses.HistoryResponse.totalCount" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genai.schemas.responses.HistoryResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genai.schemas.responses.</span></span><span class="sig-name descname"><span class="pre">HistoryResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#genai.schemas.responses.HistoryResultRequest" title="genai.schemas.responses.HistoryResultRequest"><span class="pre">HistoryResultRequest</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#genai.schemas.responses.GenerateResponse" title="genai.schemas.responses.GenerateResponse"><span class="pre">GenerateResponse</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">extra_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genai.schemas.responses.HistoryResult" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#genai.schemas.responses.GenAiResponseModel" title="genai.schemas.responses.GenAiResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenAiResponseModel</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.HistoryResult.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span></em><a class="headerlink" href="#genai.schemas.responses.HistoryResult.created_at" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.HistoryResult.duration">
+<span class="sig-name descname"><span class="pre">duration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#genai.schemas.responses.HistoryResult.duration" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.HistoryResult.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#genai.schemas.responses.HistoryResult.id" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.HistoryResult.request">
+<span class="sig-name descname"><span class="pre">request</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#genai.schemas.responses.HistoryResultRequest" title="genai.schemas.responses.HistoryResultRequest"><span class="pre">HistoryResultRequest</span></a></em><a class="headerlink" href="#genai.schemas.responses.HistoryResult.request" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.HistoryResult.response">
+<span class="sig-name descname"><span class="pre">response</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#genai.schemas.responses.GenerateResponse" title="genai.schemas.responses.GenerateResponse"><span class="pre">GenerateResponse</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Any</span></em><a class="headerlink" href="#genai.schemas.responses.HistoryResult.response" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.HistoryResult.status">
+<span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#genai.schemas.responses.HistoryResult.status" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genai.schemas.responses.HistoryResultRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genai.schemas.responses.</span></span><span class="sig-name descname"><span class="pre">HistoryResultRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="genai.schemas.generate_params.html#genai.schemas.generate_params.GenerateParams" title="genai.schemas.generate_params.GenerateParams"><span class="pre">GenerateParams</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">extra_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genai.schemas.responses.HistoryResultRequest" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#genai.schemas.responses.GenAiResponseModel" title="genai.schemas.responses.GenAiResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenAiResponseModel</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.HistoryResultRequest.inputs">
+<span class="sig-name descname"><span class="pre">inputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#genai.schemas.responses.HistoryResultRequest.inputs" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.HistoryResultRequest.model_id">
+<span class="sig-name descname"><span class="pre">model_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#genai.schemas.responses.HistoryResultRequest.model_id" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.HistoryResultRequest.parameters">
+<span class="sig-name descname"><span class="pre">parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="genai.schemas.generate_params.html#genai.schemas.generate_params.GenerateParams" title="genai.schemas.generate_params.GenerateParams"><span class="pre">GenerateParams</span></a></em><a class="headerlink" href="#genai.schemas.responses.HistoryResultRequest.parameters" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genai.schemas.responses.StopReasonEnum">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genai.schemas.responses.</span></span><span class="sig-name descname"><span class="pre">StopReasonEnum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genai.schemas.responses.StopReasonEnum" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.StopReasonEnum.CANCELLED">
+<span class="sig-name descname"><span class="pre">CANCELLED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Request</span> <span class="pre">canceled</span> <span class="pre">by</span> <span class="pre">the</span> <span class="pre">client'</span></em><a class="headerlink" href="#genai.schemas.responses.StopReasonEnum.CANCELLED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.StopReasonEnum.EOS_TOKEN">
+<span class="sig-name descname"><span class="pre">EOS_TOKEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'End</span> <span class="pre">of</span> <span class="pre">sequence</span> <span class="pre">token</span> <span class="pre">encountered'</span></em><a class="headerlink" href="#genai.schemas.responses.StopReasonEnum.EOS_TOKEN" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.StopReasonEnum.ERROR">
+<span class="sig-name descname"><span class="pre">ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Error</span> <span class="pre">encountered'</span></em><a class="headerlink" href="#genai.schemas.responses.StopReasonEnum.ERROR" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.StopReasonEnum.MAX_TOKENS">
+<span class="sig-name descname"><span class="pre">MAX_TOKENS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Maximum</span> <span class="pre">requested</span> <span class="pre">tokens</span> <span class="pre">reached'</span></em><a class="headerlink" href="#genai.schemas.responses.StopReasonEnum.MAX_TOKENS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.StopReasonEnum.NOT_FINISHED">
+<span class="sig-name descname"><span class="pre">NOT_FINISHED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Possibly</span> <span class="pre">more</span> <span class="pre">tokens</span> <span class="pre">to</span> <span class="pre">be</span> <span class="pre">streamed'</span></em><a class="headerlink" href="#genai.schemas.responses.StopReasonEnum.NOT_FINISHED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.StopReasonEnum.STOP_SEQUENCE">
+<span class="sig-name descname"><span class="pre">STOP_SEQUENCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Stop</span> <span class="pre">sequence</span> <span class="pre">encountered'</span></em><a class="headerlink" href="#genai.schemas.responses.StopReasonEnum.STOP_SEQUENCE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.StopReasonEnum.TIME_LIMIT">
+<span class="sig-name descname"><span class="pre">TIME_LIMIT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Time</span> <span class="pre">limit</span> <span class="pre">reached'</span></em><a class="headerlink" href="#genai.schemas.responses.StopReasonEnum.TIME_LIMIT" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.StopReasonEnum.TOKEN_LIMIT">
+<span class="sig-name descname"><span class="pre">TOKEN_LIMIT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Token</span> <span class="pre">limit</span> <span class="pre">reached'</span></em><a class="headerlink" href="#genai.schemas.responses.StopReasonEnum.TOKEN_LIMIT" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genai.schemas.responses.TermsOfUse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genai.schemas.responses.</span></span><span class="sig-name descname"><span class="pre">TermsOfUse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tou_accepted</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tou_accepted_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">extra_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genai.schemas.responses.TermsOfUse" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#genai.schemas.responses.GenAiResponseModel" title="genai.schemas.responses.GenAiResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenAiResponseModel</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.TermsOfUse.tou_accepted">
+<span class="sig-name descname"><span class="pre">tou_accepted</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#genai.schemas.responses.TermsOfUse.tou_accepted" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.TermsOfUse.tou_accepted_at">
+<span class="sig-name descname"><span class="pre">tou_accepted_at</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span></em><a class="headerlink" href="#genai.schemas.responses.TermsOfUse.tou_accepted_at" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genai.schemas.responses.TokenizeResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genai.schemas.responses.</span></span><span class="sig-name descname"><span class="pre">TokenizeResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="genai.schemas.models.html#genai.schemas.models.ModelType" title="genai.schemas.models.ModelType"><span class="pre">ModelType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#genai.schemas.responses.TokenizeResult" title="genai.schemas.responses.TokenizeResult"><span class="pre">TokenizeResult</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">extra_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genai.schemas.responses.TokenizeResponse" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#genai.schemas.responses.GenAiResponseModel" title="genai.schemas.responses.GenAiResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenAiResponseModel</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.TokenizeResponse.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span></em><a class="headerlink" href="#genai.schemas.responses.TokenizeResponse.created_at" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.TokenizeResponse.model_id">
+<span class="sig-name descname"><span class="pre">model_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="genai.schemas.models.html#genai.schemas.models.ModelType" title="genai.schemas.models.ModelType"><span class="pre">ModelType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#genai.schemas.responses.TokenizeResponse.model_id" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.TokenizeResponse.results">
+<span class="sig-name descname"><span class="pre">results</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#genai.schemas.responses.TokenizeResult" title="genai.schemas.responses.TokenizeResult"><span class="pre">TokenizeResult</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#genai.schemas.responses.TokenizeResponse.results" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genai.schemas.responses.TokenizeResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genai.schemas.responses.</span></span><span class="sig-name descname"><span class="pre">TokenizeResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">extra_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genai.schemas.responses.TokenizeResult" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#genai.schemas.responses.GenAiResponseModel" title="genai.schemas.responses.GenAiResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenAiResponseModel</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.TokenizeResult.token_count">
+<span class="sig-name descname"><span class="pre">token_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#genai.schemas.responses.TokenizeResult.token_count" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genai.schemas.responses.TokenizeResult.tokens">
+<span class="sig-name descname"><span class="pre">tokens</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#genai.schemas.responses.TokenizeResult.tokens" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genai.schemas.responses.alert_extra_fields_validator">
+<span class="sig-prename descclassname"><span class="pre">genai.schemas.responses.</span></span><span class="sig-name descname"><span class="pre">alert_extra_fields_validator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#genai.schemas.responses.alert_extra_fields_validator" title="Permalink to this definition">#</a></dt>
+<dd><p>Reusable validator that logs a warning if we see undocmented fields returned by the API</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cls</strong> (<em>ModelMetaclass</em>) – the pydantic model that is being validated</p></li>
+<li><p><strong>values</strong> (<em>dict</em>) – The incoming values to be checkec</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The values post validation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="genai.schemas.token_params.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Token</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="genai.schemas.models.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Models</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023, IBM Research
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Responses</a><ul>
+<li><a class="reference internal" href="#genai.schemas.responses.ErrorExtensionState"><code class="docutils literal notranslate"><span class="pre">ErrorExtensionState</span></code></a><ul>
+<li><a class="reference internal" href="#genai.schemas.responses.ErrorExtensionState.instancePath"><code class="docutils literal notranslate"><span class="pre">ErrorExtensionState.instancePath</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.ErrorExtensionState.params"><code class="docutils literal notranslate"><span class="pre">ErrorExtensionState.params</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#genai.schemas.responses.ErrorExtensionStateParam"><code class="docutils literal notranslate"><span class="pre">ErrorExtensionStateParam</span></code></a><ul>
+<li><a class="reference internal" href="#genai.schemas.responses.ErrorExtensionStateParam.comparison"><code class="docutils literal notranslate"><span class="pre">ErrorExtensionStateParam.comparison</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.ErrorExtensionStateParam.limit"><code class="docutils literal notranslate"><span class="pre">ErrorExtensionStateParam.limit</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#genai.schemas.responses.ErrorExtensions"><code class="docutils literal notranslate"><span class="pre">ErrorExtensions</span></code></a><ul>
+<li><a class="reference internal" href="#genai.schemas.responses.ErrorExtensions.code"><code class="docutils literal notranslate"><span class="pre">ErrorExtensions.code</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.ErrorExtensions.state"><code class="docutils literal notranslate"><span class="pre">ErrorExtensions.state</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#genai.schemas.responses.ErrorResponse"><code class="docutils literal notranslate"><span class="pre">ErrorResponse</span></code></a><ul>
+<li><a class="reference internal" href="#genai.schemas.responses.ErrorResponse.error"><code class="docutils literal notranslate"><span class="pre">ErrorResponse.error</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.ErrorResponse.extensions"><code class="docutils literal notranslate"><span class="pre">ErrorResponse.extensions</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.ErrorResponse.message"><code class="docutils literal notranslate"><span class="pre">ErrorResponse.message</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.ErrorResponse.status_code"><code class="docutils literal notranslate"><span class="pre">ErrorResponse.status_code</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#genai.schemas.responses.GenAiResponseModel"><code class="docutils literal notranslate"><span class="pre">GenAiResponseModel</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateResponse"><code class="docutils literal notranslate"><span class="pre">GenerateResponse</span></code></a><ul>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateResponse.created_at"><code class="docutils literal notranslate"><span class="pre">GenerateResponse.created_at</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateResponse.model_id"><code class="docutils literal notranslate"><span class="pre">GenerateResponse.model_id</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateResponse.results"><code class="docutils literal notranslate"><span class="pre">GenerateResponse.results</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateResult"><code class="docutils literal notranslate"><span class="pre">GenerateResult</span></code></a><ul>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateResult.generated_text"><code class="docutils literal notranslate"><span class="pre">GenerateResult.generated_text</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateResult.generated_token_count"><code class="docutils literal notranslate"><span class="pre">GenerateResult.generated_token_count</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateResult.generated_tokens"><code class="docutils literal notranslate"><span class="pre">GenerateResult.generated_tokens</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateResult.input_text"><code class="docutils literal notranslate"><span class="pre">GenerateResult.input_text</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateResult.input_token_count"><code class="docutils literal notranslate"><span class="pre">GenerateResult.input_token_count</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateResult.seed"><code class="docutils literal notranslate"><span class="pre">GenerateResult.seed</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateResult.stop_reason"><code class="docutils literal notranslate"><span class="pre">GenerateResult.stop_reason</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateStreamResponse"><code class="docutils literal notranslate"><span class="pre">GenerateStreamResponse</span></code></a><ul>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateStreamResponse.generated_text"><code class="docutils literal notranslate"><span class="pre">GenerateStreamResponse.generated_text</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateStreamResponse.generated_token_count"><code class="docutils literal notranslate"><span class="pre">GenerateStreamResponse.generated_token_count</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateStreamResponse.generated_tokens"><code class="docutils literal notranslate"><span class="pre">GenerateStreamResponse.generated_tokens</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateStreamResponse.input_text"><code class="docutils literal notranslate"><span class="pre">GenerateStreamResponse.input_text</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateStreamResponse.input_token_count"><code class="docutils literal notranslate"><span class="pre">GenerateStreamResponse.input_token_count</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateStreamResponse.seed"><code class="docutils literal notranslate"><span class="pre">GenerateStreamResponse.seed</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.GenerateStreamResponse.stop_reason"><code class="docutils literal notranslate"><span class="pre">GenerateStreamResponse.stop_reason</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#genai.schemas.responses.GeneratedToken"><code class="docutils literal notranslate"><span class="pre">GeneratedToken</span></code></a><ul>
+<li><a class="reference internal" href="#genai.schemas.responses.GeneratedToken.logprob"><code class="docutils literal notranslate"><span class="pre">GeneratedToken.logprob</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.GeneratedToken.text"><code class="docutils literal notranslate"><span class="pre">GeneratedToken.text</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#genai.schemas.responses.HistoryResponse"><code class="docutils literal notranslate"><span class="pre">HistoryResponse</span></code></a><ul>
+<li><a class="reference internal" href="#genai.schemas.responses.HistoryResponse.results"><code class="docutils literal notranslate"><span class="pre">HistoryResponse.results</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.HistoryResponse.totalCount"><code class="docutils literal notranslate"><span class="pre">HistoryResponse.totalCount</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#genai.schemas.responses.HistoryResult"><code class="docutils literal notranslate"><span class="pre">HistoryResult</span></code></a><ul>
+<li><a class="reference internal" href="#genai.schemas.responses.HistoryResult.created_at"><code class="docutils literal notranslate"><span class="pre">HistoryResult.created_at</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.HistoryResult.duration"><code class="docutils literal notranslate"><span class="pre">HistoryResult.duration</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.HistoryResult.id"><code class="docutils literal notranslate"><span class="pre">HistoryResult.id</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.HistoryResult.request"><code class="docutils literal notranslate"><span class="pre">HistoryResult.request</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.HistoryResult.response"><code class="docutils literal notranslate"><span class="pre">HistoryResult.response</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.HistoryResult.status"><code class="docutils literal notranslate"><span class="pre">HistoryResult.status</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#genai.schemas.responses.HistoryResultRequest"><code class="docutils literal notranslate"><span class="pre">HistoryResultRequest</span></code></a><ul>
+<li><a class="reference internal" href="#genai.schemas.responses.HistoryResultRequest.inputs"><code class="docutils literal notranslate"><span class="pre">HistoryResultRequest.inputs</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.HistoryResultRequest.model_id"><code class="docutils literal notranslate"><span class="pre">HistoryResultRequest.model_id</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.HistoryResultRequest.parameters"><code class="docutils literal notranslate"><span class="pre">HistoryResultRequest.parameters</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#genai.schemas.responses.StopReasonEnum"><code class="docutils literal notranslate"><span class="pre">StopReasonEnum</span></code></a><ul>
+<li><a class="reference internal" href="#genai.schemas.responses.StopReasonEnum.CANCELLED"><code class="docutils literal notranslate"><span class="pre">StopReasonEnum.CANCELLED</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.StopReasonEnum.EOS_TOKEN"><code class="docutils literal notranslate"><span class="pre">StopReasonEnum.EOS_TOKEN</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.StopReasonEnum.ERROR"><code class="docutils literal notranslate"><span class="pre">StopReasonEnum.ERROR</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.StopReasonEnum.MAX_TOKENS"><code class="docutils literal notranslate"><span class="pre">StopReasonEnum.MAX_TOKENS</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.StopReasonEnum.NOT_FINISHED"><code class="docutils literal notranslate"><span class="pre">StopReasonEnum.NOT_FINISHED</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.StopReasonEnum.STOP_SEQUENCE"><code class="docutils literal notranslate"><span class="pre">StopReasonEnum.STOP_SEQUENCE</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.StopReasonEnum.TIME_LIMIT"><code class="docutils literal notranslate"><span class="pre">StopReasonEnum.TIME_LIMIT</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.StopReasonEnum.TOKEN_LIMIT"><code class="docutils literal notranslate"><span class="pre">StopReasonEnum.TOKEN_LIMIT</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#genai.schemas.responses.TermsOfUse"><code class="docutils literal notranslate"><span class="pre">TermsOfUse</span></code></a><ul>
+<li><a class="reference internal" href="#genai.schemas.responses.TermsOfUse.tou_accepted"><code class="docutils literal notranslate"><span class="pre">TermsOfUse.tou_accepted</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.TermsOfUse.tou_accepted_at"><code class="docutils literal notranslate"><span class="pre">TermsOfUse.tou_accepted_at</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#genai.schemas.responses.TokenizeResponse"><code class="docutils literal notranslate"><span class="pre">TokenizeResponse</span></code></a><ul>
+<li><a class="reference internal" href="#genai.schemas.responses.TokenizeResponse.created_at"><code class="docutils literal notranslate"><span class="pre">TokenizeResponse.created_at</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.TokenizeResponse.model_id"><code class="docutils literal notranslate"><span class="pre">TokenizeResponse.model_id</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.TokenizeResponse.results"><code class="docutils literal notranslate"><span class="pre">TokenizeResponse.results</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#genai.schemas.responses.TokenizeResult"><code class="docutils literal notranslate"><span class="pre">TokenizeResult</span></code></a><ul>
+<li><a class="reference internal" href="#genai.schemas.responses.TokenizeResult.token_count"><code class="docutils literal notranslate"><span class="pre">TokenizeResult.token_count</span></code></a></li>
+<li><a class="reference internal" href="#genai.schemas.responses.TokenizeResult.tokens"><code class="docutils literal notranslate"><span class="pre">TokenizeResult.tokens</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#genai.schemas.responses.alert_extra_fields_validator"><code class="docutils literal notranslate"><span class="pre">alert_extra_fields_validator()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    </body>
+</html>

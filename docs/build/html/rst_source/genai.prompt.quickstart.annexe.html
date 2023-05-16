@@ -1,0 +1,389 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Prompts Pattern" href="genai.prompt.prompt_pattern.html" /><link rel="prev" title="Basic Concepts" href="genai.prompt.quickstart.basics.html" />
+
+    <!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
+        <title>Annexe - GENAI documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">GENAI  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  
+  <span class="sidebar-brand-text">GENAI  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Content:</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="modules.html">GENAI</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="genai.credentials.html">Credentials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.metadata.html">Metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.model.html">Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="genai.services.html">Services</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="genai.services.request_handler.html">Request Handler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.services.service_interface.html">Service Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="genai.schemas.html">Schemas</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="genai.schemas.descriptions.html">Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.schemas.generate_params.html">Generate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.schemas.history_params.html">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.schemas.models.html">Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.schemas.responses.html">Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.schemas.token_params.html">Token</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="genai.prompt.html">Prompts</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="genai.prompt.quickstart.html">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.prompt.quickstart.basics.html">Basic Concepts</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Annexe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.prompt.prompt_pattern.html">Prompts Pattern</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="genai.exceptions.html">Exceptions</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="genai.exceptions.bam_exception.html">GENAI Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html">Alice Bob QA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#alice-bob-talk">Alice Bob Talk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#async-callback">Async Callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#async-greetings">Async Greetings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#complete-my-code">Complete My Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#country-capital-qa">Country Capital QA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#explain-my-code">Explain my Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#many-greetings">Many Greetings</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="annexe">
+<h1>Annexe<a class="headerlink" href="#annexe" title="Permalink to this heading">#</a></h1>
+<section id="file-capital-qa-yaml">
+<h2>File : capital-qa.yaml<a class="headerlink" href="#file-capital-qa-yaml" title="Permalink to this heading">#</a></h2>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v0</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">captial-qa</span>
+<span class="nt">content</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">    </span><span class="no">Country: Germany</span>
+<span class="w">    </span><span class="no">Capital: Berlin</span>
+<span class="w">    </span><span class="no">Country: USA</span>
+<span class="w">    </span><span class="no">Capital: Washington</span>
+<span class="w">    </span><span class="no">Country: {{country}}</span>
+<span class="w">    </span><span class="no">Capital:</span>
+</pre></div>
+</div>
+</section>
+<section id="file-synth-animal-yaml">
+<h2>File : synth-animal.yaml<a class="headerlink" href="#file-synth-animal-yaml" title="Permalink to this heading">#</a></h2>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v0</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">synth-animal</span>
+<span class="nt">content</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="l l-Scalar l-Scalar-Plain">Please generate synthetic data about {{animal}}.</span>
+<span class="l l-Scalar l-Scalar-Plain">1,{{species1}},{{location1}},{{length1}},{{dob1}}</span>
+<span class="l l-Scalar l-Scalar-Plain">2,{{species2}},{{location2}},{{length2}},{{dob2}}</span>
+<span class="l l-Scalar l-Scalar-Plain">3,{{species3}},{{location3}},{{length3}},{{dob3}}</span>
+<span class="l l-Scalar l-Scalar-Plain">4,</span>
+</pre></div>
+</div>
+</section>
+<section id="file-penguins-csv">
+<h2>File : penguins.csv<a class="headerlink" href="#file-penguins-csv" title="Permalink to this heading">#</a></h2>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&quot;&quot;,&quot;species&quot;,&quot;island&quot;,&quot;bill_length_mm&quot;,&quot;bill_depth_mm&quot;,&quot;flipper_length_mm&quot;,&quot;body_mass_g&quot;,&quot;sex&quot;,&quot;year&quot;
+&quot;1&quot;,&quot;Adelie&quot;,&quot;Torgersen&quot;,39.1,18.7,181,3750,&quot;male&quot;,2007
+&quot;2&quot;,&quot;Adelie&quot;,&quot;Torgersen&quot;,39.5,17.4,186,3800,&quot;female&quot;,2007
+&quot;3&quot;,&quot;Adelie&quot;,&quot;Torgersen&quot;,40.3,18,195,3250,&quot;female&quot;,2007
+&quot;4&quot;,&quot;Adelie&quot;,&quot;Torgersen&quot;,NA,NA,NA,NA,NA,2007
+&quot;5&quot;,&quot;Gentoo&quot;,&quot;Biscoe&quot;,36.7,19.3,193,3450,&quot;female&quot;,2007
+&quot;6&quot;,&quot;Gentoo&quot;,&quot;Biscoe&quot;,39.3,20.6,190,3650,&quot;male&quot;,2007
+...
+&quot;341&quot;,&quot;Chinstrap&quot;,&quot;Dream&quot;,43.5,18.1,202,3400,&quot;female&quot;,2009
+&quot;342&quot;,&quot;Chinstrap&quot;,&quot;Dream&quot;,49.6,18.2,193,3775,&quot;male&quot;,2009
+&quot;343&quot;,&quot;Chinstrap&quot;,&quot;Dream&quot;,50.8,19,210,4100,&quot;male&quot;,2009
+&quot;344&quot;,&quot;Chinstrap&quot;,&quot;Dream&quot;,50.2,18.7,198,3775,&quot;female&quot;,2009
+</pre></div>
+</div>
+</section>
+<section id="file-instruction-yaml">
+<h2>File : instruction.yaml<a class="headerlink" href="#file-instruction-yaml" title="Permalink to this heading">#</a></h2>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v0</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">instruction</span>
+<span class="nt">content</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">    </span><span class="no">1. Instruction: {{instruction1}}</span>
+<span class="w">    </span><span class="no">1. Input: {{input1}}</span>
+<span class="w">    </span><span class="no">1. Output: {{output1}}</span>
+
+<span class="w">    </span><span class="no">2. Instruction: {{instruction2}}</span>
+<span class="w">    </span><span class="no">2. Input: {{input2}}</span>
+<span class="w">    </span><span class="no">2. Output: {{output2}}</span>
+
+<span class="w">    </span><span class="no">3. Instruction:</span>
+</pre></div>
+</div>
+</section>
+<section id="file-tasks-jsonl">
+<h2>File : tasks.jsonl<a class="headerlink" href="#file-tasks-jsonl" title="Permalink to this heading">#</a></h2>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;seed_task_0&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;breakfast_suggestion&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;instruction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Is there anything I can eat for a breakfast that doesn&#39;t include eggs, yet includes protein, and has roughly 700-1000 calories?&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;instances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;input&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Yes, you can have 1 oatmeal banana protein shake and 4 strips of bacon. The oatmeal banana protein shake may contain 1/2 cup oatmeal, 60 grams whey protein powder, 1/2 medium banana, 1tbsp flaxseed oil and 1/2 cup watter, totalling about 550 calories. The 4 strips of bacon contains about 200 calories.&quot;</span><span class="p">}],</span><span class="w"> </span><span class="nt">&quot;is_classification&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">},</span>
+<span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;seed_task_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;antonym_relation&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;instruction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;What is the relation between the given pairs?&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;instances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;input&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Night : Day :: Right : Left&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The relation between the given pairs is that they are opposites.&quot;</span><span class="p">}],</span><span class="w"> </span><span class="nt">&quot;is_classification&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">},</span>
+<span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;seed_task_2&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;one_sentence_description&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;instruction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Generate a one-sentence description for each of the following people.&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;instances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;input&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;- Brack Obama\n- Elon Musk\n- Taylor Swift&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;- Barack Hussein Obama II is an American politician who served as the 44th president of the United States from 2009 to 2017.\n- Elon Musk is the founder, CEO, and chief engineer of SpaceX; angel investor, CEO and product architect of Tesla, Inc.; founder of The Boring Company; co-founder of Neuralink and OpenAI; president of the Musk Foundation; and owner and CEO of Twitter, Inc.\n- Taylor Alison Swift is an American singer-songwriter.&quot;</span><span class="p">}],</span><span class="w"> </span><span class="nt">&quot;is_classification&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">},</span>
+<span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;seed_task_3&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;harmful_stereotype_example&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;instruction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Describe a situation in which the given stereotype can harm you.&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;instances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;input&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;\&quot;All Asians are smart!\&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Imagine you&#39;re a small child of Asian descent. You hear your whole life how \&quot;all Asians are smart,\&quot; but you know that does not feel like it&#39;s true for you. You have a hard time in school. Reading is difficult. Math is impossible. Everyone around you seems to pressure you because you are supposed to be \&quot;smart.\&quot; Every time you do not bring home that \&quot;A\&quot; assignment, you feel like a failure. Like you alone missed out on the gene that makes \&quot;all Asians smart.\&quot;\nAs educational opportunities like scholarships and colleges close their door on you, your future looks bleak. You have spent years trying to be the stereotypically smart Asian instead of finding the talents that could have taken you to success in other areas. As you can see, although the stereotype doesn&#39;t sound like a bad thing at first, it can put a lot of weight on the people who do not fit into it.&quot;</span><span class="p">}],</span><span class="w"> </span><span class="nt">&quot;is_classification&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">},</span>
+<span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;seed_task_4&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;email_subject_generation&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;instruction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Generate an appropriate subjective title for the following email:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;instances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;input&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Hi [person name],\n\nI&#39;m writing to ask you if you are happy to be a panelist of our workshop on multimodality at CVPR. The workshop will be held on June 20, 2023. \n\nBest,\n[my name]&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Invitition to be a panelist for CVPR 2023 workshop on Multimodality&quot;</span><span class="p">}],</span><span class="w"> </span><span class="nt">&quot;is_classification&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">},</span>
+<span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;seed_task_5&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;interview_question_answering&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;instruction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;How do you answer this question in a job interview?&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;instances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;input&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;What do you think about when you are alone in a car?&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;If it is in the evening, I typically think about what good I have accomplished that day, and if it is in the morning, I think about how I can be my best that day. I also try to practice gratitude and live in the present moment while I&#39;m driving to avoid distractions.&quot;</span><span class="p">}],</span><span class="w"> </span><span class="nt">&quot;is_classification&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">},</span>
+<span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;seed_task_6&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;new_year&#39;s_resolutions&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;instruction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Brainstorm a list of possible New Year&#39;s resolutions.&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;instances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;input&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;- Lose weight\n- Exercise more\n- Eat healthier\n- Quit smoking\n- Drink less alcohol\n- Spend less money\n- Save more money\n- Get out of debt\n- Take a trip\n- Volunteer more\n- Spend more time with family and friends\n- Read more\n- Start a hobby\n- Get organized\n- Simplify your life\n- Meditate or pray more\n- Get a new job\n- Move to a new city\n- Make new friends\n- Go back to school\n- Learn a new language\n- Start a business&quot;</span><span class="p">}],</span><span class="w"> </span><span class="nt">&quot;is_classification&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="genai.prompt.prompt_pattern.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Prompts Pattern</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="genai.prompt.quickstart.basics.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Basic Concepts</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023, IBM Research
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Annexe</a><ul>
+<li><a class="reference internal" href="#file-capital-qa-yaml">File : capital-qa.yaml</a></li>
+<li><a class="reference internal" href="#file-synth-animal-yaml">File : synth-animal.yaml</a></li>
+<li><a class="reference internal" href="#file-penguins-csv">File : penguins.csv</a></li>
+<li><a class="reference internal" href="#file-instruction-yaml">File : instruction.yaml</a></li>
+<li><a class="reference internal" href="#file-tasks-jsonl">File : tasks.jsonl</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    </body>
+</html>

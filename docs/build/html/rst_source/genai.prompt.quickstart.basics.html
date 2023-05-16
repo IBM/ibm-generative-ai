@@ -1,0 +1,628 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Annexe" href="genai.prompt.quickstart.annexe.html" /><link rel="prev" title="Quick Start" href="genai.prompt.quickstart.html" />
+
+    <!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
+        <title>Basic Concepts - GENAI documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">GENAI  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  
+  <span class="sidebar-brand-text">GENAI  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Content:</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="modules.html">GENAI</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="genai.credentials.html">Credentials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.metadata.html">Metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.model.html">Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="genai.services.html">Services</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="genai.services.request_handler.html">Request Handler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.services.service_interface.html">Service Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="genai.schemas.html">Schemas</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="genai.schemas.descriptions.html">Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.schemas.generate_params.html">Generate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.schemas.history_params.html">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.schemas.models.html">Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.schemas.responses.html">Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.schemas.token_params.html">Token</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="genai.prompt.html">Prompts</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="genai.prompt.quickstart.html">Quick Start</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Basic Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.prompt.quickstart.annexe.html">Annexe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genai.prompt.prompt_pattern.html">Prompts Pattern</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="genai.exceptions.html">Exceptions</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="genai.exceptions.bam_exception.html">GENAI Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html">Alice Bob QA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#alice-bob-talk">Alice Bob Talk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#async-callback">Async Callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#async-greetings">Async Greetings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#complete-my-code">Complete My Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#country-capital-qa">Country Capital QA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#explain-my-code">Explain my Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.user.html#many-greetings">Many Greetings</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="basic-concepts">
+<h1>Basic Concepts<a class="headerlink" href="#basic-concepts" title="Permalink to this heading">#</a></h1>
+<section id="creating-a-simple-prompt-from-a-template">
+<h2>Creating a simple prompt from a template<a class="headerlink" href="#creating-a-simple-prompt-from-a-template" title="Permalink to this heading">#</a></h2>
+<p>A prompt pattern can be created using the <a class="reference internal" href="genai.prompt.prompt_pattern.html#prompts-pattern"><span class="std std-ref">Prompts Pattern</span></a> class. It can be created from a string,
+a file, or a url.</p>
+<section id="from-string">
+<h3>From string<a class="headerlink" href="#from-string" title="Permalink to this heading">#</a></h3>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Prompt Pattern from string</span><a class="headerlink" href="#id1" title="Permalink to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">genai.prompt_pattern</span> <span class="kn">import</span> <span class="n">PromptPattern</span>
+
+<span class="n">_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    The capital of {{country}} is {{capital}}. The capital of Taiwan is</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">PromptPattern</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="n">_string</span><span class="p">)</span>
+<span class="n">prompt</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;country&quot;</span><span class="p">,</span> <span class="s2">&quot;Spain&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;capital&quot;</span><span class="p">,</span> <span class="s2">&quot;Madrid&quot;</span><span class="p">)</span>
+
+<span class="c1"># The capital of Spain is Madrid. The capital of Taiwan is</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="from-file">
+<h3>From file<a class="headerlink" href="#from-file" title="Permalink to this heading">#</a></h3>
+<p>Assuming a local <a class="reference internal" href="genai.prompt.quickstart.annexe.html#file-capital-qa-yaml"><span class="std std-ref">capital-qa.yaml</span></a> file.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Prompt Pattern from file</span><a class="headerlink" href="#id2" title="Permalink to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">genai.prompt_pattern</span> <span class="kn">import</span> <span class="n">PromptPattern</span>
+
+<span class="n">_path_to_file</span> <span class="o">=</span> <span class="s2">&quot;my_templates/capital-qa.yaml&quot;</span>
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">PromptPattern</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">_path_to_file</span><span class="p">)</span>
+<span class="n">prompt</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;country&quot;</span><span class="p">,</span> <span class="s2">&quot;Canada&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="from-a-url">
+<h3>From a URL<a class="headerlink" href="#from-a-url" title="Permalink to this heading">#</a></h3>
+<p>Assuming <a class="reference internal" href="genai.prompt.quickstart.annexe.html#file-capital-qa-yaml"><span class="std std-ref">capital-qa.yaml</span></a>, a file hosted on Github.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Prompt Pattern from URL</span><a class="headerlink" href="#id3" title="Permalink to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">genai.prompt_pattern</span> <span class="kn">import</span> <span class="n">PromptPattern</span>
+
+<span class="n">_url_to_file</span> <span class="o">=</span> <span class="s2">&quot;https://raw.github.com/my_template/capital-qa.yaml&quot;</span>
+<span class="n">_github_token</span> <span class="o">=</span> <span class="s2">&quot;my-github-token&quot;</span>
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">PromptPattern</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span>
+    <span class="n">url</span><span class="o">=</span><span class="n">_url_to_file</span><span class="p">,</span>
+    <span class="n">token</span><span class="o">=</span><span class="n">_github_token</span>
+<span class="p">)</span>
+<span class="n">prompt</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;country&quot;</span><span class="p">,</span> <span class="s2">&quot;Canada&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="template-substitutions-using-data-from-file">
+<h2>Template substitutions using data from file<a class="headerlink" href="#template-substitutions-using-data-from-file" title="Permalink to this heading">#</a></h2>
+<p>Once your prompt has been created, you might want to populate it from various sources. You can either
+directly substitute the <strong>{{var}}</strong> with a passed string (as displayed in the above examples), or you can substitute
+the variables using values pulled from a csv file or a json file.</p>
+<p>Please refere to <a class="reference internal" href="genai.prompt.prompt_pattern.html#prompts-pattern"><span class="std std-ref">Prompts Pattern</span></a> for an indepth look at the offered methods.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There are 3 strategies that can be used to populate a template from a csv or json file:</p>
+<ul class="simple">
+<li><p><strong>Sequential</strong> : sequentially substitute the template’s variables from a csv or json, starting from a given index.</p></li>
+<li><p><strong>Sample</strong>     : randomly samples rows from a csv or json and instantiate prompts. Without repetition of the data.</p></li>
+<li><p><strong>Random</strong>     : for each prompt variable, substitute the value from the corresponding key at random from csv or json.</p></li>
+</ul>
+</div>
+<section id="from-csv">
+<h3>From csv<a class="headerlink" href="#from-csv" title="Permalink to this heading">#</a></h3>
+<p>Assuming local <a class="reference internal" href="genai.prompt.quickstart.annexe.html#file-synth-animal-yaml"><span class="std std-ref">synth-animal.yaml</span></a> and <a class="reference internal" href="genai.prompt.quickstart.annexe.html#file-penguins-csv"><span class="std std-ref">penguins.csv</span></a> and files.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Substitute the template variables from a sampled row</span><a class="headerlink" href="#id4" title="Permalink to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">genai.prompt_pattern</span> <span class="kn">import</span> <span class="n">PromptPattern</span>
+
+<span class="n">_path_to_template_file</span> <span class="o">=</span> <span class="s2">&quot;my_templates/synth-animal.yaml&quot;</span>
+<span class="n">_path_to_csv_file</span> <span class="o">=</span> <span class="s2">&quot;my_data/penguins.csv&quot;</span>
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">PromptPattern</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">_path_to_template_file</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Given template:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">prompt</span><span class="p">)</span>
+
+<span class="n">prompt</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;animal&quot;</span><span class="p">,</span> <span class="s2">&quot;penguins&quot;</span><span class="p">)</span>
+
+<span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;species&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;species1&quot;</span><span class="p">,</span> <span class="s2">&quot;species2&quot;</span><span class="p">,</span> <span class="s2">&quot;species3&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;island&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;location1&quot;</span><span class="p">,</span> <span class="s2">&quot;location2&quot;</span><span class="p">,</span> <span class="s2">&quot;location3&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;flipper_length_mm&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;length1&quot;</span><span class="p">,</span> <span class="s2">&quot;length2&quot;</span><span class="p">,</span> <span class="s2">&quot;length3&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;dob1&quot;</span><span class="p">,</span> <span class="s2">&quot;dob2&quot;</span><span class="p">,</span> <span class="s2">&quot;dob3&quot;</span><span class="p">],</span>
+<span class="p">}</span>
+<span class="n">prompt</span><span class="o">.</span><span class="n">sub_from_csv</span><span class="p">(</span>
+    <span class="n">csv_path</span><span class="o">=</span><span class="n">cvs_path</span><span class="p">,</span>
+    <span class="n">col_to_var</span><span class="o">=</span><span class="n">mapping</span><span class="p">,</span>
+    <span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------------&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;generated prompt&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------------&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Output</span><a class="headerlink" href="#id5" title="Permalink to this code">#</a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Given template:</span>
+<span class="go">Please generate synthetic data about {{animal}}.</span>
+<span class="go">1,{{species1}},{{location1}},{{length1}},{{dob1}}</span>
+<span class="go">2,{{species2}},{{location2}},{{length2}},{{dob2}}</span>
+<span class="go">3,{{species3}},{{location3}},{{length3}},{{dob3}}</span>
+<span class="go">4,</span>
+
+<span class="go">-----------------------</span>
+<span class="go">generated prompt</span>
+<span class="go">Please generate synthetic data about penguins.</span>
+<span class="go">1,Gentoo,Biscoe,215,2008</span>
+<span class="go">2,Gentoo,Biscoe,217,2009</span>
+<span class="go">3,Chinstrap,Dream,198,2007</span>
+<span class="go">4,</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="from-json-and-jsonl">
+<h3>From json and jsonl<a class="headerlink" href="#from-json-and-jsonl" title="Permalink to this heading">#</a></h3>
+<p>Assuming local <a class="reference internal" href="genai.prompt.quickstart.annexe.html#file-instruction-yaml"><span class="std std-ref">instruction.yaml</span></a> and <a class="reference internal" href="genai.prompt.quickstart.annexe.html#file-tasks-jsonl"><span class="std std-ref">tasks.jsonl</span></a> and files.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">Prompt Pattern</span><a class="headerlink" href="#id6" title="Permalink to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">genai.prompt_pattern</span> <span class="kn">import</span> <span class="n">PromptPattern</span>
+
+<span class="n">_path_to_template_file</span> <span class="o">=</span> <span class="s2">&quot;my_templates/instruction.yaml&quot;</span>
+<span class="n">_path_to_json_file</span> <span class="o">=</span> <span class="s2">&quot;my_data/tasks.jsonl&quot;</span>
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">PromptPattern</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">_path_to_template_file</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Given template:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">prompt</span><span class="p">)</span>
+
+<span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;instruction&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;instruction1&quot;</span><span class="p">,</span> <span class="s2">&quot;instruction2&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;input1&quot;</span><span class="p">,</span> <span class="s2">&quot;input2&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;output&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;output1&quot;</span><span class="p">,</span> <span class="s2">&quot;output2&quot;</span><span class="p">],</span>
+<span class="p">}</span>
+
+<span class="n">prompt</span><span class="o">.</span><span class="n">sub_from_json</span><span class="p">(</span>
+    <span class="n">json_path</span><span class="o">=</span><span class="n">_path_to_json_file</span><span class="p">,</span>
+    <span class="n">key_to_var</span><span class="o">=</span><span class="n">mapping</span><span class="p">,</span>
+    <span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------------&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;generated prompt&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------------&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">Output</span><a class="headerlink" href="#id7" title="Permalink to this code">#</a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Given template:</span>
+<span class="go">1. Instruction: {{instruction1}}</span>
+<span class="go">1. Input: {{input1}}</span>
+<span class="go">1. Output: {{output1}}</span>
+
+<span class="go">2. Instruction: {{instruction2}}</span>
+<span class="go">2. Input: {{input2}}</span>
+<span class="go">2. Output: {{output2}}</span>
+
+<span class="go">3. Instruction:</span>
+
+<span class="go">-----------------------</span>
+<span class="go">generated prompt</span>
+<span class="go">1. Instruction: Is there anything I can eat for a breakfast that doesn&#39;t include eggs, yet includes protein, and has roughly 700-1000 calories?</span>
+<span class="go">1. Input:</span>
+<span class="go">1. Output: Yes, you can have 1 oatmeal banana protein shake and 4 strips of bacon. The oatmeal banana protein shake may contain 1/2 cup oatmeal, 60 grams whey protein powder, 1/2 medium banana, 1tbsp flaxseed oil and 1/2 cup watter, totalling about 550 calories. The 4 strips of bacon contains about 200 calories.</span>
+
+<span class="go">2. Instruction: What is the relation between the given pairs?</span>
+<span class="go">2. Input: Night : Day :: Right : Left</span>
+<span class="go">2. Output: The relation between the given pairs is that they are opposites.</span>
+
+<span class="go">3. Instruction:</span>
+
+<span class="go">-----------------------</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="building-multiple-prompts-from-a-file">
+<h2>Building multiple prompts from a file<a class="headerlink" href="#building-multiple-prompts-from-a-file" title="Permalink to this heading">#</a></h2>
+<p>There is a chance you might want to use a template to generate multiple prompts, based off of a csv file or a json file.</p>
+<section id="generating-multiple-random-prompts-from-csv">
+<h3>Generating multiple random prompts from csv<a class="headerlink" href="#generating-multiple-random-prompts-from-csv" title="Permalink to this heading">#</a></h3>
+<p>Assuming local <a class="reference internal" href="genai.prompt.quickstart.annexe.html#file-synth-animal-yaml"><span class="std std-ref">synth-animal.yaml</span></a> and <a class="reference internal" href="genai.prompt.quickstart.annexe.html#file-penguins-csv"><span class="std std-ref">penguins.csv</span></a> and files.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">Multiple Prompt Pattern using complete file</span><a class="headerlink" href="#id8" title="Permalink to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">genai.prompt_pattern</span> <span class="kn">import</span> <span class="n">PromptPattern</span>
+
+<span class="n">_path_to_template_file</span> <span class="o">=</span> <span class="s2">&quot;my_templates/synth-animal.yaml&quot;</span>
+<span class="n">_path_to_csv_file</span> <span class="o">=</span> <span class="s2">&quot;my_data/penguins.csv&quot;</span>
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">PromptPattern</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">_path_to_template_file</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Given template:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">prompt</span><span class="p">)</span>
+
+<span class="n">prompt</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;animal&quot;</span><span class="p">,</span> <span class="s2">&quot;penguins&quot;</span><span class="p">)</span>
+<span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;species&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;species1&quot;</span><span class="p">,</span> <span class="s2">&quot;species2&quot;</span><span class="p">,</span> <span class="s2">&quot;species3&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;island&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;location1&quot;</span><span class="p">,</span> <span class="s2">&quot;location2&quot;</span><span class="p">,</span> <span class="s2">&quot;location3&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;flipper_length_mm&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;length1&quot;</span><span class="p">,</span> <span class="s2">&quot;length2&quot;</span><span class="p">,</span> <span class="s2">&quot;length3&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;dob1&quot;</span><span class="p">,</span> <span class="s2">&quot;dob2&quot;</span><span class="p">,</span> <span class="s2">&quot;dob3&quot;</span><span class="p">],</span>
+<span class="p">}</span>
+
+<span class="n">list_of_prompts</span> <span class="o">=</span> <span class="n">prompt</span><span class="o">.</span><span class="n">sub_all_from_csv</span><span class="p">(</span>
+    <span class="n">csv_path</span><span class="o">=</span><span class="n">_path_to_csv_file</span><span class="p">,</span>
+    <span class="n">col_to_var</span><span class="o">=</span><span class="n">mapping</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Assuming local <a class="reference internal" href="genai.prompt.quickstart.annexe.html#file-synth-animal-yaml"><span class="std std-ref">synth-animal.yaml</span></a> and <a class="reference internal" href="genai.prompt.quickstart.annexe.html#file-penguins-csv"><span class="std std-ref">penguins.csv</span></a> and files.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">10 Randomly Generate Prompt Patterns</span><a class="headerlink" href="#id9" title="Permalink to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">genai.prompt_pattern</span> <span class="kn">import</span> <span class="n">PromptPattern</span>
+
+<span class="n">_path_to_template_file</span> <span class="o">=</span> <span class="s2">&quot;my_templates/synth-animal.yaml&quot;</span>
+<span class="n">_path_to_csv_file</span> <span class="o">=</span> <span class="s2">&quot;my_data/penguins.csv&quot;</span>
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">PromptPattern</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">_path_to_template_file</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Given template:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">prompt</span><span class="p">)</span>
+
+<span class="n">prompt</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;animal&quot;</span><span class="p">,</span> <span class="s2">&quot;penguins&quot;</span><span class="p">)</span>
+<span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;species&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;species1&quot;</span><span class="p">,</span> <span class="s2">&quot;species2&quot;</span><span class="p">,</span> <span class="s2">&quot;species3&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;island&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;location1&quot;</span><span class="p">,</span> <span class="s2">&quot;location2&quot;</span><span class="p">,</span> <span class="s2">&quot;location3&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;flipper_length_mm&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;length1&quot;</span><span class="p">,</span> <span class="s2">&quot;length2&quot;</span><span class="p">,</span> <span class="s2">&quot;length3&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;dob1&quot;</span><span class="p">,</span> <span class="s2">&quot;dob2&quot;</span><span class="p">,</span> <span class="s2">&quot;dob3&quot;</span><span class="p">],</span>
+<span class="p">}</span>
+
+<span class="n">list_of_prompts</span> <span class="o">=</span> <span class="n">prompt</span><span class="o">.</span><span class="n">sub_from_csv</span><span class="p">(</span>
+    <span class="n">csv_path</span><span class="o">=</span><span class="n">_path_to_csv_file</span><span class="p">,</span>
+    <span class="n">col_to_var</span><span class="o">=</span><span class="n">mapping</span><span class="p">,</span>
+    <span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;random&quot;</span><span class="p">,</span>
+    <span class="n">n</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="generating-multiple-random-prompts-from-json">
+<h3>Generating multiple random prompts from json<a class="headerlink" href="#generating-multiple-random-prompts-from-json" title="Permalink to this heading">#</a></h3>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">Multiple Prompt Patterns using complete file</span><a class="headerlink" href="#id10" title="Permalink to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">genai.prompt_pattern</span> <span class="kn">import</span> <span class="n">PromptPattern</span>
+
+<span class="n">_path_to_template_file</span> <span class="o">=</span> <span class="s2">&quot;my_templates/instruction.yaml&quot;</span>
+<span class="n">_path_to_json_file</span> <span class="o">=</span> <span class="s2">&quot;my_data/tasks.jsonl&quot;</span>
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">PromptPattern</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">_path_to_template_file</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Given template:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">prompt</span><span class="p">)</span>
+
+<span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;instruction&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;instruction1&quot;</span><span class="p">,</span> <span class="s2">&quot;instruction2&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;input1&quot;</span><span class="p">,</span> <span class="s2">&quot;input2&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;output&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;output1&quot;</span><span class="p">,</span> <span class="s2">&quot;output2&quot;</span><span class="p">],</span>
+<span class="p">}</span>
+
+<span class="n">list_of_prompts</span> <span class="o">=</span> <span class="n">prompt</span><span class="o">.</span><span class="n">sub_all_from_json</span><span class="p">(</span>
+    <span class="n">json_path</span><span class="o">=</span><span class="n">_path_to_json_file</span><span class="p">,</span>
+    <span class="n">key_to_var</span><span class="o">=</span><span class="n">mapping</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">10 Randomly Generated Prompt Patterns</span><a class="headerlink" href="#id11" title="Permalink to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">genai.prompt_pattern</span> <span class="kn">import</span> <span class="n">PromptPattern</span>
+
+<span class="n">_path_to_template_file</span> <span class="o">=</span> <span class="s2">&quot;my_templates/instruction.yaml&quot;</span>
+<span class="n">_path_to_json_file</span> <span class="o">=</span> <span class="s2">&quot;my_data/tasks.jsonl&quot;</span>
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">PromptPattern</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">_path_to_template_file</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Given template:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">prompt</span><span class="p">)</span>
+
+<span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;instruction&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;instruction1&quot;</span><span class="p">,</span> <span class="s2">&quot;instruction2&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;input1&quot;</span><span class="p">,</span> <span class="s2">&quot;input2&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;output&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;output1&quot;</span><span class="p">,</span> <span class="s2">&quot;output2&quot;</span><span class="p">],</span>
+<span class="p">}</span>
+
+<span class="n">list_of_prompts</span> <span class="o">=</span> <span class="n">prompt</span><span class="o">.</span><span class="n">sub_from_json</span><span class="p">(</span>
+    <span class="n">json_path</span><span class="o">=</span><span class="n">_path_to_json_file</span><span class="p">,</span>
+    <span class="n">key_to_var</span><span class="o">=</span><span class="n">mapping</span><span class="p">,</span>
+    <span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;random&quot;</span><span class="p">,</span>
+    <span class="n">n</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="genai.prompt.quickstart.annexe.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Annexe</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="genai.prompt.quickstart.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Quick Start</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023, IBM Research
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Basic Concepts</a><ul>
+<li><a class="reference internal" href="#creating-a-simple-prompt-from-a-template">Creating a simple prompt from a template</a><ul>
+<li><a class="reference internal" href="#from-string">From string</a></li>
+<li><a class="reference internal" href="#from-file">From file</a></li>
+<li><a class="reference internal" href="#from-a-url">From a URL</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#template-substitutions-using-data-from-file">Template substitutions using data from file</a><ul>
+<li><a class="reference internal" href="#from-csv">From csv</a></li>
+<li><a class="reference internal" href="#from-json-and-jsonl">From json and jsonl</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#building-multiple-prompts-from-a-file">Building multiple prompts from a file</a><ul>
+<li><a class="reference internal" href="#generating-multiple-random-prompts-from-csv">Generating multiple random prompts from csv</a></li>
+<li><a class="reference internal" href="#generating-multiple-random-prompts-from-json">Generating multiple random prompts from json</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    </body>
+</html>
