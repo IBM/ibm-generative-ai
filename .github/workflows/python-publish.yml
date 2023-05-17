@@ -24,7 +24,6 @@ jobs:
         python -m pip install -e ".[dev]"
     - name: Version and package
       run: |
-        git update-index --skip-worktree src/bampy/_version.py
         pip wheel -w dist -e . --no-deps
     - name: Publish package
       uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
