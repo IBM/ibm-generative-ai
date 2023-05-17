@@ -27,7 +27,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install -e ".[dev]"
-    - name: Build docs
+    - name: Build documentation
       run: |
         make -C documentation/docs html
         touch documentation/docs/build/html/.nojekyll
