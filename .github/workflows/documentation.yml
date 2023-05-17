@@ -29,11 +29,14 @@ jobs:
         python -m pip install -e ".[dev]"
     - name: Build docs
       run: |
-        make -C documentation/docs _site
+        make -C documentation/docs html
+        touch documentation/docs/build/html/.nojekyll
     - name: Setup Pages
       uses: actions/configure-pages@v3
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v1
+      with:
+        path: "documentation/docs/build/html"
   # Deployment job
   deploy:
     environment:
