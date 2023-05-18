@@ -26,7 +26,7 @@ jobs:
       run: |
         pip wheel -w dist -e . --no-deps
     - name: Publish package
-      uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
+      uses: pypa/gh-action-pypi-publish@f9ed8ba9ad06d20b1ebb6002ffb93050ed9a1951
       with:
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
