@@ -4,6 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ibm-generative-ai"
+dynamic = ["version"]
 authors = [
   {name="Lee Martie", email="lee.martie@ibm.com"},
   {name="Ana Fucs", email="ana.fucs@ibm.com"},
