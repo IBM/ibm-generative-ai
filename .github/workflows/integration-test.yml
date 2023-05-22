@@ -13,6 +13,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    environment: integration-tests
     strategy:
       fail-fast: false
       matrix:
