@@ -30,10 +30,10 @@ class Metadata:
         """
 
         try:
-            tou_response = self.service.terms_of_use()
+            tou_response = self.service.terms_of_use(True)
 
             if tou_response.status_code == 200:
-                tou_data = TermsOfUse(**tou_response.json()["data"])
+                tou_data = TermsOfUse(**tou_response.json())
                 return tou_data
             else:
                 raise GenAiException(tou_response)

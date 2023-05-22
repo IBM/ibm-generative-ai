@@ -19,21 +19,21 @@ class TestServiceInterface:
     def params(seld):
         return GenerateParams(decoding_method="greedy", temperature=0.8, return_options=ReturnOptions(input_text=True))
 
-    @patch("genai.services.RequestHandler.post")
+    @patch("genai.services.RequestHandler.patch")
     def test_tou(self, mocked_post_request):
         expected_resp = SimpleResponse.terms_of_use()
         expected = MagicMock(status_code=200, json=expected_resp)
         mocked_post_request.return_value = expected
 
-        resp = self.service.terms_of_use()
+        resp = self.service.terms_of_use(True)
 
         assert resp == expected
         assert resp.status_code == 200
 
-    @patch("genai.services.RequestHandler.post", side_effect=Exception("some general error"))
+    @patch("genai.services.RequestHandler.patch", side_effect=Exception("some general error"))
     def test_tou_exception(self, mock):
         with pytest.raises(BaseException, match="some general error"):
-            self.service.terms_of_use()
+            self.service.terms_of_use(True)
 
     def test_sanitize_params(self, params):
         new_dict = ServiceInterface._sanitize_params(params=params)

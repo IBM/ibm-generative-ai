@@ -72,4 +72,4 @@ class TestSchemas:
         self._validate_extra_field(history_example["results"][0]["request"], HistoryResultRequest)
 
         tou_example = SimpleResponse.terms_of_use()
-        self._validate_extra_field(tou_example["data"], TermsOfUse)
+        self._validate_extra_field(tou_example, TermsOfUse)
