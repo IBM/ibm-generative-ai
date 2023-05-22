@@ -10,8 +10,7 @@ on:
     - cron: '15 * * * *'
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
     environment: integration-tests
     strategy:
@@ -30,4 +29,7 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install -e ".[dev]"
     - name: Run integration tests
+      env:
+        WATSONX_API_ENDPOINT: ${{ vars.WATSONX_API_ENDPOINT }}
+        WATSONX_API_KEY: ${{ secrets.WATSONX_API_KEY }}
       run: pytest -m integration --no-cov
