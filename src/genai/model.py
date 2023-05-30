@@ -21,6 +21,8 @@ logger = logging.getLogger(__name__)
 
 
 class Model:
+    _accessors = set()
+
     def __init__(self, model: ModelType, params: Union[GenerateParams, TokenParams], credentials: Credentials):
         """Instantiates the Model Interface
 
