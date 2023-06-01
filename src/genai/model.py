@@ -137,6 +137,8 @@ class Model:
             ordered (bool): Whether the responses should be returned in-order.
             callback (Callable[[GenerateResult], Any]): Optional callback
                 to be called after generating result for a prompt.
+            hide_progressbar: boolean flag to hide or show a progress bar.
+                By defaul bar will be always shown.
 
         Returns:
             Generator[Union[GenerateResult, None]]: A list of results
