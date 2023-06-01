@@ -24,7 +24,8 @@ dependencies = [
     "aiohttp>=3.8.4",
     "pyyaml>=0.2.5",
     "httpx>=0.24.0",
-    "aiolimiter>=1.0.0"
+    "aiolimiter>=1.0.0",
+    "tqdm>=4.65.0"
 ]
 requires-python = ">=3.9"
 
