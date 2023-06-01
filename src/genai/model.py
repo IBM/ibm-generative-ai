@@ -3,6 +3,8 @@ import logging
 from collections.abc import Generator
 from typing import Any, Callable, Union
 
+from tqdm import tqdm
+
 from genai.credentials import Credentials
 from genai.exceptions import GenAiException
 from genai.metadata import Metadata
@@ -121,6 +123,7 @@ class Model:
         prompts: Union[list[str], list[PromptPattern]],
         ordered: bool = False,
         callback: Callable[[GenerateResult], Any] = None,
+        hide_progressbar: bool = False,
     ) -> Generator[Union[GenerateResult, None]]:
         """The generate endpoint is the centerpiece of the GENAI alpha.
         It provides a simplified and flexible, yet powerful interface to the supported
@@ -147,7 +150,13 @@ class Model:
             with AsyncResponseGenerator(
                 self.model, prompts, self.params, self.service, ordered=ordered, callback=callback
             ) as asynchelper:
-                for response in asynchelper.generate_response():
+                for response in tqdm(
+                    asynchelper.generate_response(),
+                    total=len(prompts),
+                    desc="Progress",
+                    unit=" inputs",
+                    disable=hide_progressbar,
+                ):
                     yield response
         except GenAiException as me:
             raise me
