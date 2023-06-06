@@ -11,7 +11,7 @@ try:
     from fastapi.responses import JSONResponse
     from starlette.middleware.base import BaseHTTPMiddleware
 except ImportError as iex:
-    raise ImportError(f"Could not import {iex.name}: Please install ibm-bampy[localserver] extension.")
+    raise ImportError(f"Could not import {iex.name}: Please install ibm-generative-ai[localserver] extension.")
 
 
 from genai import Credentials

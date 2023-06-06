@@ -2,7 +2,6 @@ import logging
 
 import pytest
 
-from genai.extensions.localserver import CustomModel, LocalLLMServer
 from genai.model import Model
 from genai.schemas import GenerateParams, GenerateResult, TokenizeResult, TokenParams
 
@@ -10,37 +9,40 @@ logger = logging.getLogger(__name__)
 
 
 # Test implmentation of CustomModel class
-class ExampleModel(CustomModel):
-    model_id = "example/model"
-
-    def __init__(self):
-        logger.info("Initialising my custom model")
-
-    def generate(self, input_text: str, params: GenerateParams) -> GenerateResult:
-        logger.info(f"Calling generate on: {input_text}")
-
-        bam_response = GenerateResult(
-            generated_text=input_text,
-            generated_token_count=len(input_text.split(" ")),
-            input_token_count=len(input_text.split(" ")),
-            stop_reason="",
-        )
-        logger.info(f"Response to {input_text} was: {bam_response}")
-
-        return bam_response
-
-    def tokenize(self, input_text: str, params: TokenParams) -> TokenizeResult:
-        logger.info(f"Calling tokenize on: {input_text}")
-        tokens = input_text.split(" ")
-        result = TokenizeResult(token_count=len(tokens))
-        if params.return_tokens is True:
-            result.tokens = tokens
-        return result
 
 
 @pytest.mark.localserver
 class TestLocalServer:
     def test_local_server(self):
+        from genai.extensions.localserver import CustomModel, LocalLLMServer
+
+        class ExampleModel(CustomModel):
+            model_id = "example/model"
+
+            def __init__(self):
+                logger.info("Initialising my custom model")
+
+            def generate(self, input_text: str, params: GenerateParams) -> GenerateResult:
+                logger.info(f"Calling generate on: {input_text}")
+
+                genai_response = GenerateResult(
+                    generated_text=input_text,
+                    generated_token_count=len(input_text.split(" ")),
+                    input_token_count=len(input_text.split(" ")),
+                    stop_reason="",
+                )
+                logger.info(f"Response to {input_text} was: {genai_response}")
+
+                return genai_response
+
+            def tokenize(self, input_text: str, params: TokenParams) -> TokenizeResult:
+                logger.info(f"Calling tokenize on: {input_text}")
+                tokens = input_text.split(" ")
+                result = TokenizeResult(token_count=len(tokens))
+                if params.return_tokens is True:
+                    result.tokens = tokens
+                return result
+
         # Instansiate the Local Server with your model
         server = LocalLLMServer(models=[ExampleModel])
         # Start the server and execute your code

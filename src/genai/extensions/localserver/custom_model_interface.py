@@ -7,7 +7,7 @@ class CustomModel(ABC):
     @property
     def model_id(self):
         """Model ID
-        This is the ID that you would use when defining the model you want to use in bampy
+        This is the ID that you would use when defining the model you want to use in genai
 
         example: "google/flan-t5-base"
 

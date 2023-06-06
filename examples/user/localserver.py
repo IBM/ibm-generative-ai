@@ -27,15 +27,15 @@ class FlanT5Model(CustomModel):
         input_ids = self.tokenizer(input_text, return_tensors="pt").input_ids
         response = self.model.generate(input_ids, max_new_tokens=params.max_new_tokens)
 
-        bam_response = GenerateResult(
+        genai_response = GenerateResult(
             generated_text=self.tokenizer.decode(response[0]),
             generated_token_count=response.shape[1],
             input_token_count=input_ids.shape[1],
             stop_reason="",
         )
-        logger.info(f"Response to {input_text} was: {bam_response}")
+        logger.info(f"Response to {input_text} was: {genai_response}")
 
-        return bam_response
+        return genai_response
 
     def tokenize(self, input_text: str, params: TokenParams) -> TokenizeResult:
         logger.info(f"Calling tokenize on: {input_text}")
