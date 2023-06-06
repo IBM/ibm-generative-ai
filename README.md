@@ -3,7 +3,11 @@
 
 This is the Python SDK for IBM Foundation Models Studio to bring IBM Generative AI into Python programs and to also extend it with useful operations and types.
 
+:books:	API Documentation: [Link](https://ibm.github.io/ibm-generative-ai/)
+
 *This is an early access library and requires invitation to use the technical preview of [watsonx.ai](https://watsonx.ai/). You can join the waitlist by visiting. https://www.ibm.com/products/watsonx-ai.*
+
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/IBM/ibm-generative-ai/blob/main/LICENSE)
 
 ## <a name='TableofContents'></a>Table of Contents
 
@@ -21,6 +25,7 @@ This is the Python SDK for IBM Foundation Models Studio to bring IBM Generative 
 * [Extensions](#extensions)
     * [LangChain Extension](#langchain-extension)
 * [Support](#support)
+* [API Documentation](#APIDocumentation)
 * [Contribution Guide](#contribution-guide)
 * [Authors](#authors)
 
@@ -298,6 +303,10 @@ Model types can be imported from the [ModelType class](src/genai/schemas/models.
 ## <a name='Support'></a>Support
 
 Need help? Check out how to get [support](SUPPORT.md)
+
+## <a name='APIDocumentation'></a>API Documentation
+
+Read our Python API documentation [here](https://ibm.github.io/ibm-generative-ai/).
 
 ## <a name='ContributionGuide'></a>Contribution Guide
 
