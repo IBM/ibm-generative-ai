@@ -13,7 +13,6 @@ from genai.utils.search_space_params import grid_search_generate_params
 
 load_dotenv()
 API_KEY = os.getenv("GENAI_KEY", None)
-ENDPOINT = os.getenv("GENAI_API", None)
 
 print("\n------------- Example (String Replacement)-------------\n")
 
@@ -28,7 +27,7 @@ my_space_params = {
     "top_p": [1],
 }
 
-creds = Credentials(api_key=API_KEY, api_endpoint=ENDPOINT)
+creds = Credentials(api_key=API_KEY)
 
 greeting1 = "Hello! How are you?"
 greeting2 = "I am fine and you?"

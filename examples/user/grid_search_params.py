@@ -13,7 +13,6 @@ from genai.utils.search_space_params import grid_search_generate_params
 
 load_dotenv()
 API_KEY = os.getenv("GENAI_KEY", None)
-ENDPOINT = os.getenv("GENAI_API", None)
 
 
 print("\n------------- Example (String Replacement)-------------\n")
@@ -27,7 +26,7 @@ my_space_params = {
     "temperature": [0.7, 0.8, 0.9, 1.5],
 }
 
-creds = Credentials(api_key=API_KEY, api_endpoint=ENDPOINT)
+creds = Credentials(api_key=API_KEY)
 pt = PromptPattern.from_str("The capital of {{country}} is {{capital}}. The capital of Taiwan is")
 pt.sub("capital", "Madrid").sub("country", "Spain")
 
