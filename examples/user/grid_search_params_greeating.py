@@ -14,6 +14,7 @@ from genai.utils.search_space_params import grid_search_generate_params
 load_dotenv()
 API_KEY = os.getenv("GENAI_KEY", None)
 
+
 print("\n------------- Example (String Replacement)-------------\n")
 
 # use the dictionary to define the search space, keep the keys as
