@@ -114,7 +114,16 @@ class SimpleResponse:
 
     @staticmethod
     def terms_of_use(**kwargs):
-        response = {"data": {"tou_accepted": True, "tou_accepted_at": "2022-12-12T18:51:53.000Z"}}
+        response = {
+            "results": {
+                "tou_accepted": True,
+                "tou_accepted_at": "2022-12-12T18:51:53.000Z",
+                "firstName": "Thomas",
+                "lastName": "Watson",
+                "data_usage_consent": True,
+                "generate_default": None,
+            }
+        }
         return response
 
     @staticmethod

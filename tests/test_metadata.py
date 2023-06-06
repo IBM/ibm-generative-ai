@@ -26,7 +26,7 @@ class TestMetadata:
         model_meta = Metadata(creds)
 
         tou_response = model_meta.accept_terms_of_use()
-        original_tou = TermsOfUse(**TOU_RESPONSE["data"])
+        original_tou = TermsOfUse(**TOU_RESPONSE)
         assert tou_response == original_tou
 
     @patch("genai.services.ServiceInterface.history")

@@ -47,9 +47,17 @@ class GenAiResponseModel(BaseModel, extra=Extra.allow):
     _extra_fields_warning = root_validator(allow_reuse=True)(alert_extra_fields_validator)
 
 
-class TermsOfUse(GenAiResponseModel):
+class TermsOfUseResult(GenAiResponseModel):
     tou_accepted: bool
     tou_accepted_at: datetime
+    firstName: str
+    lastName: str
+    data_usage_consent: bool = False
+    generate_default: dict = None
+
+
+class TermsOfUse(GenAiResponseModel):
+    results: TermsOfUseResult
 
 
 class GeneratedToken(GenAiResponseModel):

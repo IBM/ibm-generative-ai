@@ -108,19 +108,19 @@ class TestServiceInterfaceAsync:
 
     # TOU ASYNC
     @pytest.mark.asyncio
-    @patch("genai.services.RequestHandler.async_post")
+    @patch("genai.services.RequestHandler.async_patch")
     async def test_tou_async_api_call(self, mock: AsyncMock):
         expected_resp = SimpleResponse.terms_of_use()
         expected = AsyncMock(status_code=200, json=expected_resp)
 
         mock.return_value = expected
-        resp = await self.service.async_terms_of_use()
+        resp = await self.service.async_terms_of_use(True)
 
         assert resp == expected
         assert resp.status_code == 200
 
     @pytest.mark.asyncio
-    @patch("genai.services.RequestHandler.async_post", side_effect=Exception("oh no no"))
+    @patch("genai.services.RequestHandler.async_patch", side_effect=Exception("oh no no"))
     async def test_tou_async_with_exception(self, mock):
-        with pytest.raises(GenAiException, match="oh no no"):
-            await self.service.async_terms_of_use()
+        with pytest.raises(BaseException, match="oh no no"):
+            await self.service.async_terms_of_use(False)
