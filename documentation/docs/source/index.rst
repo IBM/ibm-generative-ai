@@ -1,17 +1,9 @@
-|genai| GENAI
+GENAI
 ==================================
 
-.. |genai| image:: _static/bam_pie.svg
-    :width: 60
-    :alt: GENAI!
+This is the Python SDK for IBM Foundation Models Studio to bring IBM Generative AI into Python programs and to also extend it with useful operations and types.
 
-GENAI (pronounced "GEN AI") is a Python library built on the REST interface of GENAI to bring GENAI into Python programs and to also extend GENAI with useful operations and types.
-
-.. note::
-
-    This project is under active development.
-
-    |:round_pushpin:| Comments? Ideas? Suggestions? `Please fill out this form! <https://airtable.com/shrUO9mmRjhpJWzTC>`_  |:round_pushpin:|
+This is an early access library and requires invitation to use the technical preview of `watsonx.ai <https://watsonx.ai/>`_. You can join the waitlist by visiting https://www.ibm.com/products/watsonx-ai.
 
 
 .. toctree::
