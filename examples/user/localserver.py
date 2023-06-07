@@ -1,12 +1,22 @@
 import logging
 
 # Import the ibm-generative-ai library and local server extension
-# pip install torch
-from transformers import T5ForConditionalGeneration, T5Tokenizer
-
 from genai.extensions.localserver import CustomModel, LocalLLMServer
 from genai.model import Model
 from genai.schemas import GenerateParams, GenerateResult, TokenizeResult, TokenParams
+
+# This example uses the transformers library, please install using:
+# pip install transformers
+try:
+    from transformers import T5ForConditionalGeneration, T5Tokenizer
+except ImportError:
+    raise ImportError(
+        """
+Could not import transformers which is needed for this example.
+Please install using pip install transformers.
+"""
+    )
+
 
 logger = logging.getLogger(__name__)
 
