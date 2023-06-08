@@ -52,10 +52,14 @@ huggingface = [
 pandas = [
   "pandas>=2.0.0"
 ]
+localserver = [
+  "uvicorn>=0.21.1",
+  "fastapi>=0.95.1"
+]
 
 # As new extensions are added, they should also be added
 all = [
-  "ibm-generative-ai[langchain, pandas, huggingface]"
+  "ibm-generative-ai[langchain, pandas, huggingface, localserver]"
 ]
 
 [options]
@@ -75,7 +79,8 @@ markers = [
     "integration: tests that require the GENAI API to run",
     "langchain: tests for langchain extension",
     "pandas: tests for pandas extension",
-    "huggingface: tests for huggingface extension"
+    "huggingface: tests for huggingface extension",
+    "localserver: tests for the localserver extension"
 ]
 env_files = [
     ".test.env"
