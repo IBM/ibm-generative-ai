@@ -6,14 +6,14 @@ from genai.model import Model
 from genai.schemas import GenerateParams, GenerateResult, TokenizeResult, TokenParams
 
 # This example uses the transformers library, please install using:
-# pip install transformers
+# pip install transformers torch sentencepiece
 try:
     from transformers import T5ForConditionalGeneration, T5Tokenizer
 except ImportError:
     raise ImportError(
         """
 Could not import transformers which is needed for this example.
-Please install using pip install transformers.
+Please install using: pip install transformers torch sentencepiece
 """
     )
 
