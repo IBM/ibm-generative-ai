@@ -16,13 +16,11 @@ except ImportError as iex:
 
 from genai import Credentials
 from genai.extensions.localserver.custom_model_interface import CustomModel
-from genai.schemas.responses import (
-    ErrorResponse,
+from genai.extensions.localserver.schemas import (
     GenerateRequestBody,
-    GenerateResponse,
     TokenizeRequestBody,
-    TokenizeResponse,
 )
+from genai.schemas.responses import ErrorResponse, GenerateResponse, TokenizeResponse
 
 logger = logging.getLogger(__name__)
 

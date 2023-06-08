@@ -7,7 +7,6 @@ from pydantic import BaseModel, Extra, root_validator
 
 from genai.schemas.generate_params import GenerateParams
 from genai.schemas.models import ModelType
-from genai.schemas.token_params import TokenParams
 
 logger = logging.getLogger(__name__)
 
@@ -61,12 +60,6 @@ class TermsOfUse(GenAiResponseModel):
     results: TermsOfUseResult
 
 
-class GenerateRequestBody(GenAiResponseModel):
-    model_id: str
-    inputs: list[str]
-    parameters: GenerateParams
-
-
 class GeneratedToken(GenAiResponseModel):
     logprob: Optional[float]
     text: Optional[str]
@@ -96,12 +89,6 @@ class GenerateStreamResponse(GenAiResponseModel):
     generated_tokens: Optional[list[GeneratedToken]]
     input_text: Optional[str]
     seed: Optional[int]
-
-
-class TokenizeRequestBody(GenAiResponseModel):
-    model_id: str
-    inputs: list[str]
-    parameters: TokenParams
 
 
 class TokenizeResult(GenAiResponseModel):
