@@ -1,6 +1,7 @@
 import logging
 
 import httpx
+from httpx import Response
 
 from genai._version import version
 from genai.services.connection_manager import ConnectionManager
@@ -12,7 +13,13 @@ __all__ = ["RequestHandler"]
 
 class RequestHandler:
     @staticmethod
-    def _metadata(method: str, key: str, model_id: str = None, inputs: list = None, parameters: dict = None):
+    def _metadata(
+        method: str,
+        key: str,
+        model_id: str = None,
+        inputs: list = None,
+        parameters: dict = None,
+    ) -> tuple[dict, dict]:
         """General function to build header and/or json_data for /post and /get requests.
 
         Args:
@@ -23,20 +30,17 @@ class RequestHandler:
             parameters (dict, optional): Key-value pairs for model parameters. Defaults to None.
 
         Returns:
-            dict,dict: Headers, json_data for request
+            tuple[dict,dict]: Headers, json_data for request
         """
 
-        if method == "GET":
-            return {"Authorization": f"Bearer {key}"}
+        headers = {
+            "Authorization": f"Bearer {key}",
+            "x-request-origin": f"python-sdk/{version}",
+        }
+        json_data = {}
 
-        elif method == "POST":
-            headers = {
-                "Content-Type": "application/json",
-                "Authorization": f"Bearer {key}",
-                "x-request-origin": f"python-sdk/{version}",
-            }
-
-            json_data = {}
+        if method == "POST":
+            headers["Content-Type"] = "application/json"
 
             if model_id is not None:
                 json_data["model_id"] = model_id
@@ -47,10 +51,19 @@ class RequestHandler:
             if parameters is not None:
                 json_data["parameters"] = parameters
 
-            return headers, json_data
+        if method == "PATCH":
+            headers["Content-Type"] = "application/json"
+
+        return headers, json_data
 
     @staticmethod
-    async def async_post(endpoint: str, key: str, model_id: str = None, inputs: list = None, parameters: dict = None):
+    async def async_post(
+        endpoint: str,
+        key: str,
+        model_id: str = None,
+        inputs: list = None,
+        parameters: dict = None,
+    ):
         """Low level API for async /post request to REST API.
 
         Args:
@@ -61,10 +74,14 @@ class RequestHandler:
             parameters (dict, optional): Key-value pairs for model parameters. Defaults to None.
 
         Returns:
-            requests.models.Response: Response from the REST API.
+            httpx.Response: Response from the REST API.
         """
         headers, json_data = RequestHandler._metadata(
-            method="POST", key=key, model_id=model_id, inputs=inputs, parameters=parameters
+            method="POST",
+            key=key,
+            model_id=model_id,
+            inputs=inputs,
+            parameters=parameters,
         )
         response = None
         async with httpx.AsyncClient(timeout=ConnectionManager.TIMEOUT) as client:
@@ -72,8 +89,32 @@ class RequestHandler:
         return response
 
     @staticmethod
+    async def async_patch(endpoint: str, key: str, json_data: dict = None) -> Response:
+        """Low level API for /patch request to REST API.
+
+        Currently only used for TOU endpoint.
+
+        Args:
+            endpoint (str):
+            key (str)
+            payload: (dict, optional)
+
+        Returns:
+            httpx.Response: Response from the REST API.
+        """
+        headers, json_data = RequestHandler._metadata(method="PATCH", key=key)
+        response = None
+        async with httpx.AsyncClient(timeout=ConnectionManager.TIMEOUT) as client:
+            response = await client.patch(endpoint, headers=headers, json=json_data)
+        return response
+
+    @staticmethod
     async def async_generate(
-        endpoint: str, key: str, model_id: str = None, inputs: list = None, parameters: dict = None
+        endpoint: str,
+        key: str,
+        model_id: str = None,
+        inputs: list = None,
+        parameters: dict = None,
     ):
         """Low level API for async /generate request to REST API.
 
@@ -85,17 +126,25 @@ class RequestHandler:
             parameters (dict, optional): Key-value pairs for model parameters. Defaults to None.
 
         Returns:
-            requests.models.Response: Response from the REST API.
+            httpx.Response: Response from the REST API.
         """
         headers, json_data = RequestHandler._metadata(
-            method="POST", key=key, model_id=model_id, inputs=inputs, parameters=parameters
+            method="POST",
+            key=key,
+            model_id=model_id,
+            inputs=inputs,
+            parameters=parameters,
         )
         response = await ConnectionManager.async_generate_client.post(endpoint, headers=headers, json=json_data)
         return response
 
     @staticmethod
     async def async_tokenize(
-        endpoint: str, key: str, model_id: str = None, inputs: list = None, parameters: dict = None
+        endpoint: str,
+        key: str,
+        model_id: str = None,
+        inputs: list = None,
+        parameters: dict = None,
     ):
         """Low level API for async /tokenize request to REST API.
 
@@ -107,10 +156,14 @@ class RequestHandler:
             parameters (dict, optional): Key-value pairs for model parameters. Defaults to None.
 
         Returns:
-            requests.models.Response: Response from the REST API.
+            httpx.Response: Response from the REST API.
         """
         headers, json_data = RequestHandler._metadata(
-            method="POST", key=key, model_id=model_id, inputs=inputs, parameters=parameters
+            method="POST",
+            key=key,
+            model_id=model_id,
+            inputs=inputs,
+            parameters=parameters,
         )
         response = None
         for _ in range(0, ConnectionManager.MAX_RETRIES_TOKENIZE):
@@ -133,9 +186,9 @@ class RequestHandler:
             parameters (dict, optional): Key-value pairs for model parameters. Defaults to None.
 
         Returns:
-            requests.models.Response: Response from the REST API.
+            httpx.Response: Response from the REST API.
         """
-        headers = RequestHandler._metadata(method="GET", key=key)
+        headers, _ = RequestHandler._metadata(method="GET", key=key)
 
         async with httpx.AsyncClient(timeout=ConnectionManager.TIMEOUT) as client:
             response = await client.get(url=endpoint, headers=headers, params=parameters)
@@ -160,10 +213,16 @@ class RequestHandler:
             parameters (dict, optional): Key-value pairs for model parameters. Defaults to None.
 
         Returns:
-            requests.models.Response: Response from the REST API.
+            httpx.Response: Response from the REST API.
+            or
+            Generator of streamed response payloads from the REST API.
         """
         headers, json_data = RequestHandler._metadata(
-            method="POST", key=key, model_id=model_id, inputs=inputs, parameters=parameters
+            method="POST",
+            key=key,
+            model_id=model_id,
+            inputs=inputs,
+            parameters=parameters,
         )
 
         if streaming:
@@ -174,6 +233,26 @@ class RequestHandler:
                 return response
 
     @staticmethod
+    def patch(endpoint: str, key: str, json_data: dict = None) -> Response:
+        """Low level API for /patch request to REST API.
+
+        Currently only used for TOU endpoint.
+
+        Args:
+            endpoint (str):
+            key (str)
+            payload: (dict, optional)
+
+        Returns:
+            httpx.Response: Response from the REST API.
+        """
+        headers, json_data = RequestHandler._metadata(method="PATCH", key=key)
+
+        with httpx.Client(timeout=ConnectionManager.TIMEOUT) as s:
+            response = s.patch(url=endpoint, headers=headers, json=json_data)
+            return response
+
+    @staticmethod
     def post_stream(endpoint, headers, json_data):
         with httpx.Client(timeout=ConnectionManager.TIMEOUT) as s:
             with s.stream(method="POST", url=endpoint, headers=headers, json=json_data) as r:
@@ -181,7 +260,7 @@ class RequestHandler:
                     yield chunk
 
     @staticmethod
-    def get(endpoint: str, key: str, parameters: dict = None):
+    def get(endpoint: str, key: str, parameters: dict = None) -> Response:
         """Low level API for /get request to REST API.
 
         Args:
@@ -190,9 +269,9 @@ class RequestHandler:
             parameters (dict, optional): Key-value pairs for model parameters. Defaults to None.
 
         Returns:
-            requests.models.Response: Response from the REST API.
+            httpx.Response: Response from the REST API.
         """
-        headers = RequestHandler._metadata(method="GET", key=key)
+        headers, _ = RequestHandler._metadata(method="GET", key=key)
         with httpx.Client(timeout=ConnectionManager.TIMEOUT) as s:
             response = s.get(url=endpoint, headers=headers, params=parameters)
             return response

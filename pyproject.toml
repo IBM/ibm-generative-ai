@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ibm-generative-ai"
-version = "0.1.14"
+dynamic = ["version"]
 authors = [
   {name="Lee Martie", email="lee.martie@ibm.com"},
   {name="Ana Fucs", email="ana.fucs@ibm.com"},
@@ -24,7 +24,8 @@ dependencies = [
     "aiohttp>=3.8.4",
     "pyyaml>=0.2.5",
     "httpx>=0.24.0",
-    "aiolimiter>=1.0.0"
+    "aiolimiter>=1.0.0",
+    "tqdm>=4.65.0"
 ]
 requires-python = ">=3.9"
 
@@ -51,10 +52,14 @@ huggingface = [
 pandas = [
   "pandas>=2.0.0"
 ]
+localserver = [
+  "uvicorn>=0.21.1",
+  "fastapi>=0.95.1"
+]
 
 # As new extensions are added, they should also be added
 all = [
-  "ibm-generative-ai[langchain, pandas, huggingface]"
+  "ibm-generative-ai[langchain, pandas, huggingface, localserver]"
 ]
 
 [options]
@@ -74,7 +79,8 @@ markers = [
     "integration: tests that require the GENAI API to run",
     "langchain: tests for langchain extension",
     "pandas: tests for pandas extension",
-    "huggingface: tests for huggingface extension"
+    "huggingface: tests for huggingface extension",
+    "localserver: tests for the localserver extension"
 ]
 env_files = [
     ".test.env"

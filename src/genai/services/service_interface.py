@@ -1,3 +1,5 @@
+from httpx import Response
+
 from genai.exceptions import GenAiException
 from genai.schemas import GenerateParams, HistoryParams, TokenParams
 from genai.services import RequestHandler
@@ -20,7 +22,13 @@ class ServiceInterface:
         self.service_url = service_url.rstrip("/")
         self.key = api_key
 
-    def generate(self, model: str, inputs: list, params: GenerateParams = None, streaming: bool = False):
+    def generate(
+        self,
+        model: str,
+        inputs: list,
+        params: GenerateParams = None,
+        streaming: bool = False,
+    ):
         """Generate a completion text for the given model, inputs, and params.
 
         Args:
@@ -35,7 +43,12 @@ class ServiceInterface:
             params = ServiceInterface._sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.GENERATE
             return RequestHandler.post(
-                endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params, streaming=streaming
+                endpoint,
+                key=self.key,
+                model_id=model,
+                inputs=inputs,
+                parameters=params,
+                streaming=streaming,
             )
         except Exception as e:
             raise GenAiException(e)
@@ -74,15 +87,24 @@ class ServiceInterface:
         except Exception as e:
             raise GenAiException(e)
 
-    def terms_of_use(self):
-        """Get terms of use.
+    def terms_of_use(self, accept: bool) -> Response:
+        """Accept the API Terms of Use
+
+        Args:
+            accept (bool): If the user accepts the TOU
+
+        Raises:
+            GenAiException: A general GenAI exception if there is an issue
+                with the request
 
         Returns:
-            Any: json for terms of use.
+            httpx.Response: Response from REST API
         """
+        tou_payload = {"tou_accepted": accept}
+
         try:
             endpoint = self.service_url + ServiceInterface.TOU
-            return RequestHandler.post(endpoint, key=self.key)
+            return RequestHandler.patch(endpoint, key=self.key, json_data=tou_payload)
         except Exception as e:
             raise GenAiException(e)
 
@@ -146,15 +168,24 @@ class ServiceInterface:
         except Exception as e:
             raise GenAiException(e)
 
-    async def async_terms_of_use(self):
-        """Get terms of use.
+    def async_terms_of_use(self, accept: bool) -> Response:
+        """Accept the API Terms of Use
+
+        Args:
+            accept (bool): If the user accepts the TOU
+
+        Raises:
+            GenAiException: A general GenAI exception if there is an issue
+                with the request
 
         Returns:
-            Any: json for terms of use.
+            httpx.Response: Response from REST API
         """
+        tou_payload = {"tou_accepted": accept}
+
         try:
             endpoint = self.service_url + ServiceInterface.TOU
-            return await RequestHandler.async_post(endpoint, key=self.key)
+            return RequestHandler.async_patch(endpoint, key=self.key, json_data=tou_payload)
         except Exception as e:
             raise GenAiException(e)
 

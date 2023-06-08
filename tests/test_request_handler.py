@@ -34,7 +34,7 @@ class TestRequestHandler:
         }
 
     def test_metadata_get(self):
-        headers = RequestHandler._metadata(method="GET", key="API_KEY")
+        headers, _ = RequestHandler._metadata(method="GET", key="API_KEY")
 
         assert "Authorization" in headers
         assert headers["Authorization"] == "Bearer API_KEY"

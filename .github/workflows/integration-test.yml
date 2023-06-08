@@ -1,0 +1,35 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Integration Tests
+
+on:
+  push:
+    branches: [ "main", "develop"  ]
+  schedule:
+    - cron: '15 * * * *'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment: integration-tests
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install -e ".[dev]"
+    - name: Run integration tests
+      env:
+        WATSONX_API_ENDPOINT: ${{ vars.WATSONX_API_ENDPOINT }}
+        WATSONX_API_KEY: ${{ secrets.WATSONX_API_KEY }}
+      run: pytest -m integration --no-cov
