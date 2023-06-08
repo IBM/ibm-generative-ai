@@ -1,6 +1,8 @@
 from httpx import Response
 
 from genai.exceptions import GenAiException
+from genai.options import Options
+from genai.routers import PromptTemplatingRouter
 from genai.schemas import GenerateParams, HistoryParams, TokenParams
 from genai.services import RequestHandler
 
@@ -21,13 +23,10 @@ class ServiceInterface:
         """
         self.service_url = service_url.rstrip("/")
         self.key = api_key
+        self._prompt_templating = PromptTemplatingRouter(service_url=service_url, api_key=api_key)
 
     def generate(
-        self,
-        model: str,
-        inputs: list,
-        params: GenerateParams = None,
-        streaming: bool = False,
+        self, model: str, inputs: list, params: GenerateParams = None, streaming: bool = False, options: Options = None
     ):
         """Generate a completion text for the given model, inputs, and params.
 
@@ -35,6 +34,8 @@ class ServiceInterface:
             model (str): Model id.
             inputs (list): List of inputs.
             params (GenerateParams, optional): Parameters for generation. Defaults to None.
+            streaming (bool, optional): Streaming response flag. Defaults to False.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Returns:
             Any: json from querying for text completion.
@@ -49,6 +50,7 @@ class ServiceInterface:
                 inputs=inputs,
                 parameters=params,
                 streaming=streaming,
+                options=options,
             )
         except Exception as e:
             raise GenAiException(e)

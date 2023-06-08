@@ -142,3 +142,20 @@ class ErrorResponse(GenAiResponseModel):
     error: str
     message: str
     extensions: Optional[ErrorExtensions]
+
+
+class WatsonxTemplate(GenAiResponseModel):
+    id: str
+    name: str
+    value: str
+    created_at: datetime
+    data: Optional[dict]
+
+
+class PromptTemplatesResponse(GenAiResponseModel):
+    results: list[WatsonxTemplate]
+    totalCount: int
+
+
+class WatsonxTemplateList(GenAiResponseModel):
+    results: list[str]

@@ -8,6 +8,7 @@ from tqdm import tqdm
 from genai.credentials import Credentials
 from genai.exceptions import GenAiException
 from genai.metadata import Metadata
+from genai.options import Options
 from genai.prompt_pattern import PromptPattern
 from genai.schemas import GenerateParams, ModelType, TokenParams
 from genai.schemas.responses import (
@@ -38,7 +39,9 @@ class Model:
         self.params = params
         self.service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
 
-    def generate_stream(self, prompts: Union[list[str], list[PromptPattern]]) -> Generator[GenerateStreamResponse]:
+    def generate_stream(
+        self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
+    ) -> Generator[GenerateStreamResponse]:
         if len(prompts) > 0 and isinstance(prompts[0], PromptPattern):
             prompts = PromptPattern.list_str(prompts)
 
@@ -47,7 +50,7 @@ class Model:
                 batch = prompts[i : min(i + Metadata.DEFAULT_MAX_PROMPTS, len(prompts))]
 
                 self.params.stream = True
-                response_gen = self.service.generate(self.model, batch, self.params, streaming=True)
+                response_gen = self.service.generate(self.model, batch, self.params, options=options, streaming=True)
 
                 for chunk in response_gen:
                     if "status_code" in chunk:
@@ -68,7 +71,9 @@ class Model:
         except Exception as ex:
             raise GenAiException(ex)
 
-    def generate_as_completed(self, prompts: Union[list[str], list[PromptPattern]]) -> Generator[GenerateResponse]:
+    def generate_as_completed(
+        self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
+    ) -> Generator[GenerateResponse]:
         """The generate endpoint is the centerpiece of the GENAI alpha.
         It provides a simplified and flexible, yet powerful interface to the supported
         models as a service. Given a text prompt as inputs, and required parameters
@@ -76,6 +81,7 @@ class Model:
 
         Args:
             prompts (list[str]): The list of one or more prompt strings.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Yields:
             Generator[GenerateResult]: A generator of results
@@ -88,9 +94,10 @@ class Model:
         try:
             for i in range(0, len(prompts), Metadata.DEFAULT_MAX_PROMPTS):
                 response_gen = self.service.generate(
-                    self.model,
-                    prompts[i : min(i + Metadata.DEFAULT_MAX_PROMPTS, len(prompts))],
-                    self.params,
+                    model=self.model,
+                    inputs=prompts[i : min(i + Metadata.DEFAULT_MAX_PROMPTS, len(prompts))],
+                    params=self.params,
+                    options=options,
                 )
                 if response_gen.status_code == 200:
                     response_gen = response_gen.json()
@@ -106,7 +113,9 @@ class Model:
         except Exception as ex:
             raise GenAiException(ex)
 
-    def generate(self, prompts: Union[list[str], list[PromptPattern]]) -> list[GenerateResponse]:
+    def generate(
+        self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
+    ) -> list[GenerateResponse]:
         """The generate endpoint is the centerpiece of the GENAI alpha.
         It provides a simplified and flexible, yet powerful interface to the supported
         models as a service. Given a text prompt as inputs, and required parameters
@@ -114,11 +123,12 @@ class Model:
 
         Args:
             prompts (list[str]): The list of one or more prompt strings.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Returns:
             list[GenerateResult]: A list of results
         """
-        return list(self.generate_as_completed(prompts))
+        return list(self.generate_as_completed(prompts, options))
 
     def generate_async(
         self,
