@@ -7,4 +7,4 @@ Submodules
 .. toctree::
    :maxdepth: 2
 
-   genai.exceptions.bam_exception
+   genai.exceptions.genai_exception
