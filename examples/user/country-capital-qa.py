@@ -1,4 +1,5 @@
 import os
+import pathlib
 
 from dotenv import load_dotenv
 
@@ -26,8 +27,10 @@ params = GenerateParams(
 creds = Credentials(api_key)
 model = Model(ModelType.FLAN_UL2, params=params, credentials=creds)
 
+prompt_path = pathlib.Path(__file__, "..", "prompts", "Country-Capital-Factual-QA").resolve()
+print(prompt_path)
 # load a prompt from file
-with open("prompts/Country-Capital-Factual-QA", "r") as f:
+with open(prompt_path, "r") as f:
     prompt = f.read()
 
 print(f"Prompt: \n {prompt}\n")

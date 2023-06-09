@@ -13,6 +13,8 @@ api_key = os.getenv("GENAI_KEY", None)
 
 print("\n------------- Example (Model QA)-------------\n")
 
+max_cycles = 20
+
 bob_params = GenerateParams(
     decoding_method="sample",
     max_new_tokens=25,
@@ -40,7 +42,7 @@ alice_model = Model(ModelType.FLAN_T5, params=alice_params, credentials=creds)
 alice_q = "What is 1 + 1?"
 print(f"[Alice][Q] {alice_q}")
 
-while True:
+for x in range(max_cycles):
     bob_response = bob_model.generate([alice_q])
     bob_a = bob_response[0].generated_text
     print(f"[Bob][A] {bob_a}")
@@ -54,4 +56,4 @@ while True:
 
     alice_q = "What is " + alice_a + " + " + alice_a + "?"
     print(f"[Alice][Q] {alice_q}")
-    time.sleep(1)
+    time.sleep(0.5)

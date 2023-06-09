@@ -20,7 +20,7 @@ params = GenerateParams(
     temperature=0.7,
     top_k=50,
     top_p=1,
-    returns=ReturnOptions(generated_tokens=True, token_logprobs=True, input_text=True),
+    return_options=ReturnOptions(generated_tokens=True, token_logprobs=True, input_text=True),
 )
 
 creds = Credentials(api_key)
