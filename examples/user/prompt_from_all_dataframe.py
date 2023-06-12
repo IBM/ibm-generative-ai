@@ -9,7 +9,8 @@ except ImportError:
 from dotenv import load_dotenv
 
 import genai.extensions.pandas  # noqa: F401
-from genai.model import Credentials, Model
+from genai.credentials import Credentials
+from genai.model import Model
 from genai.prompt_pattern import PromptPattern
 from genai.schemas import GenerateParams, ModelType
 
@@ -21,8 +22,10 @@ from genai.schemas import GenerateParams, ModelType
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
+# GENAI_API=<genai-api-endpoint>
 load_dotenv()
 api_key = os.getenv("GENAI_KEY", None)
+api_endpoint = os.getenv("GENAI_API", None)
 PATH = pathlib.Path(__file__).parent.resolve()
 
 print("\n------------- Example (Pandas Dataframe Replacement)-------------\n")
@@ -38,7 +41,7 @@ params = GenerateParams(
     random_seed=2,
 )
 
-creds = Credentials(api_key)
+creds = Credentials(api_key, api_endpoint)
 model = Model(ModelType.FLAN_UL2, params=params, credentials=creds)
 
 pt = PromptPattern.from_file(str(PATH) + os.sep + "templates" + os.sep + "synth-animal.yaml")

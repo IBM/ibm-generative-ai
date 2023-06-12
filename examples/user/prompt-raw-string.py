@@ -2,14 +2,17 @@ import os
 
 from dotenv import load_dotenv
 
-from genai.model import Credentials, Model
+from genai.credentials import Credentials
+from genai.model import Model
 from genai.prompt_pattern import PromptPattern
 from genai.schemas import GenerateParams, ModelType
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
+# GENAI_API=<genai-api-endpoint>
 load_dotenv()
 api_key = os.getenv("GENAI_KEY", None)
+api_endpoint = os.getenv("GENAI_API", None)
 
 print("\n------------- Example (String Replacement)-------------\n")
 
@@ -23,7 +26,7 @@ params = GenerateParams(
     top_p=1,
 )
 
-creds = Credentials(api_key)
+creds = Credentials(api_key, api_endpoint)
 model = Model(ModelType.FLAN_UL2, params=params, credentials=creds)
 
 # can live locally or at an url endpoint
