@@ -107,8 +107,7 @@ Push your changes
 ```bash
 git push origin HEAD
 ```
-<!-- Raise a pull request from your `<my_awesome_branch>` containing changes to `dev` branch by going to github page of the repo. -->
-Raise a pull request from the your `<my_awesome_branch>` in the `head repository` to the `develop` branch in the `base_repository`. You can do it by going to github page of the repo. The image below shows an example:
+Raise a pull request from the your `<my_awesome_branch>` in the `head repository` to the `develop` branch in the `base repository`. To do so go to the github page of the repo. The image below shows an example:
 
 ![image](/documentation/assets/pull_request_from_fork_to_base.png)
 
