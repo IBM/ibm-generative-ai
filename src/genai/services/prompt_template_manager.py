@@ -8,7 +8,7 @@ from genai.schemas.responses import (
 from genai.services import ServiceInterface
 
 
-class PromptServiceInterface:
+class PromptTemplateManager:
     @staticmethod
     def save_template(template: str, name: str, credentials: Credentials) -> WatsonxTemplate:
         service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
@@ -40,7 +40,6 @@ class PromptServiceInterface:
         service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
 
         try:
-            print(data)
             response = service._prompt_templating.prompt_output(inputs, template=data)
             if response.status_code == 200:
                 response_result = WatsonxTemplateList(**response.json())
@@ -52,9 +51,9 @@ class PromptServiceInterface:
     @staticmethod
     def load_template(credentials: Credentials, id: str = None, name: str = None) -> WatsonxTemplate:
         if id:
-            return PromptServiceInterface.load_template_by_id(credentials=credentials, id=id)
+            return PromptTemplateManager.load_template_by_id(credentials=credentials, id=id)
         if name:
-            return PromptServiceInterface.load_template_by_name(credentials=credentials, name=name)
+            return PromptTemplateManager.load_template_by_name(credentials=credentials, name=name)
         else:
             raise GenAiException(
                 "Provide either name or id of prompt to be fetch."
@@ -88,7 +87,7 @@ class PromptServiceInterface:
     @staticmethod
     def load_template_by_name(credentials: Credentials, name: str) -> WatsonxTemplate:
         try:
-            saved_templates = PromptServiceInterface.load_all_templates(credentials=credentials)
+            saved_templates = PromptTemplateManager.load_all_templates(credentials=credentials)
             template = list(filter(lambda tp: tp.name == name, saved_templates.results))
 
             if len(template) == 1:
@@ -103,9 +102,9 @@ class PromptServiceInterface:
     @staticmethod
     def delete_template(credentials: Credentials, id: str = None, name: str = None) -> str:
         if id:
-            return PromptServiceInterface.delete_template_by_id(credentials=credentials, id=id)
+            return PromptTemplateManager.delete_template_by_id(credentials=credentials, id=id)
         elif name:
-            return PromptServiceInterface.delete_template_by_name(credentials=credentials, name=name)
+            return PromptTemplateManager.delete_template_by_name(credentials=credentials, name=name)
         else:
             raise GenAiException("Provide either name or id of prompt to be deleted.")
 
@@ -124,11 +123,11 @@ class PromptServiceInterface:
     @staticmethod
     def delete_template_by_name(credentials: Credentials, name: str) -> str:
         try:
-            saved_templates = PromptServiceInterface.load_all_templates(credentials=credentials)
+            saved_templates = PromptTemplateManager.load_all_templates(credentials=credentials)
             template = list(filter(lambda tp: tp.name == name, saved_templates.results))
 
             if len(template) == 1:
-                return PromptServiceInterface.delete_template_by_id(credentials=credentials, id=template[0].id)
+                return PromptTemplateManager.delete_template_by_id(credentials=credentials, id=template[0].id)
             if len(template) == 0:
                 raise Exception(f"No template found for name {name}")
             raise Exception(f"More than one template found for name {name}")

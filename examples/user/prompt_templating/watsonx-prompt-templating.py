@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from genai.model import Credentials
 from genai.prompt_pattern import PromptPattern
 from genai.schemas import TokenParams
-from genai.services.prompt_service_interface import PromptServiceInterface
+from genai.services.prompt_template_manager import PromptTemplateManager
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -36,7 +36,7 @@ print("\nSaved template information:\n", test_pt)
 
 
 print("\n------------- Example Mustaches Prompt [ LIST ] -------------\n")
-pts = PromptServiceInterface.load_all_templates(credentials=creds)
+pts = PromptTemplateManager.load_all_templates(credentials=creds)
 for r in pts.results:
     print(f"{r.name}, {r.id}")
 

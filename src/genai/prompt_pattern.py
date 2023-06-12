@@ -11,7 +11,7 @@ from yaml import load
 from genai import Credentials
 from genai.exceptions import GenAiException
 from genai.schemas.responses import WatsonxTemplate
-from genai.services import PromptServiceInterface
+from genai.services import PromptTemplateManager
 from genai.utils.json_utils import json_extract, json_get_all_keys, json_load
 
 
@@ -90,17 +90,17 @@ class PromptPattern:
 
         # Is there an existing template with the name or id provided?
         try:
-            saved_template = PromptServiceInterface.load_template(credentials=credentials, id=id, name=name)
+            saved_template = PromptTemplateManager.load_template(credentials=credentials, id=id, name=name)
         except Exception:
             saved_template = None
 
         if template:
             if not saved_template:
-                wx = PromptServiceInterface.save_template(template=template, name=name, credentials=credentials)
+                wx = PromptTemplateManager.save_template(template=template, name=name, credentials=credentials)
             else:
                 id = saved_template.id
                 name = name if name else saved_template.name
-                wx = PromptServiceInterface.update_template(
+                wx = PromptTemplateManager.update_template(
                     credentials=credentials, id=id, name=name, template=template
                 )
         else:
@@ -597,12 +597,12 @@ class PromptPattern:
         _data["value"] = self.watsonx.value
         _data["data"] = data
 
-        return PromptServiceInterface.render_watsonx_prompts(credentials=self.credentials, inputs=inputs, data=_data)
+        return PromptTemplateManager.render_watsonx_prompts(credentials=self.credentials, inputs=inputs, data=_data)
 
     def delete(self) -> str:
         if not self.watsonx:
             raise GenAiException("Method only available for watsonx prompt templates.")
-        return PromptServiceInterface.delete_template(credentials=self.credentials, id=self.watsonx.id)
+        return PromptTemplateManager.delete_template(credentials=self.credentials, id=self.watsonx.id)
 
     def __str__(self):
         return self.dump

@@ -1,3 +1,3 @@
-from genai.routers.prompt_templating import PromptTemplatingRouter
+from genai.routers.prompt_template import PromptTemplateRouter
 
-__all__ = ["PromptTemplatingRouter"]
+__all__ = ["PromptTemplateRouter"]
