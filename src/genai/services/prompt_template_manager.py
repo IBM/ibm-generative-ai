@@ -1,9 +1,9 @@
 from genai import Credentials
 from genai.exceptions import GenAiException
 from genai.schemas.responses import (
-    WatsonxTemplatesResponse,
-    WatsonxTemplate,
     WatsonxRenderedPrompts,
+    WatsonxTemplate,
+    WatsonxTemplatesResponse,
 )
 from genai.services import ServiceInterface
 

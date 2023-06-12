@@ -148,7 +148,7 @@ class SimpleResponse:
                     " must have required property 'inputs'",
                     {"code": "INVALID_INPUT", "state": [{"instancePath": "", "params": {"missingProperty": "inputs"}}]},
                 )
-            
+
     @staticmethod
     def prompt_template(template, name):
         response = {
@@ -156,8 +156,7 @@ class SimpleResponse:
                 "id": "5XU9Zv6mrG6KIACN",
                 "name": name,
                 "value": template,
-                "created_at": "2023-05-08T11:51:18.000Z"
+                "created_at": "2023-05-08T11:51:18.000Z",
             }
         }
         return response
-

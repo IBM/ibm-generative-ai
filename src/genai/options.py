@@ -1,4 +1,5 @@
 from typing import Any
+
 from genai.utils.watsonx_helpers import watsonx_payload
 
 

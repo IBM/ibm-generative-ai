@@ -100,9 +100,7 @@ class PromptPattern:
             else:
                 id = saved_template.id
                 name = name if name else saved_template.name
-                wx = PromptTemplateManager.update_template(
-                    credentials=credentials, id=id, name=name, template=template
-                )
+                wx = PromptTemplateManager.update_template(credentials=credentials, id=id, name=name, template=template)
         else:
             if not saved_template:
                 raise GenAiException("No template found.")
