@@ -5,7 +5,8 @@
 * [Setup the Development Environment](#SetuptheDevelopmentEnvironment)
 	* [Pre-requisites](#Pre-requisites)
 		* [Using Venv](#UsingVenv)
-	* [Clone repo and checkout dev branch](#Clonerepoandcheckoutdevbranch)
+	* [Fork the official repo](#Forkrepo)
+    * [Clone the forked repo and checkout develop branch](#Clonerepoandcheckoutdevbranch)
 	* [Install requirements](#Installrequirements)
 	* [Setup your IBM Gen AI token](#SetupyourGenAItoken)
 * [Make Changes](#MakeChanges)
@@ -40,13 +41,19 @@ source .venv/bin/activate # Activate and use your virtual environment
 # And once you're all done..
 deactivate
 ```
+### <a name='Forkrepo'></a>Fork the official repo
 
+1. Navigate to https://github.com/IBM/ibm-generative-ai repository.
+2. In the top-right corner of the page, click **Fork**.
+3. Click **Create fork** .
 
-### <a name='Clonerepoandcheckoutdevbranch'></a>Clone repo and checkout dev branch
+Further information on how to fork a GitHub repository is avaiable [here](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
+
+### <a name='Clonerepoandcheckoutdevbranch'></a>Clone repo and checkout develop branch
 
 ```bash
 git clone <repository-link>
-git checkout dev
+git checkout develop
 ```
 
 ### <a name='Installrequirements'></a>Install requirements
@@ -100,7 +107,9 @@ Push your changes
 ```bash
 git push origin HEAD
 ```
-Raise a pull request from your `<my_awesome_branch>` containing changes to `dev` branch by going to github page of the repo.
+<!-- Raise a pull request from your `<my_awesome_branch>` containing changes to `dev` branch by going to github page of the repo. -->
+Raise a pull request from the your `<my_awesome_branch>` in the `head repository` to the `develop` branch in the `base_repository`. You can do it by going to github page of the repo. The image below shows an example:
+
 - Add a description for your PR.
 - Link any issues.
 - Wait for tests to pass. If they fail then try to fix issues. Get in touch with the core team if needed. They will get back to you for anything that needs to be addressed.
