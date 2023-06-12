@@ -1,9 +1,9 @@
 from genai import Credentials
 from genai.exceptions import GenAiException
 from genai.schemas.responses import (
-    PromptTemplatesResponse,
+    WatsonxTemplatesResponse,
     WatsonxTemplate,
-    WatsonxTemplateList,
+    WatsonxRenderedPrompts,
 )
 from genai.services import ServiceInterface
 
@@ -36,13 +36,13 @@ class PromptTemplateManager:
             raise GenAiException(ex)
 
     @staticmethod
-    def render_watsonx_prompts(credentials: Credentials, inputs: list = None, data: dict = {}) -> WatsonxTemplateList:
+    def render_watsonx_prompts(credentials: Credentials, inputs: list = None, data: dict = {}) -> list[str]:
         service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
 
         try:
             response = service._prompt_templating.prompt_output(inputs, template=data)
             if response.status_code == 200:
-                response_result = WatsonxTemplateList(**response.json())
+                response_result = WatsonxRenderedPrompts(**response.json())
                 return response_result.results
             raise GenAiException(response)
         except Exception as ex:
@@ -61,13 +61,13 @@ class PromptTemplateManager:
             )
 
     @staticmethod
-    def load_all_templates(credentials: Credentials) -> PromptTemplatesResponse:
+    def load_all_templates(credentials: Credentials) -> WatsonxTemplatesResponse:
         service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
 
         try:
             response = service._prompt_templating.get_prompt_templates()
             if response.status_code == 200:
-                return PromptTemplatesResponse(**response.json())
+                return WatsonxTemplatesResponse(**response.json())
             raise GenAiException(response)
         except Exception as ex:
             raise GenAiException(ex)

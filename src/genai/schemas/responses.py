@@ -152,10 +152,10 @@ class WatsonxTemplate(GenAiResponseModel):
     data: Optional[dict]
 
 
-class PromptTemplatesResponse(GenAiResponseModel):
+class WatsonxTemplatesResponse(GenAiResponseModel):
     results: list[WatsonxTemplate]
     totalCount: int
 
 
-class WatsonxTemplateList(GenAiResponseModel):
+class WatsonxRenderedPrompts(GenAiResponseModel):
     results: list[str]
