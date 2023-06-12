@@ -52,7 +52,7 @@ Further information on how to fork a GitHub repository is avaiable [here](https:
 ### <a name='Clonerepoandcheckoutdevbranch'></a>Clone repo and checkout develop branch
 
 ```bash
-git clone <repository-link>
+git clone <forked-repository-link>
 git checkout develop
 ```
 
