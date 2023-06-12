@@ -5,8 +5,8 @@
 * [Setup the Development Environment](#SetuptheDevelopmentEnvironment)
 	* [Pre-requisites](#Pre-requisites)
 		* [Using Venv](#UsingVenv)
-	* [Fork the official repo](#Forkrepo)
-    * [Clone the forked repo and checkout develop branch](#Clonerepoandcheckoutdevbranch)
+	* [Fork the official repo](#fork-the-official-repo)
+    * [Clone the forked repo and checkout develop branch](#clone-repo-and-checkout-develop-branch)
 	* [Install requirements](#Installrequirements)
 	* [Setup your IBM Gen AI token](#SetupyourGenAItoken)
 * [Make Changes](#MakeChanges)
@@ -109,6 +109,8 @@ git push origin HEAD
 ```
 <!-- Raise a pull request from your `<my_awesome_branch>` containing changes to `dev` branch by going to github page of the repo. -->
 Raise a pull request from the your `<my_awesome_branch>` in the `head repository` to the `develop` branch in the `base_repository`. You can do it by going to github page of the repo. The image below shows an example:
+
+![image](/documentation/assets/pull_request_from_fork_to_base.png)
 
 - Add a description for your PR.
 - Link any issues.
