@@ -8,8 +8,8 @@ try:
 except ImportError:
     raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")
 
-from genai.extensions.langchain import LangChainInterface
 from genai.credentials import Credentials
+from genai.extensions.langchain import LangChainInterface
 from genai.schemas import GenerateParams, ModelType
 
 # make sure you have a .env file under genai root with
