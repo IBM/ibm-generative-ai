@@ -1,5 +1,5 @@
 # IBM Generative AI Extensions Guide
-Inner and open-source contributors are welcome to extend IBM Gen AI functionality via extensions that must keep the IBM Gen AI package as a dependency. This document explains what extensions are, the types of extensions that exist, and how to create them.
+Open-source contributors are welcome to extend IBM Gen AI functionality via extensions that must keep the IBM Gen AI package as a dependency. This document explains what extensions are, the types of extensions that exist, and how to create them.
 
 # Table of Contents
 - [About the core package](#ibm-generative-ai-core-package)
@@ -15,7 +15,7 @@ Inner and open-source contributors are welcome to extend IBM Gen AI functionalit
 An extension is a software add-on that is installed on a program to enhance its capabilities. Gen AI extensions are meant to expand the capabilities of the Gen AI core package. For instance, imagine that you want to build a prompt pattern with data from a pandas dataframe. You could write your own code  to achive such functionaliy, or you could instead use the Gen AI Pandas extension. Using the extension will allow you to save development time and deliver an elegant solution that re-uses code when it is possible.
 
 # IBM Generative AI Extension types
-IBM Generative AI supports three types of extensions: inner-source, open-source official, and open-source third-party extensions.
+IBM Generative AI supports three two types of open-source extensions: open-source official, and open-source third-party extensions.
 
 ## Open-source "Gen AI official" extensions
 Extensions that are meant for public use from get-go should instead be developed as open-source extensions. Examples of open-source extensions that have been already released as open-source are LangChain and Hugging Face extensions.
@@ -46,7 +46,6 @@ To design an extension for IBM Gen AI SDK a developer should consider a mix-and-
 ## Extensions that simulate being part of a core class
 
 In spite of the extension's code living in a separate location, **try to give the impression that extended functionality is part of an IBM Gen AI core class**.
-<!-- Classes that integrate with genai core, giving a user an impression that genai core classes have been extended despite living in a separate file location. -->
 
 The code snippet below shows an example of this pattern. While `from_template` method is part of an extension class (`PromptExtension`) and not a core class (`PromptPattern`), the way it is being called gives end-users the impression the method is part of `PromptPattern` core class. The magic that enables providing this development experience is the use of decorators at import time. This pattern enables extending user-facing classes in a user-friendly way.
 
@@ -55,7 +54,6 @@ The code snippet below shows an example of this pattern. While `from_template` m
 ## Extensions that wrap core class functionality
 
 Designing extensions that do not integrate, but  **wrap functionality in Gen AI's core** for common use cases. These classes are meant to be used as entities on their own.
-<!-- New classes/methods that do not integrate with genai core, instead they are entities in their own right. -->
 
 The `LangChainInterface` class (see below) is an example of this pattern. `LangChainInterface` is a subclass of langchain's `LLM` class that wraps `generate` functionality of Gen AI's Model.
 
