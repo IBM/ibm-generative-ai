@@ -35,7 +35,7 @@ Country: {{input}}
 """
 
 print("\n------------- Mustaches Prompt Template -------------\n")
-pt = PromptPattern.from_watsonx(credentials=creds, name="list-qa-airport-3")
+pt = PromptPattern.from_watsonx(credentials=creds, name="list-qa-airport-3", template=_template)
 print(f"\nPrompt: {pt}")
 
 

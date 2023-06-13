@@ -92,10 +92,10 @@ class PromptTemplateManager:
 
             if len(template) == 1:
                 return template[0]
-            # If no template is found, align with the API and return None
+
             if len(template) == 0:
-                return None
-            raise Exception(f"More than one template found for name {name}")
+                raise Exception(f"No template found with name {name}")
+            raise Exception(f"More than one template found with name {name}")
         except Exception as e:
             raise GenAiException(e)
 

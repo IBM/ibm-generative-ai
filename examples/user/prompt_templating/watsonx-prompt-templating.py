@@ -52,4 +52,5 @@ print(template.watsonx)
 
 
 print("\n------------- Example Mustaches Prompt [ DELETE ] -------------\n")
-test_pt.delete()
+_id = test_pt.delete()
+print(f"\n Deleted prompt with id : {_id}")

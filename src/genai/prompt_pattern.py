@@ -88,23 +88,20 @@ class PromptPattern:
         # updating an existing template : template + (name OR id)
         # creating a new template       : template + name
 
-        # Is there an existing template with the name or id provided?
+        if not template:
+            wx = PromptTemplateManager.load_template(credentials=credentials, id=id, name=name)
+            pt = PromptPattern()
+            pt._create(url=wx.value, watsonx=wx, credentials=credentials, literal=True)
+            return pt
+
         try:
             saved_template = PromptTemplateManager.load_template(credentials=credentials, id=id, name=name)
+            id = saved_template.id
+            name = name if name else saved_template.name
+            wx = PromptTemplateManager.update_template(credentials=credentials, id=id, name=name, template=template)
         except Exception:
-            saved_template = None
-
-        if template:
-            if not saved_template:
-                wx = PromptTemplateManager.save_template(template=template, name=name, credentials=credentials)
-            else:
-                id = saved_template.id
-                name = name if name else saved_template.name
-                wx = PromptTemplateManager.update_template(credentials=credentials, id=id, name=name, template=template)
-        else:
-            if not saved_template:
-                raise GenAiException("No template found.")
-            wx = saved_template
+            # Template with name doesn't exist. Save template
+            wx = PromptTemplateManager.save_template(template=template, name=name, credentials=credentials)
 
         pt = PromptPattern()
         pt._create(url=wx.value, watsonx=wx, credentials=credentials, literal=True)

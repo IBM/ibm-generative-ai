@@ -167,8 +167,8 @@ class TestPromptTemplateManager:
         mock_load_all_templates.return_value = no_templates
 
         name = self.template.name
-        template = PromptTemplateManager.load_template_by_name(credentials=self.credentials, name=name)
-        assert not template
+        with pytest.raises(GenAiException, match=f"No template found with name {name}"):
+            PromptTemplateManager.load_template_by_name(credentials=self.credentials, name=name)
 
     @patch("genai.services.PromptTemplateManager.load_all_templates")
     @patch("genai.services.RequestHandler.get")
@@ -180,7 +180,7 @@ class TestPromptTemplateManager:
         mock_load_all_templates.return_value = no_templates
 
         name = self.template.name
-        with pytest.raises(Exception, match=f"More than one template found for name {name}"):
+        with pytest.raises(Exception, match=f"More than one template found with name {name}"):
             PromptTemplateManager.load_template_by_name(credentials=self.credentials, name=name)
 
     @patch("genai.services.PromptTemplateManager.delete_template_by_name")
