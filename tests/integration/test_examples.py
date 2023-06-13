@@ -18,4 +18,4 @@ def idfn(val):
 @pytest.mark.parametrize("script", scripts, ids=idfn)
 def test_example_execution(script):
     logger.info(f"Executing Example scipt: {script}")
-    runpy.run_path(script)
+    runpy.run_path(str(script))

@@ -9,13 +9,13 @@ pytestmark = pytest.mark.integration
 
 load_dotenv()
 
-WATSONX_API_ENDPOINT = os.getenv("GENAI_ENDPOINT")
-WATSONX_API_KEY = os.getenv("GENAI_KEY")
+GENAI_API = os.getenv("GENAI_API")
+GENAI_KEY = os.getenv("GENAI_KEY")
 
 
 @pytest.fixture
 def credentials(request):
-    return Credentials(api_key=WATSONX_API_KEY, api_endpoint=WATSONX_API_ENDPOINT)
+    return Credentials(api_key=GENAI_KEY, api_endpoint=GENAI_API)
 
 
 def pytest_exception_interact(node, call, report):
