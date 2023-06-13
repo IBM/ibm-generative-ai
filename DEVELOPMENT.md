@@ -45,6 +45,7 @@ deactivate
 
 1. Navigate to https://github.com/IBM/ibm-generative-ai repository.
 2. In the top-right corner of the page, click **Fork**.
+   *Important: **DO NOT** select 'Copy the DEFAULT branch only' option.*
 3. Click **Create fork** .
 
 Further information on how to fork a GitHub repository is avaiable [here](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
@@ -82,9 +83,12 @@ have to worry about committing it to GitHub.
 
 ## <a name='MakeChanges'></a>Make Changes
 Create a branch for making changes
+
 ```bash
-git checkout -b <my_awesome_branch>
+git checkout -b <my_awesome_branch> develop
 ```
+*Important: Note we branched off 'develop' not 'main'*
+
 Make your changes and add any unit tests. Run tests as
 ```bash
 python -m pytest
