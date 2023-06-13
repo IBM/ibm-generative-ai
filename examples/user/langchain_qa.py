@@ -8,14 +8,15 @@ try:
 except ImportError:
     raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")
 
+from genai.credentials import Credentials
 from genai.extensions.langchain import LangChainInterface
-from genai.model import Credentials
 from genai.schemas import GenerateParams, ModelType
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
 load_dotenv()
 api_key = os.getenv("GENAI_KEY", None)
+api_endpoint = os.getenv("GENAI_API", None)
 
 params = GenerateParams(
     decoding_method="sample",
@@ -34,7 +35,7 @@ pt2 = PromptTemplate(
 )
 
 
-creds = Credentials(api_key)
+creds = Credentials(api_key, api_endpoint)
 flan = LangChainInterface(model=ModelType.FLAN_UL2, credentials=creds, params=params)
 model = LangChainInterface(model=ModelType.FLAN_UL2, credentials=creds)
 prompt_to_flan = LLMChain(llm=flan, prompt=pt1)

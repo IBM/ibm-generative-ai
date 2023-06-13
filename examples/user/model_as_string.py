@@ -2,20 +2,19 @@ import os
 
 from dotenv import load_dotenv
 
-from genai.model import Credentials, Model
+from genai.credentials import Credentials
+from genai.model import Model
 from genai.schemas import GenerateParams
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
 load_dotenv()
 api_key = os.getenv("GENAI_KEY", None)
-creds = Credentials(api_key)  # credentials object to access GENAI
+api_endpoint = os.getenv("GENAI_API", None)
+creds = Credentials(api_key, api_endpoint)  # credentials object to access GENAI
 
 # Instantiate parameters for text generation
 params = GenerateParams(decoding_method="sample", max_new_tokens=10)
-
-# creds object
-creds = Credentials(api_key)
 
 # model object
 flan = Model("google/flan-ul2", params=params, credentials=creds)
