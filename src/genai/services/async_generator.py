@@ -5,9 +5,9 @@ from concurrent.futures import ThreadPoolExecutor
 from queue import Queue
 
 from genai.exceptions import GenAiException
+from genai.options import Options
 from genai.schemas.responses import GenerateResponse, TokenizeResponse
 from genai.services.connection_manager import ConnectionManager
-from genai.options import Options
 
 logger = logging.getLogger(__name__)
 
@@ -15,7 +15,9 @@ __all__ = ["AsyncResponseGenerator"]
 
 
 class AsyncResponseGenerator:
-    def __init__(self, model_id, prompts, params, service, fn="generate", ordered=False, callback=None, options:Options=None):
+    def __init__(
+        self, model_id, prompts, params, service, fn="generate", ordered=False, callback=None, options: Options = None
+    ):
         """Instantiates the ConcurrentWrapper Interface.
 
         Args:

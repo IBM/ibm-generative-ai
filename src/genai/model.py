@@ -136,7 +136,7 @@ class Model:
         ordered: bool = False,
         callback: Callable[[GenerateResult], Any] = None,
         hide_progressbar: bool = False,
-        options: Options = None
+        options: Options = None,
     ) -> Generator[Union[GenerateResult, None]]:
         """The generate endpoint is the centerpiece of the GENAI alpha.
         It provides a simplified and flexible, yet powerful interface to the supported
@@ -180,7 +180,7 @@ class Model:
             raise GenAiException(ex)
 
     def tokenize_as_completed(
-        self, prompts: Union[list[str], list[PromptPattern]], return_tokens: bool = False, options:Options=None
+        self, prompts: Union[list[str], list[PromptPattern]], return_tokens: bool = False, options: Options = None
     ) -> Generator[TokenizeResult]:
         """The tokenize endpoint allows you to check the conversion of provided prompts to tokens
         for a given model. It splits text into words or subwords, which then are converted to ids
@@ -203,7 +203,7 @@ class Model:
                     model=self.model,
                     inputs=prompts[i : min(i + Metadata.DEFAULT_MAX_PROMPTS, len(prompts))],
                     params=params,
-                    options=options
+                    options=options,
                 )
 
                 if tokenize_response.status_code == 200:
@@ -222,7 +222,7 @@ class Model:
             raise GenAiException(ex)
 
     def tokenize(
-        self, prompts: Union[list[str], list[PromptPattern]], return_tokens: bool = False, options:Options=None
+        self, prompts: Union[list[str], list[PromptPattern]], return_tokens: bool = False, options: Options = None
     ) -> list[TokenizeResult]:
         """The tokenize endpoint allows you to check the conversion of provided prompts to tokens
         for a given model. It splits text into words or subwords, which then are converted to ids
@@ -244,7 +244,7 @@ class Model:
         ordered: bool = False,
         callback: Callable[[TokenizeResult], Any] = None,
         return_tokens: bool = False,
-        options:Options=None
+        options: Options = None,
     ) -> Generator[Union[TokenizeResult, None]]:
         """The tokenize endpoint allows you to check the conversion of provided prompts to tokens
         for a given model. It splits text into words or subwords, which then are converted to ids
@@ -269,7 +269,14 @@ class Model:
         try:
             params = TokenParams(return_tokens=return_tokens)
             with AsyncResponseGenerator(
-                self.model, prompts, params, self.service, fn="tokenize", ordered=ordered, callback=callback, options=options
+                self.model,
+                prompts,
+                params,
+                self.service,
+                fn="tokenize",
+                ordered=ordered,
+                callback=callback,
+                options=options,
             ) as asynchelper:
                 for response in asynchelper.generate_response():
                     yield response
