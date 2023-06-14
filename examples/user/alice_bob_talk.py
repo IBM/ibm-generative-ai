@@ -16,6 +16,8 @@ api_endpoint = os.getenv("GENAI_API", None)
 
 print("\n------------- Example (Model Talk)-------------\n")
 
+max_cycles = 20
+
 bob_params = GenerateParams(
     decoding_method="sample",
     max_new_tokens=25,
@@ -43,7 +45,7 @@ alice_model = Model(ModelType.FLAN_T5, params=alice_params, credentials=creds)
 sentence = "Hello! How are you?"
 print(f"[Alice] --> {sentence}")
 
-while True:
+for x in range(max_cycles):
     bob_response = bob_model.generate([sentence])
     # from first batch get first result generated text
     bob_gen = bob_response[0].generated_text

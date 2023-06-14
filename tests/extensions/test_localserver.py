@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 # Test implmentation of CustomModel class
 
 
-@pytest.mark.localserver
+@pytest.mark.extension
 class TestLocalServer:
     def test_local_server(self):
         from genai.extensions.localserver import CustomModel, LocalLLMServer

@@ -7,11 +7,14 @@ This is the Python SDK for IBM Foundation Models Studio to bring IBM Generative 
 
 *This is an early access library and requires invitation to use the technical preview of [watsonx.ai](https://watsonx.ai/). You can join the waitlist by visiting. https://www.ibm.com/products/watsonx-ai.*
 
+*Looking for the JavaScript/TypeScript version? Check out https://github.com/IBM/ibm-generative-ai-node-sdk.*
+
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/IBM/ibm-generative-ai/blob/main/LICENSE)
 ![PyPI](https://img.shields.io/pypi/v/ibm-generative-ai)
 [![Build & Test](https://github.com/IBM/ibm-generative-ai/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/IBM/ibm-generative-ai/actions/workflows/main.yml)
 [![Integration Tests](https://github.com/IBM/ibm-generative-ai/actions/workflows/integration-test.yml/badge.svg)](https://github.com/IBM/ibm-generative-ai/actions/workflows/integration-test.yml)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/ibm-generative-ai)
+[![Coverage Status](https://coveralls.io/repos/github/IBM/ibm-generative-ai/badge.svg?branch=main)](https://coveralls.io/github/IBM/ibm-generative-ai?branch=main)
 
 ## <a name='TableofContents'></a>Table of Contents
 
