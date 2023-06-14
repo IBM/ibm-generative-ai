@@ -1,14 +1,13 @@
-import os
 import pathlib
 
 import pytest
 
 
-@pytest.mark.pandas
+@pytest.mark.extension
 class TestPandasExtension:
     def setup_method(self):
         self.path = pathlib.Path(__file__).parent.resolve()
-        self.asset_path = str(self.path) + os.sep + "assets" + os.sep
+        self.asset_path = pathlib.Path(__file__, "..", "..", "assets").resolve()
 
     def test_sub_from_dataframe_random(self):
         import pandas as pd
@@ -16,9 +15,9 @@ class TestPandasExtension:
         import genai.extensions.pandas  # noqa
         from genai.prompt_pattern import PromptPattern
 
-        pt = PromptPattern.from_file(self.asset_path + "csv_file.yaml")
+        pt = PromptPattern.from_file(str(self.asset_path / "csv_file.yaml"))
 
-        path = self.asset_path + "csv_file.csv"
+        path = self.asset_path / "csv_file.csv"
         df = pd.read_csv(path)
 
         pt.pandas.sub_from_dataframe(
@@ -39,7 +38,7 @@ class TestPandasExtension:
         from genai.prompt_pattern import PromptPattern
 
         pt = PromptPattern.from_str("{{col1}},{{col2}},{{col3}}")
-        path = self.asset_path + "csv_file.csv"
+        path = self.asset_path / "csv_file.csv"
         df = pd.read_csv(path)
 
         with pytest.raises(Exception) as e:
@@ -53,7 +52,7 @@ class TestPandasExtension:
         from genai.prompt_pattern import PromptPattern
 
         pt = PromptPattern.from_str("{{col1}},{{col2}},{{col3}}")
-        path = self.asset_path + "csv_file.csv"
+        path = self.asset_path / "csv_file.csv"
         df = pd.read_csv(path)
 
         with pytest.raises(Exception) as e:
@@ -66,9 +65,9 @@ class TestPandasExtension:
         import genai.extensions.pandas  # noqa
         from genai.prompt_pattern import PromptPattern
 
-        pt = PromptPattern.from_file(self.asset_path + "csv_file.yaml")
+        pt = PromptPattern.from_file(str(self.asset_path / "csv_file.yaml"))
 
-        path = self.asset_path + "csv_file.csv"
+        path = self.asset_path / "csv_file.csv"
         df = pd.read_csv(path)
 
         pt.pandas.sub_from_dataframe(dataframe=df, col_to_var={"col1": ["v2"]})
@@ -81,7 +80,7 @@ class TestPandasExtension:
         from genai.prompt_pattern import PromptPattern
 
         pt = PromptPattern.from_str("{{col1}},{{col2}},{{col3}}")
-        path = self.asset_path + "csv_file.csv"
+        path = self.asset_path / "csv_file.csv"
         df = pd.read_csv(path)
 
         res = pt.pandas.sub_all_from_dataframe(dataframe=df, col_to_var="infer")
@@ -97,7 +96,7 @@ class TestPandasExtension:
         from genai.prompt_pattern import PromptPattern
 
         pt = PromptPattern.from_str("Country {{country}} capital {{capital}}")
-        path = self.asset_path + "capital-qa-sub.csv"
+        path = self.asset_path / "capital-qa-sub.csv"
         df = pd.read_csv(path)
 
         plist = pt.pandas.sub_all_from_dataframe(dataframe=df, col_to_var="infer")
@@ -112,7 +111,7 @@ class TestPandasExtension:
         from genai.prompt_pattern import PromptPattern
 
         pt = PromptPattern.from_str("Capital {{capital}} Nonexistent {{var}}")
-        path = self.asset_path + "capital-qa-sub.csv"
+        path = self.asset_path / "capital-qa-sub.csv"
         df = pd.read_csv(path)
 
         plist = pt.pandas.sub_all_from_dataframe(dataframe=df, col_to_var="infer")
@@ -127,7 +126,7 @@ class TestPandasExtension:
         from genai.prompt_pattern import PromptPattern
 
         pt = PromptPattern.from_str("Country {{0}} capital {{1}}")
-        path = self.asset_path + "capital-qa-sub-noheader.csv"
+        path = self.asset_path / "capital-qa-sub-noheader.csv"
 
         df_no_header = pd.read_csv(path, header=None)
         plist = pt.pandas.sub_all_from_dataframe(dataframe=df_no_header, col_to_var="infer")
@@ -148,7 +147,7 @@ class TestPandasExtension:
         from genai.prompt_pattern import PromptPattern
 
         pt = PromptPattern.from_str("{{animal}},{{specices}},{{island}},{{something}},{{year}}")
-        path = self.asset_path + "penguins.csv"
+        path = self.asset_path / "penguins.csv"
         with pytest.raises(Exception) as e:
             df = pd.read_csv(path, index_col=0, header=None)
             pt.pandas.sub_all_from_dataframe(dataframe=df, col_to_var="infer", headers=False)
