@@ -13,9 +13,9 @@
 * [Commit Changes and Make a Pull Request](#commit-changes-and-make-a-pull-request)
 * [Logging](#logging)
 	* [Enabling Logs](#logging)
-* [Deployment Process](#DeploymentProcess)
+<!-- * [Deployment Process](#DeploymentProcess)
 	* [Automated Release Process](#AutomatedReleaseProcess)
-	* [Manual Release Process](#ManualProcess)
+	* [Manual Release Process](#ManualProcess) -->
 
 
 <!-- vscode-markdown-toc-config
