@@ -2,17 +2,17 @@
 # IBM Generative AI Development Guide
 
 <!-- vscode-markdown-toc -->
-* [Setup the Development Environment](#SetuptheDevelopmentEnvironment)
-	* [Pre-requisites](#Pre-requisites)
-		* [Using Venv](#UsingVenv)
+* [Setup the Development Environment](#setup-the-development-environment)
+	* [Pre-requisites](#pre-requisites)
+		* [Using Venv](#using-venv)
 	* [Fork the official repo](#fork-the-official-repo)
     * [Clone the forked repo and checkout develop branch](#clone-repo-and-checkout-develop-branch)
-	* [Install requirements](#Installrequirements)
-	* [Setup your IBM Gen AI token](#SetupyourGenAItoken)
-* [Make Changes](#MakeChanges)
-* [Commit Changes and Make a Pull Request](#CommitChangesandMakeaPullRequest)
-* [Logging](#Logging)
-	* [Enabling Logs](#EnablingLogs)
+	* [Install requirements](#install-requirements)
+	* [Setup your IBM Gen AI token](#setup-your-ibm-generative-ai-token)
+* [Make Changes](#make-changes)
+* [Commit Changes and Make a Pull Request](#commit-changes-and-make-a-pull-request)
+* [Logging](#logging)
+	* [Enabling Logs](#logging)
 * [Deployment Process](#DeploymentProcess)
 	* [Automated Release Process](#AutomatedReleaseProcess)
 	* [Manual Release Process](#ManualProcess)
@@ -24,15 +24,15 @@
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
-## <a name='SetuptheDevelopmentEnvironment'></a>Setup the Development Environment
+## Setup the Development Environment
 
-### <a name='Pre-requisites'></a>Pre-requisites
+### Pre-requisites
 
 - Python version >= 3.9.
 - Setup a virtual environment (using [venv](https://docs.python.org/3/library/venv.html) or [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html)) and activate it.
 - You need to **activate this environment every time** before you want to make changes to this repository.
 
-#### <a name='UsingVenv'></a>Using Venv
+#### Using Venv
 ```bash
 python -m venv .venv # Create your Virtual environment
 source .venv/bin/activate # Activate and use your virtual environment
@@ -41,7 +41,7 @@ source .venv/bin/activate # Activate and use your virtual environment
 # And once you're all done..
 deactivate
 ```
-### <a name='Forkrepo'></a>Fork the official repo
+### Fork the official repo
 
 1. Navigate to https://github.com/IBM/ibm-generative-ai repository.
 2. In the top-right corner of the page, click **Fork**.
@@ -50,14 +50,14 @@ deactivate
 
 Further information on how to fork a GitHub repository is avaiable [here](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
 
-### <a name='Clonerepoandcheckoutdevbranch'></a>Clone repo and checkout develop branch
+### Clone repo and checkout develop branch
 
 ```bash
 git clone <forked-repository-link>
 git checkout develop
 ```
 
-### <a name='Installrequirements'></a>Install requirements
+### Install requirements
 
 Minimal pip version is 22.0.1. Check your pip version with `pip --version` and if needed run the following command to upgrade pip.
 ```bash
@@ -72,7 +72,7 @@ Install pre-commit setup
 pre-commit install
 ```
 
-### <a name='SetupyourIBMGenAItoken'></a>Setup your IBM Generative AI token
+### Setup your IBM Generative AI token
 Login to [workbench.res.ibm.com/](https://workbench.res.ibm.com/) and get your IBM Generative AI API key. Then, create a `genai/.env` and assign the `GENAI_KEY` value as:
 ```
 GENAI_KEY=<your key here>
@@ -81,7 +81,7 @@ GENAI_KEY=<your key here>
 Once done, you and genai can use your key using `os.getenv("GENAI_KEY")` and you will not
 have to worry about committing it to GitHub.
 
-## <a name='MakeChanges'></a>Make Changes
+## Make Changes
 Create a branch for making changes
 
 ```bash
@@ -94,7 +94,7 @@ Make your changes and add any unit tests. Run tests as
 python -m pytest
 ```
 
-## <a name='CommitChangesandMakeaPullRequest'></a>Commit Changes and Make a Pull Request
+## Commit Changes and Make a Pull Request
 Once you are done making changes, run `flake8` for linting and try fixing for as many messages as possible.
 ```bash
 flake8 .
@@ -119,7 +119,7 @@ Raise a pull request from your `<my_awesome_branch>` in the `head repository` to
 - Link any issues.
 - Wait for tests to pass. If they fail then try to fix issues. Get in touch with the core team if needed. They will get back to you for anything that needs to be addressed.
 
-## <a name='Logging'></a>Logging
+## Logging
 
 GenAI uses the standard python logging module for logging debug messages within the module. Unless the consuming application explicitly enables logging, no logging messags from GenAI should appear in stdout or stderr e.g. no `print` statements, we should also always log to the `genai` namespace so that logs are easily identifiable.
 
