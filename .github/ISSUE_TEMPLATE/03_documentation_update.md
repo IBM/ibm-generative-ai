@@ -1,5 +1,5 @@
 ---
-name: Update documentation
+name: 📘 Update documentation
 about: Update the repo's documentation
 title: DOCS
 labels: documentation, good first issue, help wanted
