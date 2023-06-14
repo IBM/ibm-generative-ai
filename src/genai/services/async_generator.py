@@ -7,6 +7,7 @@ from queue import Queue
 from genai.exceptions import GenAiException
 from genai.schemas.responses import GenerateResponse, TokenizeResponse
 from genai.services.connection_manager import ConnectionManager
+from genai.options import Options
 
 logger = logging.getLogger(__name__)
 
@@ -14,7 +15,7 @@ __all__ = ["AsyncResponseGenerator"]
 
 
 class AsyncResponseGenerator:
-    def __init__(self, model_id, prompts, params, service, fn="generate", ordered=False, callback=None):
+    def __init__(self, model_id, prompts, params, service, fn="generate", ordered=False, callback=None, options:Options=None):
         """Instantiates the ConcurrentWrapper Interface.
 
         Args:
@@ -32,6 +33,7 @@ class AsyncResponseGenerator:
         self.callback = callback
         self.fn = fn
         self.ordered = ordered
+        self.options = options
 
     def __enter__(self):
         self.accumulator = []
@@ -87,9 +89,9 @@ class AsyncResponseGenerator:
             for result in response.results:
                 yield result
 
-    async def _get_response_json(self, model, inputs, params):
+    async def _get_response_json(self, model, inputs, params, options):
         try:
-            response_raw = await self.service_fn_(model, inputs, params)
+            response_raw = await self.service_fn_(model, inputs, params, options)
             response = response_raw.json()
         except Exception as ex:
             logger.error("Error in _get_response_json {}: {}".format(type(ex), str(ex)))
@@ -98,7 +100,7 @@ class AsyncResponseGenerator:
 
     async def _task(self, inputs, batch_num):
         try:
-            response = await self._get_response_json(self.model_id, inputs, self.params)
+            response = await self._get_response_json(self.model_id, inputs, self.params, self.options)
             logger.debug("Received response = {}".format(response))
             for i in range(len(response["results"])):
                 response["results"][i]["input_text"] = inputs[i]

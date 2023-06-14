@@ -70,6 +70,7 @@ class RequestHandler:
         model_id: str = None,
         inputs: list = None,
         parameters: dict = None,
+        options: Options = None,
     ):
         """Low level API for async /post request to REST API.
 
@@ -89,6 +90,7 @@ class RequestHandler:
             model_id=model_id,
             inputs=inputs,
             parameters=parameters,
+            options=options
         )
         response = None
         async with httpx.AsyncClient(timeout=ConnectionManager.TIMEOUT) as client:
@@ -122,6 +124,7 @@ class RequestHandler:
         model_id: str = None,
         inputs: list = None,
         parameters: dict = None,
+        options: Options = None
     ):
         """Low level API for async /generate request to REST API.
 
@@ -141,6 +144,7 @@ class RequestHandler:
             model_id=model_id,
             inputs=inputs,
             parameters=parameters,
+            options=options
         )
         response = await ConnectionManager.async_generate_client.post(endpoint, headers=headers, json=json_data)
         return response
@@ -152,6 +156,7 @@ class RequestHandler:
         model_id: str = None,
         inputs: list = None,
         parameters: dict = None,
+        options:Options = None
     ):
         """Low level API for async /tokenize request to REST API.
 
@@ -171,6 +176,7 @@ class RequestHandler:
             model_id=model_id,
             inputs=inputs,
             parameters=parameters,
+            options=options
         )
         response = None
         for _ in range(0, ConnectionManager.MAX_RETRIES_TOKENIZE):

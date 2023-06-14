@@ -55,7 +55,7 @@ class ServiceInterface:
         except Exception as e:
             raise GenAiException(e)
 
-    def tokenize(self, model: str, inputs: list, params: TokenParams = None):
+    def tokenize(self, model: str, inputs: list, params: TokenParams = None, options:Options =None):
         """Do the conversion of provided inputs to tokens for a given model.
 
         Args:
@@ -69,7 +69,7 @@ class ServiceInterface:
         try:
             params = ServiceInterface._sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.TOKENIZE
-            return RequestHandler.post(endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params)
+            return RequestHandler.post(endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params, options=options)
         except Exception as e:
             raise GenAiException(e)
 
@@ -113,7 +113,7 @@ class ServiceInterface:
     # * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     #   ASYNC
     # * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-    async def async_generate(self, model, inputs, params: GenerateParams = None):
+    async def async_generate(self, model, inputs, params: GenerateParams = None, options:Options=None):
         """Generate a completion text for the given model, inputs, and params.
 
         Args:
@@ -128,13 +128,13 @@ class ServiceInterface:
             params = ServiceInterface._sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.GENERATE
             return await RequestHandler.async_generate(
-                endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params
+                endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params, options=options
             )
         except Exception as e:
             # without VPN this will fail
             raise GenAiException(e)
 
-    async def async_tokenize(self, model, inputs, params: TokenParams = None):
+    async def async_tokenize(self, model, inputs, params: TokenParams = None, options:Options =None):
         """Do the conversion of provided inputs to tokens for a given model.
 
         Args:
@@ -149,7 +149,7 @@ class ServiceInterface:
             params = ServiceInterface._sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.TOKENIZE
             return await RequestHandler.async_tokenize(
-                endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params
+                endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params, options=options
             )
         except Exception as e:
             raise GenAiException(e)
