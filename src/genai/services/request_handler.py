@@ -1,3 +1,4 @@
+import asyncio
 import logging
 
 import httpx
@@ -135,7 +136,13 @@ class RequestHandler:
             inputs=inputs,
             parameters=parameters,
         )
-        response = await ConnectionManager.async_generate_client.post(endpoint, headers=headers, json=json_data)
+        response = None
+        for attempt in range(0, ConnectionManager.MAX_RETRIES_GENERATE):
+            response = await ConnectionManager.async_generate_client.post(endpoint, headers=headers, json=json_data)
+            if response.status_code in [httpx.codes.SERVICE_UNAVAILABLE, httpx.codes.TOO_MANY_REQUESTS]:
+                await asyncio.sleep(2 ** (attempt + 1))
+            else:
+                break
         return response
 
     @staticmethod
@@ -166,13 +173,15 @@ class RequestHandler:
             parameters=parameters,
         )
         response = None
-        for _ in range(0, ConnectionManager.MAX_RETRIES_TOKENIZE):
+        for attempt in range(0, ConnectionManager.MAX_RETRIES_TOKENIZE):
             # NOTE: We don't retry-fail with httpx since that'd not
             # not respect the ratelimiting below (5 requests per second).
             # Instead, we do the ratelimiting here with the help of limiter.
             async with ConnectionManager.async_tokenize_limiter:
                 response = await ConnectionManager.async_tokenize_client.post(endpoint, headers=headers, json=json_data)
-                if response.status_code == httpx.codes.OK:
+                if response.status_code in [httpx.codes.SERVICE_UNAVAILABLE, httpx.codes.TOO_MANY_REQUESTS]:
+                    await asyncio.sleep(2 ** (attempt + 1))
+                else:
                     break
         return response
 

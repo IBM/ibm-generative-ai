@@ -64,6 +64,7 @@ class AsyncResponseGenerator:
             self.num_batches_ = len(self.prompts)
             self.message_type_ = GenerateResponse
             self.service_fn_ = self.service.async_generate
+            self.max_active_tasks_ = ConnectionManager.MAX_CONCURRENT_GENERATE
             ConnectionManager.make_generate_client()
             self.client_close_fn_ = ConnectionManager.delete_generate_client
         elif self.fn == "tokenize":
@@ -72,6 +73,7 @@ class AsyncResponseGenerator:
             self.num_batches_ = a + (b > 0)
             self.message_type_ = TokenizeResponse
             self.service_fn_ = self.service.async_tokenize
+            self.max_active_tasks_ = ConnectionManager.MAX_REQ_PER_SECOND_TOKENIZE
             ConnectionManager.make_tokenize_client()
             self.client_close_fn_ = ConnectionManager.delete_tokenize_client
 
@@ -97,29 +99,32 @@ class AsyncResponseGenerator:
         return response
 
     async def _task(self, inputs, batch_num):
-        try:
-            response = await self._get_response_json(self.model_id, inputs, self.params)
-            logger.debug("Received response = {}".format(response))
-            for i in range(len(response["results"])):
-                response["results"][i]["input_text"] = inputs[i]
-            response = self.message_type_(**response)
-            logger.debug("Cast to Response = {}".format(response))
-        except Exception as e:
-            logger.error("Exception raised async_generate and casting : {}, inputs = {}".format(str(e), inputs))
-            self.queue_.put_nowait((batch_num, len(inputs), None))
-            return
-        try:
-            self.queue_.put_nowait((batch_num, len(inputs), response))
-            if self.callback is not None:
-                for result in response.results:
-                    self.callback(result)
-        except Exception as e:
-            logger.error("Exception raised in callback : {}, inputs = {}".format(str(e), inputs))
+        async with self.semaphore_:
+            try:
+                response = await self._get_response_json(self.model_id, inputs, self.params)
+                logger.debug("Received response = {}".format(response))
+                for i in range(len(response["results"])):
+                    response["results"][i]["input_text"] = inputs[i]
+                response = self.message_type_(**response)
+                logger.debug("Cast to Response = {}".format(response))
+            except Exception as e:
+                logger.error("Exception raised async_generate and casting : {}, inputs = {}".format(str(e), inputs))
+                self.queue_.put_nowait((batch_num, len(inputs), None))
+                return
+            try:
+                self.queue_.put_nowait((batch_num, len(inputs), response))
+                if self.callback is not None:
+                    for result in response.results:
+                        self.callback(result)
+            except Exception as e:
+                logger.error("Exception raised in callback : {}, inputs = {}".format(str(e), inputs))
 
     async def _schedule_requests(self):
         tasks = []
         batch_num = 0
+        self.semaphore_ = asyncio.Semaphore(self.max_active_tasks_)
         for batch in self._generate_batch():
+            logger.debug("Creating task for batch_num {}".format(batch_num))
             task = asyncio.create_task(self._task(batch, batch_num))
             tasks.append(task)
             batch_num += 1
