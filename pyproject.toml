@@ -44,10 +44,10 @@ dev = [
   "pytest-httpx>=0.22.0"
 ]
 langchain = [
-  "langchain>=0.0.123,<=0.0.150"
+  "langchain>=0.0.200"
 ]
 huggingface = [
-  "datasets>=2.11.0"
+  "datasets>=2.13.0"
 ]
 pandas = [
   "pandas>=2.0.0"
