@@ -77,10 +77,7 @@ addopts = "--cov --cov-report term-missing --cov-fail-under 80"
 markers = [
     "unit: tests that can run completely independently of the GENAI API",
     "integration: tests that require the GENAI API to run",
-    "langchain: tests for langchain extension",
-    "pandas: tests for pandas extension",
-    "huggingface: tests for huggingface extension",
-    "localserver: tests for the localserver extension"
+    "extension: tests for an extension"
 ]
 env_files = [
     ".test.env"

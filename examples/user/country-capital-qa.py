@@ -1,14 +1,18 @@
 import os
+import pathlib
 
 from dotenv import load_dotenv
 
-from genai.model import Credentials, Model
+from genai.credentials import Credentials
+from genai.model import Model
 from genai.schemas import GenerateParams, ModelType, ReturnOptions
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
+# GENAI_API=<genai-api-endpoint>
 load_dotenv()
 api_key = os.getenv("GENAI_KEY", None)
+api_endpoint = os.getenv("GENAI_API", None)
 
 print("\n------------- Example (Country-Capital-Factual-QA)-------------\n")
 
@@ -23,11 +27,13 @@ params = GenerateParams(
     return_options=ReturnOptions(input_text=False, input_tokens=True),
 )
 
-creds = Credentials(api_key)
+creds = Credentials(api_key, api_endpoint)
 model = Model(ModelType.FLAN_UL2, params=params, credentials=creds)
 
+prompt_path = pathlib.Path(__file__, "..", "prompts", "Country-Capital-Factual-QA").resolve()
+print(prompt_path)
 # load a prompt from file
-with open("prompts/Country-Capital-Factual-QA", "r") as f:
+with open(prompt_path, "r") as f:
     prompt = f.read()
 
 print(f"Prompt: \n {prompt}\n")

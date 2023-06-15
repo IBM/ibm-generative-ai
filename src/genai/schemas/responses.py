@@ -94,6 +94,7 @@ class GenerateStreamResponse(GenAiResponseModel):
 class TokenizeResult(GenAiResponseModel):
     token_count: Optional[int]
     tokens: Optional[List[str]]
+    input_text: Optional[str]
 
 
 class TokenizeResponse(GenAiResponseModel):
