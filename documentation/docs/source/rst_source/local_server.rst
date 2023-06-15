@@ -65,6 +65,6 @@ Use the GenerateParams() method to instantiate the parameters. The schema for th
 
     model = Model(<your-model-class-name>.model_id, params=params, credentials=creds)
 
-From there, you can call GenAI methods such as generate() and tokenize() as needed. Make sure to call the methods with the model proxy object. 
+From there, you can call GenAI methods such as generate() and tokenize() as needed. Make sure to call the methods with the model proxy object.
 
 For example: model.generate()
