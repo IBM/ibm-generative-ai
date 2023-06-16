@@ -55,7 +55,7 @@ You can view the documentation for CustomModel `here <https://github.com/IBM/ibm
 
 **Instantiate parameters for text generation.**
 
-Use the GenerateParams() method to instantiate the parameters. The schema for this method can be found `here <https://github.com/IBM/ibm-generative-ai/blob/23f2a42a706b7fb8d99c21da0ddac909528ca1ba/src/genai/schemas/generate_params.py#L48/>`_.
+Use the GenerateParams() method to instantiate the parameters. The schema for this method can be found `here <https://ibm.github.io/ibm-generative-ai/rst_source/genai.schemas.generate_params.html#genai.schemas.generate_params.GenerateParams/>`_.
 
 |
 
