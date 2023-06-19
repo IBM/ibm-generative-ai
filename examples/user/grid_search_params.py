@@ -35,7 +35,7 @@ pt.sub("capital", "Madrid").sub("country", "Spain")
 generate_params_list = grid_search_generate_params(my_space_params)
 
 for params in generate_params_list:
-    model = Model(ModelType.FLAN_T5, params=params, credentials=creds)
+    model = Model(ModelType.FLAN_T5_11B, params=params, credentials=creds)
     responses = model.generate_async([str(pt)])
 
     print(f"Used params: \n{params} \n")
