@@ -15,7 +15,7 @@ Open-source contributors are welcome to extend IBM Gen AI functionality via exte
 An extension is a software add-on that is installed on a program to enhance its capabilities. Gen AI extensions are meant to expand the capabilities of the Gen AI core package. For instance, imagine that you want to build a prompt pattern with data from a pandas dataframe. You could write your own code  to achive such functionaliy, or you could instead use the Gen AI Pandas extension. Using the extension will allow you to save development time and deliver an elegant solution that re-uses code when it is possible.
 
 # IBM Generative AI Extension types
-IBM Generative AI extensions can be either of the following : 
+IBM Generative AI extensions can be either of the following :
 - official open-source extensions (supported by the project team)
 - third-party open-source extensions
 
