@@ -1,4 +1,4 @@
-# IBM Generative IA Active Maintainers
+# IBM Generative AI Active Maintainers
 [Onkar Bhardwaj](https://github.com/onkarbhardwaj)
 [Veronique Demers](https://github.com/vedem1192)
 [James Sutton](https://github.com/jpwsutton)
