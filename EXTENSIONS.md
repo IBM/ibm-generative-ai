@@ -32,7 +32,7 @@ All other extensions neither implemented nor officially maintained by the Gen AI
 Open-source third-party extensions can live anywhere, inside [IBM organization](https://github.com/IBM/), the wider Github universe, or other contributors' own Github spaces (e.g., other IBM teams, clients, partners). Maintaining these extensions would be the responsibility of their owners.
 
 # Extensions migration
-Extensions might be migrated from one type to another upon evaluation and approval of the Gen AI maintenance team. Below, we describe three common migration scenarios:
+Extensions might be migrated from one type to another upon evaluation and approval of the Gen AI maintenance team. Below, we describe two common migration scenarios:
 
 ## Open-source "third-party" to open-source "Gen AI official"
 If open-source third-party contributors have an interest in their extensions becoming official, they must contact the IBM Gen AI team. The Gen AI team will evaluate the request considering novelty and implementation quality (meaning it was developed following the Gen AI official guide and meets Gen AI extensions' design considerations). If the request is approved, the Gen AI team will assist the extension owners in migrating the extension.
