@@ -51,6 +51,17 @@ pip install ibm-generative-ai
 #### <a name='KnownIssueFixes:'></a>Known Issue Fixes:
 - **[SSL Issue]** If you run into "SSL_CERTIFICATE_VERIFY_FAILED" please run the following code snippet here: [support](SUPPORT.md).
 
+### <a name='Prerequisites'></a>Prerequisites
+Python version >= 3.9
+
+Pip version >= 22.0.1
+
+Check your pip version with `pip --version` and if needed run the following command to upgrade pip.
+
+```bash
+pip install --upgrade "pip>=22.0.1"
+```
+
 
 ## <a name='GenAIEndpoint'></a>Gen AI Endpoint
 

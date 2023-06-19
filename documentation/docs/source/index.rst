@@ -16,6 +16,7 @@ This is an early access library and requires invitation to use the technical pre
    rst_source/genai.prompt.rst
    rst_source/genai.exceptions.rst
    rst_source/examples.rst
+   rst_source/local_server.rst
 
 
 Indices and tables
