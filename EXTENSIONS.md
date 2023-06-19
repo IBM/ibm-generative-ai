@@ -26,7 +26,7 @@ Extensions that are meant for public use from the get-go should instead be devel
 Open-source extensions should be submitted directly to the [IBM Generative AI open-source repository](https://github.com/IBM/ibm-generative-ai) and should be developed following the [open-source Gen AI contribution guide](https://github.com/IBM/ibm-generative-ai/blob/main/DEVELOPMENT.md). Open-source official extensions are typically developed by the Gen AI team, or in collaboration with them. Providing maintenance to open-source official extensions is responsability of the Gen AI team.
 
 ## Open-source "third-party" extensions
-We refer to all other extensions not implemented nor officially maintained by the Gen AI team as open-source third-party extensions.
+All other extensions neither implemented nor officially maintained by the Gen AI team are referred to as open-source third-party extensions.
 
 ### Ownership and location
 Open-source third-party extensions can live anywhere, inside [IBM organization](https://github.com/IBM/), the wider Github universe, or other contributors' own Github spaces (e.g., other IBM teams, clients, partners). Maintaining these extensions would be the responsibility of their owners.
