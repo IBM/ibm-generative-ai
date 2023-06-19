@@ -47,7 +47,7 @@ Among other patterns, a developer should consider a mix-and-match of the two fol
 
 In spite of the extension's code living in a separate location, **try to give the impression that extended functionality is part of an IBM Gen AI core class**.
 
-The code snippet below shows an example of this pattern. While `from_template` method is part of an extension class (`PromptExtension`) and not a core class (`PromptPattern`), the way it is being called gives end-users the impression the method is part of `PromptPattern` core class. The magic that enables providing this development experience is the use of decorators at import time. This pattern enables extending user-facing classes in a user-friendly way.
+The code snippet below shows an example of this pattern. While `from_template` method is part of an extension class (`PromptExtension`) and not a core class (`PromptPattern`), the way it is being called gives end-users the impression that the method is part of the `PromptPattern` core class. The magic that enables providing this development experience is the use of decorators at import time. This pattern enables extending user-facing classes in a user-friendly way.
 
 ```python
 genai_prompt_pattern = PromptPattern.langchain.from_template(langchain_prompt_template)
