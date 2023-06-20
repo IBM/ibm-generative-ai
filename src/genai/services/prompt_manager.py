@@ -4,7 +4,7 @@ from genai.credentials import Credentials
 from genai.exceptions.genai_exception import GenAiException
 from genai.schemas import GenerateParams, PromptListParams, PromptTemplateParams
 from genai.schemas.responses import PromptListResponse
-from genai.services.prompt_saving import PromptSaving
+from genai.services import ServiceInterface
 
 logger = logging.getLogger(__name__)
 
@@ -23,9 +23,9 @@ class PromptManager:
         Returns:
             Any: Response from the server.
         """
-        service = PromptSaving(service_url=creds.api_endpoint, api_key=creds.api_key)
+        service = ServiceInterface(service_url=creds.api_endpoint, api_key=creds.api_key)
         try:
-            response = service.list_prompts(params=params)
+            response = service._prompt_saving.list_prompts(params=params)
             if response.status_code == 200:
                 response = response.json()
                 responses = PromptListResponse(**response)
@@ -45,9 +45,9 @@ class PromptManager:
         Returns:
             Any: Response from the server.
         """
-        service = PromptSaving(service_url=creds.api_endpoint, api_key=creds.api_key)
+        service = ServiceInterface(service_url=creds.api_endpoint, api_key=creds.api_key)
         try:
-            response = service.get_prompt(id=id)
+            response = service._prompt_saving.get_prompt(id=id)
             if response.status_code == 200:
                 response = response.json()
                 return response
@@ -80,10 +80,10 @@ class PromptManager:
         Returns:
             Any: Response from the server.
         """
-        service = PromptSaving(service_url=creds.api_endpoint, api_key=creds.api_key)
+        service = ServiceInterface(service_url=creds.api_endpoint, api_key=creds.api_key)
         try:
-            response = service.create_prompt(
-                name=name, model_id=model_id, template=template, input=input, output=output
+            response = service._prompt_saving.create_prompt(
+                name=name, model_id=model_id, template=template, input=input, output=output, parameters=parameters
             )
             if response.status_code == 200:
                 response = response.json()
@@ -103,12 +103,11 @@ class PromptManager:
         Returns:
             Any: Response from the server.
         """
-        service = PromptSaving(service_url=creds.api_endpoint, api_key=creds.api_key)
+        service = ServiceInterface(service_url=creds.api_endpoint, api_key=creds.api_key)
         try:
-            response = service.delete_prompt(id=id)
-            if response.status_code == 200:
-                response = response.json()
-                return response
+            response = service._prompt_saving.delete_prompt(id=id)
+            if response.status_code == 204:
+                return {"status": "success"}
             else:
                 raise GenAiException(response)
         except Exception as e:
