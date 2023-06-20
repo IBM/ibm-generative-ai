@@ -7,6 +7,7 @@ from genai.schemas.generate_params import (
 )
 from genai.schemas.history_params import HistoryParams
 from genai.schemas.models import ModelType
+from genai.schemas.prompts_params import PromptListParams, PromptTemplateParams
 from genai.schemas.responses import GenerateResult, TokenizeResult
 from genai.schemas.token_params import TokenParams
 
@@ -21,4 +22,6 @@ __all__ = [
     "ModelType",
     "GenerateResult",
     "TokenizeResult",
+    "PromptListParams",
+    "PromptTemplateParams",
 ]
