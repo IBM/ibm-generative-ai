@@ -85,7 +85,7 @@ from genai.model import Credentials
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
-# GENAI_API=<your-genai-api endpointy>
+# GENAI_API=<genai-api-endpoint>
 load_dotenv()
 my_api_key = os.getenv("GENAI_KEY", None)
 my_api_endpoint = os.getenv("GENAI_API", None)
@@ -120,8 +120,10 @@ from genai.schemas import GenerateParams, ModelType
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
+# GENAI_API=<genai-api-endpoint>
 load_dotenv()
 api_key = os.getenv("GENAI_KEY", None)
+api_endpoint = os.getenv("GENAI_API", None)
 
 # Using Python "with" context
 print("\n------------- Example (Greetings)-------------\n")
@@ -138,7 +140,7 @@ params = GenerateParams(
 )
 
 # creds object
-creds = Credentials(api_key)
+creds = Credentials(api_key, api_endpoint)
 # model object
 model = Model(ModelType.FLAN_UL2, params=params, credentials=creds)
 
@@ -172,8 +174,10 @@ from genai.schemas import GenerateParams, ModelType
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
+# GENAI_API=<genai-api-endpoint>
 load_dotenv()
 api_key = os.getenv("GENAI_KEY", None)
+api_endpoint = os.getenv("GENAI_API", None)
 
 # Using Python "with" context
 print("\n------------- Example (Greetings)-------------\n")
@@ -190,7 +194,7 @@ params = GenerateParams(
 )
 
 # creds object
-creds = Credentials(api_key)
+creds = Credentials(api_key, api_endpoint)
 # model object
 model = Model(ModelType.FLAN_UL2, params=params, credentials=creds)
 
@@ -293,7 +297,8 @@ from genai import Credentials, Model, PromptPattern
 
 load_dotenv()
 api_key = os.getenv("GENAI_KEY", None)
-creds = Credentials(api_key)
+api_endpoint = os.getenv("GENAI_API", None)
+creds = Credentials(api_key, api_endpoint)
 params = GenerateParams(decoding_method="greedy")
 
 # As LangChain Model
