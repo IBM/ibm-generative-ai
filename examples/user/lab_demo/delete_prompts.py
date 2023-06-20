@@ -12,15 +12,13 @@ api_key = os.getenv("GENAI_KEY", None)
 api_url = os.getenv("GENAI_API", None)
 creds = Credentials(api_key, api_endpoint=api_url)
 
-
 print("\n------------- Example List Existing Prompt [ LIST ] -------------\n")
 
 prompts = PromptManager.list_prompts(creds=creds)
 print(prompts)
 
 
-print("\n------------- Example Prompt [ GET ONE ] -------------\n")
+print("\n------------- Example Prompt [ DELETE ONE ] -------------\n")
 prompt_id = prompts.results[0]["id"]
-
-prompts = PromptManager.get_prompt(creds=creds, id=prompt_id)
-print(prompts)
+prompt_delete = PromptManager.delete_prompt(creds=creds, id=prompt_id)
+print(prompt_delete)
