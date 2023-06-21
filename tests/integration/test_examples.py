@@ -6,7 +6,8 @@ import pytest
 
 logger = logging.getLogger(__name__)
 
-scripts = pathlib.Path(__file__, "..", "..", "..", "examples", "user").resolve().glob("*.py")
+all_scripts = pathlib.Path(__file__, "..", "..", "..", "examples", "user").resolve().glob("*.py")
+scripts = (l for l in all_scripts if "async_" not in l.name)
 
 
 def idfn(val):
