@@ -87,8 +87,8 @@ from genai.model import Credentials
 # GENAI_KEY=<your-genai-key>
 # GENAI_API=<genai-api-endpoint>
 load_dotenv()
-my_api_key = os.getenv("GENAI_KEY", None)
-my_api_endpoint = os.getenv("GENAI_API", None)
+api_key = os.getenv("GENAI_KEY", None)
+api_endpoint = os.getenv("GENAI_API", None)
 
 # creds object
 creds = Credentials(api_key=my_api_key, api_endpoint=my_api_endpoint)
