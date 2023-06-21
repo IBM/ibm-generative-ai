@@ -41,7 +41,8 @@ dev = [
   "pytest-asyncio>=0.21.0",
   "pytest-mock>=3.10.0",
   "setuptools-scm>=7.1.0",
-  "pytest-httpx>=0.22.0"
+  "pytest-httpx>=0.22.0",
+  "build>=0.10.0"
 ]
 langchain = [
   "langchain>=0.0.200"
