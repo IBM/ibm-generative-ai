@@ -33,7 +33,7 @@ This is the Python SDK for IBM Foundation Models Studio to bring IBM Generative 
     * [LangChain Extension](#langchain-extension)
 * [Support](#support)
 * [API Documentation](#APIDocumentation)
-* [Contribution Guide](#contribution-guide)
+* [Important Information for Contributors](#important-information-for-contributors)
 * [Authors](#authors)
 
 <!-- vscode-markdown-toc-config
@@ -50,6 +50,17 @@ pip install ibm-generative-ai
 ```
 #### <a name='KnownIssueFixes:'></a>Known Issue Fixes:
 - **[SSL Issue]** If you run into "SSL_CERTIFICATE_VERIFY_FAILED" please run the following code snippet here: [support](SUPPORT.md).
+
+### <a name='Prerequisites'></a>Prerequisites
+Python version >= 3.9
+
+Pip version >= 22.0.1
+
+Check your pip version with `pip --version` and if needed run the following command to upgrade pip.
+
+```bash
+pip install --upgrade "pip>=22.0.1"
+```
 
 
 ## <a name='GenAIEndpoint'></a>Gen AI Endpoint
@@ -315,9 +326,9 @@ Need help? Check out how to get [support](SUPPORT.md)
 
 Read our Python API documentation [here](https://ibm.github.io/ibm-generative-ai/).
 
-## <a name='ContributionGuide'></a>Contribution Guide
+## <a name='ContributionInfo'></a>Important Information for Contributors
 
-Please read our [contributing guide](DEVELOPMENT.md) for details on our code of conduct and details on submitting pull requests.
+IBM Generative AI is an open-source project that welcomes the community to contribute with documentation, tests, bug corrections, and new fuctionality in the form of [extensions](/EXTENSIONS.md). Please read our [code of counduct](/CODE_OF_CONDUCT.md) to learn the expected behavior from participants that contribute to the project, and our [contribution guide](DEVELOPMENT.md) to learn the gitflow and steps to submit pull requests.
 
 ## <a name='Authors'></a>Authors
   - Onkar Bhardwaj, onkarbhardwaj@ibm.com
