@@ -2,17 +2,18 @@ import os
 
 from dotenv import load_dotenv
 
-from genai.model import Credentials, Model
+from genai.credentials import Credentials
+from genai.model import Model
 from genai.prompt_pattern import PromptPattern
 from genai.schemas import ModelType
 from genai.utils.search_space_params import grid_search_generate_params
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
-# GEMAI_API=<the-genai-api> (optional) DEFAULT_API = "https://workbench-api.res.ibm.com/v1"
-
+# GENAI_API=<genai-api-endpoint> (optional) DEFAULT_API = "https://workbench-api.res.ibm.com/v1"
 load_dotenv()
 API_KEY = os.getenv("GENAI_KEY", None)
+API_ENDPOINT = os.getenv("GENAI_API", None)
 
 
 print("\n------------- Example (String Replacement)-------------\n")
@@ -26,7 +27,7 @@ my_space_params = {
     "temperature": [0.7, 0.8, 0.9, 1.5],
 }
 
-creds = Credentials(api_key=API_KEY)
+creds = Credentials(api_key=API_KEY, api_endpoint=API_ENDPOINT)
 pt = PromptPattern.from_str("The capital of {{country}} is {{capital}}. The capital of Taiwan is")
 pt.sub("capital", "Madrid").sub("country", "Spain")
 

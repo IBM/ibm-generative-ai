@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.abspath("../../../src/genai"))
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "GENAI"
+project = "IBM Generative AI Python SDK"
 copyright = "2023, IBM Research"
 author = "IBM Research"
 
@@ -35,3 +35,11 @@ exclude_patterns = []
 html_theme = "furo"
 # html_theme = "alabaster"
 html_static_path = ["_static"]
+html_title = "GENAI Python SDK API Docs"
+html_theme_options = {
+    "light_css_variables": {
+        "font-stack": "'IBM Plex Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif",
+        "font-stack--monospace": "'IBM Plex Mono', 'SFMono-Regular', Menlo, Consolas, Lucida Console, monospace",
+    }
+}
+html_css_files = ["custom.css"]

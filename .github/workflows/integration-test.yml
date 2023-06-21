@@ -28,8 +28,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install -e ".[dev]"
+        python -m pip install -e ".[all]"
     - name: Run integration tests
       env:
-        WATSONX_API_ENDPOINT: ${{ vars.WATSONX_API_ENDPOINT }}
-        WATSONX_API_KEY: ${{ secrets.WATSONX_API_KEY }}
+        GENAI_API: ${{ vars.GENAI_API }}
+        GENAI_KEY: ${{ secrets.GENAI_KEY }}
       run: pytest -m integration --no-cov
