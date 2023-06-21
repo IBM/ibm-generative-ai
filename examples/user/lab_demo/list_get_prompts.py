@@ -20,7 +20,7 @@ print(prompts)
 
 
 print("\n------------- Example Prompt [ GET ONE ] -------------\n")
-prompt_id = prompts.results[0]["id"]
+prompt_id = prompts.results[0].id
 
 prompts = PromptManager.get_prompt(creds=creds, id=prompt_id)
 print(prompts)

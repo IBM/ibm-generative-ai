@@ -18,7 +18,7 @@ prompts = PromptManager.list_prompts(creds=creds)
 print(prompts)
 
 
-print("\n------------- Example Prompt [ DELETE ONE ] -------------\n")
-prompt_id = prompts.results[0]["id"]
+print("\n------------- Example Deleting [ DELETE ONE ] -------------\n")
+prompt_id = prompts.results[0].id
 prompt_delete = PromptManager.delete_prompt(creds=creds, id=prompt_id)
 print(prompt_delete)
