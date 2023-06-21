@@ -3,7 +3,7 @@ import logging
 from genai.credentials import Credentials
 from genai.exceptions.genai_exception import GenAiException
 from genai.schemas import GenerateParams, PromptListParams, PromptTemplateParams
-from genai.schemas.responses import PromptListResponse
+from genai.schemas.responses import PromptListResponse, PromptResponse
 from genai.services import ServiceInterface
 
 logger = logging.getLogger(__name__)
@@ -27,8 +27,8 @@ class PromptManager:
         try:
             response = service._prompt_saving.list_prompts(params=params)
             if response.status_code == 200:
-                response = response.json()
-                responses = PromptListResponse(**response)
+                res = response.json()
+                responses = PromptListResponse(**res)
                 return responses
             else:
                 raise GenAiException(response)
@@ -49,7 +49,8 @@ class PromptManager:
         try:
             response = service._prompt_saving.get_prompt(id=id)
             if response.status_code == 200:
-                response = response.json()
+                res = response.json()
+                response = PromptResponse(**res["results"])
                 return response
             else:
                 raise GenAiException(response)
