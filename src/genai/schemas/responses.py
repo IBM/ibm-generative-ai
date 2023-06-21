@@ -165,16 +165,16 @@ class WatsonxRenderedPrompts(GenAiResponseModel):
 class PromptResponse(GenAiResponseModel):
     id: str
     name: str
-    model_id: str
-    template: str
+    data: Optional[dict]
     input: Optional[str]
     output: Optional[str]
-    created_at: datetime
-    updated_at: datetime
-    data: Optional[dict]
+    model_id: str
     parameters: Optional[GenerateParams]
+    template: Optional[str]
+    template_id: Optional[str]
+    created_at: datetime
 
 
 class PromptListResponse(GenAiResponseModel):
-    results: list[dict]
+    results: List[PromptResponse]
     totalCount: int
