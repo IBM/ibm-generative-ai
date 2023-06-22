@@ -180,4 +180,4 @@ _version.py
 .env
 .test.env
 
-examples/user/lab_demo/*.csv
+examples/user/lab_demo/
