@@ -118,7 +118,9 @@ class AsyncResponseGenerator:
                 for result in response.results:
                     self.callback(result)
         except Exception as e:
-            logger.error("Exception raised in callback : {}, inputs = {}".format(str(e), inputs))
+            logger.error(
+                "Exception raised in callback : {}, response = {}, inputs = {}".format(str(e), response, inputs)
+            )
 
     async def _schedule_requests(self):
         tasks = []
