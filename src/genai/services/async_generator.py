@@ -105,7 +105,11 @@ class AsyncResponseGenerator:
             response = self.message_type_(**response)
             logger.debug("Cast to Response = {}".format(response))
         except Exception as e:
-            logger.error("Exception raised async_generate and casting : {}, inputs = {}".format(str(e), inputs))
+            logger.error(
+                "Exception raised async_generate and casting : {}, response = {}, inputs = {}".format(
+                    str(e), response, inputs
+                )
+            )
             self.queue_.put_nowait((batch_num, len(inputs), None))
             return
         try:
