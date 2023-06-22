@@ -160,3 +160,19 @@ class SimpleResponse:
             }
         }
         return response
+
+    @staticmethod
+    def prompt_saving(**kwargs):
+        created_response = {
+            "results": {
+                "id": "4v3W9CKqUurvYOKY",
+                "name": "MyPrompt",
+                "data": None,
+                "input": "Country: Germany\nCapital: Berlin\n \nCountry: USA\nCapital: Washington\n\nCountry: ",
+                "output": None,
+                "model_id": "google/flan-ul2",
+                "template": None,
+                "created_at": "2023-06-21T23:06:59.000Z",
+            }
+        }
+        return created_response

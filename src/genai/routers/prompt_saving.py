@@ -10,7 +10,6 @@ class PromptSavingRouter:
     def __init__(self, service_url: str, api_key: str) -> None:
         self.service_url = service_url.rstrip("/")
         self.key = api_key
-        # self.service_interface = ServiceInterface(service_url, api_key)
 
     def list_prompts(self, params: PromptListParams = None):
         try:

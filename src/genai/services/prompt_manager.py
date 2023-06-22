@@ -2,7 +2,7 @@ import logging
 
 from genai.credentials import Credentials
 from genai.exceptions.genai_exception import GenAiException
-from genai.schemas import GenerateParams, PromptListParams, PromptTemplateParams
+from genai.schemas import GenerateParams, PromptListParams
 from genai.schemas.responses import PromptListResponse, PromptResponse
 from genai.services import ServiceInterface
 
@@ -62,7 +62,7 @@ class PromptManager:
         creds: Credentials,
         name: str,
         model_id: str,
-        template: PromptTemplateParams,
+        template: dict = None,
         input: str = None,
         output: str = None,
         parameters: GenerateParams = None,
