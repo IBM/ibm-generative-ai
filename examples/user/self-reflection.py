@@ -23,9 +23,6 @@ params = GenerateParams(
     max_new_tokens=20,
     min_new_tokens=1,
     stream=False,
-    temperature=0.7,
-    top_k=50,
-    top_p=1,
 )
 
 creds = Credentials(api_key, api_endpoint)
