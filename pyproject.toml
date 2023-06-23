@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=67.6.0", "wheel>=0.40.0", "setuptools_scm[toml]>=7.1.0"]
+requires = ["setuptools>=68.0.0", "wheel>=0.40.0", "setuptools_scm[toml]>=7.1.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -15,7 +15,7 @@ authors = [
   {name="James Sutton", email="james.sutton@uk.ibm.com"},
 ]
 description = "IBM Generative AI is a Python library built on IBM's large language model REST interface."
-readme = "README.MD"
+readme = "README.md"
 dependencies = [
     "urllib3<2", # https://github.com/psf/requests/issues/6432
     "requests>=2.31.0",
@@ -41,7 +41,8 @@ dev = [
   "pytest-asyncio>=0.21.0",
   "pytest-mock>=3.10.0",
   "setuptools-scm>=7.1.0",
-  "pytest-httpx>=0.22.0"
+  "pytest-httpx>=0.22.0",
+  "build>=0.10.0"
 ]
 langchain = [
   "langchain>=0.0.200"
