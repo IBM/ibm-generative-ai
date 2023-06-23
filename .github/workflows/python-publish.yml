@@ -24,7 +24,7 @@ jobs:
         python -m pip install -e ".[dev]"
     - name: Version and package
       run: |
-        pip wheel -w dist -e . --no-deps
+        python -m build
     - name: Publish package
       uses: pypa/gh-action-pypi-publish@f9ed8ba9ad06d20b1ebb6002ffb93050ed9a1951
       with:
