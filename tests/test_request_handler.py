@@ -14,7 +14,7 @@ class TestRequestHandler:
 
     @pytest.fixture
     def params(seld):
-        return GenerateParams(decoding_method="greedy", temperature=0.8).dict(by_alias=True, exclude_none=True)
+        return GenerateParams(decoding_method="greedy").dict(by_alias=True, exclude_none=True)
 
     def test_metadata_post(self, params):
         headers, json_data = RequestHandler._metadata(
@@ -30,7 +30,7 @@ class TestRequestHandler:
         assert json_data == {
             "model_id": self.model,
             "inputs": self.inputs,
-            "parameters": {"decoding_method": "greedy", "temperature": 0.8},
+            "parameters": {"decoding_method": "greedy"},
         }
 
     def test_metadata_get(self):
