@@ -341,7 +341,7 @@ class TestAsyncResponseGenerator:
     @pytest.mark.asyncio
     async def test_concurrent_tokenize_nones(self, mock_tokenize_json, tokenize_params, mocker):
         # test that if one request gets dropped, we get appropriate number of nones
-        num_prompts = 14
+        num_prompts = 18
         inputs = ["This is input number " + str(i) for i in range(num_prompts)]
         expected = SimpleResponse.tokenize_response_array_async(model=self.model, inputs=inputs)
         mock_tokenize_json.side_effect = expected

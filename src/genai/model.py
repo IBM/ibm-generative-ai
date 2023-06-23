@@ -25,11 +25,13 @@ logger = logging.getLogger(__name__)
 class Model:
     _accessors = set()
 
-    def __init__(self, model: ModelType, params: Union[GenerateParams, TokenParams], credentials: Credentials):
+    def __init__(
+        self, model: Union[ModelType, str], params: Union[GenerateParams, TokenParams], credentials: Credentials
+    ):
         """Instantiates the Model Interface
 
         Args:
-            model (ModelType): The type of model to use
+            model (Union[ModelType, str]): The type of model to use
             params (Union[GenerateParams, TokenParams]): Parameters to use during generate requests
             credentials (Credentials): The API Credentials
         """
