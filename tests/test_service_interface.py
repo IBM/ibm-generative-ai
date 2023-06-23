@@ -17,7 +17,7 @@ class TestServiceInterface:
 
     @pytest.fixture
     def params(seld):
-        return GenerateParams(decoding_method="greedy", temperature=0.8, return_options=ReturnOptions(input_text=True))
+        return GenerateParams(decoding_method="greedy", return_options=ReturnOptions(input_text=True))
 
     @patch("genai.services.RequestHandler.patch")
     def test_tou(self, mocked_post_request):
