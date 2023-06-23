@@ -131,12 +131,10 @@ class AsyncResponseGenerator:
             tasks.append(task)
             batch_num += 1
         await asyncio.gather(*tasks)
-        print("HERE")
 
     def _request_launcher(self):
         asyncio.set_event_loop(self.loop_)
         self.loop_.run_until_complete(self._schedule_requests())
-        print("TRYING TO CALL CLOSE")
         self.loop_.run_until_complete(self.client_close_fn_())
 
     def generate_response(self):  # -> Generator[Union[GenerateResult, TokenizeResult, None]]:
