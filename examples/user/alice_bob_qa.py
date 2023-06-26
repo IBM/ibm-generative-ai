@@ -40,7 +40,7 @@ alice_params = GenerateParams(
 
 creds = Credentials(api_key, api_endpoint)
 bob_model = Model(ModelType.FLAN_UL2, params=bob_params, credentials=creds)
-alice_model = Model(ModelType.FLAN_T5, params=alice_params, credentials=creds)
+alice_model = Model(ModelType.FLAN_T5_11B, params=alice_params, credentials=creds)
 
 alice_q = "What is 1 + 1?"
 print(f"[Alice][Q] {alice_q}")
