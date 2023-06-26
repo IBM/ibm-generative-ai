@@ -15,7 +15,7 @@ class TestGenerateSchema:
 
         # test all GenerateParams fields
         self.params = GenerateParams(
-            decoding_method="greedy",
+            decoding_method="sample",
             length_penalty=LengthPenalty(decay_factor=1.5, start_index=2),
             max_new_tokens=3,
             min_new_tokens=1,

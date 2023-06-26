@@ -101,6 +101,7 @@ class AsyncResponseGenerator:
         return response
 
     async def _task(self, inputs, batch_num):
+        response = None
         try:
             response = await self._get_response_json(self.model_id, inputs, self.params, self.options)
             logger.debug("Received response = {}".format(response))
@@ -109,7 +110,11 @@ class AsyncResponseGenerator:
             response = self.message_type_(**response)
             logger.debug("Cast to Response = {}".format(response))
         except Exception as e:
-            logger.error("Exception raised async_generate and casting : {}, inputs = {}".format(str(e), inputs))
+            logger.error(
+                "Exception raised async_generate and casting : {}, response = {}, inputs = {}".format(
+                    str(e), response, inputs
+                )
+            )
             self.queue_.put_nowait((batch_num, len(inputs), None))
             return
         try:
@@ -118,7 +123,9 @@ class AsyncResponseGenerator:
                 for result in response.results:
                     self.callback(result)
         except Exception as e:
-            logger.error("Exception raised in callback : {}, inputs = {}".format(str(e), inputs))
+            logger.error(
+                "Exception raised in callback : {}, response = {}, inputs = {}".format(str(e), response, inputs)
+            )
 
     async def _schedule_requests(self):
         tasks = []
