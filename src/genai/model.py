@@ -8,6 +8,7 @@ from tqdm import tqdm
 from genai.credentials import Credentials
 from genai.exceptions import GenAiException
 from genai.metadata import Metadata
+from genai.options import Options
 from genai.prompt_pattern import PromptPattern
 from genai.schemas import GenerateParams, ModelType, TokenParams
 from genai.schemas.responses import (
@@ -40,7 +41,9 @@ class Model:
         self.params = params
         self.service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
 
-    def generate_stream(self, prompts: Union[list[str], list[PromptPattern]]) -> Generator[GenerateStreamResponse]:
+    def generate_stream(
+        self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
+    ) -> Generator[GenerateStreamResponse]:
         if len(prompts) > 0 and isinstance(prompts[0], PromptPattern):
             prompts = PromptPattern.list_str(prompts)
 
@@ -49,7 +52,7 @@ class Model:
                 batch = prompts[i : min(i + Metadata.DEFAULT_MAX_PROMPTS, len(prompts))]
 
                 self.params.stream = True
-                response_gen = self.service.generate(self.model, batch, self.params, streaming=True)
+                response_gen = self.service.generate(self.model, batch, self.params, options=options, streaming=True)
 
                 for chunk in response_gen:
                     if "status_code" in chunk:
@@ -70,7 +73,9 @@ class Model:
         except Exception as ex:
             raise GenAiException(ex)
 
-    def generate_as_completed(self, prompts: Union[list[str], list[PromptPattern]]) -> Generator[GenerateResponse]:
+    def generate_as_completed(
+        self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
+    ) -> Generator[GenerateResponse]:
         """The generate endpoint is the centerpiece of the GENAI alpha.
         It provides a simplified and flexible, yet powerful interface to the supported
         models as a service. Given a text prompt as inputs, and required parameters
@@ -78,6 +83,7 @@ class Model:
 
         Args:
             prompts (list[str]): The list of one or more prompt strings.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Yields:
             Generator[GenerateResult]: A generator of results
@@ -90,9 +96,10 @@ class Model:
         try:
             for i in range(0, len(prompts), Metadata.DEFAULT_MAX_PROMPTS):
                 response_gen = self.service.generate(
-                    self.model,
-                    prompts[i : min(i + Metadata.DEFAULT_MAX_PROMPTS, len(prompts))],
-                    self.params,
+                    model=self.model,
+                    inputs=prompts[i : min(i + Metadata.DEFAULT_MAX_PROMPTS, len(prompts))],
+                    params=self.params,
+                    options=options,
                 )
                 if response_gen.status_code == 200:
                     response_gen = response_gen.json()
@@ -108,7 +115,9 @@ class Model:
         except Exception as ex:
             raise GenAiException(ex)
 
-    def generate(self, prompts: Union[list[str], list[PromptPattern]]) -> list[GenerateResponse]:
+    def generate(
+        self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
+    ) -> list[GenerateResponse]:
         """The generate endpoint is the centerpiece of the GENAI alpha.
         It provides a simplified and flexible, yet powerful interface to the supported
         models as a service. Given a text prompt as inputs, and required parameters
@@ -116,11 +125,12 @@ class Model:
 
         Args:
             prompts (list[str]): The list of one or more prompt strings.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Returns:
             list[GenerateResult]: A list of results
         """
-        return list(self.generate_as_completed(prompts))
+        return list(self.generate_as_completed(prompts, options))
 
     def generate_async(
         self,
@@ -128,6 +138,7 @@ class Model:
         ordered: bool = False,
         callback: Callable[[GenerateResult], Any] = None,
         hide_progressbar: bool = False,
+        options: Options = None,
     ) -> Generator[Union[GenerateResult, None]]:
         """The generate endpoint is the centerpiece of the GENAI alpha.
         It provides a simplified and flexible, yet powerful interface to the supported
@@ -141,8 +152,9 @@ class Model:
             ordered (bool): Whether the responses should be returned in-order.
             callback (Callable[[GenerateResult], Any]): Optional callback
                 to be called after generating result for a prompt.
-            hide_progressbar: boolean flag to hide or show a progress bar.
+            hide_progressbar (bool, optional): boolean flag to hide or show a progress bar.
                 By defaul bar will be always shown.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Returns:
             Generator[Union[GenerateResult, None]]: A list of results
@@ -154,7 +166,7 @@ class Model:
 
         try:
             with AsyncResponseGenerator(
-                self.model, prompts, self.params, self.service, ordered=ordered, callback=callback
+                self.model, prompts, self.params, self.service, ordered=ordered, callback=callback, options=options
             ) as asynchelper:
                 for response in tqdm(
                     asynchelper.generate_response(),
@@ -170,7 +182,7 @@ class Model:
             raise GenAiException(ex)
 
     def tokenize_as_completed(
-        self, prompts: Union[list[str], list[PromptPattern]], return_tokens: bool = False
+        self, prompts: Union[list[str], list[PromptPattern]], return_tokens: bool = False, options: Options = None
     ) -> Generator[TokenizeResult]:
         """The tokenize endpoint allows you to check the conversion of provided prompts to tokens
         for a given model. It splits text into words or subwords, which then are converted to ids
@@ -190,9 +202,10 @@ class Model:
             params = TokenParams(return_tokens=return_tokens)
             for i in range(0, len(prompts), Metadata.DEFAULT_MAX_PROMPTS):
                 tokenize_response = self.service.tokenize(
-                    self.model,
-                    prompts[i : min(i + Metadata.DEFAULT_MAX_PROMPTS, len(prompts))],
-                    params,
+                    model=self.model,
+                    inputs=prompts[i : min(i + Metadata.DEFAULT_MAX_PROMPTS, len(prompts))],
+                    params=params,
+                    options=options,
                 )
 
                 if tokenize_response.status_code == 200:
@@ -211,7 +224,7 @@ class Model:
             raise GenAiException(ex)
 
     def tokenize(
-        self, prompts: Union[list[str], list[PromptPattern]], return_tokens: bool = False
+        self, prompts: Union[list[str], list[PromptPattern]], return_tokens: bool = False, options: Options = None
     ) -> list[TokenizeResult]:
         """The tokenize endpoint allows you to check the conversion of provided prompts to tokens
         for a given model. It splits text into words or subwords, which then are converted to ids
@@ -225,13 +238,15 @@ class Model:
         Returns:
             list[TokenizeResult]: The Tokenized input
         """
-        return list(self.tokenize_as_completed(prompts, return_tokens))
+        return list(self.tokenize_as_completed(prompts, return_tokens, options=options))
 
     def tokenize_async(
         self,
         prompts: Union[list[str], list[PromptPattern]],
         ordered: bool = False,
         callback: Callable[[TokenizeResult], Any] = None,
+        return_tokens: bool = False,
+        options: Options = None,
     ) -> Generator[Union[TokenizeResult, None]]:
         """The tokenize endpoint allows you to check the conversion of provided prompts to tokens
         for a given model. It splits text into words or subwords, which then are converted to ids
@@ -243,6 +258,7 @@ class Model:
             prompts (list[str]): The list of one or more prompt strings.
             ordered (bool): Whether the responses should be returned in-order.
             callback (Callable[[TokenizeResult], Any]): Callback to call for each result.
+            return_tokens (bool, optional): Return tokens with the response. Defaults to False.
 
         Returns:
             Generator[Union[TokenizeResult, None]]: The Tokenized input
@@ -253,8 +269,16 @@ class Model:
         logger.debug(f"Calling Tokenize Async. Prompts: {prompts}, params: {self.params}")
 
         try:
+            params = TokenParams(return_tokens=return_tokens)
             with AsyncResponseGenerator(
-                self.model, prompts, self.params, self.service, fn="tokenize", ordered=ordered, callback=callback
+                self.model,
+                prompts,
+                params,
+                self.service,
+                fn="tokenize",
+                ordered=ordered,
+                callback=callback,
+                options=options,
             ) as asynchelper:
                 for response in asynchelper.generate_response():
                     yield response
