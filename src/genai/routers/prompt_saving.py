@@ -1,6 +1,6 @@
 from genai.exceptions import GenAiException
 from genai.options import Options
-from genai.schemas import GenerateParams, PromptListParams, PromptTemplateParams
+from genai.schemas import PromptListParams
 from genai.services import RequestHandler
 
 
@@ -18,50 +18,39 @@ class PromptSavingRouter:
         except Exception as e:
             raise GenAiException(e)
 
-    def create_prompt(
-        self,
-        name: str,
-        model_id: str,
-        template: dict,
-        input: str = None,
-        output: str = None,
-        parameters: GenerateParams = None,
-    ):
+    def create_prompt(self, options=Options):
         try:
             endpoint = self.service_url + PromptSavingRouter.PROMPT_SAVING
             return RequestHandler.post(
-                endpoint,
+                endpoint=endpoint,
                 key=self.key,
-                model_id=model_id,
-                parameters=parameters,
-                options=Options(name=name, template=template, input=input, output=output),
+                options=options,
             )
         except Exception as e:
             raise GenAiException(e)
 
-    def update_prompt(
-        self, id: str, name: str, model_id: str, template: PromptTemplateParams, input: str = None, output: str = None
-    ):
+    def update_prompt(self, prompt_id: str, options: Options):
         try:
-            endpoint = self.service_url + PromptSavingRouter.PROMPT_SAVING + "/" + id
+            endpoint = self.service_url + PromptSavingRouter.PROMPT_SAVING + "/" + prompt_id
             return RequestHandler.put(
                 endpoint,
                 key=self.key,
-                options=Options(name=name, model_id=model_id, template=template, input=input, output=output),
+                id=prompt_id,
+                options=options,
             )
         except Exception as e:
             raise GenAiException(e)
 
-    def get_prompt(self, id: str):
+    def get_prompt(self, prompt_id: str):
         try:
-            endpoint = self.service_url + PromptSavingRouter.PROMPT_SAVING + "/" + id
+            endpoint = self.service_url + PromptSavingRouter.PROMPT_SAVING + "/" + prompt_id
             return RequestHandler.get(endpoint, key=self.key)
         except Exception as e:
             raise GenAiException(e)
 
-    def delete_prompt(self, id: str):
+    def delete_prompt(self, prompt_id: str):
         try:
-            endpoint = self.service_url + PromptSavingRouter.PROMPT_SAVING + "/" + id
+            endpoint = self.service_url + PromptSavingRouter.PROMPT_SAVING + "/" + prompt_id
             return RequestHandler.delete(endpoint, key=self.key)
         except Exception as e:
             raise GenAiException(e)
