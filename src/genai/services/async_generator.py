@@ -106,7 +106,7 @@ class AsyncResponseGenerator:
         async with self.semaphore_:
             response = None
             try:
-                response = await self._get_response_json(self.model_id, inputs, self.params)
+                response = await self._get_response_json(self.model_id, inputs, self.params, self.options)
                 logger.debug("Received response = {}".format(response))
                 for i in range(len(response["results"])):
                     response["results"][i]["input_text"] = inputs[i]
