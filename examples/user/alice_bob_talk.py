@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 from genai.credentials import Credentials
 from genai.model import Model
-from genai.schemas import GenerateParams, ModelType
+from genai.schemas import GenerateParams
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -39,8 +39,8 @@ alice_params = GenerateParams(
 )
 
 creds = Credentials(api_key, api_endpoint)
-bob_model = Model(ModelType.FLAN_UL2, params=bob_params, credentials=creds)
-alice_model = Model(ModelType.FLAN_T5, params=alice_params, credentials=creds)
+bob_model = Model("google/flan-ul2", params=bob_params, credentials=creds)
+alice_model = Model("google/flan-t5-xxl", params=alice_params, credentials=creds)
 
 sentence = "Hello! How are you?"
 print(f"[Alice] --> {sentence}")
