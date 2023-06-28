@@ -28,8 +28,7 @@ Assuming local :ref:`synth-animal.yaml<File : synth-animal.yaml>` and :ref:`peng
 
 .. literalinclude:: ../../../../examples/user/prompt_from_all_csv.py
     :language: python
-    :start-at: print("\nGiven template:\n", prompt)
-    :end-at: for response in responses:
+    :lines: 42-44, 46-66
     :caption: Multiple Prompt Patterns using complete file
     :prepend: from genai.prompt_pattern import PromptPattern
               _path_to_template_file = "my_templates/synth-animal.yaml"
