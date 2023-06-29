@@ -27,6 +27,7 @@ class FlakyRequestHandler(RequestHandler):
             model_id (str, optional): The id of the language model to be queried. Defaults to None.
             inputs (list, optional): List of inputs to be queried. Defaults to None.
             parameters (dict, optional): Key-value pairs for model parameters. Defaults to None.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Returns:
             httpx.Response: Response from the REST API.
