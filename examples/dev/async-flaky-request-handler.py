@@ -11,17 +11,13 @@ from genai.schemas import GenerateParams, ModelType, TokenParams
 from genai.services.connection_manager import ConnectionManager
 from genai.services.request_handler import RequestHandler
 
-num_requests = 0
+logging.basicConfig(level="ERROR")
 
 
 class FlakyRequestHandler(RequestHandler):
     @staticmethod
     async def flaky_async_generate(
-        endpoint: str,
-        key: str,
-        model_id: str = None,
-        inputs: list = None,
-        parameters: dict = None,
+        endpoint: str, key: str, model_id: str = None, inputs: list = None, parameters: dict = None, options=None
     ):
         """Low level API for async /generate request to REST API.
 
@@ -41,7 +37,9 @@ class FlakyRequestHandler(RequestHandler):
             model_id=model_id,
             inputs=inputs,
             parameters=parameters,
+            options=options,
         )
+
         response = None
         totalsleep = 0
         for attempt in range(0, ConnectionManager.MAX_RETRIES_GENERATE):
@@ -67,10 +65,6 @@ class FlakyRequestHandler(RequestHandler):
 
 
 RequestHandler.async_generate = FlakyRequestHandler.flaky_async_generate
-
-
-logging.getLogger("genai").setLevel(logging.INFO)
-
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
