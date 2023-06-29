@@ -27,7 +27,7 @@ params = GenerateParams(
 )
 
 creds = Credentials(api_key, api_endpoint)
-code_explainer = Model("salesforce/codegen-16b-mono", params=params, credentials=creds)
+code_explainer = Model("google/flan-ul2", params=params, credentials=creds)
 
 
 # pass in an actual python function to explain
