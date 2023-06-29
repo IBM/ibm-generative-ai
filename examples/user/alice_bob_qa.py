@@ -33,7 +33,7 @@ alice_params = GenerateParams(
     max_new_tokens=45,
     min_new_tokens=1,
     stream=False,
-    temperature=0,
+    temperature=1,
     top_k=50,
     top_p=1,
 )
