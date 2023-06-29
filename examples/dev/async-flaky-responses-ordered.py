@@ -13,13 +13,13 @@ num_requests = 0
 
 
 class FlakyAsyncResponseGenerator(AsyncResponseGenerator):
-    async def _get_response_json(self, model, inputs, params):
+    async def _get_response_json(self, model, inputs, params, options):
         try:
             global num_requests
             num_requests += 1
             if num_requests % 2 == 0:
                 await asyncio.sleep(random.randint(0, 5))
-                response_raw = await self.service_fn_(model, inputs, params)
+                response_raw = await self.service_fn_(model, inputs, params, options)
             else:
                 await asyncio.sleep(random.randint(0, 5))
                 response_raw = None  # bad response
@@ -35,10 +35,11 @@ class FlakyModel(Model):
         prompts,
         ordered: bool = False,
         callback=None,
+        options=None,
     ):
         try:
             with FlakyAsyncResponseGenerator(
-                self.model, prompts, self.params, self.service, ordered=ordered, callback=callback
+                self.model, prompts, self.params, self.service, ordered=ordered, callback=callback, options=options
             ) as asynchelper:
                 for response in asynchelper.generate_response():
                     yield response
@@ -47,10 +48,17 @@ class FlakyModel(Model):
         except Exception as ex:
             raise GenAiException(ex)
 
-    def tokenize_async(self, prompts, ordered=False, callback=None):
+    def tokenize_async(self, prompts, ordered=False, callback=None, options=None):
         try:
             with FlakyAsyncResponseGenerator(
-                self.model, prompts, self.params, self.service, fn="tokenize", ordered=ordered, callback=callback
+                self.model,
+                prompts,
+                self.params,
+                self.service,
+                fn="tokenize",
+                ordered=ordered,
+                callback=callback,
+                options=options,
             ) as asynchelper:
                 for response in asynchelper.generate_response():
                     yield response
