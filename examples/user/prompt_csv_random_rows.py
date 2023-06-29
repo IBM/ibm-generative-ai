@@ -27,7 +27,7 @@ params = GenerateParams(
     decoding_method="greedy",
     max_new_tokens=15,
     min_new_tokens=1,
-    stream=False
+    stream=False,
 )
 
 creds = Credentials(api_key, api_endpoint)
