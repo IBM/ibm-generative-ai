@@ -8,7 +8,10 @@ import requests
 from yaml import CLoader as Loader
 from yaml import load
 
+from genai import Credentials
 from genai.exceptions import GenAiException
+from genai.schemas.responses import WatsonxTemplate
+from genai.services import PromptTemplateManager
 from genai.utils.json_utils import json_extract, json_get_all_keys, json_load
 
 
@@ -21,6 +24,9 @@ class PromptPattern:
         self.dump = None
         self.yaml = None
         self.token: str = None
+
+        self.watsonx: WatsonxTemplate = None
+        self.credentials: Credentials = None
 
         for key, value in kwargs.items():
             setattr(self, key, value)
@@ -73,6 +79,32 @@ class PromptPattern:
         """
         pt = PromptPattern()
         pt._create(url=prompt, literal=True)
+        return pt
+
+    @classmethod
+    def from_watsonx(cls, credentials: Credentials, name: str = None, template: dict = None, id: str = None):
+        # Cases :
+        # fetching an existing template : name OR id
+        # updating an existing template : template + (name OR id)
+        # creating a new template       : template + name
+
+        if not template:
+            wx = PromptTemplateManager.load_template(credentials=credentials, id=id, name=name)
+            pt = PromptPattern()
+            pt._create(url=wx.value, watsonx=wx, credentials=credentials, literal=True)
+            return pt
+
+        try:
+            saved_template = PromptTemplateManager.load_template(credentials=credentials, id=id, name=name)
+            id = saved_template.id
+            name = name if name else saved_template.name
+            wx = PromptTemplateManager.update_template(credentials=credentials, id=id, name=name, template=template)
+        except Exception:
+            # Template with name doesn't exist. Save template
+            wx = PromptTemplateManager.save_template(template=template, name=name, credentials=credentials)
+
+        pt = PromptPattern()
+        pt._create(url=wx.value, watsonx=wx, credentials=credentials, literal=True)
         return pt
 
     def _fetch_prompt(self):
@@ -552,11 +584,29 @@ class PromptPattern:
 
         return complete_pt
 
+    def render(self, inputs, data):
+        if not self.watsonx:
+            raise GenAiException("Method only available for watsonx prompt templates.")
+
+        _data = {}
+        _data["value"] = self.watsonx.value
+        _data["data"] = data
+
+        return PromptTemplateManager.render_watsonx_prompts(credentials=self.credentials, inputs=inputs, data=_data)
+
+    def delete(self) -> str:
+        if not self.watsonx:
+            raise GenAiException("Method only available for watsonx prompt templates.")
+        return PromptTemplateManager.delete_template(credentials=self.credentials, id=self.watsonx.id)
+
     def __str__(self):
         return self.dump
 
     def __repr__(self):
         return self.dump
+
+    def __contains__(self, val):
+        return self.__dict__.__contains__(val)
 
     @staticmethod
     def list_str(list_of_prompts: list["PromptPattern"]) -> list[str]:
