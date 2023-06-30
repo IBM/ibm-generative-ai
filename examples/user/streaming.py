@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 from genai.credentials import Credentials
 from genai.model import Model
-from genai.schemas import GenerateParams, ModelType, ReturnOptions
+from genai.schemas import GenerateParams, ReturnOptions
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -22,7 +22,7 @@ params = GenerateParams(
 )
 
 # Instantiate a model proxy object to send your requests
-flan_ul2 = Model(ModelType.FLAN_UL2_20B, params=params, credentials=creds)
+flan_ul2 = Model("google/flan-ul2", params=params, credentials=creds)
 
 prompts = [" Explain life in one sentence"]
 count = 0
