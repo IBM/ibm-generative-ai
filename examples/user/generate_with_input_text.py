@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 from genai.credentials import Credentials
 from genai.model import Model
-from genai.schemas import GenerateParams, ModelType
+from genai.schemas import GenerateParams
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -18,7 +18,7 @@ creds = Credentials(api_key, api_endpoint)  # credentials object to access GENAI
 params = GenerateParams(decoding_method="sample", max_new_tokens=10)
 
 # Instantiate a model proxy object to send your requests
-flan_ul2 = Model(ModelType.FLAN_UL2, params=params, credentials=creds)
+flan_ul2 = Model("google/flan-ul2", params=params, credentials=creds)
 
 prompts = ["Hello! How are you?", "How's the weather?"]
 for response in flan_ul2.generate_async(prompts):

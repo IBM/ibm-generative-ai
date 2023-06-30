@@ -26,40 +26,16 @@ A crucial step is to provide the mapping between the template's variables and th
 
 Assuming local :ref:`synth-animal.yaml<File : synth-animal.yaml>` and :ref:`penguins.csv<File : penguins.csv>` and files.
 
-..  code-block:: python
+.. literalinclude:: ../../../../examples/user/prompt_from_all_csv.py
+    :language: python
+    :lines: 42-44, 46-66
     :caption: Multiple Prompt Patterns using complete file
-
-    from genai.prompt_pattern import PromptPattern
-
-    _path_to_template_file = "my_templates/synth-animal.yaml"
-    _path_to_csv_file = "my_data/penguins.csv"
-
-    prompt = PromptPattern.from_file(_path_to_template_file)
-    print("\nGiven template:\n", prompt)
-
-    prompt.sub("animal", "penguins")
-    mapping = {
-        "species": ["species1", "species2", "species3"],
-        "island": ["location1", "location2", "location3"],
-        "flipper_length_mm": ["length1", "length2", "length3"],
-        "year": ["dob1", "dob2", "dob3"],
-    }
-
-    list_of_prompts = prompt.sub_all_from_csv(
-        csv_path=_path_to_csv_file,
-        col_to_var=mapping,
-    )
-
-    print("-----------------------")
-    print("generated prompt")
-    print(list_of_prompts)
-    print(len(list_of_prompts))
-    print("-----------------------")
-
-    responses = bloomz.generate_as_completed(list_of_prompts)
-    for response in responses:
-        # do something with response.generated_text
-
+    :prepend: from genai.prompt_pattern import PromptPattern
+              _path_to_template_file = "my_templates/synth-animal.yaml"
+              _path_to_csv_file = "my_data/penguins.csv"
+              # Create prompt pattern from the file
+              prompt = PromptPattern.from_file(_path_to_template_file)
+    :append:      # do something with response.generated_text
 
 ..  code-block:: console
     :caption: Output
@@ -134,7 +110,7 @@ Assuming local :ref:`instruction.yaml<File : instruction.yaml>` and :ref:`tasks.
     print("-----------------------")
 
 
-    responses = bloomz.generate_as_completed(list_of_prompts)
+    responses = flan_ul2.generate_as_completed(list_of_prompts)
     for response in responses:
         # do something with response.generated_text
 
@@ -225,7 +201,7 @@ Assuming local :ref:`synth-animal.yaml<File : synth-animal.yaml>` and :ref:`peng
     print(len(list_of_prompts))
     print("-----------------------")
 
-    responses = bloomz.generate_as_completed(list_of_prompts)
+    responses = flan_ul2.generate_as_completed(list_of_prompts)
     for response in responses:
         # do something with response.generated_text
 

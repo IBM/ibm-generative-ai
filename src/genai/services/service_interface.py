@@ -1,6 +1,8 @@
 from httpx import Response
 
 from genai.exceptions import GenAiException
+from genai.options import Options
+from genai.routers import PromptTemplateRouter
 from genai.schemas import GenerateParams, HistoryParams, TokenParams
 from genai.services import RequestHandler
 
@@ -21,13 +23,10 @@ class ServiceInterface:
         """
         self.service_url = service_url.rstrip("/")
         self.key = api_key
+        self._prompt_templating = PromptTemplateRouter(service_url=service_url, api_key=api_key)
 
     def generate(
-        self,
-        model: str,
-        inputs: list,
-        params: GenerateParams = None,
-        streaming: bool = False,
+        self, model: str, inputs: list, params: GenerateParams = None, streaming: bool = False, options: Options = None
     ):
         """Generate a completion text for the given model, inputs, and params.
 
@@ -35,6 +34,8 @@ class ServiceInterface:
             model (str): Model id.
             inputs (list): List of inputs.
             params (GenerateParams, optional): Parameters for generation. Defaults to None.
+            streaming (bool, optional): Streaming response flag. Defaults to False.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Returns:
             Any: json from querying for text completion.
@@ -49,11 +50,12 @@ class ServiceInterface:
                 inputs=inputs,
                 parameters=params,
                 streaming=streaming,
+                options=options,
             )
         except Exception as e:
             raise GenAiException(e)
 
-    def tokenize(self, model: str, inputs: list, params: TokenParams = None):
+    def tokenize(self, model: str, inputs: list, params: TokenParams = None, options: Options = None):
         """Do the conversion of provided inputs to tokens for a given model.
 
         Args:
@@ -67,7 +69,9 @@ class ServiceInterface:
         try:
             params = ServiceInterface._sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.TOKENIZE
-            return RequestHandler.post(endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params)
+            return RequestHandler.post(
+                endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params, options=options
+            )
         except Exception as e:
             raise GenAiException(e)
 
@@ -111,7 +115,7 @@ class ServiceInterface:
     # * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     #   ASYNC
     # * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-    async def async_generate(self, model, inputs, params: GenerateParams = None):
+    async def async_generate(self, model, inputs, params: GenerateParams = None, options: Options = None):
         """Generate a completion text for the given model, inputs, and params.
 
         Args:
@@ -126,13 +130,13 @@ class ServiceInterface:
             params = ServiceInterface._sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.GENERATE
             return await RequestHandler.async_generate(
-                endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params
+                endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params, options=options
             )
         except Exception as e:
             # without VPN this will fail
             raise GenAiException(e)
 
-    async def async_tokenize(self, model, inputs, params: TokenParams = None):
+    async def async_tokenize(self, model, inputs, params: TokenParams = None, options: Options = None):
         """Do the conversion of provided inputs to tokens for a given model.
 
         Args:
@@ -147,7 +151,7 @@ class ServiceInterface:
             params = ServiceInterface._sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.TOKENIZE
             return await RequestHandler.async_tokenize(
-                endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params
+                endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params, options=options
             )
         except Exception as e:
             raise GenAiException(e)
