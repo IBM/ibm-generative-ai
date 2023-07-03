@@ -4,8 +4,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 from genai.credentials import Credentials
 
-from genai_prompt_tuning.file_manager import FileManager
-from genai_prompt_tuning.schemas.files_params import FileListParams
+from genai.services.file_manager import FileManager
+from genai.schemas.files_params import FileListParams
 
 load_dotenv()
 API_KEY = os.getenv("GENAI_KEY", None)

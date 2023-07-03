@@ -8,7 +8,7 @@ from genai_prompt_tuning.schemas import (
     CreateTuneParams,
     TunesListParams,
 )
-from genai_prompt_tuning.tune_manager import TuneManager
+from genai.services.tune_manager import TuneManager
 
 load_dotenv()
 API_KEY = os.getenv("GENAI_KEY", None)
@@ -16,7 +16,7 @@ ENDPOINT = os.getenv("GENAI_API", None)
 
 creds = Credentials(api_key=API_KEY, api_endpoint=ENDPOINT)
 
-file_ids = ["96e9ccba-567f-457f-99d1-4fd3ab44fbf5"]
+file_ids = ["a7ace3e4-cf43-4930-a1a0-a6003f20ec7f"] # ["<some-file-id>"]
 
 hyperparams = CreateTuneHyperParams(verbalizer='classify { "red", "yellow" } Input: {{input}} Output:')
 
