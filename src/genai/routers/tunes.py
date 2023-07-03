@@ -1,6 +1,4 @@
 from genai.exceptions import GenAiException
-from genai.services import ServiceInterface
-
 from genai.schemas.tunes_params import CreateTuneParams, TunesListParams
 from genai.services.request_handler import RequestHandler
 
@@ -13,6 +11,8 @@ class TunesRouter:
         self.key = api_key
 
     def list_tunes(self, params: TunesListParams):
+        from genai.services import ServiceInterface  # circular import
+
         """List all tunes on the server.
         Returns:
             ListTunesResponse: json from querying for tunes list.
@@ -36,6 +36,8 @@ class TunesRouter:
             raise GenAiException(e)
 
     def create_tune(self, params: CreateTuneParams):
+        from genai.services import ServiceInterface  # circular import
+
         """Create a new tune.
         Returns:
             TuneInfoResult: json with info about the newly generated tune.

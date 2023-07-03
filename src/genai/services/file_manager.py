@@ -5,11 +5,9 @@ from typing import Union
 
 from genai.credentials import Credentials
 from genai.exceptions.genai_exception import GenAiException
-
-from genai.services.service_interface import ServiceInterface
-from genai.schemas.files_params import FileListParams
+from genai.schemas import FileListParams
 from genai.schemas.responses import FileInfoResult, FilesListResponse
-
+from genai.services import ServiceInterface
 
 logger = logging.getLogger(__name__)
 

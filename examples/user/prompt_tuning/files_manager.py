@@ -2,10 +2,10 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
-from genai.credentials import Credentials
 
-from genai.services.file_manager import FileManager
-from genai.schemas.files_params import FileListParams
+from genai.credentials import Credentials
+from genai.schemas import FileListParams
+from genai.services import FileManager
 
 load_dotenv()
 API_KEY = os.getenv("GENAI_KEY", None)
