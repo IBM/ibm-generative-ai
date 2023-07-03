@@ -160,3 +160,70 @@ class WatsonxTemplatesResponse(GenAiResponseModel):
 
 class WatsonxRenderedPrompts(GenAiResponseModel):
     results: list[str]
+
+
+class FileFormatResult(GenAiResponseModel):
+    id: int
+    name: str
+
+
+class FileInfoResult(GenAiResponseModel):
+    id: str
+    bytes: str
+    file_name: str
+    purpose: str
+    storage_provider_location: Optional[str]
+    created_at: datetime
+    file_formats: List[FileFormatResult]
+
+
+class FilesListResponse(GenAiResponseModel):
+    results: List[FileInfoResult]
+    totalCount: int
+
+
+class TuneParameters(GenAiResponseModel):
+    accumulate_steps: Optional[int]
+    batch_size: Optional[int]
+    learning_rate: Optional[float]
+    max_input_tokens: Optional[int]
+    max_output_tokens: Optional[int]
+    num_epochs: Optional[int]
+    num_virtual_tokens: Optional[int]
+    verbalizer: Optional[str]
+
+
+class TuneInfoResult(GenAiResponseModel):
+    id: str
+    name: str
+    model_id: str
+    model_name: str
+    method_id: Optional[str]
+    method_name: Optional[str]
+    status: str
+    task_id: str
+    task_name: Optional[str]
+    parameters: Optional[TuneParameters]
+    created_at: datetime
+    preferred: Optional[bool]
+    datapoints: Optional[dict]
+    validation_files: Optional[list[str]]
+    training_files: Optional[list]
+    evaluation_files: Optional[list[str]]
+    status_message: Optional[str]
+    started_at: Optional[datetime]
+
+
+class TunesListResponse(GenAiResponseModel):
+    results: List[TuneInfoResult]
+    totalCount: int
+
+
+class TrainingFilesParameters(GenAiResponseModel):
+    id: str
+    file_name: str
+    created_at: str
+
+
+class TuneGetResponse(GenAiResponseModel):
+    results: Optional[TuneInfoResult]
