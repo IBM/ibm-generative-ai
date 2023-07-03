@@ -12,7 +12,7 @@ import genai.extensions.pandas  # noqa: F401
 from genai.credentials import Credentials
 from genai.model import Model
 from genai.prompt_pattern import PromptPattern
-from genai.schemas import GenerateParams, ModelType
+from genai.schemas import GenerateParams
 
 #
 # In this demo, the following dataset was used:
@@ -34,14 +34,10 @@ params = GenerateParams(
     max_new_tokens=15,
     min_new_tokens=1,
     stream=False,
-    temperature=0.7,
-    top_k=50,
-    top_p=1,
-    random_seed=2,
 )
 
 creds = Credentials(api_key, api_endpoint)
-model = Model(ModelType.FLAN_UL2, params=params, credentials=creds)
+model = Model("google/flan-ul2", params=params, credentials=creds)
 
 
 csv_path = str(PATH) + os.sep + "assets" + os.sep + "penguins.csv"

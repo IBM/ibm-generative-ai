@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 from genai.credentials import Credentials
 from genai.model import Model
-from genai.schemas import GenerateParams, ModelType
+from genai.schemas import GenerateParams
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -26,7 +26,7 @@ params = GenerateParams(
 )
 
 creds = Credentials(api_key, api_endpoint)
-chat = Model(ModelType.FLAN_UL2_20B, params=params, credentials=creds)
+chat = Model("google/flan-ul2", params=params, credentials=creds)
 
 
 prompt = "Write a bash script to split string on comma display as list"

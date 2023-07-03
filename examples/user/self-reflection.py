@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from genai.credentials import Credentials
 from genai.model import Model
 from genai.prompt_pattern import PromptPattern
-from genai.schemas import GenerateParams, ModelType
+from genai.schemas import GenerateParams
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -23,13 +23,10 @@ params = GenerateParams(
     max_new_tokens=20,
     min_new_tokens=1,
     stream=False,
-    temperature=0.7,
-    top_k=50,
-    top_p=1,
 )
 
 creds = Credentials(api_key, api_endpoint)
-model = Model(ModelType.FLAN_UL2, params=params, credentials=creds)
+model = Model("google/flan-ul2", params=params, credentials=creds)
 
 # (1) Prompt
 prompt = "Is McDonald's or Burger King better?"

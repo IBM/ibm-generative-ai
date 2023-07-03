@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 from genai.credentials import Credentials
 from genai.model import Model
-from genai.schemas import GenerateParams, ModelType, TokenParams
+from genai.schemas import GenerateParams, TokenParams
 
 logging.getLogger("genai").setLevel(logging.INFO)
 
@@ -24,7 +24,7 @@ generate_params = GenerateParams(decoding_method="sample", max_new_tokens=500, m
 tokenize_params = TokenParams(return_tokens=True)
 
 
-flan_ul2 = Model(ModelType.FLAN_UL2_20B, params=generate_params, credentials=creds)
+flan_ul2 = Model("google/flan-ul2", params=generate_params, credentials=creds)
 prompts = ["Explain life in one sentence:", "Write a python function to permute an array."] * 5
 print("======== Async Generate (responses need not be in order) ======== ")
 counter = 0
@@ -54,7 +54,7 @@ for response in flan_ul2.generate_async(prompts, ordered=True):
 
 
 # Instantiate a model proxy object to send your requests
-flan_ul2 = Model(ModelType.FLAN_UL2_20B, params=tokenize_params, credentials=creds)
+flan_ul2 = Model("google/flan-ul2", params=tokenize_params, credentials=creds)
 prompts = ["Explain life in one sentence:", "Write a python function to permute an array." * 5] * 5
 print("======== Async Tokenize (responses need not be in order) ======== ")
 counter = 0

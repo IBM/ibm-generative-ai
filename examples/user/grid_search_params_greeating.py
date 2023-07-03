@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 
 from genai.credentials import Credentials
 from genai.model import Model
-from genai.schemas import ModelType
 from genai.utils.search_space_params import grid_search_generate_params
 
 # make sure you have a .env file under genai root with
@@ -36,7 +35,7 @@ greeting2 = "I am fine and you?"
 generate_params_list = grid_search_generate_params(my_space_params)
 
 for params in generate_params_list:
-    model = Model(ModelType.FLAN_UL2, params=params, credentials=creds)
+    model = Model("google/flan-ul2", params=params, credentials=creds)
     responses = model.generate_as_completed([greeting1, greeting2] * 4)
 
     print(f"Used params: \n{params} \n")
