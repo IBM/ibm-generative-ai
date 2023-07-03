@@ -1,7 +1,14 @@
 from genai.exceptions import GenAiException
 from genai.services import ServiceInterface
 
+<<<<<<< HEAD
 from genai.schemas.tunes_params import CreateTuneParams, TunesListParams
+=======
+from genai.schemas import (
+    CreateTuneParams,
+    TunesListParams,
+)
+>>>>>>> 41b8679 (fix: fixed tunes router)
 from genai.services.request_handler import RequestHandler
 
 
@@ -30,7 +37,11 @@ class TunesRouter:
             TuneGetResponse: json from querying for tune with the given ID.
         """
         try:
+<<<<<<< HEAD
             endpoint = self.service_url + TunesRouter.TUNES + "/" + tune_id
+=======
+            endpoint = self.service_url + TunesRouter.TUNES + tune_id
+>>>>>>> 41b8679 (fix: fixed tunes router)
             return RequestHandler.get(endpoint, key=self.key)
         except Exception as e:
             raise GenAiException(e)
@@ -42,12 +53,17 @@ class TunesRouter:
         """
         try:
             params = ServiceInterface._sanitize_params(params)
+<<<<<<< HEAD
             endpoint = self.service_url + TunesRouter.TUNES
+=======
+            endpoint = self.service_url + TunesRouter.TUNES + TunesRouter.TUNES
+>>>>>>> 41b8679 (fix: fixed tunes router)
             return RequestHandler.post(endpoint, key=self.key, payload=params)
         except Exception as e:
             raise GenAiException(e)
 
     def delete_tune(self, tune_id: str):
+<<<<<<< HEAD
         """Delete a tune from the server.
 
         Args:
@@ -56,8 +72,15 @@ class TunesRouter:
         Returns:
             Any: json with info about the deleted tune.
         """
+=======
+        """Deletes a tune from the server."""
+>>>>>>> 41b8679 (fix: fixed tunes router)
         try:
             endpoint = self.service_url + TunesRouter.TUNES + "/" + tune_id
             return RequestHandler.delete(endpoint, key=self.key, parameters=tune_id)
         except Exception as e:
             raise GenAiException(e)
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 41b8679 (fix: fixed tunes router)
