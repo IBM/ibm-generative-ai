@@ -3,7 +3,7 @@
 
 This is the Python SDK for IBM Foundation Models Studio to bring IBM Generative AI into Python programs and to also extend it with useful operations and types.
 
-:books:	API Documentation: [Link](https://ibm.github.io/ibm-generative-ai/)
+:books:	**API Documentation: [Link](https://ibm.github.io/ibm-generative-ai/)**
 
 *This is an early access library and requires invitation to use the technical preview of [watsonx.ai](https://watsonx.ai/). You can join the waitlist by visiting. https://www.ibm.com/products/watsonx-ai.*
 
@@ -101,11 +101,12 @@ creds = Credentials(api_key=my_api_key, api_endpoint=my_api_endpoint)
 ## <a name='Examples'></a>Examples
 
 There are a number of examples you can try in the [`examples/user`](examples/user) directory.
-Login to [workbench.res.ibm.com](https://workbench.res.ibm.com/) and get your GenAI API key. Then, create a `.env` file and assign the `GENAI_KEY` value as:
+Login to [workbench.res.ibm.com](https://workbench.res.ibm.com/) and get your GenAI API key. Then, create a `.env` file and assign the `GENAI_KEY` value as below example. [More information](#gen-ai-endpoint)
 
 
 ```ini
 GENAI_KEY=YOUR_GENAI_API_KEY
+# GENAI_API=GENAI_API_ENDPOINT << for a different endpoint
 ```
 
 ### <a name='AsyncExample'></a>Async Example
@@ -116,7 +117,7 @@ import os
 from dotenv import load_dotenv
 
 from genai.model import Credentials, Model
-from genai.schemas import GenerateParams, ModelType
+from genai.schemas import GenerateParams
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -142,7 +143,7 @@ params = GenerateParams(
 # creds object
 creds = Credentials(api_key, api_endpoint)
 # model object
-model = Model(ModelType.FLAN_UL2, params=params, credentials=creds)
+model = Model("google/flan-ul2", params=params, credentials=creds)
 
 greeting = "Hello! How are you?"
 lots_of_greetings = [greeting] * 1000
@@ -170,7 +171,7 @@ import os
 from dotenv import load_dotenv
 
 from genai.model import Credentials, Model
-from genai.schemas import GenerateParams, ModelType
+from genai.schemas import GenerateParams
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -196,7 +197,7 @@ params = GenerateParams(
 # creds object
 creds = Credentials(api_key, api_endpoint)
 # model object
-model = Model(ModelType.FLAN_UL2, params=params, credentials=creds)
+model = Model("google/flan-ul2", params=params, credentials=creds)
 
 greeting1 = "Hello! How are you?"
 greeting2 = "I am fine and you?"
@@ -292,7 +293,7 @@ import os
 from dotenv import load_dotenv
 import genai.extensions.langchain
 from genai.extensions.langchain import LangChainInterface
-from genai.schemas import GenerateParams, ModelType
+from genai.schemas import GenerateParams
 from genai import Credentials, Model, PromptPattern
 
 load_dotenv()
@@ -302,11 +303,11 @@ creds = Credentials(api_key, api_endpoint)
 params = GenerateParams(decoding_method="greedy")
 
 # As LangChain Model
-langchain_model = LangChainInterface(model=ModelType.FLAN_UL2, params=params, credentials=creds)
+langchain_model = LangChainInterface(model="google/flan-ul2", params=params, credentials=creds)
 print(langchain_model("Answer this question: What is life?"))
 
 # As GenAI Model
-genai_model = Model(model=ModelType.FLAN_UL2, params=params, credentials=creds)
+genai_model = Model(model="google/flan-ul2", params=params, credentials=creds)
 print(genai_model.generate(["Answer this question: What is life?"])[0].generated_text)
 
 # GenAI prompt pattern to langchain PromptTemplate and vice versa

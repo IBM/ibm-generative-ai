@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 from genai.credentials import Credentials
 from genai.model import Model
-from genai.schemas import ModelType, TokenParams
+from genai.schemas import TokenParams
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -16,7 +16,7 @@ api_endpoint = os.getenv("GENAI_API", None)
 print("\n------------- Example (Tokenize)-------------\n")
 
 creds = Credentials(api_key, api_endpoint)
-model = Model(ModelType.FLAN_UL2, params=TokenParams, credentials=creds)
+model = Model("google/flan-ul2", params=TokenParams, credentials=creds)
 
 sentence = "Hello! How are you?"
 

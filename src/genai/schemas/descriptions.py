@@ -24,17 +24,13 @@ class Descriptions:
     LENGTH_PENALTY = "It can be used to exponentially increase the likelihood of the text generation terminating once a specified number of tokens have been generated."
     MAX_NEW_TOKEN = "The maximum number of new tokens to be generated. The range is 1 to 1024, defaults to 20."
     MIN_NEW_TOKEN = "If stop sequences are given, they are ignored until minimum tokens are generated."
-    RANDOM_SEED = (
-        "Manually passed seed to initialize the randomization for experimental repeatability. The range is 1 to 9999."
-    )
+    RANDOM_SEED = "Manually passed seed to initialize the randomization for experimental repeatability. The range is 1 to 9999. Valid only with decoding_method=sample."
     STOP_SQUENCES = "Stop sequences are one or more strings which will cause the text generation to stop if/when they are produced as part of the output. Stop sequences encountered prior to the minimum number of tokens being generated will be ignored."
     STREAM = "Enables to stream partial progress as server-sent events. Defaults to false."
-    TEMPERATURE = "The value used to module the next token probabilities. The range is 0.00 to 2.00, a value set to 0.00 would make it deterministic."
+    TEMPERATURE = "The value used to module the next token probabilities. The range is 0.05 to 2.00, a value set to 0.05 would make it deterministic. Valid only with decoding_method=sample."
     TIME_LIMIT = "Time limit in milliseconds - if not completed within this time, generation will stop. The text generated so far will be returned along with the TIME_LIMIT stop reason."
-    TOP_K = (
-        "The number of highest probability vocabulary tokens to keep for top-k-filtering. The range is any value >= 1."
-    )
-    TOP_P = "If set to value < 1, only the most probable tokens with probabilities that add up to top_p or higher are kept for generation. The range is 0.00 to 1.00."
+    TOP_K = "The number of highest probability vocabulary tokens to keep for top-k-filtering. The range is any value >= 1. Valid only with decoding_method=sample."
+    TOP_P = "If set to value < 1, only the most probable tokens with probabilities that add up to top_p or higher are kept for generation. The range is 0.00 to 1.00. Valid only with decoding_method=sample."
     REPETITION_PENALTY = "The parameter for repetition penalty. 1.0 means no penalty."
     TRUNCATE_INPUT_TOKENS = "Truncate to this many input tokens. Can be used to avoid requests failing due to input being longer than configured limits. Zero means don't truncate."
 

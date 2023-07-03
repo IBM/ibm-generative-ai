@@ -10,7 +10,7 @@ except ImportError:
 
 from genai.credentials import Credentials
 from genai.extensions.langchain import LangChainInterface
-from genai.schemas import GenerateParams, ModelType
+from genai.schemas import GenerateParams
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -36,8 +36,8 @@ pt2 = PromptTemplate(
 
 
 creds = Credentials(api_key, api_endpoint)
-flan = LangChainInterface(model=ModelType.FLAN_UL2, credentials=creds, params=params)
-model = LangChainInterface(model=ModelType.FLAN_UL2, credentials=creds)
+flan = LangChainInterface(model="google/flan-ul2", credentials=creds, params=params)
+model = LangChainInterface(model="google/flan-ul2", credentials=creds)
 prompt_to_flan = LLMChain(llm=flan, prompt=pt1)
 flan_to_model = LLMChain(llm=model, prompt=pt2)
 qa = SimpleSequentialChain(chains=[prompt_to_flan, flan_to_model], verbose=True)

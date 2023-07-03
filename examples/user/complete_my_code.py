@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 from genai.credentials import Credentials
 from genai.model import Model
-from genai.schemas import GenerateParams, ModelType
+from genai.schemas import GenerateParams
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -27,7 +27,7 @@ params = GenerateParams(
 )
 
 creds = Credentials(api_key, api_endpoint)
-code_explainer = Model(ModelType.CODEGEN_MONO_16B, params=params, credentials=creds)
+code_explainer = Model("google/flan-ul2", params=params, credentials=creds)
 
 
 # pass in an actual python function to explain
