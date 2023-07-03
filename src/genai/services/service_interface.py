@@ -2,8 +2,7 @@ from httpx import Response
 
 from genai.exceptions import GenAiException
 from genai.options import Options
-from genai.routers import PromptTemplateRouter
-from genai.routers import FilesRouter
+from genai.routers import PromptTemplateRouter, FilesRouter, TunesRouter
 from genai.schemas import GenerateParams, HistoryParams, TokenParams
 from genai.services import RequestHandler
 
@@ -26,6 +25,7 @@ class ServiceInterface:
         self.key = api_key
         self._prompt_templating = PromptTemplateRouter(service_url=service_url, api_key=api_key)
         self._files = FilesRouter(service_url=service_url, api_key=api_key)
+        self._tunes = TunesRouter(service_url=service_url, api_key=api_key)
 
     def generate(
         self, model: str, inputs: list, params: GenerateParams = None, streaming: bool = False, options: Options = None
