@@ -137,8 +137,8 @@ class TestFiles:
     # test file delete function
     @patch("genai.services.RequestHandler.delete")
     def test_delete_file_api_call(self, mock_requests):
-        mock_response = MagicMock(status_code=200)
-        mock_response.json.return_value = SimpleResponse.files(file_id="file_id")
+        mock_response = MagicMock(status_code=204)
+        mock_response.json.return_value = {"status": "success"}
         mock_requests.return_value = mock_response
 
         f = self.service_router.delete_file(file_id="file_id")
