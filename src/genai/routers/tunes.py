@@ -58,7 +58,7 @@ class TunesRouter:
         try:
             params = ServiceInterface._sanitize_params(params)
             endpoint = self.service_url + TunesRouter.TUNES
-            return RequestHandler.post(endpoint, key=self.key, payload=params)
+            return RequestHandler.post(endpoint, key=self.key, options=params)
         except Exception as e:
             raise GenAiException(e)
 
