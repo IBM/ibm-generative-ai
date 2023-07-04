@@ -170,7 +170,7 @@ class TestAsyncResponseGenerator:
     async def test_concurrent_generate_dropped_request(self, httpx_mock, generate_params):
         failed_id = 4
         single_response = SimpleResponse.generate(model=self.model, inputs=self.inputs, params=generate_params)
-        headers, json_data = RequestHandler._metadata(
+        headers, json_data, _ = RequestHandler._metadata(
             "POST",
             key="TEST_KEY",
             model_id=self.model,

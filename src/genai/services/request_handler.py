@@ -21,6 +21,7 @@ class RequestHandler:
         model_id: str = None,
         inputs: list = None,
         parameters: dict = None,
+        files: dict = None,
         options: Options = None,
     ) -> tuple[dict, dict]:
         """General function to build header and/or json_data for /post and /get requests.
@@ -32,10 +33,17 @@ class RequestHandler:
             inputs (list, optional): List of inputs to be queried. Defaults to None.
             parameters (dict, optional): Key-value pairs for model parameters. Defaults to None.
             options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
+            files (dict, optional): Pre-built files. Defaults to None.
 
         Returns:
             tuple[dict,dict]: Headers, json_data for request
         """
+
+        # NOTE: discuss with team if we want to keep like this or try another approach
+        if method == "POST" and files is not None:
+            headers = {"Authorization": f"Bearer {key}"}
+            json_data = None
+            return headers, json_data, files
 
         headers = {
             "Authorization": f"Bearer {key}",
@@ -62,7 +70,7 @@ class RequestHandler:
         if method == "PATCH":
             headers["Content-Type"] = "application/json"
 
-        return headers, json_data
+        return headers, json_data, files
 
     @staticmethod
     async def async_post(
@@ -72,6 +80,7 @@ class RequestHandler:
         inputs: list = None,
         parameters: dict = None,
         options: Options = None,
+        files: dict = None,
     ):
         """Low level API for async /post request to REST API.
 
@@ -85,12 +94,18 @@ class RequestHandler:
         Returns:
             httpx.Response: Response from the REST API.
         """
-        headers, json_data = RequestHandler._metadata(
-            method="POST", key=key, model_id=model_id, inputs=inputs, parameters=parameters, options=options
+        headers, json_data, files = RequestHandler._metadata(
+            method="POST",
+            key=key,
+            model_id=model_id,
+            inputs=inputs,
+            parameters=parameters,
+            options=options,
+            files=files,
         )
         response = None
         async with httpx.AsyncClient(timeout=ConnectionManager.TIMEOUT) as client:
-            response = await client.post(endpoint, headers=headers, json=json_data)
+            response = await client.post(endpoint, headers=headers, json=json_data, files=files)
         return response
 
     @staticmethod
@@ -134,7 +149,7 @@ class RequestHandler:
         Returns:
             httpx.Response: Response from the REST API.
         """
-        headers, json_data = RequestHandler._metadata(
+        headers, json_data, _ = RequestHandler._metadata(
             method="POST", key=key, model_id=model_id, inputs=inputs, parameters=parameters, options=options
         )
         response = None
@@ -167,7 +182,7 @@ class RequestHandler:
         Returns:
             httpx.Response: Response from the REST API.
         """
-        headers, json_data = RequestHandler._metadata(
+        headers, json_data, _ = RequestHandler._metadata(
             method="POST", key=key, model_id=model_id, inputs=inputs, parameters=parameters, options=options
         )
         response = None
@@ -195,7 +210,7 @@ class RequestHandler:
         Returns:
             httpx.Response: Response from the REST API.
         """
-        headers, _ = RequestHandler._metadata(method="GET", key=key)
+        headers, _, _ = RequestHandler._metadata(method="GET", key=key)
 
         async with httpx.AsyncClient(timeout=ConnectionManager.TIMEOUT) as client:
             response = await client.get(url=endpoint, headers=headers, params=parameters)
@@ -210,6 +225,7 @@ class RequestHandler:
         parameters: dict = None,
         streaming: bool = False,
         options: Options = None,
+        files: dict = None,
     ):
         """Low level API for /post request to REST API.
 
@@ -220,21 +236,28 @@ class RequestHandler:
             inputs (list, optional): List of inputs to be queried. Defaults to None.
             parameters (dict, optional): Key-value pairs for model parameters. Defaults to None.
             options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
+            files (dict, optional): Files to be sent to the server. Defaults to None.
 
         Returns:
             httpx.Response: Response from the REST API.
             or
             Generator of streamed response payloads from the REST API.
         """
-        headers, json_data = RequestHandler._metadata(
-            method="POST", key=key, model_id=model_id, inputs=inputs, parameters=parameters, options=options
+        headers, json_data, files = RequestHandler._metadata(
+            method="POST",
+            key=key,
+            model_id=model_id,
+            inputs=inputs,
+            parameters=parameters,
+            options=options,
+            files=files,
         )
 
         if streaming:
-            return RequestHandler.post_stream(endpoint=endpoint, headers=headers, json_data=json_data)
+            return RequestHandler.post_stream(endpoint=endpoint, headers=headers, json_data=json_data, files=files)
         else:
             with httpx.Client(timeout=ConnectionManager.TIMEOUT) as s:
-                response = s.post(url=endpoint, headers=headers, json=json_data)
+                response = s.post(url=endpoint, headers=headers, json=json_data, files=files)
                 return response
 
     @staticmethod
@@ -258,9 +281,9 @@ class RequestHandler:
             return response
 
     @staticmethod
-    def post_stream(endpoint, headers, json_data):
+    def post_stream(endpoint, headers, json_data, files):
         with httpx.Client(timeout=ConnectionManager.TIMEOUT) as s:
-            with s.stream(method="POST", url=endpoint, headers=headers, json=json_data) as r:
+            with s.stream(method="POST", url=endpoint, headers=headers, json=json_data, files=files) as r:
                 for chunk in r.iter_text():
                     yield chunk
 
@@ -276,7 +299,7 @@ class RequestHandler:
         Returns:
             httpx.Response: Response from the REST API.
         """
-        headers, _ = RequestHandler._metadata(method="GET", key=key)
+        headers, _, _ = RequestHandler._metadata(method="GET", key=key)
         with httpx.Client(timeout=ConnectionManager.TIMEOUT) as s:
             response = s.get(url=endpoint, headers=headers, params=parameters)
             return response
@@ -293,7 +316,7 @@ class RequestHandler:
         Returns:
             requests.models.Response: Response from the REST API.
         """
-        headers, json_data = RequestHandler._metadata(method="PUT", key=key, options=options)
+        headers, json_data, _ = RequestHandler._metadata(method="PUT", key=key, options=options)
         with httpx.Client(timeout=ConnectionManager.TIMEOUT) as s:
             response = s.put(url=endpoint, headers=headers, json=json_data)
             return response
@@ -310,7 +333,7 @@ class RequestHandler:
         Returns:
             requests.models.Response: Response from the REST API.
         """
-        headers, _ = RequestHandler._metadata(method="DELETE", key=key)
+        headers, _, _ = RequestHandler._metadata(method="DELETE", key=key)
         with httpx.Client(timeout=ConnectionManager.TIMEOUT) as s:
             response = s.delete(url=endpoint, headers=headers, params=parameters)
             return response
