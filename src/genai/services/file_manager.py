@@ -16,11 +16,11 @@ class FileManager:
     """Class for managing files on the server."""
 
     @staticmethod
-    def list_files(credentials: Credentials, params: FileListParams) -> FilesListResponse:
+    def list_files(credentials: Credentials, params: FileListParams = None) -> FilesListResponse:
         """List all files on the server.
 
         Args:
-            params (FileListParams): Parameters for listing files.
+            params (FileListParams, optional): Parameters for listing files.
 
         Returns:
             FilesListResponse: Response from the server.

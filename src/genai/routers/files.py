@@ -15,6 +15,9 @@ class FilesRouter:
 
         """List all files on the server.
 
+        Args:
+            params (FileListParams, optional): Parameters for listing files.
+
         Returns:
             Any: json from querying for file list.
         """

@@ -9,7 +9,7 @@ from genai import Credentials
 from genai.exceptions import GenAiException
 from genai.routers import FilesRouter
 from genai.schemas import FileListParams
-from genai.schemas.responses import FileInfoResult
+from genai.schemas.responses import FileInfoResult, FilesListResponse
 from genai.services.file_manager import FileManager
 from tests.assets.response_helper import SimpleResponse
 
@@ -50,14 +50,27 @@ class TestFiles:
     def task_id_types(self):
         return ["generation", "classification", "summarization"]
 
+    # test list files function
+    @patch("genai.services.RequestHandler.get")
+    def test_list_files(self, mock_requests, params, credentials):
+        list_response = SimpleResponse.files(params=params)
+        expected_response = FilesListResponse(**list_response)
+
+        mock_response = MagicMock(status_code=200)
+        mock_response.json.return_value = list_response
+        mock_requests.return_value = mock_response
+
+        f = FileManager.list_files(credentials=credentials)
+        assert f == expected_response
+
     @patch("genai.services.RequestHandler.get")
     def test_file_list_api_call(self, mock_requests, params):
         mock_response = MagicMock(status_code=200)
         mock_response.json.return_value = SimpleResponse.files()
         mock_requests.return_value = mock_response
 
-        g = self.service_router.list_files(params=params)
-        assert g == mock_response
+        f = self.service_router.list_files(params=params)
+        assert f == mock_response
 
     def test_file_list_api_call_with_wrong_params(self):
         with pytest.raises(GenAiException) as e:
@@ -69,7 +82,17 @@ class TestFiles:
             self.service_router.list_files(params=123)
             assert e.message == "params must be of type FileListParams."
 
-    def test_file_metadata_api_call(self):
+    # test file metadata function
+    @patch("genai.services.RequestHandler.get")
+    def test_file_metadata_api_call(self, mock_requests):
+        mock_response = MagicMock(status_code=200)
+        mock_response.json.return_value = SimpleResponse.files(file_id="file_id")
+        mock_requests.return_value = mock_response
+
+        f = self.service_router.get_file_metadata(file_id="file_id")
+        assert f == mock_response
+
+    def test_file_metadata_api_call_wrong_id(self):
         with pytest.raises(GenAiException) as e:
             self.service_router.get_file_metadata(file_id=123)
             assert e.message == "File not found, file_id must be of type str"
@@ -87,7 +110,17 @@ class TestFiles:
 
         assert file_response == expected_response
 
-    def test_read_file_api_call(self):
+    # test file read function
+    @patch("genai.services.RequestHandler.get")
+    def test_read_file_api_call(self, mock_requests):
+        mock_response = MagicMock(status_code=200)
+        mock_response.json.return_value = SimpleResponse.files(file_id="file_id")
+        mock_requests.return_value = mock_response
+
+        f = self.service_router.read_file(file_id="file_id")
+        assert f == mock_response
+
+    def test_read_file_api_call_wrong_id(self):
         with pytest.raises(Exception) as e:
             self.service_router.read_file(file_id=123)
             assert e.message == "File not found, file_id must be of type str"
@@ -101,7 +134,17 @@ class TestFiles:
 
         assert file_response == response.content.decode("utf-8")
 
-    def test_file_delete_api_call(self):
+    # test file delete function
+    @patch("genai.services.RequestHandler.delete")
+    def test_delete_file_api_call(self, mock_requests):
+        mock_response = MagicMock(status_code=200)
+        mock_response.json.return_value = SimpleResponse.files(file_id="file_id")
+        mock_requests.return_value = mock_response
+
+        f = self.service_router.delete_file(file_id="file_id")
+        assert f == mock_response
+
+    def test_file_delete_api_call_wrong_id(self):
         with pytest.raises(Exception) as e:
             self.service_router.delete_file(file_id=123)
             assert e.message == "File not found, file_id must be of type str"
@@ -117,7 +160,17 @@ class TestFiles:
 
         assert file_response == expected_response
 
-    def test_file_uplod_api_call(self):
+    # test file upload function
+    @patch("genai.services.RequestHandler.post")
+    def test_upload_file_api_call(self, mock_requests, multipart_form_data):
+        mock_response = MagicMock(status_code=200)
+        mock_response.json.return_value = SimpleResponse.files(multipart_form_data=multipart_form_data)
+        mock_requests.return_value = mock_response
+
+        f = self.service_router.upload_file(multipart_form_data=multipart_form_data)
+        assert f == mock_response
+
+    def test_file_uplod_api_call_wrong_forms(self):
         with pytest.raises(GenAiException) as e:
             self.service_router.upload_file(multipart_form_data="form_data")
             assert e.message == "multipart_form_data must be of type dict"

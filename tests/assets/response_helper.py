@@ -177,13 +177,17 @@ class SimpleResponse:
                     "name": "generation",
                 },
             ],
-            "task_name": "Generation, Summarization",
         }
 
         if "multipart_form_data" in kwargs:
             response = {"results": results}
         elif "file_id" in kwargs:
             response = {"results": results}
+        elif "params" in kwargs:
+            response = {
+                "results": [results, results],
+                "totalCount": 2,
+            }
         else:
             response = {
                 "results": [results],
