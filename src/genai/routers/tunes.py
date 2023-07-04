@@ -14,8 +14,12 @@ class TunesRouter:
         from genai.services import ServiceInterface  # circular import
 
         """List all tunes on the server.
+
+        Args:
+            params (TunesListParams): Parameters for the tune list.
+
         Returns:
-            ListTunesResponse: json from querying for tunes list.
+            Any: json from querying for tune list.
         """
         try:
             params = ServiceInterface._sanitize_params(params)
@@ -26,8 +30,12 @@ class TunesRouter:
 
     def get_tune(self, tune_id: str):
         """Get a given tune from the server.
+
+        Args:
+            tune_id (str): Id of the tune to be retrieved.
+
         Returns:
-            TuneGetResponse: json from querying for tune with the given ID.
+            Any: json from querying for tune retrieval.
         """
         try:
             endpoint = self.service_url + TunesRouter.TUNES + "/" + tune_id
@@ -38,10 +46,15 @@ class TunesRouter:
     def create_tune(self, params: CreateTuneParams):
         from genai.services import ServiceInterface  # circular import
 
-        """Create a new tune.
+        """Create a new tune on the server.
+
+        Args:
+            params (CreateTuneParams): Parameters for the tune creation.
+
         Returns:
-            TuneInfoResult: json with info about the newly generated tune.
+            Any: json with info about the created tune.
         """
+
         try:
             params = ServiceInterface._sanitize_params(params)
             endpoint = self.service_url + TunesRouter.TUNES
