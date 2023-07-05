@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, Extra, Field
 
 # TODO: Update the descriptions import
-from genai_prompt_tuning.schemas.tunes_descriptions import TunesAPIDescriptions as tx
+from genai.schemas.descriptions import TunesAPIDescriptions as tx
 
 
 class TunesListParams(BaseModel):

@@ -1,14 +1,9 @@
 import logging
 
-from genai_prompt_tuning.schemas import (
-    TuneGetResponse,
-    TuneInfoResult,
-    TunesListResponse,
-)
-from genai_prompt_tuning.schemas.tunes_params import CreateTuneParams, TunesListParams
-
 from genai.credentials import Credentials
 from genai.exceptions.genai_exception import GenAiException
+from genai.schemas.responses import TuneGetResponse, TuneInfoResult, TunesListResponse
+from genai.schemas.tunes_params import CreateTuneParams, TunesListParams
 from genai.services.service_interface import ServiceInterface
 
 logger = logging.getLogger(__name__)
