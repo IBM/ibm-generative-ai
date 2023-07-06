@@ -314,7 +314,7 @@ class Model:
         label: str,
         method: str,
         task: str,
-        hyperparameters: CreateTuneHyperParams,
+        hyperparameters: CreateTuneHyperParams = None,
         training_file_ids: list[str] = None,
         validation_file_ids: list[str] = None,
     ):
@@ -341,7 +341,7 @@ class Model:
             task_id=task,
             training_file_ids=training_file_ids,
             validation_file_ids=validation_file_ids,
-            parameters=hyperparameters,
+            parameters=hyperparameters or CreateTuneHyperParams(),
         )
         tune = TuneManager.create_tune(credentials=self.creds, params=params)
         return Model(model=tune.id, params=None, credentials=self.creds)
