@@ -50,3 +50,14 @@ class CreateTuneParams(BaseModel):
     training_file_ids: list[str] = Field(None, description=tx.TRAINING_FILE_IDS)
     validation_file_ids: Optional[list[str]] = Field(None, description=tx.VALIDATION_FILE_IDS)
     parameters: Optional[CreateTuneHyperParams] = Field(None, description=tx.PARAMETERS)
+
+
+class DownloadAssetsParams(BaseModel):
+    """Class to hold the parameters for downloading tune assets."""
+
+    class Config:
+        anystr_strip_whitespace: True
+        # extra: Extra.forbid
+
+    id: str = Field(None, description=tx.ID)
+    content: str = Field(None, description=tx.CONTENT)

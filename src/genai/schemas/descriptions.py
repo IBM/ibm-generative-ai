@@ -66,6 +66,8 @@ class TunesAPIDescriptions:
     LIMIT = "Specifies the maximum number of items in the collection that should be returned. Defaults to 100. Maximum is 100."
     SEARCH = "Filters the items to be returned based on their name."
     STATUS = "Filters the items to be returned based on their status. Possible values are: INITIALIZING, NOT_STARTED, PENDING, HALTED, RUNNING, QUEUED, COMPLETED, FAILED."
+    ID = "The ID of the tune."
+    CONTENT = "The name of the asset. Available options are encoder and logs."
 
 
 class FilesAPIDescriptions:

@@ -8,7 +8,11 @@ from genai.schemas.responses import (
     TuneMethodsGetResponse,
     TunesListResponse,
 )
-from genai.schemas.tunes_params import CreateTuneParams, TunesListParams
+from genai.schemas.tunes_params import (
+    CreateTuneParams,
+    DownloadAssetsParams,
+    TunesListParams,
+)
 from genai.services.service_interface import ServiceInterface
 
 logger = logging.getLogger(__name__)
@@ -109,7 +113,7 @@ class TuneManager:
         """Get list of tune methods.
 
         Returns:
-            TuneMethodsGetResponse
+            TuneMethodsGetResponse: Response from the server
         """
         service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
         try:
@@ -118,6 +122,28 @@ class TuneManager:
                 response = response.json()
                 responses = TuneMethodsGetResponse(**response)
                 return responses.results
+            else:
+                raise GenAiException(response)
+        except Exception as e:
+            raise GenAiException(e)
+
+    @staticmethod
+    def download_tune_assets(credentials: Credentials, params: DownloadAssetsParams) -> dict:
+        """Download tune asset (available only for completed tunes)
+
+        Args:
+            params (DownloadAssetsParams): Parameters for downloading tune assets.
+
+        Returns:
+            dict: Response from the server.
+        """
+        service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
+        try:
+            response = service._tunes.download_tune_assets(params=params)
+
+            if response.status_code == 200:
+                response = response.json()
+                return response
             else:
                 raise GenAiException(response)
         except Exception as e:

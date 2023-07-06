@@ -3,7 +3,11 @@ import os
 from dotenv import load_dotenv
 
 from genai.credentials import Credentials
-from genai.schemas.tunes_params import CreateTuneParams, TunesListParams
+from genai.schemas.tunes_params import (
+    CreateTuneParams,
+    DownloadAssetsParams,
+    TunesListParams,
+)
 from genai.services.tune_manager import TuneManager
 
 load_dotenv()
@@ -48,3 +52,8 @@ print("\n\nDelete tune response: \n", tune_delete)
 # Get tune methods
 tune_methods = TuneManager.get_tune_methods(credentials=creds)
 print("\n\nTune methods: \n", tune_methods)
+
+assets_params = DownloadAssetsParams(id="flan-t5-xl-mpt-5TruaBww-2023-07-03-18-37-28", content="encoder")
+
+# Download tune assets
+tune_assets = TuneManager.download_tune_assets(credentials=creds, params=assets_params)

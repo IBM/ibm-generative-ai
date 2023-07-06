@@ -16,7 +16,7 @@ ENDPOINT = os.getenv("GENAI_API", None)
 
 creds = Credentials(api_key=API_KEY, api_endpoint=ENDPOINT)
 
-file_ids = ["<some-file-id>"]
+file_ids = ["a7ace3e4-cf43-4930-a1a0-a6003f20ec7f"]  # ["<some-file-id>"]
 
 hyperparams = CreateTuneHyperParams(verbalizer='classify { "red", "yellow" } Input: {{input}} Output:')
 
@@ -52,3 +52,6 @@ print("\n\nDelete tune response: \n", tune_delete)
 # Get tune methods
 tune_methods = TuneManager.get_tune_methods(credentials=creds)
 print("\n\nTune methods: \n", tune_methods)
+
+# Download tune assets
+# tune_assets =

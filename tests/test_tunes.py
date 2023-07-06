@@ -6,6 +6,7 @@ from genai import Credentials
 from genai.exceptions import GenAiException
 from genai.routers.tunes import TunesRouter
 from genai.schemas.tunes_params import CreateTuneParams, TunesListParams
+from genai.services.tune_manager import TuneManager
 from tests.assets.response_helper import SimpleResponse
 
 
@@ -20,7 +21,7 @@ class TestTunes:
 
     @pytest.fixture
     def credentials(self):
-        return Credentials("GENAI_APY_KEY")
+        return Credentials("GENAI_KEY")
 
     # Test list tunes function
     @patch("genai.services.RequestHandler.get")
@@ -93,3 +94,17 @@ class TestTunes:
         with pytest.raises(GenAiException) as e:
             self.service_router.create_tune(params=123)
             assert e.message == "params must be of type dict as CreateTuneParams."
+
+    # Test download tune assets function
+
+    @patch("genai.services.RequestHandler.get")
+    def test_get_tune_methods(self, credentials):
+        expected_response = MagicMock(status_code=200)
+
+        tune_manager = TuneManager()
+        tune_response = tune_manager.get_tune_methods(credentials=credentials)
+
+        print("\n\nTUNE RESPONSE: ", tune_response)
+        print("\n\nEXPECTED REPONSE: ", expected_response)
+
+        assert tune_response == expected_response
