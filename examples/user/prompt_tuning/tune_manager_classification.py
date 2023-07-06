@@ -47,4 +47,8 @@ print("\n\nGet tune result: \n", tune_get)
 
 # Delete a tune
 tune_delete = TuneManager.delete_tune(credentials=creds, tune_id=tune_id)
-print("\n\nDelete tune response:", tune_delete)
+print("\n\nDelete tune response: \n", tune_delete)
+
+# Get tune methods
+tune_methods = TuneManager.get_tune_methods(credentials=creds)
+print("\n\nTune methods: \n", tune_methods)

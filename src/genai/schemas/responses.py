@@ -235,4 +235,4 @@ class TuneMethodsInfo(GenAiResponseModel):
 
 
 class TuneMethodsGetResponse(GenAiResponseModel):
-    results: Optional[TuneMethodsInfo]
+    results: Optional[List[TuneMethodsInfo]]
