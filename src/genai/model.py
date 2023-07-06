@@ -347,6 +347,11 @@ class Model:
         return Model(model=tune.id, params=None, credentials=self.creds)
 
     def status(self):
+        """Get status of the model, currently supports only tuned models.
+
+        Returns:
+            str: Status of a tuned model
+        """
         params = TunesListParams()
         tunes = TuneManager.list_tunes(credentials=self.creds, params=params).results
         id_to_status = {t.id: t.status for t in tunes}
