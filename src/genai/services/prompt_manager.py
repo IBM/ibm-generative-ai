@@ -48,7 +48,7 @@ class PromptManager:
         """
         service = ServiceInterface(service_url=creds.api_endpoint, api_key=creds.api_key)
         try:
-            response = service._prompt_saving.get_prompt(prompt_id=id)
+            response = service._prompt_saving.get_prompt(id=id)
             if response.status_code == 200:
                 res = response.json()
                 response = PromptResponse(**res["results"])

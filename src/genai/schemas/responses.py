@@ -174,10 +174,10 @@ class PromptResponse(GenAiResponseModel):
     template_id: Optional[str]
     created_at: datetime
     public: bool
-    descroption: Optional[str]
+    description: Optional[str]
     created_by_id: int
 
 
 class PromptListResponse(GenAiResponseModel):
-    results: List[PromptResponse]
+    results: list[PromptResponse]
     totalCount: int

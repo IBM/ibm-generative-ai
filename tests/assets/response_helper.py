@@ -163,16 +163,29 @@ class SimpleResponse:
 
     @staticmethod
     def prompt_saving(**kwargs):
-        created_response = {
-            "results": {
-                "id": "4v3W9CKqUurvYOKY",
-                "name": "MyPrompt",
-                "data": None,
-                "input": "Country: Germany\nCapital: Berlin\n \nCountry: USA\nCapital: Washington\n\nCountry: ",
-                "output": None,
-                "model_id": "google/flan-ul2",
-                "template": None,
-                "created_at": "2023-06-21T23:06:59.000Z",
-            }
+        response = {}
+        results = {
+            "id": "4v3W9CKqUurvYOKY",
+            "name": "MyPrompt",
+            "data": None,
+            "input": "Country: Germany\nCapital: Berlin\n \nCountry: USA\nCapital: Washington\n\nCountry: ",
+            "output": None,
+            "model_id": "google/flan-ul2",
+            "parameters": None,
+            "template": None,
+            "template_id": None,
+            "created_at": "2023-06-21T23:06:59.000Z",
+            "public": False,
+            "description": None,
+            "created_by_id": 123,
         }
-        return created_response
+        if "params" in kwargs:
+            response = {
+                "results": [results],
+                "totalCount": 1,
+            }
+        elif "id" in kwargs:
+            response = {"results": results}
+        else:
+            response = {"results": results}
+        return response
