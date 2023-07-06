@@ -1,0 +1,22 @@
+
+
+## This is where we save links to external resources that are displayed on your project's profile in the InnerSource Portal.
+---
+## (Optional) Artifactory path of project
+## artifactoryPath: "<YOUR_ARTIFACTORY_PATH_URL>"
+
+## Link to documentation
+documentationLink: "https://ibm.github.io/ibm-generative-ai/"
+## documentationLink: "<YOUR_DOCUMENTATION_URL>"
+
+## Link to project slack channel
+## slackChannel: "<YOUR_SLACK_CHANNEL_URL>"
+
+## Links to starter contact info
+## starterName: "[<FIRST_NAME> <LAST_NAME](<W3_DEVELOPER_PROFILE>)"
+
+## starterRole: "<YOUR_PROJECT_ROLE>"
+
+## starterSlack: "<YOUR_SLACK_CHANNEL_URL>"
+
+## starterEmail: "<YOUR_IBM_EMAIL>"
