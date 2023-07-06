@@ -1,7 +1,7 @@
 # IBM Generative AI Python SDK
 
 
-This is the Python SDK for IBM Foundation Models Studio to bring IBM Generative AI into Python programs and to also extend it with useful operations and types.
+This is the Python SDK for IBM Foundation Models Studio to bring IBM Generative AI (GenAI) into Python programs and to also extend it with useful operations and types.
 
 :books:	**API Documentation: [Link](https://ibm.github.io/ibm-generative-ai/)**
 
@@ -17,10 +17,9 @@ This is the Python SDK for IBM Foundation Models Studio to bring IBM Generative 
 [![Coverage Status](https://coveralls.io/repos/github/IBM/ibm-generative-ai/badge.svg?branch=main)](https://coveralls.io/github/IBM/ibm-generative-ai?branch=main)
 
 ## Important Information for Starters and Contributors
-- Check the [Getting Started Guideline](GETTING_STARTED.md) to instanll and develop amazing AI applications with IBM Generative AI SDK.
-- Check IMB Generative AI SDK API documentation [here](https://ibm.github.io/ibm-generative-ai/).
-- Important Information for Contributors: IBM Generative AI is an open-source project that welcomes the community to contribute with documentation, tests, bug corrections, and new fuctionality in the form of [extensions](EXTENSIONS.md). Please read our [code of counduct](CODE_OF_CONDUCT.md) to learn the expected behavior from participants that contribute to the project, and our [contribution guide](CONTRIBUTING.md) to learn the gitflow and steps to submit pull requests.
-- [Authors and Active Maintainers](STARTER_TEAM.md)
+- Do you want to get started with GenAI? check the [Getting Started Guideline](GETTING_STARTED.md) to instanll and develop amazing AI applications with IBM Generative AI SDK.
+- Do you want to contribute to the project? IBM Generative AI is an open-source project that welcomes the community to contribute with documentation, tests, bug corrections, and new fuctionality in the form of [extensions](EXTENSIONS.md). Please read our [code of counduct](CODE_OF_CONDUCT.md) to learn the expected behavior from participants that contribute to the project, and our [contribution guide](CONTRIBUTING.md) to learn the gitflow and steps to submit pull requests.
+- Looking for the GenAI team contact information? click [here](STARTER_TEAM.md)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
