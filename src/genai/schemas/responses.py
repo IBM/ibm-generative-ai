@@ -227,3 +227,12 @@ class TrainingFilesParameters(GenAiResponseModel):
 
 class TuneGetResponse(GenAiResponseModel):
     results: Optional[TuneInfoResult]
+
+
+class TuneMethodsInfo(GenAiResponseModel):
+    id: str
+    name: str
+
+
+class TuneMethodsGetResponse(GenAiResponseModel):
+    results: Optional[TuneMethodsInfo]

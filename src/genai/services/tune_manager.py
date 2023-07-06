@@ -2,7 +2,12 @@ import logging
 
 from genai.credentials import Credentials
 from genai.exceptions.genai_exception import GenAiException
-from genai.schemas.responses import TuneGetResponse, TuneInfoResult, TunesListResponse
+from genai.schemas.responses import (
+    TuneGetResponse,
+    TuneInfoResult,
+    TuneMethodsGetResponse,
+    TunesListResponse,
+)
 from genai.schemas.tunes_params import CreateTuneParams, TunesListParams
 from genai.services.service_interface import ServiceInterface
 
@@ -94,6 +99,25 @@ class TuneManager:
             response = service._tunes.delete_tune(tune_id=tune_id)
             if response.status_code == 204:
                 return {"status": "success"}
+            else:
+                raise GenAiException(response)
+        except Exception as e:
+            raise GenAiException(e)
+
+    @staticmethod
+    def get_tune_methods(credentials: Credentials) -> TuneMethodsGetResponse:
+        """Get list of tune methods.
+
+        Returns:
+            TuneMethodsGetResponse
+        """
+        service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
+        try:
+            response = service._tunes.get_tune_methods()
+            if response.status_code == 200:
+                response = response.json()
+                responses = TuneMethodsGetResponse(**response)
+                return responses.results
             else:
                 raise GenAiException(response)
         except Exception as e:

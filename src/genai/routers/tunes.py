@@ -76,3 +76,16 @@ class TunesRouter:
             return RequestHandler.delete(endpoint, key=self.key, parameters=tune_id)
         except Exception as e:
             raise GenAiException(e)
+
+    def get_tune_methods(self):
+        """Get list of tune methods.
+
+        Returns:
+            Any: json with info about the available tune methods.
+        """
+        try:
+            endpoint = self.service_url + TunesRouter.TUNES + "/tune_methods"
+            print("\nendpoint: \n", endpoint)
+            return RequestHandler.get(endpoint, key=self.key)
+        except Exception as e:
+            raise GenAiException(e)
