@@ -18,7 +18,13 @@ from genai.schemas.responses import (
     TokenizeResponse,
     TokenizeResult,
 )
+from genai.schemas.tunes_params import (
+    CreateTuneHyperParams,
+    CreateTuneParams,
+    TunesListParams,
+)
 from genai.services import AsyncResponseGenerator, ServiceInterface
+from genai.services.tune_manager import TuneManager
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +33,10 @@ class Model:
     _accessors = set()
 
     def __init__(
-        self, model: Union[ModelType, str], params: Union[GenerateParams, TokenParams], credentials: Credentials
+        self,
+        model: Union[ModelType, str],
+        params: Union[GenerateParams, TokenParams, Any] = None,
+        credentials: Credentials = None,
     ):
         """Instantiates the Model Interface
 
@@ -39,6 +48,7 @@ class Model:
         logger.debug(f"Model Created:  Model: {model}, endpoint: {credentials.api_endpoint}")
         self.model = model
         self.params = params
+        self.creds = credentials
         self.service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
 
     def generate_stream(
@@ -166,7 +176,13 @@ class Model:
 
         try:
             with AsyncResponseGenerator(
-                self.model, prompts, self.params, self.service, ordered=ordered, callback=callback, options=options
+                self.model,
+                prompts,
+                self.params,
+                self.service,
+                ordered=ordered,
+                callback=callback,
+                options=options,
             ) as asynchelper:
                 for response in tqdm(
                     asynchelper.generate_response(),
@@ -182,7 +198,10 @@ class Model:
             raise GenAiException(ex)
 
     def tokenize_as_completed(
-        self, prompts: Union[list[str], list[PromptPattern]], return_tokens: bool = False, options: Options = None
+        self,
+        prompts: Union[list[str], list[PromptPattern]],
+        return_tokens: bool = False,
+        options: Options = None,
     ) -> Generator[TokenizeResult]:
         """The tokenize endpoint allows you to check the conversion of provided prompts to tokens
         for a given model. It splits text into words or subwords, which then are converted to ids
@@ -224,7 +243,10 @@ class Model:
             raise GenAiException(ex)
 
     def tokenize(
-        self, prompts: Union[list[str], list[PromptPattern]], return_tokens: bool = False, options: Options = None
+        self,
+        prompts: Union[list[str], list[PromptPattern]],
+        return_tokens: bool = False,
+        options: Options = None,
     ) -> list[TokenizeResult]:
         """The tokenize endpoint allows you to check the conversion of provided prompts to tokens
         for a given model. It splits text into words or subwords, which then are converted to ids
@@ -286,3 +308,48 @@ class Model:
             raise me
         except Exception as ex:
             raise GenAiException(ex)
+
+    def tune(
+        self,
+        label: str,
+        method: str,
+        task: str,
+        hyperparameters: CreateTuneHyperParams,
+        training_file_ids: list[str] = None,
+        validation_file_ids: list[str] = None,
+    ):
+        """Tune the base-model for given training data.
+
+        Args:
+            label (str): Label for this tuned model.
+            method (str): The list of one or more prompt strings.
+            task (str): Task ID, could be "classification", "summarization", or "generation"
+            hyperparameters (CreateTuneHyperParams): Tuning hyperparameters
+            training_file_ids (list[str]): IDs for files with training data
+            validation_file_ids (list[str]): IDs for files with validation data
+
+        Returns:
+            Model: An instance of tuned model
+        """
+        if training_file_ids is None:
+            raise GenAiException(ValueError("Parameter should be specified: training_file_paths or training_file_ids."))
+
+        params = CreateTuneParams(
+            name=label,
+            model_id=self.model,
+            method_id=method,
+            task_id=task,
+            training_file_ids=training_file_ids,
+            validation_file_ids=validation_file_ids,
+            parameters=hyperparameters,
+        )
+        tune = TuneManager.create_tune(credentials=self.creds, params=params)
+        return Model(model=tune.id, params=None, credentials=self.creds)
+
+    def status(self):
+        params = TunesListParams()
+        tunes = TuneManager.list_tunes(credentials=self.creds, params=params).results
+        id_to_status = {t.id: t.status for t in tunes}
+        if self.model not in id_to_status:
+            raise GenAiException(ValueError("Tuned model not found. Currently method supports only tuned models."))
+        return id_to_status[self.model]
