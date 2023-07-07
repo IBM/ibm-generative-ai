@@ -311,7 +311,7 @@ class Model:
 
     def tune(
         self,
-        label: str,
+        name: str,
         method: str,
         task: str,
         hyperparameters: CreateTuneHyperParams = None,
@@ -321,7 +321,7 @@ class Model:
         """Tune the base-model for given training data.
 
         Args:
-            label (str): Label for this tuned model.
+            name (str): Label for this tuned model.
             method (str): The list of one or more prompt strings.
             task (str): Task ID, could be "classification", "summarization", or "generation"
             hyperparameters (CreateTuneHyperParams): Tuning hyperparameters
@@ -335,7 +335,7 @@ class Model:
             raise GenAiException(ValueError("Parameter should be specified: training_file_paths or training_file_ids."))
 
         params = CreateTuneParams(
-            name=label,
+            name=name,
             model_id=self.model,
             method_id=method,
             task_id=task,
@@ -358,3 +358,11 @@ class Model:
         if self.model not in id_to_status:
             raise GenAiException(ValueError("Tuned model not found. Currently method supports only tuned models."))
         return id_to_status[self.model]
+
+    def delete(self):
+        params = TunesListParams()
+        tunes = TuneManager.list_tunes(credentials=self.creds, params=params).results
+        id_to_status = {t.id: t.status for t in tunes}
+        if self.model not in id_to_status:
+            raise GenAiException(ValueError("Tuned model not found. Currently method supports only tuned models."))
+        TuneManager.delete_tune(credentials=self.creds, tune_id=self.model)

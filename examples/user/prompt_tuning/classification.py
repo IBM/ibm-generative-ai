@@ -1,3 +1,10 @@
+#
+# NOTE: This example has been written to enable an end-user
+# to quickly try prompt-tuning. In order to obtain better
+# performance, a user would need to experiment with the
+# number of observations and tuning hyperparameters
+#
+
 import os
 import time
 from pathlib import Path
@@ -14,7 +21,7 @@ from dotenv import load_dotenv
 from genai.credentials import Credentials
 from genai.model import Model
 from genai.schemas.generate_params import GenerateParams
-from genai.schemas.tunes_params import CreateTuneHyperParams, TunesListParams
+from genai.schemas.tunes_params import CreateTuneHyperParams
 from genai.services import FileManager
 
 load_dotenv()
@@ -75,15 +82,14 @@ def get_creds():
 if __name__ == "__main__":
     creds = get_creds()
     create_dataset()
-    upload_files(creds, update=False)
-    params = TunesListParams(limit=10)
+    upload_files(creds, update=True)
 
     model = Model("google/flan-t5-xl", params=None, credentials=creds)
     hyperparams = CreateTuneHyperParams(num_epochs=2, verbalizer='classify { "0", "1", "2" } Input: {{input}} Output:')
     training_file_ids, validation_file_ids = get_file_ids(creds)
 
     tuned_model = model.tune(
-        label="fpb-mpt-tune-api",
+        name="classification-mpt-tune-api",
         method="mpt",
         task="classification",
         hyperparameters=hyperparams,
@@ -106,5 +112,7 @@ if __name__ == "__main__":
                 max_new_tokens=50,
                 min_new_tokens=1,
             )
-            tuned_model.params = genparams
-            print(tuned_model.generate([prompt]))
+            print("Answer = ", tuned_model.generate([prompt])[0].generated_text)
+            to_delete = input("Delete this model? (y/N):\n")
+            if to_delete == "y":
+                tuned_model.delete()

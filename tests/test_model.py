@@ -108,7 +108,7 @@ class TestModel:
 
         base_model = Model(self.model, params=None, credentials=credentials)
         tuned_model = base_model.tune(
-            label=label, method="mpt", task="generation", training_file_ids=["id1"], hyperparameters=hyperparams
+            name=label, method="mpt", task="generation", training_file_ids=["id1"], hyperparameters=hyperparams
         )
         assert tuned_model.model == expected_response["results"]["id"]
 
