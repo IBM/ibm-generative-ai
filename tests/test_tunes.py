@@ -5,7 +5,7 @@ import pytest
 from genai import Credentials
 from genai.exceptions import GenAiException
 from genai.routers.tunes import TunesRouter
-from genai.schemas.responses import TuneGetResponse, TuneInfoResult, TunesListResponse
+from genai.schemas.responses import TuneInfoResult, TunesListResponse
 from genai.schemas.tunes_params import CreateTuneParams, TunesListParams
 from genai.services.tune_manager import TuneManager
 from tests.assets.response_helper import SimpleResponse
@@ -98,7 +98,7 @@ class TestTunes:
     @patch("genai.services.RequestHandler.get")
     def test_get_tune(self, mock_requests, credentials):
         get_tune_response = SimpleResponse.tunes(tune_id="tune_id")
-        expected_response = TuneGetResponse(**get_tune_response)
+        expected_response = TuneInfoResult(**get_tune_response["results"])
 
         mock_response = MagicMock(status_code=200)
         mock_response.json.return_value = get_tune_response
