@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 from genai.credentials import Credentials
 from genai.model import Model
-from genai.schemas import GenerateParams, ModelType
+from genai.schemas import GenerateParams
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -26,7 +26,7 @@ params = GenerateParams(
 )
 
 creds = Credentials(api_key, api_endpoint)
-model = Model(ModelType.FLAN_UL2, params=params, credentials=creds)
+model = Model("google/flan-ul2", params=params, credentials=creds)
 
 greeting = "Hello! How are you?"
 lots_of_greetings = [greeting] * 500

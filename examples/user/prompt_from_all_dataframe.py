@@ -12,7 +12,7 @@ import genai.extensions.pandas  # noqa: F401
 from genai.credentials import Credentials
 from genai.model import Model
 from genai.prompt_pattern import PromptPattern
-from genai.schemas import GenerateParams, ModelType
+from genai.schemas import GenerateParams
 
 #
 # In this demo, the following dataset was used:
@@ -38,7 +38,7 @@ params = GenerateParams(
 )
 
 creds = Credentials(api_key, api_endpoint)
-model = Model(ModelType.FLAN_UL2, params=params, credentials=creds)
+model = Model("google/flan-ul2", params=params, credentials=creds)
 
 pt = PromptPattern.from_file(str(PATH) + os.sep + "templates" + os.sep + "synth-animal.yaml")
 print("\nGiven template:\n", pt)
