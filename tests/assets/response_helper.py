@@ -197,19 +197,27 @@ class SimpleResponse:
 
     @staticmethod
     def tunes(**kwargs):
-        response = {
-            "results": [
-                {
-                    "id": "google/flan-t5-xxl-mpt-Bok9gSo3-2023-04-11-18-00-57",
-                    "name": "Tune #2 google/flan-t5-xxl (3B)",
-                    "model_id": "google/google/flan-t5-xxl",
-                    "model_name": "google/flan-t5-xxl (3B)",
-                    "status": "COMPLETED",
-                    "task_id": "generation",
-                    "parameters": {"batch_size": 4, "num_epochs": 12},
-                    "created_at": "2023-04-11T18:00:57.000Z",
-                }
-            ],
-            "totalCount": 1,
+        from genai.schemas.tunes_params import CreateTuneParams
+
+        response = {}
+        results = {
+            "id": "google/flan-t5-xxl-mpt-Bok9gSo3-2023-04-11-18-00-57",
+            "name": "Tune #2 google/flan-t5-xxl (3B)",
+            "model_id": "google/google/flan-t5-xxl",
+            "model_name": "google/flan-t5-xxl (3B)",
+            "status": "COMPLETED",
+            "task_id": "generation",
+            "parameters": {"batch_size": 4, "num_epochs": 12},
+            "created_at": "2023-04-11T18:00:57.000Z",
         }
+
+        if "tune_id" in kwargs:
+            response["results"] = results
+        elif "params" in kwargs and type(kwargs["params"]) == CreateTuneParams:
+            response["results"] = results
+        else:
+            response = {
+                "results": [results],
+                "totalCount": 1,
+            }
         return response
