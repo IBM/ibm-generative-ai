@@ -207,9 +207,9 @@ class TuneInfoResult(GenAiResponseModel):
     created_at: datetime
     preferred: Optional[bool]
     datapoints: Optional[dict]
-    validation_files: Optional[list[str]]
+    validation_files: Optional[list]
     training_files: Optional[list]
-    evaluation_files: Optional[list[str]]
+    evaluation_files: Optional[list]
     status_message: Optional[str]
     started_at: Optional[datetime]
 
