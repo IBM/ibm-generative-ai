@@ -1,4 +1,17 @@
+import warnings
 from enum import Enum
+
+warnings.simplefilter("always", DeprecationWarning)
+warnings.warn(
+    """\x1b[33;20m
+The class ModelType is being deprecated.
+Please replace any reference to ModelType by its model id string equivalent.
+Example :
+  ModelType.FLAN_T5 becomes "google/flan-t5-xxl"\x1b[0m
+""",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 
 class ModelType(str, Enum):
