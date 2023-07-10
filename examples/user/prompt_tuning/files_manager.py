@@ -28,7 +28,7 @@ print("File Metadada: \n", file_metadata)
 
 # READ FILE
 print("------- Read a file with id = {} -----".format(file_id))
-file_content = FileManager.read_files(credentials=creds, file_id=file_id)
+file_content = FileManager.read_file(credentials=creds, file_id=file_id)
 print("File content: \n", file_content)
 
 # # UPLOAD FILE
