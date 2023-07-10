@@ -6,6 +6,7 @@ from genai import Credentials, Model
 from genai.exceptions import GenAiException
 from genai.schemas import GenerateParams, ModelType
 from genai.schemas.responses import GenerateResponse, TokenizeResponse
+from genai.schemas.tunes_params import CreateTuneHyperParams
 from genai.services import ServiceInterface
 from tests.assets.response_helper import SimpleResponse
 
@@ -13,6 +14,7 @@ from tests.assets.response_helper import SimpleResponse
 @pytest.mark.unit
 class TestModel:
     def setup_method(self):
+        self.creds = Credentials(api_key="API_KEY", api_endpoint="SERVICE_URL")
         self.service = ServiceInterface(service_url="SERVICE_URL", api_key="API_KEY")
         self.model = "google/ul2"
         self.inputs = ["Write a tagline for an alumni association: Together we"]
@@ -92,3 +94,35 @@ class TestModel:
         responses = model.tokenize(["a", "b", "c"], False)
 
         assert responses == expected_token_response.results
+
+    @patch("genai.services.RequestHandler.post")
+    def test_create_tune(self, mock_requests, credentials):
+        label = "test_label"
+        model_id = self.model
+        hyperparams = CreateTuneHyperParams(num_epochs=10)
+        expected_response = SimpleResponse.create_tune(model_id=model_id, name=label)
+
+        mock_response = MagicMock(status_code=200)
+        mock_response.json.return_value = expected_response
+        mock_requests.return_value = mock_response
+
+        base_model = Model(self.model, params=None, credentials=credentials)
+        tuned_model = base_model.tune(
+            name=label, method="mpt", task="generation", training_file_ids=["id1"], hyperparameters=hyperparams
+        )
+        assert tuned_model.model == expected_response["results"]["id"]
+
+    @patch("genai.services.RequestHandler.get")
+    def test_status(self, mock_requests, credentials):
+        label = "test_label"
+        model_id = self.model
+        tune_id = SimpleResponse.create_tune(model_id=model_id, name=label)["results"]["id"]
+
+        tuned_model = Model(tune_id, params=None, credentials=credentials)
+
+        expected_response = SimpleResponse.tunes()
+        mock_response = MagicMock(status_code=200)
+        mock_response.json.return_value = expected_response
+        mock_requests.return_value = mock_response
+
+        assert tuned_model.status() == expected_response["results"][0]["status"]
