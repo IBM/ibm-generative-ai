@@ -2,9 +2,10 @@ from httpx import Response
 
 from genai.exceptions import GenAiException
 from genai.options import Options
-from genai.routers import PromptTemplateRouter
+from genai.routers import FilesRouter, PromptTemplateRouter, TunesRouter
 from genai.schemas import GenerateParams, HistoryParams, TokenParams
 from genai.services import RequestHandler
+from genai.utils.request_utils import sanitize_params
 
 
 class ServiceInterface:
@@ -24,6 +25,8 @@ class ServiceInterface:
         self.service_url = service_url.rstrip("/")
         self.key = api_key
         self._prompt_templating = PromptTemplateRouter(service_url=service_url, api_key=api_key)
+        self._files = FilesRouter(service_url=service_url, api_key=api_key)
+        self._tunes = TunesRouter(service_url=service_url, api_key=api_key)
 
     def generate(
         self, model: str, inputs: list, params: GenerateParams = None, streaming: bool = False, options: Options = None
@@ -41,7 +44,7 @@ class ServiceInterface:
             Any: json from querying for text completion.
         """
         try:
-            params = ServiceInterface._sanitize_params(params)
+            params = sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.GENERATE
             return RequestHandler.post(
                 endpoint,
@@ -67,7 +70,7 @@ class ServiceInterface:
             Any: json from querying for tokenization.
         """
         try:
-            params = ServiceInterface._sanitize_params(params)
+            params = sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.TOKENIZE
             return RequestHandler.post(
                 endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params, options=options
@@ -85,7 +88,7 @@ class ServiceInterface:
             Any: json from querying for tokenization.
         """
         try:
-            params = ServiceInterface._sanitize_params(params)
+            params = sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.HISTORY
             return RequestHandler.get(endpoint, key=self.key, parameters=params)
         except Exception as e:
@@ -127,7 +130,7 @@ class ServiceInterface:
             Any: json from querying for text completion.
         """
         try:
-            params = ServiceInterface._sanitize_params(params)
+            params = sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.GENERATE
             return await RequestHandler.async_generate(
                 endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params, options=options
@@ -148,7 +151,7 @@ class ServiceInterface:
             Any: json from querying for tokenization.
         """
         try:
-            params = ServiceInterface._sanitize_params(params)
+            params = sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.TOKENIZE
             return await RequestHandler.async_tokenize(
                 endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params, options=options
@@ -166,7 +169,7 @@ class ServiceInterface:
             Any: json from querying for tokenization.
         """
         try:
-            params = ServiceInterface._sanitize_params(params)
+            params = sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.HISTORY
             return await RequestHandler.async_get(endpoint, key=self.key, parameters=params)
         except Exception as e:
@@ -192,11 +195,3 @@ class ServiceInterface:
             return RequestHandler.async_patch(endpoint, key=self.key, json_data=tou_payload)
         except Exception as e:
             raise GenAiException(e)
-
-    @staticmethod
-    def _sanitize_params(params):
-        if params is not None:
-            if type(params) is not dict:
-                params = params.dict(by_alias=True, exclude_none=True)
-
-        return params
