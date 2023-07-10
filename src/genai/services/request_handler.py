@@ -23,7 +23,7 @@ class RequestHandler:
         parameters: dict = None,
         options: Options = None,
         files: dict = None,
-    ) :
+    ):
         """General function to build header and/or json_data for /post and /get requests.
 
         Args:
