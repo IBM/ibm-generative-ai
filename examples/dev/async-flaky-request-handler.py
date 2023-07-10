@@ -32,7 +32,7 @@ class FlakyRequestHandler(RequestHandler):
         Returns:
             httpx.Response: Response from the REST API.
         """
-        headers, json_data = RequestHandler._metadata(
+        headers, json_data, _ = RequestHandler._metadata(
             method="POST",
             key=key,
             model_id=model_id,

@@ -23,7 +23,7 @@ class RequestHandler:
         parameters: dict = None,
         options: Options = None,
         files: dict = None,
-    ) -> tuple[dict, dict]:
+    ):
         """General function to build header and/or json_data for /post and /get requests.
 
         Args:
@@ -36,7 +36,7 @@ class RequestHandler:
             files (dict, optional): Pre-built files. Defaults to None.
 
         Returns:
-            tuple[dict,dict]: Headers, json_data for request
+            tuple: Headers, json_data for request, files
         """
 
         headers = {
@@ -121,7 +121,7 @@ class RequestHandler:
         Returns:
             httpx.Response: Response from the REST API.
         """
-        headers, json_data = RequestHandler._metadata(method="PATCH", key=key)
+        headers, json_data, _ = RequestHandler._metadata(method="PATCH", key=key)
         response = None
         async with httpx.AsyncClient(timeout=ConnectionManager.TIMEOUT) as client:
             response = await client.patch(endpoint, headers=headers, json=json_data)
@@ -273,7 +273,7 @@ class RequestHandler:
         Returns:
             httpx.Response: Response from the REST API.
         """
-        headers, json_data = RequestHandler._metadata(method="PATCH", key=key)
+        headers, json_data, _ = RequestHandler._metadata(method="PATCH", key=key)
 
         with httpx.Client(timeout=ConnectionManager.TIMEOUT) as s:
             response = s.patch(url=endpoint, headers=headers, json=json_data)
