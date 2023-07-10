@@ -5,6 +5,7 @@ from genai.exceptions.genai_exception import GenAiException
 from genai.schemas.responses import TuneGetResponse, TuneInfoResult, TunesListResponse
 from genai.schemas.tunes_params import CreateTuneParams, TunesListParams
 from genai.services.service_interface import ServiceInterface
+from genai.utils import service_utils as utils
 
 logger = logging.getLogger(__name__)
 
@@ -13,7 +14,9 @@ class TuneManager:
     """Class for managing tunes on the server."""
 
     @staticmethod
-    def list_tunes(credentials: Credentials, params: TunesListParams) -> TunesListResponse:
+    def list_tunes(
+        credentials: Credentials or ServiceInterface() = None, params: TunesListParams = None
+    ) -> TunesListResponse:
         """List all tunes on the server.
 
         Args:
@@ -22,7 +25,7 @@ class TuneManager:
         Returns:
             TunesListResponse: Response from the server.
         """
-        service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
+        service = utils._check_credentials(credentials)
         try:
             response = service._tunes.list_tunes(params=params)
 
@@ -36,7 +39,7 @@ class TuneManager:
             raise GenAiException(e)
 
     @staticmethod
-    def get_tune(credentials: Credentials, tune_id: str) -> TuneGetResponse:
+    def get_tune(tune_id: str, credentials: Credentials or ServiceInterface() = None) -> TuneGetResponse:
         """Get a tune from the server.
 
         Args:
@@ -45,7 +48,7 @@ class TuneManager:
         Returns:
             TuneInfoResult
         """
-        service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
+        service = utils._check_credentials(credentials)
         try:
             response = service._tunes.get_tune(tune_id=tune_id)
             if response.status_code == 200:
@@ -58,7 +61,10 @@ class TuneManager:
             raise GenAiException(e)
 
     @staticmethod
-    def create_tune(credentials: Credentials, params: CreateTuneParams) -> TuneInfoResult:
+    def create_tune(
+        params: CreateTuneParams,
+        credentials: Credentials or ServiceInterface() = None,
+    ) -> TuneInfoResult:
         """Create a new tune to be uploaded to the server.
 
         Args:
@@ -67,7 +73,7 @@ class TuneManager:
         Returns:
             TuneInfoResult: Response from the server.
         """
-        service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
+        service = utils._check_credentials(credentials)
         try:
             response = service._tunes.create_tune(params=params)
             if response.status_code == 200:
@@ -80,7 +86,7 @@ class TuneManager:
             raise GenAiException(e)
 
     @staticmethod
-    def delete_tune(credentials: Credentials, tune_id: str) -> dict:
+    def delete_tune(tune_id: str, credentials: Credentials or ServiceInterface() = None) -> dict:
         """Deletes a tune from the server.
 
         Args:
@@ -89,7 +95,7 @@ class TuneManager:
         Returns:
             dict: Response from the server.
         """
-        service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
+        service = utils._check_credentials(credentials)
         try:
             response = service._tunes.delete_tune(tune_id=tune_id)
             if response.status_code == 204:
