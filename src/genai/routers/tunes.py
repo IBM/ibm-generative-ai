@@ -1,6 +1,7 @@
 from genai.exceptions import GenAiException
 from genai.schemas.tunes_params import CreateTuneParams, TunesListParams
 from genai.services.request_handler import RequestHandler
+from genai.utils.request_utils import sanitize_params
 
 
 class TunesRouter:
@@ -11,8 +12,6 @@ class TunesRouter:
         self.key = api_key
 
     def list_tunes(self, params: TunesListParams = None):
-        from genai.services import ServiceInterface  # circular import
-
         """List all tunes on the server.
 
         Args:
@@ -22,7 +21,7 @@ class TunesRouter:
             Any: json from querying for tune list.
         """
         try:
-            params = ServiceInterface._sanitize_params(params)
+            params = sanitize_params(params)
             endpoint = self.service_url + TunesRouter.TUNES
             return RequestHandler.get(endpoint, key=self.key, parameters=params)
         except Exception as e:
@@ -44,8 +43,6 @@ class TunesRouter:
             raise GenAiException(e)
 
     def create_tune(self, params: CreateTuneParams):
-        from genai.services import ServiceInterface  # circular import
-
         """Create a new tune on the server.
 
         Args:
@@ -56,7 +53,7 @@ class TunesRouter:
         """
 
         try:
-            params = ServiceInterface._sanitize_params(params)
+            params = sanitize_params(params)
             endpoint = self.service_url + TunesRouter.TUNES
             return RequestHandler.post(endpoint, key=self.key, options=params)
         except Exception as e:
