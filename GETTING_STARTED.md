@@ -292,9 +292,11 @@ print(langchain_model(template.format(question="What is life?")))
 print(genai_model.generate([pattern.sub("question", "What is life?")])[0].generated_text)
 ```
 
-## <a name='Model Types'></a>Model Types
+## <a name='[Deprecated] Model Types'></a>[Deprecated] Model Types
 
 Model types can be imported from the [ModelType class](src/genai/schemas/models.py). If you want to use a model that is not included in this class, you can pass it as a string as exemplified [here](src/genai/schemas/models.py).
+
+Models can be selected by passing their string id to the Model class as exemplified [here](src/genai/schemas/models.py).
 
 
 ## <a name='Support'></a>Support
