@@ -9,7 +9,10 @@ import os
 import time
 from pathlib import Path
 
-from datasets import load_dataset
+try:
+    from datasets import load_dataset
+except ImportError:
+    print("Install datasets: it is a pre-requisite to run this example")
 
 try:
     import pandas as pd
