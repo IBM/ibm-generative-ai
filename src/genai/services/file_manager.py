@@ -23,8 +23,10 @@ class FileManager:
         """List all files on the server.
 
         Args:
-            credentials (Credentials or ServiceInterface()): Credentials or ServiceInterface object,
-                one of them must be provided.
+            credentials (Credentials, optional): Credentials object. Defaults to None.
+                If not providec, service must be provided.
+            service (ServiceInterface, optional): ServiceInterface object. Defaults to None.
+                If not provided, credentials must be provided.
             params (FileListParams, optional): Parameters for listing files.
 
         Returns:
@@ -51,9 +53,11 @@ class FileManager:
         """Get metadata from a file.
 
         Args:
+            credentials (Credentials, optional): Credentials object. Defaults to None.
+                If not providec, service must be provided.
+            service (ServiceInterface, optional): ServiceInterface object. Defaults to None.
+                If not provided, credentials must be provided.
             file_id (str): File id.
-            credentials (Credentials or ServiceInterface()): Credentials or ServiceInterface object,
-                one of them must be provided.
 
         Returns:
             FileInfoResult: Response from the server.
@@ -79,8 +83,10 @@ class FileManager:
 
         Args:
             file_id (Union[list[str], str]): File id or list of file ids.
-            credentials (Credentials or ServiceInterface()): Credentials or ServiceInterface object,
-                one of them must be provided.
+            credentials (Credentials, optional): Credentials object. Defaults to None.
+                If not providec, service must be provided.
+            service (ServiceInterface, optional): ServiceInterface object. Defaults to None.
+                If not provided, credentials must be provided.
 
         Returns:
             Union[list[dict], dict]: File content.
@@ -107,8 +113,10 @@ class FileManager:
             file_path (str): Path to the file to be uploaded. The file needs to be in JSON or JSON Lines format.
                 Format of the data depends on the task_id.
             purpose (str): Purpose of the file to be uploaded. Currently accepts only "tune" or "template".
-            credentials (Credentials or ServiceInterface()): Credentials or ServiceInterface object,
-                one of them must be provided.
+            credentials (Credentials, optional): Credentials object. Defaults to None.
+                If not providec, service must be provided.
+            service (ServiceInterface, optional): ServiceInterface object. Defaults to None.
+                If not provided, credentials must be provided.
 
         Raises:
             GenAiException: If file does not exist.
@@ -156,8 +164,10 @@ class FileManager:
 
         Args:
             file_id (str): File id.
-            credentials (Credentials or ServiceInterface()): Credentials or ServiceInterface object,
-                one of them must be provided.
+            credentials (Credentials, optional): Credentials object. Defaults to None.
+                If not providec, service must be provided.
+            service (ServiceInterface, optional): ServiceInterface object. Defaults to None.
+                If not provided, credentials must be provided.
 
         Returns:
             dict: Response from the server.

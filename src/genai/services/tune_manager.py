@@ -20,9 +20,11 @@ class TuneManager:
         """List all tunes on the server.
 
         Args:
+            credentials (Credentials, optional): Credentials object. Defaults to None.
+                If not providec, service must be provided.
+            service (ServiceInterface, optional): ServiceInterface object. Defaults to None.
+                If not provided, credentials must be provided.
             params (TunesListParams): Parameters for listing tunes.
-            credentials (Credentials or ServiceInterface()): Credentials or ServiceInterface object,
-                one of them must be provided.
 
         Returns:
             TunesListResponse: Response from the server.
@@ -41,15 +43,15 @@ class TuneManager:
             raise GenAiException(e)
 
     @staticmethod
-    def get_tune(
-        credentials: Credentials = None, service: ServiceInterface = None, tune_id: str = None
-    ) -> TuneGetResponse:
+    def get_tune(tune_id: str, credentials: Credentials = None, service: ServiceInterface = None) -> TuneGetResponse:
         """Get a tune from the server.
 
         Args:
             tune_id: ID of the tune to fetch from the server.
-            credentials (Credentials or ServiceInterface()): Credentials or ServiceInterface object,
-                one of them must be provided.
+            credentials (Credentials, optional): Credentials object. Defaults to None.
+                If not providec, service must be provided.
+            service (ServiceInterface, optional): ServiceInterface object. Defaults to None.
+                If not provided, credentials must be provided.
 
         Returns:
             TuneGetResponse: Response from the server.
@@ -73,9 +75,11 @@ class TuneManager:
         """Create a new tune to be uploaded to the server.
 
         Args:
+            credentials (Credentials, optional): Credentials object. Defaults to None.
+                If not providec, service must be provided.
+            service (ServiceInterface, optional): ServiceInterface object. Defaults to None.
+                If not provided, credentials must be provided.
             params (CreateTuneParams): Parameters for creating tunes.
-            credentials (Credentials or ServiceInterface()): Credentials or ServiceInterface object,
-                one of them must be provided.
 
         Returns:
             TuneInfoResult: Response from the server.
@@ -106,13 +110,15 @@ class TuneManager:
             raise GenAiException(e)
 
     @staticmethod
-    def delete_tune(credentials: Credentials = None, service: ServiceInterface = None, tune_id: str = None) -> dict:
+    def delete_tune(tune_id: str, credentials: Credentials = None, service: ServiceInterface = None) -> dict:
         """Deletes a tune from the server.
 
         Args:
             tune_id: ID of the tune to delete from the server.
-            credentials (Credentials or ServiceInterface()): Credentials or ServiceInterface object,
-                one of them must be provided.
+            credentials (Credentials, optional): Credentials object. Defaults to None.
+                If not providec, service must be provided.
+            service (ServiceInterface, optional): ServiceInterface object. Defaults to None.
+                If not provided, credentials must be provided.
 
         Returns:
             dict: Response from the server.
