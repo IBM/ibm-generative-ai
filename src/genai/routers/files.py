@@ -1,6 +1,7 @@
 from genai.exceptions import GenAiException
 from genai.schemas.files_params import FileListParams, MultipartFormData
 from genai.services.request_handler import RequestHandler
+from genai.utils.request_utils import sanitize_params
 
 
 class FilesRouter:
@@ -11,8 +12,6 @@ class FilesRouter:
         self.key = api_key
 
     def list_files(self, params: FileListParams = None):
-        from genai.services import ServiceInterface  # circular import
-
         """List all files on the server.
 
         Args:
@@ -22,7 +21,7 @@ class FilesRouter:
             Any: json from querying for file list.
         """
         try:
-            params = ServiceInterface._sanitize_params(params)
+            params = sanitize_params(params)
             endpoint = self.service_url + FilesRouter.FILES
             return RequestHandler.get(endpoint, key=self.key, parameters=params)
         except Exception as e:

@@ -21,8 +21,8 @@ class RequestHandler:
         model_id: str = None,
         inputs: list = None,
         parameters: dict = None,
-        files: dict = None,
         options: Options = None,
+        files: dict = None,
     ) -> tuple[dict, dict]:
         """General function to build header and/or json_data for /post and /get requests.
 
@@ -39,16 +39,15 @@ class RequestHandler:
             tuple[dict,dict]: Headers, json_data for request
         """
 
-        # NOTE: discuss with team if we want to keep like this or try another approach
-        if method == "POST" and files is not None:
-            headers = {"Authorization": f"Bearer {key}"}
-            json_data = None
-            return headers, json_data, files
-
         headers = {
             "Authorization": f"Bearer {key}",
             "x-request-origin": f"python-sdk/{version}",
         }
+
+        # NOTE: discuss with team if we want to keep like this or try another approach
+        if method == "POST" and files is not None:
+            return headers, None, files
+
         json_data = {}
 
         if method == "POST" or method == "PUT":
