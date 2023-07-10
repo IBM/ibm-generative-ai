@@ -13,3 +13,5 @@ Submodules
    genai.schemas.models
    genai.schemas.responses
    genai.schemas.token_params
+   genai.schemas.tunes_params
+   genai.schemas.files_params
