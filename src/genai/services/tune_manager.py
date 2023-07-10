@@ -21,6 +21,8 @@ class TuneManager:
 
         Args:
             params (TunesListParams): Parameters for listing tunes.
+            credentials (Credentials or ServiceInterface()): Credentials or ServiceInterface object,
+                one of them must be provided.
 
         Returns:
             TunesListResponse: Response from the server.
@@ -44,9 +46,11 @@ class TuneManager:
 
         Args:
             tune_id: ID of the tune to fetch from the server.
+            credentials (Credentials or ServiceInterface()): Credentials or ServiceInterface object,
+                one of them must be provided.
 
         Returns:
-            TuneInfoResult
+            TuneGetResponse: Response from the server.
         """
         service = utils._check_credentials(credentials)
         try:
@@ -69,10 +73,25 @@ class TuneManager:
 
         Args:
             params (CreateTuneParams): Parameters for creating tunes.
+            credentials (Credentials or ServiceInterface()): Credentials or ServiceInterface object,
+                one of them must be provided.
 
         Returns:
             TuneInfoResult: Response from the server.
         """
+        # TODO: check if the params.method_id is valid listing the tune models list
+
+        if params.method_id == "mpt" and (params.parameters.init_method or params.parameters.init_text):
+            raise GenAiException(
+                "When using method_id 'mpt' you cannot use init_method or"
+                "init_text, those are only for 'pt' (Prompt Tuning) method_id."
+            )
+
+        if params.task_id not in ["generation", "classification", "summarization"]:
+            raise GenAiException(
+                "The task_id must be one of the following: 'generation', 'classification' or 'summarization'."
+            )
+
         service = utils._check_credentials(credentials)
         try:
             response = service._tunes.create_tune(params=params)
@@ -91,6 +110,8 @@ class TuneManager:
 
         Args:
             tune_id: ID of the tune to delete from the server.
+            credentials (Credentials or ServiceInterface()): Credentials or ServiceInterface object,
+                one of them must be provided.
 
         Returns:
             dict: Response from the server.

@@ -10,13 +10,13 @@ class TunesRouter:
         self.service_url = service_url.rstrip("/")
         self.key = api_key
 
-    def list_tunes(self, params: TunesListParams):
+    def list_tunes(self, params: TunesListParams = None):
         from genai.services import ServiceInterface  # circular import
 
         """List all tunes on the server.
 
         Args:
-            params (TunesListParams): Parameters for the tune list.
+            params (TunesListParams, optional): Parameters for the tune list.
 
         Returns:
             Any: json from querying for tune list.
