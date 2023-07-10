@@ -58,11 +58,11 @@ def upload_files(creds, update=True):
         filename = filepath.name
         if update and filename in filenames_to_id:
             print(f"File already present: Overwriting {filename}")
-            FileManager.delete_file(creds, filenames_to_id[filename])
-            FileManager.upload_file(creds, file_path=str(filepath), purpose="tune")
+            FileManager.delete_file(credentials=creds, file_id=filenames_to_id[filename])
+            FileManager.upload_file(credentials=creds, file_path=str(filepath), purpose="tune")
         if filename not in filenames_to_id:
             print(f"File not present: Uploading {filename}")
-            FileManager.upload_file(creds, file_path=str(filepath), purpose="tune")
+            FileManager.upload_file(credentials=creds, file_path=str(filepath), purpose="tune")
 
 
 def get_file_ids(creds):
