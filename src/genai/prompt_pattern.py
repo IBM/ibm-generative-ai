@@ -201,7 +201,7 @@ class PromptPattern:
 
         pattern = re.compile(r"{{\s*" + var + r"\s*}}")
         prompt = self.dump
-        self.dump = re.sub(pattern, value, prompt)
+        self.dump = re.sub(pattern, value.replace("\\", r"\\"), prompt)
         return self
 
     def _get_idx(self, strategy, start_index, idx, max_length, random_idx_list):
