@@ -8,7 +8,6 @@ from genai.exceptions.genai_exception import GenAiException
 from genai.schemas import FileListParams
 from genai.schemas.responses import FileInfoResult, FilesListResponse
 from genai.services import ServiceInterface
-from genai.utils import service_utils as utils
 
 logger = logging.getLogger(__name__)
 
@@ -17,9 +16,7 @@ class FileManager:
     """Class for managing files on the server."""
 
     @staticmethod
-    def list_files(
-        credentials: Credentials or ServiceInterface() = None, params: FileListParams = None
-    ) -> FilesListResponse:
+    def list_files(credentials: Credentials, params: FileListParams = None) -> FilesListResponse:
         """List all files on the server.
 
         Args:
@@ -28,8 +25,7 @@ class FileManager:
         Returns:
             FilesListResponse: Response from the server.
         """
-        service = utils._check_credentials(credentials)
-
+        service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
         try:
             response = service._files.list_files(params=params)
 
@@ -43,7 +39,7 @@ class FileManager:
             raise GenAiException(e)
 
     @staticmethod
-    def file_metadata(file_id: str, credentials: Credentials or ServiceInterface() = None) -> FileInfoResult:
+    def file_metadata(credentials: Credentials, file_id: str) -> FileInfoResult:
         """Get metadata from a file.
 
         Args:
@@ -52,8 +48,7 @@ class FileManager:
         Returns:
             FileInfoResult: Response from the server.
         """
-        service = utils._check_credentials(credentials)
-
+        service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
         try:
             response = service._files.get_file_metadata(file_id=file_id)
 
@@ -66,9 +61,7 @@ class FileManager:
             raise GenAiException(e)
 
     @staticmethod
-    def read_files(
-        file_id: Union[list[str], str], credentials: Credentials or ServiceInterface() = None
-    ) -> Union[list[dict], dict]:
+    def read_files(credentials: Credentials, file_id: Union[list[str], str]) -> Union[list[dict], dict]:
         """Read a file from the server and return the file content.
 
         Args:
@@ -77,8 +70,7 @@ class FileManager:
         Returns:
             Union[list[dict], dict]: File content.
         """
-        service = utils._check_credentials(credentials)
-
+        service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
         try:
             response = service._files.read_file(file_id=file_id)
 
@@ -90,9 +82,7 @@ class FileManager:
             raise GenAiException(e)
 
     @staticmethod
-    def upload_file(
-        file_path: str, purpose: str, credentials: Credentials or ServiceInterface() = None
-    ) -> FileInfoResult:
+    def upload_file(credentials: Credentials, file_path: str, purpose: str) -> FileInfoResult:
         """Upload a file to the server.
 
         Args:
@@ -127,8 +117,7 @@ class FileManager:
 
         multipart_form_data = FileManager._validate_mmultipart_form_data_order(multipart_form_data)
 
-        service = utils._check_credentials(credentials)
-
+        service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
         try:
             response = service._files.upload_file(multipart_form_data=multipart_form_data)
 
@@ -141,7 +130,7 @@ class FileManager:
             raise GenAiException(e)
 
     @staticmethod
-    def delete_file(file_id: str, credentials: Credentials or ServiceInterface() = None) -> dict:
+    def delete_file(credentials: Credentials, file_id: str) -> dict:
         """Delete a file from the server.
 
         Args:
@@ -150,8 +139,7 @@ class FileManager:
         Returns:
             dict: Response from the server.
         """
-        service = utils._check_credentials(credentials)
-
+        service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
         try:
             response = service._files.delete_file(file_id=file_id)
             if response.status_code == 204:
