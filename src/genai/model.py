@@ -343,7 +343,7 @@ class Model:
             validation_file_ids=validation_file_ids,
             parameters=hyperparameters or CreateTuneHyperParams(),
         )
-        tune = TuneManager.create_tune(credentials=self.creds, params=params)
+        tune = TuneManager.create_tune(service=self.service, params=params)
         return Model(model=tune.id, params=None, credentials=self.creds)
 
     def status(self):
@@ -353,7 +353,7 @@ class Model:
             str: Status of a tuned model
         """
         params = TunesListParams()
-        tunes = TuneManager.list_tunes(credentials=self.creds, params=params).results
+        tunes = TuneManager.list_tunes(service=self.service, params=params).results
         id_to_status = {t.id: t.status for t in tunes}
         if self.model not in id_to_status:
             raise GenAiException(ValueError("Tuned model not found. Currently method supports only tuned models."))
@@ -361,8 +361,8 @@ class Model:
 
     def delete(self):
         params = TunesListParams()
-        tunes = TuneManager.list_tunes(credentials=self.creds, params=params).results
+        tunes = TuneManager.list_tunes(service=self.service, params=params).results
         id_to_status = {t.id: t.status for t in tunes}
         if self.model not in id_to_status:
             raise GenAiException(ValueError("Tuned model not found. Currently method supports only tuned models."))
-        TuneManager.delete_tune(credentials=self.creds, tune_id=self.model)
+        TuneManager.delete_tune(service=self.service, tune_id=self.model)

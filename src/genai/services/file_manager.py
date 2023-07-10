@@ -8,7 +8,7 @@ from genai.exceptions.genai_exception import GenAiException
 from genai.schemas import FileListParams
 from genai.schemas.responses import FileInfoResult, FilesListResponse
 from genai.services import ServiceInterface
-from genai.utils import service_utils as utils
+from genai.utils.service_utils import _get_service
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +18,7 @@ class FileManager:
 
     @staticmethod
     def list_files(
-        credentials: Credentials or ServiceInterface() = None, params: FileListParams = None
+        credentials: Credentials = None, service: ServiceInterface = None, params: FileListParams = None
     ) -> FilesListResponse:
         """List all files on the server.
 
@@ -30,7 +30,7 @@ class FileManager:
         Returns:
             FilesListResponse: Response from the server.
         """
-        service = utils._check_credentials(credentials)
+        service = _get_service(credentials, service)
 
         try:
             response = service._files.list_files(params=params)
@@ -45,7 +45,9 @@ class FileManager:
             raise GenAiException(e)
 
     @staticmethod
-    def file_metadata(file_id: str, credentials: Credentials or ServiceInterface() = None) -> FileInfoResult:
+    def file_metadata(
+        file_id: str, credentials: Credentials = None, service: ServiceInterface = None
+    ) -> FileInfoResult:
         """Get metadata from a file.
 
         Args:
@@ -56,7 +58,7 @@ class FileManager:
         Returns:
             FileInfoResult: Response from the server.
         """
-        service = utils._check_credentials(credentials)
+        service = _get_service(credentials, service)
 
         try:
             response = service._files.get_file_metadata(file_id=file_id)
@@ -71,7 +73,7 @@ class FileManager:
 
     @staticmethod
     def read_files(
-        file_id: Union[list[str], str], credentials: Credentials or ServiceInterface() = None
+        file_id: Union[list[str], str], credentials: Credentials = None, service: ServiceInterface = None
     ) -> Union[list[dict], dict]:
         """Read a file from the server and return the file content.
 
@@ -83,7 +85,7 @@ class FileManager:
         Returns:
             Union[list[dict], dict]: File content.
         """
-        service = utils._check_credentials(credentials)
+        service = _get_service(credentials, service)
 
         try:
             response = service._files.read_file(file_id=file_id)
@@ -97,7 +99,7 @@ class FileManager:
 
     @staticmethod
     def upload_file(
-        file_path: str, purpose: str, credentials: Credentials or ServiceInterface() = None
+        file_path: str, purpose: str, credentials: Credentials = None, service: ServiceInterface = None
     ) -> FileInfoResult:
         """Upload a file to the server.
 
@@ -118,15 +120,15 @@ class FileManager:
         """
 
         if purpose != "tune" and purpose != "template":
-            raise GenAiException("Purpose must be 'tune' or 'template'")
+            raise GenAiException(ValueError("Purpose must be 'tune' or 'template'"))
 
         # check if file exists
         if not os.path.isfile(file_path):
-            raise GenAiException(f"File {file_path} does not exist")
+            raise GenAiException(ValueError(f"File {file_path} does not exist"))
 
         # check if file is json or jsonl
         if not file_path.endswith(".json") and not file_path.endswith(".jsonl"):
-            raise GenAiException(f"File {file_path} must be in json or jsonl format")
+            raise GenAiException(ValueError(f"File {file_path} must be in json or jsonl format"))
 
         multipart_form_data = {
             "purpose": (None, purpose),
@@ -135,7 +137,7 @@ class FileManager:
 
         multipart_form_data = FileManager._validate_mmultipart_form_data_order(multipart_form_data)
 
-        service = utils._check_credentials(credentials)
+        service = _get_service(credentials, service)
 
         try:
             response = service._files.upload_file(multipart_form_data=multipart_form_data)
@@ -149,7 +151,7 @@ class FileManager:
             raise GenAiException(e)
 
     @staticmethod
-    def delete_file(file_id: str, credentials: Credentials or ServiceInterface() = None) -> dict:
+    def delete_file(file_id: str, credentials: Credentials = None, service: ServiceInterface = None) -> dict:
         """Delete a file from the server.
 
         Args:
@@ -160,7 +162,7 @@ class FileManager:
         Returns:
             dict: Response from the server.
         """
-        service = utils._check_credentials(credentials)
+        service = _get_service(credentials, service)
 
         try:
             response = service._files.delete_file(file_id=file_id)
