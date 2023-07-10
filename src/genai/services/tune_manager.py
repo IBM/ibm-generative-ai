@@ -88,7 +88,7 @@ class TuneManager:
 
         if params.method_id == "mpt" and (params.parameters.init_method or params.parameters.init_text):
             raise GenAiException(
-                "When using method_id 'mpt' you cannot use init_method or"
+                "When using method_id 'mpt' you cannot use init_method or "
                 "init_text, those are only for 'pt' (Prompt Tuning) method_id."
             )
 
