@@ -22,30 +22,31 @@ from genai.credentials import Credentials
 from genai.model import Model
 from genai.schemas.generate_params import GenerateParams
 from genai.schemas.tunes_params import CreateTuneHyperParams, TunesListParams
-from genai.services import FileManager
-from genai.services.tune_manager import TuneManager
+from genai.services import FileManager, TuneManager
 
 load_dotenv()
 num_training_samples = 100
 num_validation_samples = 20
 data_root = Path(__file__).parent.resolve() / "data"
-training_file = data_root / "fpb_train.jsonl"
-validation_file = data_root / "fpb_validation.jsonl"
+training_file = data_root / "summarization_train.jsonl"
+validation_file = data_root / "summarization_validation.jsonl"
 
 
 def create_dataset():
     Path(data_root).mkdir(parents=True, exist_ok=True)
     if training_file.exists() and validation_file.exists():
         return
-    data = load_dataset(
-        "financial_phrasebank",
-        "sentences_allagree",
-    )
-    df = pd.DataFrame(data["train"]).sample(n=num_training_samples + num_validation_samples)
-    df.rename(columns={"sentence": "input", "label": "output"}, inplace=True)
-    df["output"] = df["output"].astype(str)
-    train_jsonl = df.iloc[:num_training_samples].to_json(orient="records", lines=True, force_ascii=True)
-    validation_jsonl = df.iloc[num_training_samples:].to_json(orient="records", lines=True, force_ascii=True)
+    data = load_dataset("cnn_dailymail", "3.0.0")
+    jsondict = {}
+    samples = {"train": num_training_samples, "validation": num_validation_samples}
+    for split in ["train", "validation"]:
+        df = pd.DataFrame(data[split]).sample(n=samples[split])
+        df.rename(columns={"article": "input", "highlights": "output"}, inplace=True)
+        df = df[["input", "output"]]
+        df["output"] = df["output"].astype(str)
+        jsondict[split] = df
+    train_jsonl = jsondict["train"].to_json(orient="records", lines=True, force_ascii=True)
+    validation_jsonl = jsondict["validation"].to_json(orient="records", lines=True, force_ascii=True)
     with open(training_file, "w") as fout:
         fout.write(train_jsonl)
     with open(validation_file, "w") as fout:
@@ -86,13 +87,13 @@ if __name__ == "__main__":
     upload_files(creds, update=True)
 
     model = Model("google/flan-t5-xl", params=None, credentials=creds)
-    hyperparams = CreateTuneHyperParams(num_epochs=2, verbalizer='classify { "0", "1", "2" } Input: {{input}} Output:')
+    hyperparams = CreateTuneHyperParams(num_epochs=2, verbalizer="Input: {{input}} Output:")
     training_file_ids, validation_file_ids = get_file_ids(creds)
 
     tuned_model = model.tune(
-        name="classification-mpt-tune-api",
+        name="summarization-mpt-tune-api",
         method="mpt",
-        task="classification",
+        task="summarization",
         hyperparameters=hyperparams,
         training_file_ids=training_file_ids,
         validation_file_ids=validation_file_ids,
@@ -113,9 +114,10 @@ if __name__ == "__main__":
                 max_new_tokens=50,
                 min_new_tokens=1,
             )
+            tuned_model.params = genparams
             print("Answer = ", tuned_model.generate([prompt])[0].generated_text)
 
-            print("~~~~~~~ Listing tunes and getting tune metadata with TuneManager ~~~~~")
+            print("~~~~~~~ Listing tunes with TuneManager ~~~~~")
 
             list_params = TunesListParams(limit=5, offset=0)
 
