@@ -6,6 +6,7 @@ from genai.credentials import Credentials
 from genai.schemas.tunes_params import (
     CreateTuneHyperParams,
     CreateTuneParams,
+    DownloadAssetsParams,
     TunesListParams,
 )
 from genai.services.tune_manager import TuneManager
@@ -16,7 +17,7 @@ ENDPOINT = os.getenv("GENAI_API", None)
 
 creds = Credentials(api_key=API_KEY, api_endpoint=ENDPOINT)
 
-file_ids = ["a7ace3e4-cf43-4930-a1a0-a6003f20ec7f"]  # ["<some-file-id>"]
+file_ids = ["a2ebeed8-0d9e-4f92-be4c-17137b4fc3be"]  # ["<some-file-id>"]
 
 hyperparams = CreateTuneHyperParams(verbalizer='classify { "red", "yellow" } Input: {{input}} Output:')
 
@@ -54,4 +55,6 @@ tune_methods = TuneManager.get_tune_methods(credentials=creds)
 print("\n\nTune methods: \n", tune_methods)
 
 # Download tune assets
-# tune_assets =
+tune_id = "flan-t5-xl-mpt-KtkzU1Ig-2023-07-10-14-20-09"
+assets_params = DownloadAssetsParams(id=tune_id, content="encoder")
+tune_assets = TuneManager.download_tune_assets(credentials=creds, params=assets_params)
