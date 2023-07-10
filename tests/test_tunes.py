@@ -26,7 +26,7 @@ class TestTunes:
             name="Test",
             model_id="some-model-id",
             method_id="some-method-id",
-            task_id="some-task-id",
+            task_id="generation",
             training_file_ids=["some-file-id"],
         )
 
