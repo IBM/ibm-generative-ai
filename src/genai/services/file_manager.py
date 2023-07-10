@@ -76,13 +76,13 @@ class FileManager:
             raise GenAiException(e)
 
     @staticmethod
-    def read_files(
-        file_id: Union[list[str], str], credentials: Credentials = None, service: ServiceInterface = None
+    def read_file(
+        file_id: str, credentials: Credentials = None, service: ServiceInterface = None
     ) -> Union[list[dict], dict]:
         """Read a file from the server and return the file content.
 
         Args:
-            file_id (Union[list[str], str]): File id or list of file ids.
+            file_id (str): File id or list of file ids.
             credentials (Credentials, optional): Credentials object. Defaults to None.
                 If not providec, service must be provided.
             service (ServiceInterface, optional): ServiceInterface object. Defaults to None.
@@ -119,9 +119,7 @@ class FileManager:
                 If not provided, credentials must be provided.
 
         Raises:
-            GenAiException: If file does not exist.
-            GenAiException: If file is not in json or jsonl format.
-            GenAiException: If purpose is not 'tune' or 'template'.
+            GenAiException: If file does not exist or has incorrect format or if incorrect purpose.
 
         Returns:
             FileInfoResult: Response from the server.

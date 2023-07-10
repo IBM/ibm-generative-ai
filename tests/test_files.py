@@ -130,7 +130,7 @@ class TestFiles:
         response = MagicMock(status_code=200)
         mocker.return_value = response
 
-        file_response = FileManager.read_files(credentials=credentials, file_id="file_id")
+        file_response = FileManager.read_file(credentials=credentials, file_id="file_id")
 
         assert file_response == response.content.decode("utf-8")
 
