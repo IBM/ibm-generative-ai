@@ -1,0 +1,5 @@
+[
+    {"country": "Canada", "capital": "Ottawa", "airport": "YOW"},
+    {"country": "Germany", "capital": "Berlin", "airport": "BER"},
+    {"country": "USA", "capital": "Washington", "airport": "DCA"}
+]
