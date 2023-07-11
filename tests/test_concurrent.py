@@ -12,6 +12,7 @@ from genai.schemas import GenerateParams, ReturnOptions, TokenParams
 from genai.schemas.responses import GenerateResponse, TokenizeResponse
 from genai.services import AsyncResponseGenerator, RequestHandler, ServiceInterface
 from genai.services.connection_manager import ConnectionManager
+from genai.utils.request_utils import sanitize_params
 from tests.assets.response_helper import SimpleResponse
 
 logger = logging.getLogger(__name__)
@@ -170,12 +171,12 @@ class TestAsyncResponseGenerator:
     async def test_concurrent_generate_dropped_request(self, httpx_mock, generate_params):
         failed_id = 4
         single_response = SimpleResponse.generate(model=self.model, inputs=self.inputs, params=generate_params)
-        headers, json_data = RequestHandler._metadata(
+        headers, json_data, _ = RequestHandler._metadata(
             "POST",
             key="TEST_KEY",
             model_id=self.model,
             inputs=["Input " + str(failed_id)],
-            parameters=ServiceInterface._sanitize_params(generate_params),
+            parameters=sanitize_params(generate_params),
         )
         # Following two lines: Selected input id should return 429, others should succeed
         httpx_mock.add_response(method="POST", json=single_response)

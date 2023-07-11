@@ -160,3 +160,82 @@ class SimpleResponse:
             }
         }
         return response
+
+    @staticmethod
+    def files(**kwargs):
+        response = {}
+        results = {
+            "id": "dumb-id",
+            "bytes": "931652",
+            "file_name": "file_to_tune.json",
+            "purpose": "tune",
+            "storage_provider_location": "us-east",
+            "created_at": "2023-05-17T14:55:06.000Z",
+            "file_formats": [
+                {
+                    "id": "1",
+                    "name": "generation",
+                },
+            ],
+        }
+
+        if "multipart_form_data" in kwargs:
+            response = {"results": results}
+        elif "file_id" in kwargs:
+            response = {"results": results}
+        elif "params" in kwargs:
+            response = {
+                "results": [results, results],
+                "totalCount": 2,
+            }
+        else:
+            response = {
+                "results": [results],
+                "totalCount": 1,
+            }
+        return response
+
+    @staticmethod
+    def tunes(**kwargs):
+        from genai.schemas.tunes_params import CreateTuneParams
+
+        response = {}
+        results = {
+            "id": "google/flan-t5-xxl-mpt-Bok9gSo3-2023-04-11-18-00-57",
+            "name": "Tune #2 google/flan-t5-xxl (3B)",
+            "model_id": "google/google/flan-t5-xxl",
+            "model_name": "google/flan-t5-xxl (3B)",
+            "status": "COMPLETED",
+            "task_id": "generation",
+            "parameters": {"batch_size": 4, "num_epochs": 12},
+            "created_at": "2023-04-11T18:00:57.000Z",
+        }
+
+        if "tune_id" in kwargs:
+            response["results"] = results
+        elif "params" in kwargs and type(kwargs["params"]) == CreateTuneParams:
+            response["results"] = results
+        else:
+            response = {
+                "results": [results],
+                "totalCount": 1,
+            }
+        return response
+
+    @staticmethod
+    def create_tune(**kwargs):
+        model_id = kwargs["model_id"] if "model_id" in kwargs else "google/flan-t5-xxl"
+        name = kwargs["name"] if "name" in kwargs else "Tune #2 google/flan-t5-xxl (3B)"
+        response = {
+            "results": {
+                "id": "google/flan-t5-xxl-mpt-Bok9gSo3-2023-04-11-18-00-57",
+                "name": name,
+                "model_id": model_id,
+                "model_name": "google/flan-t5-xxl (3B)",
+                "status": "COMPLETED",
+                "task_id": "generation",
+                "parameters": {"batch_size": 4, "num_epochs": 12},
+                "created_at": "2023-04-11T18:00:57.000Z",
+            }
+        }
+        return response
