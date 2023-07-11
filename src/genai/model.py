@@ -12,11 +12,13 @@ from genai.options import Options
 from genai.prompt_pattern import PromptPattern
 from genai.schemas import GenerateParams, ModelType, TokenParams
 from genai.schemas.responses import (
+    BuiltinModelCard,
     GenerateResponse,
     GenerateResult,
     GenerateStreamResponse,
     TokenizeResponse,
     TokenizeResult,
+    TuneInfoResult,
 )
 from genai.schemas.tunes_params import (
     CreateTuneHyperParams,
@@ -380,6 +382,11 @@ class Model:
         return {t.id: t for t in tunes}
 
     def available(self):
+        """Check if the model is available
+
+        Returns:
+            bool: Boolean indicating model availability
+        """
         builtin_models = Model._fetch_builtin_models(service=self.service)
         if self.model in builtin_models:
             return True
@@ -388,7 +395,12 @@ class Model:
             return True
         return False
 
-    def info(self):
+    def info(self) -> Union[BuiltinModelCard, TuneInfoResult, None]:
+        """Get info of the model
+
+        Returns:
+            Union[BuiltinModelCard, TuneInfoResult, None]: Model info
+        """
         builtin_models = Model._fetch_builtin_models(service=self.service)
         if self.model in builtin_models:
             return builtin_models[self.model]
@@ -399,7 +411,7 @@ class Model:
 
     @staticmethod
     def models(credentials: Credentials = None, service: ServiceInterface = None, kind="all"):
-        """Get a list of models.
+        """Get a list of models
 
         Args:
             credentials (Credentials): Credentials
