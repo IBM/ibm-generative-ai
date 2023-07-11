@@ -43,7 +43,7 @@ class TuneManager:
             raise GenAiException(e)
 
     @staticmethod
-    def get_tune(tune_id: str, credentials: Credentials = None, service: ServiceInterface = None) -> TuneGetResponse:
+    def get_tune(tune_id: str, credentials: Credentials = None, service: ServiceInterface = None) -> TuneInfoResult:
         """Get a tune from the server.
 
         Args:
@@ -54,7 +54,7 @@ class TuneManager:
                 If not provided, credentials must be provided.
 
         Returns:
-            TuneGetResponse: Response from the server.
+            TuneInfoResult: Response from the server.
         """
         service = _get_service(credentials, service)
         try:
