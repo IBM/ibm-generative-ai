@@ -399,7 +399,7 @@ class Model:
 
     @staticmethod
     def models(credentials: Credentials = None, service: ServiceInterface = None, kind="all"):
-        """Tune the base-model for given training data.
+        """Get a list of models.
 
         Args:
             credentials (Credentials): Credentials
