@@ -197,19 +197,45 @@ class SimpleResponse:
 
     @staticmethod
     def tunes(**kwargs):
+        from genai.schemas.tunes_params import CreateTuneParams
+
+        response = {}
+        results = {
+            "id": "google/flan-t5-xxl-mpt-Bok9gSo3-2023-04-11-18-00-57",
+            "name": "Tune #2 google/flan-t5-xxl (3B)",
+            "model_id": "google/google/flan-t5-xxl",
+            "model_name": "google/flan-t5-xxl (3B)",
+            "status": "COMPLETED",
+            "task_id": "generation",
+            "parameters": {"batch_size": 4, "num_epochs": 12},
+            "created_at": "2023-04-11T18:00:57.000Z",
+        }
+
+        if "tune_id" in kwargs:
+            response["results"] = results
+        elif "params" in kwargs and type(kwargs["params"]) == CreateTuneParams:
+            response["results"] = results
+        else:
+            response = {
+                "results": [results],
+                "totalCount": 1,
+            }
+        return response
+
+    @staticmethod
+    def create_tune(**kwargs):
+        model_id = kwargs["model_id"] if "model_id" in kwargs else "google/flan-t5-xxl"
+        name = kwargs["name"] if "name" in kwargs else "Tune #2 google/flan-t5-xxl (3B)"
         response = {
-            "results": [
-                {
-                    "id": "google/flan-t5-xxl-mpt-Bok9gSo3-2023-04-11-18-00-57",
-                    "name": "Tune #2 google/flan-t5-xxl (3B)",
-                    "model_id": "google/google/flan-t5-xxl",
-                    "model_name": "google/flan-t5-xxl (3B)",
-                    "status": "COMPLETED",
-                    "task_id": "generation",
-                    "parameters": {"batch_size": 4, "num_epochs": 12},
-                    "created_at": "2023-04-11T18:00:57.000Z",
-                }
-            ],
-            "totalCount": 1,
+            "results": {
+                "id": "google/flan-t5-xxl-mpt-Bok9gSo3-2023-04-11-18-00-57",
+                "name": name,
+                "model_id": model_id,
+                "model_name": "google/flan-t5-xxl (3B)",
+                "status": "COMPLETED",
+                "task_id": "generation",
+                "parameters": {"batch_size": 4, "num_epochs": 12},
+                "created_at": "2023-04-11T18:00:57.000Z",
+            }
         }
         return response

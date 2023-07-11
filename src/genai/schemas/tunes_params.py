@@ -33,7 +33,9 @@ class CreateTuneHyperParams(BaseModel):
     max_output_tokens: Optional[int] = Field(128, description=tx.MAX_OUTPUT_TOKENS)
     num_epochs: Optional[int] = Field(20, description=tx.NUM_EPOCHS)
     num_virtual_tokens: Optional[int] = Field(100, description=tx.NUM_VIRTUAL_TOKENS)
-    verbalizer: Optional[str] = Field("{{input}}", description=tx.VERBALIZER)
+    verbalizer: Optional[str] = Field("Input: {{input}} Output:", description=tx.VERBALIZER)
+    init_method: Optional[str] = Field(None, description=tx.INIT_METHOD)
+    init_text: Optional[str] = Field(None, description=tx.INIT_TEXT)
 
 
 class CreateTuneParams(BaseModel):

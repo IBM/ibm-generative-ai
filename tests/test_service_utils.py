@@ -3,7 +3,7 @@ import unittest
 import pytest
 
 from genai.schemas import GenerateParams, ReturnOptions
-from genai.services import ServiceInterface
+from genai.utils.request_utils import sanitize_params
 
 # API Reference : https://workbench.res.ibm.com/docs/api-reference#generate
 
@@ -18,5 +18,5 @@ class TestServiceUtils(unittest.TestCase):
 
         expected_genParams = {"decoding_method": "greedy", "return_options": {"input_text": True}}
 
-        sanitized_dict = ServiceInterface._sanitize_params(input_genParams)
+        sanitized_dict = sanitize_params(input_genParams)
         self.assertEqual(expected_genParams, sanitized_dict)

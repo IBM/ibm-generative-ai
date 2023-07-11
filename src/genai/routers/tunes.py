@@ -5,6 +5,7 @@ from genai.schemas.tunes_params import (
     TunesListParams,
 )
 from genai.services.request_handler import RequestHandler
+from genai.utils.request_utils import sanitize_params
 
 
 class TunesRouter:
@@ -14,19 +15,17 @@ class TunesRouter:
         self.service_url = service_url.rstrip("/")
         self.key = api_key
 
-    def list_tunes(self, params: TunesListParams):
-        from genai.services import ServiceInterface  # circular import
-
+    def list_tunes(self, params: TunesListParams = None):
         """List all tunes on the server.
 
         Args:
-            params (TunesListParams): Parameters for the tune list.
+            params (TunesListParams, optional): Parameters for the tune list.
 
         Returns:
             Any: json from querying for tune list.
         """
         try:
-            params = ServiceInterface._sanitize_params(params)
+            params = sanitize_params(params)
             endpoint = self.service_url + TunesRouter.TUNES
             return RequestHandler.get(endpoint, key=self.key, parameters=params)
         except Exception as e:
@@ -48,8 +47,6 @@ class TunesRouter:
             raise GenAiException(e)
 
     def create_tune(self, params: CreateTuneParams):
-        from genai.services import ServiceInterface  # circular import
-
         """Create a new tune on the server.
 
         Args:
@@ -60,7 +57,7 @@ class TunesRouter:
         """
 
         try:
-            params = ServiceInterface._sanitize_params(params)
+            params = sanitize_params(params)
             endpoint = self.service_url + TunesRouter.TUNES
             return RequestHandler.post(endpoint, key=self.key, options=params)
         except Exception as e:
