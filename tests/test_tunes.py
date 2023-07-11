@@ -5,7 +5,11 @@ import pytest
 from genai import Credentials
 from genai.exceptions import GenAiException
 from genai.routers.tunes import TunesRouter
-from genai.schemas.responses import TuneInfoResult, TunesListResponse
+from genai.schemas.responses import (
+    TuneInfoResult,
+    TuneMethodsGetResponse,
+    TunesListResponse,
+)
 from genai.schemas.tunes_params import CreateTuneParams, TunesListParams
 from genai.services.tune_manager import TuneManager
 from tests.assets.response_helper import SimpleResponse
@@ -157,13 +161,21 @@ class TestTunes:
     # Test download tune assets function
 
     @patch("genai.services.RequestHandler.get")
-    def test_get_tune_methods(self, credentials):
-        expected_response = MagicMock(status_code=200)
+    def test_get_tune_methods(self, mock_requests, credentials):
+        tune_methods_response = SimpleResponse.get_tune_methods()
+        expected_response = TuneMethodsGetResponse(**tune_methods_response)
 
-        tune_manager = TuneManager()
-        tune_response = tune_manager.get_tune_methods(credentials=credentials)
+        mock_response = MagicMock(status_code=200)
+        mock_response.json.return_value = tune_methods_response
+        mock_requests.return_value = mock_response
 
-        print("\n\nTUNE RESPONSE: ", tune_response)
-        print("\n\nEXPECTED REPONSE: ", expected_response)
+        tune_response = TuneManager.get_tune_methods(credentials=credentials)
+        assert tune_response == expected_response.results
 
-        assert tune_response == expected_response
+    @patch("genai.services.RequestHandler.get")
+    def test_get_tune_methods_api_call(self, mock_requests):
+        mock_response = MagicMock(status_code=200)
+        mock_response.json.return_value = SimpleResponse.get_tune_methods()
+        mock_requests.return_value = mock_response
+        g = self.service_router.get_tune_methods()
+        assert g == mock_response
