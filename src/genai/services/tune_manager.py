@@ -1,4 +1,6 @@
 import logging
+import os
+import pathlib
 
 from genai.credentials import Credentials
 from genai.exceptions.genai_exception import GenAiException
@@ -162,22 +164,40 @@ class TuneManager:
             raise GenAiException(e)
 
     @staticmethod
-    def download_tune_assets(credentials: Credentials, params: DownloadAssetsParams) -> dict:
+    def download_tune_assets(credentials: Credentials, params: DownloadAssetsParams, output_path="tune_assets") -> dict:
         """Download tune asset (available only for completed tunes)
 
         Args:
             params (DownloadAssetsParams): Parameters for downloading tune assets.
+            output_path (str): Output directory for tune assets file. Follows absolute path.
 
         Returns:
             dict: Response from the server.
         """
+
+        if params.content == "encoder":
+            filename = f"{params.id}.pt"
+        elif params.content == "logs":
+            filename = f"{params.id}.jsonl"
+        else:
+            raise GenAiException("'content' must be input as either 'encoder' or 'logs'")
+        # Todo: Check if tune is available to be downloaded
+        # Todo: tests to check content
+        # Todo: update branch with dev
+
         service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
+
         try:
             response = service._tunes.download_tune_assets(params=params)
 
             if response.status_code == 200:
-                response = response.json()
-                return response
+                parent_path = pathlib.Path(__file__).parent.resolve()
+                path = os.path.join(parent_path, output_path)
+                os.makedirs(path)
+                complete_path = os.path.join(path, filename)
+
+                with open(complete_path, "wb") as f:
+                    return f.write(response.content)
             else:
                 raise GenAiException(response)
         except Exception as e:
