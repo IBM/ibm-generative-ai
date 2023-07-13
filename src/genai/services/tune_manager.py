@@ -164,39 +164,43 @@ class TuneManager:
             raise GenAiException(e)
 
     @staticmethod
+    def get_filename(params: DownloadAssetsParams):
+        if params.content == "encoder":
+            return f"{params.id}.pt"
+        elif params.content == "logs":
+            return f"{params.id}.jsonl"
+        else:
+            raise GenAiException("Input for 'content' must either be 'encoder' or 'logs'")
+
+    @staticmethod
+    def get_complete_path(output_path, filename):
+        parent_path = pathlib.Path(__file__).parent.resolve()
+        path = os.path.join(parent_path, output_path)
+        if not (os.path.exists(path) and os.path.isdir(path)):
+            os.makedirs(path)
+        return os.path.join(path, filename)
+
+    @staticmethod
     def download_tune_assets(credentials: Credentials, params: DownloadAssetsParams, output_path="tune_assets") -> dict:
         """Download tune asset (available only for completed tunes)
 
         Args:
             params (DownloadAssetsParams): Parameters for downloading tune assets.
-            output_path (str): Output directory for tune assets file. Follows absolute path.
+            output_path (str): Output directory for tune assets file. Path is relative to services directory.
 
         Returns:
             dict: Response from the server.
         """
 
-        if params.content == "encoder":
-            filename = f"{params.id}.pt"
-        elif params.content == "logs":
-            filename = f"{params.id}.jsonl"
-        else:
-            raise GenAiException("'content' must be input as either 'encoder' or 'logs'")
-        # Todo: Check if tune is available to be downloaded
-        # Todo: tests to check content
-        # Todo: update branch with dev
+        filename = TuneManager.get_filename(params)
 
         service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
 
         try:
             response = service._tunes.download_tune_assets(params=params)
-
             if response.status_code == 200:
-                parent_path = pathlib.Path(__file__).parent.resolve()
-                path = os.path.join(parent_path, output_path)
-                os.makedirs(path)
-                complete_path = os.path.join(path, filename)
-
-                with open(complete_path, "wb") as f:
+                path = TuneManager.get_complete_path(output_path, filename)
+                with open(path, "wb") as f:
                     return f.write(response.content)
             else:
                 raise GenAiException(response)

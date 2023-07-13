@@ -16,7 +16,7 @@ ENDPOINT = os.getenv("GENAI_API", None)
 
 creds = Credentials(api_key=API_KEY, api_endpoint=ENDPOINT)
 
-file_ids = ["a2ebeed8-0d9e-4f92-be4c-17137b4fc3be"]
+file_ids = ["<some-file-id>"]
 
 ## Testing generation task
 
@@ -54,6 +54,6 @@ tune_methods = TuneManager.get_tune_methods(credentials=creds)
 print("\n\nTune methods: \n", tune_methods)
 
 # Download tune assets
-tune_id = "flan-t5-xl-mpt-KtkzU1Ig-2023-07-10-14-20-09"
-assets_params = DownloadAssetsParams(id=tune_id, content="encoder")
+tune_id = ["some-tune-id"]
+assets_params = DownloadAssetsParams(id=tune_id, content="logs")
 tune_assets = TuneManager.download_tune_assets(credentials=creds, params=assets_params)

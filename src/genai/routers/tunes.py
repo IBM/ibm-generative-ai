@@ -98,7 +98,6 @@ class TunesRouter:
         """
         try:
             endpoint = self.service_url + TunesRouter.TUNES + "/" + params.id + "/content/" + params.content
-            print("\nENDPOINT: ", endpoint)
             return RequestHandler.get(endpoint, key=self.key)
         except Exception as e:
             raise GenAiException(e)

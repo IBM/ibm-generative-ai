@@ -10,7 +10,11 @@ from genai.schemas.responses import (
     TuneMethodsGetResponse,
     TunesListResponse,
 )
-from genai.schemas.tunes_params import CreateTuneParams, TunesListParams
+from genai.schemas.tunes_params import (
+    CreateTuneParams,
+    DownloadAssetsParams,
+    TunesListParams,
+)
 from genai.services.tune_manager import TuneManager
 from tests.assets.response_helper import SimpleResponse
 
@@ -23,6 +27,10 @@ class TestTunes:
     @pytest.fixture
     def list_params(self):
         return TunesListParams(limit=10, offset=0)
+
+    @pytest.fixture
+    def download_assets_params(self):
+        return DownloadAssetsParams(id="some-tune-id", content="encoder")
 
     @pytest.fixture
     def create_params(self):
@@ -158,7 +166,7 @@ class TestTunes:
             self.service_router.create_tune(params=123)
             assert e.message == "params must be of type dict as CreateTuneParams."
 
-    # Test download tune assets function
+    # Test get tune methods function
 
     @patch("genai.services.RequestHandler.get")
     def test_get_tune_methods(self, mock_requests, credentials):
@@ -179,3 +187,9 @@ class TestTunes:
         mock_requests.return_value = mock_response
         g = self.service_router.get_tune_methods()
         assert g == mock_response
+
+    # Test download tune assets function
+
+    @patch("genai.services.RequestHandler.get")
+    def test_download_assets(self, mocker, download_assets_params):
+        ...

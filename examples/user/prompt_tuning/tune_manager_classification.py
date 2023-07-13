@@ -17,12 +17,12 @@ ENDPOINT = os.getenv("GENAI_API", None)
 
 creds = Credentials(api_key=API_KEY, api_endpoint=ENDPOINT)
 
-file_ids = ["a2ebeed8-0d9e-4f92-be4c-17137b4fc3be"]  # ["<some-file-id>"]
+file_ids = ["<some-file-id>"]
 
 hyperparams = CreateTuneHyperParams(verbalizer='classify { "red", "yellow" } Input: {{input}} Output:')
 
 params = CreateTuneParams(
-    name="flan-t5-xl-red-yellow-TEST-3",
+    name="Tune Manager Classification",
     model_id="google/flan-t5-xl",
     method_id="mpt",
     task_id="classification",
