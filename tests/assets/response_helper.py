@@ -239,3 +239,10 @@ class SimpleResponse:
             }
         }
         return response
+
+    @staticmethod
+    def get_tune_methods():
+        response = {
+            "results": [{"id": "pt", "name": "Prompt tuning"}, {"id": "mpt", "name": "Multitask prompt tuning"}]
+        }
+        return response

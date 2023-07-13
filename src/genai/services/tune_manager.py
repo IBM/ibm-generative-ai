@@ -1,9 +1,20 @@
 import logging
+import os
+import pathlib
 
 from genai.credentials import Credentials
 from genai.exceptions.genai_exception import GenAiException
-from genai.schemas.responses import TuneGetResponse, TuneInfoResult, TunesListResponse
-from genai.schemas.tunes_params import CreateTuneParams, TunesListParams
+from genai.schemas.responses import (
+    TuneGetResponse,
+    TuneInfoResult,
+    TuneMethodsGetResponse,
+    TunesListResponse,
+)
+from genai.schemas.tunes_params import (
+    CreateTuneParams,
+    DownloadAssetsParams,
+    TunesListParams,
+)
 from genai.services.service_interface import ServiceInterface
 from genai.utils.service_utils import _get_service
 
@@ -128,6 +139,69 @@ class TuneManager:
             response = service._tunes.delete_tune(tune_id=tune_id)
             if response.status_code == 204:
                 return {"status": "success"}
+            else:
+                raise GenAiException(response)
+        except Exception as e:
+            raise GenAiException(e)
+
+    @staticmethod
+    def get_tune_methods(credentials: Credentials) -> TuneMethodsGetResponse:
+        """Get list of tune methods.
+
+        Returns:
+            TuneMethodsGetResponse: Response from the server
+        """
+        service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
+        try:
+            response = service._tunes.get_tune_methods()
+            if response.status_code == 200:
+                response = response.json()
+                responses = TuneMethodsGetResponse(**response)
+                return responses.results
+            else:
+                raise GenAiException(response)
+        except Exception as e:
+            raise GenAiException(e)
+
+    @staticmethod
+    def get_filename(params: DownloadAssetsParams):
+        if params.content == "encoder":
+            return f"{params.id}.pt"
+        elif params.content == "logs":
+            return f"{params.id}.jsonl"
+        else:
+            raise GenAiException("Input for 'content' must either be 'encoder' or 'logs'")
+
+    @staticmethod
+    def get_complete_path(output_path, filename):
+        parent_path = pathlib.Path(__file__).parent.resolve()
+        path = os.path.join(parent_path, output_path)
+        if not (os.path.exists(path) and os.path.isdir(path)):
+            os.makedirs(path)
+        return os.path.join(path, filename)
+
+    @staticmethod
+    def download_tune_assets(credentials: Credentials, params: DownloadAssetsParams, output_path="tune_assets") -> dict:
+        """Download tune asset (available only for completed tunes)
+
+        Args:
+            params (DownloadAssetsParams): Parameters for downloading tune assets.
+            output_path (str): Output directory for tune assets file. Path is relative to services directory.
+
+        Returns:
+            dict: Response from the server.
+        """
+
+        filename = TuneManager.get_filename(params)
+
+        service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
+
+        try:
+            response = service._tunes.download_tune_assets(params=params)
+            if response.status_code == 200:
+                path = TuneManager.get_complete_path(output_path, filename)
+                with open(path, "wb") as f:
+                    return f.write(response.content)
             else:
                 raise GenAiException(response)
         except Exception as e:
