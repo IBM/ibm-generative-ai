@@ -116,13 +116,13 @@ class TestModel:
     def test_status(self, mock_requests, credentials):
         label = "test_label"
         model_id = self.model
-        tune_id = SimpleResponse.create_tune(model_id=model_id, name=label)["results"]["id"]
+        tune_id = SimpleResponse.get_tune(model_id=model_id, name=label)["results"]["id"]
 
         tuned_model = Model(tune_id, params=None, credentials=credentials)
 
-        expected_response = SimpleResponse.tunes()
+        expected_response = SimpleResponse.get_tune()
         mock_response = MagicMock(status_code=200)
         mock_response.json.return_value = expected_response
         mock_requests.return_value = mock_response
 
-        assert tuned_model.status() == expected_response["results"][0]["status"]
+        assert tuned_model.status() == expected_response["results"]["status"]

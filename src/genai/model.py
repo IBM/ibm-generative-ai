@@ -12,11 +12,13 @@ from genai.options import Options
 from genai.prompt_pattern import PromptPattern
 from genai.schemas import GenerateParams, ModelType, TokenParams
 from genai.schemas.responses import (
+    BuiltinModelCard,
     GenerateResponse,
     GenerateResult,
     GenerateStreamResponse,
     TokenizeResponse,
     TokenizeResult,
+    TuneInfoResult,
 )
 from genai.schemas.tunes_params import (
     CreateTuneHyperParams,
@@ -25,6 +27,7 @@ from genai.schemas.tunes_params import (
 )
 from genai.services import AsyncResponseGenerator, ServiceInterface
 from genai.services.tune_manager import TuneManager
+from genai.utils.service_utils import _get_service
 
 logger = logging.getLogger(__name__)
 
@@ -347,17 +350,13 @@ class Model:
         return Model(model=tune.id, params=None, credentials=self.creds)
 
     def status(self):
-        """Get status of the model, currently supports only tuned models.
+        """Get status of a tuned model.
 
         Returns:
             str: Status of a tuned model
         """
-        params = TunesListParams()
-        tunes = TuneManager.list_tunes(service=self.service, params=params).results
-        id_to_status = {t.id: t.status for t in tunes}
-        if self.model not in id_to_status:
-            raise GenAiException(ValueError("Tuned model not found. Currently method supports only tuned models."))
-        return id_to_status[self.model]
+        tune = TuneManager.get_tune(tune_id=self.model, service=self.service)
+        return tune.status
 
     def delete(self):
         params = TunesListParams()
@@ -366,3 +365,65 @@ class Model:
         if self.model not in id_to_status:
             raise GenAiException(ValueError("Tuned model not found. Currently method supports only tuned models."))
         TuneManager.delete_tune(service=self.service, tune_id=self.model)
+
+    @staticmethod
+    def _fetch_builtin_models(credentials: Credentials = None, service: ServiceInterface = None):
+        # Should fetch and store a dict of built in models
+        # id -> ModelCard
+        return {}
+
+    @staticmethod
+    def _fetch_tuned_models(credentials: Credentials = None, service: ServiceInterface = None):
+        service = _get_service(credentials, service)
+        params = TunesListParams()
+        tunes = TuneManager.list_tunes(service=service, params=params).results
+        return {t.id: t for t in tunes}
+
+    def available(self):
+        """Check if the model is available. Note that for tuned models
+        the model could still be in the process of tuning.
+
+        Returns:
+            bool: Boolean indicating model availability
+        """
+        builtin_models = Model._fetch_builtin_models(service=self.service)
+        if self.model in builtin_models:
+            return True
+        tuned_models = Model._fetch_tuned_models(service=self.service)
+        if self.model in tuned_models:
+            return True
+        return False
+
+    def info(self) -> Union[BuiltinModelCard, TuneInfoResult, None]:
+        """Get info of the model
+
+        Returns:
+            Union[BuiltinModelCard, TuneInfoResult, None]: Model info
+        """
+        builtin_models = Model._fetch_builtin_models(service=self.service)
+        if self.model in builtin_models:
+            return builtin_models[self.model]
+        tuned_models = Model._fetch_tuned_models(service=self.service)
+        if self.model in tuned_models:
+            return tuned_models[self.model]
+        return None
+
+    @staticmethod
+    def models(credentials: Credentials = None, service: ServiceInterface = None, kind="all"):
+        """Get a list of models
+
+        Args:
+            credentials (Credentials): Credentials
+            service (ServiceInterface): Service Interface
+            kind (str): "builtin", "tunes", or "all"
+
+        Returns:
+            dict: A dictionary of available models
+        """
+
+        result = {}
+        if kind in ["builtin", "all"]:
+            result.update(Model._fetch_builtin_models(service=service, credentials=credentials))
+        if kind in ["tunes", "all"]:
+            result.update(Model._fetch_tuned_models(service=service, credentials=credentials))
+        return result
