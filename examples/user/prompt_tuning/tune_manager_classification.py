@@ -55,6 +55,6 @@ tune_methods = TuneManager.get_tune_methods(credentials=creds)
 print("\n\nTune methods: \n", tune_methods)
 
 # Download tune assets
-tune_id = "flan-t5-xl-mpt-KtkzU1Ig-2023-07-10-14-20-09"
+tune_id = "some-tune-id"
 assets_params = DownloadAssetsParams(id=tune_id, content="encoder")
 tune_assets = TuneManager.download_tune_assets(credentials=creds, params=assets_params)

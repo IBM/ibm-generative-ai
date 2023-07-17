@@ -1,6 +1,6 @@
 import os
 import pathlib
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, mock_open, patch
 
 import pytest
 
@@ -195,9 +195,13 @@ class TestTunes:
     # Test download tune assets function
 
     @patch("genai.services.RequestHandler.get")
-    def test_download_assets(self, credentials, download_assets_params):
-        output_path = pathlib.Path(self.asset_path, "tune-assets").resolve()
+    @patch("builtins.open", new=mock_open(read_data="some data"), create=True)
+    def test_download_assets(self, mock_request, credentials, download_assets_params, tmp_path):
+        output_path = pathlib.Path(self.asset_path, tmp_path, "tune_assets").resolve()
+        mock_request.return_value = MagicMock(status_code=200)
+
         TuneManager.download_tune_assets(
             credentials=credentials, params=download_assets_params, output_path=output_path
         )
         assert os.path.exists(output_path)
+        assert os.path.isdir(output_path)

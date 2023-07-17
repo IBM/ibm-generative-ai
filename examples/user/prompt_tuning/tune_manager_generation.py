@@ -54,6 +54,6 @@ tune_methods = TuneManager.get_tune_methods(credentials=creds)
 print("\n\nTune methods: \n", tune_methods)
 
 # Download tune assets
-tune_id = ["some-tune-id"]
+tune_id = "some-tune-id"
 assets_params = DownloadAssetsParams(id=tune_id, content="logs")
 tune_assets = TuneManager.download_tune_assets(credentials=creds, params=assets_params)
