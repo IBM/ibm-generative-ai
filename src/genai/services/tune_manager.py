@@ -174,11 +174,12 @@ class TuneManager:
 
     @staticmethod
     def get_complete_path(output_path, filename):
-        parent_path = pathlib.Path(__file__).parent.resolve()
-        path = os.path.join(parent_path, output_path)
-        if not (os.path.exists(path) and os.path.isdir(path)):
-            os.makedirs(path)
-        return os.path.join(path, filename)
+        if output_path == "tune_assets":
+            parent_path = pathlib.Path(__file__).parent.resolve()
+            output_path = os.path.join(parent_path, output_path)
+        if not (os.path.exists(output_path) and os.path.isdir(output_path)):
+            os.makedirs(output_path)
+        return os.path.join(output_path, filename)
 
     @staticmethod
     def download_tune_assets(credentials: Credentials, params: DownloadAssetsParams, output_path="tune_assets") -> dict:

@@ -1,3 +1,5 @@
+import os
+import pathlib
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -23,6 +25,8 @@ from tests.assets.response_helper import SimpleResponse
 class TestTunes:
     def setup_method(self):
         self.service_router = TunesRouter(service_url="SERVICE_URL", api_key="API_KEY")
+        self.path = pathlib.Path(__file__).parent.resolve()
+        self.asset_path = pathlib.Path(__file__, "..", "assets").resolve()
 
     @pytest.fixture
     def list_params(self):
@@ -191,5 +195,9 @@ class TestTunes:
     # Test download tune assets function
 
     @patch("genai.services.RequestHandler.get")
-    def test_download_assets(self, mocker, download_assets_params):
-        ...
+    def test_download_assets(self, credentials, download_assets_params):
+        output_path = pathlib.Path(self.asset_path, "tune-assets").resolve()
+        TuneManager.download_tune_assets(
+            credentials=credentials, params=download_assets_params, output_path=output_path
+        )
+        assert os.path.exists(output_path)
