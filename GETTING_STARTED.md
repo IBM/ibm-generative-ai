@@ -3,29 +3,33 @@
 ## <a name='TableofContents'></a>Table of Contents
 
 <!-- vscode-markdown-toc -->
-* [Table of Contents](#table-of-contents)
-* [Installation](#installation)
-* [Gen AI Endpoint](#gen-ai-endpoint)
-    * [Example](#example)
-* [Examples](#examples)
-    * [Async Example](#async-example)
-    * [Synchronous Example](#synchronous-example)
-* [Tips and Troubleshooting](#tips-and-troubleshooting)
-    * [Enabling Logs](#enabling-logs)
-    * [Experimenting with a Large Number of Prompts](#many-prompts)
-* [Extensions](#extensions)
-    * [LangChain Extension](#langchain-extension)
-* [Support](#support)
+
+- [Table of Contents](#table-of-contents)
+- [Installation](#installation)
+- [Gen AI Endpoint](#gen-ai-endpoint)
+  - [Example](#example)
+- [Examples](#examples)
+  - [Async Example](#async-example)
+  - [Synchronous Example](#synchronous-example)
+- [Tips and Troubleshooting](#tips-and-troubleshooting)
+  - [Enabling Logs](#enabling-logs)
+  - [Experimenting with a Large Number of Prompts](#many-prompts)
+- [Extensions](#extensions)
+  - [LangChain Extension](#langchain-extension)
+- [Support](#support)
 
 ## <a name='Installation'></a>Installation
 
 ```bash
 pip install ibm-generative-ai
 ```
+
 #### <a name='KnownIssueFixes:'></a>Known Issue Fixes:
+
 - **[SSL Issue]** If you run into "SSL_CERTIFICATE_VERIFY_FAILED" please run the following code snippet here: [support](SUPPORT.md).
 
 ### <a name='Prerequisites'></a>Prerequisites
+
 Python version >= 3.9
 
 Pip version >= 22.0.1
@@ -70,12 +74,10 @@ creds = Credentials(api_key=my_api_key, api_endpoint=my_api_endpoint)
 
 ```
 
-
 ## <a name='Examples'></a>Examples
 
 There are a number of examples you can try in the [`examples/user`](examples/user) directory.
 Login to [workbench.res.ibm.com](https://workbench.res.ibm.com/) and get your GenAI API key. Then, create a `.env` file and assign the `GENAI_KEY` value as below example. [More information](#gen-ai-endpoint)
-
 
 ```ini
 GENAI_KEY=YOUR_GENAI_API_KEY
@@ -223,6 +225,7 @@ To learn more about logging in python, you can follow the tutorial [here](https:
 
 Since generating responses for a large number of prompts can be time-consuming and there could be unforeseen circumstances such as internet connectivity issues, here are some strategies
 to work with:
+
 - Start with a small number of prompts to prototype the code. You can enable logging as described above for debugging during prototyping.
 - Include exception handling in sensitive sections such as callbacks.
 - Checkpoint/save prompts and received responses periodically.
@@ -257,10 +260,13 @@ us if you want support for some framework as an extension or want to design an e
 ### <a name='LangChainExtension'></a>LangChain Extension
 
 Install the langchain extension as follows:
+
 ```bash
 pip install "ibm-generative-ai[langchain]"
 ```
+
 Currently the langchain extension allows IBM Generative AI models to be wrapped as Langchain LLMs and translation between genai PromptPatterns and LangChain PromptTemplates. Below are sample snippets
+
 ```python
 import os
 from dotenv import load_dotenv
@@ -291,13 +297,6 @@ pattern = PromptPattern.langchain.from_template(template)
 print(langchain_model(template.format(question="What is life?")))
 print(genai_model.generate([pattern.sub("question", "What is life?")])[0].generated_text)
 ```
-
-## <a name='[Deprecated] Model Types'></a>[Deprecated] Model Types
-
-Model types can be imported from the [ModelType class](src/genai/schemas/models.py). If you want to use a model that is not included in this class, you can pass it as a string as exemplified [here](src/genai/schemas/models.py).
-
-Models can be selected by passing their string id to the Model class as exemplified [here](src/genai/schemas/models.py).
-
 
 ## <a name='Support'></a>Support
 
