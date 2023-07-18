@@ -368,7 +368,7 @@ class Model:
         TuneManager.delete_tune(service=self.service, tune_id=self.model)
 
     @staticmethod
-    def models(credentials: Credentials = None, service: ServiceInterface = None):
+    def models(credentials: Credentials = None, service: ServiceInterface = None) -> list[ModelCard]:
         """Get a list of models
 
         Args:
@@ -376,7 +376,7 @@ class Model:
             service (ServiceInterface): Service Interface
 
         Returns:
-            dict: A dictionary of available models
+            list[ModelCard]: A list of available models
         """
         service = _get_service(credentials, service)
         response = service.models()

@@ -1,4 +1,4 @@
-from httpx import Response
+from httpx import ConnectError, Response
 
 from genai.exceptions import GenAiException
 from genai.options import Options
@@ -6,6 +6,8 @@ from genai.routers import FilesRouter, PromptTemplateRouter, TunesRouter
 from genai.schemas import GenerateParams, HistoryParams, TokenParams
 from genai.services import RequestHandler
 from genai.utils.request_utils import sanitize_params
+
+__all__ = ["ServiceInterface"]
 
 
 class ServiceInterface:
@@ -38,6 +40,10 @@ class ServiceInterface:
         try:
             endpoint = self.service_url + ServiceInterface.MODELS
             return RequestHandler.get(endpoint, key=self.key)
+        except ConnectError as e:
+            raise GenAiException(
+                Exception("Endpoint unreachable. Please check connectivity.\nRaw error message = {}".format(e))
+            )
         except Exception as e:
             raise GenAiException(e)
 
