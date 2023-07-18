@@ -12,13 +12,14 @@ from genai.options import Options
 from genai.prompt_pattern import PromptPattern
 from genai.schemas import GenerateParams, ModelType, TokenParams
 from genai.schemas.responses import (
-    BuiltinModelCard,
     GenerateResponse,
     GenerateResult,
     GenerateStreamResponse,
+    ModelCard,
+    ModelList,
     TokenizeResponse,
     TokenizeResult,
-    TuneInfoResult,
+    TuneGetResponse,
 )
 from genai.schemas.tunes_params import (
     CreateTuneHyperParams,
@@ -349,7 +350,7 @@ class Model:
         tune = TuneManager.create_tune(service=self.service, params=params)
         return Model(model=tune.id, params=None, credentials=self.creds)
 
-    def status(self):
+    def status(self) -> TuneGetResponse:
         """Get status of a tuned model.
 
         Returns:
@@ -367,63 +368,36 @@ class Model:
         TuneManager.delete_tune(service=self.service, tune_id=self.model)
 
     @staticmethod
-    def _fetch_builtin_models(credentials: Credentials = None, service: ServiceInterface = None):
-        # Should fetch and store a dict of built in models
-        # id -> ModelCard
-        return {}
+    def models(credentials: Credentials = None, service: ServiceInterface = None):
+        """Get a list of models
 
-    @staticmethod
-    def _fetch_tuned_models(credentials: Credentials = None, service: ServiceInterface = None):
+        Args:
+            credentials (Credentials): Credentials
+            service (ServiceInterface): Service Interface
+
+        Returns:
+            dict: A dictionary of available models
+        """
         service = _get_service(credentials, service)
-        params = TunesListParams()
-        tunes = TuneManager.list_tunes(service=service, params=params).results
-        return {t.id: t for t in tunes}
+        response = service.models()
+        cards = ModelList(**response.json()).results
+        return cards
 
-    def available(self):
+    def available(self) -> bool:
         """Check if the model is available. Note that for tuned models
         the model could still be in the process of tuning.
 
         Returns:
             bool: Boolean indicating model availability
         """
-        builtin_models = Model._fetch_builtin_models(service=self.service)
-        if self.model in builtin_models:
-            return True
-        tuned_models = Model._fetch_tuned_models(service=self.service)
-        if self.model in tuned_models:
-            return True
-        return False
+        idset = set(m.id for m in Model.models(service=self.service))
+        return self.model in idset
 
-    def info(self) -> Union[BuiltinModelCard, TuneInfoResult, None]:
+    def info(self) -> Union[ModelCard, None]:
         """Get info of the model
 
         Returns:
-            Union[BuiltinModelCard, TuneInfoResult, None]: Model info
+            Union[ModelCard, TuneInfoResult, None]: Model info
         """
-        builtin_models = Model._fetch_builtin_models(service=self.service)
-        if self.model in builtin_models:
-            return builtin_models[self.model]
-        tuned_models = Model._fetch_tuned_models(service=self.service)
-        if self.model in tuned_models:
-            return tuned_models[self.model]
-        return None
-
-    @staticmethod
-    def models(credentials: Credentials = None, service: ServiceInterface = None, kind="all"):
-        """Get a list of models
-
-        Args:
-            credentials (Credentials): Credentials
-            service (ServiceInterface): Service Interface
-            kind (str): "builtin", "tunes", or "all"
-
-        Returns:
-            dict: A dictionary of available models
-        """
-
-        result = {}
-        if kind in ["builtin", "all"]:
-            result.update(Model._fetch_builtin_models(service=service, credentials=credentials))
-        if kind in ["tunes", "all"]:
-            result.update(Model._fetch_tuned_models(service=service, credentials=credentials))
-        return result
+        id_to_model = {m.id: m for m in Model.models(service=self.service)}
+        return id_to_model.get(self.model, None)

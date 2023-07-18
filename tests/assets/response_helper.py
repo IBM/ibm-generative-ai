@@ -254,6 +254,27 @@ class SimpleResponse:
         return response
 
     @staticmethod
+    def models(**kwargs):
+        return {
+            "results": [
+                {
+                    "id": "google/flan-t5-xl",
+                    "name": "flan-t5-xl (3B)",
+                    "size": "3B",
+                    "source_model_id": None,
+                    "token_limit": 4096,
+                },
+                {
+                    "id": "flan-t5-xl-mpt-XmHNkJWk-2023-07-18-17-00-34",
+                    "name": "flan-t5-xxl (11B)",
+                    "size": "11B",
+                    "source_model_id": "google/flan-t5-xl",
+                    "token_limit": 4096,
+                },
+            ]
+        }
+
+    @staticmethod
     def create_tune(**kwargs):
         model_id = kwargs["model_id"] if "model_id" in kwargs else "google/flan-t5-xxl"
         name = kwargs["name"] if "name" in kwargs else "Tune #2 google/flan-t5-xxl (3B)"

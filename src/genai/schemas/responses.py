@@ -229,13 +229,13 @@ class TuneGetResponse(GenAiResponseModel):
     results: Optional[TuneInfoResult]
 
 
-class BuiltinModelCard(GenAiResponseModel):
-    id: str
-    name: str
-    size: str
-    source_model_id: str
-    token_limit: str
+class ModelCard(GenAiResponseModel):
+    id: Optional[str]
+    name: Optional[str]
+    size: Optional[str]
+    source_model_id: Optional[str]
+    token_limit: Optional[Union[int, Any]]
 
 
-class BuiltinModelList(GenAiResponseModel):
-    results: list[BuiltinModelCard]
+class ModelList(GenAiResponseModel):
+    results: list[ModelCard]

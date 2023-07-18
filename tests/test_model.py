@@ -5,7 +5,12 @@ import pytest
 from genai import Credentials, Model
 from genai.exceptions import GenAiException
 from genai.schemas import GenerateParams, ModelType
-from genai.schemas.responses import GenerateResponse, TokenizeResponse
+from genai.schemas.responses import (
+    GenerateResponse,
+    ModelCard,
+    ModelList,
+    TokenizeResponse,
+)
 from genai.schemas.tunes_params import CreateTuneHyperParams
 from genai.services import ServiceInterface
 from tests.assets.response_helper import SimpleResponse
@@ -126,3 +131,43 @@ class TestModel:
         mock_requests.return_value = mock_response
 
         assert tuned_model.status() == expected_response["results"]["status"]
+
+    @patch("genai.services.RequestHandler.get")
+    def test_info(self, mock_requests, credentials):
+        model_id = "google/flan-t5-xl"
+        response = SimpleResponse.models()
+        card = [m for m in response["results"] if m["id"] == model_id]
+        info = ModelCard(**card[0])
+
+        mock_response = MagicMock(status_code=200)
+        mock_response.json.return_value = response
+        mock_requests.return_value = mock_response
+
+        model = Model(model_id, params=None, credentials=credentials)
+        assert info == model.info()
+
+    @patch("genai.services.RequestHandler.get")
+    def test_models(self, mock_requests, credentials):
+        response = SimpleResponse.models()
+
+        mock_response = MagicMock(status_code=200)
+        mock_response.json.return_value = response
+        mock_requests.return_value = mock_response
+
+        assert Model.models(service=self.service) == ModelList(**response).results
+
+    @patch("genai.services.RequestHandler.get")
+    def test_available(self, mock_requests, credentials):
+        response = SimpleResponse.models()
+
+        mock_response = MagicMock(status_code=200)
+        mock_response.json.return_value = response
+        mock_requests.return_value = mock_response
+
+        model_id = "google/flan-t5-xl"
+        model = Model(model_id, params=None, credentials=credentials)
+        assert model.available() is True
+
+        model_id = "random"
+        model = Model(model_id, params=None, credentials=credentials)
+        assert model.available() is False
