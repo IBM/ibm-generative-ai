@@ -48,10 +48,6 @@ class RequestHandler:
         if method == "POST" and files is not None:
             return headers, None, files
 
-        # NOTE: discuss with team if we want to keep like this or try another approach
-        if method == "POST" and files is not None:
-            return headers, None, files
-
         json_data = {}
 
         if method == "POST" or method == "PUT":
@@ -73,7 +69,7 @@ class RequestHandler:
         if method == "PATCH":
             headers["Content-Type"] = "application/json"
 
-        return headers, json_data, files, files
+        return headers, json_data, files
 
     @staticmethod
     async def async_post(
@@ -97,7 +93,7 @@ class RequestHandler:
         Returns:
             httpx.Response: Response from the REST API.
         """
-        headers, json_data, files, files = RequestHandler._metadata(
+        headers, json_data, files = RequestHandler._metadata(
             method="POST",
             key=key,
             model_id=model_id,
@@ -152,7 +148,7 @@ class RequestHandler:
         Returns:
             httpx.Response: Response from the REST API.
         """
-        headers, json_data, _, _ = RequestHandler._metadata(
+        headers, json_data, _ = RequestHandler._metadata(
             method="POST", key=key, model_id=model_id, inputs=inputs, parameters=parameters, options=options
         )
         response = None
@@ -185,7 +181,7 @@ class RequestHandler:
         Returns:
             httpx.Response: Response from the REST API.
         """
-        headers, json_data, _, _ = RequestHandler._metadata(
+        headers, json_data, _ = RequestHandler._metadata(
             method="POST", key=key, model_id=model_id, inputs=inputs, parameters=parameters, options=options
         )
         response = None
@@ -213,7 +209,7 @@ class RequestHandler:
         Returns:
             httpx.Response: Response from the REST API.
         """
-        headers, _, _, _ = RequestHandler._metadata(method="GET", key=key)
+        headers, _, _ = RequestHandler._metadata(method="GET", key=key)
 
         async with httpx.AsyncClient(timeout=ConnectionManager.TIMEOUT) as client:
             response = await client.get(url=endpoint, headers=headers, params=parameters)
@@ -240,14 +236,13 @@ class RequestHandler:
             parameters (dict, optional): Key-value pairs for model parameters. Defaults to None.
             options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
             files (dict, optional): Files to be sent to the server. Defaults to None.
-            files (dict, optional): Files to be sent to the server. Defaults to None.
 
         Returns:
             httpx.Response: Response from the REST API.
             or
             Generator of streamed response payloads from the REST API.
         """
-        headers, json_data, files, files = RequestHandler._metadata(
+        headers, json_data, files = RequestHandler._metadata(
             method="POST",
             key=key,
             model_id=model_id,
@@ -303,7 +298,7 @@ class RequestHandler:
         Returns:
             httpx.Response: Response from the REST API.
         """
-        headers, _, _, _ = RequestHandler._metadata(method="GET", key=key)
+        headers, _, _ = RequestHandler._metadata(method="GET", key=key)
         with httpx.Client(timeout=ConnectionManager.TIMEOUT) as s:
             response = s.get(url=endpoint, headers=headers, params=parameters)
             return response
@@ -320,7 +315,7 @@ class RequestHandler:
         Returns:
             requests.models.Response: Response from the REST API.
         """
-        headers, json_data, _, _ = RequestHandler._metadata(method="PUT", key=key, options=options)
+        headers, json_data, _ = RequestHandler._metadata(method="PUT", key=key, options=options)
         with httpx.Client(timeout=ConnectionManager.TIMEOUT) as s:
             response = s.put(url=endpoint, headers=headers, json=json_data)
             return response
@@ -337,7 +332,7 @@ class RequestHandler:
         Returns:
             requests.models.Response: Response from the REST API.
         """
-        headers, _, _, _ = RequestHandler._metadata(method="DELETE", key=key)
+        headers, _, _ = RequestHandler._metadata(method="DELETE", key=key)
         with httpx.Client(timeout=ConnectionManager.TIMEOUT) as s:
             response = s.delete(url=endpoint, headers=headers, params=parameters)
             return response
