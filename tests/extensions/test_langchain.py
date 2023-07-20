@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from genai import Credentials
-from genai.schemas import GenerateParams, ModelType
+from genai.schemas import GenerateParams
 from genai.schemas.responses import GenerateResponse
 from genai.services import ServiceInterface
 from tests.assets.response_helper import SimpleResponse
@@ -32,14 +32,14 @@ class TestLangChain:
     def test_langchain_interface(self, mocked_post_request, credentials, params, prompts):
         from genai.extensions.langchain import LangChainInterface
 
-        GENERATE_RESPONSE = SimpleResponse.generate(model=ModelType.FLAN_UL2, inputs=prompts, params=params)
+        GENERATE_RESPONSE = SimpleResponse.generate(model="google/flan-ul2", inputs=prompts, params=params)
         expected_generated_response = GenerateResponse(**GENERATE_RESPONSE)
 
         response = MagicMock(status_code=200)
         response.json.return_value = GENERATE_RESPONSE
         mocked_post_request.return_value = response
 
-        model = LangChainInterface(model=ModelType.FLAN_UL2, params=params, credentials=credentials)
+        model = LangChainInterface(model="google/flan-ul2", params=params, credentials=credentials)
         observed = model(prompts[0])
         assert observed == expected_generated_response.results[0].generated_text
 

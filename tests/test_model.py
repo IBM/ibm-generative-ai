@@ -4,7 +4,7 @@ import pytest
 
 from genai import Credentials, Model
 from genai.exceptions import GenAiException
-from genai.schemas import GenerateParams, ModelType
+from genai.schemas import GenerateParams
 from genai.schemas.responses import GenerateResponse, TokenizeResponse
 from genai.schemas.tunes_params import CreateTuneHyperParams
 from genai.services import ServiceInterface
@@ -43,14 +43,14 @@ class TestModel:
     def test_generate(self, mocked_post_request, credentials, params, prompts):
         """Tests that we can call the generate endpoint"""
 
-        GENERATE_RESPONSE = SimpleResponse.generate(model=ModelType.FLAN_UL2, inputs=prompts, params=params)
+        GENERATE_RESPONSE = SimpleResponse.generate(model="google/flan-ul2", inputs=prompts, params=params)
         expected_generated_response = GenerateResponse(**GENERATE_RESPONSE)
 
         response = MagicMock(status_code=200)
         response.json.return_value = GENERATE_RESPONSE
         mocked_post_request.return_value = response
 
-        model = Model(ModelType.FLAN_UL2, params=params, credentials=credentials)
+        model = Model("google/flan-ul2", params=params, credentials=credentials)
 
         responses = model.generate_as_completed(prompts=prompts)
         responses_list = list(responses)
@@ -65,7 +65,7 @@ class TestModel:
 
         mock_service_generate.return_value = MagicMock(status_code=500)
 
-        model = Model(ModelType.FLAN_UL2, params=params, credentials=credentials)
+        model = Model("google/flan-ul2", params=params, credentials=credentials)
 
         with pytest.raises(GenAiException):
             model.generate(prompts=prompts)
@@ -73,7 +73,7 @@ class TestModel:
     @patch("genai.services.RequestHandler.post", side_effect=Exception("some general error"))
     def test_generate_throws_exception_for_generic_exception(self, credentials, params, prompts):
         """Tests that the GenAiException is thrown if a generic Exception is raised"""
-        model = Model(ModelType.FLAN_UL2, params=params, credentials=credentials)
+        model = Model("google/flan-ul2", params=params, credentials=credentials)
 
         with pytest.raises(GenAiException, match="some general error"):
             model.generate(prompts=prompts)
@@ -82,14 +82,14 @@ class TestModel:
     def test_tokenize(self, mocked_post_request, credentials, params):
         """Tests that we can call the tokenize endpoint"""
 
-        TOKENIZE_RESPONSE = SimpleResponse.tokenize(model=ModelType.FLAN_UL2, inputs=["a", "b", "c"])
+        TOKENIZE_RESPONSE = SimpleResponse.tokenize(model="google/flan-ul2", inputs=["a", "b", "c"])
         expected_token_response = TokenizeResponse(**TOKENIZE_RESPONSE)
 
         mock_response = MagicMock(status_code=200)
         mock_response.json.return_value = TOKENIZE_RESPONSE
         mocked_post_request.return_value = mock_response
 
-        model = Model(ModelType.FLAN_UL2, params=params, credentials=credentials)
+        model = Model("google/flan-ul2", params=params, credentials=credentials)
 
         responses = model.tokenize(["a", "b", "c"], False)
 

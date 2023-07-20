@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 from genai.model import Credentials, Model
-from genai.schemas import GenerateParams, ModelType
+from genai.schemas import GenerateParams
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -24,7 +24,8 @@ print(
     " during iteration it will do symb1 symb1 symb1 due to how it"
     " maps internally. ===="
 )
-for key, modelid in ModelType.__members__.items():
+for model_card in Model.models(credentials=creds):
+    modelid = model_card.id
     model = Model(modelid, params=params, credentials=creds)
     responses = [response.generated_text for response in model.generate(prompts)]
     print(modelid, ":", responses)
