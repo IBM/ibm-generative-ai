@@ -10,7 +10,7 @@ from genai.exceptions import GenAiException
 from genai.metadata import Metadata
 from genai.options import Options
 from genai.prompt_pattern import PromptPattern
-from genai.schemas import GenerateParams, ModelType, TokenParams
+from genai.schemas import GenerateParams, TokenParams
 from genai.schemas.responses import (
     GenerateResponse,
     GenerateResult,
@@ -38,14 +38,14 @@ class Model:
 
     def __init__(
         self,
-        model: Union[ModelType, str],
+        model: str,
         params: Union[GenerateParams, TokenParams, Any] = None,
         credentials: Credentials = None,
     ):
         """Instantiates the Model Interface
 
         Args:
-            model (Union[ModelType, str]): The type of model to use
+            model (str): The type of model to use
             params (Union[GenerateParams, TokenParams]): Parameters to use during generate requests
             credentials (Credentials): The API Credentials
         """
