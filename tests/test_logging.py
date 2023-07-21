@@ -25,4 +25,4 @@ class TestLogging:
         params = GenerateParams()
         Model("google/flan-ul2", params=params, credentials=credentials)
 
-        assert any("google/flan-ul2" in caplog.text)
+        assert "google/flan-ul2" in caplog.text
