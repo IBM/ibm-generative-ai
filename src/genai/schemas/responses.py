@@ -227,3 +227,15 @@ class TrainingFilesParameters(GenAiResponseModel):
 
 class TuneGetResponse(GenAiResponseModel):
     results: Optional[TuneInfoResult]
+
+
+class ModelCard(GenAiResponseModel):
+    id: Optional[str]
+    name: Optional[str]
+    size: Optional[str]
+    source_model_id: Optional[str]
+    token_limit: Optional[Union[int, Any]]
+
+
+class ModelList(GenAiResponseModel):
+    results: list[ModelCard]
