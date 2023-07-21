@@ -110,6 +110,10 @@ if __name__ == "__main__":
         if status in ["FAILED", "HALTED"]:
             print("Model tuning failed or halted")
         else:
+            print("Model info:\n")
+            print(tuned_model.info())
+            time.sleep(5)
+
             prompt = input("Enter a prompt:\n")
             genparams = GenerateParams(
                 decoding_method="greedy",
@@ -117,21 +121,29 @@ if __name__ == "__main__":
                 min_new_tokens=1,
             )
             print("Answer = ", tuned_model.generate([prompt])[0].generated_text)
+            time.sleep(5)
 
-            print("~~~~~~~ Listing tunes and getting tune metadata with TuneManager ~~~~~")
+            print("~~~~~~~ List of all models ~~~~~~")
+            for m in Model.models(credentials=creds):
+                print(m, "\n")
+            time.sleep(10)
 
-            list_params = TunesListParams(limit=5, offset=0)
+            print("~~~~~~~ Getting list of all tuned models with TuneManager ~~~~~")
+
+            list_params = TunesListParams(limit=50, offset=0)
 
             tune_list = TuneManager.list_tunes(credentials=creds, params=list_params)
             print("\n\nList of tunes: \n\n")
             for tune in tune_list.results:
                 print(tune, "\n")
+            time.sleep(10)
 
             tune_get_result = TuneManager.get_tune(credentials=creds, tune_id=tuned_model.model)
             print(
                 "\n\n~~~~~ Metadata for a single tune with TuneManager ~~~~: \n\n",
                 tune_get_result,
             )
+            time.sleep(5)
 
             print("~~~~~~~ Deleting a tuned model ~~~~~")
             to_delete = input("Delete this model? (y/N):\n")

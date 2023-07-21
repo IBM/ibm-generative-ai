@@ -2,21 +2,20 @@
 
 ## <a name='TableofContents'></a>Table of Contents
 
-<!-- vscode-markdown-toc -->
-
-- [Table of Contents](#table-of-contents)
-- [Installation](#installation)
-- [Gen AI Endpoint](#gen-ai-endpoint)
-  - [Example](#example)
-- [Examples](#examples)
-  - [Async Example](#async-example)
-  - [Synchronous Example](#synchronous-example)
-- [Tips and Troubleshooting](#tips-and-troubleshooting)
-  - [Enabling Logs](#enabling-logs)
-  - [Experimenting with a Large Number of Prompts](#many-prompts)
-- [Extensions](#extensions)
-  - [LangChain Extension](#langchain-extension)
-- [Support](#support)
+* [Table of Contents](#table-of-contents)
+* [Installation](#installation)
+* [Gen AI Endpoint](#gen-ai-endpoint)
+    * [Example](#example)
+* [Examples](#examples)
+    * [Async Example](#async-example)
+    * [Synchronous Example](#synchronous-example)
+* [Tips and Troubleshooting](#tips-and-troubleshooting)
+    * [Model Availability](#model-availability)
+    * [Enabling Logs](#enabling-logs)
+    * [Experimenting with a Large Number of Prompts](#many-prompts)
+* [Extensions](#extensions)
+    * [LangChain Extension](#langchain-extension)
+* [Support](#support)
 
 ## <a name='Installation'></a>Installation
 
@@ -185,6 +184,40 @@ for response in responses:
 ```
 
 ## <a name='TipsAndTroubleshooting'></a>Tips and Troubleshooting
+
+### <a name='Model Availability'></a>Model Availability
+To test the reachability of your endpoint and availability of desired model, use the following utility script with your model details:
+```python
+import os
+
+from dotenv import load_dotenv
+
+from genai.credentials import Credentials
+from genai.model import Model
+
+# make sure you have a .env file under genai root with
+# GENAI_KEY=<your-genai-key>
+# GENAI_API=<your-genai-api endpoint>
+load_dotenv()
+api_key = os.getenv("GENAI_KEY", None)
+api_url = os.getenv("GENAI_API", None)
+creds = Credentials(api_key, api_endpoint=api_url)
+
+print("======= List of all available models =======")
+for m in Model.models(credentials=creds):
+    print(m)
+
+print("====== Checking availability of a specific model =======")
+model_id = "<string-id-of-model>"
+model = Model(model_id, params=None, credentials=creds)
+print(f"Model availability for {model_id}: {model.available()}")
+
+print("====== Display model card =======")
+model = Model(model_id, params=None, credentials=creds)
+model_info = model.info()
+print(f"Model info for {model_id}: \n{model_info}")
+print(f"Extract fields from model card (e.g., token_limit): {model_info.token_limit}")
+```
 
 ### <a name='EnablingLogs'></a>Enabling Logs
 

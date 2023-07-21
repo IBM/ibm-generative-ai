@@ -223,6 +223,58 @@ class SimpleResponse:
         return response
 
     @staticmethod
+    def get_tune(**kwargs):
+        response = {
+            "results": {
+                "id": "google/flan-t5-xl-mpt-oP8G21Dj-2023-04-11-18-11-54",
+                "name": "Tune #1 google/flan-t5-xl (3B)",
+                "model_id": "google/google/flan-t5-xl",
+                "method_id": "mpt",
+                "model_name": "google/flan-t5-xl (3B)",
+                "status_message": "",
+                "task_id": "generation",
+                "status": "COMPLETED",
+                "parameters": {"batch_size": 4, "num_epochs": 12},
+                "created_at": "2023-04-11T18:11:54.000Z",
+                "validation_files": [],
+                "training_files": [
+                    {
+                        "id": "60d54ad5-b9d7-4acb-99d6-870ff31c9222",
+                        "file_name": "file.json",
+                        "created_at": "2023-04-24 10:26:02+02",
+                    }
+                ],
+                "evaluation_files": [],
+                "datapoints": {
+                    "loss": [{"data": {"epoch": 0, "value": 1.9922}, "timestamp": "2023-05-07T09:05:56.000Z"}]
+                },
+            }
+        }
+
+        return response
+
+    @staticmethod
+    def models(**kwargs):
+        return {
+            "results": [
+                {
+                    "id": "google/flan-t5-xl",
+                    "name": "flan-t5-xl (3B)",
+                    "size": "3B",
+                    "source_model_id": None,
+                    "token_limit": 4096,
+                },
+                {
+                    "id": "flan-t5-xl-mpt-XmHNkJWk-2023-07-18-17-00-34",
+                    "name": "flan-t5-xxl (11B)",
+                    "size": "11B",
+                    "source_model_id": "google/flan-t5-xl",
+                    "token_limit": 4096,
+                },
+            ]
+        }
+
+    @staticmethod
     def create_tune(**kwargs):
         model_id = kwargs["model_id"] if "model_id" in kwargs else "google/flan-t5-xxl"
         name = kwargs["name"] if "name" in kwargs else "Tune #2 google/flan-t5-xxl (3B)"
