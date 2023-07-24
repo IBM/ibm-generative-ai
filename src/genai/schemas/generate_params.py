@@ -48,7 +48,7 @@ class Return(ReturnOptions):
 class GenerateParams(BaseModel):
     class Config:
         anystr_strip_whitespace: True
-        extra: Extra.forbid
+        extra = Extra.allow
         allow_population_by_field_name = True
 
     decoding_method: Optional[Literal["greedy", "sample"]] = Field(None, description=tx.DECODING_METHOD)
