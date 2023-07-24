@@ -47,7 +47,7 @@ class Return(ReturnOptions):
 
 class GenerateParams(BaseModel):
     class Config:
-        anystr_strip_whitespace: True
+        anystr_strip_whitespace = True
         extra = Extra.allow
         allow_population_by_field_name = True
 
