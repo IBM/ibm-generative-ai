@@ -54,7 +54,7 @@ class TuneManager:
                 If not provided, credentials must be provided.
 
         Returns:
-            TuneGetResponse: Response from the server.
+            TuneInfoResult: Response from the server.
         """
         service = _get_service(credentials, service)
         try:
