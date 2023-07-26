@@ -14,10 +14,10 @@ class TestRequestHandler:
 
     @pytest.fixture
     def params(seld):
-        return GenerateParams(decoding_method="greedy", temperature=0.8).dict(by_alias=True, exclude_none=True)
+        return GenerateParams(decoding_method="greedy").dict(by_alias=True, exclude_none=True)
 
     def test_metadata_post(self, params):
-        headers, json_data = RequestHandler._metadata(
+        headers, json_data, _ = RequestHandler._metadata(
             method="POST", key="API_KEY", model_id=self.model, inputs=self.inputs, parameters=params
         )
 
@@ -30,11 +30,11 @@ class TestRequestHandler:
         assert json_data == {
             "model_id": self.model,
             "inputs": self.inputs,
-            "parameters": {"decoding_method": "greedy", "temperature": 0.8},
+            "parameters": {"decoding_method": "greedy"},
         }
 
     def test_metadata_get(self):
-        headers, _ = RequestHandler._metadata(method="GET", key="API_KEY")
+        headers, _, _ = RequestHandler._metadata(method="GET", key="API_KEY")
 
         assert "Authorization" in headers
         assert headers["Authorization"] == "Bearer API_KEY"

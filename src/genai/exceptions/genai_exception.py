@@ -1,8 +1,8 @@
 import logging
 from typing import Union
 
+from httpx import Response
 from pydantic import ValidationError
-from requests import Response
 
 from genai.schemas.responses import ErrorResponse
 

@@ -1,8 +1,13 @@
-from httpx import Response
+from httpx import ConnectError, Response
 
 from genai.exceptions import GenAiException
+from genai.options import Options
+from genai.routers import FilesRouter, PromptTemplateRouter, TunesRouter
 from genai.schemas import GenerateParams, HistoryParams, TokenParams
 from genai.services import RequestHandler
+from genai.utils.request_utils import sanitize_params
+
+__all__ = ["ServiceInterface"]
 
 
 class ServiceInterface:
@@ -10,6 +15,7 @@ class ServiceInterface:
     TOKENIZE = "/tokenize"
     HISTORY = "/requests"
     TOU = "/user"
+    MODELS = "/models"
 
     def __init__(self, service_url: str, api_key: str) -> None:
         """Initialize ServiceInterface.
@@ -21,13 +27,28 @@ class ServiceInterface:
         """
         self.service_url = service_url.rstrip("/")
         self.key = api_key
+        self._prompt_templating = PromptTemplateRouter(service_url=service_url, api_key=api_key)
+        self._files = FilesRouter(service_url=service_url, api_key=api_key)
+        self._tunes = TunesRouter(service_url=service_url, api_key=api_key)
+
+    def models(self):
+        """Generate a completion text for the given model, inputs, and params.
+
+        Returns:
+            Any: json from querying for text completion.
+        """
+        try:
+            endpoint = self.service_url + ServiceInterface.MODELS
+            return RequestHandler.get(endpoint, key=self.key)
+        except ConnectError as e:
+            raise GenAiException(
+                Exception("Endpoint unreachable. Please check connectivity.\nRaw error message = {}".format(e))
+            )
+        except Exception as e:
+            raise GenAiException(e)
 
     def generate(
-        self,
-        model: str,
-        inputs: list,
-        params: GenerateParams = None,
-        streaming: bool = False,
+        self, model: str, inputs: list, params: GenerateParams = None, streaming: bool = False, options: Options = None
     ):
         """Generate a completion text for the given model, inputs, and params.
 
@@ -35,12 +56,14 @@ class ServiceInterface:
             model (str): Model id.
             inputs (list): List of inputs.
             params (GenerateParams, optional): Parameters for generation. Defaults to None.
+            streaming (bool, optional): Streaming response flag. Defaults to False.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Returns:
             Any: json from querying for text completion.
         """
         try:
-            params = ServiceInterface._sanitize_params(params)
+            params = sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.GENERATE
             return RequestHandler.post(
                 endpoint,
@@ -49,11 +72,12 @@ class ServiceInterface:
                 inputs=inputs,
                 parameters=params,
                 streaming=streaming,
+                options=options,
             )
         except Exception as e:
             raise GenAiException(e)
 
-    def tokenize(self, model: str, inputs: list, params: TokenParams = None):
+    def tokenize(self, model: str, inputs: list, params: TokenParams = None, options: Options = None):
         """Do the conversion of provided inputs to tokens for a given model.
 
         Args:
@@ -65,9 +89,11 @@ class ServiceInterface:
             Any: json from querying for tokenization.
         """
         try:
-            params = ServiceInterface._sanitize_params(params)
+            params = sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.TOKENIZE
-            return RequestHandler.post(endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params)
+            return RequestHandler.post(
+                endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params, options=options
+            )
         except Exception as e:
             raise GenAiException(e)
 
@@ -81,7 +107,7 @@ class ServiceInterface:
             Any: json from querying for tokenization.
         """
         try:
-            params = ServiceInterface._sanitize_params(params)
+            params = sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.HISTORY
             return RequestHandler.get(endpoint, key=self.key, parameters=params)
         except Exception as e:
@@ -111,7 +137,7 @@ class ServiceInterface:
     # * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     #   ASYNC
     # * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-    async def async_generate(self, model, inputs, params: GenerateParams = None):
+    async def async_generate(self, model, inputs, params: GenerateParams = None, options: Options = None):
         """Generate a completion text for the given model, inputs, and params.
 
         Args:
@@ -123,16 +149,16 @@ class ServiceInterface:
             Any: json from querying for text completion.
         """
         try:
-            params = ServiceInterface._sanitize_params(params)
+            params = sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.GENERATE
             return await RequestHandler.async_generate(
-                endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params
+                endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params, options=options
             )
         except Exception as e:
             # without VPN this will fail
             raise GenAiException(e)
 
-    async def async_tokenize(self, model, inputs, params: TokenParams = None):
+    async def async_tokenize(self, model, inputs, params: TokenParams = None, options: Options = None):
         """Do the conversion of provided inputs to tokens for a given model.
 
         Args:
@@ -144,10 +170,10 @@ class ServiceInterface:
             Any: json from querying for tokenization.
         """
         try:
-            params = ServiceInterface._sanitize_params(params)
+            params = sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.TOKENIZE
             return await RequestHandler.async_tokenize(
-                endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params
+                endpoint, key=self.key, model_id=model, inputs=inputs, parameters=params, options=options
             )
         except Exception as e:
             raise GenAiException(e)
@@ -162,7 +188,7 @@ class ServiceInterface:
             Any: json from querying for tokenization.
         """
         try:
-            params = ServiceInterface._sanitize_params(params)
+            params = sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.HISTORY
             return await RequestHandler.async_get(endpoint, key=self.key, parameters=params)
         except Exception as e:
@@ -188,11 +214,3 @@ class ServiceInterface:
             return RequestHandler.async_patch(endpoint, key=self.key, json_data=tou_payload)
         except Exception as e:
             raise GenAiException(e)
-
-    @staticmethod
-    def _sanitize_params(params):
-        if params is not None:
-            if type(params) is not dict:
-                params = params.dict(by_alias=True, exclude_none=True)
-
-        return params

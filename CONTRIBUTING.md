@@ -1,4 +1,3 @@
-
 # IBM Generative AI Development Guide
 
 <!-- vscode-markdown-toc -->

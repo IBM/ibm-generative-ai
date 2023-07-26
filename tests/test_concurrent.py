@@ -2,14 +2,17 @@ import json
 import logging
 import queue
 import random
+import time
 from unittest.mock import AsyncMock
 
+import httpx
 import pytest
 
 from genai.schemas import GenerateParams, ReturnOptions, TokenParams
 from genai.schemas.responses import GenerateResponse, TokenizeResponse
 from genai.services import AsyncResponseGenerator, RequestHandler, ServiceInterface
 from genai.services.connection_manager import ConnectionManager
+from genai.utils.request_utils import sanitize_params
 from tests.assets.response_helper import SimpleResponse
 
 logger = logging.getLogger(__name__)
@@ -127,7 +130,7 @@ class TestAsyncResponseGenerator:
         num_prompts = 17
         counter = 0
         with AsyncResponseGenerator(
-            self.model, self.inputs * num_prompts, tokenize_params, self.service
+            self.model, self.inputs * num_prompts, tokenize_params, self.service, fn="tokenize"
         ) as asynchelper:
             for result in asynchelper.generate_response():
                 assert result is None
@@ -135,15 +138,45 @@ class TestAsyncResponseGenerator:
             assert counter == num_prompts
 
     @pytest.mark.asyncio
+    async def test_concurrent_generate_retry(self, httpx_mock, generate_params):
+        saved = ConnectionManager.MAX_RETRIES_GENERATE
+        ConnectionManager.MAX_RETRIES_GENERATE = 2
+        for code in [httpx.codes.SERVICE_UNAVAILABLE, httpx.codes.TOO_MANY_REQUESTS]:
+            httpx_mock.add_response(method="POST", status_code=code, json={})
+            with AsyncResponseGenerator(self.model, self.inputs, generate_params, self.service) as asynchelper:
+                time_start = time.time()
+                for result in asynchelper.generate_response():
+                    assert result is None
+                time_end = time.time()
+                assert time_end - time_start > 5
+        ConnectionManager.MAX_RETRIES_GENERATE = saved
+
+    @pytest.mark.asyncio
+    async def test_concurrent_tokenize_retry(self, httpx_mock, tokenize_params):
+        saved = ConnectionManager.MAX_RETRIES_TOKENIZE
+        ConnectionManager.MAX_RETRIES_TOKENIZE = 2
+        for code in [httpx.codes.SERVICE_UNAVAILABLE, httpx.codes.TOO_MANY_REQUESTS]:
+            httpx_mock.add_response(method="POST", status_code=code, json={})
+            with AsyncResponseGenerator(
+                self.model, self.inputs, tokenize_params, self.service, fn="tokenize"
+            ) as asynchelper:
+                time_start = time.time()
+                for result in asynchelper.generate_response():
+                    assert result is None
+                time_end = time.time()
+                assert time_end - time_start > 5
+        ConnectionManager.MAX_RETRIES_TOKENIZE = saved
+
+    @pytest.mark.asyncio
     async def test_concurrent_generate_dropped_request(self, httpx_mock, generate_params):
         failed_id = 4
         single_response = SimpleResponse.generate(model=self.model, inputs=self.inputs, params=generate_params)
-        headers, json_data = RequestHandler._metadata(
+        headers, json_data, _ = RequestHandler._metadata(
             "POST",
             key="TEST_KEY",
             model_id=self.model,
             inputs=["Input " + str(failed_id)],
-            parameters=ServiceInterface._sanitize_params(generate_params),
+            parameters=sanitize_params(generate_params),
         )
         # Following two lines: Selected input id should return 429, others should succeed
         httpx_mock.add_response(method="POST", json=single_response)
@@ -309,7 +342,7 @@ class TestAsyncResponseGenerator:
     @pytest.mark.asyncio
     async def test_concurrent_tokenize_nones(self, mock_tokenize_json, tokenize_params, mocker):
         # test that if one request gets dropped, we get appropriate number of nones
-        num_prompts = 14
+        num_prompts = 18
         inputs = ["This is input number " + str(i) for i in range(num_prompts)]
         expected = SimpleResponse.tokenize_response_array_async(model=self.model, inputs=inputs)
         mock_tokenize_json.side_effect = expected

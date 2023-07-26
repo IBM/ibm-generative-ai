@@ -13,13 +13,15 @@ authors = [
   {name="Mirian Silva", email="mirianfrsilva@ibm.com"},
   {name="Onkar Bhardwaj", email="onkarbhardwaj@ibm.com"},
   {name="James Sutton", email="james.sutton@uk.ibm.com"},
+  {name="Ja Young Lee", email="younglee@ibm.com"},
+  {name="Adriana Meza Soria", email="adriana.meza.soria@ibm.com"}
 ]
 description = "IBM Generative AI is a Python library built on IBM's large language model REST interface."
 readme = "README.md"
 dependencies = [
     "urllib3<2", # https://github.com/psf/requests/issues/6432
     "requests>=2.31.0",
-    "pydantic>=1.10.9",
+    "pydantic<=1.10.10",
     "python-dotenv>=1.0.0",
     "aiohttp>=3.8.4",
     "pyyaml>=0.2.5",

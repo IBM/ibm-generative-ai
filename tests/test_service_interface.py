@@ -4,6 +4,7 @@ import pytest
 
 from genai.schemas import GenerateParams, ReturnOptions
 from genai.services import ServiceInterface
+from genai.utils.request_utils import sanitize_params
 from tests.assets.response_helper import SimpleResponse
 
 
@@ -17,7 +18,7 @@ class TestServiceInterface:
 
     @pytest.fixture
     def params(seld):
-        return GenerateParams(decoding_method="greedy", temperature=0.8, return_options=ReturnOptions(input_text=True))
+        return GenerateParams(decoding_method="greedy", return_options=ReturnOptions(input_text=True))
 
     @patch("genai.services.RequestHandler.patch")
     def test_tou(self, mocked_post_request):
@@ -36,7 +37,7 @@ class TestServiceInterface:
             self.service.terms_of_use(True)
 
     def test_sanitize_params(self, params):
-        new_dict = ServiceInterface._sanitize_params(params=params)
+        new_dict = sanitize_params(params=params)
 
         assert isinstance(new_dict, dict)
         assert "min_new_tokens" not in new_dict

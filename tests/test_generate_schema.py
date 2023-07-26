@@ -15,7 +15,7 @@ class TestGenerateSchema:
 
         # test all GenerateParams fields
         self.params = GenerateParams(
-            decoding_method="greedy",
+            decoding_method="sample",
             length_penalty=LengthPenalty(decay_factor=1.5, start_index=2),
             max_new_tokens=3,
             min_new_tokens=1,
@@ -268,3 +268,10 @@ class TestGenerateSchema:
     def test_returns_raises_warning(self):
         with pytest.deprecated_call():
             GenerateParams(returns=Return())
+
+    def test_optional_fields(self):
+        try:
+            genparams = GenerateParams(answer=42)
+            assert genparams.answer == 42
+        except ValidationError as e:
+            assert False, "Extra fields not parsed: {}".format(e)

@@ -148,3 +148,146 @@ class SimpleResponse:
                     " must have required property 'inputs'",
                     {"code": "INVALID_INPUT", "state": [{"instancePath": "", "params": {"missingProperty": "inputs"}}]},
                 )
+
+    @staticmethod
+    def prompt_template(template, name):
+        response = {
+            "results": {
+                "id": "5XU9Zv6mrG6KIACN",
+                "name": name,
+                "value": template,
+                "created_at": "2023-05-08T11:51:18.000Z",
+            }
+        }
+        return response
+
+    @staticmethod
+    def files(**kwargs):
+        response = {}
+        results = {
+            "id": "dumb-id",
+            "bytes": "931652",
+            "file_name": "file_to_tune.json",
+            "purpose": "tune",
+            "storage_provider_location": "us-east",
+            "created_at": "2023-05-17T14:55:06.000Z",
+            "file_formats": [
+                {
+                    "id": "1",
+                    "name": "generation",
+                },
+            ],
+        }
+
+        if "multipart_form_data" in kwargs:
+            response = {"results": results}
+        elif "file_id" in kwargs:
+            response = {"results": results}
+        elif "params" in kwargs:
+            response = {
+                "results": [results, results],
+                "totalCount": 2,
+            }
+        else:
+            response = {
+                "results": [results],
+                "totalCount": 1,
+            }
+        return response
+
+    @staticmethod
+    def tunes(**kwargs):
+        from genai.schemas.tunes_params import CreateTuneParams
+
+        response = {}
+        results = {
+            "id": "google/flan-t5-xxl-mpt-Bok9gSo3-2023-04-11-18-00-57",
+            "name": "Tune #2 google/flan-t5-xxl (3B)",
+            "model_id": "google/google/flan-t5-xxl",
+            "model_name": "google/flan-t5-xxl (3B)",
+            "status": "COMPLETED",
+            "task_id": "generation",
+            "parameters": {"batch_size": 4, "num_epochs": 12},
+            "created_at": "2023-04-11T18:00:57.000Z",
+        }
+
+        if "tune_id" in kwargs:
+            response["results"] = results
+        elif "params" in kwargs and type(kwargs["params"]) == CreateTuneParams:
+            response["results"] = results
+        else:
+            response = {
+                "results": [results],
+                "totalCount": 1,
+            }
+        return response
+
+    @staticmethod
+    def get_tune(**kwargs):
+        response = {
+            "results": {
+                "id": "google/flan-t5-xl-mpt-oP8G21Dj-2023-04-11-18-11-54",
+                "name": "Tune #1 google/flan-t5-xl (3B)",
+                "model_id": "google/google/flan-t5-xl",
+                "method_id": "mpt",
+                "model_name": "google/flan-t5-xl (3B)",
+                "status_message": "",
+                "task_id": "generation",
+                "status": "COMPLETED",
+                "parameters": {"batch_size": 4, "num_epochs": 12},
+                "created_at": "2023-04-11T18:11:54.000Z",
+                "validation_files": [],
+                "training_files": [
+                    {
+                        "id": "60d54ad5-b9d7-4acb-99d6-870ff31c9222",
+                        "file_name": "file.json",
+                        "created_at": "2023-04-24 10:26:02+02",
+                    }
+                ],
+                "evaluation_files": [],
+                "datapoints": {
+                    "loss": [{"data": {"epoch": 0, "value": 1.9922}, "timestamp": "2023-05-07T09:05:56.000Z"}]
+                },
+            }
+        }
+
+        return response
+
+    @staticmethod
+    def models(**kwargs):
+        return {
+            "results": [
+                {
+                    "id": "google/flan-t5-xl",
+                    "name": "flan-t5-xl (3B)",
+                    "size": "3B",
+                    "source_model_id": None,
+                    "token_limit": 4096,
+                },
+                {
+                    "id": "flan-t5-xl-mpt-XmHNkJWk-2023-07-18-17-00-34",
+                    "name": "flan-t5-xxl (11B)",
+                    "size": "11B",
+                    "source_model_id": "google/flan-t5-xl",
+                    "token_limit": 4096,
+                },
+            ]
+        }
+
+    @staticmethod
+    def create_tune(**kwargs):
+        model_id = kwargs["model_id"] if "model_id" in kwargs else "google/flan-t5-xxl"
+        name = kwargs["name"] if "name" in kwargs else "Tune #2 google/flan-t5-xxl (3B)"
+        response = {
+            "results": {
+                "id": "google/flan-t5-xxl-mpt-Bok9gSo3-2023-04-11-18-00-57",
+                "name": name,
+                "model_id": model_id,
+                "model_name": "google/flan-t5-xxl (3B)",
+                "status": "COMPLETED",
+                "task_id": "generation",
+                "parameters": {"batch_size": 4, "num_epochs": 12},
+                "created_at": "2023-04-11T18:00:57.000Z",
+            }
+        }
+        return response
