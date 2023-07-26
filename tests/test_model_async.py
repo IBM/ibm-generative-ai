@@ -3,7 +3,7 @@ from unittest.mock import AsyncMock
 import pytest
 
 from genai import Credentials, Model
-from genai.schemas import GenerateParams, ModelType, TokenParams
+from genai.schemas import GenerateParams, TokenParams
 from genai.schemas.responses import GenerateResponse, TokenizeResponse
 from genai.services import ServiceInterface
 from tests.assets.response_helper import SimpleResponse
@@ -46,7 +46,7 @@ class TestModelAsync:
         creds = Credentials("TEST_API_KEY")
         mock_generate_json.side_effect = expected
 
-        model = Model(ModelType.FLAN_UL2, params=generate_params, credentials=creds)
+        model = Model("google/flan-ul2", params=generate_params, credentials=creds)
 
         counter = 0
         responses = list(model.generate_async(prompts))
@@ -67,7 +67,7 @@ class TestModelAsync:
         creds = Credentials("TEST_API_KEY")
         mock_tokenize_json.side_effect = expected
 
-        model = Model(ModelType.FLAN_UL2, params=tokenize_params, credentials=creds)
+        model = Model("google/flan-ul2", params=tokenize_params, credentials=creds)
 
         counter = 0
         responses = list(model.tokenize_async(prompts))
@@ -92,7 +92,7 @@ class TestModelAsync:
             message += result.generated_text
 
         prompts = ["TEST_PROMPT"] * num_prompts
-        model = Model(ModelType.FLAN_UL2, params=generate_params, credentials=creds)
+        model = Model("google/flan-ul2", params=generate_params, credentials=creds)
 
         for result in model.generate_async(prompts, callback=tasks_completed):
             pass
@@ -114,7 +114,7 @@ class TestModelAsync:
             message += result.tokens
 
         prompts = ["TEST_PROMPT"] * num_prompts
-        model = Model(ModelType.FLAN_UL2, params=tokenize_params, credentials=creds)
+        model = Model("google/flan-ul2", params=tokenize_params, credentials=creds)
 
         for result in model.tokenize_async(prompts, callback=tasks_completed):
             pass

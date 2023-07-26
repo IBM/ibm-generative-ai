@@ -21,7 +21,7 @@ class AsyncResponseGenerator:
         """Instantiates the ConcurrentWrapper Interface.
 
         Args:
-            model_id (ModelType): The type of model to use
+            model_id (str): The type of model to use
             prompts (list): List of prompts
             params (GenerateParams): Parameters to use during generate requests
             service (ServiceInterface): The service interface

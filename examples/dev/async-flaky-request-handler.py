@@ -7,7 +7,7 @@ import httpx
 from dotenv import load_dotenv
 
 from genai.model import Credentials, Model
-from genai.schemas import GenerateParams, ModelType, TokenParams
+from genai.schemas import GenerateParams, TokenParams
 from genai.services.connection_manager import ConnectionManager
 from genai.services.request_handler import RequestHandler
 
@@ -32,7 +32,7 @@ class FlakyRequestHandler(RequestHandler):
         Returns:
             httpx.Response: Response from the REST API.
         """
-        headers, json_data = RequestHandler._metadata(
+        headers, json_data, _ = RequestHandler._metadata(
             method="POST",
             key=key,
             model_id=model_id,
@@ -80,7 +80,7 @@ generate_params = GenerateParams(decoding_method="sample", max_new_tokens=5, min
 tokenize_params = TokenParams(return_tokens=True)
 
 
-flan_ul2 = Model(ModelType.FLAN_UL2, params=generate_params, credentials=creds)
+flan_ul2 = Model("google/flan-ul2", params=generate_params, credentials=creds)
 prompts = ["Generate a random number > {}: ".format(i) for i in range(25)]
 for response in flan_ul2.generate_async(prompts, ordered=True):
     pass

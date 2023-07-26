@@ -10,15 +10,25 @@ from genai.exceptions import GenAiException
 from genai.metadata import Metadata
 from genai.options import Options
 from genai.prompt_pattern import PromptPattern
-from genai.schemas import GenerateParams, ModelType, TokenParams
+from genai.schemas import GenerateParams, TokenParams
 from genai.schemas.responses import (
     GenerateResponse,
     GenerateResult,
     GenerateStreamResponse,
+    ModelCard,
+    ModelList,
     TokenizeResponse,
     TokenizeResult,
+    TuneGetResponse,
+)
+from genai.schemas.tunes_params import (
+    CreateTuneHyperParams,
+    CreateTuneParams,
+    TunesListParams,
 )
 from genai.services import AsyncResponseGenerator, ServiceInterface
+from genai.services.tune_manager import TuneManager
+from genai.utils.service_utils import _get_service
 
 logger = logging.getLogger(__name__)
 
@@ -27,18 +37,22 @@ class Model:
     _accessors = set()
 
     def __init__(
-        self, model: Union[ModelType, str], params: Union[GenerateParams, TokenParams], credentials: Credentials
+        self,
+        model: str,
+        params: Union[GenerateParams, TokenParams, Any] = None,
+        credentials: Credentials = None,
     ):
         """Instantiates the Model Interface
 
         Args:
-            model (Union[ModelType, str]): The type of model to use
+            model (str): The type of model to use
             params (Union[GenerateParams, TokenParams]): Parameters to use during generate requests
             credentials (Credentials): The API Credentials
         """
         logger.debug(f"Model Created:  Model: {model}, endpoint: {credentials.api_endpoint}")
         self.model = model
         self.params = params
+        self.creds = credentials
         self.service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
 
     def generate_stream(
@@ -166,7 +180,13 @@ class Model:
 
         try:
             with AsyncResponseGenerator(
-                self.model, prompts, self.params, self.service, ordered=ordered, callback=callback, options=options
+                self.model,
+                prompts,
+                self.params,
+                self.service,
+                ordered=ordered,
+                callback=callback,
+                options=options,
             ) as asynchelper:
                 for response in tqdm(
                     asynchelper.generate_response(),
@@ -182,7 +202,10 @@ class Model:
             raise GenAiException(ex)
 
     def tokenize_as_completed(
-        self, prompts: Union[list[str], list[PromptPattern]], return_tokens: bool = False, options: Options = None
+        self,
+        prompts: Union[list[str], list[PromptPattern]],
+        return_tokens: bool = False,
+        options: Options = None,
     ) -> Generator[TokenizeResult]:
         """The tokenize endpoint allows you to check the conversion of provided prompts to tokens
         for a given model. It splits text into words or subwords, which then are converted to ids
@@ -224,7 +247,10 @@ class Model:
             raise GenAiException(ex)
 
     def tokenize(
-        self, prompts: Union[list[str], list[PromptPattern]], return_tokens: bool = False, options: Options = None
+        self,
+        prompts: Union[list[str], list[PromptPattern]],
+        return_tokens: bool = False,
+        options: Options = None,
     ) -> list[TokenizeResult]:
         """The tokenize endpoint allows you to check the conversion of provided prompts to tokens
         for a given model. It splits text into words or subwords, which then are converted to ids
@@ -286,3 +312,92 @@ class Model:
             raise me
         except Exception as ex:
             raise GenAiException(ex)
+
+    def tune(
+        self,
+        name: str,
+        method: str,
+        task: str,
+        hyperparameters: CreateTuneHyperParams = None,
+        training_file_ids: list[str] = None,
+        validation_file_ids: list[str] = None,
+    ):
+        """Tune the base-model for given training data.
+
+        Args:
+            name (str): Label for this tuned model.
+            method (str): The list of one or more prompt strings.
+            task (str): Task ID, could be "classification", "summarization", or "generation"
+            hyperparameters (CreateTuneHyperParams): Tuning hyperparameters
+            training_file_ids (list[str]): IDs for files with training data
+            validation_file_ids (list[str]): IDs for files with validation data
+
+        Returns:
+            Model: An instance of tuned model
+        """
+        if training_file_ids is None:
+            raise GenAiException(ValueError("Parameter should be specified: training_file_paths or training_file_ids."))
+
+        params = CreateTuneParams(
+            name=name,
+            model_id=self.model,
+            method_id=method,
+            task_id=task,
+            training_file_ids=training_file_ids,
+            validation_file_ids=validation_file_ids,
+            parameters=hyperparameters or CreateTuneHyperParams(),
+        )
+        tune = TuneManager.create_tune(service=self.service, params=params)
+        return Model(model=tune.id, params=None, credentials=self.creds)
+
+    def status(self) -> TuneGetResponse:
+        """Get status of a tuned model.
+
+        Returns:
+            str: Status of a tuned model
+        """
+        tune = TuneManager.get_tune(tune_id=self.model, service=self.service)
+        return tune.status
+
+    def delete(self):
+        params = TunesListParams()
+        tunes = TuneManager.list_tunes(service=self.service, params=params).results
+        id_to_status = {t.id: t.status for t in tunes}
+        if self.model not in id_to_status:
+            raise GenAiException(ValueError("Tuned model not found. Currently method supports only tuned models."))
+        TuneManager.delete_tune(service=self.service, tune_id=self.model)
+
+    @staticmethod
+    def models(credentials: Credentials = None, service: ServiceInterface = None) -> list[ModelCard]:
+        """Get a list of models
+
+        Args:
+            credentials (Credentials): Credentials
+            service (ServiceInterface): Service Interface
+
+        Returns:
+            list[ModelCard]: A list of available models
+        """
+        service = _get_service(credentials, service)
+        response = service.models()
+        cards = ModelList(**response.json()).results
+        return cards
+
+    def available(self) -> bool:
+        """Check if the model is available. Note that for tuned models
+        the model could still be in the process of tuning.
+
+        Returns:
+            bool: Boolean indicating model availability
+        """
+        idset = set(m.id for m in Model.models(service=self.service))
+        return self.model in idset
+
+    def info(self) -> Union[ModelCard, None]:
+        """Get info of the model
+
+        Returns:
+            Union[ModelCard, TuneInfoResult, None]: Model info
+        """
+        id_to_model = {m.id: m for m in Model.models(service=self.service)}
+        return id_to_model.get(self.model, None)

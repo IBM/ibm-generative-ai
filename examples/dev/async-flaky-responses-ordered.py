@@ -6,7 +6,7 @@ import random
 from dotenv import load_dotenv
 
 from genai.model import Credentials, GenAiException, Model
-from genai.schemas import GenerateParams, ModelType, TokenParams
+from genai.schemas import GenerateParams, TokenParams
 from genai.services.async_generator import AsyncResponseGenerator
 
 num_requests = 0
@@ -83,7 +83,7 @@ generate_params = GenerateParams(decoding_method="sample", max_new_tokens=5, min
 tokenize_params = TokenParams(return_tokens=True)
 
 
-flan_ul2 = FlakyModel(ModelType.FLAN_UL2_20B, params=generate_params, credentials=creds)
+flan_ul2 = FlakyModel("google/flan-ul2", params=generate_params, credentials=creds)
 prompts = ["Generate a random number > {}: ".format(i) for i in range(17)]
 print("======== Async Generate with ordered=True ======== ")
 counter = 0
@@ -97,7 +97,7 @@ for response in flan_ul2.generate_async(prompts, ordered=True):
 num_requests = 0
 
 # Instantiate a model proxy object to send your requests
-flan_ul2 = FlakyModel(ModelType.FLAN_UL2_20B, params=tokenize_params, credentials=creds)
+flan_ul2 = FlakyModel("google/flan-ul2", params=tokenize_params, credentials=creds)
 prompts = ["Generate a random number > {}: ".format(i) for i in range(23)]
 print("======== Async Tokenize with ordered=True ======== ")
 counter = 0
