@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel, Extra, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 # TODO: Update the descriptions import
 from genai.schemas.descriptions import TunesAPIDescriptions as tx
@@ -9,9 +9,7 @@ from genai.schemas.descriptions import TunesAPIDescriptions as tx
 class TunesListParams(BaseModel):
     """Class to hold the parameters for listing tunes."""
 
-    class Config:
-        anystr_strip_whitespace: True
-        extra: Extra.forbid
+    model_config = ConfigDict()
 
     limit: Optional[int] = Field(None, description=tx.LIMIT, le=100)
     offset: Optional[int] = Field(None, description=tx.OFFSET)
@@ -22,9 +20,7 @@ class TunesListParams(BaseModel):
 class CreateTuneHyperParams(BaseModel):
     """Class to hold the hyperparameters for creating tunes."""
 
-    class Config:
-        anystr_strip_whitespace: True
-        # extra: Extra.forbid
+    model_config = ConfigDict()
 
     accumulate_steps: Optional[int] = Field(16, description=tx.ACCUMULATE_STEPS)
     batch_size: Optional[int] = Field(16, description=tx.BATCH_SIZE)
@@ -41,9 +37,7 @@ class CreateTuneHyperParams(BaseModel):
 class CreateTuneParams(BaseModel):
     """Class to hold the parameters for creating tunes."""
 
-    class Config:
-        anystr_strip_whitespace: True
-        # extra: Extra.forbid
+    model_config = ConfigDict(protected_namespaces=())
 
     name: str = Field(None, description=tx.NAME)
     model_id: str = Field(None, description=tx.MODEL_ID)

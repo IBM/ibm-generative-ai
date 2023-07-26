@@ -2,8 +2,8 @@ from typing import Literal, Union
 
 try:
     from pandas import DataFrame
-except ImportError:
-    raise ImportError("Could not import pandas: Please install ibm-generative-ai[pandas] extension.")
+except ImportError as ex:
+    raise ImportError("Could not import pandas: Please install ibm-generative-ai[pandas] extension.") from ex
 
 from genai.exceptions import GenAiException
 from genai.prompt_pattern import PromptPattern

@@ -4,8 +4,8 @@ import re
 
 try:
     from langchain import PromptTemplate
-except ImportError:
-    raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")
+except ImportError as ex:
+    raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.") from ex
 
 from genai.prompt_pattern import PromptPattern
 from genai.utils.extensions import register_promptpattern_accessor

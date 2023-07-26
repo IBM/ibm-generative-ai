@@ -2,13 +2,13 @@
 import logging
 from typing import Any, List, Mapping, Optional
 
-from pydantic import BaseModel, Extra
+from pydantic import BaseModel, ConfigDict
 
 try:
     from langchain.llms.base import LLM
     from langchain.llms.utils import enforce_stop_tokens
-except ImportError:
-    raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")
+except ImportError as ex:
+    raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.") from ex
 
 from genai import Credentials, Model
 from genai.schemas import GenerateParams
@@ -34,11 +34,7 @@ class LangChainInterface(LLM, BaseModel):
     credentials: Credentials = None
     model: Optional[str] = None
     params: Optional[GenerateParams] = None
-
-    class Config:
-        """Configuration for this pydantic object."""
-
-        extra = Extra.forbid
+    model_config = ConfigDict(extra="forbid")
 
     @property
     def _identifying_params(self) -> Mapping[str, Any]:

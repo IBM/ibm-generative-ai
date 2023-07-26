@@ -9,13 +9,13 @@ from genai.schemas import GenerateParams, GenerateResult, TokenizeResult, TokenP
 # pip install transformers torch sentencepiece
 try:
     from transformers import T5ForConditionalGeneration, T5Tokenizer
-except ImportError:
+except ImportError as ex:
     raise ImportError(
         """
 Could not import transformers which is needed for this example.
 Please install using: pip install transformers torch sentencepiece
 """
-    )
+    ) from ex
 
 
 logger = logging.getLogger(__name__)

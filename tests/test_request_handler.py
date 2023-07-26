@@ -13,8 +13,8 @@ class TestRequestHandler:
         self.inputs = ["a"]
 
     @pytest.fixture
-    def params(seld):
-        return GenerateParams(decoding_method="greedy").dict(by_alias=True, exclude_none=True)
+    def params(self):
+        return GenerateParams(decoding_method="greedy").model_dump(by_alias=True, exclude_none=True)
 
     def test_metadata_post(self, params):
         headers, json_data, _ = RequestHandler._metadata(

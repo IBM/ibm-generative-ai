@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel, Extra, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from genai.schemas import Descriptions as tx
 
@@ -8,8 +8,6 @@ from genai.schemas import Descriptions as tx
 
 
 class TokenParams(BaseModel):
-    class Config:
-        anystr_strip_whitespace: True
-        extra: Extra.forbid
+    model_config = ConfigDict()
 
     return_tokens: Optional[bool] = Field(None, description=tx.RETURN_TOKEN)

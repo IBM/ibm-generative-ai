@@ -14,22 +14,22 @@ class PromptTemplateRouter:
         try:
             endpoint = self.service_url + PromptTemplateRouter.PROMPT_TEMPLATES + "/output"
             return RequestHandler.post(endpoint, key=self.key, options=Options(inputs=inputs, template=template))
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     def prompt_templates(self, name, value):
         try:
             endpoint = self.service_url + PromptTemplateRouter.PROMPT_TEMPLATES
             return RequestHandler.post(endpoint, key=self.key, options=Options(name=name, value=value))
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     def update_prompt_templates(self, id: str, name: str, value: str):
         try:
             endpoint = self.service_url + PromptTemplateRouter.PROMPT_TEMPLATES + "/" + id
             return RequestHandler.put(endpoint, key=self.key, options=Options(name=name, value=value))
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     def get_prompt_templates(self, id: str = None):
         try:
@@ -37,8 +37,8 @@ class PromptTemplateRouter:
             endpoint = endpoint if id is None else endpoint + "/" + id
 
             return RequestHandler.get(endpoint, key=self.key)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     def delete_prompt_templates(self, id: str):
         if id is None:
@@ -46,5 +46,5 @@ class PromptTemplateRouter:
         try:
             endpoint = self.service_url + PromptTemplateRouter.PROMPT_TEMPLATES + "/" + id
             return RequestHandler.delete(endpoint, key=self.key)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex

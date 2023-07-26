@@ -10,8 +10,8 @@ try:
     from fastapi import APIRouter, FastAPI, Request, status
     from fastapi.responses import JSONResponse
     from starlette.middleware.base import BaseHTTPMiddleware
-except ImportError as iex:
-    raise ImportError(f"Could not import {iex.name}: Please install ibm-generative-ai[localserver] extension.")
+except ImportError as ex:
+    raise ImportError(f"Could not import {ex.name}: Please install ibm-generative-ai[localserver] extension.") from ex
 
 
 from genai import Credentials
@@ -42,8 +42,8 @@ class ApiAuthMiddleware(BaseHTTPMiddleware):
                     error="Unauthorized",
                     message="API key not found",
                 )
-                logger.debug(response_obj.dict())
-                return JSONResponse(content=response_obj.dict(), status_code=status.HTTP_401_UNAUTHORIZED)
+                logger.debug(response_obj.model_dump())
+                return JSONResponse(content=response_obj.model_dump(), status_code=status.HTTP_401_UNAUTHORIZED)
         logging.debug("Calling next in chain")
         response = await call_next(request)
         logging.debug("Returning response")

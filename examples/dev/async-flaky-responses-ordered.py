@@ -46,7 +46,7 @@ class FlakyModel(Model):
         except GenAiException as me:
             raise me
         except Exception as ex:
-            raise GenAiException(ex)
+            raise GenAiException(ex) from ex
 
     def tokenize_async(self, prompts, ordered=False, callback=None, options=None):
         try:
@@ -65,7 +65,7 @@ class FlakyModel(Model):
         except GenAiException as me:
             raise me
         except Exception as ex:
-            raise GenAiException(ex)
+            raise GenAiException(ex) from ex
 
 
 logging.getLogger("genai").setLevel(logging.INFO)

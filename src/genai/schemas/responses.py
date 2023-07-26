@@ -3,7 +3,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Any, List, Optional, Union
 
-from pydantic import BaseModel, Extra, root_validator
+from pydantic import BaseModel, ConfigDict, model_validator
 
 from genai.schemas.generate_params import GenerateParams
 
@@ -31,7 +31,7 @@ def alert_extra_fields_validator(cls, values) -> dict:
     Returns:
         dict: The values post validation
     """
-    extra_fields = values.keys() - cls.__fields__.keys()
+    extra_fields = values.keys() - cls.model_fields.keys()
 
     if extra_fields:
         logger.warning(
@@ -41,9 +41,11 @@ def alert_extra_fields_validator(cls, values) -> dict:
     return values
 
 
-class GenAiResponseModel(BaseModel, extra=Extra.allow):
+class GenAiResponseModel(BaseModel, extra="allow"):
     # Validators
-    _extra_fields_warning = root_validator(allow_reuse=True)(alert_extra_fields_validator)
+    _extra_fields_warning = model_validator(mode="before")(alert_extra_fields_validator)
+    # We're protecting model_id and model_name as they are commonly used fields in BAM
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class TermsOfUseResult(GenAiResponseModel):
@@ -52,7 +54,7 @@ class TermsOfUseResult(GenAiResponseModel):
     firstName: str
     lastName: str
     data_usage_consent: bool = False
-    generate_default: dict = None
+    generate_default: Optional[dict] = None
 
 
 class TermsOfUse(GenAiResponseModel):
@@ -60,18 +62,18 @@ class TermsOfUse(GenAiResponseModel):
 
 
 class GeneratedToken(GenAiResponseModel):
-    logprob: Optional[float]
-    text: Optional[str]
+    logprob: Optional[float] = None
+    text: Optional[str] = None
 
 
 class GenerateResult(GenAiResponseModel):
     generated_text: str
     generated_token_count: int
-    input_token_count: Optional[int]
+    input_token_count: Optional[int] = None
     stop_reason: str
-    generated_tokens: Optional[list[GeneratedToken]]
-    input_text: Optional[str]
-    seed: Optional[int]
+    generated_tokens: Optional[list[GeneratedToken]] = None
+    input_text: Optional[str] = None
+    seed: Optional[int] = None
 
 
 class GenerateResponse(GenAiResponseModel):
@@ -81,19 +83,19 @@ class GenerateResponse(GenAiResponseModel):
 
 
 class GenerateStreamResponse(GenAiResponseModel):
-    generated_text: Optional[str]
-    generated_token_count: Optional[int]
-    input_token_count: Optional[int]
-    stop_reason: Optional[str]
-    generated_tokens: Optional[list[GeneratedToken]]
-    input_text: Optional[str]
-    seed: Optional[int]
+    generated_text: Optional[str] = None
+    generated_token_count: Optional[int] = None
+    input_token_count: Optional[int] = None
+    stop_reason: Optional[str] = None
+    generated_tokens: Optional[list[GeneratedToken]] = None
+    input_text: Optional[str] = None
+    seed: Optional[int] = None
 
 
 class TokenizeResult(GenAiResponseModel):
-    token_count: Optional[int]
-    tokens: Optional[List[str]]
-    input_text: Optional[str]
+    token_count: Optional[int] = None
+    tokens: Optional[List[str]] = None
+    input_text: Optional[str] = None
 
 
 class TokenizeResponse(GenAiResponseModel):
@@ -141,7 +143,7 @@ class ErrorResponse(GenAiResponseModel):
     status_code: int
     error: str
     message: str
-    extensions: Optional[ErrorExtensions]
+    extensions: Optional[ErrorExtensions] = None
 
 
 class WatsonxTemplate(GenAiResponseModel):
@@ -149,7 +151,7 @@ class WatsonxTemplate(GenAiResponseModel):
     name: str
     value: str
     created_at: datetime
-    data: Optional[dict]
+    data: Optional[dict] = None
 
 
 class WatsonxTemplatesResponse(GenAiResponseModel):
@@ -171,7 +173,7 @@ class FileInfoResult(GenAiResponseModel):
     bytes: str
     file_name: str
     purpose: str
-    storage_provider_location: Optional[str]
+    storage_provider_location: Optional[str] = None
     created_at: datetime
     file_formats: List[FileFormatResult]
 
@@ -182,14 +184,14 @@ class FilesListResponse(GenAiResponseModel):
 
 
 class TuneParameters(GenAiResponseModel):
-    accumulate_steps: Optional[int]
-    batch_size: Optional[int]
-    learning_rate: Optional[float]
-    max_input_tokens: Optional[int]
-    max_output_tokens: Optional[int]
-    num_epochs: Optional[int]
-    num_virtual_tokens: Optional[int]
-    verbalizer: Optional[str]
+    accumulate_steps: Optional[int] = None
+    batch_size: Optional[int] = None
+    learning_rate: Optional[float] = None
+    max_input_tokens: Optional[int] = None
+    max_output_tokens: Optional[int] = None
+    num_epochs: Optional[int] = None
+    num_virtual_tokens: Optional[int] = None
+    verbalizer: Optional[str] = None
 
 
 class TuneInfoResult(GenAiResponseModel):
@@ -197,20 +199,20 @@ class TuneInfoResult(GenAiResponseModel):
     name: str
     model_id: str
     model_name: str
-    method_id: Optional[str]
-    method_name: Optional[str]
+    method_id: Optional[str] = None
+    method_name: Optional[str] = None
     status: str
     task_id: str
-    task_name: Optional[str]
-    parameters: Optional[TuneParameters]
+    task_name: Optional[str] = None
+    parameters: Optional[TuneParameters] = None
     created_at: datetime
-    preferred: Optional[bool]
-    datapoints: Optional[dict]
-    validation_files: Optional[list]
-    training_files: Optional[list]
-    evaluation_files: Optional[list]
-    status_message: Optional[str]
-    started_at: Optional[datetime]
+    preferred: Optional[bool] = None
+    datapoints: Optional[dict] = None
+    validation_files: Optional[list] = None
+    training_files: Optional[list] = None
+    evaluation_files: Optional[list] = None
+    status_message: Optional[str] = None
+    started_at: Optional[datetime] = None
 
 
 class TunesListResponse(GenAiResponseModel):
@@ -225,15 +227,15 @@ class TrainingFilesParameters(GenAiResponseModel):
 
 
 class TuneGetResponse(GenAiResponseModel):
-    results: Optional[TuneInfoResult]
+    results: Optional[TuneInfoResult] = None
 
 
 class ModelCard(GenAiResponseModel):
-    id: Optional[str]
-    name: Optional[str]
-    size: Optional[str]
-    source_model_id: Optional[str]
-    token_limit: Optional[Union[int, Any]]
+    id: Optional[str] = None
+    name: Optional[str] = None
+    size: Optional[str] = None
+    source_model_id: Optional[str] = None
+    token_limit: Optional[Union[int, Any]] = None
 
 
 class ModelList(GenAiResponseModel):

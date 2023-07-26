@@ -82,5 +82,5 @@ tokenize_params = TokenParams(return_tokens=True)
 
 flan_ul2 = Model("google/flan-ul2", params=generate_params, credentials=creds)
 prompts = ["Generate a random number > {}: ".format(i) for i in range(25)]
-for response in flan_ul2.generate_async(prompts, ordered=True):
+for _ in flan_ul2.generate_async(prompts, ordered=True):
     pass

@@ -1,5 +1,29 @@
 [flake8]
-ignore = E203, E266, W503, E221, E741, E261
+exclude =
+    # Don't traverse .git
+    .git,
+    # Ignore python cache
+    __pycache__,
+    # Ignore build
+    build,
+    # Ignore dist
+    dist,
+    # Ignore common venvs
+    .env,
+    .venv,
+    env
+    venv
+extend-ignore =
+    # Can only be resolved if we drop python 9.3 and below
+    B905,
+    # Ignored as no longer in line with PEP8
+    W503,
+    # Ignored as no longer in line with PEP8
+    E203
 max-line-length = 120
 max-complexity = 18
 select = B,C,E,F,W,T4,B9
+count = True
+show_source = True
+statistics = True
+doctests = True

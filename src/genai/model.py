@@ -85,7 +85,7 @@ class Model:
         except GenAiException as me:
             raise me
         except Exception as ex:
-            raise GenAiException(ex)
+            raise GenAiException(ex) from ex
 
     def generate_as_completed(
         self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
@@ -127,7 +127,7 @@ class Model:
         except GenAiException as me:
             raise me
         except Exception as ex:
-            raise GenAiException(ex)
+            raise GenAiException(ex) from ex
 
     def generate(
         self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
@@ -199,7 +199,7 @@ class Model:
         except GenAiException as me:
             raise me
         except Exception as ex:
-            raise GenAiException(ex)
+            raise GenAiException(ex) from ex
 
     def tokenize_as_completed(
         self,
@@ -244,7 +244,7 @@ class Model:
         except GenAiException as me:
             raise me
         except Exception as ex:
-            raise GenAiException(ex)
+            raise GenAiException(ex) from ex
 
     def tokenize(
         self,
@@ -311,7 +311,7 @@ class Model:
         except GenAiException as me:
             raise me
         except Exception as ex:
-            raise GenAiException(ex)
+            raise GenAiException(ex) from ex
 
     def tune(
         self,

@@ -59,12 +59,12 @@ class TestTunes:
     def test_list_tunes_wrong_params(self):
         with pytest.raises(GenAiException) as e:
             self.service_router.list_tunes(params="params")
-            assert e.message == "params must be of type TunesListParams."
+        assert e.message == "params must be of type TunesListParams."
 
     def test_list_tunes_wrong_params_type(self):
         with pytest.raises(GenAiException) as e:
             self.service_router.list_tunes(params=123)
-            assert e.message == "params must be of type TunesListParams."
+        assert e.message == "params must be of type TunesListParams."
 
     # Test delete tunes function
     @patch("genai.services.RequestHandler.delete")
@@ -91,7 +91,7 @@ class TestTunes:
     def test_tune_delete_wrong_params(self):
         with pytest.raises(Exception) as e:
             self.service_router.delete_tune(tune_id=123)
-            assert e.message == "Tune not found, tune_id must be of type str"
+        assert e.message == "Tune not found, tune_id must be of type str"
 
     # Test get tune function
 
@@ -118,7 +118,7 @@ class TestTunes:
     def test_get_tune_wrong_params(self):
         with pytest.raises(Exception) as e:
             self.service_router.get_tune(tune_id=123)
-            assert e.message == "Tune not found, tune_id must be of type str"
+        assert e.message == "Tune not found, tune_id must be of type str"
 
     # Test create tune function
 
@@ -147,9 +147,9 @@ class TestTunes:
     def test_create_tune_wrong_params(self):
         with pytest.raises(GenAiException) as e:
             self.service_router.create_tune(params="params")
-            assert e.message == "params must be of type dict as CreateTuneParams."
+        assert e.message == "params must be of type dict as CreateTuneParams."
 
     def test_create_tune_wrong_params_type(self):
         with pytest.raises(GenAiException) as e:
             self.service_router.create_tune(params=123)
-            assert e.message == "params must be of type dict as CreateTuneParams."
+        assert e.message == "params must be of type dict as CreateTuneParams."

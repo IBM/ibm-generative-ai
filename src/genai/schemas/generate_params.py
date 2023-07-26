@@ -1,7 +1,7 @@
 from typing import Literal, Optional
 from warnings import warn
 
-from pydantic import BaseModel, Extra, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from genai.schemas import Descriptions as tx
 
@@ -9,18 +9,14 @@ from genai.schemas import Descriptions as tx
 
 
 class LengthPenalty(BaseModel):
-    class Config:
-        anystr_strip_whitespace: True
-        extra: Extra.forbid
+    model_config = ConfigDict()
 
     decay_factor: Optional[float] = Field(None, description=tx.DECAY_FACTOR, gt=1.00)
     start_index: Optional[int] = Field(None, description=tx.START_INDEX)
 
 
 class ReturnOptions(BaseModel):
-    class Config:
-        anystr_strip_whitespace: True
-        extra: Extra.forbid
+    model_config = ConfigDict()
 
     input_text: Optional[bool] = Field(None, description=tx.INPUT_TEXT)
     generated_tokens: Optional[bool] = Field(None, description=tx.GENERATED_TOKEN)
@@ -46,10 +42,7 @@ class Return(ReturnOptions):
 
 
 class GenerateParams(BaseModel):
-    class Config:
-        anystr_strip_whitespace = True
-        extra = Extra.allow
-        allow_population_by_field_name = True
+    model_config = ConfigDict(str_strip_whitespace=True, extra="allow", populate_by_name=True)
 
     decoding_method: Optional[Literal["greedy", "sample"]] = Field(None, description=tx.DECODING_METHOD)
     length_penalty: Optional[LengthPenalty] = Field(None, description=tx.LENGTH_PENALTY)
@@ -65,4 +58,6 @@ class GenerateParams(BaseModel):
     repetition_penalty: Optional[float] = Field(None, description=tx.REPETITION_PENALTY)
     truncate_input_tokens: Optional[int] = Field(None, description=tx.TRUNCATE_INPUT_TOKENS)
     return_options: Optional[ReturnOptions] = Field(None, description=tx.RETURN)
-    returns: Optional[Return] = Field(None, description=tx.RETURN, alias="return", deprecated=True)
+    returns: Optional[Return] = Field(
+        None, description=tx.RETURN, alias="return", json_schema_extra={"deprecated": True}
+    )

@@ -342,7 +342,7 @@ class TestPromptPattern:
 
         with pytest.raises(Exception) as e:
             pt.sub_all_from_csv(csv_path=path, col_to_var="infer", start_index=0, strategy="random")
-            assert "start_index" in str(e)
+        assert "start_index" in str(e)
 
     def test_sub_from_csv_start_index_sample_strategy(self):
         pt = PromptPattern.from_str("{{col1}},{{col2}},{{col3}}")
@@ -350,4 +350,4 @@ class TestPromptPattern:
 
         with pytest.raises(Exception) as e:
             pt.sub_all_from_csv(csv_path=path, col_to_var="infer", start_index=0, strategy="sample")
-            assert "start_index" in str(e)
+        assert "start_index" in str(e)

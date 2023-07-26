@@ -45,7 +45,7 @@ alice_model = Model("google/flan-t5-xxl", params=alice_params, credentials=creds
 sentence = "Hello! How are you?"
 print(f"[Alice] --> {sentence}")
 
-for x in range(max_cycles):
+for _ in range(max_cycles):
     bob_response = bob_model.generate([sentence])
     # from first batch get first result generated text
     bob_gen = bob_response[0].generated_text

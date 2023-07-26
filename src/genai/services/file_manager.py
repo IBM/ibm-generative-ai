@@ -43,8 +43,8 @@ class FileManager:
                 return responses
             else:
                 raise GenAiException(response)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     @staticmethod
     def file_metadata(
@@ -72,8 +72,8 @@ class FileManager:
                 return FileInfoResult(**response["results"])
             else:
                 raise GenAiException(response)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     @staticmethod
     def read_file(
@@ -100,8 +100,8 @@ class FileManager:
                 return response.content.decode("utf-8")
             else:
                 raise GenAiException(response)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     @staticmethod
     def upload_file(
@@ -153,8 +153,8 @@ class FileManager:
                 return FileInfoResult(**response["results"])
             else:
                 raise GenAiException(response)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     @staticmethod
     def delete_file(file_id: str, credentials: Credentials = None, service: ServiceInterface = None) -> dict:
@@ -178,8 +178,8 @@ class FileManager:
                 return {"status": "success"}
             else:
                 raise GenAiException(response)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     @staticmethod
     def _validate_mmultipart_form_data_order(form_data: dict):

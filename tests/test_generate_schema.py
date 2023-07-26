@@ -274,4 +274,4 @@ class TestGenerateSchema:
             genparams = GenerateParams(answer=42)
             assert genparams.answer == 42
         except ValidationError as e:
-            assert False, "Extra fields not parsed: {}".format(e)
+            raise AssertionError(f"Extra fields not parsed: {e}") from e

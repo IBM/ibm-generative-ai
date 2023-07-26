@@ -94,7 +94,7 @@ class TestModelAsync:
         prompts = ["TEST_PROMPT"] * num_prompts
         model = Model("google/flan-ul2", params=generate_params, credentials=creds)
 
-        for result in model.generate_async(prompts, callback=tasks_completed):
+        for _ in model.generate_async(prompts, callback=tasks_completed):
             pass
 
         assert message == GenerateResponse(**single_response).results[0].generated_text * num_prompts
@@ -116,7 +116,7 @@ class TestModelAsync:
         prompts = ["TEST_PROMPT"] * num_prompts
         model = Model("google/flan-ul2", params=tokenize_params, credentials=creds)
 
-        for result in model.tokenize_async(prompts, callback=tasks_completed):
+        for _ in model.tokenize_async(prompts, callback=tasks_completed):
             pass
 
         assert message == TokenizeResponse(**expected[0]).results[0].tokens * num_prompts

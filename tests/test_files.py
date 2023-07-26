@@ -75,12 +75,12 @@ class TestFiles:
     def test_file_list_api_call_with_wrong_params(self):
         with pytest.raises(GenAiException) as e:
             self.service_router.list_files(params="params")
-            assert e.message == "params must be of type FileListParams."
+        assert e.message == "params must be of type FileListParams."
 
     def test_file_list_api_call_with_wrong_params_type(self):
         with pytest.raises(GenAiException) as e:
             self.service_router.list_files(params=123)
-            assert e.message == "params must be of type FileListParams."
+        assert e.message == "params must be of type FileListParams."
 
     # test file metadata function
     @patch("genai.services.RequestHandler.get")
@@ -95,7 +95,7 @@ class TestFiles:
     def test_file_metadata_api_call_wrong_id(self):
         with pytest.raises(GenAiException) as e:
             self.service_router.get_file_metadata(file_id=123)
-            assert e.message == "File not found, file_id must be of type str"
+        assert e.message == "File not found, file_id must be of type str"
 
     @patch("genai.services.RequestHandler.get")
     def test_file_metadata(self, mock_requests, credentials):
@@ -123,7 +123,7 @@ class TestFiles:
     def test_read_file_api_call_wrong_id(self):
         with pytest.raises(Exception) as e:
             self.service_router.read_file(file_id=123)
-            assert e.message == "File not found, file_id must be of type str"
+        assert e.message == "File not found, file_id must be of type str"
 
     @patch("genai.services.RequestHandler.get")
     def test_read_file(self, mocker, credentials):
@@ -147,7 +147,7 @@ class TestFiles:
     def test_file_delete_api_call_wrong_id(self):
         with pytest.raises(Exception) as e:
             self.service_router.delete_file(file_id=123)
-            assert e.message == "File not found, file_id must be of type str"
+        assert e.message == "File not found, file_id must be of type str"
 
     @patch("genai.services.RequestHandler.delete")
     def test_delete_file(self, mocker, credentials):
@@ -173,10 +173,11 @@ class TestFiles:
     def test_file_uplod_api_call_wrong_forms(self):
         with pytest.raises(GenAiException) as e:
             self.service_router.upload_file(multipart_form_data="form_data")
-            assert e.message == "multipart_form_data must be of type dict"
+        assert e.message == "multipart_form_data must be of type dict"
+
         with pytest.raises(GenAiException) as e:
             self.service_router.upload_file(multipart_form_data="")
-            assert e.message == "multipart_form_data must be of type dict"
+        assert e.message == "multipart_form_data must be of type dict"
 
     @patch("genai.services.RequestHandler.post")
     def test_file_upload(self, mocker, multipart_form_data, credentials, file_to_upload):
@@ -194,28 +195,28 @@ class TestFiles:
     def test_file_upload_with_wrong_params_type(self, credentials, file_to_upload):
         with pytest.raises(GenAiException) as e:
             FileManager.upload_file(credentials=credentials, file_path=file_to_upload, purpose=123)
-            assert e.message == "purpose is not valid, must be one of tune or template"
+        assert e.message == "purpose is not valid, must be one of tune or template"
 
     def test_file_upload_with_wrong_file_path(self, credentials):
         with pytest.raises(GenAiException) as e:
             FileManager.upload_file(credentials=credentials, file_path="file_path", purpose="tune")
-            assert e.message == "File not found, file_path does not exist"
+        assert e.message == "File not found, file_path does not exist"
 
     def test_file_upload_is_json(self, credentials, not_valid_file_to_upload):
         with pytest.raises(GenAiException) as e:
             FileManager.upload_file(credentials=credentials, file_path=not_valid_file_to_upload, purpose="tune")
-            assert e.message == "File must be in json or jsonl format"
+        assert e.message == "File must be in json or jsonl format"
 
     def test_file_list_params_schema(self):
         with pytest.raises(ValidationError) as e:
             FileListParams(limit="200", offset=0)
-            assert e.message == "Ensure the limit value is less than or equal to 100"
+        assert e.message == "Ensure the limit value is less than or equal to 100"
         with pytest.raises(ValidationError) as e:
             FileListParams(limit=[100], offset="0")
-            assert e.message == "Ensure limite value is a valid integer and not list"
+        assert e.message == "Ensure limite value is a valid integer and not list"
         with pytest.raises(ValidationError) as e:
             FileListParams(limit=100, offset=[0])
-            assert e.message == "Ensure offset value is a valid integer and not list"
+        assert e.message == "Ensure offset value is a valid integer and not list"
         with pytest.raises(ValidationError) as e:
             FileListParams(limit=100, offset=0, search=["test"])
-            assert e.message == "Ensure search value is a valid string"
+        assert e.message == "Ensure search value is a valid string"

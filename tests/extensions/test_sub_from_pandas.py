@@ -43,7 +43,7 @@ class TestPandasExtension:
 
         with pytest.raises(Exception) as e:
             pt.pandas.sub_all_from_dataframe(dataframe=df, col_to_var="infer", start_index=0, strategy="random")
-            assert "start_index" in str(e)
+        assert "start_index" in str(e)
 
     def test_sub_from_dataframe_start_index_sample_strategy(self):
         import pandas as pd
@@ -57,7 +57,7 @@ class TestPandasExtension:
 
         with pytest.raises(Exception) as e:
             pt.pandas.sub_all_from_dataframe(dataframe=df, col_to_var="infer", start_index=0, strategy="sample")
-            assert "start_index" in str(e)
+        assert "start_index" in str(e)
 
     def test_sub_from_dataframe_random_row(self):
         import pandas as pd
@@ -148,7 +148,7 @@ class TestPandasExtension:
 
         pt = PromptPattern.from_str("{{animal}},{{specices}},{{island}},{{something}},{{year}}")
         path = self.asset_path / "penguins.csv"
+        df = pd.read_csv(path, index_col=0, header=None)
         with pytest.raises(Exception) as e:
-            df = pd.read_csv(path, index_col=0, header=None)
             pt.pandas.sub_all_from_dataframe(dataframe=df, col_to_var="infer", headers=False)
-            assert "col_to_var" in str(e)
+        assert "col_to_var" in str(e)

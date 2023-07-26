@@ -24,8 +24,8 @@ class FilesRouter:
             params = sanitize_params(params)
             endpoint = self.service_url + FilesRouter.FILES
             return RequestHandler.get(endpoint, key=self.key, parameters=params)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     def get_file_metadata(self, file_id: str):
         """Get the file metadata from the server.
@@ -39,8 +39,8 @@ class FilesRouter:
         try:
             endpoint = self.service_url + FilesRouter.FILES + "/" + file_id
             return RequestHandler.get(endpoint, key=self.key)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     def read_file(self, file_id: str):
         """Read the content of a file from the server.
@@ -54,8 +54,8 @@ class FilesRouter:
         try:
             endpoint = self.service_url + FilesRouter.FILES + "/" + file_id + "/content"
             return RequestHandler.get(endpoint, key=self.key)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     def delete_file(self, file_id: str):
         """Delete a file from the server.
@@ -69,8 +69,8 @@ class FilesRouter:
         try:
             endpoint = self.service_url + FilesRouter.FILES + "/" + file_id
             return RequestHandler.delete(endpoint, key=self.key)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     def upload_file(self, multipart_form_data: MultipartFormData):
         """Upload a file to the server.
@@ -84,5 +84,5 @@ class FilesRouter:
         try:
             endpoint = self.service_url + FilesRouter.FILES
             return RequestHandler.post(endpoint, key=self.key, files=multipart_form_data)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex

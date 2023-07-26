@@ -39,8 +39,8 @@ class TuneManager:
                 return responses
             else:
                 raise GenAiException(response)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     @staticmethod
     def get_tune(tune_id: str, credentials: Credentials = None, service: ServiceInterface = None) -> TuneGetResponse:
@@ -65,8 +65,8 @@ class TuneManager:
                 return responses.results
             else:
                 raise GenAiException(response)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     @staticmethod
     def create_tune(
@@ -106,8 +106,8 @@ class TuneManager:
                 return responses
             else:
                 raise GenAiException(response)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     @staticmethod
     def delete_tune(tune_id: str, credentials: Credentials = None, service: ServiceInterface = None) -> dict:
@@ -130,5 +130,5 @@ class TuneManager:
                 return {"status": "success"}
             else:
                 raise GenAiException(response)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex

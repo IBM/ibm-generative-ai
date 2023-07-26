@@ -50,5 +50,5 @@ def progress_callback(result):
 
 
 # yields batch of results that are produced asynchronously and in parallel
-for result in model.generate_async(lots_of_greetings, callback=progress_callback, hide_progressbar=True):
+for _ in model.generate_async(lots_of_greetings, callback=progress_callback, hide_progressbar=True):
     pass

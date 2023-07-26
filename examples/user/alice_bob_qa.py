@@ -45,7 +45,7 @@ alice_model = Model("google/flan-t5-xxl", params=alice_params, credentials=creds
 alice_q = "What is 1 + 1?"
 print(f"[Alice][Q] {alice_q}")
 
-for x in range(max_cycles):
+for _ in range(max_cycles):
     bob_response = bob_model.generate([alice_q])
     bob_a = bob_response[0].generated_text
     print(f"[Bob][A] {bob_a}")

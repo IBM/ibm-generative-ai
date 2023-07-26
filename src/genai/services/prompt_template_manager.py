@@ -20,7 +20,7 @@ class PromptTemplateManager:
                 return response_result
             raise GenAiException(response)
         except Exception as ex:
-            raise GenAiException(ex)
+            raise GenAiException(ex) from ex
 
     @staticmethod
     def update_template(credentials: Credentials, id: str, name: str, template: str) -> WatsonxTemplate:
@@ -33,11 +33,13 @@ class PromptTemplateManager:
                 return response_result
             raise GenAiException(response)
         except Exception as ex:
-            raise GenAiException(ex)
+            raise GenAiException(ex) from ex
 
     @staticmethod
-    def render_watsonx_prompts(credentials: Credentials, inputs: list = None, data: dict = {}) -> list[str]:
+    def render_watsonx_prompts(credentials: Credentials, inputs: list = None, data: dict = None) -> list[str]:
         service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
+        if data is None:
+            data = {}
 
         try:
             response = service._prompt_templating.prompt_output(inputs, template=data)
@@ -46,7 +48,7 @@ class PromptTemplateManager:
                 return response_result.results
             raise GenAiException(response)
         except Exception as ex:
-            raise GenAiException(ex)
+            raise GenAiException(ex) from ex
 
     @staticmethod
     def load_template(credentials: Credentials, id: str = None, name: str = None) -> WatsonxTemplate:
@@ -56,8 +58,8 @@ class PromptTemplateManager:
             return PromptTemplateManager.load_template_by_name(credentials=credentials, name=name)
         else:
             raise GenAiException(
-                "Provide either name or id of prompt to be fetch."
-                + "\nIf you want to list all templates, use the load_all_templates method."
+                "Provide either name or id of prompt to be fetch.\n"
+                "If you want to list all templates, use the load_all_templates method."
             )
 
     @staticmethod
@@ -70,7 +72,7 @@ class PromptTemplateManager:
                 return WatsonxTemplatesResponse(**response.json())
             raise GenAiException(response)
         except Exception as ex:
-            raise GenAiException(ex)
+            raise GenAiException(ex) from ex
 
     @staticmethod
     def load_template_by_id(credentials: Credentials, id: str) -> WatsonxTemplate:
@@ -82,7 +84,7 @@ class PromptTemplateManager:
                 return WatsonxTemplate(**response.json()["results"])
             raise GenAiException(response)
         except Exception as ex:
-            raise GenAiException(ex)
+            raise GenAiException(ex) from ex
 
     @staticmethod
     def load_template_by_name(credentials: Credentials, name: str) -> WatsonxTemplate:
@@ -96,8 +98,8 @@ class PromptTemplateManager:
             if len(template) == 0:
                 raise Exception(f"No template found with name {name}")
             raise Exception(f"More than one template found with name {name}")
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     @staticmethod
     def delete_template(credentials: Credentials, id: str = None, name: str = None) -> str:
@@ -118,7 +120,7 @@ class PromptTemplateManager:
                 return id
             raise GenAiException(response)
         except GenAiException as ex:
-            raise Exception(ex)
+            raise Exception(ex) from ex
 
     @staticmethod
     def delete_template_by_name(credentials: Credentials, name: str) -> str:
@@ -131,5 +133,5 @@ class PromptTemplateManager:
             if len(template) == 0:
                 raise Exception(f"No template found for name {name}")
             raise Exception(f"More than one template found for name {name}")
-        except GenAiException as e:
-            raise Exception(e)
+        except GenAiException as ex:
+            raise Exception(ex) from ex

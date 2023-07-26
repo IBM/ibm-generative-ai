@@ -24,8 +24,8 @@ class TunesRouter:
             params = sanitize_params(params)
             endpoint = self.service_url + TunesRouter.TUNES
             return RequestHandler.get(endpoint, key=self.key, parameters=params)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     def get_tune(self, tune_id: str):
         """Get a given tune from the server.
@@ -39,8 +39,8 @@ class TunesRouter:
         try:
             endpoint = self.service_url + TunesRouter.TUNES + "/" + tune_id
             return RequestHandler.get(endpoint, key=self.key)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     def create_tune(self, params: CreateTuneParams):
         """Create a new tune on the server.
@@ -56,8 +56,8 @@ class TunesRouter:
             params = sanitize_params(params)
             endpoint = self.service_url + TunesRouter.TUNES
             return RequestHandler.post(endpoint, key=self.key, options=params)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex
 
     def delete_tune(self, tune_id: str):
         """Delete a tune from the server.
@@ -71,5 +71,5 @@ class TunesRouter:
         try:
             endpoint = self.service_url + TunesRouter.TUNES + "/" + tune_id
             return RequestHandler.delete(endpoint, key=self.key, parameters=tune_id)
-        except Exception as e:
-            raise GenAiException(e)
+        except Exception as ex:
+            raise GenAiException(ex) from ex

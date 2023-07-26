@@ -17,7 +17,7 @@ class TestServiceInterface:
         self.inputs = ["Write a tagline for an alumni association: Together we"]
 
     @pytest.fixture
-    def params(seld):
+    def params(self):
         return GenerateParams(decoding_method="greedy", return_options=ReturnOptions(input_text=True))
 
     @patch("genai.services.RequestHandler.patch")

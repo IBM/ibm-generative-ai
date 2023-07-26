@@ -40,9 +40,9 @@ class Metadata:
         except GenAiException as me:
             raise me
         except Exception as ex:
-            raise GenAiException(ex)
+            raise GenAiException(ex) from ex
 
-    def get_history(self, params: HistoryParams = HistoryParams()) -> HistoryResponse:
+    def get_history(self, params: HistoryParams = None) -> HistoryResponse:
         """The requests endpoint provides the ability to retrieve past generation requests
            and responses returned by the given models.
            Items are returned in reverse chronological order.
@@ -53,6 +53,8 @@ class Metadata:
         Returns:
             HistoryResponse: The History of requests and responses
         """
+        if params is None:
+            params = HistoryParams()
 
         try:
             history_response = self.service.history(params)
@@ -65,4 +67,4 @@ class Metadata:
         except GenAiException as me:
             raise me
         except Exception as ex:
-            raise GenAiException(ex)
+            raise GenAiException(ex) from ex

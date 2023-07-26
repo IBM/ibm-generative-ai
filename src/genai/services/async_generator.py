@@ -58,9 +58,9 @@ class AsyncResponseGenerator:
     def __exit__(self, exc_type, exc_val, exc_tb):
         try:
             self._shutdown()
-        except Exception as e:
-            logger.error(str(e))
-            raise GenAiException(e)
+        except Exception as ex:
+            logger.error(str(ex))
+            raise GenAiException(ex) from ex
 
     def _initialize_fn_specific_params(self):
         if self.fn == "generate":
@@ -179,7 +179,7 @@ class AsyncResponseGenerator:
                 try:
                     # If we are here then self.ordered is True.
                     heapq.heappush(minheap, (batch_num, batch_size, response))
-                    for i in range(len(minheap)):
+                    for _ in range(len(minheap)):
                         bnum, bsize, resp = heapq.heappop(minheap)
                         if bnum == batch_tracker:
                             for result in self._process_response(resp, bsize):
