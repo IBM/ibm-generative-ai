@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 class Metadata:
     DEFAULT_MAX_PROMPTS = 5
 
-    def __init__(self, credentials: Credentials):
+    def __init__(self, credentials: Credentials) -> None:
         """Get's metadata for service backing the Model class.
 
         Args:

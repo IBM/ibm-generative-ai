@@ -17,7 +17,7 @@ __all__ = ["AsyncResponseGenerator"]
 class AsyncResponseGenerator:
     def __init__(
         self, model_id, prompts, params, service, fn="generate", ordered=False, callback=None, options: Options = None
-    ):
+    ) -> None:
         """Instantiates the ConcurrentWrapper Interface.
 
         Args:

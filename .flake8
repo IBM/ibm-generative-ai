@@ -22,8 +22,3 @@ extend-ignore =
     E203
 max-line-length = 120
 max-complexity = 18
-select = B,C,E,F,W,T4,B9
-count = True
-show_source = True
-statistics = True
-doctests = True

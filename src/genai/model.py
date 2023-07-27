@@ -41,7 +41,7 @@ class Model:
         model: str,
         params: Union[GenerateParams, TokenParams, Any] = None,
         credentials: Credentials = None,
-    ):
+    ) -> None:
         """Instantiates the Model Interface
 
         Args:
@@ -91,6 +91,7 @@ class Model:
         self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
     ) -> Generator[GenerateResponse]:
         """The generate endpoint is the centerpiece of the GENAI alpha.
+
         It provides a simplified and flexible, yet powerful interface to the supported
         models as a service. Given a text prompt as inputs, and required parameters
         the selected model (model_id) will generate a completion text as generated_text.

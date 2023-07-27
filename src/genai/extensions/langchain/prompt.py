@@ -17,7 +17,7 @@ __all__ = ["PromptExtension"]
 
 @register_promptpattern_accessor("langchain")
 class PromptExtension:
-    def __init__(self, prompt_pattern: PromptPattern):
+    def __init__(self, prompt_pattern: PromptPattern) -> None:
         self._obj = prompt_pattern
 
     def as_template(self):

@@ -13,7 +13,7 @@ __all__ = ["HuggingFaceDatasetExtension"]
 
 @register_promptpattern_accessor("huggingface")
 class HuggingFaceDatasetExtension:
-    def __init__(self, prompt_pattern: PromptPattern):
+    def __init__(self, prompt_pattern: PromptPattern) -> None:
         self._obj = prompt_pattern
 
     def save_dataset(self, list_of_prompts: list, path: str, key: str = "prompt"):

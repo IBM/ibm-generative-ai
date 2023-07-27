@@ -599,13 +599,13 @@ class PromptPattern:
             raise GenAiException("Method only available for watsonx prompt templates.")
         return PromptTemplateManager.delete_template(credentials=self.credentials, id=self.watsonx.id)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.dump
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.dump
 
-    def __contains__(self, val):
+    def __contains__(self, val: str) -> bool:
         return self.__dict__.__contains__(val)
 
     @staticmethod

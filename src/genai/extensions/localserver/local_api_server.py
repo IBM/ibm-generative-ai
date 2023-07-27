@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 class ApiAuthMiddleware(BaseHTTPMiddleware):
-    def __init__(self, app, api_key: str = None, insecure: bool = False):
+    def __init__(self, app, api_key: str = None, insecure: bool = False) -> None:
         super().__init__(app)
         self.api_key = api_key
         self.insecure = insecure
@@ -58,7 +58,7 @@ class LocalLLMServer:
         interface: str = "0.0.0.0",
         api_key: str = None,
         insecure_api: bool = False,
-    ):
+    ) -> None:
         self.models = {model.model_id: model() for model in models}
         self.port = port
         self.interface = interface

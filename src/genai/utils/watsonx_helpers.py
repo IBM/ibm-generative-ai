@@ -1,4 +1,4 @@
-def watsonx_payload(template, data=None, files=None):
+def watsonx_payload(template, data=None, files: list = None):
     _dict = {}
     _dict["data"] = {}
 

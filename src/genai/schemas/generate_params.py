@@ -27,7 +27,7 @@ class ReturnOptions(BaseModel):
 
 
 class Return(ReturnOptions):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         warn(DeprecationWarning(f"{self.__class__.__name__} is deprecated, please use ReturnOptions instead."))
         super().__init__(*args, **kwargs)
 

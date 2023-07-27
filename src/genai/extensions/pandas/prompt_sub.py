@@ -14,7 +14,7 @@ __all__ = ["PandasExtension"]
 
 @register_promptpattern_accessor("pandas")
 class PandasExtension:
-    def __init__(self, prompt_pattern: PromptPattern):
+    def __init__(self, prompt_pattern: PromptPattern) -> None:
         self._obj = prompt_pattern
 
     def sub_from_dataframe(

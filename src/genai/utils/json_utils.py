@@ -3,7 +3,7 @@ import json
 
 def json_load(file):
     """
-    Loads json or jsonl data from a file
+    Loads json or jsonl data from a file.
 
     Args:
         file (IO) : The json or jsonl file
