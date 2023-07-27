@@ -6,7 +6,6 @@ from typing import Any, List, Optional, Union
 from pydantic import BaseModel, Extra, root_validator
 
 from genai.schemas.generate_params import GenerateParams
-from genai.schemas.models import ModelType
 
 logger = logging.getLogger(__name__)
 
@@ -76,7 +75,7 @@ class GenerateResult(GenAiResponseModel):
 
 
 class GenerateResponse(GenAiResponseModel):
-    model_id: Union[ModelType, str]
+    model_id: str
     created_at: datetime
     results: List[GenerateResult]
 
@@ -98,7 +97,7 @@ class TokenizeResult(GenAiResponseModel):
 
 
 class TokenizeResponse(GenAiResponseModel):
-    model_id: Union[ModelType, str]
+    model_id: str
     created_at: datetime
     results: List[TokenizeResult]
 
@@ -283,3 +282,16 @@ class TuneInfoResult(GenAiResponseModel):
     evaluation_files: Optional[list]
     status_message: Optional[str]
     started_at: Optional[datetime]
+
+
+class ModelCard(GenAiResponseModel):
+    id: Optional[str]
+    name: Optional[str]
+    size: Optional[str]
+    source_model_id: Optional[str]
+    token_limit: Optional[Union[int, Any]]
+
+
+class ModelList(GenAiResponseModel):
+    results: list[ModelCard]
+

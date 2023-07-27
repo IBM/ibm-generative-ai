@@ -9,7 +9,7 @@ from genai.schemas import Descriptions as tx
 
 class TokenParams(BaseModel):
     class Config:
-        anystr_strip_whitespace: True
-        extra: Extra.forbid
+        anystr_strip_whitespace = True
+        extra = Extra.forbid
 
     return_tokens: Optional[bool] = Field(None, description=tx.RETURN_TOKEN)

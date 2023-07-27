@@ -23,7 +23,7 @@ IBM Generative AI extensions can be either of the following :
 Extensions that are meant for public use from the get-go should instead be developed as official open-source extensions. Examples of official extensions that have already been released are LangChain, Pandas, and Hugging Face extensions.
 
 ### Ownership and location
-Open-source extensions should be submitted directly to the [IBM Generative AI open-source repository](https://github.com/IBM/ibm-generative-ai) and should be developed following the [open-source Gen AI contribution guide](https://github.com/IBM/ibm-generative-ai/blob/main/DEVELOPMENT.md). Open-source official extensions are typically developed by the Gen AI team, or in collaboration with them. Providing maintenance to open-source official extensions is responsability of the Gen AI team.
+Open-source extensions should be submitted directly to the [IBM Generative AI open-source repository](https://github.com/IBM/ibm-generative-ai) and should be developed following the [open-source Gen AI contribution guide](https://github.com/IBM/ibm-generative-ai/blob/main/CONTRIBUTING.md). Open-source official extensions are typically developed by the Gen AI team, or in collaboration with them. Providing maintenance to open-source official extensions is responsability of the Gen AI team.
 
 ## Open-source "third-party" extensions
 All other extensions neither implemented nor officially maintained by the Gen AI team are referred to as open-source third-party extensions.

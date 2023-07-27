@@ -10,13 +10,16 @@ from genai.exceptions import GenAiException
 from genai.metadata import Metadata
 from genai.options import Options
 from genai.prompt_pattern import PromptPattern
-from genai.schemas import GenerateParams, ModelType, TokenParams
+from genai.schemas import GenerateParams, TokenParams
 from genai.schemas.responses import (
     GenerateResponse,
     GenerateResult,
     GenerateStreamResponse,
+    ModelCard,
+    ModelList,
     TokenizeResponse,
     TokenizeResult,
+    TuneGetResponse,
 )
 from genai.schemas.tunes_params import (
     CreateTuneHyperParams,
@@ -25,6 +28,7 @@ from genai.schemas.tunes_params import (
 )
 from genai.services import AsyncResponseGenerator, ServiceInterface
 from genai.services.tune_manager import TuneManager
+from genai.utils.service_utils import _get_service
 
 logger = logging.getLogger(__name__)
 
@@ -34,14 +38,14 @@ class Model:
 
     def __init__(
         self,
-        model: Union[ModelType, str],
+        model: str,
         params: Union[GenerateParams, TokenParams, Any] = None,
         credentials: Credentials = None,
     ):
         """Instantiates the Model Interface
 
         Args:
-            model (Union[ModelType, str]): The type of model to use
+            model (str): The type of model to use
             params (Union[GenerateParams, TokenParams]): Parameters to use during generate requests
             credentials (Credentials): The API Credentials
         """
@@ -346,18 +350,14 @@ class Model:
         tune = TuneManager.create_tune(service=self.service, params=params)
         return Model(model=tune.id, params=None, credentials=self.creds)
 
-    def status(self):
-        """Get status of the model, currently supports only tuned models.
+    def status(self) -> TuneGetResponse:
+        """Get status of a tuned model.
 
         Returns:
             str: Status of a tuned model
         """
-        params = TunesListParams()
-        tunes = TuneManager.list_tunes(service=self.service, params=params).results
-        id_to_status = {t.id: t.status for t in tunes}
-        if self.model not in id_to_status:
-            raise GenAiException(ValueError("Tuned model not found. Currently method supports only tuned models."))
-        return id_to_status[self.model]
+        tune = TuneManager.get_tune(tune_id=self.model, service=self.service)
+        return tune.status
 
     def delete(self):
         params = TunesListParams()
@@ -366,3 +366,38 @@ class Model:
         if self.model not in id_to_status:
             raise GenAiException(ValueError("Tuned model not found. Currently method supports only tuned models."))
         TuneManager.delete_tune(service=self.service, tune_id=self.model)
+
+    @staticmethod
+    def models(credentials: Credentials = None, service: ServiceInterface = None) -> list[ModelCard]:
+        """Get a list of models
+
+        Args:
+            credentials (Credentials): Credentials
+            service (ServiceInterface): Service Interface
+
+        Returns:
+            list[ModelCard]: A list of available models
+        """
+        service = _get_service(credentials, service)
+        response = service.models()
+        cards = ModelList(**response.json()).results
+        return cards
+
+    def available(self) -> bool:
+        """Check if the model is available. Note that for tuned models
+        the model could still be in the process of tuning.
+
+        Returns:
+            bool: Boolean indicating model availability
+        """
+        idset = set(m.id for m in Model.models(service=self.service))
+        return self.model in idset
+
+    def info(self) -> Union[ModelCard, None]:
+        """Get info of the model
+
+        Returns:
+            Union[ModelCard, TuneInfoResult, None]: Model info
+        """
+        id_to_model = {m.id: m for m in Model.models(service=self.service)}
+        return id_to_model.get(self.model, None)

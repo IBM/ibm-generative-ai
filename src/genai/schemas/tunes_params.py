@@ -10,8 +10,8 @@ class TunesListParams(BaseModel):
     """Class to hold the parameters for listing tunes."""
 
     class Config:
-        anystr_strip_whitespace: True
-        extra: Extra.forbid
+        anystr_strip_whitespace = True
+        extra = Extra.forbid
 
     limit: Optional[int] = Field(None, description=tx.LIMIT, le=100)
     offset: Optional[int] = Field(None, description=tx.OFFSET)
@@ -23,8 +23,8 @@ class CreateTuneHyperParams(BaseModel):
     """Class to hold the hyperparameters for creating tunes."""
 
     class Config:
-        anystr_strip_whitespace: True
-        # extra: Extra.forbid
+        anystr_strip_whitespace = True
+        extra = Extra.allow
 
     accumulate_steps: Optional[int] = Field(16, description=tx.ACCUMULATE_STEPS)
     batch_size: Optional[int] = Field(16, description=tx.BATCH_SIZE)
@@ -42,8 +42,8 @@ class CreateTuneParams(BaseModel):
     """Class to hold the parameters for creating tunes."""
 
     class Config:
-        anystr_strip_whitespace: True
-        # extra: Extra.forbid
+        anystr_strip_whitespace = True
+        extra = Extra.allow
 
     name: str = Field(None, description=tx.NAME)
     model_id: str = Field(None, description=tx.MODEL_ID)

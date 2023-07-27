@@ -1,4 +1,4 @@
-from httpx import Response
+from httpx import ConnectError, Response
 
 from genai.exceptions import GenAiException
 from genai.options import Options
@@ -7,12 +7,15 @@ from genai.schemas import GenerateParams, HistoryParams, TokenParams
 from genai.services import RequestHandler
 from genai.utils.request_utils import sanitize_params
 
+__all__ = ["ServiceInterface"]
+
 
 class ServiceInterface:
     GENERATE = "/generate"
     TOKENIZE = "/tokenize"
     HISTORY = "/requests"
     TOU = "/user"
+    MODELS = "/models"
 
     def __init__(self, service_url: str, api_key: str) -> None:
         """Initialize ServiceInterface.
@@ -27,6 +30,22 @@ class ServiceInterface:
         self._prompt_templating = PromptTemplateRouter(service_url=service_url, api_key=api_key)
         self._files = FilesRouter(service_url=service_url, api_key=api_key)
         self._tunes = TunesRouter(service_url=service_url, api_key=api_key)
+
+    def models(self):
+        """Generate a completion text for the given model, inputs, and params.
+
+        Returns:
+            Any: json from querying for text completion.
+        """
+        try:
+            endpoint = self.service_url + ServiceInterface.MODELS
+            return RequestHandler.get(endpoint, key=self.key)
+        except ConnectError as e:
+            raise GenAiException(
+                Exception("Endpoint unreachable. Please check connectivity.\nRaw error message = {}".format(e))
+            )
+        except Exception as e:
+            raise GenAiException(e)
 
     def generate(
         self, model: str, inputs: list, params: GenerateParams = None, streaming: bool = False, options: Options = None

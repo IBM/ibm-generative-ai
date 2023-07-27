@@ -268,3 +268,10 @@ class TestGenerateSchema:
     def test_returns_raises_warning(self):
         with pytest.deprecated_call():
             GenerateParams(returns=Return())
+
+    def test_optional_fields(self):
+        try:
+            genparams = GenerateParams(answer=42)
+            assert genparams.answer == 42
+        except ValidationError as e:
+            assert False, "Extra fields not parsed: {}".format(e)
