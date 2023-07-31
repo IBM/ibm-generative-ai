@@ -9,8 +9,8 @@ from genai.schemas import Descriptions as tx
 
 class HistoryParams(BaseModel):
     class Config:
-        anystr_strip_whitespace: True
-        extra: Extra.forbid
+        anystr_strip_whitespace = True
+        extra = Extra.forbid
 
     limit: Optional[int] = Field(None, description=tx.LIMIT, le=100)
     offset: Optional[int] = Field(None, description=tx.OFFSET)

@@ -10,8 +10,8 @@ from genai.schemas import Descriptions as tx
 
 class LengthPenalty(BaseModel):
     class Config:
-        anystr_strip_whitespace: True
-        extra: Extra.forbid
+        anystr_strip_whitespace = True
+        extra = Extra.forbid
 
     decay_factor: Optional[float] = Field(None, description=tx.DECAY_FACTOR, gt=1.00)
     start_index: Optional[int] = Field(None, description=tx.START_INDEX)
@@ -19,8 +19,8 @@ class LengthPenalty(BaseModel):
 
 class ReturnOptions(BaseModel):
     class Config:
-        anystr_strip_whitespace: True
-        extra: Extra.forbid
+        anystr_strip_whitespace = True
+        extra = Extra.forbid
 
     input_text: Optional[bool] = Field(None, description=tx.INPUT_TEXT)
     generated_tokens: Optional[bool] = Field(None, description=tx.GENERATED_TOKEN)
