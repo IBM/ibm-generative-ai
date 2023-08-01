@@ -27,7 +27,7 @@ my_space_params = {
 }
 
 creds = Credentials(api_key=API_KEY, api_endpoint=API_ENDPOINT)
-pt = PromptPattern.from_str("The capital of {{country}} is {{capital}}. The capital of Taiwan is")
+pt = PromptPattern.from_str("The capital of {{country}} is {{capital}}. The capital of Canada is")
 pt.sub("capital", "Madrid").sub("country", "Spain")
 
 # generate all combinations of parameters, returns a list of GenerateParams
