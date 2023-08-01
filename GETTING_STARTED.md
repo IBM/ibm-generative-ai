@@ -2,20 +2,20 @@
 
 ## <a name='TableofContents'></a>Table of Contents
 
-* [Table of Contents](#table-of-contents)
-* [Installation](#installation)
-* [Gen AI Endpoint](#gen-ai-endpoint)
-    * [Example](#example)
-* [Examples](#examples)
-    * [Async Example](#async-example)
-    * [Synchronous Example](#synchronous-example)
-* [Tips and Troubleshooting](#tips-and-troubleshooting)
-    * [Model Availability](#model-availability)
-    * [Enabling Logs](#enabling-logs)
-    * [Experimenting with a Large Number of Prompts](#many-prompts)
-* [Extensions](#extensions)
-    * [LangChain Extension](#langchain-extension)
-* [Support](#support)
+- [Table of Contents](#table-of-contents)
+- [Installation](#installation)
+- [Gen AI Endpoint](#gen-ai-endpoint)
+  - [Example](#example)
+- [Examples](#examples)
+  - [Async Example](#async-example)
+  - [Synchronous Example](#synchronous-example)
+- [Tips and Troubleshooting](#tips-and-troubleshooting)
+  - [Model Availability](#model-availability)
+  - [Enabling Logs](#enabling-logs)
+  - [Experimenting with a Large Number of Prompts](#many-prompts)
+- [Extensions](#extensions)
+  - [LangChain Extension](#langchain-extension)
+- [Support](#support)
 
 ## <a name='Installation'></a>Installation
 
@@ -57,7 +57,7 @@ import os
 
 from dotenv import load_dotenv
 
-from genai.model import Credentials
+from genai.credentials import Credentials
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -90,7 +90,8 @@ import os
 
 from dotenv import load_dotenv
 
-from genai.model import Credentials, Model
+from genai.credentials import Credentials
+from genai.model import Model
 from genai.schemas import GenerateParams
 
 # make sure you have a .env file under genai root with
@@ -144,7 +145,8 @@ import os
 
 from dotenv import load_dotenv
 
-from genai.model import Credentials, Model
+from genai.credentials import Credentials
+from genai.model import Model
 from genai.schemas import GenerateParams
 
 # make sure you have a .env file under genai root with
@@ -186,7 +188,9 @@ for response in responses:
 ## <a name='TipsAndTroubleshooting'></a>Tips and Troubleshooting
 
 ### <a name='Model Availability'></a>Model Availability
+
 To test the reachability of your endpoint and availability of desired model, use the following utility script with your model details:
+
 ```python
 import os
 
