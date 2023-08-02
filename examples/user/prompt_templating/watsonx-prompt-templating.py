@@ -2,7 +2,7 @@ import os
 
 from dotenv import load_dotenv
 
-from genai.model import Credentials
+from genai.credentials import Credentials
 from genai.prompt_pattern import PromptPattern
 from genai.schemas import TokenParams
 from genai.services.prompt_template_manager import PromptTemplateManager

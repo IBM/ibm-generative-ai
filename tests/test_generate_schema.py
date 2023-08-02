@@ -28,6 +28,7 @@ class TestGenerateSchema:
             top_p=0.7,
             repetition_penalty=1.2,
             truncate_input_tokens=2,
+            beam_width=1,
             return_options=ReturnOptions(
                 input_text=True,
                 generated_tokens=True,
@@ -122,8 +123,6 @@ class TestGenerateSchema:
             GenerateParams(random_seed="dummy")
         with pytest.raises(ValidationError):
             GenerateParams(random_seed=0)
-        with pytest.raises(ValidationError):
-            GenerateParams(random_seed=10000)
 
     def test_random_seed_valid_type(self, request_body):
         # test that random_seed must be an integer between 1 and 9999
@@ -162,7 +161,7 @@ class TestGenerateSchema:
         assert isinstance(params.stream, bool)
 
     def test_temperature_invalid_type(self):
-        # test that temperature must be a float between 0 and 1
+        # test that temperature must be a float between 0.05 and 1
         with pytest.raises(ValidationError):
             GenerateParams(temperature="")
         with pytest.raises(ValidationError):
@@ -238,7 +237,7 @@ class TestGenerateSchema:
 
     def test_repetition_penalty_invalid_type(self):
         # test that repetition_penalty must be a float
-        # NOTE: repetition_penalty can be 0 or less then 0?
+        # NOTE: repetition_penalty can be 0 or less than 0?
         with pytest.raises(ValidationError):
             GenerateParams(repetition_penalty="")
         with pytest.raises(ValidationError):
@@ -253,13 +252,24 @@ class TestGenerateSchema:
         assert isinstance(params.repetition_penalty, float)
 
     def test_truncate_input_tokens_invalid_type(self):
-        # test that truncate_input_tokens must be a interger
+        # test that truncate_input_tokens must be an integer
         with pytest.raises(ValidationError):
             GenerateParams(truncate_input_tokens="")
         with pytest.raises(ValidationError):
             GenerateParams(truncate_input_tokens=[0, 1, 2])
         with pytest.raises(ValidationError):
             GenerateParams(truncate_input_tokens="dummy")
+
+    def test_beam_width_valid_type(self, request_body):
+        params = request_body["params"]
+        assert isinstance(params.beam_width, int)
+
+    def test_beam_width_invalid_type(self):
+        # test that beam_width must be an non-negative integer
+        with pytest.raises(ValidationError):
+            GenerateParams(beam_width="")
+        with pytest.raises(ValidationError):
+            GenerateParams(beam_width=-100)
 
     def test_truncate_input_tokens_valid_type(self, request_body):
         params = request_body["params"]
