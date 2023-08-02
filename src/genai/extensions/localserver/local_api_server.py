@@ -136,5 +136,7 @@ class LocalLLMServer:
             for input in generate_request.inputs
         ]
         created_at = datetime.datetime.now().isoformat()
-        response = GenerateResponse(model_id=generate_request.model_id, created_at=created_at, results=results)
+        response = GenerateResponse(
+            id=str(uuid.uuid4()), model_id=generate_request.model_id, created_at=created_at, results=results
+        )
         return response
