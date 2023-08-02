@@ -294,4 +294,3 @@ class ModelCard(GenAiResponseModel):
 
 class ModelList(GenAiResponseModel):
     results: list[ModelCard]
-
