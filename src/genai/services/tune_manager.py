@@ -134,10 +134,10 @@ class TuneManager:
             dict: Response from the server.
         """
         service = _get_service(credentials, service)
-        status = TuneManager._check_tune_status(tune_id, service)
+        status = TuneManager._get_tune_status(tune_id, service)
 
         if status not in ["FAILED", "COMPLETED"]:
-            raise GenAiException(f"Tune status: {status}. Tune can not be deleted until is completed or failed.")
+            raise Exception(f"Tune status: {status}. Tune can not be deleted until is completed or failed.")
 
         try:
             response = service._tunes.delete_tune(tune_id=tune_id)
@@ -192,6 +192,17 @@ class TuneManager:
         return os.path.join(output_path, filename)
 
     @staticmethod
+    def _get_tune_status(tune_id, service):
+        """Get status of a tuned model."""
+        try:
+            response = service._tunes.get_tune(tune_id=tune_id)
+            if response.status_code == 200:
+                response = response.json()
+                return response["results"]["status"]
+        except Exception as e:
+            raise GenAiException(e)
+
+    @staticmethod
     def download_tune_assets(
         params: DownloadAssetsParams,
         output_path="tune_assets",
@@ -213,28 +224,21 @@ class TuneManager:
 
         filename = TuneManager.get_filename(params)
         service = _get_service(credentials, service)
-        status = TuneManager._check_tune_status(params.id, service)
+        status = TuneManager._get_tune_status(params.id, service)
 
         # while status not in ["FAILED", "HALTED", "COMPLETED"]:
         #     logger.debug(f"Tune status: {status}. Tune can not be dowloaded until is completed.")
+        if status != "COMPLETED":
+            raise GenAiException(f"Tune status: {status}. Tune can not be dowloaded if status is not COMPLETED.")
 
-        if status == "COMPLETED":
-            try:
-                response = service._tunes.download_tune_assets(params=params)
-                if response.status_code == 200:
-                    path = TuneManager.get_complete_path(output_path, filename)
-                    with open(path, "wb") as f:
-                        f.write(response.content)
-                    return ("Download Completed:", path)
-                else:
-                    raise GenAiException(response)
-            except Exception as e:
-                raise GenAiException(e)
-        elif status in ["FAILED", "HALTED"]:
-            return f"Tune status: {status}. Tune can not be dowloaded until is completed."
-
-    @staticmethod
-    def _check_tune_status(tune_id: str, service) -> TuneGetResponse:
-        """Get status of a tuned model."""
-        tune = TuneManager.get_tune(tune_id=tune_id, service=service)
-        return tune.status
+        try:
+            response = service._tunes.download_tune_assets(params=params)
+            if response.status_code == 200:
+                path = TuneManager.get_complete_path(output_path, filename)
+                with open(path, "wb") as f:
+                    f.write(response.content)
+                    return {"dowloaded_file_path": path}
+            else:
+                raise GenAiException(response)
+        except Exception as e:
+            raise GenAiException(e)

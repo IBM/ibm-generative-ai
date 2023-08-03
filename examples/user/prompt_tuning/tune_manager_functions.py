@@ -50,7 +50,7 @@ tune_get = TuneManager.get_tune(credentials=creds, tune_id=t)
 print("\nGet tune result: \n", tune_get)
 
 print("\n======================== LIST TUNES =========================")
-list_params = TunesListParams(limit=2, offset=0)
+list_params = TunesListParams(limit=5, offset=0)
 tune_list = TuneManager.list_tunes(credentials=creds, params=list_params)
 for t in tune_list.results:
     print("\nTune ID:", t.id, ", Tune Name:", t.name)
@@ -72,5 +72,5 @@ print("\n Tune assets:", tune_assets)
 
 
 print("\n======================== DELETE TUNE ========================")
-tune_delete = TuneManager.delete_tune(credentials=creds, tune_id="tune-id-to-be-deleteded")
+tune_delete = TuneManager.delete_tune(credentials=creds, tune_id=tune)
 print("\nDelete tune response: \n", tune_delete)

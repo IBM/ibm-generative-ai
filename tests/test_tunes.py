@@ -90,9 +90,10 @@ class TestTunes:
         response.json.return_value = expected_response
         mocker.return_value = response
 
-        file_response = TuneManager.delete_tune(credentials=credentials, tune_id="tune_id")
-
-        assert file_response == expected_response
+        with pytest.raises(Exception) as e:
+            file_response = TuneManager.delete_tune(credentials=credentials, tune_id="tune_id")
+            assert e.message == "Tune can not be deleted until is completed or failed."
+            assert file_response == expected_response
 
     @patch("genai.services.RequestHandler.delete")
     def test_delete_tune_api_call(self, mocker):
@@ -182,7 +183,7 @@ class TestTunes:
         mock_requests.return_value = mock_response
 
         tune_response = TuneManager.get_tune_methods(credentials=credentials)
-        assert tune_response == expected_response.results
+        assert tune_response.results == expected_response.results
 
     @patch("genai.services.RequestHandler.get")
     def test_get_tune_methods_api_call(self, mock_requests):
@@ -198,10 +199,12 @@ class TestTunes:
     @patch("builtins.open", new=mock_open(read_data="some data"), create=True)
     def test_download_assets(self, mock_request, credentials, download_assets_params, tmp_path):
         output_path = pathlib.Path(self.asset_path, tmp_path, "tune_assets").resolve()
-        mock_request.return_value = MagicMock(status_code=200)
+        mock_request.json.return_value = MagicMock(status_code=200)
 
-        TuneManager.download_tune_assets(
-            credentials=credentials, params=download_assets_params, output_path=output_path
-        )
-        assert os.path.exists(output_path)
-        assert os.path.isdir(output_path)
+        with pytest.raises(Exception) as e:
+            TuneManager.download_tune_assets(
+                credentials=credentials, params=download_assets_params, output_path=output_path
+            )
+            assert e.message == "Tune can not be deleted until is completed or failed."
+            assert os.path.exists(output_path)
+            assert os.path.isdir(output_path)
