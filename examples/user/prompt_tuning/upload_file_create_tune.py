@@ -42,5 +42,3 @@ tunes_params = CreateTuneParams(
 
 tune_create = TuneManager.create_tune(credentials=creds, params=tunes_params)
 print("Created tune has the id: \n ", tune_create.id)
-
-# TODO: add tunes options in the model generation

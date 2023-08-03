@@ -81,21 +81,20 @@ class TuneManager:
 
     @staticmethod
     def create_tune(
-        credentials: Credentials = None, service: ServiceInterface = None, params: CreateTuneParams = None
+        params: CreateTuneParams, credentials: Credentials = None, service: ServiceInterface = None
     ) -> TuneInfoResult:
         """Create a new tune to be uploaded to the server.
 
         Args:
+            params (CreateTuneParams): Parameters for creating tunes.
             credentials (Credentials, optional): Credentials object. Defaults to None.
                 If not providec, service must be provided.
             service (ServiceInterface, optional): ServiceInterface object. Defaults to None.
                 If not provided, credentials must be provided.
-            params (CreateTuneParams): Parameters for creating tunes.
 
         Returns:
             TuneInfoResult: Response from the server.
         """
-        # TODO: check if the params.method_id is valid listing the tune models list
 
         if params.method_id == "mpt" and (params.parameters.init_method or params.parameters.init_text):
             raise GenAiException(
@@ -135,6 +134,11 @@ class TuneManager:
             dict: Response from the server.
         """
         service = _get_service(credentials, service)
+        status = TuneManager._check_tune_status(tune_id, service)
+
+        if status not in ["FAILED", "COMPLETED"]:
+            raise GenAiException(f"Tune status: {status}. Tune can not be deleted until is completed or failed.")
+
         try:
             response = service._tunes.delete_tune(tune_id=tune_id)
             if response.status_code == 204:
@@ -145,19 +149,25 @@ class TuneManager:
             raise GenAiException(e)
 
     @staticmethod
-    def get_tune_methods(credentials: Credentials) -> TuneMethodsGetResponse:
+    def get_tune_methods(credentials: Credentials = None, service: ServiceInterface = None) -> TuneMethodsGetResponse:
         """Get list of tune methods.
+
+        Args:
+            credentials (Credentials, optional): Credentials object. Defaults to None.
+                If not providec, service must be provided.
+            service (ServiceInterface, optional): ServiceInterface object. Defaults to None.
+                If not provided, credentials must be provided.
 
         Returns:
             TuneMethodsGetResponse: Response from the server
         """
-        service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
+        service = _get_service(credentials, service)
         try:
             response = service._tunes.get_tune_methods()
             if response.status_code == 200:
                 response = response.json()
                 responses = TuneMethodsGetResponse(**response)
-                return responses.results
+                return responses
             else:
                 raise GenAiException(response)
         except Exception as e:
@@ -182,28 +192,49 @@ class TuneManager:
         return os.path.join(output_path, filename)
 
     @staticmethod
-    def download_tune_assets(credentials: Credentials, params: DownloadAssetsParams, output_path="tune_assets") -> dict:
+    def download_tune_assets(
+        params: DownloadAssetsParams,
+        output_path="tune_assets",
+        credentials: Credentials = None,
+        service: ServiceInterface = None,
+    ) -> dict:
         """Download tune asset (available only for completed tunes)
 
         Args:
             params (DownloadAssetsParams): Parameters for downloading tune assets.
             output_path (str): Output directory for tune assets file. Path is relative to services directory.
-
+            credentials (Credentials, optional): Credentials object. Defaults to None.
+                If not providec, service must be provided.
+            service (ServiceInterface, optional): ServiceInterface object. Defaults to None.
+                If not provided, credentials must be provided.
         Returns:
             dict: Response from the server.
         """
 
         filename = TuneManager.get_filename(params)
+        service = _get_service(credentials, service)
+        status = TuneManager._check_tune_status(params.id, service)
 
-        service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
+        # while status not in ["FAILED", "HALTED", "COMPLETED"]:
+        #     logger.debug(f"Tune status: {status}. Tune can not be dowloaded until is completed.")
 
-        try:
-            response = service._tunes.download_tune_assets(params=params)
-            if response.status_code == 200:
-                path = TuneManager.get_complete_path(output_path, filename)
-                with open(path, "wb") as f:
-                    return f.write(response.content)
-            else:
-                raise GenAiException(response)
-        except Exception as e:
-            raise GenAiException(e)
+        if status == "COMPLETED":
+            try:
+                response = service._tunes.download_tune_assets(params=params)
+                if response.status_code == 200:
+                    path = TuneManager.get_complete_path(output_path, filename)
+                    with open(path, "wb") as f:
+                        f.write(response.content)
+                    return ("Download Completed:", path)
+                else:
+                    raise GenAiException(response)
+            except Exception as e:
+                raise GenAiException(e)
+        elif status in ["FAILED", "HALTED"]:
+            return f"Tune status: {status}. Tune can not be dowloaded until is completed."
+
+    @staticmethod
+    def _check_tune_status(tune_id: str, service) -> TuneGetResponse:
+        """Get status of a tuned model."""
+        tune = TuneManager.get_tune(tune_id=tune_id, service=service)
+        return tune.status
