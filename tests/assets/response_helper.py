@@ -4,6 +4,7 @@ class SimpleResponse:
         SimpleResponse._check_for_errors("generate", **kwargs)
 
         response = {}
+        response["id"] = "1cf9f510-5549-4ea5-a909-2cf9219c1bb5"
         response["model_id"] = kwargs["model"]
         response["created_at"] = "2023-03-15T18:28:12.007Z"
         response["results"] = [
@@ -24,6 +25,7 @@ class SimpleResponse:
         arr = []
         for i in range(len(kwargs["inputs"])):
             response = {}
+            response["id"] = "1cf9f510-5549-4ea5-a909-2cf9219c1bb5"
             response["model_id"] = kwargs["model"]
             response["created_at"] = "2023-03-15T18:28:12.007Z"
             response["results"] = [

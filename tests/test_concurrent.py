@@ -33,7 +33,7 @@ class TestAsyncResponseGenerator:
 
     @pytest.fixture
     def generate_params(self):
-        return GenerateParams(temperature=0, max_new_tokens=3, return_options=ReturnOptions(input_text=True))
+        return GenerateParams(temperature=0.05, max_new_tokens=3, return_options=ReturnOptions(input_text=True))
 
     @pytest.fixture
     def mock_tokenize_json(self, mocker):

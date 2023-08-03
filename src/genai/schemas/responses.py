@@ -75,6 +75,7 @@ class GenerateResult(GenAiResponseModel):
 
 
 class GenerateResponse(GenAiResponseModel):
+    id: str
     model_id: str
     created_at: datetime
     results: List[GenerateResult]
