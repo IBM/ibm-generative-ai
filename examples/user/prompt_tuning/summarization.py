@@ -135,6 +135,15 @@ if __name__ == "__main__":
                 tune_get_result,
             )
 
+            time.sleep(5)
+
+            print("~~~~~~~ Downloading tuned model assets ~~~~~")
+            to_download_assets = input("Download tuned model assets? (y/N):\n")
+            if to_download_assets == "y":
+                tuned_model.download()
+
+            time.sleep(5)
+
             print("~~~~~~~ Deleting a tuned model ~~~~~")
             to_delete = input("Delete this model? (y/N):\n")
             if to_delete == "y":
