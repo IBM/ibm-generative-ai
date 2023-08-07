@@ -58,7 +58,7 @@ class DownloadAssetsParams(BaseModel):
     """Class to hold the parameters for downloading tune assets."""
 
     class Config:
-        anystr_strip_whitespace: True
+        anystr_strip_whitespace =True
         # extra: Extra.forbid
 
     id: str = Field(None, description=tx.ID)
