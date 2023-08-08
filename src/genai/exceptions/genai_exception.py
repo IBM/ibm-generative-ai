@@ -14,8 +14,7 @@ class GenAiException(Exception):
         if isinstance(error, Response):
             try:
                 self.error = ErrorResponse(**error.json())
-                self.error_message = self.error.message
-                
+                self.error_message = self.error.message      
             except ValidationError:
                 self.error = error
                 self.error_message = str(error.content)
