@@ -1,5 +1,9 @@
 from genai.exceptions import GenAiException
-from genai.schemas.tunes_params import CreateTuneParams, TunesListParams
+from genai.schemas.tunes_params import (
+    CreateTuneParams,
+    DownloadAssetsParams,
+    TunesListParams,
+)
 from genai.services.request_handler import RequestHandler
 from genai.utils.request_utils import sanitize_params
 
@@ -71,5 +75,29 @@ class TunesRouter:
         try:
             endpoint = self.service_url + TunesRouter.TUNES + "/" + tune_id
             return RequestHandler.delete(endpoint, key=self.key, parameters=tune_id)
+        except Exception as e:
+            raise GenAiException(e)
+
+    def get_tune_methods(self):
+        """Get list of tune methods.
+
+        Returns:
+            Any: json with info about the available tune methods.
+        """
+        try:
+            endpoint = self.service_url + "/tune_methods"
+            return RequestHandler.get(endpoint, key=self.key)
+        except Exception as e:
+            raise GenAiException(e)
+
+    def download_tune_assets(self, params: DownloadAssetsParams):
+        """Download tune asset.
+
+        Returns:
+            Any: json with info about the downloaded tune asset.
+        """
+        try:
+            endpoint = self.service_url + TunesRouter.TUNES + "/" + params.id + "/content/" + params.content
+            return RequestHandler.get(endpoint, key=self.key)
         except Exception as e:
             raise GenAiException(e)

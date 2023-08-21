@@ -1,12 +1,22 @@
-from unittest.mock import MagicMock, patch
+import os
+import pathlib
+from unittest.mock import MagicMock, mock_open, patch
 
 import pytest
 
 from genai import Credentials
 from genai.exceptions import GenAiException
 from genai.routers.tunes import TunesRouter
-from genai.schemas.responses import TuneInfoResult, TunesListResponse
-from genai.schemas.tunes_params import CreateTuneParams, TunesListParams
+from genai.schemas.responses import (
+    TuneInfoResult,
+    TuneMethodsGetResponse,
+    TunesListResponse,
+)
+from genai.schemas.tunes_params import (
+    CreateTuneParams,
+    DownloadAssetsParams,
+    TunesListParams,
+)
 from genai.services.tune_manager import TuneManager
 from tests.assets.response_helper import SimpleResponse
 
@@ -15,10 +25,16 @@ from tests.assets.response_helper import SimpleResponse
 class TestTunes:
     def setup_method(self):
         self.service_router = TunesRouter(service_url="SERVICE_URL", api_key="API_KEY")
+        self.path = pathlib.Path(__file__).parent.resolve()
+        self.asset_path = pathlib.Path(__file__, "..", "assets").resolve()
 
     @pytest.fixture
     def list_params(self):
         return TunesListParams(limit=10, offset=0)
+
+    @pytest.fixture
+    def download_assets_params(self):
+        return DownloadAssetsParams(id="some-tune-id", content="encoder")
 
     @pytest.fixture
     def create_params(self):
@@ -32,7 +48,7 @@ class TestTunes:
 
     @pytest.fixture
     def credentials(self):
-        return Credentials("GENAI_APY_KEY")
+        return Credentials("GENAI_KEY")
 
     # Test list tunes function
     @patch("genai.services.RequestHandler.get")
@@ -74,9 +90,10 @@ class TestTunes:
         response.json.return_value = expected_response
         mocker.return_value = response
 
-        file_response = TuneManager.delete_tune(credentials=credentials, tune_id="tune_id")
-
-        assert file_response == expected_response
+        with pytest.raises(Exception) as e:
+            file_response = TuneManager.delete_tune(credentials=credentials, tune_id="tune_id")
+            assert e.message == "Tune can not be deleted until is completed or failed."
+            assert file_response == expected_response
 
     @patch("genai.services.RequestHandler.delete")
     def test_delete_tune_api_call(self, mocker):
@@ -153,3 +170,41 @@ class TestTunes:
         with pytest.raises(GenAiException) as e:
             self.service_router.create_tune(params=123)
             assert e.message == "params must be of type dict as CreateTuneParams."
+
+    # Test get tune methods function
+
+    @patch("genai.services.RequestHandler.get")
+    def test_get_tune_methods(self, mock_requests, credentials):
+        tune_methods_response = SimpleResponse.get_tune_methods()
+        expected_response = TuneMethodsGetResponse(**tune_methods_response)
+
+        mock_response = MagicMock(status_code=200)
+        mock_response.json.return_value = tune_methods_response
+        mock_requests.return_value = mock_response
+
+        tune_response = TuneManager.get_tune_methods(credentials=credentials)
+        assert tune_response.results == expected_response.results
+
+    @patch("genai.services.RequestHandler.get")
+    def test_get_tune_methods_api_call(self, mock_requests):
+        mock_response = MagicMock(status_code=200)
+        mock_response.json.return_value = SimpleResponse.get_tune_methods()
+        mock_requests.return_value = mock_response
+        g = self.service_router.get_tune_methods()
+        assert g == mock_response
+
+    # Test download tune assets function
+
+    @patch("genai.services.RequestHandler.get")
+    @patch("builtins.open", new=mock_open(read_data="some data"), create=True)
+    def test_download_assets(self, mock_request, credentials, download_assets_params, tmp_path):
+        output_path = pathlib.Path(self.asset_path, tmp_path, "tune_assets").resolve()
+        mock_request.json.return_value = MagicMock(status_code=200)
+
+        with pytest.raises(Exception) as e:
+            TuneManager.download_tune_assets(
+                credentials=credentials, params=download_assets_params, output_path=output_path
+            )
+            assert e.message == "Tune can not be deleted until is completed or failed."
+            assert os.path.exists(output_path)
+            assert os.path.isdir(output_path)

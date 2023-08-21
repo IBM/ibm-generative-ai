@@ -24,6 +24,7 @@ from genai.schemas.responses import (
 from genai.schemas.tunes_params import (
     CreateTuneHyperParams,
     CreateTuneParams,
+    DownloadAssetsParams,
     TunesListParams,
 )
 from genai.services import AsyncResponseGenerator, ServiceInterface
@@ -366,6 +367,12 @@ class Model:
         if self.model not in id_to_status:
             raise GenAiException(ValueError("Tuned model not found. Currently method supports only tuned models."))
         TuneManager.delete_tune(service=self.service, tune_id=self.model)
+
+    def download(self):
+        enconder_params = DownloadAssetsParams(id=self.model, content="encoder")
+        logs_params = DownloadAssetsParams(id=self.model, content="logs")
+        TuneManager.download_tune_assets(service=self.service, params=enconder_params)
+        TuneManager.download_tune_assets(service=self.service, params=logs_params)
 
     @staticmethod
     def models(credentials: Credentials = None, service: ServiceInterface = None) -> list[ModelCard]:
