@@ -30,7 +30,7 @@ creds = Credentials(api_key, api_endpoint)
 model = Model("google/flan-ul2", params=params, credentials=creds)
 
 # can live locally or at an url endpoint
-pt = PromptPattern.from_str("The capital of {{country}} is {{capital}}. The capital of Taiwan is")
+pt = PromptPattern.from_str("The capital of {{country}} is {{capital}}. The capital of United Kingdom is")
 pt.sub("capital", "Madrid").sub("country", "Spain")
 
 print(pt)

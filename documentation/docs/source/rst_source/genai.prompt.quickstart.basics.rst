@@ -15,13 +15,13 @@ From string
     from genai.prompt_pattern import PromptPattern
 
     _string = """
-        The capital of {{country}} is {{capital}}. The capital of Taiwan is
+        The capital of {{country}} is {{capital}}. The capital of United Kingdom is
     """
 
     prompt = PromptPattern.from_str(_string)
     prompt.sub("country", "Spain").sub("capital", "Madrid")
 
-    # The capital of Spain is Madrid. The capital of Taiwan is
+    # The capital of Spain is Madrid. The capital of United Kingdom is
 
 
 From file
