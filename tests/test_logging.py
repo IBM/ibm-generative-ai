@@ -5,6 +5,7 @@ import pytest
 from genai import Credentials, Model
 from genai.schemas import GenerateParams
 
+logging.captureWarnings(False)
 logger = logging.getLogger()
 logger.addHandler(logging.StreamHandler())
 

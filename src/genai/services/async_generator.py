@@ -4,10 +4,16 @@ import logging
 from concurrent.futures import ThreadPoolExecutor
 from queue import Queue
 from signal import SIGINT, SIGTERM, signal
+from typing import Generator, Union
 
 from genai.exceptions import GenAiException
 from genai.options import Options
-from genai.schemas.responses import GenerateResponse, TokenizeResponse
+from genai.schemas.responses import (
+    GenerateResponse,
+    GenerateResult,
+    TokenizeResponse,
+    TokenizeResult,
+)
 from genai.services.connection_manager import ConnectionManager
 from genai.utils.errors import to_genai_error
 
@@ -114,7 +120,9 @@ class AsyncResponseGenerator:
         try:
             response_raw = await self.service_fn_(model, inputs, params, options)
             response = response_raw.json()
-            if response_raw and (200 < response_raw.status_code or response_raw.status_code > 299):
+            if response_raw and (
+                200 < response_raw.status_code or response_raw.status_code > 299
+            ):
                 raise Exception(response)
         except Exception as ex:
             logger.error("Error in _get_response_json {}: {}".format(type(ex), str(ex)))
@@ -138,7 +146,9 @@ class AsyncResponseGenerator:
 
             response = None
             try:
-                response = await self._get_response_json(self.model_id, inputs, self.params, self.options)
+                response = await self._get_response_json(
+                    self.model_id, inputs, self.params, self.options
+                )
                 logger.debug("Received response = {}".format(response))
                 for i in range(len(response["results"])):
                     response["results"][i]["input_text"] = inputs[i]
@@ -150,7 +160,9 @@ class AsyncResponseGenerator:
                         str(e), response, inputs
                     )
                 )
-                self.queue_.put_nowait((batch_num, len(inputs), None, to_genai_error(e)))
+                self.queue_.put_nowait(
+                    (batch_num, len(inputs), None, to_genai_error(e))
+                )
                 return
             try:
                 self.queue_.put_nowait((batch_num, len(inputs), response, None))
@@ -159,7 +171,9 @@ class AsyncResponseGenerator:
                         self.callback(result)
             except Exception as e:
                 logger.error(
-                    "Exception raised in callback : {}, response = {}, inputs = {}".format(str(e), response, inputs)
+                    "Exception raised in callback : {}, response = {}, inputs = {}".format(
+                        str(e), response, inputs
+                    )
                 )
 
     async def _schedule_requests(self):
@@ -187,7 +201,7 @@ class AsyncResponseGenerator:
 
     def generate_response(
         self,
-    ):  # -> Generator[Union[GenerateResult, TokenizeResult, None]]:
+    ) -> Generator[Union[GenerateResult, TokenizeResult, None], None, None]:
         """Method to spawn a launcher thread to launch requests for generate endpoint
         and yield responses as they get received.
 
@@ -215,7 +229,9 @@ class AsyncResponseGenerator:
                     batch_num, batch_size, response, error = self.queue_.get()
                     self.queue_.task_done()
                 except Exception as ex:
-                    logger.error("Exception while reading from queue: {}".format(str(ex)))
+                    logger.error(
+                        "Exception while reading from queue: {}".format(str(ex))
+                    )
                     raise ex
                 else:
                     counter += 1

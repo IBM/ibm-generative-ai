@@ -1,3 +1,5 @@
+from urllib.parse import quote
+
 from httpx import ConnectError, Response
 
 from genai.exceptions import GenAiException
@@ -30,6 +32,22 @@ class ServiceInterface:
         self._prompt_templating = PromptTemplateRouter(service_url=service_url, api_key=api_key)
         self._files = FilesRouter(service_url=service_url, api_key=api_key)
         self._tunes = TunesRouter(service_url=service_url, api_key=api_key)
+
+    def model(self, model_id: str):
+        try:
+            encoded_model_id = quote(
+                model_id,
+                safe="",
+                encoding=None,
+            )
+            endpoint = f"{self.service_url}{ServiceInterface.MODELS}/{encoded_model_id}"
+            return RequestHandler.get(endpoint, key=self.key)
+        except ConnectError as e:
+            raise GenAiException(
+                Exception("Endpoint unreachable. Please check connectivity.\nRaw error message = {}".format(e))
+            )
+        except Exception as e:
+            raise GenAiException(e)
 
     def models(self):
         """Generate a completion text for the given model, inputs, and params.

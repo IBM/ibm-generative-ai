@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Optional
 
 from genai.utils.watsonx_helpers import watsonx_payload
 
@@ -8,7 +8,7 @@ class Options:
         self,
         watsonx_template=None,
         watsonx_data=None,
-        watsonx_files: list = None,
+        watsonx_files: Optional[list] = None,
         *args,
         **kwargs,
     ) -> None:

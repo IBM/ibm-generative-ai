@@ -1,6 +1,7 @@
 import logging
 import os
 import pathlib
+from typing import Optional
 
 from genai.credentials import Credentials
 from genai.exceptions.genai_exception import GenAiException
@@ -56,7 +57,9 @@ class TuneManager:
             raise GenAiException(e)
 
     @staticmethod
-    def get_tune(tune_id: str, credentials: Credentials = None, service: ServiceInterface = None) -> TuneGetResponse:
+    def get_tune(
+        tune_id: str, credentials: Credentials = None, service: ServiceInterface = None
+    ) -> Optional[TuneInfoResult]:
         """Get a tune from the server.
 
         Args:

@@ -75,7 +75,10 @@ class TestModel:
         with pytest.raises(GenAiException):
             model.generate(prompts=prompts)
 
-    @patch("genai.services.RequestHandler.post", side_effect=Exception("some general error"))
+    @patch(
+        "genai.services.RequestHandler.post",
+        side_effect=Exception("some general error"),
+    )
     def test_generate_throws_exception_for_generic_exception(self, credentials, params, prompts):
         """Tests that the GenAiException is thrown if a generic Exception is raised"""
         model = Model("google/flan-ul2", params=params, credentials=credentials)
@@ -113,7 +116,11 @@ class TestModel:
 
         base_model = Model(self.model, params=None, credentials=credentials)
         tuned_model = base_model.tune(
-            name=label, method="mpt", task="generation", training_file_ids=["id1"], hyperparameters=hyperparams
+            name=label,
+            method="mpt",
+            task="generation",
+            training_file_ids=["id1"],
+            hyperparameters=hyperparams,
         )
         assert tuned_model.model == expected_response["results"]["id"]
 
@@ -135,16 +142,15 @@ class TestModel:
     @patch("genai.services.RequestHandler.get")
     def test_info(self, mock_requests, credentials):
         model_id = "google/flan-t5-xl"
-        response = SimpleResponse.models()
-        card = [m for m in response["results"] if m["id"] == model_id]
-        info = ModelCard(**card[0])
+        response = SimpleResponse.model(model_id)
+        info = ModelCard(**response)
 
-        mock_response = MagicMock(status_code=200)
+        mock_response = MagicMock(status_code=(200 if response is not None else 404))
         mock_response.json.return_value = response
         mock_requests.return_value = mock_response
 
         model = Model(model_id, params=None, credentials=credentials)
-        assert info == model.info()
+        assert info.dict() == model.info().dict()
 
     @patch("genai.services.RequestHandler.get")
     def test_models(self, mock_requests, credentials):
@@ -158,16 +164,12 @@ class TestModel:
 
     @patch("genai.services.RequestHandler.get")
     def test_available(self, mock_requests, credentials):
-        response = SimpleResponse.models()
+        for model_id in ["google/flan-t5-xl", "random"]:
+            response = SimpleResponse.model(model_id)
 
-        mock_response = MagicMock(status_code=200)
-        mock_response.json.return_value = response
-        mock_requests.return_value = mock_response
+            mock_response = MagicMock(status_code=(200 if response is not None else 404))
+            mock_response.json.return_value = response
+            mock_requests.return_value = mock_response
 
-        model_id = "google/flan-t5-xl"
-        model = Model(model_id, params=None, credentials=credentials)
-        assert model.available() is True
-
-        model_id = "random"
-        model = Model(model_id, params=None, credentials=credentials)
-        assert model.available() is False
+            model = Model(model_id, params=None, credentials=credentials)
+            assert model.available() is (response is not None)

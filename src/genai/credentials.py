@@ -11,7 +11,7 @@ class Credentials:
         api_endpoint: str = DEFAULT_API,
     ):
         """
-        Instansiate the credentials object
+        Instantiate the credentials object
 
         Args:
             api_key (str): The GENAI API Key

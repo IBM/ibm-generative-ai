@@ -299,7 +299,14 @@ class SimpleResponse:
         return response
 
     @staticmethod
-    def models(**kwargs):
+    def model(model_id: str):
+        models = SimpleResponse.models()["results"]
+        for model in models:
+            if model["id"] == model_id:
+                return {"results": model}
+
+    @staticmethod
+    def models():
         return {
             "results": [
                 {

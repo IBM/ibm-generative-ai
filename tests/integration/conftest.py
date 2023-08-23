@@ -3,7 +3,7 @@ import os
 import pytest
 from dotenv import load_dotenv
 
-from genai import Credentials
+from genai.credentials import Credentials
 
 pytestmark = pytest.mark.integration
 

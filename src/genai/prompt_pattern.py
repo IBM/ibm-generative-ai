@@ -8,7 +8,7 @@ import requests
 from yaml import CLoader as Loader
 from yaml import load
 
-from genai import Credentials
+from genai.credentials import Credentials
 from genai.exceptions import GenAiException
 from genai.schemas.responses import WatsonxTemplate
 from genai.services import PromptTemplateManager

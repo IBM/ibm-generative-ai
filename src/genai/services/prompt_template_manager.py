@@ -1,3 +1,5 @@
+from typing import Optional
+
 from genai import Credentials
 from genai.exceptions import GenAiException
 from genai.schemas.responses import (
@@ -36,10 +38,13 @@ class PromptTemplateManager:
             raise GenAiException(ex)
 
     @staticmethod
-    def render_watsonx_prompts(credentials: Credentials, inputs: list = None, data: dict = {}) -> list[str]:
+    def render_watsonx_prompts(credentials: Credentials, inputs: list = None, data: Optional[dict] = None) -> list[str]:
         service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
 
         try:
+            if not data:
+                data = {}
+
             response = service._prompt_templating.prompt_output(inputs, template=data)
             if response.status_code == 200:
                 response_result = WatsonxRenderedPrompts(**response.json())
@@ -49,7 +54,9 @@ class PromptTemplateManager:
             raise GenAiException(ex)
 
     @staticmethod
-    def load_template(credentials: Credentials, id: str = None, name: str = None) -> WatsonxTemplate:
+    def load_template(
+        credentials: Credentials, id: Optional[str] = None, name: Optional[str] = None
+    ) -> WatsonxTemplate:
         if id:
             return PromptTemplateManager.load_template_by_id(credentials=credentials, id=id)
         if name:
