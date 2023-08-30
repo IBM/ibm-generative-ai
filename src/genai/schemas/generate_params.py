@@ -62,6 +62,7 @@ class GenerateParams(BaseModel):
     time_limit: Optional[int] = Field(None, description=tx.TIME_LIMIT)
     top_k: Optional[int] = Field(None, description=tx.TOP_K, ge=1)
     top_p: Optional[float] = Field(None, description=tx.TOP_P, ge=0.00, le=1.00)
+    typical_p: Optional[float] = Field(None, description=tx.TYPICAL_P, gt=0.00, le=1.00)
     repetition_penalty: Optional[float] = Field(
         None, description=tx.REPETITION_PENALTY, multiple_of=0.01, ge=1.00, le=2.00
     )
