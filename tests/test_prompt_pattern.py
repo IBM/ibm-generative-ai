@@ -66,16 +66,17 @@ class TestPromptPattern:
 
     def test_sub_string_template(self):
         pt = PromptPattern.from_file(self.asset_path + "capital-qa.yaml")
-        pt.sub("country", "Taiwan")
+        pt.sub("country", "United Kingdom")
 
         expected = self.asset(name="capital-qa-sub.txt")
         assert str(pt) == expected
 
     def test_cache_reset(self):
         pt = PromptPattern.from_file(self.asset_path + "capital-qa.yaml")
-        pt.sub("country", "Taiwan")
+        pt.sub("country", "United Kingdom")
 
         expected = self.asset(name="capital-qa-sub.txt")
+        assert str(pt) == expected
         assert str(pt) == expected
 
         pt.reset()
