@@ -16,7 +16,15 @@ __all__ = ["AsyncResponseGenerator"]
 
 class AsyncResponseGenerator:
     def __init__(
-        self, model_id, prompts, params, service, fn="generate", ordered=False, callback=None, options: Options = None
+        self,
+        model_id,
+        prompts,
+        params,
+        service,
+        fn="generate",
+        ordered=False,
+        callback=None,
+        options: Options = None,
     ):
         """Instantiates the ConcurrentWrapper Interface.
 
@@ -146,7 +154,9 @@ class AsyncResponseGenerator:
         self.loop_.run_until_complete(self._schedule_requests())
         self.loop_.run_until_complete(self.client_close_fn_())
 
-    def generate_response(self):  # -> Generator[Union[GenerateResult, TokenizeResult, None]]:
+    def generate_response(
+        self,
+    ):  # -> Generator[Union[GenerateResult, TokenizeResult, None]]:
         """Method to spawn a launcher thread to launch requests for generate endpoint
         and yield responses as they get received.
 

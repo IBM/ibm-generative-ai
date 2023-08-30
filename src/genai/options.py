@@ -4,7 +4,14 @@ from genai.utils.watsonx_helpers import watsonx_payload
 
 
 class Options:
-    def __init__(self, watsonx_template=None, watsonx_data=None, watsonx_files: list = None, *args, **kwargs) -> None:
+    def __init__(
+        self,
+        watsonx_template=None,
+        watsonx_data=None,
+        watsonx_files: list = None,
+        *args,
+        **kwargs,
+    ) -> None:
         self.d = {}
         if watsonx_template:
             self.d["template"] = watsonx_payload(watsonx_template, watsonx_data, watsonx_files)

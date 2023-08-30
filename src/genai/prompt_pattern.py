@@ -82,7 +82,13 @@ class PromptPattern:
         return pt
 
     @classmethod
-    def from_watsonx(cls, credentials: Credentials, name: str = None, template: dict = None, id: str = None):
+    def from_watsonx(
+        cls,
+        credentials: Credentials,
+        name: str = None,
+        template: dict = None,
+        id: str = None,
+    ):
         # Cases :
         # fetching an existing template : name OR id
         # updating an existing template : template + (name OR id)
