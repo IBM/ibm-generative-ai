@@ -1,5 +1,6 @@
 import asyncio
 import logging
+from typing import Optional
 
 import httpx
 from httpx import Response
@@ -7,6 +8,7 @@ from httpx import Response
 from genai._version import version
 from genai.options import Options
 from genai.services.connection_manager import ConnectionManager
+from genai.utils.http_provider import HttpProvider
 
 logger = logging.getLogger(__name__)
 
@@ -102,13 +104,11 @@ class RequestHandler:
             options=options,
             files=files,
         )
-        response = None
-        async with httpx.AsyncClient(timeout=ConnectionManager.TIMEOUT) as client:
-            response = await client.post(endpoint, headers=headers, json=json_data, files=files)
-        return response
+        async with HttpProvider.get_async_client() as client:
+            return await client.post(endpoint, headers=headers, json=json_data, files=files)
 
     @staticmethod
-    async def async_patch(endpoint: str, key: str, json_data: dict = None) -> Response:
+    async def async_patch(endpoint: str, key: str, json_data: dict) -> Response:
         """Low level API for /patch request to REST API.
 
         Currently only used for TOU endpoint.
@@ -116,16 +116,14 @@ class RequestHandler:
         Args:
             endpoint (str):
             key (str)
-            payload: (dict, optional)
+            json_data: (dict)
 
         Returns:
             httpx.Response: Response from the REST API.
         """
-        headers, json_data, _ = RequestHandler._metadata(method="PATCH", key=key)
-        response = None
-        async with httpx.AsyncClient(timeout=ConnectionManager.TIMEOUT) as client:
-            response = await client.patch(endpoint, headers=headers, json=json_data)
-        return response
+        headers, _, _ = RequestHandler._metadata(method="PATCH", key=key)
+        async with HttpProvider.get_async_client(timeout=ConnectionManager.TIMEOUT) as client:
+            return await client.patch(endpoint, headers=headers, json=json_data)
 
     @staticmethod
     async def async_generate(
@@ -227,7 +225,7 @@ class RequestHandler:
         """
         headers, _, _ = RequestHandler._metadata(method="GET", key=key)
 
-        async with httpx.AsyncClient(timeout=ConnectionManager.TIMEOUT) as client:
+        async with HttpProvider.get_async_client(timeout=ConnectionManager.TIMEOUT) as client:
             response = await client.get(url=endpoint, headers=headers, params=parameters)
         return response
 
@@ -271,12 +269,12 @@ class RequestHandler:
         if streaming:
             return RequestHandler.post_stream(endpoint=endpoint, headers=headers, json_data=json_data, files=files)
         else:
-            with httpx.Client(timeout=ConnectionManager.TIMEOUT) as s:
+            with HttpProvider.get_client(timeout=ConnectionManager.TIMEOUT) as s:
                 response = s.post(url=endpoint, headers=headers, json=json_data, files=files)
                 return response
 
     @staticmethod
-    def patch(endpoint: str, key: str, json_data: dict = None) -> Response:
+    def patch(endpoint: str, key: str, json_data: dict) -> Response:
         """Low level API for /patch request to REST API.
 
         Currently only used for TOU endpoint.
@@ -284,20 +282,20 @@ class RequestHandler:
         Args:
             endpoint (str):
             key (str)
-            payload: (dict, optional)
+            json_data: (dict)
 
         Returns:
             httpx.Response: Response from the REST API.
         """
-        headers, json_data, _ = RequestHandler._metadata(method="PATCH", key=key)
+        headers, _, _ = RequestHandler._metadata(method="PATCH", key=key)
 
-        with httpx.Client(timeout=ConnectionManager.TIMEOUT) as s:
+        with HttpProvider.get_client(timeout=ConnectionManager.TIMEOUT) as s:
             response = s.patch(url=endpoint, headers=headers, json=json_data)
             return response
 
     @staticmethod
     def post_stream(endpoint, headers, json_data, files):
-        with httpx.Client(timeout=ConnectionManager.TIMEOUT) as s:
+        with HttpProvider.get_client(timeout=ConnectionManager.TIMEOUT) as s:
             with s.stream(
                 method="POST",
                 url=endpoint,
@@ -309,7 +307,7 @@ class RequestHandler:
                     yield chunk
 
     @staticmethod
-    def get(endpoint: str, key: str, parameters: dict = None) -> Response:
+    def get(endpoint: str, key: str, parameters: Optional[dict] = None) -> Response:
         """Low level API for /get request to REST API.
 
         Args:
@@ -321,12 +319,12 @@ class RequestHandler:
             httpx.Response: Response from the REST API.
         """
         headers, _, _ = RequestHandler._metadata(method="GET", key=key)
-        with httpx.Client(timeout=ConnectionManager.TIMEOUT) as s:
+        with HttpProvider.get_client(timeout=ConnectionManager.TIMEOUT) as s:
             response = s.get(url=endpoint, headers=headers, params=parameters)
             return response
 
     @staticmethod
-    def put(endpoint: str, key: str, options: Options = None) -> Response:
+    def put(endpoint: str, key: str, options: Optional[Options] = None) -> Response:
         """Low level API for /get request to REST API.
 
         Args:
@@ -338,12 +336,12 @@ class RequestHandler:
             requests.models.Response: Response from the REST API.
         """
         headers, json_data, _ = RequestHandler._metadata(method="PUT", key=key, options=options)
-        with httpx.Client(timeout=ConnectionManager.TIMEOUT) as s:
+        with HttpProvider.get_client(timeout=ConnectionManager.TIMEOUT) as s:
             response = s.put(url=endpoint, headers=headers, json=json_data)
             return response
 
     @staticmethod
-    def delete(endpoint: str, key: str, parameters: dict = None) -> Response:
+    def delete(endpoint: str, key: str, parameters: Optional[dict] = None) -> Response:
         """Low level API for /get request to REST API.
 
         Args:
@@ -355,6 +353,6 @@ class RequestHandler:
             requests.models.Response: Response from the REST API.
         """
         headers, _, _ = RequestHandler._metadata(method="DELETE", key=key)
-        with httpx.Client(timeout=ConnectionManager.TIMEOUT) as s:
+        with HttpProvider.get_client(timeout=ConnectionManager.TIMEOUT) as s:
             response = s.delete(url=endpoint, headers=headers, params=parameters)
             return response
