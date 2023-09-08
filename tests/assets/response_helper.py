@@ -21,6 +21,28 @@ class SimpleResponse:
         return response
 
     @staticmethod
+    def generate_stream(**kwargs):
+        SimpleResponse._check_for_errors("generate", **kwargs)
+
+        responses = []
+        for idx, token in enumerate("This is the output text.".split(" ")):
+            response = {
+                "id": "1cf9f510-5549-4ea5-a909-2cf9219c1bb5",
+                "model_id": kwargs["model"],
+                "created_at": "2023-03-15T18:28:12.007Z",
+                "results": [
+                    {
+                        "generated_text": token,
+                        "generated_token_count": idx + 1,
+                        "stop_reason": "MAX_TOKENS",
+                    }
+                ],
+            }
+            responses.append(response)
+
+        return responses
+
+    @staticmethod
     def generate_response_array_async(**kwargs):
         arr = []
         for i in range(len(kwargs["inputs"])):

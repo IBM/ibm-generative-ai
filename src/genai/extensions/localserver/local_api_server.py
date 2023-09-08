@@ -43,7 +43,10 @@ class ApiAuthMiddleware(BaseHTTPMiddleware):
                     message="API key not found",
                 )
                 logger.debug(response_obj.dict())
-                return JSONResponse(content=response_obj.dict(), status_code=status.HTTP_401_UNAUTHORIZED)
+                return JSONResponse(
+                    content=response_obj.dict(),
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                )
         logging.debug("Calling next in chain")
         response = await call_next(request)
         logging.debug("Returning response")
@@ -137,6 +140,9 @@ class LocalLLMServer:
         ]
         created_at = datetime.datetime.now().isoformat()
         response = GenerateResponse(
-            id=str(uuid.uuid4()), model_id=generate_request.model_id, created_at=created_at, results=results
+            id=str(uuid.uuid4()),
+            model_id=generate_request.model_id,
+            created_at=created_at,
+            results=results,
         )
         return response

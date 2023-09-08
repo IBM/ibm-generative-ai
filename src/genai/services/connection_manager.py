@@ -28,10 +28,12 @@ class ConnectionManager:
         if ConnectionManager.async_generate_client is not None:
             raise GenAiException(ValueError("Can't have two active async_generate_clients"))
         async_generate_transport = httpx.AsyncHTTPTransport(
-            limits=ConnectionManager.generate_limits, retries=ConnectionManager.MAX_RETRIES_GENERATE
+            limits=ConnectionManager.generate_limits,
+            retries=ConnectionManager.MAX_RETRIES_GENERATE,
         )
         ConnectionManager.async_generate_client = httpx.AsyncClient(
-            transport=async_generate_transport, timeout=ConnectionManager.TIMEOUT_GENERATE
+            transport=async_generate_transport,
+            timeout=ConnectionManager.TIMEOUT_GENERATE,
         )
 
     @staticmethod

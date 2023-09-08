@@ -90,7 +90,7 @@ class Model:
 
     def generate_as_completed(
         self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
-    ) -> Generator[GenerateResponse]:
+    ) -> Generator[GenerateResult]:
         """The generate endpoint is the centerpiece of the GENAI alpha.
         It provides a simplified and flexible, yet powerful interface to the supported
         models as a service. Given a text prompt as inputs, and required parameters
@@ -130,9 +130,7 @@ class Model:
         except Exception as ex:
             raise GenAiException(ex)
 
-    def generate(
-        self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
-    ) -> list[GenerateResponse]:
+    def generate(self, prompts: Union[list[str], list[PromptPattern]], options: Options = None) -> list[GenerateResult]:
         """The generate endpoint is the centerpiece of the GENAI alpha.
         It provides a simplified and flexible, yet powerful interface to the supported
         models as a service. Given a text prompt as inputs, and required parameters

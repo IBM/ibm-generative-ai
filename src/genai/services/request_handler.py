@@ -149,12 +149,20 @@ class RequestHandler:
             httpx.Response: Response from the REST API.
         """
         headers, json_data, _ = RequestHandler._metadata(
-            method="POST", key=key, model_id=model_id, inputs=inputs, parameters=parameters, options=options
+            method="POST",
+            key=key,
+            model_id=model_id,
+            inputs=inputs,
+            parameters=parameters,
+            options=options,
         )
         response = None
         for attempt in range(0, ConnectionManager.MAX_RETRIES_GENERATE):
             response = await ConnectionManager.async_generate_client.post(endpoint, headers=headers, json=json_data)
-            if response.status_code in [httpx.codes.SERVICE_UNAVAILABLE, httpx.codes.TOO_MANY_REQUESTS]:
+            if response.status_code in [
+                httpx.codes.SERVICE_UNAVAILABLE,
+                httpx.codes.TOO_MANY_REQUESTS,
+            ]:
                 await asyncio.sleep(2 ** (attempt + 1))
             else:
                 break
@@ -182,7 +190,12 @@ class RequestHandler:
             httpx.Response: Response from the REST API.
         """
         headers, json_data, _ = RequestHandler._metadata(
-            method="POST", key=key, model_id=model_id, inputs=inputs, parameters=parameters, options=options
+            method="POST",
+            key=key,
+            model_id=model_id,
+            inputs=inputs,
+            parameters=parameters,
+            options=options,
         )
         response = None
         for attempt in range(0, ConnectionManager.MAX_RETRIES_TOKENIZE):
@@ -191,7 +204,10 @@ class RequestHandler:
             # Instead, we do the ratelimiting here with the help of limiter.
             async with ConnectionManager.async_tokenize_limiter:
                 response = await ConnectionManager.async_tokenize_client.post(endpoint, headers=headers, json=json_data)
-                if response.status_code in [httpx.codes.SERVICE_UNAVAILABLE, httpx.codes.TOO_MANY_REQUESTS]:
+                if response.status_code in [
+                    httpx.codes.SERVICE_UNAVAILABLE,
+                    httpx.codes.TOO_MANY_REQUESTS,
+                ]:
                     await asyncio.sleep(2 ** (attempt + 1))
                 else:
                     break
@@ -282,7 +298,13 @@ class RequestHandler:
     @staticmethod
     def post_stream(endpoint, headers, json_data, files):
         with httpx.Client(timeout=ConnectionManager.TIMEOUT) as s:
-            with s.stream(method="POST", url=endpoint, headers=headers, json=json_data, files=files) as r:
+            with s.stream(
+                method="POST",
+                url=endpoint,
+                headers=headers,
+                json=json_data,
+                files=files,
+            ) as r:
                 for chunk in r.iter_text():
                     yield chunk
 

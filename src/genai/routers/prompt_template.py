@@ -13,7 +13,11 @@ class PromptTemplateRouter:
     def prompt_output(self, inputs, template):
         try:
             endpoint = self.service_url + PromptTemplateRouter.PROMPT_TEMPLATES + "/output"
-            return RequestHandler.post(endpoint, key=self.key, options=Options(inputs=inputs, template=template))
+            return RequestHandler.post(
+                endpoint,
+                key=self.key,
+                options=Options(inputs=inputs, template=template),
+            )
         except Exception as e:
             raise GenAiException(e)
 

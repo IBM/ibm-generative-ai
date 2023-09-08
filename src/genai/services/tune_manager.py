@@ -26,7 +26,9 @@ class TuneManager:
 
     @staticmethod
     def list_tunes(
-        credentials: Credentials = None, service: ServiceInterface = None, params: TunesListParams = None
+        credentials: Credentials = None,
+        service: ServiceInterface = None,
+        params: TunesListParams = None,
     ) -> TunesListResponse:
         """List all tunes on the server.
 
@@ -81,7 +83,9 @@ class TuneManager:
 
     @staticmethod
     def create_tune(
-        params: CreateTuneParams, credentials: Credentials = None, service: ServiceInterface = None
+        params: CreateTuneParams,
+        credentials: Credentials = None,
+        service: ServiceInterface = None,
     ) -> TuneInfoResult:
         """Create a new tune to be uploaded to the server.
 
