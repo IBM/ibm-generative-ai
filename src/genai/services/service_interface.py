@@ -221,7 +221,7 @@ class ServiceInterface:
         except Exception as e:
             raise GenAiException(e)
 
-    def async_terms_of_use(self, accept: bool) -> Response:
+    async def async_terms_of_use(self, accept: bool) -> Response:
         """Accept the API Terms of Use
 
         Args:
@@ -238,6 +238,6 @@ class ServiceInterface:
 
         try:
             endpoint = self.service_url + ServiceInterface.TOU
-            return RequestHandler.async_patch(endpoint, key=self.key, json_data=tou_payload)
+            return await RequestHandler.async_patch(endpoint, key=self.key, json_data=tou_payload)
         except Exception as e:
             raise GenAiException(e)
