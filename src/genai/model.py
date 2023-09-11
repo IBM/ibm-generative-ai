@@ -12,7 +12,6 @@ from genai.options import Options
 from genai.prompt_pattern import PromptPattern
 from genai.schemas import GenerateParams, TokenParams
 from genai.schemas.responses import (
-    GenerateResponse,
     GenerateResult,
     GenerateStreamResponse,
     ModelCard,
@@ -56,24 +55,30 @@ class Model:
 
     @deprecated(reason="use client.generate.generate_stream method")
     def generate_stream(
-        self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
-    ):
+        self,
+        prompts: Union[list[str], list[PromptPattern]],
+        options: Optional[Options] = None,
+    ) -> Generator[GenerateStreamResponse, None, None]:
         return self._client.generate.generate_stream(
             model=self.model, params=self.params, prompts=prompts, options=options
         )
 
     @deprecated(reason="use 'client.generate.generate_as_completed' method")
     def generate_as_completed(
-        self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
-    ):
+        self,
+        prompts: Union[list[str], list[PromptPattern]],
+        options: Optional[Options] = None,
+    ) -> Generator[GenerateResult, None, None]:
         return self._client.generate.generate_as_completed(
             model=self.model, params=self.params, prompts=prompts, options=options
         )
 
     @deprecated(reason="use 'client.generate.generate' method")
     def generate(
-        self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
-    ):
+        self,
+        prompts: Union[list[str], list[PromptPattern]],
+        options: Optional[Options] = None,
+    ) -> list[GenerateResult]:
         return self._client.generate.generate(
             model=self.model, params=self.params, prompts=prompts, options=options
         )
@@ -104,13 +109,14 @@ class Model:
     def tokenize_as_completed(
         self,
         prompts: Union[list[str], list[PromptPattern]],
-        return_tokens: bool = False,
         options: Options = None,
+        params: Optional[TokenParams] = None,
+        options: Optional[Options] = None,
     ) -> Generator[TokenizeResult, None, None]:
         return self._client.tokenize.tokenize_as_completed(
             model_id=self.model,
             prompts=prompts,
-            return_tokens=return_tokens,
+            params=params,
             options=options,
         )
 

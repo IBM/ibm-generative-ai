@@ -1,28 +1,35 @@
 import logging
+from typing import Optional, Union
 
 import pytest
 
-from genai.model import Model
+from genai import Options, PromptPattern
+from genai.client import Client, Container
+from genai.extensions.localserver.local_client import LocalClient
 from genai.schemas import GenerateParams, GenerateResult, TokenizeResult, TokenParams
+from genai.services.generate_service import GenerateService, Params
+from genai.services.tokenize_service import TokenizeService
 
 logger = logging.getLogger(__name__)
 
 
-# Test implmentation of CustomModel class
+# Test implementation of CustomModel class
 
 
 @pytest.mark.extension
 class TestLocalServer:
     def test_local_server(self):
-        from genai.extensions.localserver import CustomModel, LocalLLMServer
+        from genai.extensions.localserver import LocalLLMServer
 
-        class ExampleModel(CustomModel):
-            model_id = "example/model"
-
-            def __init__(self):
-                logger.info("Initialising my custom model")
-
-            def generate(self, input_text: str, params: GenerateParams) -> GenerateResult:
+        class ExampleGenerateService(GenerateService):
+            def generate(
+                self,
+                model: str,
+                prompts: Union[list[str], list[PromptPattern]],
+                params: Params,
+                options: Optional[Options] = None,
+            ) -> list[GenerateResult]:
+                input_text = prompts[0]
                 logger.info(f"Calling generate on: {input_text}")
 
                 genai_response = GenerateResult(
@@ -33,18 +40,32 @@ class TestLocalServer:
                 )
                 logger.info(f"Response to {input_text} was: {genai_response}")
 
-                return genai_response
+                return [genai_response]
 
-            def tokenize(self, input_text: str, params: TokenParams) -> TokenizeResult:
-                logger.info(f"Calling tokenize on: {input_text}")
-                tokens = input_text.split(" ")
-                result = TokenizeResult(token_count=len(tokens))
-                if params.return_tokens is True:
-                    result.tokens = tokens
-                return result
+        class ExampleTokenizeService(TokenizeService):
+            def tokenize(
+                self,
+                model_id: str,
+                prompts: Union[list[str], list[PromptPattern]],
+                params: Optional[TokenParams] = None,
+                options: Optional[Options] = None,
+            ) -> list[TokenizeResult]:
+                results = []
+                for input_text in prompts:
+                    logger.info(f"Calling tokenize on: {input_text}")
+                    tokens = input_text.split(" ")
+                    result = TokenizeResult(token_count=len(tokens))
+                    if params and params.return_tokens is True:
+                        result.tokens = tokens
+                    results.append(result)
+                return results
 
-        # Instansiate the Local Server with your model
-        server = LocalLLMServer(models=[ExampleModel])
+        # Instantiate the Local Server with custom client/services
+        client = LocalClient(
+            services=Container(generate=ExampleGenerateService, tokenize=ExampleTokenizeService),
+        )
+        server = LocalLLMServer(client=client)
+
         # Start the server and execute your code
         with server.run_locally():
             logger.info("Local Server Started, attempting basic generate call")
@@ -55,16 +76,15 @@ class TestLocalServer:
             params = GenerateParams()
 
             # Instantiate a model proxy object to send your requests
-            custom_model = Model(ExampleModel.model_id, params=params, credentials=creds)
+            client = Client(credentials=creds)
 
             test_prompt = "hello this is a test of a custom model in a local server"
-            responses = custom_model.generate([test_prompt])
+            responses = client.generate.generate(model="example/model", prompts=[test_prompt], params=params)
             assert len(responses) == 1
-            response = responses[0]
             # Our test model simply returns the input test, so this will verify that our server is working
-            assert response.generated_text == test_prompt
+            assert responses[0].generated_text == test_prompt
 
-            token_responses = custom_model.tokenize([test_prompt])
+            token_responses = client.tokenize.tokenize(model_id="example/model", prompts=[test_prompt])
             assert len(token_responses) == 1
             token_response = token_responses[0]
             # Our test model simply returns the input test, so this will verify that our server is working

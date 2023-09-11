@@ -4,6 +4,9 @@ import logging
 import threading
 import time
 import uuid
+from typing import Optional
+
+from genai.client import Client
 
 try:
     import uvicorn
@@ -15,7 +18,6 @@ except ImportError as iex:
 
 
 from genai import Credentials
-from genai.extensions.localserver.custom_model_interface import CustomModel
 from genai.extensions.localserver.schemas import (
     GenerateRequestBody,
     TokenizeRequestBody,
@@ -56,13 +58,13 @@ class ApiAuthMiddleware(BaseHTTPMiddleware):
 class LocalLLMServer:
     def __init__(
         self,
-        models: list[CustomModel],
+        client: Client,
         port: int = 8080,
         interface: str = "0.0.0.0",
-        api_key: str = None,
+        api_key: Optional[str] = None,
         insecure_api: bool = False,
     ):
-        self.models = {model.model_id: model() for model in models}
+        self.client = client
         self.port = port
         self.interface = interface
         self.insecure_api = insecure_api
@@ -76,8 +78,8 @@ class LocalLLMServer:
         self.app = FastAPI(
             title="IBM Generative AI Local Model Server",
             debug=False,
-            openapi_url=False,
-            docs_url=False,
+            openapi_url=None,
+            docs_url=None,
             redoc_url=None,
         )
         self.router = APIRouter()
@@ -89,7 +91,11 @@ class LocalLLMServer:
         self.uvicorn_config = uvicorn.Config(self.app, host=interface, port=port, log_level="error", access_log=False)
         self.uvicorn_server = uvicorn.Server(self.uvicorn_config)
         self.endpoint = f"http://{self.interface}:{self.port}/v1"
-        logger.debug(f"{__name__}: Models: {list(self.models.keys())}, API: {self.endpoint}, Insecure: {insecure_api}")
+
+        self.client.credentials.api_endpoint = self.endpoint
+        self.client.credentials.api_key = self.api_key
+
+        logger.debug(f"{__name__}: API: {self.endpoint}, Insecure: {insecure_api}")
 
     @contextlib.contextmanager
     def run_locally(self):
@@ -121,11 +127,11 @@ class LocalLLMServer:
 
     async def _route_tokenize(self, tokenize_request: TokenizeRequestBody):
         logger.info(f"Tokenize called: {tokenize_request}")
-
-        results = [
-            self.models[tokenize_request.model_id].tokenize(input_text=input, params=tokenize_request.parameters)
-            for input in tokenize_request.inputs
-        ]
+        results = self.client.tokenize.tokenize(
+            model_id=tokenize_request.model_id,
+            prompts=tokenize_request.inputs,
+            params=tokenize_request.parameters,
+        )
 
         created_at = datetime.datetime.now().isoformat()
         response = TokenizeResponse(model_id=tokenize_request.model_id, created_at=created_at, results=results)
@@ -134,10 +140,11 @@ class LocalLLMServer:
 
     async def _route_generate(self, generate_request: GenerateRequestBody):
         logger.info(f"Generate Called: Model: {generate_request.model_id}: {generate_request.inputs}")
-        results = [
-            self.models[generate_request.model_id].generate(input_text=input, params=generate_request.parameters)
-            for input in generate_request.inputs
-        ]
+        results = self.client.generate.generate(
+            model=generate_request.model_id,
+            prompts=generate_request.inputs,
+            params=generate_request.parameters,
+        )
         created_at = datetime.datetime.now().isoformat()
         response = GenerateResponse(
             id=str(uuid.uuid4()),

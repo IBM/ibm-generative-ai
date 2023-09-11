@@ -2,6 +2,7 @@ import logging
 
 # Import the ibm-generative-ai library and local server extension
 from genai.extensions.localserver import CustomModel, LocalLLMServer
+from genai.extensions.localserver.local_client import LocalClient
 from genai.model import Model
 from genai.schemas import GenerateParams, GenerateResult, TokenizeResult, TokenParams
 
@@ -57,8 +58,9 @@ class FlanT5Model(CustomModel):
         return result
 
 
-# Instansiate the Local Server with your model
-server = LocalLLMServer(models=[FlanT5Model])
+# Instantiate the Local Server with your models
+client = LocalClient.from_models([FlanT5Model])
+server = LocalLLMServer(client=client)
 
 # Start the server and execute your code
 with server.run_locally():
