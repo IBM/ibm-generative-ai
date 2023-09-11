@@ -21,7 +21,7 @@ class TokenizeService(BaseService):
         self,
         model_id: str,
         prompts: Union[list[str], list[PromptPattern]],
-        return_tokens: bool = False,
+        params: Optional[TokenParams] = None,
         options: Optional[Options] = None,
     ) -> list[TokenizeResult]:
         """The tokenize endpoint allows you to check the conversion of provided prompts to tokens
@@ -37,16 +37,14 @@ class TokenizeService(BaseService):
             list[TokenizeResult]: The Tokenized input
         """
         return list(
-            self.tokenize_as_completed(
-                model_id, prompts, return_tokens, options=options
-            )
+            self.tokenize_as_completed(model_id, prompts, params, options=options)
         )
 
     def tokenize_as_completed(
         self,
         model_id: str,
         prompts: Union[list[str], list[PromptPattern]],
-        return_tokens: bool = False,
+        params: Optional[TokenParams] = None,
         options: Optional[Options] = None,
     ) -> Generator[TokenizeResult, None, None]:
         """The tokenize endpoint allows you to check the conversion of provided prompts to tokens
@@ -64,7 +62,7 @@ class TokenizeService(BaseService):
             prompts = PromptPattern.list_str(prompts)
 
         try:
-            params = TokenParams(return_tokens=return_tokens)
+            params = params or TokenParams(return_tokens=False)
             for i in range(0, len(prompts), Metadata.DEFAULT_MAX_PROMPTS):
                 tokenize_response = self._api_service.tokenize(
                     model=model_id,
@@ -97,7 +95,7 @@ class TokenizeService(BaseService):
         ordered: bool = False,
         callback: Optional[Callable[[TokenizeResult], Any]] = None,
         return_tokens: bool = False,
-        options: Options = None,
+        options: Optional[Options] = None,
     ) -> Generator[Union[TokenizeResult, None], None, None]:
         """The tokenize endpoint allows you to check the conversion of provided prompts to tokens
         for a given model. It splits text into words or subwords, which then are converted to ids
@@ -110,6 +108,7 @@ class TokenizeService(BaseService):
             ordered (bool): Whether the responses should be returned in-order.
             callback (Callable[[TokenizeResult], Any]): Callback to call for each result.
             return_tokens (bool, optional): Return tokens with the response. Defaults to False.
+            options: (Options, optional): Extra optional top-level properties like (prompt_id).
 
         Returns:
             Generator[Union[TokenizeResult, None]]: The Tokenized input

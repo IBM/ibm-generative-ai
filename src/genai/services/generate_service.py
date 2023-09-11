@@ -83,7 +83,12 @@ class GenerateService(BaseService):
         prompts: Union[list[str], list[PromptPattern]],
         options: Options = None,
     ) -> Generator[GenerateResult, None, None]:
-        """Args:
+        """The generate endpoint is the centerpiece of the GENAI alpha.
+        It provides a simplified and flexible, yet powerful interface to the supported
+        models as a service. Given a text prompt as inputs, and required parameters
+        the selected model (model_id) will generate a completion text as generated_text.
+
+        Args:
             prompts (list[str]): The list of one or more prompt strings.
             options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
@@ -127,7 +132,7 @@ class GenerateService(BaseService):
         model: str,
         prompts: Union[list[str], list[PromptPattern]],
         params: Params,
-        options: Options = None,
+        options: Optional[Options] = None,
     ) -> list[GenerateResult]:
         """The generate endpoint is the centerpiece of the GENAI alpha.
         It provides a simplified and flexible, yet powerful interface to the supported
