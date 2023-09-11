@@ -5,6 +5,8 @@ from genai.exceptions import GenAiException
 
 __all__ = ["ConnectionManager"]
 
+from genai.utils.http_provider import HttpProvider
+
 
 class ConnectionManager:
     MAX_CONCURRENT_GENERATE = 10
@@ -27,11 +29,14 @@ class ConnectionManager:
         """Function to make async httpx client for generate."""
         if ConnectionManager.async_generate_client is not None:
             raise GenAiException(ValueError("Can't have two active async_generate_clients"))
-        async_generate_transport = httpx.AsyncHTTPTransport(
-            limits=ConnectionManager.generate_limits, retries=ConnectionManager.MAX_RETRIES_GENERATE
+
+        async_generate_transport = HttpProvider.get_async_transport(
+            limits=ConnectionManager.generate_limits,
+            retries=ConnectionManager.MAX_RETRIES_GENERATE,
         )
-        ConnectionManager.async_generate_client = httpx.AsyncClient(
-            transport=async_generate_transport, timeout=ConnectionManager.TIMEOUT_GENERATE
+        ConnectionManager.async_generate_client = HttpProvider.get_async_client(
+            transport=async_generate_transport,
+            timeout=ConnectionManager.TIMEOUT_GENERATE,
         )
 
     @staticmethod
@@ -39,10 +44,11 @@ class ConnectionManager:
         """Function to make async httpx client for tokenize."""
         if ConnectionManager.async_tokenize_client is not None:
             raise GenAiException(ValueError("Can't have two active async_tokenize_clients"))
+
         ConnectionManager.async_tokenize_limiter = aiolimiter.AsyncLimiter(
             max_rate=ConnectionManager.MAX_REQ_PER_SECOND_TOKENIZE, time_period=1
         )
-        ConnectionManager.async_tokenize_client = httpx.AsyncClient()
+        ConnectionManager.async_tokenize_client = HttpProvider.get_async_client()
 
     @staticmethod
     async def delete_generate_client():

@@ -26,6 +26,7 @@ class TestGenerateSchema:
             time_limit=10.0,
             top_k=10,
             top_p=0.7,
+            typical_p=0.5,
             repetition_penalty=1.2,
             truncate_input_tokens=2,
             beam_width=1,
@@ -234,6 +235,24 @@ class TestGenerateSchema:
         assert params.top_p >= 0
         assert params.top_p <= 1
         assert isinstance(params.top_p, float)
+
+    def test_typical_p_invalid_type(self):
+        with pytest.raises(ValidationError):
+            GenerateParams(typical_p="")
+        with pytest.raises(ValidationError):
+            GenerateParams(typical_p=[0, 1, 2])
+        with pytest.raises(ValidationError):
+            GenerateParams(typical_p="dummy")
+        with pytest.raises(ValidationError):
+            GenerateParams(typical_p=0)
+        with pytest.raises(ValidationError):
+            GenerateParams(typical_p=1.5)
+
+    def test_typical_p_valid_type(self, request_body):
+        params = request_body["params"]
+        assert params.typical_p > 0
+        assert params.typical_p <= 1
+        assert isinstance(params.typical_p, float)
 
     def test_repetition_penalty_invalid_type(self):
         # test that repetition_penalty must be a float

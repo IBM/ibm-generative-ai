@@ -56,12 +56,13 @@ class GenerateParams(BaseModel):
     max_new_tokens: Optional[int] = Field(None, description=tx.MAX_NEW_TOKEN, ge=1)
     min_new_tokens: Optional[int] = Field(None, description=tx.MIN_NEW_TOKEN, ge=0)
     random_seed: Optional[int] = Field(None, description=tx.RANDOM_SEED, ge=1)
-    stop_sequences: Optional[list[str]] = Field(None, description=tx.STOP_SQUENCES, min_length=1)
+    stop_sequences: Optional[list[str]] = Field(None, description=tx.STOP_SQUENCES)
     stream: Optional[bool] = Field(None, description=tx.STREAM)
     temperature: Optional[float] = Field(None, description=tx.TEMPERATURE, ge=0.05, le=2.00)
     time_limit: Optional[int] = Field(None, description=tx.TIME_LIMIT)
     top_k: Optional[int] = Field(None, description=tx.TOP_K, ge=1)
     top_p: Optional[float] = Field(None, description=tx.TOP_P, ge=0.00, le=1.00)
+    typical_p: Optional[float] = Field(None, description=tx.TYPICAL_P, gt=0.00, le=1.00)
     repetition_penalty: Optional[float] = Field(
         None, description=tx.REPETITION_PENALTY, multiple_of=0.01, ge=1.00, le=2.00
     )

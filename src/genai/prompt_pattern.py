@@ -82,7 +82,13 @@ class PromptPattern:
         return pt
 
     @classmethod
-    def from_watsonx(cls, credentials: Credentials, name: str = None, template: dict = None, id: str = None):
+    def from_watsonx(
+        cls,
+        credentials: Credentials,
+        name: str = None,
+        template: dict = None,
+        id: str = None,
+    ):
         # Cases :
         # fetching an existing template : name OR id
         # updating an existing template : template + (name OR id)
@@ -201,7 +207,7 @@ class PromptPattern:
 
         pattern = re.compile(r"{{\s*" + var + r"\s*}}")
         prompt = self.dump
-        self.dump = re.sub(pattern, value, prompt)
+        self.dump = re.sub(pattern, value.replace("\\", r"\\"), prompt)
         return self
 
     def _get_idx(self, strategy, start_index, idx, max_length, random_idx_list):

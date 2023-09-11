@@ -18,7 +18,9 @@ class FileManager:
 
     @staticmethod
     def list_files(
-        credentials: Credentials = None, service: ServiceInterface = None, params: FileListParams = None
+        credentials: Credentials = None,
+        service: ServiceInterface = None,
+        params: FileListParams = None,
     ) -> FilesListResponse:
         """List all files on the server.
 
@@ -105,7 +107,10 @@ class FileManager:
 
     @staticmethod
     def upload_file(
-        file_path: str, purpose: str, credentials: Credentials = None, service: ServiceInterface = None
+        file_path: str,
+        purpose: str,
+        credentials: Credentials = None,
+        service: ServiceInterface = None,
     ) -> FileInfoResult:
         """Upload a file to the server.
 
