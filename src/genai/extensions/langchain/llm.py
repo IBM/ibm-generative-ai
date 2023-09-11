@@ -9,13 +9,16 @@ from langchain.schema.output import Generation, GenerationChunk
 from pydantic import BaseModel, Extra
 
 from genai.exceptions import GenAiException
+from genai.client import Client
 
 try:
     from langchain.llms.base import LLM
 except ImportError:
-    raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")
+    raise ImportError(
+        "Could not import langchain: Please install ibm-generative-ai[langchain] extension."
+    )
 
-from genai import Credentials, Model
+from genai import Credentials
 from genai.schemas import GenerateParams
 
 logger = logging.getLogger(__name__)
@@ -36,8 +39,8 @@ class LangChainInterface(LLM, BaseModel):
             llm = LangChainInterface(model="google/flan-ul2", credentials=creds)
     """
 
-    credentials: Credentials = None
-    model: Optional[str] = None
+    credentials: Credentials
+    model: str
     params: Optional[GenerateParams] = None
 
     class Config:
@@ -86,7 +89,9 @@ class LangChainInterface(LLM, BaseModel):
                 llm = LangChainInterface(model_id="google/flan-ul2", credentials=creds)
                 response = llm("What is a molecule")
         """
-        result = self._generate(prompts=[prompt], stop=stop, run_manager=run_manager, **kwargs)
+        result = self._generate(
+            prompts=[prompt], stop=stop, run_manager=run_manager, **kwargs
+        )
         return result.generations[0][0].text
 
     def _update_llm_result(self, current: LLMResult, generation_info: Optional[dict]):
@@ -101,11 +106,15 @@ class LangChainInterface(LLM, BaseModel):
 
     def _create_generation_info(self, response: dict):
         keys_to_pick = {"stop_reason"}
-        return {k: v for k, v in response.items() if k in keys_to_pick and v is not None}
+        return {
+            k: v for k, v in response.items() if k in keys_to_pick and v is not None
+        }
 
     def _create_full_generation_info(self, response: dict):
         keys_to_omit = {"generated_text"}
-        return {k: v for k, v in response.items() if k not in keys_to_omit and v is not None}
+        return {
+            k: v for k, v in response.items() if k not in keys_to_omit and v is not None
+        }
 
     def _generate(
         self,
@@ -122,7 +131,9 @@ class LangChainInterface(LLM, BaseModel):
         params.stop_sequences = stop or params.stop_sequences
         if params.stream:
             if len(prompts) != 1:
-                raise GenAiException(ValueError("Streaming works only for a single prompt."))
+                raise GenAiException(
+                    ValueError("Streaming works only for a single prompt.")
+                )
 
             generation = GenerationChunk(text="", generation_info={})
             for chunk in self._stream(
@@ -131,20 +142,27 @@ class LangChainInterface(LLM, BaseModel):
                 run_manager=run_manager,
                 **kwargs,
             ):
-                self._update_llm_result(current=result, generation_info=chunk.generation_info)
+                self._update_llm_result(
+                    current=result, generation_info=chunk.generation_info
+                )
                 generation.text += chunk.text
-                generation.generation_info.update(self._create_generation_info(chunk.generation_info or {}))
+                generation.generation_info.update(
+                    self._create_generation_info(chunk.generation_info or {})
+                )
 
             result.generations.append([generation])
             return result
 
-        model = Model(model=self.model, params=params, credentials=self.credentials)
-        for response in model.generate(
+        client = Client(credentials=self.credentials)
+        for response in client.generate.generate(
+            model=self.model,
             prompts=prompts,
             **kwargs,
         ):
-            if params.stop_sequences:
-                response.generated_text = self._enforce_stop_tokens(response.generated_text, params.stop_sequences)
+            if params.stop_sequences is not None:
+                response.generated_text = self._enforce_stop_tokens(
+                    response.generated_text, params.stop_sequences
+                )
 
             generation = Generation(
                 text=response.generated_text or "",
@@ -152,7 +170,9 @@ class LangChainInterface(LLM, BaseModel):
             )
             logger.info("Output of GENAI call: {}".format(generation.text))
             result.generations.append([generation])
-            self._update_llm_result(current=result, generation_info=generation.generation_info)
+            self._update_llm_result(
+                current=result, generation_info=generation.generation_info
+            )
 
         return result
 
@@ -179,21 +199,28 @@ class LangChainInterface(LLM, BaseModel):
         params = self._get_params()
         params.stop_sequences = stop or params.stop_sequences
 
-        model = Model(model=self.model, params=params, credentials=self.credentials)
-        for response in model.generate_stream(prompts=[prompt], **kwargs):
-            if params.stop_sequences:
-                response.generated_text = self._enforce_stop_tokens(response.generated_text, params.stop_sequences)
+        client = Client(credentials=self.credentials)
+        for response in client.generate.generate_stream(
+            model=self.model, params=params, prompts=[prompt], **kwargs
+        ):
+            if params.stop_sequences is not None:
+                response.generated_text = self._enforce_stop_tokens(
+                    response.generated_text, params.stop_sequences
+                )
+
             logger.info("Chunk received: {}".format(response.generated_text))
             yield GenerationChunk(
                 text=response.generated_text or "",
                 generation_info=self._create_full_generation_info(response.dict()),
             )
             if run_manager:
-                run_manager.on_llm_new_token(token=response.generated_text, response=response)
+                run_manager.on_llm_new_token(
+                    token=response.generated_text or "", response=response
+                )
 
     def _enforce_stop_tokens(self, text: Optional[str], stop: List[str]):
         """Cut off the text as soon as any stop words occur."""
-        if not stop:
+        if not stop or not text:
             return text or ""
 
         escaped_stop_sequences = [re.escape(s) for s in stop]
