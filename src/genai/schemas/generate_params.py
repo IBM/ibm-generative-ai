@@ -19,7 +19,7 @@ class LengthPenalty(BaseModel):
 
 class ReturnOptions(BaseModel):
     class Config:
-        anystr_strip_whitespace = True
+        anystr_strip_whitespace = False
         extra = Extra.forbid
 
     input_text: Optional[bool] = Field(None, description=tx.INPUT_TEXT)
@@ -47,7 +47,7 @@ class Return(ReturnOptions):
 
 class GenerateParams(BaseModel):
     class Config:
-        anystr_strip_whitespace = True
+        anystr_strip_whitespace = False
         extra = Extra.allow
         allow_population_by_field_name = True
 
@@ -56,7 +56,7 @@ class GenerateParams(BaseModel):
     max_new_tokens: Optional[int] = Field(None, description=tx.MAX_NEW_TOKEN, ge=1)
     min_new_tokens: Optional[int] = Field(None, description=tx.MIN_NEW_TOKEN, ge=0)
     random_seed: Optional[int] = Field(None, description=tx.RANDOM_SEED, ge=1)
-    stop_sequences: Optional[list[str]] = Field(None, description=tx.STOP_SQUENCES)
+    stop_sequences: Optional[list[str]] = Field(None, description=tx.STOP_SQUENCES, min_length=1)
     stream: Optional[bool] = Field(None, description=tx.STREAM)
     temperature: Optional[float] = Field(None, description=tx.TEMPERATURE, ge=0.05, le=2.00)
     time_limit: Optional[int] = Field(None, description=tx.TIME_LIMIT)

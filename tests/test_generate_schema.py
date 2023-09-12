@@ -20,7 +20,7 @@ class TestGenerateSchema:
             max_new_tokens=3,
             min_new_tokens=1,
             random_seed=123,
-            stop_sequences=["!", "?", "."],
+            stop_sequences=["!", "?", ".", "\n"],
             stream=False,
             temperature=0.5,
             time_limit=10.0,
@@ -37,6 +37,9 @@ class TestGenerateSchema:
                 token_logprobs=False,
             ),
         )
+
+    def test_preserve_special_characters(self):
+        assert "\n" in self.params.stop_sequences
 
     @pytest.fixture
     def request_body(self):
