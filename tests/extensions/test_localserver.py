@@ -4,10 +4,10 @@ from typing import Optional, Union
 import pytest
 
 from genai import Options, PromptPattern
-from genai.client import Client, Container
+from genai.client import Client, ServicesContainer
 from genai.extensions.localserver.local_client import LocalClient
 from genai.schemas import GenerateParams, GenerateResult, TokenizeResult, TokenParams
-from genai.services.generate_service import GenerateService, Params
+from genai.services.generate_service import GenerationService, Params
 from genai.services.tokenize_service import TokenizeService
 
 logger = logging.getLogger(__name__)
@@ -21,7 +21,7 @@ class TestLocalServer:
     def test_local_server(self):
         from genai.extensions.localserver import LocalLLMServer
 
-        class ExampleGenerateService(GenerateService):
+        class ExampleGenerationService(GenerationService):
             def generate(
                 self,
                 model: str,
@@ -62,7 +62,7 @@ class TestLocalServer:
 
         # Instantiate the Local Server with custom client/services
         client = LocalClient(
-            services=Container(generate=ExampleGenerateService, tokenize=ExampleTokenizeService),
+            services=ServicesContainer(generation=ExampleGenerationService, tokenize=ExampleTokenizeService),
         )
         server = LocalLLMServer(client=client)
 
@@ -79,7 +79,7 @@ class TestLocalServer:
             client = Client(credentials=creds)
 
             test_prompt = "hello this is a test of a custom model in a local server"
-            responses = client.generate.generate(model="example/model", prompts=[test_prompt], params=params)
+            responses = client.generation.generate(model="example/model", prompts=[test_prompt], params=params)
             assert len(responses) == 1
             # Our test model simply returns the input test, so this will verify that our server is working
             assert responses[0].generated_text == test_prompt

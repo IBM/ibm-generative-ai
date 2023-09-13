@@ -140,7 +140,7 @@ class LocalLLMServer:
 
     async def _route_generate(self, generate_request: GenerateRequestBody):
         logger.info(f"Generate Called: Model: {generate_request.model_id}: {generate_request.inputs}")
-        results = self.client.generate.generate(
+        results = self.client.generation.generate(
             model=generate_request.model_id,
             prompts=generate_request.inputs,
             params=generate_request.parameters,

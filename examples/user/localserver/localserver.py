@@ -36,7 +36,7 @@ class FlanT5Model(CustomModel):
     def generate(self, input_text: str, params: GenerateParams) -> GenerateResult:
         logger.info(f"Calling generate on: {input_text}")
         input_ids = self.tokenizer(input_text, return_tensors="pt").input_ids
-        response = self.model.generate(input_ids, max_new_tokens=params.max_new_tokens)
+        response = self.model.generation(input_ids, max_new_tokens=params.max_new_tokens)
 
         genai_response = GenerateResult(
             generated_text=self.tokenizer.decode(response[0]),

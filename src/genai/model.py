@@ -53,37 +53,37 @@ class Model:
         )
         self._client = Client(credentials=credentials)
 
-    @deprecated(reason="use client.generate.generate_stream method")
+    @deprecated(reason="use client.generation.generate_stream method")
     def generate_stream(
         self,
         prompts: Union[list[str], list[PromptPattern]],
         options: Optional[Options] = None,
     ) -> Generator[GenerateStreamResponse, None, None]:
-        return self._client.generate.generate_stream(
+        return self._client.generation.generate_stream(
             model=self.model, params=self.params, prompts=prompts, options=options
         )
 
-    @deprecated(reason="use 'client.generate.generate_as_completed' method")
+    @deprecated(reason="use 'client.generation.generate_as_completed' method")
     def generate_as_completed(
         self,
         prompts: Union[list[str], list[PromptPattern]],
         options: Optional[Options] = None,
     ) -> Generator[GenerateResult, None, None]:
-        return self._client.generate.generate_as_completed(
+        return self._client.generation.generate_as_completed(
             model=self.model, params=self.params, prompts=prompts, options=options
         )
 
-    @deprecated(reason="use 'client.generate.generate' method")
+    @deprecated(reason="use 'client.generation.generate' method")
     def generate(
         self,
         prompts: Union[list[str], list[PromptPattern]],
         options: Optional[Options] = None,
     ) -> list[GenerateResult]:
-        return self._client.generate.generate(
+        return self._client.generation.generation(
             model=self.model, params=self.params, prompts=prompts, options=options
         )
 
-    @deprecated(reason="use 'client.generate.generate_async' method")
+    @deprecated(reason="use 'client.generation.generate_async' method")
     def generate_async(
         self,
         prompts: Union[list[str], list[PromptPattern]],
@@ -94,7 +94,7 @@ class Model:
         *,
         throw_on_error: bool = False,
     ) -> Generator[Union[GenerateResult, None], None, None]:
-        return self._client.generate.generate_async(
+        return self._client.generation.generate_async(
             model=self.model,
             prompts=prompts,
             ordered=ordered,

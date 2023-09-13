@@ -154,7 +154,7 @@ class LangChainInterface(LLM, BaseModel):
             return result
 
         client = Client(credentials=self.credentials)
-        for response in client.generate.generate(
+        for response in client.generation.generate(
             model=self.model,
             prompts=prompts,
             **kwargs,
@@ -200,15 +200,14 @@ class LangChainInterface(LLM, BaseModel):
         params.stop_sequences = stop or params.stop_sequences
 
         client = Client(credentials=self.credentials)
-        for response in client.generate.generate_stream(
+        for response in client.generation.generate_stream(
             model=self.model, params=params, prompts=[prompt], **kwargs
         ):
+            logger.info("Chunk received: {}".format(response.generated_text))
             if params.stop_sequences is not None:
                 response.generated_text = self._enforce_stop_tokens(
                     response.generated_text, params.stop_sequences
                 )
-
-            logger.info("Chunk received: {}".format(response.generated_text))
             yield GenerationChunk(
                 text=response.generated_text or "",
                 generation_info=self._create_full_generation_info(response.dict()),

@@ -118,7 +118,7 @@ if __name__ == "__main__":
                 min_new_tokens=1,
             )
             tuned_model.params = genparams
-            print("Answer = ", tuned_model.generate([prompt])[0].generated_text)
+            print("Answer = ", tuned_model.generation([prompt])[0].generated_text)
 
             print("~~~~~~~ Listing tunes with TuneManager ~~~~~")
 

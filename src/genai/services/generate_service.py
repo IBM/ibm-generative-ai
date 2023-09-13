@@ -21,7 +21,7 @@ from genai.services.base_service import BaseService
 Params = Union[GenerateParams, TokenParams, Any]
 
 
-class GenerateService(BaseService):
+class GenerationService(BaseService):
     def generate_stream(
         self,
         model: str,

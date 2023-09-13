@@ -120,7 +120,7 @@ if __name__ == "__main__":
                 max_new_tokens=50,
                 min_new_tokens=1,
             )
-            print("Answer = ", tuned_model.generate([prompt])[0].generated_text)
+            print("Answer = ", tuned_model.generation([prompt])[0].generated_text)
             time.sleep(5)
 
             print("~~~~~~~ List of all models ~~~~~~")

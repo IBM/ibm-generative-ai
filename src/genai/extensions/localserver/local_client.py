@@ -1,10 +1,10 @@
 from typing import Generator, List, Optional, Type, TypeVar, Union
 
 from genai import Credentials, Options, PromptPattern
-from genai.client import Client, Container
+from genai.client import Client, ServicesContainer
 from genai.extensions.localserver import CustomModel
 from genai.schemas import GenerateResult, TokenizeResult, TokenParams
-from genai.services.generate_service import GenerateService, Params
+from genai.services.generate_service import GenerationService, Params
 from genai.services.tokenize_service import TokenizeService
 
 A = TypeVar("A")
@@ -15,7 +15,7 @@ E = TypeVar("E")
 
 
 class LocalClient(Client[A, B, C, D, E]):
-    def __init__(self, *, services: Optional[Container[A, B, C, D, E]] = None) -> None:
+    def __init__(self, *, services: Optional[ServicesContainer[A, B, C, D, E]] = None) -> None:
         credentials = Credentials(api_key="")
         super().__init__(credentials, services=services)
 
@@ -32,7 +32,7 @@ class LocalClient(Client[A, B, C, D, E]):
                 raise Exception("Only plain strings are supported!")
             return input
 
-        class CustomGenerateService(GenerateService):
+        class CustomGenerationService(GenerationService):
             def generate_as_completed(
                 self,
                 model: str,
@@ -42,7 +42,7 @@ class LocalClient(Client[A, B, C, D, E]):
             ) -> Generator[GenerateResult, None, None]:
                 model_instance = models[model]
                 for prompt in prompts:
-                    yield model_instance.generate(input_text=to_string(prompt), params=params)
+                    yield model_instance.generation(input_text=to_string(prompt), params=params)
 
         class CustomTokenizeService(TokenizeService):
             def tokenize_as_completed(
@@ -56,4 +56,4 @@ class LocalClient(Client[A, B, C, D, E]):
                 for prompt in prompts:
                     yield model_instance.tokenize(input_text=to_string(prompt), params=params or TokenParams())
 
-        return cls(services=Container(generate=CustomGenerateService, tokenize=CustomTokenizeService))
+        return cls(services=ServicesContainer(generation=CustomGenerationService, tokenize=CustomTokenizeService))
