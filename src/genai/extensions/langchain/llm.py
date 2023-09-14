@@ -3,12 +3,15 @@ import logging
 from typing import Any, Iterator, List, Mapping, Optional
 
 from langchain.callbacks.manager import CallbackManagerForLLMRun
-from langchain.schema.output import GenerationChunk
+from langchain.llms.utils import enforce_stop_tokens
+from langchain.schema import LLMResult
+from langchain.schema.output import Generation, GenerationChunk
 from pydantic import BaseModel, Extra
+
+from genai.exceptions import GenAiException
 
 try:
     from langchain.llms.base import LLM
-    from langchain.llms.utils import enforce_stop_tokens
 except ImportError:
     raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")
 
@@ -45,7 +48,7 @@ class LangChainInterface(LLM, BaseModel):
     @property
     def _identifying_params(self) -> Mapping[str, Any]:
         """Get the identifying parameters."""
-        _params = self.params or GenerateParams()
+        _params = self._get_params()
         return {
             **{"model": self.model},
             **{"params": _params},
@@ -55,6 +58,14 @@ class LangChainInterface(LLM, BaseModel):
     def _llm_type(self) -> str:
         """Return type of llm."""
         return "IBM GENAI"
+
+    def _get_params(self):
+        if self.params is None:
+            return GenerateParams()
+
+        if isinstance(self.params, dict):
+            return GenerateParams(**self.params)
+        return self.params.copy()
 
     def _call(
         self,
@@ -75,22 +86,78 @@ class LangChainInterface(LLM, BaseModel):
                 llm = LangChainInterface(model_id="google/flan-ul2", credentials=creds)
                 response = llm("What is a molecule")
         """
-        params = self.params or GenerateParams()
+        result = self._generate(prompts=[prompt], stop=stop, run_manager=run_manager, **kwargs)
+        return result.generations[0][0].text
+
+    def _update_llm_result(self, current: LLMResult, generation_info: Optional[dict]):
+        if generation_info is None:
+            return
+
+        token_usage = current.llm_output["token_usage"]
+        for key in {"generated_token_count", "input_token_count"}:
+            if key in generation_info:
+                new_tokens = generation_info.get(key, 0) or 0
+                token_usage[key] = token_usage.get(key, 0) + new_tokens
+
+    def _create_generation_info(self, response: dict):
+        keys_to_pick = {"stop_reason"}
+        return {k: v for k, v in response.items() if k in keys_to_pick and v is not None}
+
+    def _create_full_generation_info(self, response: dict):
+        keys_to_omit = {"generated_text"}
+        return {k: v for k, v in response.items() if k not in keys_to_omit and v is not None}
+
+    def _generate(
+        self,
+        prompts: List[str],
+        stop: Optional[List[str]] = None,
+        run_manager: Optional[CallbackManagerForLLMRun] = None,
+        **kwargs: Any,
+    ) -> LLMResult:
+        result = LLMResult(generations=[], llm_output={"token_usage": {}})
+        if len(prompts) == 0:
+            return result
+
+        params = self._get_params()
         params.stop_sequences = stop or params.stop_sequences
         if params.stream:
-            final_text = ""
-            for chunk in self._stream(prompt=prompt, stop=stop, run_manager=run_manager, **kwargs):
-                final_text += chunk.text
-            if stop is not None:
-                final_text = enforce_stop_tokens(final_text, stop)
-            return final_text
+            if len(prompts) != 1:
+                raise GenAiException(ValueError("Streaming works only for a single prompt."))
+
+            generation = GenerationChunk(text="", generation_info={})
+            for chunk in self._stream(
+                prompt=prompts[0],
+                stop=params.stop_sequences,
+                run_manager=run_manager,
+                **kwargs,
+            ):
+                self._update_llm_result(current=result, generation_info=chunk.generation_info)
+                generation.text += chunk.text
+                generation.generation_info.update(self._create_generation_info(chunk.generation_info or {}))
+
+            result.generations.append([generation])
+            return result
 
         model = Model(model=self.model, params=params, credentials=self.credentials)
-        text = model.generate(prompts=[prompt], **kwargs)[0].generated_text
-        logger.info("Output of GENAI call: {}".format(text))
-        if params.stop_sequences is not None:
-            text = enforce_stop_tokens(text, params.stop_sequences)
-        return text
+        for response in model.generate_async(
+            prompts=prompts,
+            ordered=True,
+            hide_progressbar=True,
+            throw_on_error=True,
+            **kwargs,
+        ):
+            if params.stop_sequences:
+                response.generated_text = enforce_stop_tokens(response.generated_text, params.stop_sequences)
+
+            generation = Generation(
+                text=response.generated_text or "",
+                generation_info=self._create_full_generation_info(response.dict()),
+            )
+            logger.info("Output of GENAI call: {}".format(generation.text))
+            result.generations.append([generation])
+            self._update_llm_result(current=result, generation_info=generation.generation_info)
+
+        return result
 
     def _stream(
         self,
@@ -112,12 +179,17 @@ class LangChainInterface(LLM, BaseModel):
                 for chunk in llm.stream("What is a molecule?"):
                     print(chunk.text)
         """
-        params = self.params or GenerateParams()
+        params = self._get_params()
         params.stop_sequences = stop or params.stop_sequences
 
         model = Model(model=self.model, params=params, credentials=self.credentials)
         for response in model.generate_stream(prompts=[prompt], **kwargs):
+            if params.stop_sequences:
+                response.generated_text = enforce_stop_tokens(response.generated_text or "", params.stop_sequences)
             logger.info("Chunk received: {}".format(response.generated_text))
-            yield GenerationChunk(text=response.generated_text, generation_info=response.dict())
+            yield GenerationChunk(
+                text=response.generated_text or "",
+                generation_info=self._create_full_generation_info(response.dict()),
+            )
             if run_manager:
                 run_manager.on_llm_new_token(token=response.generated_text, response=response)
