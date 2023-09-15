@@ -9,13 +9,13 @@ class SimpleResponse:
         response["created_at"] = "2023-03-15T18:28:12.007Z"
         response["results"] = [
             {
-                "input_text": kwargs["inputs"][i],
-                "generated_text": " are stronger.",
-                "generated_token_count": 3,
-                "input_token_count": len(kwargs["inputs"][i].split(" ")),
+                "input_text": input,
+                "generated_text": input,
+                "generated_token_count": len(input.split(" ")),
+                "input_token_count": len(input.split(" ")),
                 "stop_reason": "MAX_TOKENS",
             }
-            for i in range(len(kwargs["inputs"]))
+            for input in kwargs["inputs"]
         ]
 
         return response
@@ -79,7 +79,10 @@ class SimpleResponse:
             ]
         else:
             response["results"] = [
-                {"input_text": kwargs["inputs"][i], "token_count": len(kwargs["inputs"][i].split(" "))}
+                {
+                    "input_text": kwargs["inputs"][i],
+                    "token_count": len(kwargs["inputs"][i].split(" ")),
+                }
                 for i in range(len(kwargs["inputs"]))
             ]
 
@@ -163,14 +166,27 @@ class SimpleResponse:
     def _check_for_errors(func, **kwargs):
         if func == "generate":
             if "model" not in kwargs:
-                return SimpleResponse.error(404, "Not found", "Model not found", {"code": "NOT_FOUND", "state": {}})
+                return SimpleResponse.error(
+                    404,
+                    "Not found",
+                    "Model not found",
+                    {"code": "NOT_FOUND", "state": {}},
+                )
 
             if "inputs" not in kwargs:
                 return SimpleResponse.error(
                     400,
                     "Bad Request",
                     " must have required property 'inputs'",
-                    {"code": "INVALID_INPUT", "state": [{"instancePath": "", "params": {"missingProperty": "inputs"}}]},
+                    {
+                        "code": "INVALID_INPUT",
+                        "state": [
+                            {
+                                "instancePath": "",
+                                "params": {"missingProperty": "inputs"},
+                            }
+                        ],
+                    },
                 )
 
     @staticmethod
@@ -270,7 +286,12 @@ class SimpleResponse:
                 ],
                 "evaluation_files": [],
                 "datapoints": {
-                    "loss": [{"data": {"epoch": 0, "value": 1.9922}, "timestamp": "2023-05-07T09:05:56.000Z"}]
+                    "loss": [
+                        {
+                            "data": {"epoch": 0, "value": 1.9922},
+                            "timestamp": "2023-05-07T09:05:56.000Z",
+                        }
+                    ]
                 },
             }
         }
@@ -319,6 +340,9 @@ class SimpleResponse:
     @staticmethod
     def get_tune_methods():
         response = {
-            "results": [{"id": "pt", "name": "Prompt tuning"}, {"id": "mpt", "name": "Multitask prompt tuning"}]
+            "results": [
+                {"id": "pt", "name": "Prompt tuning"},
+                {"id": "mpt", "name": "Multitask prompt tuning"},
+            ]
         }
         return response

@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 class GenAiException(Exception):
-    def __init__(self, error: Union[Exception, Response]) -> None:
+    def __init__(self, error: Union[Exception, Response, str]) -> None:
         if isinstance(error, Response):
             try:
                 self.error = ErrorResponse(**error.json())

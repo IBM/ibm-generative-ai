@@ -20,7 +20,6 @@ This is the Python SDK for IBM Foundation Models Studio to bring IBM Generative 
 ## Important Information for Starters and Contributors
 - Do you want to get started with GenAI? check the [Getting Started Guideline](GETTING_STARTED.md) to install and develop amazing AI applications with IBM Generative AI SDK.
 - Do you want to contribute to the project? IBM Generative AI is an open-source project that welcomes the community to contribute with documentation, tests, bug corrections, and new fuctionality in the form of [extensions](EXTENSIONS.md). Please read our [code of conduct](CODE_OF_CONDUCT.md) to learn the expected behavior from participants that contribute to the project, and our [contribution guide](CONTRIBUTING.md) to learn the gitflow and steps to submit pull requests.
-- Looking for the GenAI team contact information? click [here](STARTER_TEAM.md)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
