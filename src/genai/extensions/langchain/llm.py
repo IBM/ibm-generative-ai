@@ -147,7 +147,7 @@ class LangChainInterface(LLM, BaseModel):
             **kwargs,
         ):
             if params.stop_sequences:
-                response.generated_text = enforce_stop_tokens(response.generated_text, params.stop_sequences)
+                response.generated_text = enforce_stop_tokens(response.generated_text or "", params.stop_sequences)
 
             generation = Generation(
                 text=response.generated_text or "",
