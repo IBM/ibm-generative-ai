@@ -25,6 +25,8 @@ class AsyncResponseGenerator:
         ordered=False,
         callback=None,
         options: Options = None,
+        *,
+        throw_on_error: bool = False,
     ):
         """Instantiates the ConcurrentWrapper Interface.
 
@@ -44,6 +46,7 @@ class AsyncResponseGenerator:
         self.fn = fn
         self.ordered = ordered
         self.options = options
+        self.throw_on_error = throw_on_error
 
     def __enter__(self):
         self.accumulator = []
@@ -105,7 +108,11 @@ class AsyncResponseGenerator:
         try:
             response_raw = await self.service_fn_(model, inputs, params, options)
             response = response_raw.json()
+            if response_raw and (200 < response_raw.status_code or response_raw.status_code > 299):
+                raise Exception(response)
         except Exception as ex:
+            if self.throw_on_error:
+                raise ex
             logger.error("Error in _get_response_json {}: {}".format(type(ex), str(ex)))
             response = None
         return response
@@ -126,10 +133,17 @@ class AsyncResponseGenerator:
                         str(e), response, inputs
                     )
                 )
-                self.queue_.put_nowait((batch_num, len(inputs), None))
+                self.queue_.put_nowait(
+                    (
+                        batch_num,
+                        len(inputs),
+                        None,
+                        GenAiException(e),
+                    )
+                )
                 return
             try:
-                self.queue_.put_nowait((batch_num, len(inputs), response))
+                self.queue_.put_nowait((batch_num, len(inputs), response, None))
                 if self.callback is not None:
                     for result in response.results:
                         self.callback(result)
@@ -171,7 +185,7 @@ class AsyncResponseGenerator:
             minheap, batch_tracker = [], 0
             while counter < self.num_batches_:
                 try:
-                    batch_num, batch_size, response = self.queue_.get()
+                    batch_num, batch_size, response, error = self.queue_.get()
                     self.queue_.task_done()
                 except Exception as ex:
                     logger.error("Exception while reading from queue: {}".format(str(ex)))
@@ -183,20 +197,25 @@ class AsyncResponseGenerator:
                     #   for i in len(response.results):
                     #     response.results[i].metadata = self.metadata[batch_num * BATCH_SIZE + i]
                     if not self.ordered:
+                        if self.throw_on_error and error:
+                            raise error
+
                         for result in self._process_response(response, batch_size):
                             yield result
                         continue
                 try:
                     # If we are here then self.ordered is True.
-                    heapq.heappush(minheap, (batch_num, batch_size, response))
+                    heapq.heappush(minheap, (batch_num, batch_size, response, error))
                     for i in range(len(minheap)):
-                        bnum, bsize, resp = heapq.heappop(minheap)
+                        bnum, bsize, resp, error = heapq.heappop(minheap)
                         if bnum == batch_tracker:
+                            if self.throw_on_error and error:
+                                raise error
                             for result in self._process_response(resp, bsize):
                                 yield result
                             batch_tracker += 1
                         else:
-                            heapq.heappush(minheap, (bnum, bsize, resp))
+                            heapq.heappush(minheap, (bnum, bsize, resp, error))
                             break
                 except Exception as ex:
                     logger.error("Error in heap processing: {}".format(str(ex)))

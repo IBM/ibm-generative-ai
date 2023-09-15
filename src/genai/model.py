@@ -152,7 +152,9 @@ class Model:
         callback: Callable[[GenerateResult], Any] = None,
         hide_progressbar: bool = False,
         options: Options = None,
-    ) -> Generator[Union[GenerateResult, None]]:
+        *,
+        throw_on_error: bool = False,
+    ) -> Generator[Union[GenerateResult, None], None, None]:
         """The generate endpoint is the centerpiece of the GENAI alpha.
         It provides a simplified and flexible, yet powerful interface to the supported
         models as a service. Given a text prompt as inputs, and required parameters
@@ -186,6 +188,7 @@ class Model:
                 ordered=ordered,
                 callback=callback,
                 options=options,
+                throw_on_error=throw_on_error,
             ) as asynchelper:
                 for response in tqdm(
                     asynchelper.generate_response(),
@@ -205,7 +208,7 @@ class Model:
         prompts: Union[list[str], list[PromptPattern]],
         return_tokens: bool = False,
         options: Options = None,
-    ) -> Generator[TokenizeResult]:
+    ) -> Generator[TokenizeResult, None, None]:
         """The tokenize endpoint allows you to check the conversion of provided prompts to tokens
         for a given model. It splits text into words or subwords, which then are converted to ids
         through a look-up table (vocabulary). Tokenization allows the model to have a reasonable

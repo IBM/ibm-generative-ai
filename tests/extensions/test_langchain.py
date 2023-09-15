@@ -30,8 +30,18 @@ class TestLangChain:
     def prompts(self):
         return ["Hi! How's the weather, eh?"]
 
-    @patch("genai.services.RequestHandler.post")
-    def test_langchain_interface(self, mocked_post_request, credentials, params, prompts):
+    @pytest.fixture
+    def multi_prompts(self):
+        return ["What is IBM?", "What is AI?"]
+
+    @patch("httpx.AsyncClient.post")
+    def test_langchain_interface(
+        self,
+        mocked_post_request,
+        credentials,
+        params,
+        prompts,
+    ):
         from genai.extensions.langchain import LangChainInterface
 
         GENERATE_RESPONSE = SimpleResponse.generate(model="google/flan-ul2", inputs=prompts, params=params)
@@ -42,24 +52,48 @@ class TestLangChain:
         mocked_post_request.return_value = response
 
         model = LangChainInterface(model="google/flan-ul2", params=params, credentials=credentials)
-        observed = model(prompts[0])
-        assert observed == expected_generated_response.results[0].generated_text
+        results = model(prompts[0])
+        assert results == expected_generated_response.results[0].generated_text
 
     @pytest.mark.asyncio
-    @patch("genai.services.RequestHandler.post")
-    async def test_async_langchain_interface(self, mocked_post_request, credentials, params, prompts):
+    @patch("httpx.AsyncClient.post")
+    async def test_async_langchain_interface(self, mocked_post_request, credentials, params, multi_prompts):
         from genai.extensions.langchain import LangChainInterface
 
-        GENERATE_RESPONSE = SimpleResponse.generate(model="google/flan-ul2", inputs=prompts, params=params)
-        expected_generated_response = GenerateResponse(**GENERATE_RESPONSE)
+        expected_responses = []
+        mock_responses = []
+        for prompt in multi_prompts:
+            server_response = SimpleResponse.generate(model="google/flan-ul2", inputs=[prompt], params=params)
+            expected_response = GenerateResponse(**server_response)
+            expected_responses.append(expected_response)
 
-        response = MagicMock(status_code=200)
-        response.json.return_value = GENERATE_RESPONSE
-        mocked_post_request.return_value = response
+            mock_response = MagicMock(status_code=200)
+            mock_response.json.return_value = server_response
+            mock_responses.append(mock_response)
+
+        mocked_post_request.side_effect = mock_responses
 
         model = LangChainInterface(model="google/flan-ul2", params=params, credentials=credentials)
-        observed = await model.agenerate(prompts)
-        assert observed.generations[0][0].text == expected_generated_response.results[0].generated_text
+        observed = await model.agenerate(prompts=multi_prompts)
+        assert len(observed.generations) == 2
+        assert len(observed.generations[0]) == 1
+        assert len(observed.generations[1]) == 1
+
+        assert observed.llm_output["token_usage"]["input_token_count"] == sum(
+            c.results[0].input_token_count for c in expected_responses
+        )
+        assert observed.llm_output["token_usage"]["generated_token_count"] == sum(
+            c.results[0].generated_token_count for c in expected_responses
+        )
+
+        for idx, generation_list in enumerate(observed.generations):
+            assert len(generation_list) == 1
+            generation = generation_list[0]
+            assert generation.text == expected_responses[idx].results[0].generated_text
+
+            expected_result = expected_responses[idx].results[0].dict()
+            for key in {"generated_token_count", "input_text", "stop_reason"}:
+                assert generation.generation_info[key] == expected_result[key]
 
     @patch("genai.services.RequestHandler.post_stream")
     def test_langchain_stream(self, mock_post_stream, credentials, params, prompts):
@@ -77,7 +111,10 @@ class TestLangChain:
         callback.on_llm_new_token = MagicMock()
 
         model = LangChainInterface(
-            model="google/flan-ul2", params=params, credentials=credentials, callbacks=[callback]
+            model="google/flan-ul2",
+            params=params,
+            credentials=credentials,
+            callbacks=[callback],
         )
         expected_generated_responses = [GenerateResponse(**result) for result in GENERATE_STREAM_RESPONSES]
 

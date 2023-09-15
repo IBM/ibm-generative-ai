@@ -8,6 +8,7 @@ from unittest.mock import AsyncMock
 import httpx
 import pytest
 
+from genai.exceptions import GenAiException
 from genai.schemas import GenerateParams, ReturnOptions, TokenParams
 from genai.schemas.responses import GenerateResponse, TokenizeResponse
 from genai.services import AsyncResponseGenerator, RequestHandler, ServiceInterface
@@ -28,17 +29,27 @@ class TestAsyncResponseGenerator:
     @pytest.fixture
     def mock_generate_json(self, mocker):
         async_mock = AsyncMock()
-        mocker.patch("genai.services.AsyncResponseGenerator._get_response_json", side_effect=async_mock)
+        mocker.patch(
+            "genai.services.AsyncResponseGenerator._get_response_json",
+            side_effect=async_mock,
+        )
         return async_mock
 
     @pytest.fixture
     def generate_params(self):
-        return GenerateParams(temperature=0.05, max_new_tokens=3, return_options=ReturnOptions(input_text=True))
+        return GenerateParams(
+            temperature=0.05,
+            max_new_tokens=3,
+            return_options=ReturnOptions(input_text=True),
+        )
 
     @pytest.fixture
     def mock_tokenize_json(self, mocker):
         async_mock = AsyncMock()
-        mocker.patch("genai.services.AsyncResponseGenerator._get_response_json", side_effect=async_mock)
+        mocker.patch(
+            "genai.services.AsyncResponseGenerator._get_response_json",
+            side_effect=async_mock,
+        )
         return async_mock
 
     @pytest.fixture
@@ -114,7 +125,11 @@ class TestAsyncResponseGenerator:
         mock_tokenize_json.side_effect = side_effect
 
         with AsyncResponseGenerator(
-            self.model, self.inputs * num_prompts, tokenize_params, self.service, fn="tokenize"
+            self.model,
+            self.inputs * num_prompts,
+            tokenize_params,
+            self.service,
+            fn="tokenize",
         ) as asynchelper:
             assert ConnectionManager.async_tokenize_client is not None
             total_responses = 0
@@ -130,7 +145,11 @@ class TestAsyncResponseGenerator:
         num_prompts = 17
         counter = 0
         with AsyncResponseGenerator(
-            self.model, self.inputs * num_prompts, tokenize_params, self.service, fn="tokenize"
+            self.model,
+            self.inputs * num_prompts,
+            tokenize_params,
+            self.service,
+            fn="tokenize",
         ) as asynchelper:
             for result in asynchelper.generate_response():
                 assert result is None
@@ -181,7 +200,9 @@ class TestAsyncResponseGenerator:
         # Following two lines: Selected input id should return 429, others should succeed
         httpx_mock.add_response(method="POST", json=single_response)
         httpx_mock.add_response(
-            method="POST", status_code=429, match_content=bytes(json.dumps(json_data), encoding="utf-8")
+            method="POST",
+            status_code=429,
+            match_content=bytes(json.dumps(json_data), encoding="utf-8"),
         )
         num_prompts = 9
         counter = 0
@@ -218,7 +239,12 @@ class TestAsyncResponseGenerator:
                 "get",
                 spec=queue.Queue,
                 side_effect=[
-                    (permutation[counter], 1, GenerateResponse(**expected[permutation[counter]]))
+                    (
+                        permutation[counter],
+                        1,
+                        GenerateResponse(**expected[permutation[counter]]),
+                        None,
+                    )
                     for counter in range(num_prompts)
                 ],
             )
@@ -252,7 +278,12 @@ class TestAsyncResponseGenerator:
                 "get",
                 spec=queue.Queue,
                 side_effect=[
-                    (permutation[counter], 1, GenerateResponse(**expected[permutation[counter]]))
+                    (
+                        permutation[counter],
+                        1,
+                        GenerateResponse(**expected[permutation[counter]]),
+                        None,
+                    )
                     for counter in range(num_prompts)
                 ],
             )
@@ -278,7 +309,12 @@ class TestAsyncResponseGenerator:
         random.shuffle(permutation)
         # Permute what comes out of the queue completely but expect results in order
         with AsyncResponseGenerator(
-            self.model, inputs, tokenize_params, self.service, fn="tokenize", ordered=True
+            self.model,
+            inputs,
+            tokenize_params,
+            self.service,
+            fn="tokenize",
+            ordered=True,
         ) as asynchelper:
             assert ConnectionManager.async_tokenize_client is not None
             mocker.patch.object(
@@ -286,7 +322,12 @@ class TestAsyncResponseGenerator:
                 "get",
                 spec=queue.Queue,
                 side_effect=[
-                    (permutation[counter], asynchelper.batch_size_, TokenizeResponse(**expected[permutation[counter]]))
+                    (
+                        permutation[counter],
+                        asynchelper.batch_size_,
+                        TokenizeResponse(**expected[permutation[counter]]),
+                        None,
+                    )
                     for counter in range(len(expected))
                 ],
             )
@@ -314,7 +355,12 @@ class TestAsyncResponseGenerator:
         random.shuffle(permutation)
         # Permute what comes out of the queue completely and expect results in the same order
         with AsyncResponseGenerator(
-            self.model, inputs, tokenize_params, self.service, fn="tokenize", ordered=False
+            self.model,
+            inputs,
+            tokenize_params,
+            self.service,
+            fn="tokenize",
+            ordered=False,
         ) as asynchelper:
             assert ConnectionManager.async_tokenize_client is not None
             mocker.patch.object(
@@ -322,7 +368,12 @@ class TestAsyncResponseGenerator:
                 "get",
                 spec=queue.Queue,
                 side_effect=[
-                    (permutation[counter], asynchelper.batch_size_, TokenizeResponse(**expected[permutation[counter]]))
+                    (
+                        permutation[counter],
+                        asynchelper.batch_size_,
+                        TokenizeResponse(**expected[permutation[counter]]),
+                        None,
+                    )
                     for counter in range(len(expected))
                 ],
             )
@@ -349,18 +400,33 @@ class TestAsyncResponseGenerator:
 
         batch_indices = list(range(len(expected)))
         side_effect = [
-            (batch_indices[counter], 5, TokenizeResponse(**expected[batch_indices[counter]]))
+            (
+                batch_indices[counter],
+                5,
+                TokenizeResponse(**expected[batch_indices[counter]]),
+                None,
+            )
             for counter in range(len(expected))
         ]
         # Test for failing requests for the first batch, last batch, intermediate batch
         for failed_id in [0, -1, random.randint(1, len(expected) - 2)]:
             batch_size = num_prompts % 5 if failed_id == -1 else 5
             side_effect_with_failed = side_effect[:]
-            side_effect_with_failed[failed_id] = (batch_indices[failed_id], batch_size, None)
+            side_effect_with_failed[failed_id] = (
+                batch_indices[failed_id],
+                batch_size,
+                None,
+                GenAiException("Something went wrong!"),
+            )
 
             # Permute what comes out of the queue completely and expect results in the same order
             with AsyncResponseGenerator(
-                self.model, inputs, tokenize_params, self.service, fn="tokenize", ordered=False
+                self.model,
+                inputs,
+                tokenize_params,
+                self.service,
+                fn="tokenize",
+                ordered=False,
             ) as asynchelper:
                 assert ConnectionManager.async_tokenize_client is not None
                 mocker.patch.object(
