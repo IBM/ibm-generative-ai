@@ -126,7 +126,7 @@ class TestLangChain:
         )
 
         response = MagicMock(status_code=200)
-        response.__iter__.return_value = (f"data: {json.dumps(response)}" for response in GENERATE_STREAM_RESPONSES)
+        response.__iter__.return_value = (json.dumps(response) for response in GENERATE_STREAM_RESPONSES)
         mock_post_stream.return_value = response
 
         callback = BaseCallbackHandler()

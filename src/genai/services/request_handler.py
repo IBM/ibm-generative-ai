@@ -4,6 +4,7 @@ from typing import Optional
 
 import httpx
 from httpx import Response
+from httpx_sse import connect_sse
 
 from genai._version import version
 from genai.options import Options
@@ -295,16 +296,17 @@ class RequestHandler:
 
     @staticmethod
     def post_stream(endpoint, headers, json_data, files):
-        with HttpProvider.get_client(timeout=ConnectionManager.TIMEOUT) as s:
-            with s.stream(
+        with HttpProvider.get_client(timeout=ConnectionManager.TIMEOUT) as client:
+            with connect_sse(
+                client,
                 method="POST",
                 url=endpoint,
                 headers=headers,
                 json=json_data,
                 files=files,
-            ) as r:
-                for chunk in r.iter_text():
-                    yield chunk
+            ) as event_source:
+                for sse in event_source.iter_sse():
+                    yield sse.data
 
     @staticmethod
     def get(endpoint: str, key: str, parameters: Optional[dict] = None) -> Response:
