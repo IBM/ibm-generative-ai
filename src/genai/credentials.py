@@ -1,5 +1,8 @@
+from urllib3.util import parse_url
+
+
 class Credentials:
-    DEFAULT_API = "https://workbench-api.res.ibm.com/v1"
+    DEFAULT_API = "https://workbench-api.res.ibm.com"
 
     def __init__(
         self,
@@ -19,3 +22,11 @@ class Credentials:
         if api_endpoint is None:
             raise ValueError("api_endpoint must be provided")
         self.api_endpoint = api_endpoint
+        self.remove_version()
+
+    def remove_version(self) -> None:
+        parsed_url = parse_url(self.api_endpoint)
+
+        if parsed_url.path and "/v" in parsed_url.path:
+            self.api_endpoint = self.api_endpoint.split("/v")[0]
+            print("Warning: Api_endpoint should not contain any version, removing it")

@@ -1,0 +1,11 @@
+import pytest
+
+from genai import Credentials
+
+
+@pytest.mark.unit
+class TestCredentials:
+    def test_remove_version(self):
+        credentials = Credentials(api_key="GENAI_API_KEY", api_endpoint="https://workbench-api.res.ibm.com/v1")
+
+        assert "/v1" not in credentials.api_endpoint
