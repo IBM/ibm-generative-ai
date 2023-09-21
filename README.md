@@ -5,7 +5,7 @@ This is the Python SDK for IBM Foundation Models Studio to bring IBM Generative 
 
 :books:	**API Documentation: [Link](https://ibm.github.io/ibm-generative-ai/)**
 
-*This is an early access library and requires invitation to use the technical preview of [watsonx.ai](https://watsonx.ai/). You can join the waitlist by visiting. https://www.ibm.com/products/watsonx-ai.*
+*You can start a trial version or request a demo via https://www.ibm.com/products/watsonx-ai.*
 
 *Looking for the JavaScript/TypeScript version? Check out https://github.com/IBM/ibm-generative-ai-node-sdk.*
 *Looking for a command-line interface? Check out [IBM Generative AI CLI](https://github.com/IBM/ibm-generative-ai-cli).
