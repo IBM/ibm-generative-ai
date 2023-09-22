@@ -44,6 +44,7 @@ class RequestHandler:
         headers = {
             "Authorization": f"Bearer {key}",
             "x-request-origin": f"python-sdk/{version}",
+            "user-agent": f"python-sdk/{version}",
         }
 
         # NOTE: discuss with team if we want to keep like this or try another approach
