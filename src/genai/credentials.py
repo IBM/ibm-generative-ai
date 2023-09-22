@@ -1,4 +1,5 @@
 import re
+from warnings import warn
 
 
 class Credentials:
@@ -25,7 +26,12 @@ class Credentials:
         self._remove_api_endpoint_version()
 
     def _remove_api_endpoint_version(self) -> None:
-        has_version = re.search(r".\d$", self.api_endpoint)
-        if has_version:
-            self.api_endpoint = self.api_endpoint.rsplit("/v", 1)[0]
-            print("Warning: Api_endpoint should not contain any version, removing it")
+        [api, *version] = re.split(r"(/v\d+$)", self.api_endpoint, maxsplit=1)
+        if version:
+            warn(
+                DeprecationWarning(
+                    f"The 'api_endpoint' property should not contain any explicit API version"
+                    f"(rename it from '{self.api_endpoint}' to just '{api}')"
+                )
+            )
+            self.api_endpoint = api
