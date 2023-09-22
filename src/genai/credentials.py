@@ -28,3 +28,4 @@ class Credentials:
         has_version = re.search(r".\d$", self.api_endpoint)
         if has_version:
             self.api_endpoint = self.api_endpoint.rsplit("/v", 1)[0]
+            print("Warning: Api_endpoint should not contain any version, removing it")
