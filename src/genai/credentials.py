@@ -21,7 +21,7 @@ class Credentials:
         self.api_key = api_key
         if api_endpoint is None:
             raise ValueError("api_endpoint must be provided")
-        self.api_endpoint = api_endpoint
+        self.api_endpoint = api_endpoint.rstrip("/")
         self._remove_api_endpoint_version()
 
     def _remove_api_endpoint_version(self) -> None:
