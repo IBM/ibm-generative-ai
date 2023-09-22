@@ -1,5 +1,9 @@
+import re
+from warnings import warn
+
+
 class Credentials:
-    DEFAULT_API = "https://workbench-api.res.ibm.com/v1"
+    DEFAULT_API = "https://workbench-api.res.ibm.com"
 
     def __init__(
         self,
@@ -18,4 +22,16 @@ class Credentials:
         self.api_key = api_key
         if api_endpoint is None:
             raise ValueError("api_endpoint must be provided")
-        self.api_endpoint = api_endpoint
+        self.api_endpoint = api_endpoint.rstrip("/")
+        self._remove_api_endpoint_version()
+
+    def _remove_api_endpoint_version(self) -> None:
+        [api, *version] = re.split(r"(/v\d+$)", self.api_endpoint, maxsplit=1)
+        if version:
+            warn(
+                DeprecationWarning(
+                    f"The 'api_endpoint' property should not contain any explicit API version"
+                    f"(rename it from '{self.api_endpoint}' to just '{api}')"
+                )
+            )
+            self.api_endpoint = api

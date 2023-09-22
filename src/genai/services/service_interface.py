@@ -11,11 +11,11 @@ __all__ = ["ServiceInterface"]
 
 
 class ServiceInterface:
-    GENERATE = "/generate"
-    TOKENIZE = "/tokenize"
-    HISTORY = "/requests"
-    TOU = "/user"
-    MODELS = "/models"
+    GENERATE = "/v1/generate"
+    TOKENIZE = "/v1/tokenize"
+    HISTORY = "/v1/requests"
+    TOU = "/v1/user"
+    MODELS = "/v1/models"
 
     def __init__(self, service_url: str, api_key: str) -> None:
         """Initialize ServiceInterface.
