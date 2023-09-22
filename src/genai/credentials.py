@@ -1,4 +1,4 @@
-from urllib3.util import parse_url
+import re
 
 
 class Credentials:
@@ -22,11 +22,9 @@ class Credentials:
         if api_endpoint is None:
             raise ValueError("api_endpoint must be provided")
         self.api_endpoint = api_endpoint
-        self.remove_version()
+        self._remove_api_endpoint_version()
 
-    def remove_version(self) -> None:
-        parsed_url = parse_url(self.api_endpoint)
-
-        if parsed_url.path and "/v" in parsed_url.path:
-            self.api_endpoint = self.api_endpoint.split("/v")[0]
-            print("Warning: Api_endpoint should not contain any version, removing it")
+    def _remove_api_endpoint_version(self) -> None:
+        has_version = re.search(r".\d$", self.api_endpoint)
+        if has_version:
+            self.api_endpoint = self.api_endpoint.rsplit("/v", 1)[0]
