@@ -1,4 +1,4 @@
-import ast
+import json
 import logging
 from collections.abc import Generator
 from typing import Any, Callable, Union
@@ -71,17 +71,29 @@ class Model:
 
                 response_gen = self.service.generate(self.model, batch, params, options=options, streaming=True)
 
-                for chunk in response_gen:
-                    if "status_code" in chunk:
-                        error = ast.literal_eval(chunk)
+                for response in response_gen:
+                    if not response:
+                        continue
+
+                    if "status_code" in response:
+                        error = json.loads(response)
                         raise GenAiException(error)
 
-                    # we assume the returned string from the service is of shape "data: {...}"
-                    response = chunk.replace("data:", "").strip()
                     try:
-                        parsed_response = ast.literal_eval(response)
+                        parsed_response = json.loads(response)
+                        if "moderation" in parsed_response:
+                            result = {
+                                "id": parsed_response["id"],
+                                "results": [],
+                                "model_id": parsed_response["model_id"],
+                                "created_at": parsed_response["created_at"],
+                                "moderation": parsed_response["moderation"],
+                            }
+                            yield GenerateStreamResponse(**result)
+
                         for result in parsed_response["results"]:
                             yield GenerateStreamResponse(**result)
+
                     except Exception:
                         logger.error("Could not parse {} as literal_eval".format(response))
 

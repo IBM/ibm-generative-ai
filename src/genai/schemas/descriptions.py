@@ -45,6 +45,13 @@ class Descriptions:
     STATUS = "Filters the items to be returned based on their status. Possible values are SUCCESS and ERROR."
     ORIGIN = "Filters the items to be returned based on their origin. Possible values are API and UI."
 
+    # Params.Moderations
+    MODERATIONS = "Leverages various models to detect hate speech in the provided inputs and generated outputs."
+    HAP = "Mechanism for detecting hate/abuse/profanity on a sentence level."
+    HAP_INPUT = "Enable/Disable HAP detection on the provided input."
+    HAP_OUTPUT = "Enable/Disable HAP detection on the generated output."
+    HAP_THRESHOLD = "The number from interval <0, 1> that causes the sentence to be flagged (default is 0.75)."
+
 
 class TunesAPIDescriptions:
     # Params.CreateTune
