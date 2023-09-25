@@ -4,7 +4,7 @@ from genai.services import RequestHandler
 
 
 class PromptTemplateRouter:
-    PROMPT_TEMPLATES = "/prompt_templates"
+    PROMPT_TEMPLATES = "/v1/prompt_templates"
 
     def __init__(self, service_url: str, api_key: str) -> None:
         self.service_url = service_url.rstrip("/")
