@@ -34,7 +34,7 @@ class TestLangChain:
     def multi_prompts(self):
         return ["What is IBM?", "What is AI?"]
 
-    @patch("httpx.AsyncClient.post")
+    @patch("httpx.Client.post")
     def test_langchain_interface(
         self,
         mocked_post_request,
@@ -55,23 +55,45 @@ class TestLangChain:
         results = model(prompts[0])
         assert results == expected_generated_response.results[0].generated_text
 
+    @patch("httpx.Client.post")
+    def test_langchain_stop_sequences(
+        self,
+        mocked_post_request,
+        credentials,
+    ):
+        from genai.extensions.langchain import LangChainInterface
+
+        prompts = ["Hello..."]
+        stop_sequences = ["..."]
+
+        params = GenerateParams(stop_sequences=stop_sequences)
+        GENERATE_RESPONSE = SimpleResponse.generate(
+            model="google/flan-ul2",
+            inputs=prompts,
+            params=params,
+        )
+        expected_generated_response = GenerateResponse(**GENERATE_RESPONSE)
+        response = MagicMock(status_code=200)
+        response.json.return_value = GENERATE_RESPONSE
+        mocked_post_request.return_value = response
+
+        model = LangChainInterface(model="google/flan-ul2", params=params, credentials=credentials)
+        generated_text = model(prompts[0])
+        assert generated_text != expected_generated_response.results[0].generated_text
+        assert generated_text == "Hello"
+        for stop_sequence in stop_sequences:
+            assert stop_sequence not in generated_text
+
     @pytest.mark.asyncio
-    @patch("httpx.AsyncClient.post")
+    @patch("httpx.Client.post")
     async def test_async_langchain_interface(self, mocked_post_request, credentials, params, multi_prompts):
         from genai.extensions.langchain import LangChainInterface
 
-        expected_responses = []
-        mock_responses = []
-        for prompt in multi_prompts:
-            server_response = SimpleResponse.generate(model="google/flan-ul2", inputs=[prompt], params=params)
-            expected_response = GenerateResponse(**server_response)
-            expected_responses.append(expected_response)
-
-            mock_response = MagicMock(status_code=200)
-            mock_response.json.return_value = server_response
-            mock_responses.append(mock_response)
-
-        mocked_post_request.side_effect = mock_responses
+        server_response = SimpleResponse.generate(model="google/flan-ul2", inputs=multi_prompts, params=params)
+        expected_response = GenerateResponse(**server_response)
+        mock_response = MagicMock(status_code=200)
+        mock_response.json.return_value = server_response
+        mocked_post_request.return_value = mock_response
 
         model = LangChainInterface(model="google/flan-ul2", params=params, credentials=credentials)
         observed = await model.agenerate(prompts=multi_prompts)
@@ -80,18 +102,18 @@ class TestLangChain:
         assert len(observed.generations[1]) == 1
 
         assert observed.llm_output["token_usage"]["input_token_count"] == sum(
-            c.results[0].input_token_count for c in expected_responses
+            c.input_token_count for c in expected_response.results
         )
         assert observed.llm_output["token_usage"]["generated_token_count"] == sum(
-            c.results[0].generated_token_count for c in expected_responses
+            c.generated_token_count for c in expected_response.results
         )
 
         for idx, generation_list in enumerate(observed.generations):
             assert len(generation_list) == 1
             generation = generation_list[0]
-            assert generation.text == expected_responses[idx].results[0].generated_text
+            assert generation.text == expected_response.results[idx].generated_text
 
-            expected_result = expected_responses[idx].results[0].dict()
+            expected_result = expected_response.results[idx].dict()
             for key in {"generated_token_count", "input_text", "stop_reason"}:
                 assert generation.generation_info[key] == expected_result[key]
 
@@ -104,7 +126,7 @@ class TestLangChain:
         )
 
         response = MagicMock(status_code=200)
-        response.__iter__.return_value = (f"data: {json.dumps(response)}" for response in GENERATE_STREAM_RESPONSES)
+        response.__iter__.return_value = (json.dumps(response) for response in GENERATE_STREAM_RESPONSES)
         mock_post_stream.return_value = response
 
         callback = BaseCallbackHandler()

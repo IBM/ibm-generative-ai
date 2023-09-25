@@ -111,9 +111,9 @@ class AsyncResponseGenerator:
             if response_raw and (200 < response_raw.status_code or response_raw.status_code > 299):
                 raise Exception(response)
         except Exception as ex:
+            logger.error("Error in _get_response_json {}: {}".format(type(ex), str(ex)))
             if self.throw_on_error:
                 raise ex
-            logger.error("Error in _get_response_json {}: {}".format(type(ex), str(ex)))
             response = None
         return response
 

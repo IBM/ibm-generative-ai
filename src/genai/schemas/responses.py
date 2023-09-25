@@ -59,6 +59,22 @@ class TermsOfUse(GenAiResponseModel):
     results: TermsOfUseResult
 
 
+class TextPosition(GenAiResponseModel):
+    start: int
+    end: int
+
+
+class HAPResult(GenAiResponseModel):
+    flagged: bool
+    score: float
+    success: bool
+    position: TextPosition
+
+
+class ModerationResult(GenAiResponseModel):
+    hap: List[HAPResult]
+
+
 class GeneratedToken(GenAiResponseModel):
     logprob: Optional[float]
     text: Optional[str]
@@ -72,6 +88,7 @@ class GenerateResult(GenAiResponseModel):
     generated_tokens: Optional[list[GeneratedToken]]
     input_text: Optional[str]
     seed: Optional[int]
+    moderation: Optional[ModerationResult]
 
 
 class GenerateResponse(GenAiResponseModel):
@@ -89,6 +106,7 @@ class GenerateStreamResponse(GenAiResponseModel):
     generated_tokens: Optional[list[GeneratedToken]]
     input_text: Optional[str]
     seed: Optional[int]
+    moderation: Optional[ModerationResult]
 
 
 class TokenizeResult(GenAiResponseModel):

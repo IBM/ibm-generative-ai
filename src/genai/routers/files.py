@@ -5,7 +5,7 @@ from genai.utils.request_utils import sanitize_params
 
 
 class FilesRouter:
-    FILES = "/files"
+    FILES = "/v1/files"
 
     def __init__(self, service_url: str, api_key: str) -> None:
         self.service_url = service_url.rstrip("/")

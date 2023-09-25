@@ -1,4 +1,4 @@
-import ast
+import json
 import logging
 from collections.abc import Generator
 from typing import Any, Callable, Union
@@ -62,24 +62,38 @@ class Model:
         if len(prompts) > 0 and isinstance(prompts[0], PromptPattern):
             prompts = PromptPattern.list_str(prompts)
 
+        params = self._get_params()
+        params.stream = True
+
         try:
             for i in range(0, len(prompts), Metadata.DEFAULT_MAX_PROMPTS):
                 batch = prompts[i : min(i + Metadata.DEFAULT_MAX_PROMPTS, len(prompts))]
 
-                self.params.stream = True
-                response_gen = self.service.generate(self.model, batch, self.params, options=options, streaming=True)
+                response_gen = self.service.generate(self.model, batch, params, options=options, streaming=True)
 
-                for chunk in response_gen:
-                    if "status_code" in chunk:
-                        error = ast.literal_eval(chunk)
+                for response in response_gen:
+                    if not response:
+                        continue
+
+                    if "status_code" in response:
+                        error = json.loads(response)
                         raise GenAiException(error)
 
-                    # we assume the returned string from the service is of shape "data: {...}"
-                    response = chunk.replace("data:", "").strip()
                     try:
-                        parsed_response = ast.literal_eval(response)
+                        parsed_response = json.loads(response)
+                        if "moderation" in parsed_response:
+                            result = {
+                                "id": parsed_response["id"],
+                                "results": [],
+                                "model_id": parsed_response["model_id"],
+                                "created_at": parsed_response["created_at"],
+                                "moderation": parsed_response["moderation"],
+                            }
+                            yield GenerateStreamResponse(**result)
+
                         for result in parsed_response["results"]:
                             yield GenerateStreamResponse(**result)
+
                     except Exception:
                         logger.error("Could not parse {} as literal_eval".format(response))
 
@@ -106,14 +120,17 @@ class Model:
         if len(prompts) > 0 and isinstance(prompts[0], PromptPattern):
             prompts = PromptPattern.list_str(prompts)
 
-        logger.debug(f"Calling Generate. Prompts: {prompts}, params: {self.params}")
+        params = self._get_params()
+        params.stream = False
+
+        logger.debug(f"Calling Generate. Prompts: {prompts}, params: {params}")
 
         try:
             for i in range(0, len(prompts), Metadata.DEFAULT_MAX_PROMPTS):
                 response_gen = self.service.generate(
                     model=self.model,
                     inputs=prompts[i : min(i + Metadata.DEFAULT_MAX_PROMPTS, len(prompts))],
-                    params=self.params,
+                    params=params,
                     options=options,
                 )
                 if response_gen.status_code == 200:
@@ -177,13 +194,15 @@ class Model:
         if len(prompts) > 0 and isinstance(prompts[0], PromptPattern):
             prompts = PromptPattern.list_str(prompts)
 
-        logger.debug(f"Calling Generate Async. Prompts: {prompts}, params: {self.params}")
+        params = self._get_params()
+        params.stream = False
+        logger.debug(f"Calling Generate Async. Prompts: {prompts}, params: {params}")
 
         try:
             with AsyncResponseGenerator(
                 self.model,
                 prompts,
-                self.params,
+                params,
                 self.service,
                 ordered=ordered,
                 callback=callback,
@@ -294,7 +313,7 @@ class Model:
         if len(prompts) > 0 and isinstance(prompts[0], PromptPattern):
             prompts = PromptPattern.list_str(prompts)
 
-        logger.debug(f"Calling Tokenize Async. Prompts: {prompts}, params: {self.params}")
+        logger.debug(f"Calling Tokenize Async. Prompts: {prompts}")
 
         try:
             params = TokenParams(return_tokens=return_tokens)
@@ -409,3 +428,11 @@ class Model:
         """
         id_to_model = {m.id: m for m in Model.models(service=self.service)}
         return id_to_model.get(self.model, None)
+
+    def _get_params(self):
+        if self.params is None:
+            return GenerateParams()
+
+        if isinstance(self.params, dict):
+            return GenerateParams(**self.params)
+        return self.params.copy()
