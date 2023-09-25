@@ -45,18 +45,18 @@ class Return(ReturnOptions):
 # Link to doc : https://workbench.res.ibm.com/docs/api-reference#generate
 
 
-class ModerationHAPOptions(BaseModel):
+class HAPOptions(BaseModel):
     input: bool = Field(description=tx.HAP_INPUT, default=True)
     output: bool = Field(description=tx.HAP_OUTPUT, default=True)
     threshold: float = Field(description=tx.HAP_THRESHOLD, ge=0, le=1, multiple_of=0.01, default=0.75)
 
 
-class ModerationOptions(BaseModel):
+class ModerationsOptions(BaseModel):
     class Config:
         extra = Extra.allow
         allow_population_by_field_name = True
 
-    hap: Union[bool, ModerationHAPOptions] = Field(description=tx.HAP, default=False)
+    hap: Union[bool, HAPOptions] = Field(description=tx.HAP, default=False)
 
 
 class GenerateParams(BaseModel):
@@ -84,4 +84,4 @@ class GenerateParams(BaseModel):
     beam_width: Optional[int] = Field(None, description=tx.BEAM_WIDTH, ge=0)
     return_options: Optional[ReturnOptions] = Field(None, description=tx.RETURN)
     returns: Optional[Return] = Field(None, description=tx.RETURN, alias="return", deprecated=True)
-    moderations: Optional[ModerationOptions] = Field(None, description=tx.MODERATIONS)
+    moderations: Optional[ModerationsOptions] = Field(None, description=tx.MODERATIONS)

@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from genai.credentials import Credentials
 from genai.model import Model
 from genai.schemas import GenerateParams
-from genai.schemas.generate_params import ModerationHAPOptions, ModerationOptions
+from genai.schemas.generate_params import HAPOptions, ModerationsOptions
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -21,9 +21,10 @@ params = GenerateParams(
     min_new_tokens=10,
     max_new_tokens=20,
     stream=True,
-    moderations=ModerationOptions(
+    moderations=ModerationsOptions(
         # Threshold is set to very low level to flag everything (testing purposes)
-        hap=ModerationHAPOptions(input=True, output=True, threshold=0.01)
+        # or set to True to enable HAP with default settings
+        hap=HAPOptions(input=True, output=True, threshold=0.01)
     ),
 )
 
