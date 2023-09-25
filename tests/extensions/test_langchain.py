@@ -34,7 +34,7 @@ class TestLangChain:
     def multi_prompts(self):
         return ["What is IBM?", "What is AI?"]
 
-    @patch("httpx.AsyncClient.post")
+    @patch("httpx.Client.post")
     def test_langchain_interface(
         self,
         mocked_post_request,
@@ -85,22 +85,15 @@ class TestLangChain:
             assert stop_sequence not in generated_text
 
     @pytest.mark.asyncio
-    @patch("httpx.AsyncClient.post")
+    @patch("httpx.Client.post")
     async def test_async_langchain_interface(self, mocked_post_request, credentials, params, multi_prompts):
         from genai.extensions.langchain import LangChainInterface
 
-        expected_responses = []
-        mock_responses = []
-        for prompt in multi_prompts:
-            server_response = SimpleResponse.generate(model="google/flan-ul2", inputs=[prompt], params=params)
-            expected_response = GenerateResponse(**server_response)
-            expected_responses.append(expected_response)
-
-            mock_response = MagicMock(status_code=200)
-            mock_response.json.return_value = server_response
-            mock_responses.append(mock_response)
-
-        mocked_post_request.side_effect = mock_responses
+        server_response = SimpleResponse.generate(model="google/flan-ul2", inputs=multi_prompts, params=params)
+        expected_response = GenerateResponse(**server_response)
+        mock_response = MagicMock(status_code=200)
+        mock_response.json.return_value = server_response
+        mocked_post_request.return_value = mock_response
 
         model = LangChainInterface(model="google/flan-ul2", params=params, credentials=credentials)
         observed = await model.agenerate(prompts=multi_prompts)
@@ -109,18 +102,18 @@ class TestLangChain:
         assert len(observed.generations[1]) == 1
 
         assert observed.llm_output["token_usage"]["input_token_count"] == sum(
-            c.results[0].input_token_count for c in expected_responses
+            c.input_token_count for c in expected_response.results
         )
         assert observed.llm_output["token_usage"]["generated_token_count"] == sum(
-            c.results[0].generated_token_count for c in expected_responses
+            c.generated_token_count for c in expected_response.results
         )
 
         for idx, generation_list in enumerate(observed.generations):
             assert len(generation_list) == 1
             generation = generation_list[0]
-            assert generation.text == expected_responses[idx].results[0].generated_text
+            assert generation.text == expected_response.results[idx].generated_text
 
-            expected_result = expected_responses[idx].results[0].dict()
+            expected_result = expected_response.results[idx].dict()
             for key in {"generated_token_count", "input_text", "stop_reason"}:
                 assert generation.generation_info[key] == expected_result[key]
 

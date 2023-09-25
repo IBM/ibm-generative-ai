@@ -139,11 +139,8 @@ class LangChainInterface(LLM, BaseModel):
             return result
 
         model = Model(model=self.model, params=params, credentials=self.credentials)
-        for response in model.generate_async(
+        for response in model.generate(
             prompts=prompts,
-            ordered=True,
-            hide_progressbar=True,
-            throw_on_error=True,
             **kwargs,
         ):
             if params.stop_sequences:
