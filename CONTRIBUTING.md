@@ -5,7 +5,7 @@
 	* [Pre-requisites](#pre-requisites)
 		* [Using Venv](#using-venv)
 	* [Fork the official repo](#fork-the-official-repo)
-    * [Clone the forked repo and checkout develop branch](#clone-repo-and-checkout-develop-branch)
+    * [Clone the forked repo](#clone-repo)
 	* [Install requirements](#install-requirements)
 	* [Setup your IBM Gen AI token](#setup-your-ibm-generative-ai-token)
 * [Make Changes](#make-changes)
@@ -44,16 +44,14 @@ deactivate
 
 1. Navigate to https://github.com/IBM/ibm-generative-ai repository.
 2. In the top-right corner of the page, click **Fork**.
-   *Important: **DO NOT** select 'Copy the DEFAULT branch only' option.*
 3. Click **Create fork** .
 
 Further information on how to fork a GitHub repository is avaiable [here](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
 
-### Clone repo and checkout develop branch
+### Clone repo
 
 ```bash
 git clone <forked-repository-link>
-git checkout develop
 ```
 
 ### Install requirements
@@ -84,9 +82,8 @@ have to worry about committing it to GitHub.
 Create a branch for making changes
 
 ```bash
-git checkout -b <my_awesome_branch> develop
+git checkout -b <my_awesome_branch> main
 ```
-*Important: Note we branched off 'develop' not 'main'*
 
 Make your changes and add any unit tests. Run tests as
 ```bash
@@ -110,7 +107,7 @@ Push your changes
 ```bash
 git push origin HEAD
 ```
-Raise a pull request from your `<my_awesome_branch>` in the `head repository` to the `develop` branch in the `base repository`. To do so go to the github page of the repo. The image below shows an example:
+Raise a pull request from your `<my_awesome_branch>` in the `head repository` to the `main` branch in the `base repository`. To do so go to the github page of the repo. The image below shows an example:
 
 ![image](/documentation/assets/pull_request_from_fork_to_base.png)
 
@@ -137,5 +134,5 @@ logger.debug("This is some debug.")
 logger.info("This is some info.")
 logger.warning("This is a warning.")
 logger.error("This is an error.")
-logger.critical("This is a critial message.")
+logger.critical("This is a critical message.")
 ```
