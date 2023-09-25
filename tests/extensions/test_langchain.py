@@ -55,7 +55,7 @@ class TestLangChain:
         results = model(prompts[0])
         assert results == expected_generated_response.results[0].generated_text
 
-    @patch("httpx.AsyncClient.post")
+    @patch("httpx.Client.post")
     def test_langchain_stop_sequences(
         self,
         mocked_post_request,
