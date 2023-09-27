@@ -4,9 +4,10 @@ from typing import Optional
 
 import httpx
 from httpx import Response
-from httpx_sse import connect_sse
+from httpx_sse import SSEError, connect_sse
 
 from genai._version import version
+from genai.exceptions import GenAiException
 from genai.options import Options
 from genai.services.connection_manager import ConnectionManager
 from genai.utils.http_provider import HttpProvider
@@ -306,8 +307,15 @@ class RequestHandler:
                 json=json_data,
                 files=files,
             ) as event_source:
-                for sse in event_source.iter_sse():
-                    yield sse.data
+                try:
+                    for sse in event_source.iter_sse():
+                        yield sse.data
+                except SSEError as e:
+                    response: Response = event_source.response
+                    if "application/json" in response.headers["content-type"]:
+                        response.read()
+                        raise GenAiException(response)
+                    raise e
 
     @staticmethod
     def get(endpoint: str, key: str, parameters: Optional[dict] = None) -> Response:
