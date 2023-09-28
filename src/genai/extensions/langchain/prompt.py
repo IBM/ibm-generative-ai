@@ -3,7 +3,7 @@ import logging
 import re
 
 try:
-    from langchain import PromptTemplate
+    from langchain.prompts import PromptTemplate
 except ImportError:
     raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")
 
