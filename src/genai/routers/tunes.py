@@ -10,6 +10,7 @@ from genai.utils.request_utils import sanitize_params
 
 class TunesRouter:
     TUNES = "/v1/tunes"
+    TUNE_METHODS = "/v1/tune_methods"
 
     def __init__(self, service_url: str, api_key: str) -> None:
         self.service_url = service_url.rstrip("/")
@@ -74,7 +75,7 @@ class TunesRouter:
         """
         try:
             endpoint = self.service_url + TunesRouter.TUNES + "/" + tune_id
-            return RequestHandler.delete(endpoint, key=self.key, parameters=tune_id)
+            return RequestHandler.delete(endpoint, key=self.key)
         except Exception as e:
             raise GenAiException(e)
 
@@ -85,7 +86,7 @@ class TunesRouter:
             Any: json with info about the available tune methods.
         """
         try:
-            endpoint = self.service_url + "/tune_methods"
+            endpoint = self.service_url + self.TUNE_METHODS
             return RequestHandler.get(endpoint, key=self.key)
         except Exception as e:
             raise GenAiException(e)
