@@ -51,7 +51,8 @@ langchain = [
   "langchain>=0.0.200"
 ]
 huggingface = [
-  "datasets>=2.13.0"
+  "datasets>=2.13.0",
+  "transformers>=4.33.3"
 ]
 pandas = [
   "pandas>=2.0.0"
