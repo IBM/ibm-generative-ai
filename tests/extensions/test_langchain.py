@@ -155,7 +155,7 @@ class TestLangChain:
             assert response == result.results[0]
 
     def test_prompt_translator(self):
-        from langchain import PromptTemplate
+        from langchain.prompts import PromptTemplate
 
         import genai.extensions.langchain  # noqa
         from genai.prompt_pattern import PromptPattern

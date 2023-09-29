@@ -3,8 +3,8 @@ import os
 from dotenv import load_dotenv
 
 try:
-    from langchain import PromptTemplate
     from langchain.chains import LLMChain, SimpleSequentialChain
+    from langchain.prompts import PromptTemplate
 except ImportError:
     raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")
 
@@ -28,7 +28,10 @@ params = GenerateParams(
     top_p=1,
 ).dict()  # Langchain uses dictionaries to pass kwargs
 
-pt1 = PromptTemplate(input_variables=["topic"], template="Generate a random question about {topic}: Question: ")
+pt1 = PromptTemplate(
+    input_variables=["topic"],
+    template="Generate a random question about {topic}: Question: ",
+)
 pt2 = PromptTemplate(
     input_variables=["question"],
     template="Answer the following question: {question}",
