@@ -44,4 +44,4 @@ class TestHuggingfaceAgent:
         mocked_post_request.return_value = response
 
         agent = GenaiAgent(credentials=credentials, model="google/flan-ul2", params=params)
-        agent.run("Summorize a text", text="Testing the summorization")
+        agent.run("Summarize the text", text="Testing the summarization")

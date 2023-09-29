@@ -56,10 +56,10 @@ class GenaiAgent(Agent):
         params.stop_sequences = stop or params.stop_sequences
         model = Model(model=self.model, params=params, credentials=self.credentials)
         for response in model.generate(prompts=prompts):
-            if params.stop_sequences:
-                response.generated_text = enforce_stop_tokens(response.generated_text, params.stop_sequences)
-
             generated_text = response.generated_text
+            if params.stop_sequences:
+                generated_text = enforce_stop_tokens(generated_text, params.stop_sequences)
+
             logger.info("Output of GENAI call: {}".format(generated_text))
             result.append(generated_text)
 
