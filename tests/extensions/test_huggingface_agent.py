@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from genai import Credentials
-from genai.extensions.huggingface import GenaiAgent
+from genai.extensions.huggingface import IBMGenaiAgent
 from genai.schemas import GenerateParams
 from tests.assets.response_helper import SimpleResponse
 
@@ -43,5 +43,5 @@ class TestHuggingfaceAgent:
         response.json.return_value = GENERATE_RESPONSE
         mocked_post_request.return_value = response
 
-        agent = GenaiAgent(credentials=credentials, model="google/flan-ul2", params=params)
+        agent = IBMGenaiAgent(credentials=credentials, model="google/flan-ul2", params=params)
         agent.run("Summarize the text", text="Testing the summarization")

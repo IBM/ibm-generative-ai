@@ -12,17 +12,11 @@ from typing import List, Optional
 
 from genai import Credentials, Model
 from genai.schemas import GenerateParams
-from genai.utils.extensions import enforce_stop_tokens
 
 logger = logging.getLogger(__name__)
 
 
-class GenaiAgent(Agent):
-    """
-    Class that extends the functionality of the Hugging Face Transformers' Agent class.
-    It uses Genai models as agents that select appropriate tools and then generate code.
-    """
-
+class IBMGenaiAgent(Agent):
     def __init__(
         self,
         credentials: Credentials = None,
@@ -52,15 +46,21 @@ class GenaiAgent(Agent):
         if len(prompts) == 0:
             return result
 
-        params = self.params or GenerateParams()
+        params = self._get_params()
         params.stop_sequences = stop or params.stop_sequences
         model = Model(model=self.model, params=params, credentials=self.credentials)
         for response in model.generate(prompts=prompts):
             generated_text = response.generated_text
-            if params.stop_sequences:
-                generated_text = enforce_stop_tokens(generated_text, params.stop_sequences)
 
             logger.info("Output of GENAI call: {}".format(generated_text))
             result.append(generated_text)
 
         return result
+
+    def _get_params(self):
+        if self.params is None:
+            return GenerateParams()
+
+        if isinstance(self.params, dict):
+            return GenerateParams(**self.params)
+        return self.params.copy()
