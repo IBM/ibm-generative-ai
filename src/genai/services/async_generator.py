@@ -3,11 +3,13 @@ import heapq
 import logging
 from concurrent.futures import ThreadPoolExecutor
 from queue import Queue
+from signal import SIGINT, SIGTERM, signal
 
 from genai.exceptions import GenAiException
 from genai.options import Options
 from genai.schemas.responses import GenerateResponse, TokenizeResponse
 from genai.services.connection_manager import ConnectionManager
+from genai.utils.errors import to_genai_error
 
 logger = logging.getLogger(__name__)
 
@@ -47,12 +49,16 @@ class AsyncResponseGenerator:
         self.ordered = ordered
         self.options = options
         self.throw_on_error = throw_on_error
+        self.tokenize_client_close_fn_ = None
+        self.generate_client_close_fn_ = None
+        self._is_terminating = False
 
     def __enter__(self):
         self.accumulator = []
         self._initialize_fn_specific_params()
         self.queue_ = Queue()
         self.loop_ = asyncio.new_event_loop()
+        self._is_terminating = False
         return self
 
     def _shutdown(self):
@@ -71,7 +77,7 @@ class AsyncResponseGenerator:
             self._shutdown()
         except Exception as e:
             logger.error(str(e))
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     def _initialize_fn_specific_params(self):
         if self.fn == "generate":
@@ -81,7 +87,7 @@ class AsyncResponseGenerator:
             self.service_fn_ = self.service.async_generate
             self.max_active_tasks_ = ConnectionManager.MAX_CONCURRENT_GENERATE
             ConnectionManager.make_generate_client()
-            self.client_close_fn_ = ConnectionManager.delete_generate_client
+            self.generate_client_close_fn_ = ConnectionManager.delete_generate_client
         elif self.fn == "tokenize":
             self.batch_size_ = 5
             a, b = divmod(len(self.prompts), self.batch_size_)
@@ -90,7 +96,7 @@ class AsyncResponseGenerator:
             self.service_fn_ = self.service.async_tokenize
             self.max_active_tasks_ = ConnectionManager.MAX_REQ_PER_SECOND_TOKENIZE
             ConnectionManager.make_tokenize_client()
-            self.client_close_fn_ = ConnectionManager.delete_tokenize_client
+            self.tokenize_client_close_fn_ = ConnectionManager.delete_tokenize_client
 
     def _generate_batch(self):
         for i in range(0, len(self.prompts), self.batch_size_):
@@ -119,6 +125,17 @@ class AsyncResponseGenerator:
 
     async def _task(self, inputs, batch_num):
         async with self.semaphore_:
+            if self._is_terminating:
+                self.queue_.put_nowait(
+                    (
+                        batch_num,
+                        len(inputs),
+                        None,
+                        GenAiException("Generation has been aborted by the user."),
+                    )
+                )
+                return
+
             response = None
             try:
                 response = await self._get_response_json(self.model_id, inputs, self.params, self.options)
@@ -133,14 +150,7 @@ class AsyncResponseGenerator:
                         str(e), response, inputs
                     )
                 )
-                self.queue_.put_nowait(
-                    (
-                        batch_num,
-                        len(inputs),
-                        None,
-                        GenAiException(e),
-                    )
-                )
+                self.queue_.put_nowait((batch_num, len(inputs), None, to_genai_error(e)))
                 return
             try:
                 self.queue_.put_nowait((batch_num, len(inputs), response, None))
@@ -166,7 +176,14 @@ class AsyncResponseGenerator:
     def _request_launcher(self):
         asyncio.set_event_loop(self.loop_)
         self.loop_.run_until_complete(self._schedule_requests())
-        self.loop_.run_until_complete(self.client_close_fn_())
+        self.loop_.run_until_complete(self._cleanup())
+
+    async def _cleanup(self):
+        if self.generate_client_close_fn_ is not None:
+            await self.generate_client_close_fn_()
+
+        if self.tokenize_client_close_fn_ is not None:
+            await self.tokenize_client_close_fn_()
 
     def generate_response(
         self,
@@ -179,8 +196,18 @@ class AsyncResponseGenerator:
         """
         if len(self.prompts) == 0:
             return
+
         with ThreadPoolExecutor(max_workers=1) as executor:
+
+            def init_termination(*args):
+                self._is_terminating = True
+                executor.shutdown(cancel_futures=False, wait=False)
+
+            signal(SIGTERM, init_termination)
+            signal(SIGINT, init_termination)
+
             executor.submit(self._request_launcher)
+
             counter = 0
             minheap, batch_tracker = [], 0
             while counter < self.num_batches_:
