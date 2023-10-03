@@ -16,7 +16,7 @@ from genai.schemas import GenerateParams
 logger = logging.getLogger(__name__)
 
 
-class IBMGenaiAgent(Agent):
+class IBMGenAIAgent(Agent):
     def __init__(
         self,
         credentials: Credentials = None,
