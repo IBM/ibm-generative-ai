@@ -2,7 +2,7 @@ import copy
 import csv
 import random
 import re
-from typing import Literal, Union
+from typing import List, Literal, Union
 
 import requests
 from yaml import CLoader as Loader
@@ -615,7 +615,7 @@ class PromptPattern:
         return self.__dict__.__contains__(val)
 
     @staticmethod
-    def list_str(list_of_prompts: list["PromptPattern"]) -> list[str]:
+    def list_str(list_of_prompts: Union[List["PromptPattern"], List[str]]) -> list[str]:
         return [str(x) for x in list_of_prompts]
 
     @staticmethod

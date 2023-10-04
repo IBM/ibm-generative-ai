@@ -324,7 +324,7 @@ class TestAsyncResponseGenerator:
                 side_effect=[
                     (
                         permutation[counter],
-                        asynchelper.batch_size_,
+                        asynchelper._batch_size,
                         TokenizeResponse(**expected[permutation[counter]]),
                         None,
                     )
@@ -335,7 +335,7 @@ class TestAsyncResponseGenerator:
             mocker.patch.object(queue.Queue, "task_done", spec=queue.Queue, return_value=None)
             num_results = 0
             observed = list(asynchelper.generate_response())
-            for counter in range(asynchelper.num_batches_):
+            for counter in range(asynchelper._num_batches):
                 response = TokenizeResponse(**expected[counter])
                 for result in response.results:
                     assert observed[num_results].tokens == result.tokens
@@ -370,7 +370,7 @@ class TestAsyncResponseGenerator:
                 side_effect=[
                     (
                         permutation[counter],
-                        asynchelper.batch_size_,
+                        asynchelper._batch_size,
                         TokenizeResponse(**expected[permutation[counter]]),
                         None,
                     )
@@ -381,7 +381,7 @@ class TestAsyncResponseGenerator:
             mocker.patch.object(queue.Queue, "task_done", spec=queue.Queue, return_value=None)
             num_results = 0
             observed = list(asynchelper.generate_response())
-            for counter in range(asynchelper.num_batches_):
+            for counter in range(asynchelper._num_batches):
                 response = TokenizeResponse(**expected[permutation[counter]])
                 for result in response.results:
                     assert observed[num_results].tokens == result.tokens
@@ -439,7 +439,7 @@ class TestAsyncResponseGenerator:
                 mocker.patch.object(queue.Queue, "task_done", spec=queue.Queue, return_value=None)
                 num_results = 0
                 observed = list(asynchelper.generate_response())
-                for counter in range(asynchelper.num_batches_):
+                for counter in range(asynchelper._num_batches):
                     response = TokenizeResponse(**expected[counter])
                     for result in response.results:
                         if failed_id == 0 and num_results < 5:
@@ -447,9 +447,9 @@ class TestAsyncResponseGenerator:
                         elif failed_id == -1 and num_results >= num_prompts - num_prompts % 5:
                             assert observed[num_results] is None
                         elif (
-                            failed_id * asynchelper.batch_size_
+                            failed_id * asynchelper._batch_size
                             <= num_results
-                            < (failed_id + 1) * asynchelper.batch_size_
+                            < (failed_id + 1) * asynchelper._batch_size
                         ):
                             assert observed[num_results] is None
                         else:

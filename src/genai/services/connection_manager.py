@@ -1,5 +1,6 @@
 import aiolimiter
-import httpx
+from aiolimiter import AsyncLimiter
+from httpx import AsyncClient
 
 from genai.exceptions import GenAiException
 
@@ -9,20 +10,15 @@ from genai.utils.http_provider import HttpProvider
 
 
 class ConnectionManager:
-    MAX_CONCURRENT_GENERATE = 10
     MAX_RETRIES_GENERATE = 3
     TIMEOUT_GENERATE = 600
     MAX_RETRIES_TOKENIZE = 3
     MAX_REQ_PER_SECOND_TOKENIZE = 5
     TIMEOUT = 600
 
-    generate_limits = httpx.Limits(
-        max_keepalive_connections=MAX_CONCURRENT_GENERATE,
-        max_connections=MAX_CONCURRENT_GENERATE,
-    )
-    async_generate_client = None
-    async_tokenize_client = None
-    async_tokenize_limiter = aiolimiter.AsyncLimiter(max_rate=MAX_REQ_PER_SECOND_TOKENIZE, time_period=1)
+    async_generate_client: AsyncClient = None
+    async_tokenize_client: AsyncClient = None
+    async_tokenize_limiter: AsyncLimiter = None
 
     @staticmethod
     def make_generate_client():
@@ -31,7 +27,6 @@ class ConnectionManager:
             raise GenAiException(ValueError("Can't have two active async_generate_clients"))
 
         async_generate_transport = HttpProvider.get_async_transport(
-            limits=ConnectionManager.generate_limits,
             retries=ConnectionManager.MAX_RETRIES_GENERATE,
         )
         ConnectionManager.async_generate_client = HttpProvider.get_async_client(

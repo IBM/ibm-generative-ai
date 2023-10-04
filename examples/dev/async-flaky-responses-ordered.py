@@ -19,7 +19,7 @@ class FlakyAsyncResponseGenerator(AsyncResponseGenerator):
             num_requests += 1
             if num_requests % 2 == 0:
                 await asyncio.sleep(random.randint(0, 5))
-                response_raw = await self.service_fn_(model, inputs, params, options)
+                response_raw = await self._service_fn(model, inputs, params, options)
             else:
                 await asyncio.sleep(random.randint(0, 5))
                 response_raw = None  # bad response
@@ -39,7 +39,13 @@ class FlakyModel(Model):
     ):
         try:
             with FlakyAsyncResponseGenerator(
-                self.model, prompts, self.params, self.service, ordered=ordered, callback=callback, options=options
+                self.model,
+                prompts,
+                self.params,
+                self.service,
+                ordered=ordered,
+                callback=callback,
+                options=options,
             ) as asynchelper:
                 for response in asynchelper.generate_response():
                     yield response
