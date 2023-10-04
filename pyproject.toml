@@ -52,13 +52,7 @@ langchain = [
 ]
 huggingface = [
   "datasets>=2.13.0",
-  "transformers>=4.33.3",
-  "huggingface-hub>=0.17.3",
-  "torch>=2.0.1",
-  "accelerate>=0.20.3",
-  "sentencepiece>=0.1.99",
-  "opencv-python>=4.8.1.78",
-  "soundfile>=0.12.1"
+  "transformers[agents]>=4.33.3"
 ]
 pandas = [
   "pandas>=2.0.0"
