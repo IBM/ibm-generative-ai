@@ -16,8 +16,15 @@ Pandas
     :caption: See `prompt_from_dataframe.py <https://github.com/IBM/ibm-generative-ai/blob/main/examples/user/prompt_from_dataframe.py>`_ on GitHub.
 
 -----------------
-HuggingFace
+HuggingFace datasets
 -----------------
 
 .. literalinclude:: ../../../../../examples/user/saving_prompts_as_hf_dataset.py
     :caption: See `saving_prompts_as_hf_dataset.py <https://github.com/IBM/ibm-generative-ai/blob/main/examples/user/saving_prompts_as_hf_dataset.py>`_ on GitHub.
+
+-----------------
+HuggingFace agent
+-----------------
+
+.. literalinclude:: ../../../../../examples/user/huggingface_agent.py
+    :caption: See `hugginface_agent.py <https://github.com/IBM/ibm-generative-ai/blob/main/examples/user/huggingface_agent.py>`_ on GitHub.

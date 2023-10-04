@@ -1,6 +1,8 @@
 # A stripped down and modified version of some definitions in
 # https://github.com/pandas-dev/pandas/blob/2.0.x/pandas/core/accessor.py
 import logging
+import re
+from typing import List
 
 logger = logging.getLogger(__name__)
 
@@ -36,3 +38,11 @@ def register_promptpattern_accessor(name: str):
     # @register_accessor("extension_name", PromptPattern)
     # class A():
     return _register_accessor(name, PromptPattern)
+
+
+def enforce_stop_tokens(text: str, stop: List[str]):
+    if not stop:
+        return text or ""
+
+    escaped_stop_sequences = [re.escape(s) for s in stop]
+    return re.split("|".join(escaped_stop_sequences), text or "", 1)[0]
