@@ -73,7 +73,10 @@ class TestTokenize:
         with pytest.raises(ValidationError):
             TokenParams(return_tokens="dummy")
 
-    @patch("genai.services.RequestHandler.post", side_effect=Exception("some general error"))
+    @patch(
+        "genai.services.RequestHandler.post",
+        side_effect=Exception("some general error"),
+    )
     def test_tokenize_general_exception(self, mock):
         with pytest.raises(BaseException, match="some general error"):
             self.service.tokenize(model="somemodel", inputs=["inputs"])

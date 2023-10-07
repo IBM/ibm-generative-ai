@@ -188,9 +188,15 @@ class AsyncResponseGenerator:
         await asyncio.gather(*tasks)
 
     def _request_launcher(self):
-        asyncio.set_event_loop(self._loop)
-        self._loop.run_until_complete(self._schedule_requests())
-        self._loop.run_until_complete(self._cleanup())
+        try:
+            asyncio.set_event_loop(self._loop)
+            self._loop.run_until_complete(self._schedule_requests())
+        except Exception as ex:
+            self.throw_on_error = True
+            self._queue.put_nowait((1, 1, None, ex))
+            raise ex
+        finally:
+            self._loop.run_until_complete(self._cleanup())
 
     async def _cleanup(self):
         if self._client_close_fn is not None:
@@ -217,7 +223,7 @@ class AsyncResponseGenerator:
             signal(SIGTERM, init_termination)
             signal(SIGINT, init_termination)
 
-            executor.submit(self._request_launcher)
+            task = executor.submit(self._request_launcher)
 
             counter = 0
             minheap, batch_tracker = [], 0
@@ -225,6 +231,8 @@ class AsyncResponseGenerator:
                 try:
                     batch_num, batch_size, response, error = self._queue.get()
                     self._queue.task_done()
+                    if task.exception() is not None:
+                        raise task.exception()
                 except Exception as ex:
                     logger.error("Exception while reading from queue: {}".format(str(ex)))
                     raise ex

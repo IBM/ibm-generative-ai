@@ -18,5 +18,5 @@ def idfn(val):
 @pytest.mark.integration
 @pytest.mark.parametrize("script", scripts, ids=idfn)
 def test_example_execution(script):
-    logger.info(f"Executing Example scipt: {script}")
+    logger.info(f"Executing Example script: {script}")
     runpy.run_path(str(script))

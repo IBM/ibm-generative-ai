@@ -214,7 +214,6 @@ class Model:
                     unit=" inputs",
                     disable=hide_progressbar,
                 ):
-                    print("Helloo")
                     yield response
         except Exception as ex:
             raise to_genai_error(ex)

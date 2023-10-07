@@ -75,7 +75,10 @@ class TestModel:
         with pytest.raises(GenAiException):
             model.generate(prompts=prompts)
 
-    @patch("genai.services.RequestHandler.post", side_effect=Exception("some general error"))
+    @patch(
+        "genai.services.RequestHandler.post",
+        side_effect=Exception("some general error"),
+    )
     def test_generate_throws_exception_for_generic_exception(self, credentials, params, prompts):
         """Tests that the GenAiException is thrown if a generic Exception is raised"""
         model = Model("google/flan-ul2", params=params, credentials=credentials)
@@ -113,7 +116,11 @@ class TestModel:
 
         base_model = Model(self.model, params=None, credentials=credentials)
         tuned_model = base_model.tune(
-            name=label, method="mpt", task="generation", training_file_ids=["id1"], hyperparameters=hyperparams
+            name=label,
+            method="mpt",
+            task="generation",
+            training_file_ids=["id1"],
+            hyperparameters=hyperparams,
         )
         assert tuned_model.model == expected_response["results"]["id"]
 

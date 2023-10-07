@@ -38,7 +38,7 @@ greeting1 = "Hello! How are you?"
 for result in model.generate_async(
     lots_of_greetings,
     ordered=True,
-    # throw_on_error=True,
+    throw_on_error=True,
     hide_progressbar=False,
     max_concurrency_limit=1,
 ):

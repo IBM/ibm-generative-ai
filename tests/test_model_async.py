@@ -19,7 +19,10 @@ class TestModelAsync:
     @pytest.fixture
     def mock_generate_json(self, mocker):
         async_mock = AsyncMock()
-        mocker.patch("genai.services.AsyncResponseGenerator._get_response_json", side_effect=async_mock)
+        mocker.patch(
+            "genai.services.AsyncResponseGenerator._get_response_json",
+            side_effect=async_mock,
+        )
         return async_mock
 
     @pytest.fixture
@@ -29,7 +32,10 @@ class TestModelAsync:
     @pytest.fixture
     def mock_tokenize_json(self, mocker):
         async_mock = AsyncMock()
-        mocker.patch("genai.services.AsyncResponseGenerator._get_response_json", side_effect=async_mock)
+        mocker.patch(
+            "genai.services.AsyncResponseGenerator._get_response_json",
+            side_effect=async_mock,
+        )
         return async_mock
 
     @pytest.fixture
@@ -46,10 +52,15 @@ class TestModelAsync:
         creds = Credentials("TEST_API_KEY")
         mock_generate_json.side_effect = expected
 
-        model = Model("google/flan-ul2", params=generate_params, credentials=creds)
+        model = Model(
+            "google/flan-ul2",
+            params=generate_params,
+            credentials=creds,
+        )
 
         counter = 0
-        responses = list(model.generate_async(prompts))
+        responses = list(model.generate_async(prompts, throw_on_error=True, hide_progressbar=True))
+        assert len(responses) == len(expected)
         for batch_idx in range(len(expected)):
             for result in GenerateResponse(**expected[batch_idx]).results:
                 assert responses[counter] == result

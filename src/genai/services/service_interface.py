@@ -61,9 +61,7 @@ class ServiceInterface:
                 raise GenAiException(response)
             return GenerateLimits(**response.json())
         except ConnectError as e:
-            raise GenAiException(
-                Exception("Endpoint unreachable. Please check connectivity.\nRaw error message = {}".format(e))
-            )
+            raise GenAiException("Endpoint unreachable. Please check connectivity.\nRaw error message = {}".format(e))
         except Exception as e:
             raise to_genai_error(e)
 
@@ -169,7 +167,7 @@ class ServiceInterface:
             endpoint = self.service_url + ServiceInterface.TOU
             return RequestHandler.patch(endpoint, key=self.key, json_data=tou_payload)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     # * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     #   ASYNC

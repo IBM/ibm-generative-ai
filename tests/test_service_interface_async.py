@@ -33,7 +33,10 @@ class TestServiceInterfaceAsync:
         TestCase().assertDictEqual(resp.json, expected_resp)
 
     @pytest.mark.asyncio
-    @patch("genai.services.RequestHandler.async_generate", side_effect=Exception("oh no, an exception"))
+    @patch(
+        "genai.services.RequestHandler.async_generate",
+        side_effect=Exception("oh no, an exception"),
+    )
     async def test_generate_async_with_exception(self, mock):
         with pytest.raises(GenAiException, match="oh no, an exception"):
             await self.service.async_generate(model=self.model, inputs=self.inputs)
