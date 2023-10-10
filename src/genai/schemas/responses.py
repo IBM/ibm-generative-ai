@@ -313,3 +313,8 @@ class ModelCard(GenAiResponseModel):
 
 class ModelList(GenAiResponseModel):
     results: list[ModelCard]
+
+
+class GenerateLimits(GenAiResponseModel):
+    tokenCapacity: int
+    tokensUsed: int

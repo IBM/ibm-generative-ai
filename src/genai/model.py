@@ -1,7 +1,7 @@
 import json
 import logging
 from collections.abc import Generator
-from typing import Any, Callable, Union
+from typing import Any, Callable, Optional, Union
 
 from tqdm import tqdm
 
@@ -29,6 +29,7 @@ from genai.schemas.tunes_params import (
 )
 from genai.services import AsyncResponseGenerator, ServiceInterface
 from genai.services.tune_manager import TuneManager
+from genai.utils.errors import to_genai_error
 from genai.utils.service_utils import _get_service
 
 logger = logging.getLogger(__name__)
@@ -97,10 +98,8 @@ class Model:
                     except Exception:
                         logger.error("Could not parse {} as literal_eval".format(response))
 
-        except GenAiException as me:
-            raise me
         except Exception as ex:
-            raise GenAiException(ex)
+            raise to_genai_error(ex)
 
     def generate_as_completed(
         self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
@@ -142,10 +141,8 @@ class Model:
                         yield result
                 else:
                     raise GenAiException(response_gen)
-        except GenAiException as me:
-            raise me
         except Exception as ex:
-            raise GenAiException(ex)
+            raise to_genai_error(ex)
 
     def generate(self, prompts: Union[list[str], list[PromptPattern]], options: Options = None) -> list[GenerateResult]:
         """The generate endpoint is the centerpiece of the GENAI alpha.
@@ -166,11 +163,12 @@ class Model:
         self,
         prompts: Union[list[str], list[PromptPattern]],
         ordered: bool = False,
-        callback: Callable[[GenerateResult], Any] = None,
+        callback: Optional[Callable[[GenerateResult], Any]] = None,
         hide_progressbar: bool = False,
-        options: Options = None,
+        options: Optional[Options] = None,
         *,
         throw_on_error: bool = False,
+        max_concurrency_limit: Optional[int] = None,
     ) -> Generator[Union[GenerateResult, None], None, None]:
         """The generate endpoint is the centerpiece of the GENAI alpha.
         It provides a simplified and flexible, yet powerful interface to the supported
@@ -185,7 +183,6 @@ class Model:
             callback (Callable[[GenerateResult], Any]): Optional callback
                 to be called after generating result for a prompt.
             hide_progressbar (bool, optional): boolean flag to hide or show a progress bar.
-                By defaul bar will be always shown.
             options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Returns:
@@ -196,31 +193,30 @@ class Model:
 
         params = self._get_params()
         params.stream = False
-        logger.debug(f"Calling Generate Async. Prompts: {prompts}, params: {params}")
+        logger.debug(f"Calling Generate. Prompts: {prompts}, Params: {params}")
 
         try:
             with AsyncResponseGenerator(
-                self.model,
-                prompts,
-                params,
-                self.service,
+                model_id=self.model,
+                prompts=prompts,
+                params=params,
+                service=self.service,
                 ordered=ordered,
                 callback=callback,
                 options=options,
                 throw_on_error=throw_on_error,
-            ) as asynchelper:
+                max_concurrency_limit=max_concurrency_limit,
+            ) as generator:
                 for response in tqdm(
-                    asynchelper.generate_response(),
+                    iterable=generator.generate_response(),
                     total=len(prompts),
                     desc="Progress",
                     unit=" inputs",
                     disable=hide_progressbar,
                 ):
                     yield response
-        except GenAiException as me:
-            raise me
         except Exception as ex:
-            raise GenAiException(ex)
+            raise to_genai_error(ex)
 
     def tokenize_as_completed(
         self,
@@ -259,13 +255,10 @@ class Model:
                     responses = TokenizeResponse(**response_json)
                     for token in responses.results:
                         yield token
-
                 else:
                     raise GenAiException(tokenize_response)
-        except GenAiException as me:
-            raise me
         except Exception as ex:
-            raise GenAiException(ex)
+            raise to_genai_error(ex)
 
     def tokenize(
         self,
@@ -329,10 +322,8 @@ class Model:
             ) as asynchelper:
                 for response in asynchelper.generate_response():
                     yield response
-        except GenAiException as me:
-            raise me
         except Exception as ex:
-            raise GenAiException(ex)
+            raise to_genai_error(ex)
 
     def tune(
         self,

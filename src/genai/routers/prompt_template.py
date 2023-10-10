@@ -1,6 +1,6 @@
 from genai.exceptions import GenAiException
 from genai.options import Options
-from genai.services import RequestHandler
+from genai.services.request_handler import RequestHandler
 
 
 class PromptTemplateRouter:

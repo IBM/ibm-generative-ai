@@ -1,10 +1,13 @@
+import cachetools.func
 from httpx import ConnectError, Response
 
 from genai.exceptions import GenAiException
 from genai.options import Options
 from genai.routers import FilesRouter, PromptTemplateRouter, TunesRouter
 from genai.schemas import GenerateParams, HistoryParams, TokenParams
-from genai.services import RequestHandler
+from genai.schemas.responses import GenerateLimits
+from genai.services.request_handler import RequestHandler
+from genai.utils.errors import to_genai_error
 from genai.utils.request_utils import sanitize_params
 
 __all__ = ["ServiceInterface"]
@@ -16,6 +19,7 @@ class ServiceInterface:
     HISTORY = "/v1/requests"
     TOU = "/v1/user"
     MODELS = "/v1/models"
+    GENERATE_LIMITS = "/v1/generate/limits"
 
     def __init__(self, service_url: str, api_key: str) -> None:
         """Initialize ServiceInterface.
@@ -46,6 +50,20 @@ class ServiceInterface:
             )
         except Exception as e:
             raise GenAiException(e)
+
+    @cachetools.func.ttl_cache(ttl=1000, typed=True, maxsize=None)
+    def generate_limits(self):
+        """Retrieve generate limits for the account associated with current auth token."""
+        try:
+            endpoint = f"{self.service_url}{ServiceInterface.GENERATE_LIMITS}"
+            response = RequestHandler.get(endpoint, key=self.key)
+            if not response.is_success:
+                raise GenAiException(response)
+            return GenerateLimits(**response.json())
+        except ConnectError as e:
+            raise GenAiException("Endpoint unreachable. Please check connectivity.\nRaw error message = {}".format(e))
+        except Exception as e:
+            raise to_genai_error(e)
 
     def generate(
         self,
@@ -149,7 +167,7 @@ class ServiceInterface:
             endpoint = self.service_url + ServiceInterface.TOU
             return RequestHandler.patch(endpoint, key=self.key, json_data=tou_payload)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     # * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     #   ASYNC

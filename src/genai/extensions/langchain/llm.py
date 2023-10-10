@@ -1,9 +1,14 @@
 """Wrapper around IBM GENAI APIs for use in Langchain"""
+import asyncio
 import logging
 import re
+from functools import partial
 from typing import Any, Iterator, List, Mapping, Optional
 
-from langchain.callbacks.manager import CallbackManagerForLLMRun
+from langchain.callbacks.manager import (
+    AsyncCallbackManagerForLLMRun,
+    CallbackManagerForLLMRun,
+)
 from langchain.schema import LLMResult
 from langchain.schema.output import Generation, GenerationChunk
 from pydantic import BaseModel, Extra
@@ -155,6 +160,17 @@ class LangChainInterface(LLM, BaseModel):
             self._update_llm_result(current=result, generation_info=generation.generation_info)
 
         return result
+
+    async def _agenerate(
+        self,
+        prompts: List[str],
+        stop: Optional[List[str]] = None,
+        run_manager: Optional[AsyncCallbackManagerForLLMRun] = None,
+        **kwargs: Any,
+    ) -> LLMResult:
+        return await asyncio.get_running_loop().run_in_executor(
+            None, partial(self._generate, prompts, stop, run_manager, **kwargs)
+        )
 
     def _stream(
         self,

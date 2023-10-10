@@ -1,4 +1,5 @@
 import os
+from urllib.parse import urlparse
 
 import pytest
 from dotenv import load_dotenv
@@ -16,6 +17,12 @@ GENAI_KEY = os.getenv("GENAI_KEY")
 @pytest.fixture
 def credentials(request):
     return Credentials(api_key=GENAI_KEY, api_endpoint=GENAI_API)
+
+
+@pytest.fixture
+def non_mocked_hosts(credentials) -> list:
+    api_endpoint = urlparse(credentials.api_endpoint)
+    return [api_endpoint.hostname]
 
 
 def pytest_exception_interact(node, call, report):

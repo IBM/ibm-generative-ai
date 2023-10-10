@@ -29,7 +29,7 @@ creds = Credentials(api_key, api_endpoint)
 model = Model("google/flan-ul2", params=params, credentials=creds)
 
 greeting = "Hello! How are you?"
-lots_of_greetings = [greeting] * 1000
+lots_of_greetings = [greeting] * 50
 
 # some global state for our call back
 num_of_greetings = len(lots_of_greetings)

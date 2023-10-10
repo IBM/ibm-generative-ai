@@ -18,7 +18,11 @@ class TestRequestHandler:
 
     def test_metadata_post(self, params):
         headers, json_data, _ = RequestHandler._metadata(
-            method="POST", key="API_KEY", model_id=self.model, inputs=self.inputs, parameters=params
+            method="POST",
+            key="API_KEY",
+            model_id=self.model,
+            inputs=self.inputs,
+            parameters=params,
         )
 
         assert "Content-Type" in headers

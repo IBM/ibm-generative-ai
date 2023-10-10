@@ -47,7 +47,9 @@ class TestGenerateService:
     def test_generate_with_invalid_params(self):
         with pytest.raises(ValidationError):
             self.service.generate(
-                model=self.model, inputs=self.inputs, params=GenerateParams(decoding_method="not the right method")
+                model=self.model,
+                inputs=self.inputs,
+                params=GenerateParams(decoding_method="not the right method"),
             )
 
     def test_generate_empty_body(self):
@@ -62,7 +64,10 @@ class TestGenerateService:
         with pytest.raises(TypeError):
             self.service.generate(model=self.model)
 
-    @patch("genai.services.RequestHandler.post", side_effect=Exception("some general error"))
+    @patch(
+        "genai.services.RequestHandler.post",
+        side_effect=Exception("some general error"),
+    )
     def test_generate_general_exception(self, mock):
         with pytest.raises(BaseException, match="some general error"):
             self.service.generate(model="somemodel", inputs=["inputs"])

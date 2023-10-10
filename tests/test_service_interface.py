@@ -31,7 +31,10 @@ class TestServiceInterface:
         assert resp == expected
         assert resp.status_code == 200
 
-    @patch("genai.services.RequestHandler.patch", side_effect=Exception("some general error"))
+    @patch(
+        "genai.services.RequestHandler.patch",
+        side_effect=Exception("some general error"),
+    )
     def test_tou_exception(self, mock):
         with pytest.raises(BaseException, match="some general error"):
             self.service.terms_of_use(True)

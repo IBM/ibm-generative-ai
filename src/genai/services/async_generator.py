@@ -4,11 +4,13 @@ import logging
 from concurrent.futures import ThreadPoolExecutor
 from queue import Queue
 from signal import SIGINT, SIGTERM, signal
+from typing import Optional
 
 from genai.exceptions import GenAiException
 from genai.options import Options
 from genai.schemas.responses import GenerateResponse, TokenizeResponse
 from genai.services.connection_manager import ConnectionManager
+from genai.services.service_interface import ServiceInterface
 from genai.utils.errors import to_genai_error
 
 logger = logging.getLogger(__name__)
@@ -22,13 +24,14 @@ class AsyncResponseGenerator:
         model_id,
         prompts,
         params,
-        service,
+        service: ServiceInterface,
         fn="generate",
         ordered=False,
         callback=None,
-        options: Options = None,
+        options: Optional[Options] = None,
         *,
         throw_on_error: bool = False,
+        max_concurrency_limit: Optional[int] = None,
     ):
         """Instantiates the ConcurrentWrapper Interface.
 
@@ -49,28 +52,28 @@ class AsyncResponseGenerator:
         self.ordered = ordered
         self.options = options
         self.throw_on_error = throw_on_error
-        self.tokenize_client_close_fn_ = None
-        self.generate_client_close_fn_ = None
+        self._client_close_fn = None
         self._is_terminating = False
+        self._max_concurrency_limit = max_concurrency_limit
 
     def __enter__(self):
-        self.accumulator = []
+        self._accumulator = []
         self._initialize_fn_specific_params()
-        self.queue_ = Queue()
-        self.loop_ = asyncio.new_event_loop()
+        self._queue = Queue()
+        self._loop = asyncio.new_event_loop()
         self._is_terminating = False
         return self
 
     def _shutdown(self):
-        pending = asyncio.all_tasks(self.loop_)
+        pending = asyncio.all_tasks(self._loop)
         for t in pending:
             t.cancel()
-        if self.loop_.is_running():
-            self.loop_.stop()
-        while not self.queue_.empty():
-            _ = self.queue_.get()
-            self.queue_.task_done()
-        self.queue_.join()
+        if self._loop.is_running():
+            self._loop.stop()
+        while not self._queue.empty():
+            _ = self._queue.get()
+            self._queue.task_done()
+        self._queue.join()
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         try:
@@ -81,26 +84,24 @@ class AsyncResponseGenerator:
 
     def _initialize_fn_specific_params(self):
         if self.fn == "generate":
-            self.batch_size_ = 1
-            self.num_batches_ = len(self.prompts)
-            self.message_type_ = GenerateResponse
-            self.service_fn_ = self.service.async_generate
-            self.max_active_tasks_ = ConnectionManager.MAX_CONCURRENT_GENERATE
+            self._batch_size = 1
+            self._num_batches = len(self.prompts)
+            self._message_type = GenerateResponse
+            self._service_fn = self.service.async_generate
             ConnectionManager.make_generate_client()
-            self.generate_client_close_fn_ = ConnectionManager.delete_generate_client
+            self._client_close_fn = ConnectionManager.delete_generate_client
         elif self.fn == "tokenize":
-            self.batch_size_ = 5
-            a, b = divmod(len(self.prompts), self.batch_size_)
-            self.num_batches_ = a + (b > 0)
-            self.message_type_ = TokenizeResponse
-            self.service_fn_ = self.service.async_tokenize
-            self.max_active_tasks_ = ConnectionManager.MAX_REQ_PER_SECOND_TOKENIZE
+            self._batch_size = 5
+            a, b = divmod(len(self.prompts), self._batch_size)
+            self._num_batches = a + (b > 0)
+            self._message_type = TokenizeResponse
+            self._service_fn = self.service.async_tokenize
             ConnectionManager.make_tokenize_client()
-            self.tokenize_client_close_fn_ = ConnectionManager.delete_tokenize_client
+            self._client_close_fn = ConnectionManager.delete_tokenize_client
 
     def _generate_batch(self):
-        for i in range(0, len(self.prompts), self.batch_size_):
-            yield self.prompts[i : min(i + self.batch_size_, len(self.prompts))]
+        for i in range(0, len(self.prompts), self._batch_size):
+            yield self.prompts[i : min(i + self._batch_size, len(self.prompts))]
 
     def _process_response(self, response, batch_size):
         if response is None:
@@ -112,7 +113,7 @@ class AsyncResponseGenerator:
 
     async def _get_response_json(self, model, inputs, params, options):
         try:
-            response_raw = await self.service_fn_(model, inputs, params, options)
+            response_raw = await self._service_fn(model, inputs, params, options)
             response = response_raw.json()
             if response_raw and (200 < response_raw.status_code or response_raw.status_code > 299):
                 raise Exception(response)
@@ -124,66 +125,82 @@ class AsyncResponseGenerator:
         return response
 
     async def _task(self, inputs, batch_num):
-        async with self.semaphore_:
-            if self._is_terminating:
-                self.queue_.put_nowait(
-                    (
-                        batch_num,
-                        len(inputs),
-                        None,
-                        GenAiException("Generation has been aborted by the user."),
-                    )
+        if self._is_terminating:
+            self._queue.put_nowait(
+                (
+                    batch_num,
+                    len(inputs),
+                    None,
+                    GenAiException("Generation has been aborted by the user."),
                 )
-                return
+            )
+            return
 
-            response = None
-            try:
-                response = await self._get_response_json(self.model_id, inputs, self.params, self.options)
-                logger.debug("Received response = {}".format(response))
-                for i in range(len(response["results"])):
-                    response["results"][i]["input_text"] = inputs[i]
-                response = self.message_type_(**response)
-                logger.debug("Cast to Response = {}".format(response))
-            except Exception as e:
-                logger.error(
-                    "Exception raised async_generate and casting : {}, response = {}, inputs = {}".format(
-                        str(e), response, inputs
-                    )
+        response = None
+        try:
+            response = await self._get_response_json(self.model_id, inputs, self.params, self.options)
+            logger.debug("Received response = {}".format(response))
+            for i in range(len(response["results"])):
+                response["results"][i]["input_text"] = inputs[i]
+            response = self._message_type(**response)
+            logger.debug("Cast to Response = {}".format(response))
+        except Exception as e:
+            logger.error(
+                "Exception raised async_generate and casting : {}, response = {}, inputs = {}".format(
+                    str(e), response, inputs
                 )
-                self.queue_.put_nowait((batch_num, len(inputs), None, to_genai_error(e)))
-                return
-            try:
-                self.queue_.put_nowait((batch_num, len(inputs), response, None))
-                if self.callback is not None:
-                    for result in response.results:
-                        self.callback(result)
-            except Exception as e:
-                logger.error(
-                    "Exception raised in callback : {}, response = {}, inputs = {}".format(str(e), response, inputs)
-                )
+            )
+            self._queue.put_nowait((batch_num, len(inputs), None, to_genai_error(e)))
+            return
+        try:
+            self._queue.put_nowait((batch_num, len(inputs), response, None))
+            if self.callback is not None:
+                for result in response.results:
+                    self.callback(result)
+        except Exception as e:
+            logger.error(
+                "Exception raised in callback : {}, response = {}, inputs = {}".format(str(e), response, inputs)
+            )
 
     async def _schedule_requests(self):
+        async def get_limits():
+            if self.fn == "tokenize":
+                return len(self.prompts)
+
+            limits = self.service.generate_limits()
+            tokens_remaining = limits.tokenCapacity - limits.tokensUsed
+            if self._max_concurrency_limit is not None and self._max_concurrency_limit > 0:
+                return min(self._max_concurrency_limit, tokens_remaining)
+            return tokens_remaining
+
         tasks = []
-        batch_num = 0
-        self.semaphore_ = asyncio.Semaphore(self.max_active_tasks_)
-        for batch in self._generate_batch():
-            logger.debug("Creating task for batch_num {}".format(batch_num))
-            task = asyncio.create_task(self._task(batch, batch_num))
+        remaining_tokens = await get_limits()
+        for idx, batch in enumerate(self._generate_batch()):
+            while remaining_tokens <= 0:
+                await asyncio.sleep(1)
+                remaining_tokens = await get_limits()
+
+            remaining_tokens -= 1
+            logger.debug("Creating task for batch_num {}".format(idx))
+            task = asyncio.create_task(self._task(batch, idx))
             tasks.append(task)
-            batch_num += 1
+
         await asyncio.gather(*tasks)
 
     def _request_launcher(self):
-        asyncio.set_event_loop(self.loop_)
-        self.loop_.run_until_complete(self._schedule_requests())
-        self.loop_.run_until_complete(self._cleanup())
+        try:
+            asyncio.set_event_loop(self._loop)
+            self._loop.run_until_complete(self._schedule_requests())
+        except Exception as ex:
+            self.throw_on_error = True
+            self._queue.put_nowait((1, 1, None, ex))
+            raise ex
+        finally:
+            self._loop.run_until_complete(self._cleanup())
 
     async def _cleanup(self):
-        if self.generate_client_close_fn_ is not None:
-            await self.generate_client_close_fn_()
-
-        if self.tokenize_client_close_fn_ is not None:
-            await self.tokenize_client_close_fn_()
+        if self._client_close_fn is not None:
+            await self._client_close_fn()
 
     def generate_response(
         self,
@@ -206,14 +223,16 @@ class AsyncResponseGenerator:
             signal(SIGTERM, init_termination)
             signal(SIGINT, init_termination)
 
-            executor.submit(self._request_launcher)
+            task = executor.submit(self._request_launcher)
 
             counter = 0
             minheap, batch_tracker = [], 0
-            while counter < self.num_batches_:
+            while counter < self._num_batches:
                 try:
-                    batch_num, batch_size, response, error = self.queue_.get()
-                    self.queue_.task_done()
+                    batch_num, batch_size, response, error = self._queue.get()
+                    self._queue.task_done()
+                    if task.exception() is not None:
+                        raise task.exception()
                 except Exception as ex:
                     logger.error("Exception while reading from queue: {}".format(str(ex)))
                     raise ex
