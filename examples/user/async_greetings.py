@@ -40,7 +40,6 @@ for result in model.generate_async(
     ordered=True,
     throw_on_error=True,
     hide_progressbar=False,
-    max_concurrency_limit=1,
 ):
     num_said_greetings += 1
     print(f"[Progress {str(float(num_said_greetings/num_of_greetings)*100)}%]")

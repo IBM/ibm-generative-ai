@@ -162,7 +162,7 @@ class Model:
     def generate_async(
         self,
         prompts: Union[list[str], list[PromptPattern]],
-        ordered: bool = True,
+        ordered: bool = False,
         callback: Optional[Callable[[GenerateResult], Any]] = None,
         hide_progressbar: bool = False,
         options: Optional[Options] = None,
