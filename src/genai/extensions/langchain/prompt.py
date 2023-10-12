@@ -22,8 +22,6 @@ class PromptExtension:
 
     def as_template(self):
         """Convert genai PromptPattern to langchain PromptTemplate.
-        Args:
-            pattern (PromptPattern): An instance of genai prompt pattern.
         Returns:
             PromptTemplate: An instance of langchain PromptTemplate.
         """

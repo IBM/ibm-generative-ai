@@ -76,8 +76,8 @@ class LocalLLMServer:
         self.app = FastAPI(
             title="IBM Generative AI Local Model Server",
             debug=False,
-            openapi_url=False,
-            docs_url=False,
+            openapi_url=None,
+            docs_url=None,
             redoc_url=None,
         )
         self.router = APIRouter()

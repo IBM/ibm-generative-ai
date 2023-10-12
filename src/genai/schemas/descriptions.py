@@ -73,7 +73,6 @@ class TunesAPIDescriptions:
     VERBALIZER = "Verbalizer template to be used for formatting data at train and inference time. This template may use double brackets to indicate where fields from training data should be rendered. The template can contain one or both of {{input}} and {{output}}. Defaults to {{input}}."
     OFFSET = "Specifies the starting position in the collection. Defaults to 0."
     LIMIT = "Specifies the maximum number of items in the collection that should be returned. Defaults to 100. Maximum is 100."
-    SEARCH = "Filters the items to be returned based on their name."
     STATUS = "Filters the items to be returned based on their status. Possible values are: INITIALIZING, NOT_STARTED, PENDING, HALTED, RUNNING, QUEUED, COMPLETED, FAILED."
     INIT_METHOD = "Initialization method to be used. Possible values are RANDOM or TEXT. Defaults to RANDOM. Used only if the method_id is 'pt' = Prompt Tuning."
     INIT_TEXT = "Initialization text to be used. This is only applicable if init_method == TEXT. Used only if the method_id is 'pt' = Prompt Tuning."

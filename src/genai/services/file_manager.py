@@ -1,7 +1,6 @@
 import logging
 import os
 from collections import OrderedDict
-from typing import Union
 
 from genai.credentials import Credentials
 from genai.exceptions.genai_exception import GenAiException
@@ -78,20 +77,18 @@ class FileManager:
             raise GenAiException(e)
 
     @staticmethod
-    def read_file(
-        file_id: str, credentials: Credentials = None, service: ServiceInterface = None
-    ) -> Union[list[dict], dict]:
+    def read_file(file_id: str, credentials: Credentials = None, service: ServiceInterface = None) -> str:
         """Read a file from the server and return the file content.
 
         Args:
             file_id (str): File id or list of file ids.
             credentials (Credentials, optional): Credentials object. Defaults to None.
-                If not providec, service must be provided.
+                If not provided, service must be provided.
             service (ServiceInterface, optional): ServiceInterface object. Defaults to None.
                 If not provided, credentials must be provided.
 
         Returns:
-            Union[list[dict], dict]: File content.
+            str: File content.
         """
         service = _get_service(credentials, service)
 
@@ -187,9 +184,15 @@ class FileManager:
             raise GenAiException(e)
 
     @staticmethod
-    def _validate_mmultipart_form_data_order(form_data: dict):
-        "To upload a file, the required body needs to be in a specific order."
-        "purpose needs to be placed before file in the multipart/form-data payload."
+    def _validate_mmultipart_form_data_order(form_data: dict) -> dict:
+        """
+        To upload a file, the required body needs to be in a specific order.
+        'purpose' needs to be placed before 'file' in the multipart/form-data payload.
+        Args:
+            form_data (dict): Dictionary with the form data.
+        Returns:
+            dict: Dictionary with the form data in the correct order.
+        """
         desired_order = ["purpose", "file"]
 
         if list(form_data.keys()) != desired_order:

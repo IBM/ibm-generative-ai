@@ -27,7 +27,6 @@ class ServiceInterface:
         Args:
             service_url (str): Base URL for querying.
             api_key (str): User API key for authorization.
-            use_async (bool): Use async version of methods
         """
         self.service_url = service_url.rstrip("/")
         self.key = api_key
@@ -114,6 +113,7 @@ class ServiceInterface:
             model (str): Model id.
             inputs (list): List of inputs.
             params (TokenParams, optional): Parameters for generation. Defaults to None.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Returns:
             Any: json from querying for tokenization.
@@ -179,6 +179,7 @@ class ServiceInterface:
             model (str): Model id.
             inputs (list): List of inputs.
             params (GenerateParams, optional): Parameters for generation. Defaults to None.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Returns:
             Any: json from querying for text completion.
@@ -205,6 +206,7 @@ class ServiceInterface:
             model (str): Model id.
             inputs (list): List of inputs.
             params (TokenParams, optional): Parameters for generation. Defaults to None.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Returns:
             Any: json from querying for tokenization.

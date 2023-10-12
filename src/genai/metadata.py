@@ -13,7 +13,7 @@ class Metadata:
     DEFAULT_MAX_PROMPTS = 5
 
     def __init__(self, credentials: Credentials):
-        """Get's metadata for service backing the Model class.
+        """Gets metadata for service backing the Model class.
 
         Args:
             credentials (Credentials): The API Credentials

@@ -86,7 +86,7 @@ class PromptPattern:
         cls,
         credentials: Credentials,
         name: str = None,
-        template: dict = None,
+        template: str = None,
         id: str = None,
     ):
         # Cases :
@@ -158,8 +158,6 @@ class PromptPattern:
     def validate(self):
         """
         Validate if the yaml at apiVersion is correct.
-        Args:
-            dict: yaml
         Returns:
             returns True if passes and raises Exception otherwise
         """
@@ -256,10 +254,9 @@ class PromptPattern:
             List[PromptPattern] : List of PromptPattern
         """
 
-        strategy = "sequential"
         start_index = 0
         n = -1
-        return self.sub_from_json(json_path, key_to_var, strategy, start_index, n, encoding)
+        return self.sub_from_json(json_path, key_to_var, "sequential", start_index, n, encoding)
 
     def sub_from_json(
         self,
@@ -386,10 +383,9 @@ class PromptPattern:
             List[PromptPattern] : List of PromptPattern
         """
 
-        strategy = "sequential"
         start_index = 0
         n = -1
-        return self.sub_from_csv(csv_path, col_to_var, headers, strategy, start_index, n, encoding, delimiter)
+        return self.sub_from_csv(csv_path, col_to_var, headers, "sequential", start_index, n, encoding, delimiter)
 
     def _json_infer_mode_helper(self, first_dict):
         vars = self.find_vars()
@@ -430,7 +426,7 @@ class PromptPattern:
         If the number of prompts is zero, raise an exception.
 
         Args:
-            prompt (list): List of prompts to be checked.
+            prompts (list): List of prompts to be checked.
             n (int): Number of prompts to be generated.
 
         Returns:
@@ -540,7 +536,7 @@ class PromptPattern:
                 where the list against each column is a list of variables which can be substituted from
                 that column.
             headers (bool, Optional): Indicates if the csv contains a header row. Only used if inferring col_to_var.
-                Defalts to True.
+                Defaults to True.
             strategy (Literal[sequential, sample, random], optional): Define how the template will be populated from
                 the given csv.
                 Sequential  : sequentially subs the template's variables from the json, starting at a given start_index.
@@ -582,7 +578,6 @@ class PromptPattern:
 
             PromptPattern.validate_start_index(strategy, start_index, data)
 
-            complete_pt = []
             complete_pt = self._sub_from_tabular_data(data, columns, col_to_var, start_index, n, strategy)
 
         # if n == 1, return a single PromptPattern
@@ -594,9 +589,7 @@ class PromptPattern:
         if not self.watsonx:
             raise GenAiException("Method only available for watsonx prompt templates.")
 
-        _data = {}
-        _data["value"] = self.watsonx.value
-        _data["data"] = data
+        _data = {"value": self.watsonx.value, "data": data}
 
         return PromptTemplateManager.render_watsonx_prompts(credentials=self.credentials, inputs=inputs, data=_data)
 

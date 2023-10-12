@@ -1,6 +1,5 @@
 def watsonx_payload(template, data=None, files=None):
-    _dict = {}
-    _dict["data"] = {}
+    _dict = {"data": {}}
 
     try:
         _dict["id"] = template.watsonx.id

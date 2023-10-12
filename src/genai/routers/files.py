@@ -83,6 +83,6 @@ class FilesRouter:
         """
         try:
             endpoint = self.service_url + FilesRouter.FILES
-            return RequestHandler.post(endpoint, key=self.key, files=multipart_form_data)
+            return RequestHandler.post(endpoint, key=self.key, files=dict(multipart_form_data))
         except Exception as e:
             raise GenAiException(e)

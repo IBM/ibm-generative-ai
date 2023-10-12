@@ -19,7 +19,6 @@ from genai.schemas.responses import (
     ModelList,
     TokenizeResponse,
     TokenizeResult,
-    TuneGetResponse,
 )
 from genai.schemas.tunes_params import (
     CreateTuneHyperParams,
@@ -184,7 +183,7 @@ class Model:
                 to be called after generating result for a prompt.
             hide_progressbar (bool, optional): boolean flag to hide or show a progress bar.
             options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
-
+            throw_on_error(bool, optional): Throws error on failure.
         Returns:
             Generator[Union[GenerateResult, None]]: A list of results
         """
@@ -230,8 +229,9 @@ class Model:
         vocabulary size.
 
         Args:
+            prompts (Union[list[str], list[PromptPattern]]): Prompts to be tokenized.
             return_tokens (bool, optional): Return tokens with the response. Defaults to False.
-
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
         Yields:
             Generator[TokenizeResult]: The Tokenized input
         """
@@ -274,6 +274,7 @@ class Model:
         Args:
             prompts (list[str]): The list of one or more prompt strings.
             return_tokens (bool, optional): Return tokens with the response. Defaults to False.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Returns:
             list[TokenizeResult]: The Tokenized input
@@ -299,6 +300,7 @@ class Model:
             ordered (bool): Whether the responses should be returned in-order.
             callback (Callable[[TokenizeResult], Any]): Callback to call for each result.
             return_tokens (bool, optional): Return tokens with the response. Defaults to False.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Returns:
             Generator[Union[TokenizeResult, None]]: The Tokenized input
@@ -362,7 +364,7 @@ class Model:
         tune = TuneManager.create_tune(service=self.service, params=params)
         return Model(model=tune.id, params=None, credentials=self.creds)
 
-    def status(self) -> TuneGetResponse:
+    def status(self) -> str:
         """Get status of a tuned model.
 
         Returns:

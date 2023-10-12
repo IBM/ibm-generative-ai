@@ -56,7 +56,9 @@ class TuneManager:
             raise GenAiException(e)
 
     @staticmethod
-    def get_tune(tune_id: str, credentials: Credentials = None, service: ServiceInterface = None) -> TuneGetResponse:
+    def get_tune(
+        tune_id: str, credentials: Credentials = None, service: ServiceInterface = None
+    ) -> TuneInfoResult | None:
         """Get a tune from the server.
 
         Args:

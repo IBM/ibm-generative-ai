@@ -25,6 +25,7 @@ def json_extract(obj, key, join: bool = False):
     Args:
         obj : JSON tree where we are looking for the key
         key (string): The kwy we are looking for
+        join (bool, optional): If True, the values are returned as a string. Defaults to False.
 
     Returns:
         string | list : Values for the given key. Can be returned as string or list of string
