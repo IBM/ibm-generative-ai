@@ -13,7 +13,7 @@ class ConnectionManager:
     MAX_RETRIES_GENERATE = 3
     TIMEOUT_GENERATE = 600
     MAX_RETRIES_TOKENIZE = 3
-    MAX_REQ_PER_SECOND_TOKENIZE = 20
+    MAX_REQ_PER_SECOND_TOKENIZE = 10
     TIMEOUT = 600
 
     async_generate_client: AsyncClient = None
