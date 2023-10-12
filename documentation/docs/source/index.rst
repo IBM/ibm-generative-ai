@@ -1,9 +1,9 @@
-IBM Generative AI Python SDK
+IBM Generative AI Python SDK (Tech Preview)
 ==================================
 
 This is the Python SDK for IBM Foundation Models Studio to bring IBM Generative AI into Python programs and to also extend it with useful operations and types.
 
-This is an early access library and requires invitation to use the technical preview of `watsonx.ai <https://watsonx.ai/>`_. You can join the waitlist by visiting https://www.ibm.com/products/watsonx-ai.
+You can start a trial version or request a demo via https://www.ibm.com/products/watsonx-ai.
 
 
 .. toctree::
