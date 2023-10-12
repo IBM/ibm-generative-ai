@@ -14,7 +14,12 @@ authors = [
   {name="Onkar Bhardwaj", email="onkarbhardwaj@ibm.com"},
   {name="James Sutton", email="james.sutton@uk.ibm.com"},
   {name="Ja Young Lee", email="younglee@ibm.com"},
-  {name="Adriana Meza Soria", email="adriana.meza.soria@ibm.com"}
+  {name="Adriana Meza Soria", email="adriana.meza.soria@ibm.com"},
+  {name = "Tomas Dvorak", email = "tomas.dvorak@ibm.com"},
+  {name = "David Kristek", email = "david.kristek@ibm.com"},
+]
+maintainers = [
+  {name = "Tomas Dvorak", email = "tomas.dvorak@ibm.com"},
 ]
 description = "IBM Generative AI is a Python library built on IBM's large language model REST interface."
 readme = "README.md"
