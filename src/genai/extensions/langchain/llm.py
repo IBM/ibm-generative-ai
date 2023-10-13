@@ -1,7 +1,6 @@
 """Wrapper around IBM GENAI APIs for use in Langchain"""
 import asyncio
 import logging
-import re
 from functools import partial
 from typing import Any, Iterator, List, Mapping, Optional
 
@@ -148,9 +147,6 @@ class LangChainInterface(LLM, BaseModel):
             prompts=prompts,
             **kwargs,
         ):
-            if params.stop_sequences:
-                response.generated_text = self._enforce_stop_tokens(response.generated_text, params.stop_sequences)
-
             generation = Generation(
                 text=response.generated_text or "",
                 generation_info=self._create_full_generation_info(response.dict()),
@@ -197,8 +193,6 @@ class LangChainInterface(LLM, BaseModel):
 
         model = Model(model=self.model, params=params, credentials=self.credentials)
         for response in model.generate_stream(prompts=[prompt], **kwargs):
-            if params.stop_sequences:
-                response.generated_text = self._enforce_stop_tokens(response.generated_text, params.stop_sequences)
             logger.info("Chunk received: {}".format(response.generated_text))
             yield GenerationChunk(
                 text=response.generated_text or "",
@@ -206,11 +200,3 @@ class LangChainInterface(LLM, BaseModel):
             )
             if run_manager:
                 run_manager.on_llm_new_token(token=response.generated_text, response=response)
-
-    def _enforce_stop_tokens(self, text: Optional[str], stop: List[str]):
-        """Cut off the text as soon as any stop words occur."""
-        if not stop:
-            return text or ""
-
-        escaped_stop_sequences = [re.escape(s) for s in stop]
-        return re.split("|".join(escaped_stop_sequences), text or "", 1)[0]

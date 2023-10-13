@@ -16,6 +16,7 @@ class Descriptions:
         "Include rank of each returned token. Applicable only if generated_tokens == true and/or input_tokens == true."
     )
     TOP_N_TOKENS = "Include top n candidate tokens at the position of each returned token. The maximum value permitted is 5, but more may be returned if there is a tie for nth place. Applicable only if generated_tokens == true and/or input_tokens == true."
+    STOP_SEQUENCE = "Include the concrete stop sequence which caused the generation to stop."
 
     # Params.Generate
     DECODING_METHOD = (
@@ -35,6 +36,7 @@ class Descriptions:
     REPETITION_PENALTY = "The parameter for repetition penalty. 1.0 means no penalty."
     TRUNCATE_INPUT_TOKENS = "Truncate to this many input tokens. Can be used to avoid requests failing due to input being longer than configured limits. Zero means don't truncate."
     BEAM_WIDTH = "Multiple output sequences of tokens are generated, using your decoding selection, and then the output sequence with the highest overall probability is returned. When beam search is enabled, there will be a performance penalty, and Stop sequences will not be available."  # noqa
+    INCLUDE_STOP_SEQUENCE = "Include stop sequence in the generated output."
 
     # Params.Token
     RETURN_TOKEN = "Return tokens with the response. Defaults to false."

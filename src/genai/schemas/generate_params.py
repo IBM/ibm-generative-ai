@@ -28,6 +28,7 @@ class ReturnOptions(BaseModel):
     token_logprobs: Optional[bool] = Field(None, description=tx.TOKEN_LOGPROBS)
     token_ranks: Optional[bool] = Field(None, description=tx.TOKEN_RANKS)
     top_n_tokens: Optional[int] = Field(None, description=tx.TOP_N_TOKENS)
+    stop_tokens: Optional[str] = Field(None, description=tx.STOP_SQUENCES)
 
 
 class Return(ReturnOptions):
@@ -85,3 +86,4 @@ class GenerateParams(BaseModel):
     return_options: Optional[ReturnOptions] = Field(None, description=tx.RETURN)
     returns: Optional[Return] = Field(None, description=tx.RETURN, alias="return", deprecated=True)
     moderations: Optional[ModerationsOptions] = Field(None, description=tx.MODERATIONS)
+    include_stop_sequence: Optional[bool] = Field(None, description=tx.INCLUDE_STOP_SEQUENCE)
