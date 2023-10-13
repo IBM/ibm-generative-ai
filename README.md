@@ -1,11 +1,13 @@
-# IBM Generative AI Python SDK
+# IBM Generative AI Python SDK (Tech Preview)
 
 
-This is the Python SDK for IBM Foundation Models Studio to bring IBM Generative AI (GenAI) into Python programs and to also extend it with useful operations and types.
+This is not the [watsonx.ai](https://www.ibm.com/products/watsonx-ai) Python SDK. This is the Python SDK for the Tech Preview program for IBM Foundation Models Studio. This SDK brings IBM Generative AI (GenAI) into Python programs and provides useful operations and types.
+
 
 :books:	**API Documentation: [Link](https://ibm.github.io/ibm-generative-ai/)**
 
 *You can start a trial version or request a demo via https://www.ibm.com/products/watsonx-ai.*
+*Looking for the [watsonx.ai](https://www.ibm.com/products/watsonx-ai) Python SDK? Check out https://ibm.github.io/watson-machine-learning-sdk/foundation_models.html.*
 
 *Looking for the JavaScript/TypeScript version? Check out https://github.com/IBM/ibm-generative-ai-node-sdk.*
 *Looking for a command-line interface? Check out [IBM Generative AI CLI](https://github.com/IBM/ibm-generative-ai-cli).*
