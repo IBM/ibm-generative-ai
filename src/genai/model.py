@@ -289,6 +289,8 @@ class Model:
         callback: Callable[[TokenizeResult], Any] = None,
         return_tokens: bool = False,
         options: Options = None,
+        *,
+        throw_on_error: bool = False,
     ) -> Generator[Union[TokenizeResult, None]]:
         """The tokenize endpoint allows you to check the conversion of provided prompts to tokens
         for a given model. It splits text into words or subwords, which then are converted to ids
@@ -322,6 +324,7 @@ class Model:
                 ordered=ordered,
                 callback=callback,
                 options=options,
+                throw_on_error=throw_on_error,
             ) as asynchelper:
                 for response in asynchelper.generate_response():
                     yield response
