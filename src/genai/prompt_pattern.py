@@ -345,13 +345,7 @@ class PromptPattern:
 
                 start_index += len(variables)
 
-        if n == 1:
-            if len(complete_pt) == 0:
-                raise GenAiException("Could not produce a prompt from given parameters.")
-            self.__dict__ = copy.deepcopy(complete_pt[0].__dict__)
-            return self
-
-        return complete_pt
+        return self._return_single_prompt_or_completed_list(complete_pt, n)
 
     def sub_all_from_csv(
         self,
@@ -420,7 +414,7 @@ class PromptPattern:
 
         return col_to_var, columns
 
-    def _return_single_prompt_from_completed_list(self, prompts: list, n: int):
+    def _return_single_prompt_or_completed_list(self, prompts: list, n: int):
         """
         Return a single PromptTemplate is the requested number is one, changing the list of prompts as a single prompt.
         If the number of prompts is zero, raise an exception.
@@ -438,6 +432,8 @@ class PromptPattern:
                 raise GenAiException("Could not produce a prompt from given parameters.")
             self.__dict__ = copy.deepcopy(prompts[0].__dict__)
             return self
+        else:
+            return prompts
 
     def _random_row_idx_helper(self, data: list[list[str]]) -> list:
         """
@@ -461,7 +457,7 @@ class PromptPattern:
         start_index: int = 0,
         n: int = 1,
         strategy: Literal["random", "sequential", "sample"] = "sequential",
-    ) -> list["PromptPattern"]:
+    ) -> Union["PromptPattern", list["PromptPattern"]]:
         """
         Substitutes variables from a tabular data.
         Returns a complete prompt if n=1, else returns a list of prompts.
@@ -510,7 +506,7 @@ class PromptPattern:
 
             start_index += len(variables)
 
-        return complete_prompt
+        return self._return_single_prompt_or_completed_list(complete_prompt, n)
 
     def sub_from_csv(
         self,
@@ -579,9 +575,6 @@ class PromptPattern:
             PromptPattern.validate_start_index(strategy, start_index, data)
 
             complete_pt = self._sub_from_tabular_data(data, columns, col_to_var, start_index, n, strategy)
-
-        # if n == 1, return a single PromptPattern
-        self._return_single_prompt_from_completed_list(complete_pt, n)
 
         return complete_pt
 

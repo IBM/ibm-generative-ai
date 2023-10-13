@@ -148,7 +148,7 @@ class TestPromptPattern:
         pt = PromptPattern.from_file(self.asset_path + "csv_file.yaml")
 
         path = self.asset_path + "csv_file.csv"
-        pt.sub_from_csv(
+        res = pt.sub_from_csv(
             csv_path=path,
             strategy="random",
             col_to_var={
@@ -158,6 +158,7 @@ class TestPromptPattern:
             },
         )
 
+        assert isinstance(res, PromptPattern) is True
         assert str(pt).replace("\n", "") == "aa,aa,cc,bb,"
 
     def test_sub_from_rand_row(self):

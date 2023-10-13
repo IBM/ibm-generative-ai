@@ -183,7 +183,8 @@ class Model:
                 to be called after generating result for a prompt.
             hide_progressbar (bool, optional): boolean flag to hide or show a progress bar.
             options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
-            throw_on_error(bool, optional): Throws error on failure.
+            throw_on_error (bool, optional): Throws error on failure. Defaults to False.
+            max_concurrency_limit (int, optional): Maximum number of concurrent requests to make. Defaults to None.
         Returns:
             Generator[Union[GenerateResult, None]]: A list of results
         """

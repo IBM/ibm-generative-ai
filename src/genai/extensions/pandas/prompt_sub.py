@@ -25,7 +25,7 @@ class PandasExtension:
         strategy: Literal["random", "sequential", "sample"] = "sequential",
         start_index: int = 0,
         n: int = 1,  # prompt number to be returned - Optional
-    ) -> list["PromptPattern"]:
+    ) -> Union["PromptPattern", list["PromptPattern"]]:
         """
         Substitutes variables in the prompt pattern with values from a dataframe.
 
@@ -76,12 +76,7 @@ class PandasExtension:
 
         self._obj.validate_start_index(strategy, start_index, data)
 
-        complete_pt = self._obj._sub_from_tabular_data(data, columns, col_to_var, start_index, n, strategy)
-
-        # if n == 1, return a single PromptPattern
-        self._obj._return_single_prompt_from_completed_list(complete_pt, n)
-
-        return complete_pt
+        return self._obj._sub_from_tabular_data(data, columns, col_to_var, start_index, n, strategy)
 
     def sub_all_from_dataframe(
         self,

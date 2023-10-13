@@ -6,6 +6,7 @@ from genai.schemas.responses import (
     WatsonxTemplatesResponse,
 )
 from genai.services import ServiceInterface
+from genai.utils import to_genai_error
 
 
 class PromptTemplateManager:
@@ -33,7 +34,7 @@ class PromptTemplateManager:
                 return response_result
             raise GenAiException(response)
         except Exception as ex:
-            raise GenAiException(ex)
+            raise to_genai_error(ex)
 
     @staticmethod
     def render_watsonx_prompts(credentials: Credentials, inputs: list = None, data: dict = {}) -> list[str]:
