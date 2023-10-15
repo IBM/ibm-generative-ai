@@ -5,6 +5,7 @@ from genai.exceptions import GenAiException
 from genai.schemas.history_params import HistoryParams
 from genai.schemas.responses import HistoryResponse, TermsOfUse
 from genai.services import ServiceInterface
+from genai.utils.errors import to_genai_error
 
 logger = logging.getLogger(__name__)
 
@@ -37,10 +38,8 @@ class Metadata:
                 return tou_data
             else:
                 raise GenAiException(tou_response)
-        except GenAiException as me:
-            raise me
         except Exception as ex:
-            raise GenAiException(ex)
+            raise to_genai_error(ex)
 
     def get_history(self, params: HistoryParams = HistoryParams()) -> HistoryResponse:
         """The requests endpoint provides the ability to retrieve past generation requests
@@ -62,7 +61,5 @@ class Metadata:
                 return history_data
             else:
                 raise GenAiException(history_response)
-        except GenAiException as me:
-            raise me
         except Exception as ex:
-            raise GenAiException(ex)
+            raise to_genai_error(ex)

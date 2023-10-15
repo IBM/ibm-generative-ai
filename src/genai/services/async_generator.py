@@ -120,7 +120,7 @@ class AsyncResponseGenerator:
         except Exception as ex:
             logger.error("Error in _get_response_json {}: {}".format(type(ex), str(ex)))
             if self.throw_on_error:
-                raise ex
+                raise to_genai_error(ex)
             response = None
         return response
 
@@ -194,7 +194,7 @@ class AsyncResponseGenerator:
         except Exception as ex:
             self.throw_on_error = True
             self._queue.put_nowait((1, 1, None, ex))
-            raise ex
+            raise to_genai_error(ex)
         finally:
             self._loop.run_until_complete(self._cleanup())
 
@@ -235,7 +235,7 @@ class AsyncResponseGenerator:
                         raise task.exception()
                 except Exception as ex:
                     logger.error("Exception while reading from queue: {}".format(str(ex)))
-                    raise ex
+                    raise to_genai_error(ex)
                 else:
                     counter += 1
                     # FUTURE: Add metadata here as follows if necessary:
@@ -265,4 +265,4 @@ class AsyncResponseGenerator:
                             break
                 except Exception as ex:
                     logger.error("Error in heap processing: {}".format(str(ex)))
-                    raise ex
+                    raise to_genai_error(ex)

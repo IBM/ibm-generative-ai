@@ -1,6 +1,6 @@
-from genai.exceptions import GenAiException
 from genai.schemas.files_params import FileListParams, MultipartFormData
 from genai.services.request_handler import RequestHandler
+from genai.utils.errors import to_genai_error
 from genai.utils.request_utils import sanitize_params
 
 
@@ -25,7 +25,7 @@ class FilesRouter:
             endpoint = self.service_url + FilesRouter.FILES
             return RequestHandler.get(endpoint, key=self.key, parameters=params)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     def get_file_metadata(self, file_id: str):
         """Get the file metadata from the server.
@@ -40,7 +40,7 @@ class FilesRouter:
             endpoint = self.service_url + FilesRouter.FILES + "/" + file_id
             return RequestHandler.get(endpoint, key=self.key)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     def read_file(self, file_id: str):
         """Read the content of a file from the server.
@@ -55,7 +55,7 @@ class FilesRouter:
             endpoint = self.service_url + FilesRouter.FILES + "/" + file_id + "/content"
             return RequestHandler.get(endpoint, key=self.key)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     def delete_file(self, file_id: str):
         """Delete a file from the server.
@@ -70,7 +70,7 @@ class FilesRouter:
             endpoint = self.service_url + FilesRouter.FILES + "/" + file_id
             return RequestHandler.delete(endpoint, key=self.key)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     def upload_file(self, multipart_form_data: MultipartFormData):
         """Upload a file to the server.
@@ -85,4 +85,4 @@ class FilesRouter:
             endpoint = self.service_url + FilesRouter.FILES
             return RequestHandler.post(endpoint, key=self.key, files=dict(multipart_form_data))
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)

@@ -5,9 +5,10 @@ import random
 
 from dotenv import load_dotenv
 
-from genai.model import Credentials, GenAiException, Model
+from genai.model import Credentials, Model
 from genai.schemas import GenerateParams, TokenParams
 from genai.services.async_generator import AsyncResponseGenerator
+from genai.utils.errors import to_genai_error
 
 num_requests = 0
 
@@ -49,10 +50,8 @@ class FlakyModel(Model):
             ) as asynchelper:
                 for response in asynchelper.generate_response():
                     yield response
-        except GenAiException as me:
-            raise me
         except Exception as ex:
-            raise GenAiException(ex)
+            raise to_genai_error(ex)
 
     def tokenize_async(self, prompts, ordered=False, callback=None, options=None):
         try:
@@ -68,10 +67,8 @@ class FlakyModel(Model):
             ) as asynchelper:
                 for response in asynchelper.generate_response():
                     yield response
-        except GenAiException as me:
-            raise me
         except Exception as ex:
-            raise GenAiException(ex)
+            raise to_genai_error(ex)
 
 
 logging.getLogger("genai").setLevel(logging.INFO)

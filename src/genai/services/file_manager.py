@@ -7,6 +7,7 @@ from genai.exceptions.genai_exception import GenAiException
 from genai.schemas import FileListParams
 from genai.schemas.responses import FileInfoResult, FilesListResponse
 from genai.services import ServiceInterface
+from genai.utils.errors import to_genai_error
 from genai.utils.service_utils import _get_service
 
 logger = logging.getLogger(__name__)
@@ -45,7 +46,7 @@ class FileManager:
             else:
                 raise GenAiException(response)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     @staticmethod
     def file_metadata(
@@ -74,7 +75,7 @@ class FileManager:
             else:
                 raise GenAiException(response)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     @staticmethod
     def read_file(file_id: str, credentials: Credentials = None, service: ServiceInterface = None) -> str:
@@ -100,7 +101,7 @@ class FileManager:
             else:
                 raise GenAiException(response)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     @staticmethod
     def upload_file(
@@ -156,7 +157,7 @@ class FileManager:
             else:
                 raise GenAiException(response)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     @staticmethod
     def delete_file(file_id: str, credentials: Credentials = None, service: ServiceInterface = None) -> dict:
@@ -181,7 +182,7 @@ class FileManager:
             else:
                 raise GenAiException(response)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     @staticmethod
     def _validate_mmultipart_form_data_order(form_data: dict) -> dict:

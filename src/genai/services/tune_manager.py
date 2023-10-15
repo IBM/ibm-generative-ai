@@ -17,6 +17,7 @@ from genai.schemas.tunes_params import (
     TunesListParams,
 )
 from genai.services.service_interface import ServiceInterface
+from genai.utils.errors import to_genai_error
 from genai.utils.service_utils import _get_service
 
 logger = logging.getLogger(__name__)
@@ -54,7 +55,7 @@ class TuneManager:
             else:
                 raise GenAiException(response)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     @staticmethod
     def get_tune(
@@ -82,7 +83,7 @@ class TuneManager:
             else:
                 raise GenAiException(response)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     @staticmethod
     def create_tune(
@@ -124,7 +125,7 @@ class TuneManager:
             else:
                 raise GenAiException(response)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     @staticmethod
     def delete_tune(tune_id: str, credentials: Credentials = None, service: ServiceInterface = None) -> dict:
@@ -153,7 +154,7 @@ class TuneManager:
             else:
                 raise GenAiException(response)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     @staticmethod
     def get_tune_methods(credentials: Credentials = None, service: ServiceInterface = None) -> TuneMethodsGetResponse:
@@ -178,7 +179,7 @@ class TuneManager:
             else:
                 raise GenAiException(response)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     @staticmethod
     def get_filename(params: DownloadAssetsParams):
@@ -207,7 +208,7 @@ class TuneManager:
                 response = response.json()
                 return response["results"]["status"]
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     @staticmethod
     def download_tune_assets(
@@ -248,4 +249,4 @@ class TuneManager:
             else:
                 raise GenAiException(response)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)

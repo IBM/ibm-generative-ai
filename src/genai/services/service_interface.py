@@ -48,7 +48,7 @@ class ServiceInterface:
                 Exception("Endpoint unreachable. Please check connectivity.\nRaw error message = {}".format(e))
             )
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     @cachetools.func.ttl_cache(ttl=1000, typed=True, maxsize=None)
     def generate_limits(self):
@@ -98,7 +98,7 @@ class ServiceInterface:
             )
             return res
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     def tokenize(
         self,
@@ -130,7 +130,7 @@ class ServiceInterface:
                 options=options,
             )
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     def history(self, params: HistoryParams = None):
         """Retrieve past generation requests and responses returned by the given models.
@@ -146,7 +146,7 @@ class ServiceInterface:
             endpoint = self.service_url + ServiceInterface.HISTORY
             return RequestHandler.get(endpoint, key=self.key, parameters=params)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     def terms_of_use(self, accept: bool) -> Response:
         """Accept the API Terms of Use
@@ -197,7 +197,7 @@ class ServiceInterface:
             )
         except Exception as e:
             # without VPN this will fail
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     async def async_tokenize(self, model, inputs, params: TokenParams = None, options: Options = None):
         """Do the conversion of provided inputs to tokens for a given model.
@@ -223,7 +223,7 @@ class ServiceInterface:
                 options=options,
             )
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     async def async_history(self, params: HistoryParams = None):
         """Retrieve past generation requests and responses returned by the given models.
@@ -239,7 +239,7 @@ class ServiceInterface:
             endpoint = self.service_url + ServiceInterface.HISTORY
             return await RequestHandler.async_get(endpoint, key=self.key, parameters=params)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     async def async_terms_of_use(self, accept: bool) -> Response:
         """Accept the API Terms of Use
@@ -260,4 +260,4 @@ class ServiceInterface:
             endpoint = self.service_url + ServiceInterface.TOU
             return await RequestHandler.async_patch(endpoint, key=self.key, json_data=tou_payload)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
