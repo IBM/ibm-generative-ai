@@ -6,7 +6,7 @@ from genai.schemas.responses import (
     WatsonxTemplatesResponse,
 )
 from genai.services import ServiceInterface
-from genai.utils import to_genai_error
+from genai.utils.errors import to_genai_error
 
 
 class PromptTemplateManager:
