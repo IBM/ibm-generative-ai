@@ -85,6 +85,7 @@ class GenerateResult(GenAiResponseModel):
     generated_token_count: int
     input_token_count: Optional[int]
     stop_reason: str
+    stop_sequence: Optional[str]
     generated_tokens: Optional[list[GeneratedToken]]
     input_text: Optional[str]
     seed: Optional[int]
@@ -103,6 +104,7 @@ class GenerateStreamResponse(GenAiResponseModel):
     generated_token_count: Optional[int]
     input_token_count: Optional[int]
     stop_reason: Optional[str]
+    stop_sequence: Optional[str]
     generated_tokens: Optional[list[GeneratedToken]]
     input_text: Optional[str]
     seed: Optional[int]

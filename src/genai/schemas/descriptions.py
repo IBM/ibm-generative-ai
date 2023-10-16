@@ -16,7 +16,7 @@ class Descriptions:
         "Include rank of each returned token. Applicable only if generated_tokens == true and/or input_tokens == true."
     )
     TOP_N_TOKENS = "Include top n candidate tokens at the position of each returned token. The maximum value permitted is 5, but more may be returned if there is a tie for nth place. Applicable only if generated_tokens == true and/or input_tokens == true."
-    STOP_SEQUENCE = "Include the concrete stop sequence which caused the generation to stop."
+    INCLUDE_STOP_SEQUENCE = "Include the concrete stop sequence which caused the generation to stop."
 
     # Params.Generate
     DECODING_METHOD = (
@@ -26,7 +26,7 @@ class Descriptions:
     MAX_NEW_TOKEN = "The maximum number of new tokens to be generated. The range is 1 to 1024, defaults to 20."
     MIN_NEW_TOKEN = "If stop sequences are given, they are ignored until minimum tokens are generated."
     RANDOM_SEED = "Manually passed seed to initialize the randomization for experimental repeatability. The range is 1 to 9999. Valid only with decoding_method=sample."
-    STOP_SQUENCES = "Stop sequences are one or more strings which will cause the text generation to stop if/when they are produced as part of the output. Stop sequences encountered prior to the minimum number of tokens being generated will be ignored."
+    STOP_SEQUENCES = "Stop sequences are one or more strings which will cause the text generation to stop if/when they are produced as part of the output. Stop sequences encountered prior to the minimum number of tokens being generated will be ignored."
     STREAM = "Enables to stream partial progress as server-sent events. Defaults to false."
     TEMPERATURE = "The value used to module the next token probabilities. The range is 0.05 to 2.00, a value set to 0.05 would make it deterministic. Valid only with decoding_method=sample."
     TIME_LIMIT = "Time limit in milliseconds - if not completed within this time, generation will stop. The text generated so far will be returned along with the TIME_LIMIT stop reason."
@@ -36,7 +36,6 @@ class Descriptions:
     REPETITION_PENALTY = "The parameter for repetition penalty. 1.0 means no penalty."
     TRUNCATE_INPUT_TOKENS = "Truncate to this many input tokens. Can be used to avoid requests failing due to input being longer than configured limits. Zero means don't truncate."
     BEAM_WIDTH = "Multiple output sequences of tokens are generated, using your decoding selection, and then the output sequence with the highest overall probability is returned. When beam search is enabled, there will be a performance penalty, and Stop sequences will not be available."  # noqa
-    INCLUDE_STOP_SEQUENCE = "Include stop sequence in the generated output."
 
     # Params.Token
     RETURN_TOKEN = "Return tokens with the response. Defaults to false."
