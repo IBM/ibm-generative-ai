@@ -194,7 +194,7 @@ class AsyncResponseGenerator:
         except Exception as ex:
             self.throw_on_error = True
             self._queue.put_nowait((1, 1, None, ex))
-            raise to_genai_error(ex)
+            raise ex
         finally:
             self._loop.run_until_complete(self._cleanup())
 
