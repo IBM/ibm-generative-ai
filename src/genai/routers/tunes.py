@@ -1,10 +1,10 @@
-from genai.exceptions import GenAiException
 from genai.schemas.tunes_params import (
     CreateTuneParams,
     DownloadAssetsParams,
     TunesListParams,
 )
 from genai.services.request_handler import RequestHandler
+from genai.utils.errors import to_genai_error
 from genai.utils.request_utils import sanitize_params
 
 
@@ -30,7 +30,7 @@ class TunesRouter:
             endpoint = self.service_url + TunesRouter.TUNES
             return RequestHandler.get(endpoint, key=self.key, parameters=params)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     def get_tune(self, tune_id: str):
         """Get a given tune from the server.
@@ -45,7 +45,7 @@ class TunesRouter:
             endpoint = self.service_url + TunesRouter.TUNES + "/" + tune_id
             return RequestHandler.get(endpoint, key=self.key)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     def create_tune(self, params: CreateTuneParams):
         """Create a new tune on the server.
@@ -62,7 +62,7 @@ class TunesRouter:
             endpoint = self.service_url + TunesRouter.TUNES
             return RequestHandler.post(endpoint, key=self.key, options=params)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     def delete_tune(self, tune_id: str):
         """Delete a tune from the server.
@@ -77,7 +77,7 @@ class TunesRouter:
             endpoint = self.service_url + TunesRouter.TUNES + "/" + tune_id
             return RequestHandler.delete(endpoint, key=self.key)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     def get_tune_methods(self):
         """Get list of tune methods.
@@ -89,7 +89,7 @@ class TunesRouter:
             endpoint = self.service_url + self.TUNE_METHODS
             return RequestHandler.get(endpoint, key=self.key)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     def download_tune_assets(self, params: DownloadAssetsParams):
         """Download tune asset.
@@ -101,4 +101,4 @@ class TunesRouter:
             endpoint = self.service_url + TunesRouter.TUNES + "/" + params.id + "/content/" + params.content
             return RequestHandler.get(endpoint, key=self.key)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)

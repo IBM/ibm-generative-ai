@@ -27,7 +27,6 @@ class ServiceInterface:
         Args:
             service_url (str): Base URL for querying.
             api_key (str): User API key for authorization.
-            use_async (bool): Use async version of methods
         """
         self.service_url = service_url.rstrip("/")
         self.key = api_key
@@ -49,7 +48,7 @@ class ServiceInterface:
                 Exception("Endpoint unreachable. Please check connectivity.\nRaw error message = {}".format(e))
             )
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     @cachetools.func.ttl_cache(ttl=1000, typed=True, maxsize=None)
     def generate_limits(self):
@@ -99,7 +98,7 @@ class ServiceInterface:
             )
             return res
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     def tokenize(
         self,
@@ -114,6 +113,7 @@ class ServiceInterface:
             model (str): Model id.
             inputs (list): List of inputs.
             params (TokenParams, optional): Parameters for generation. Defaults to None.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Returns:
             Any: json from querying for tokenization.
@@ -130,7 +130,7 @@ class ServiceInterface:
                 options=options,
             )
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     def history(self, params: HistoryParams = None):
         """Retrieve past generation requests and responses returned by the given models.
@@ -146,7 +146,7 @@ class ServiceInterface:
             endpoint = self.service_url + ServiceInterface.HISTORY
             return RequestHandler.get(endpoint, key=self.key, parameters=params)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     def terms_of_use(self, accept: bool) -> Response:
         """Accept the API Terms of Use
@@ -179,6 +179,7 @@ class ServiceInterface:
             model (str): Model id.
             inputs (list): List of inputs.
             params (GenerateParams, optional): Parameters for generation. Defaults to None.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Returns:
             Any: json from querying for text completion.
@@ -196,7 +197,7 @@ class ServiceInterface:
             )
         except Exception as e:
             # without VPN this will fail
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     async def async_tokenize(self, model, inputs, params: TokenParams = None, options: Options = None):
         """Do the conversion of provided inputs to tokens for a given model.
@@ -205,6 +206,7 @@ class ServiceInterface:
             model (str): Model id.
             inputs (list): List of inputs.
             params (TokenParams, optional): Parameters for generation. Defaults to None.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Returns:
             Any: json from querying for tokenization.
@@ -221,7 +223,7 @@ class ServiceInterface:
                 options=options,
             )
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     async def async_history(self, params: HistoryParams = None):
         """Retrieve past generation requests and responses returned by the given models.
@@ -237,7 +239,7 @@ class ServiceInterface:
             endpoint = self.service_url + ServiceInterface.HISTORY
             return await RequestHandler.async_get(endpoint, key=self.key, parameters=params)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)
 
     async def async_terms_of_use(self, accept: bool) -> Response:
         """Accept the API Terms of Use
@@ -258,4 +260,4 @@ class ServiceInterface:
             endpoint = self.service_url + ServiceInterface.TOU
             return await RequestHandler.async_patch(endpoint, key=self.key, json_data=tou_payload)
         except Exception as e:
-            raise GenAiException(e)
+            raise to_genai_error(e)

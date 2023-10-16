@@ -94,6 +94,8 @@ class RequestHandler:
             model_id (str, optional): The id of the language model to be queried. Defaults to None.
             inputs (list, optional): List of inputs to be queried. Defaults to None.
             parameters (dict, optional): Key-value pairs for model parameters. Defaults to None.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
+            files (dict, optional): Files to be sent to the server. Defaults to None.
 
         Returns:
             httpx.Response: Response from the REST API.
@@ -145,6 +147,7 @@ class RequestHandler:
             model_id (str, optional): The id of the language model to be queried. Defaults to None.
             inputs (list, optional): List of inputs to be queried. Defaults to None.
             parameters (dict, optional): Key-value pairs for model parameters. Defaults to None.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Returns:
             httpx.Response: Response from the REST API.
@@ -186,6 +189,7 @@ class RequestHandler:
             model_id (str, optional): The id of the language model to be queried. Defaults to None.
             inputs (list, optional): List of inputs to be queried. Defaults to None.
             parameters (dict, optional): Key-value pairs for model parameters. Defaults to None.
+            options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
 
         Returns:
             httpx.Response: Response from the REST API.
@@ -252,6 +256,7 @@ class RequestHandler:
             inputs (list, optional): List of inputs to be queried. Defaults to None.
             parameters (dict, optional): Key-value pairs for model parameters. Defaults to None.
             options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
+            streaming (bool, optional): Streaming response flag. Defaults to False.
             files (dict, optional): Files to be sent to the server. Defaults to None.
 
         Returns:
