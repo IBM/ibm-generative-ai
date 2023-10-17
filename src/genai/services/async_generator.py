@@ -1,6 +1,7 @@
 import asyncio
 import heapq
 import logging
+import threading
 from concurrent.futures import ThreadPoolExecutor
 from queue import Queue
 from signal import SIGINT, SIGTERM, signal
@@ -215,13 +216,14 @@ class AsyncResponseGenerator:
             return
 
         with ThreadPoolExecutor(max_workers=1) as executor:
+            if threading.current_thread() is threading.main_thread():
 
-            def init_termination(*args):
-                self._is_terminating = True
-                executor.shutdown(cancel_futures=False, wait=False)
+                def init_termination(*args):
+                    self._is_terminating = True
+                    executor.shutdown(cancel_futures=False, wait=False)
 
-            signal(SIGTERM, init_termination)
-            signal(SIGINT, init_termination)
+                signal(SIGTERM, init_termination)
+                signal(SIGINT, init_termination)
 
             task = executor.submit(self._request_launcher)
 
