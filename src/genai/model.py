@@ -304,6 +304,7 @@ class Model:
             callback (Callable[[TokenizeResult], Any]): Callback to call for each result.
             return_tokens (bool, optional): Return tokens with the response. Defaults to False.
             options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
+            throw_on_error (bool, optional): Throws error on failure. Defaults to False.
 
         Returns:
             Generator[Union[TokenizeResult, None]]: The Tokenized input
