@@ -1,7 +1,7 @@
 from typing import Literal, Optional, Union
 from warnings import warn
 
-from pydantic import BaseModel, Extra, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from genai.schemas import Descriptions as tx
 
@@ -9,18 +9,14 @@ from genai.schemas import Descriptions as tx
 
 
 class LengthPenalty(BaseModel):
-    class Config:
-        anystr_strip_whitespace = True
-        extra = Extra.forbid
+    model_config = ConfigDict(str_strip_whitespace=True, extra="forbid", protected_namespaces=())
 
     decay_factor: Optional[float] = Field(None, description=tx.DECAY_FACTOR, gt=1.00)
     start_index: Optional[int] = Field(None, description=tx.START_INDEX)
 
 
 class ReturnOptions(BaseModel):
-    class Config:
-        anystr_strip_whitespace = False
-        extra = Extra.forbid
+    model_config = ConfigDict(str_strip_whitespace=False, extra="forbid", protected_namespaces=())
 
     input_text: Optional[bool] = Field(None, description=tx.INPUT_TEXT)
     generated_tokens: Optional[bool] = Field(None, description=tx.GENERATED_TOKEN)
@@ -52,18 +48,13 @@ class HAPOptions(BaseModel):
 
 
 class ModerationsOptions(BaseModel):
-    class Config:
-        extra = Extra.allow
-        allow_population_by_field_name = True
+    model_config = ConfigDict(extra="allow", populate_by_name=True)
 
     hap: Union[bool, HAPOptions] = Field(description=tx.HAP, default=False)
 
 
 class GenerateParams(BaseModel):
-    class Config:
-        anystr_strip_whitespace = False
-        extra = Extra.allow
-        allow_population_by_field_name = True
+    model_config = ConfigDict(str_strip_whitespace=False, extra="allow", populate_by_name=True, protected_namespaces=())
 
     decoding_method: Optional[Literal["greedy", "sample"]] = Field(None, description=tx.DECODING_METHOD)
     length_penalty: Optional[LengthPenalty] = Field(None, description=tx.LENGTH_PENALTY)
@@ -83,6 +74,8 @@ class GenerateParams(BaseModel):
     truncate_input_tokens: Optional[int] = Field(None, description=tx.TRUNCATE_INPUT_TOKENS, ge=0)
     beam_width: Optional[int] = Field(None, description=tx.BEAM_WIDTH, ge=0)
     return_options: Optional[ReturnOptions] = Field(None, description=tx.RETURN)
-    returns: Optional[Return] = Field(None, description=tx.RETURN, alias="return", deprecated=True)
+    returns: Optional[Return] = Field(
+        None, description=tx.RETURN, alias="return", json_schema_extra={"deprecated": True}
+    )
     moderations: Optional[ModerationsOptions] = Field(None, description=tx.MODERATIONS)
     include_stop_sequence: Optional[bool] = Field(None, description=tx.INCLUDE_STOP_SEQUENCE)

@@ -47,9 +47,9 @@ class ApiAuthMiddleware(BaseHTTPMiddleware):
                     error="Unauthorized",
                     message="API key not found",
                 )
-                logger.debug(response_obj.dict())
+                logger.debug(response_obj.model_dump())
                 return JSONResponse(
-                    content=response_obj.dict(),
+                    content=response_obj.model_dump(),
                     status_code=status.HTTP_401_UNAUTHORIZED,
                 )
         logging.debug("Calling next in chain")

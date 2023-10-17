@@ -103,7 +103,7 @@ class TestPromptTemplateManager:
     @patch("genai.services.RequestHandler.get")
     def test_load_all_template(self, mock_get):
         expected = MagicMock(status_code=200)
-        expected.json.return_value = {"results": [self.template.dict()], "totalCount": 1}
+        expected.json.return_value = {"results": [self.template.model_dump()], "totalCount": 1}
         mock_get.return_value = expected
 
         resp = PromptTemplateManager.load_all_templates(credentials=self.credentials)
