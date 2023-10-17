@@ -1,5 +1,3 @@
-import aiolimiter
-from aiolimiter import AsyncLimiter
 from httpx import AsyncClient
 
 from genai.exceptions import GenAiException
@@ -7,6 +5,7 @@ from genai.exceptions import GenAiException
 __all__ = ["ConnectionManager"]
 
 from genai.utils.http_provider import HttpProvider
+from genai.utils.http_utils import AsyncRateLimitTransport
 
 
 class ConnectionManager:
@@ -18,7 +17,6 @@ class ConnectionManager:
 
     async_generate_client: AsyncClient = None
     async_tokenize_client: AsyncClient = None
-    async_tokenize_limiter: AsyncLimiter = None
 
     @staticmethod
     def make_generate_client():
@@ -26,11 +24,10 @@ class ConnectionManager:
         if ConnectionManager.async_generate_client is not None:
             raise GenAiException(ValueError("Can't have two active async_generate_clients"))
 
-        async_generate_transport = HttpProvider.get_async_transport(
-            retries=ConnectionManager.MAX_RETRIES_GENERATE,
-        )
         ConnectionManager.async_generate_client = HttpProvider.get_async_client(
-            transport=async_generate_transport,
+            transport=HttpProvider.get_async_transport(
+                retries=ConnectionManager.MAX_RETRIES_GENERATE,
+            ),
             timeout=ConnectionManager.TIMEOUT_GENERATE,
         )
 
@@ -40,10 +37,14 @@ class ConnectionManager:
         if ConnectionManager.async_tokenize_client is not None:
             raise GenAiException(ValueError("Can't have two active async_tokenize_clients"))
 
-        ConnectionManager.async_tokenize_limiter = aiolimiter.AsyncLimiter(
-            max_rate=ConnectionManager.MAX_REQ_PER_SECOND_TOKENIZE, time_period=1
+        ConnectionManager.async_tokenize_client = HttpProvider.get_async_client(
+            transport=AsyncRateLimitTransport(
+                default_max_rate=ConnectionManager.MAX_REQ_PER_SECOND_TOKENIZE,
+                default_time_period=1,
+                retries=ConnectionManager.MAX_RETRIES_TOKENIZE,
+                **HttpProvider.default_http_transport_options,
+            )
         )
-        ConnectionManager.async_tokenize_client = HttpProvider.get_async_client()
 
     @staticmethod
     async def delete_generate_client():

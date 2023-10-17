@@ -171,6 +171,7 @@ class TestAsyncResponseGenerator:
         ConnectionManager.MAX_RETRIES_GENERATE = saved
 
     @pytest.mark.asyncio
+    @pytest.mark.skip(reason="pytest_httpx does not handle custom transports")
     async def test_concurrent_tokenize_retry(self, httpx_mock, tokenize_params):
         saved = ConnectionManager.MAX_RETRIES_TOKENIZE
         ConnectionManager.MAX_RETRIES_TOKENIZE = 2
