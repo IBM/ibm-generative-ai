@@ -83,12 +83,7 @@ class TestModelAsync:
         indirect=["patch_generate_limits"],
     )
     async def test_generate_custom_concurrency_limit(
-        self,
-        generate_params,
-        httpx_mock: HTTPXMock,
-        max_concurrency_limit: int,
-        expectation,
-        patch_generate_limits,
+        self, generate_params, httpx_mock: HTTPXMock, max_concurrency_limit: int, expectation, patch_generate_limits
     ):
         generate_request_url = re.compile(f".+{ServiceInterface.GENERATE}$")
 
@@ -104,14 +99,19 @@ class TestModelAsync:
             credentials=Credentials("TEST_API_KEY"),
         )
 
-        for count, response in enumerate(
-            model.generate_async(
-                prompts=prompts, max_concurrency_limit=1, throw_on_error=True, hide_progressbar=True, ordered=False
-            ),
-            start=1,
-        ):
-            assert len(httpx_mock.get_requests(url=generate_request_url)) == count
-            assert response is not None
+        with expectation:
+            for count, response in enumerate(
+                model.generate_async(
+                    prompts=prompts,
+                    max_concurrency_limit=max_concurrency_limit,
+                    throw_on_error=True,
+                    hide_progressbar=True,
+                    ordered=False,
+                ),
+                start=1,
+            ):
+                assert len(httpx_mock.get_requests(url=generate_request_url)) == count
+                assert response is not None
 
     @pytest.mark.asyncio
     async def test_tokenize_async(self, mock_tokenize_json, tokenize_params):
