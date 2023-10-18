@@ -189,7 +189,7 @@ class AsyncResponseGenerator:
         remaining_tokens = await get_limits()
         for idx, batch in enumerate(self._generate_batch()):
             while remaining_tokens <= 0:
-                await asyncio.sleep(max(AsyncResponseGenerator.LIMITS_CHECK_SLEEP_DURATION, 0.0))
+                await asyncio.sleep(max(AsyncResponseGenerator.LIMITS_CHECK_SLEEP_DURATION, 0.1))
                 remaining_tokens = await get_limits()
 
             remaining_tokens -= 1

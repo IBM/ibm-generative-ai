@@ -28,9 +28,9 @@ def patch_generate_limits(request: SubRequest, httpx_mock: HTTPXMock):
     tokens_used = getattr(custom_params, "tokens_used", 0)
 
     httpx_mock.add_response(
-        url=re.compile(f".+{ServiceInterface.GENERATE_LIMITS}"),
-        json={"tokenCapacity": token_capacity, "tokensUsed": tokens_used},
+        url=re.compile(f".+{ServiceInterface.GENERATE_LIMITS}$"),
         method="GET",
+        json={"tokenCapacity": token_capacity, "tokensUsed": tokens_used},
         status_code=200,
     )
 
@@ -38,7 +38,7 @@ def patch_generate_limits(request: SubRequest, httpx_mock: HTTPXMock):
 @pytest.fixture(autouse=True, scope="function")
 def patch_async_requests_limits(request: SubRequest):
     if "integration" in request.node.keywords:
-        return
-
-    with patch.multiple(AsyncResponseGenerator, LIMITS_CHECK_SLEEP_DURATION=0):
         yield
+    else:
+        with patch.multiple(AsyncResponseGenerator, LIMITS_CHECK_SLEEP_DURATION=0.1):
+            yield
