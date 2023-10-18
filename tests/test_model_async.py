@@ -1,6 +1,9 @@
+import re
+from contextlib import nullcontext as does_not_raise
 from unittest.mock import AsyncMock
 
 import pytest
+from pytest_httpx import HTTPXMock
 
 from genai import Credentials, Model
 from genai.schemas import GenerateParams, TokenParams
@@ -67,6 +70,48 @@ class TestModelAsync:
                 assert prompts[counter] == result.input_text
                 counter += 1
         assert counter == num_prompts
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "max_concurrency_limit,expectation,patch_generate_limits",
+        [
+            (1, does_not_raise(), {"tokens_capacity": 10}),
+            (2, pytest.raises(AssertionError), {"tokens_capacity": 10}),
+            (3, pytest.raises(AssertionError), {"tokens_capacity": 10}),
+            (4, pytest.raises(AssertionError), {"tokens_capacity": 10}),
+        ],
+        indirect=["patch_generate_limits"],
+    )
+    async def test_generate_custom_concurrency_limit(
+        self,
+        generate_params,
+        httpx_mock: HTTPXMock,
+        max_concurrency_limit: int,
+        expectation,
+        patch_generate_limits,
+    ):
+        generate_request_url = re.compile(f".+{ServiceInterface.GENERATE}$")
+
+        num_prompts = 10
+        prompts = ["TEST_PROMPT"] * num_prompts
+        for prompt in prompts:
+            response = SimpleResponse.generate(model=self.model, inputs=[prompt], params=generate_params)
+            httpx_mock.add_response(url=generate_request_url, method="POST", json=response)
+
+        model = Model(
+            "google/flan-ul2",
+            params=generate_params,
+            credentials=Credentials("TEST_API_KEY"),
+        )
+
+        for count, response in enumerate(
+            model.generate_async(
+                prompts=prompts, max_concurrency_limit=1, throw_on_error=True, hide_progressbar=True, ordered=False
+            ),
+            start=1,
+        ):
+            assert len(httpx_mock.get_requests(url=generate_request_url)) == count
+            assert response is not None
 
     @pytest.mark.asyncio
     async def test_tokenize_async(self, mock_tokenize_json, tokenize_params):

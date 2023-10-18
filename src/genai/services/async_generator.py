@@ -1,6 +1,7 @@
 import asyncio
 import heapq
 import logging
+import math
 import threading
 from concurrent.futures import ThreadPoolExecutor
 from queue import Queue
@@ -20,6 +21,8 @@ __all__ = ["AsyncResponseGenerator"]
 
 
 class AsyncResponseGenerator:
+    LIMITS_CHECK_SLEEP_DURATION: float = 1.0
+
     def __init__(
         self,
         model_id,
@@ -164,26 +167,37 @@ class AsyncResponseGenerator:
             )
 
     async def _schedule_requests(self):
+        local_concurrency_limit = max(self._max_concurrency_limit or math.inf, 1)
+
         async def get_limits():
+            nonlocal local_concurrency_limit
+            if local_concurrency_limit <= 0:
+                return local_concurrency_limit
+
             if self.fn == "tokenize":
-                return len(self.prompts)
+                return min(local_concurrency_limit, len(self.prompts))
 
             limits = self.service.generate_limits()
             tokens_remaining = limits.tokenCapacity - limits.tokensUsed
-            if self._max_concurrency_limit is not None and self._max_concurrency_limit > 0:
-                return min(self._max_concurrency_limit, tokens_remaining)
-            return tokens_remaining
+            return min(tokens_remaining, local_concurrency_limit)
+
+        def increment_local_concurrency_limit(*args):
+            nonlocal local_concurrency_limit
+            local_concurrency_limit += 1
 
         tasks = []
         remaining_tokens = await get_limits()
         for idx, batch in enumerate(self._generate_batch()):
             while remaining_tokens <= 0:
-                await asyncio.sleep(1)
+                await asyncio.sleep(max(AsyncResponseGenerator.LIMITS_CHECK_SLEEP_DURATION, 0.0))
                 remaining_tokens = await get_limits()
 
             remaining_tokens -= 1
+            local_concurrency_limit -= 1
+
             logger.debug("Creating task for batch_num {}".format(idx))
             task = asyncio.create_task(self._task(batch, idx))
+            task.add_done_callback(increment_local_concurrency_limit)
             tasks.append(task)
 
         await asyncio.gather(*tasks)
@@ -233,8 +247,6 @@ class AsyncResponseGenerator:
                 try:
                     batch_num, batch_size, response, error = self._queue.get()
                     self._queue.task_done()
-                    if task.exception() is not None:
-                        raise task.exception()
                 except Exception as ex:
                     logger.error("Exception while reading from queue: {}".format(str(ex)))
                     raise to_genai_error(ex)
@@ -268,3 +280,7 @@ class AsyncResponseGenerator:
                 except Exception as ex:
                     logger.error("Error in heap processing: {}".format(str(ex)))
                     raise to_genai_error(ex)
+
+            task_err = task.exception()
+            if task_err is not None:
+                raise task_err
