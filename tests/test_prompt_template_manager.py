@@ -27,8 +27,8 @@ class TestPromptTemplateManager:
 
         self.expected_resp = SimpleResponse.prompt_template(template=self.string_template, name=self.name)
 
-        self.template = WatsonxTemplate.parse_obj(self.expected_resp["results"])
-        self.all_templates = WatsonxTemplatesResponse.parse_obj({"results": [self.template], "totalCount": 1})
+        self.template = WatsonxTemplate.model_validate(self.expected_resp["results"])
+        self.all_templates = WatsonxTemplatesResponse.model_validate({"results": [self.template], "totalCount": 1})
 
     @patch("genai.services.RequestHandler.post")
     def test_save_template(self, mocked_post_request):
@@ -160,7 +160,7 @@ class TestPromptTemplateManager:
     @patch("genai.services.PromptTemplateManager.load_all_templates")
     @patch("genai.services.RequestHandler.get")
     def test_load_template_by_name_not_found(self, mock_get, mock_load_all_templates):
-        no_templates = WatsonxTemplatesResponse.parse_obj({"results": [], "totalCount": 0})
+        no_templates = WatsonxTemplatesResponse.model_validate({"results": [], "totalCount": 0})
 
         expected = MagicMock(status_code=200)
         mock_get.return_value = expected
@@ -173,7 +173,9 @@ class TestPromptTemplateManager:
     @patch("genai.services.PromptTemplateManager.load_all_templates")
     @patch("genai.services.RequestHandler.get")
     def test_load_template_by_name_too_many_found(self, mock_get, mock_load_all_templates):
-        no_templates = WatsonxTemplatesResponse.parse_obj({"results": [self.template, self.template], "totalCount": 2})
+        no_templates = WatsonxTemplatesResponse.model_validate(
+            {"results": [self.template, self.template], "totalCount": 2}
+        )
 
         expected = MagicMock(status_code=200)
         mock_get.return_value = expected
@@ -236,7 +238,7 @@ class TestPromptTemplateManager:
     @patch("genai.services.PromptTemplateManager.load_all_templates")
     @patch("genai.services.RequestHandler.delete")
     def test_delete_template_by_name_not_found(self, mock_delete, mock_load_all_templates):
-        no_templates = WatsonxTemplatesResponse.parse_obj({"results": [], "totalCount": 0})
+        no_templates = WatsonxTemplatesResponse.model_validate({"results": [], "totalCount": 0})
 
         expected = MagicMock(status_code=204)
         mock_delete.return_value = expected
@@ -249,7 +251,9 @@ class TestPromptTemplateManager:
     @patch("genai.services.PromptTemplateManager.load_all_templates")
     @patch("genai.services.RequestHandler.delete")
     def test_delete_template_by_name_too_many_found(self, mock_delete, mock_load_all_templates):
-        all_templates = WatsonxTemplatesResponse.parse_obj({"results": [self.template, self.template], "totalCount": 2})
+        all_templates = WatsonxTemplatesResponse.model_validate(
+            {"results": [self.template, self.template], "totalCount": 2}
+        )
 
         expected = MagicMock(status_code=204)
         mock_delete.return_value = expected

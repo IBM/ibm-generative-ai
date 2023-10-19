@@ -16,7 +16,7 @@ class TestPromptPattern:
         self.name = "io"
 
         self.expected_resp = SimpleResponse.prompt_template(template=self.string_template, name=self.name)
-        self.template = WatsonxTemplate.parse_obj(self.expected_resp["results"])
+        self.template = WatsonxTemplate.model_validate(self.expected_resp["results"])
 
     @patch("genai.services.PromptTemplateManager.save_template")
     def test_from_watsonx(self, save):
