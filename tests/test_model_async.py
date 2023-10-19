@@ -2,6 +2,7 @@ import re
 from contextlib import nullcontext as does_not_raise
 from unittest.mock import AsyncMock
 
+import httpx
 import pytest
 from pytest_httpx import HTTPXMock
 
@@ -176,3 +177,39 @@ class TestModelAsync:
             pass
 
         assert message == TokenizeResponse(**expected[0]).results[0].tokens * num_prompts
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "patch_generate_limits",
+        [
+            ({"tokens_capacity": 1}),
+        ],
+        indirect=["patch_generate_limits"],
+    )
+    async def test_generate_async_progress_bar(
+        self, generate_params, patch_async_requests_limits, patch_generate_limits, httpx_mock: HTTPXMock
+    ):
+        """Tests that the response is yielded immediately (key part for the progress bar to work as expected)"""
+        handled_responses = 0
+
+        def handle_request(request: httpx.Request):
+            nonlocal handled_responses
+            handled_responses += 1
+
+            return httpx.Response(json=SimpleResponse.generate(inputs=["Hello"], model=self.model), status_code=200)
+
+        httpx_mock.add_callback(
+            callback=handle_request,
+            url=re.compile(f".+{ServiceInterface.GENERATE}$"),
+            method="POST",
+        )
+
+        model = Model(self.model, params=generate_params, credentials=Credentials("TEST_API_KEY"))
+        prompts = ["Hello world!"] * 10
+
+        for count, response in enumerate(
+            model.generate_async(prompts=prompts, hide_progressbar=True, throw_on_error=True),
+            start=1,
+        ):
+            assert count == handled_responses
+            assert response is not None

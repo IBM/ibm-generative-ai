@@ -168,6 +168,8 @@ class AsyncResponseGenerator:
 
     async def _schedule_requests(self):
         local_concurrency_limit = max(self._max_concurrency_limit or math.inf, 1)
+        limits = self.service.generate_limits()
+        print(limits)
 
         async def get_limits():
             nonlocal local_concurrency_limit
@@ -178,6 +180,7 @@ class AsyncResponseGenerator:
                 return min(local_concurrency_limit, len(self.prompts))
 
             limits = self.service.generate_limits()
+            print(limits)
             tokens_remaining = limits.tokenCapacity - limits.tokensUsed
             return min(tokens_remaining, local_concurrency_limit)
 
@@ -189,7 +192,7 @@ class AsyncResponseGenerator:
         remaining_tokens = await get_limits()
         for idx, batch in enumerate(self._generate_batch()):
             while remaining_tokens <= 0:
-                await asyncio.sleep(max(AsyncResponseGenerator.LIMITS_CHECK_SLEEP_DURATION, 0.1))
+                await asyncio.sleep(max(AsyncResponseGenerator.LIMITS_CHECK_SLEEP_DURATION, 0.0))
                 remaining_tokens = await get_limits()
 
             remaining_tokens -= 1
