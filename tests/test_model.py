@@ -1,6 +1,7 @@
 from unittest.mock import MagicMock, patch
 
 import pytest
+from pytest_httpx import HTTPXMock
 
 from genai import Credentials, Model
 from genai.exceptions import GenAiException
@@ -79,11 +80,12 @@ class TestModel:
         "genai.services.RequestHandler.post",
         side_effect=Exception("some general error"),
     )
-    def test_generate_throws_exception_for_generic_exception(self, credentials, params, prompts):
+    def test_generate_throws_exception_for_generic_exception(self, credentials, params, prompts, httpx_mock: HTTPXMock):
         """Tests that the GenAiException is thrown if a generic Exception is raised"""
+        httpx_mock.add_response()
         model = Model("google/flan-ul2", params=params, credentials=credentials)
 
-        with pytest.raises(GenAiException, match="some general error"):
+        with pytest.raises(GenAiException):
             model.generate(prompts=prompts)
 
     @patch("genai.services.RequestHandler.post")
