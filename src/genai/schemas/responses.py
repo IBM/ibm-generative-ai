@@ -34,7 +34,7 @@ def alert_extra_fields_validator(cls, values) -> dict:
     extra_fields = values.keys() - cls.__fields__.keys()
 
     if extra_fields:
-        logger.warning(
+        logger.debug(
             f"Extra fields missing from {cls.__name__}. Add Optional[Type] typing for these fields: {extra_fields}"
         )
 
