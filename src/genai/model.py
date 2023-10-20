@@ -29,6 +29,7 @@ from genai.schemas.tunes_params import (
 from genai.services import AsyncResponseGenerator, ServiceInterface
 from genai.services.tune_manager import TuneManager
 from genai.utils.errors import to_genai_error
+from genai.utils.general import to_model_instance
 from genai.utils.service_utils import _get_service
 
 logger = logging.getLogger(__name__)
@@ -62,7 +63,7 @@ class Model:
         if len(prompts) > 0 and isinstance(prompts[0], PromptPattern):
             prompts = PromptPattern.list_str(prompts)
 
-        params = self._get_params()
+        params = to_model_instance(self.params, GenerateParams)
         params.stream = True
 
         try:
@@ -118,7 +119,7 @@ class Model:
         if len(prompts) > 0 and isinstance(prompts[0], PromptPattern):
             prompts = PromptPattern.list_str(prompts)
 
-        params = self._get_params()
+        params = to_model_instance(self.params, GenerateParams)
         params.stream = False
 
         logger.debug(f"Calling Generate. Prompts: {prompts}, params: {params}")
@@ -191,7 +192,7 @@ class Model:
         if len(prompts) > 0 and isinstance(prompts[0], PromptPattern):
             prompts = PromptPattern.list_str(prompts)
 
-        params = self._get_params()
+        params = to_model_instance(self.params, GenerateParams)
         params.stream = False
         logger.debug(f"Calling Generate. Prompts: {prompts}, Params: {params}")
 
@@ -426,11 +427,3 @@ class Model:
         """
         id_to_model = {m.id: m for m in Model.models(service=self.service)}
         return id_to_model.get(self.model, None)
-
-    def _get_params(self):
-        if self.params is None:
-            return GenerateParams()
-
-        if isinstance(self.params, dict):
-            return GenerateParams(**self.params)
-        return self.params.copy()

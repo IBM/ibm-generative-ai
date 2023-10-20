@@ -14,6 +14,7 @@ from langchain.schema.output import Generation, GenerationChunk
 from pydantic import BaseModel, Extra
 
 from genai.exceptions import GenAiException
+from genai.utils.general import to_model_instance
 
 try:
     from langchain.llms.base import LLM
@@ -53,7 +54,7 @@ class LangChainInterface(LLM, BaseModel):
     @property
     def _identifying_params(self) -> Mapping[str, Any]:
         """Get the identifying parameters."""
-        _params = self._get_params()
+        _params = to_model_instance(self.params, GenerateParams)
         return {
             **{"model": self.model},
             **{"params": _params},
@@ -63,14 +64,6 @@ class LangChainInterface(LLM, BaseModel):
     def _llm_type(self) -> str:
         """Return type of llm."""
         return "IBM GENAI"
-
-    def _get_params(self):
-        if self.params is None:
-            return GenerateParams()
-
-        if isinstance(self.params, dict):
-            return GenerateParams(**self.params)
-        return self.params.copy()
 
     def _call(
         self,
@@ -123,7 +116,7 @@ class LangChainInterface(LLM, BaseModel):
         if len(prompts) == 0:
             return result
 
-        params = self._get_params()
+        params = to_model_instance(self.params, GenerateParams)
         params.stop_sequences = stop or params.stop_sequences
         if params.stream:
             if len(prompts) != 1:
@@ -192,7 +185,7 @@ class LangChainInterface(LLM, BaseModel):
                 for chunk in llm.stream("What is a molecule?"):
                     print(chunk.text)
         """
-        params = self._get_params()
+        params = to_model_instance(self.params, GenerateParams)
         params.stop_sequences = stop or params.stop_sequences
 
         model = Model(model=self.model, params=params, credentials=self.credentials)
