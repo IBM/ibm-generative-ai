@@ -35,7 +35,7 @@ class Descriptions:
     REPETITION_PENALTY = "The parameter for repetition penalty. 1.0 means no penalty."
     TRUNCATE_INPUT_TOKENS = "Truncate to this many input tokens. Can be used to avoid requests failing due to input being longer than configured limits. Zero means don't truncate."
     BEAM_WIDTH = "Multiple output sequences of tokens are generated, using your decoding selection, and then the output sequence with the highest overall probability is returned. When beam search is enabled, there will be a performance penalty, and Stop sequences will not be available."  # noqa
-    INCLUDE_STOP_SEQUENCE = "Include the concrete stop sequence which caused the generation to stop."
+    INCLUDE_STOP_SEQUENCE = "Indicates whether the stop sequence (which caused the generation to stop) is part of the generated text. The default value depends on the model in use."
 
     # Params.Token
     RETURN_TOKEN = "Return tokens with the response. Defaults to false."
