@@ -1,7 +1,9 @@
 import json
 import logging
+import time
+from collections import deque
 from collections.abc import Generator
-from typing import Any, Callable, Optional, Union
+from typing import Any, Callable, List, Optional, Union
 
 from tqdm import tqdm
 
@@ -123,23 +125,44 @@ class Model:
 
         logger.debug(f"Calling Generate. Prompts: {prompts}, params: {params}")
 
+        def get_remaining_limit():
+            limits = self.service.generate_limits()
+            return limits.tokenCapacity - limits.tokensUsed
+
+        def execute(inputs: List[str], attempt=0) -> List[GenerateResult]:
+            response = self.service.generate(
+                model=self.model,
+                inputs=inputs,
+                params=params,
+                options=options,
+            )
+            if response.status_code == 200:
+                raw_response = response.json()
+                for i, result in enumerate(raw_response["results"]):
+                    result["input_text"] = inputs[i]
+                generate_response = GenerateResponse(**raw_response)
+                return generate_response.results
+            elif response.status_code == 429:
+                nonlocal remaining_limit
+                remaining_limit = 0
+                time.sleep(2 ** (attempt + 1))
+                return execute(inputs, attempt + 1)
+            else:
+                raise GenAiException(response)
+
         try:
-            for i in range(0, len(prompts), Metadata.DEFAULT_MAX_PROMPTS):
-                response_gen = self.service.generate(
-                    model=self.model,
-                    inputs=prompts[i : min(i + Metadata.DEFAULT_MAX_PROMPTS, len(prompts))],
-                    params=params,
-                    options=options,
-                )
-                if response_gen.status_code == 200:
-                    response_gen = response_gen.json()
-                    for y, result in enumerate(response_gen["results"]):
-                        result["input_text"] = prompts[i + y]
-                    responses = GenerateResponse(**response_gen)
-                    for result in responses.results:
-                        yield result
-                else:
-                    raise GenAiException(response_gen)
+            remaining_prompts = deque(prompts)
+            remaining_limit = get_remaining_limit()
+            while remaining_prompts:
+                while remaining_limit <= 0:
+                    time.sleep(1)
+                    remaining_limit = get_remaining_limit()
+
+                prompts_to_process = min(remaining_limit, Metadata.DEFAULT_MAX_PROMPTS, len(remaining_prompts))
+                remaining_limit -= prompts_to_process
+                inputs = [remaining_prompts.popleft() for _ in range(prompts_to_process)]
+                for result in execute(inputs):
+                    yield result
         except Exception as ex:
             raise to_genai_error(ex)
 

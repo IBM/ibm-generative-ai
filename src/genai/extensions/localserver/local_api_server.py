@@ -20,7 +20,12 @@ from genai.extensions.localserver.schemas import (
     GenerateRequestBody,
     TokenizeRequestBody,
 )
-from genai.schemas.responses import ErrorResponse, GenerateResponse, TokenizeResponse
+from genai.schemas.responses import (
+    ErrorResponse,
+    GenerateLimits,
+    GenerateResponse,
+    TokenizeResponse,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -83,6 +88,7 @@ class LocalLLMServer:
         self.router = APIRouter()
         self.router.add_api_route("/v1/tokenize", self._route_tokenize, methods=["POST"])
         self.router.add_api_route("/v1/generate", self._route_generate, methods=["POST"])
+        self.router.add_api_route("/v1/generate/limits", self._route_generate_limits, methods=["GET"])
         self.app.include_router(self.router)
         self.app.add_middleware(ApiAuthMiddleware, api_key=self.api_key, insecure=insecure_api)
 
@@ -145,4 +151,9 @@ class LocalLLMServer:
             created_at=created_at,
             results=results,
         )
+        return response
+
+    async def _route_generate_limits(self):
+        logger.info("Generate Limits Called")
+        response = GenerateLimits(tokenCapacity=100, tokensUsed=0)
         return response
