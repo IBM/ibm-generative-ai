@@ -180,3 +180,9 @@ class TestModel:
         model_id = "random"
         model = Model(model_id, params=None, credentials=credentials)
         assert model.available() is False
+
+    @pytest.mark.parametrize("generate_params", [([],), (1,), ("",), (CreateTuneHyperParams())])
+    def test_invalid_generate_parameters(self, generate_params, credentials):
+        with pytest.raises(ValueError):
+            model = Model("google/flan-ul2", params=generate_params, credentials=credentials)
+            model.generate(prompts=[])

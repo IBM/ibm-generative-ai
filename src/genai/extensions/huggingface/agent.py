@@ -1,5 +1,7 @@
 import logging
 
+from genai.utils.general import to_model_instance
+
 try:
     from transformers import Agent
 except ImportError:
@@ -46,7 +48,7 @@ class IBMGenAIAgent(Agent):
         if len(prompts) == 0:
             return result
 
-        params = self._get_params()
+        params = to_model_instance(self.params, GenerateParams)
         params.stop_sequences = stop or params.stop_sequences
         model = Model(model=self.model, params=params, credentials=self.credentials)
         for response in model.generate(prompts=prompts):
@@ -56,11 +58,3 @@ class IBMGenAIAgent(Agent):
             result.append(generated_text)
 
         return result
-
-    def _get_params(self):
-        if self.params is None:
-            return GenerateParams()
-
-        if isinstance(self.params, dict):
-            return GenerateParams(**self.params)
-        return self.params.copy()
