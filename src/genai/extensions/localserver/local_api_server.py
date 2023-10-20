@@ -88,7 +88,7 @@ class LocalLLMServer:
 
         self.uvicorn_config = uvicorn.Config(self.app, host=interface, port=port, log_level="error", access_log=False)
         self.uvicorn_server = uvicorn.Server(self.uvicorn_config)
-        self.endpoint = f"http://{self.interface}:{self.port}/v1"
+        self.endpoint = f"http://{self.interface}:{self.port}"
         logger.debug(f"{__name__}: Models: {list(self.models.keys())}, API: {self.endpoint}, Insecure: {insecure_api}")
 
     @contextlib.contextmanager
