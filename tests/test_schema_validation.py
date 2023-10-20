@@ -55,7 +55,7 @@ class TestSchemas:
             caplog (Generator[LogCaptureFixture, None, None]): The Logging capture during the test
         """
         self.caplog = caplog
-        self.caplog.set_level(logging.WARNING)
+        self.caplog.set_level(logging.DEBUG)
 
         # Test Generate Result
         generate_example = SimpleResponse.generate(model=self.model, inputs=self.inputs)
