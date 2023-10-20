@@ -65,7 +65,6 @@ The `LangChainInterface` class (see below) is an example of this pattern. `LangC
 
 try:
     from langchain.llms.base import LLM
-    from langchain.llms.utils import enforce_stop_tokens
 except ImportError:
     raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")
 

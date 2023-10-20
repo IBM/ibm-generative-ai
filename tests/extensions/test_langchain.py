@@ -55,35 +55,6 @@ class TestLangChain:
         results = model(prompts[0])
         assert results == expected_generated_response.results[0].generated_text
 
-    @patch("httpx.Client.post")
-    def test_langchain_stop_sequences(
-        self,
-        mocked_post_request,
-        credentials,
-    ):
-        from genai.extensions.langchain import LangChainInterface
-
-        prompts = ["Hello..."]
-        stop_sequences = ["..."]
-
-        params = GenerateParams(stop_sequences=stop_sequences)
-        GENERATE_RESPONSE = SimpleResponse.generate(
-            model="google/flan-ul2",
-            inputs=prompts,
-            params=params,
-        )
-        expected_generated_response = GenerateResponse(**GENERATE_RESPONSE)
-        response = MagicMock(status_code=200)
-        response.json.return_value = GENERATE_RESPONSE
-        mocked_post_request.return_value = response
-
-        model = LangChainInterface(model="google/flan-ul2", params=params, credentials=credentials)
-        generated_text = model(prompts[0])
-        assert generated_text != expected_generated_response.results[0].generated_text
-        assert generated_text == "Hello"
-        for stop_sequence in stop_sequences:
-            assert stop_sequence not in generated_text
-
     @pytest.mark.asyncio
     @patch("httpx.Client.post")
     async def test_async_langchain_interface(self, mocked_post_request, credentials, params, multi_prompts):

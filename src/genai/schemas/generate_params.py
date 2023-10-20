@@ -70,7 +70,7 @@ class GenerateParams(BaseModel):
     max_new_tokens: Optional[int] = Field(None, description=tx.MAX_NEW_TOKEN, ge=1)
     min_new_tokens: Optional[int] = Field(None, description=tx.MIN_NEW_TOKEN, ge=0)
     random_seed: Optional[int] = Field(None, description=tx.RANDOM_SEED, ge=1)
-    stop_sequences: Optional[list[str]] = Field(None, description=tx.STOP_SQUENCES, min_length=1)
+    stop_sequences: Optional[list[str]] = Field(None, description=tx.STOP_SEQUENCES, min_length=1)
     stream: Optional[bool] = Field(None, description=tx.STREAM)
     temperature: Optional[float] = Field(None, description=tx.TEMPERATURE, ge=0.05, le=2.00)
     time_limit: Optional[int] = Field(None, description=tx.TIME_LIMIT)
@@ -85,3 +85,4 @@ class GenerateParams(BaseModel):
     return_options: Optional[ReturnOptions] = Field(None, description=tx.RETURN)
     returns: Optional[Return] = Field(None, description=tx.RETURN, alias="return", deprecated=True)
     moderations: Optional[ModerationsOptions] = Field(None, description=tx.MODERATIONS)
+    include_stop_sequence: Optional[bool] = Field(None, description=tx.INCLUDE_STOP_SEQUENCE)
