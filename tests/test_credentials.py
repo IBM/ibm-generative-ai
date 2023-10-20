@@ -14,3 +14,7 @@ class TestCredentials:
         credentials = Credentials(api_key="GENAI_API_KEY", api_endpoint="https://workbench-api.res.ibm.com/v2/ai/v12")
 
         assert credentials.api_endpoint == "https://workbench-api.res.ibm.com/v2/ai"
+
+    def test_trigger_deprecation_warning(self):
+        with pytest.deprecated_call():
+            Credentials(api_key="GENAI_API_KEY", api_endpoint="https://workbench-api.res.ibm.com/v1/")
