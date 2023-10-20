@@ -9,7 +9,7 @@ from genai.utils.search_space_params import grid_search_generate_params
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
-# GENAI_API=<genai-api-endpoint> (optional) DEFAULT_API = "https://workbench-api.res.ibm.com/v1"
+# GENAI_API=<genai-api-endpoint> (optional) DEFAULT_API = "https://workbench-api.res.ibm.com"
 load_dotenv()
 API_KEY = os.getenv("GENAI_KEY", None)
 API_ENDPOINT = os.getenv("GENAI_API", None)

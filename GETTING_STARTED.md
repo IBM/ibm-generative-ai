@@ -41,7 +41,7 @@ pip install --upgrade "pip>=22.0.1"
 
 ## <a name='GenAIEndpoint'></a>Gen AI Endpoint
 
-By default, IBM Generative AI will use the following API endpoint: `https://workbench-api.res.ibm.com/v1/`. However, if you wish to target a different Gen AI API, you can do so by defining it with the `api_endpoint` argument when you instansiate the `Credentials` object.
+By default, IBM Generative AI will use the following API endpoint: `https://workbench-api.res.ibm.com/`. However, if you wish to target a different Gen AI API, you can do so by defining it with the `api_endpoint` argument when you instansiate the `Credentials` object.
 
 ### <a name='Example'></a>Example
 
@@ -49,7 +49,7 @@ Your `.env` file:
 
 ```ini
 GENAI_KEY=YOUR_GENAI_API_KEY
-GENAI_API=https://workbench-api.res.ibm.com/v1/
+GENAI_API=https://workbench-api.res.ibm.com
 ```
 
 ```python
@@ -244,7 +244,7 @@ logging.getLogger("genai").setLevel(logging.DEBUG)
 Example log message from GENAI:
 
 ```log
-DEBUG:genai.model:Model Created:  Model: google/flan-t5-xxl, endpoint: https://workbench-api.res.ibm.com/v1/
+DEBUG:genai.model:Model Created:  Model: google/flan-t5-xxl, endpoint: https://workbench-api.res.ibm.com
 ```
 
 Example of directing genai logs to a file:
