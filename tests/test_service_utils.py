@@ -7,7 +7,7 @@ from genai.utils.request_utils import sanitize_params
 
 # API Reference : https://workbench.res.ibm.com/docs/api-reference#generate
 
-SERVICE_URL = "https://workbench-api.res.ibm.com/v1/"
+SERVICE_URL = "https://workbench-api.res.ibm.com"
 KEY = "pak-"
 
 
