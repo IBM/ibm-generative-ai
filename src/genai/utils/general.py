@@ -1,6 +1,8 @@
 from typing import Any, Type, TypeVar
 
-T = TypeVar("T")
+from pydantic import BaseModel
+
+T = TypeVar("T", bound=BaseModel)
 
 
 def to_model_instance(params: Any, Model: Type[T]) -> T:
@@ -8,7 +10,7 @@ def to_model_instance(params: Any, Model: Type[T]) -> T:
         return Model()
 
     if isinstance(params, Model):
-        return params.copy()
+        return params.model_copy()
 
     if isinstance(params, dict):
         return Model(**params)
