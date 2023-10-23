@@ -5,13 +5,13 @@ from genai.exceptions import GenAiException
 __all__ = ["ConnectionManager"]
 
 from genai.utils.http_provider import HttpProvider
-from genai.utils.http_utils import AsyncRateLimitTransport
+from genai.utils.http_utils import AsyncRateLimitTransport, AsyncRetryTransport
 
 
 class ConnectionManager:
-    MAX_RETRIES_GENERATE = 3
+    MAX_RETRIES_GENERATE = 5
     TIMEOUT_GENERATE = 600
-    MAX_RETRIES_TOKENIZE = 3
+    MAX_RETRIES_TOKENIZE = 5
     MAX_REQ_PER_SECOND_TOKENIZE = 10
     TIMEOUT = 600
 
@@ -25,8 +25,8 @@ class ConnectionManager:
             raise GenAiException(ValueError("Can't have two active async_generate_clients"))
 
         ConnectionManager.async_generate_client = HttpProvider.get_async_client(
-            transport=HttpProvider.get_async_transport(
-                retries=ConnectionManager.MAX_RETRIES_GENERATE,
+            transport=AsyncRetryTransport(
+                retries=ConnectionManager.MAX_RETRIES_GENERATE, **HttpProvider.default_http_transport_options
             ),
             timeout=ConnectionManager.TIMEOUT_GENERATE,
         )
