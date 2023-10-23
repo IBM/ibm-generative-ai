@@ -1,4 +1,5 @@
 import re
+import signal
 from contextlib import nullcontext as does_not_raise
 from unittest.mock import AsyncMock
 
@@ -7,8 +8,9 @@ import pytest
 from pytest_httpx import HTTPXMock
 
 from genai import Credentials, Model
+from genai.exceptions import GenAiException
 from genai.schemas import GenerateParams, TokenParams
-from genai.schemas.responses import GenerateResponse, TokenizeResponse
+from genai.schemas.responses import GenerateResponse, GenerateResult, TokenizeResponse
 from genai.services import ServiceInterface
 from tests.assets.response_helper import SimpleResponse
 
@@ -213,3 +215,55 @@ class TestModelAsync:
         ):
             assert count == handled_responses
             assert response is not None
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("throw_in_callback", [True, False])
+    @pytest.mark.parametrize("termination_signal", [signal.SIGINT, signal.SIGTERM])
+    @pytest.mark.parametrize("execution_params", [{"throw_on_error": True}, {"throw_on_error": False}])
+    async def test_generate_termination_results(
+        self,
+        generate_params,
+        httpx_mock: HTTPXMock,
+        execution_params: dict,
+        throw_in_callback: bool,
+        termination_signal: int,
+    ):
+        """Tests that the processing in case of crash ends up as soon as possible"""
+        url = re.compile(f".+{ServiceInterface.GENERATE}$")
+        httpx_mock.add_response(
+            url=url,
+            method="POST",
+            json=SimpleResponse.generate(model=self.model, inputs=self.inputs),
+        )
+
+        model = Model(self.model, params=generate_params, credentials=Credentials("TEST_API_KEY"))
+        prompts = ["Hello world!"] * 10
+        chunk_size = 5
+        has_raised = False
+
+        def callback(result: GenerateResult):
+            assert result is not None
+            nonlocal has_raised
+            if throw_in_callback and not has_raised:
+                has_raised = True
+                raise GenAiException("Unexpected Callback Error")
+
+        with pytest.raises(GenAiException):
+            for response in enumerate(
+                model.generate_async(
+                    **execution_params,
+                    prompts=prompts,
+                    hide_progressbar=True,
+                    max_concurrency_limit=chunk_size,
+                    callback=callback,
+                ),
+            ):
+                assert response is not None
+                # Abort as soon as possible
+                if not has_raised and not throw_in_callback:
+                    has_raised = True
+                    signal.raise_signal(termination_signal)
+
+        # Only one chunk is completed and then the process is terminated
+        requests = httpx_mock.get_requests(url=url, method="POST")
+        assert len(requests) == chunk_size

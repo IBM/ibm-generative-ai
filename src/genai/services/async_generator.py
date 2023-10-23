@@ -3,6 +3,7 @@ import heapq
 import logging
 import math
 import threading
+from asyncio import Future
 from concurrent.futures import ThreadPoolExecutor
 from queue import Queue
 from signal import SIGINT, SIGTERM, signal
@@ -129,17 +130,6 @@ class AsyncResponseGenerator:
         return response
 
     async def _task(self, inputs, batch_num):
-        if self._is_terminating:
-            self._queue.put_nowait(
-                (
-                    batch_num,
-                    len(inputs),
-                    None,
-                    GenAiException("Generation has been aborted by the user."),
-                )
-            )
-            return
-
         response = None
         try:
             response = await self._get_response_json(self.model_id, inputs, self.params, self.options)
@@ -165,6 +155,7 @@ class AsyncResponseGenerator:
             logger.error(
                 "Exception raised in callback : {}, response = {}, inputs = {}".format(str(e), response, inputs)
             )
+            raise e
 
     async def _schedule_requests(self):
         local_concurrency_limit = max(self._max_concurrency_limit or math.inf, 1)
@@ -181,26 +172,39 @@ class AsyncResponseGenerator:
             tokens_remaining = limits.tokenCapacity - limits.tokensUsed
             return min(tokens_remaining, local_concurrency_limit)
 
-        def increment_local_concurrency_limit(*args):
+        has_error = False
+
+        def increment_local_concurrency_limit(future: Future):
+            if future.exception():
+                nonlocal has_error
+                has_error = True
+
             nonlocal local_concurrency_limit
             local_concurrency_limit += 1
 
         tasks = []
-        remaining_tokens = await get_limits()
-        for idx, batch in enumerate(self._generate_batch()):
-            while remaining_tokens <= 0:
-                await asyncio.sleep(max(AsyncResponseGenerator.LIMITS_CHECK_SLEEP_DURATION, 0.0))
-                remaining_tokens = await get_limits()
+        try:
+            remaining_tokens = await get_limits()
+            for idx, batch in enumerate(self._generate_batch()):
+                while remaining_tokens <= 0 and not self._is_terminating and not has_error:
+                    await asyncio.sleep(max(AsyncResponseGenerator.LIMITS_CHECK_SLEEP_DURATION, 0.0))
+                    remaining_tokens = await get_limits()
 
-            remaining_tokens -= 1
-            local_concurrency_limit -= 1
+                if has_error:
+                    break
 
-            logger.debug("Creating task for batch_num {}".format(idx))
-            task = asyncio.create_task(self._task(batch, idx))
-            task.add_done_callback(increment_local_concurrency_limit)
-            tasks.append(task)
+                if self._is_terminating:
+                    raise GenAiException("Generation has been aborted by the user.")
 
-        await asyncio.gather(*tasks)
+                remaining_tokens -= 1
+                local_concurrency_limit -= 1
+
+                logger.debug("Creating task for batch_num {}".format(idx))
+                task = asyncio.create_task(self._task(batch, idx))
+                task.add_done_callback(increment_local_concurrency_limit)
+                tasks.append(task)
+        finally:
+            await asyncio.gather(*tasks)
 
     def _request_launcher(self):
         try:
@@ -239,10 +243,10 @@ class AsyncResponseGenerator:
                 signal(SIGTERM, init_termination)
                 signal(SIGINT, init_termination)
 
-            task = executor.submit(self._request_launcher)
-
             counter = 0
             minheap, batch_tracker = [], 0
+
+            task = executor.submit(self._request_launcher)
             while counter < self._num_batches:
                 try:
                     batch_num, batch_size, response, error = self._queue.get()
@@ -250,35 +254,29 @@ class AsyncResponseGenerator:
                 except Exception as ex:
                     logger.error("Exception while reading from queue: {}".format(str(ex)))
                     raise to_genai_error(ex)
-                else:
-                    counter += 1
-                    # FUTURE: Add metadata here as follows if necessary:
-                    # if response is not None:
-                    #   for i in len(response.results):
-                    #     response.results[i].metadata = self.metadata[batch_num * BATCH_SIZE + i]
-                    if not self.ordered:
-                        if self.throw_on_error and error:
-                            raise error
 
+                counter += 1
+
+                if self.throw_on_error and error:
+                    raise to_genai_error(error)
+
+                try:
+                    if not self.ordered:
                         for result in self._process_response(response, batch_size):
                             yield result
-                        continue
-                try:
-                    # If we are here then self.ordered is True.
-                    heapq.heappush(minheap, (batch_num, batch_size, response, error))
-                    for i in range(len(minheap)):
-                        bnum, bsize, resp, error = heapq.heappop(minheap)
-                        if bnum == batch_tracker:
-                            if self.throw_on_error and error:
-                                raise error
-                            for result in self._process_response(resp, bsize):
-                                yield result
-                            batch_tracker += 1
-                        else:
-                            heapq.heappush(minheap, (bnum, bsize, resp, error))
-                            break
+                    else:
+                        heapq.heappush(minheap, (batch_num, batch_size, response, error))
+                        for i in range(len(minheap)):
+                            bnum, bsize, resp, error = heapq.heappop(minheap)
+                            if bnum == batch_tracker:
+                                for result in self._process_response(resp, bsize):
+                                    yield result
+                                batch_tracker += 1
+                            else:
+                                heapq.heappush(minheap, (bnum, bsize, resp, error))
+                                break
                 except Exception as ex:
-                    logger.error("Error in heap processing: {}".format(str(ex)))
+                    logger.error("Error in processing: {}".format(str(ex)))
                     raise to_genai_error(ex)
 
             task_err = task.exception()
