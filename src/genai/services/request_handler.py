@@ -1,8 +1,6 @@
-import asyncio
 import logging
 from typing import Optional
 
-import httpx
 from httpx import Response
 from httpx_sse import SSEError, connect_sse
 
@@ -160,17 +158,7 @@ class RequestHandler:
             parameters=parameters,
             options=options,
         )
-        response = None
-        for attempt in range(0, ConnectionManager.MAX_RETRIES_GENERATE):
-            response = await ConnectionManager.async_generate_client.post(endpoint, headers=headers, json=json_data)
-            if response.status_code in [
-                httpx.codes.SERVICE_UNAVAILABLE,
-                httpx.codes.TOO_MANY_REQUESTS,
-            ]:
-                await asyncio.sleep(2 ** (attempt + 1))
-            else:
-                break
-        return response
+        return await ConnectionManager.async_generate_client.post(endpoint, headers=headers, json=json_data)
 
     @staticmethod
     async def async_tokenize(

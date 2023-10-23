@@ -2,11 +2,13 @@ import json
 import logging
 import queue
 import random
+import re
 import time
-from unittest.mock import AsyncMock
+from unittest.mock import AsyncMock, patch
 
 import httpx
 import pytest
+from pytest_httpx import HTTPXMock
 
 from genai.exceptions import GenAiException
 from genai.schemas import GenerateParams, ReturnOptions, TokenParams
@@ -157,18 +159,21 @@ class TestAsyncResponseGenerator:
             assert counter == num_prompts
 
     @pytest.mark.asyncio
-    async def test_concurrent_generate_retry(self, httpx_mock, generate_params):
-        saved = ConnectionManager.MAX_RETRIES_GENERATE
-        ConnectionManager.MAX_RETRIES_GENERATE = 2
-        for code in [httpx.codes.SERVICE_UNAVAILABLE, httpx.codes.TOO_MANY_REQUESTS]:
-            httpx_mock.add_response(method="POST", status_code=code, json={})
-            with AsyncResponseGenerator(self.model, self.inputs, generate_params, self.service) as asynchelper:
-                time_start = time.time()
-                for result in asynchelper.generate_response():
-                    assert result is None
-                time_end = time.time()
-                assert time_end - time_start > 5
-        ConnectionManager.MAX_RETRIES_GENERATE = saved
+    @pytest.mark.skip(reason="pytest_httpx does not handle custom transports")
+    async def test_concurrent_generate_retry(self, httpx_mock: HTTPXMock, generate_params):
+        with patch.multiple(AsyncResponseGenerator, MAX_RETRIES_GENERATE=1):
+            for code in [httpx.codes.SERVICE_UNAVAILABLE, httpx.codes.TOO_MANY_REQUESTS]:
+                httpx_mock.add_response(method="POST", status_code=code, json={})
+                httpx_mock.add_response(method="POST", status_code=httpx.codes.OK, json={})
+
+                with AsyncResponseGenerator(self.model, self.inputs, generate_params, self.service) as asynchelper:
+                    response = list(asynchelper.generate_response())
+                    assert len(response) == 2
+                    assert response[0] is None
+                    assert response[1] is not None
+
+                requests = httpx_mock.get_requests(url=re.compile(f".+{ServiceInterface.GENERATE}$"), method="POST")
+                assert len(requests) == 2
 
     @pytest.mark.asyncio
     @pytest.mark.skip(reason="pytest_httpx does not handle custom transports")
