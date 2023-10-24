@@ -16,7 +16,7 @@ from genai.schemas import GenerateParams, TokenParams
 from genai.schemas.responses import (
     GenerateResponse,
     GenerateResult,
-    GenerateStreamResponse,
+    GenerateStreamResult,
     ModelCard,
     ModelList,
     TokenizeResponse,
@@ -61,7 +61,7 @@ class Model:
 
     def generate_stream(
         self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
-    ) -> Generator[GenerateStreamResponse]:
+    ) -> Generator[GenerateStreamResult]:
         if len(prompts) > 0 and isinstance(prompts[0], PromptPattern):
             prompts = PromptPattern.list_str(prompts)
 
@@ -92,10 +92,10 @@ class Model:
                                 "created_at": parsed_response["created_at"],
                                 "moderation": parsed_response["moderation"],
                             }
-                            yield GenerateStreamResponse(**result)
+                            yield GenerateStreamResult(**result)
 
                         for result in parsed_response["results"]:
-                            yield GenerateStreamResponse(**result)
+                            yield GenerateStreamResult(**result)
 
                     except Exception:
                         logger.error("Could not parse {} as literal_eval".format(response))

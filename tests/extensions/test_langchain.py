@@ -6,7 +6,7 @@ from langchain.callbacks.base import BaseCallbackHandler
 
 from genai import Credentials
 from genai.schemas import GenerateParams
-from genai.schemas.responses import GenerateResponse
+from genai.schemas.responses import GenerateResponse, GenerateStreamResponse
 from genai.services import ServiceInterface
 from tests.assets.response_helper import SimpleResponse
 
@@ -84,7 +84,7 @@ class TestLangChain:
             generation = generation_list[0]
             assert generation.text == expected_response.results[idx].generated_text
 
-            expected_result = expected_response.results[idx].dict()
+            expected_result = expected_response.results[idx].model_dump()
             for key in {"generated_token_count", "input_text", "stop_reason"}:
                 assert generation.generation_info[key] == expected_result[key]
 
@@ -109,7 +109,7 @@ class TestLangChain:
             credentials=credentials,
             callbacks=[callback],
         )
-        expected_generated_responses = [GenerateResponse(**result) for result in GENERATE_STREAM_RESPONSES]
+        expected_generated_responses = [GenerateStreamResponse(**result) for result in GENERATE_STREAM_RESPONSES]
 
         # Verify results
         for idx, result in enumerate(model.stream(input=prompts[0])):

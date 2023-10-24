@@ -10,7 +10,7 @@ from langchain.callbacks.manager import (
 )
 from langchain.schema import LLMResult
 from langchain.schema.output import Generation, GenerationChunk
-from pydantic import BaseModel, Extra
+from pydantic import ConfigDict
 
 from genai.exceptions import GenAiException
 from genai.utils.general import to_model_instance
@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 __all__ = ["LangChainInterface"]
 
 
-class LangChainInterface(LLM, BaseModel):
+class LangChainInterface(LLM):
     """
     Wrapper around IBM GENAI models.
     To use, you should have the ``genai`` python package installed
@@ -44,11 +44,7 @@ class LangChainInterface(LLM, BaseModel):
     credentials: Credentials = None
     model: Optional[str] = None
     params: Optional[GenerateParams] = None
-
-    class Config:
-        """Configuration for this pydantic object."""
-
-        extra = Extra.forbid
+    model_config = ConfigDict(extra="forbid", protected_namespaces=())
 
     @property
     def _identifying_params(self) -> Mapping[str, Any]:
@@ -142,7 +138,7 @@ class LangChainInterface(LLM, BaseModel):
         ):
             generation = Generation(
                 text=response.generated_text or "",
-                generation_info=self._create_full_generation_info(response.dict()),
+                generation_info=self._create_full_generation_info(response.model_dump()),
             )
             logger.info("Output of GENAI call: {}".format(generation.text))
             result.generations.append([generation])
@@ -189,7 +185,7 @@ class LangChainInterface(LLM, BaseModel):
             logger.info("Chunk received: {}".format(response.generated_text))
             yield GenerationChunk(
                 text=response.generated_text or "",
-                generation_info=self._create_full_generation_info(response.dict()),
+                generation_info=self._create_full_generation_info(response.model_dump()),
             )
             if run_manager:
                 run_manager.on_llm_new_token(token=response.generated_text, response=response)

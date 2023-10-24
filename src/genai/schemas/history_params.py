@@ -1,6 +1,6 @@
 from typing import Literal, Optional
 
-from pydantic import BaseModel, Extra, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from genai.schemas import Descriptions as tx
 
@@ -8,9 +8,7 @@ from genai.schemas import Descriptions as tx
 
 
 class HistoryParams(BaseModel):
-    class Config:
-        anystr_strip_whitespace = True
-        extra = Extra.forbid
+    model_config = ConfigDict(str_strip_whitespace=True, extra="forbid")
 
     limit: Optional[int] = Field(None, description=tx.LIMIT, le=100)
     offset: Optional[int] = Field(None, description=tx.OFFSET)

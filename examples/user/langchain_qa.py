@@ -26,7 +26,7 @@ params = GenerateParams(
     temperature=0.5,
     top_k=50,
     top_p=1,
-).dict()  # Langchain uses dictionaries to pass kwargs
+)
 
 pt1 = PromptTemplate(
     input_variables=["topic"],

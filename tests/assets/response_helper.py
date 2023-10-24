@@ -253,7 +253,7 @@ class SimpleResponse:
 
         if "tune_id" in kwargs:
             response["results"] = results
-        elif "params" in kwargs and type(kwargs["params"]) == CreateTuneParams:
+        elif "params" in kwargs and isinstance(kwargs["params"], CreateTuneParams):
             response["results"] = results
         else:
             response = {
