@@ -5,7 +5,7 @@ from collections import deque
 from collections.abc import Generator
 from typing import Any, Callable, List, Optional, Union
 
-from tqdm import tqdm
+from tqdm.auto import tqdm
 
 from genai.credentials import Credentials
 from genai.exceptions import GenAiException
