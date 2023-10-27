@@ -197,7 +197,7 @@ class FileFormatResult(GenAiResponseModel):
 
 class FileInfoResult(GenAiResponseModel):
     id: str
-    bytes: str
+    bytes: int
     file_name: str
     purpose: str
     storage_provider_location: Optional[str] = None

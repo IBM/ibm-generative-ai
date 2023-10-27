@@ -1,3 +1,5 @@
+from httpx import Response
+
 from genai.schemas.files_params import FileListParams, MultipartFormData
 from genai.services.request_handler import RequestHandler
 from genai.utils.errors import to_genai_error
@@ -11,7 +13,7 @@ class FilesRouter:
         self.service_url = service_url.rstrip("/")
         self.key = api_key
 
-    def list_files(self, params: FileListParams = None):
+    def list_files(self, params: FileListParams = None) -> Response:
         """List all files on the server.
 
         Args:
@@ -27,7 +29,7 @@ class FilesRouter:
         except Exception as e:
             raise to_genai_error(e)
 
-    def get_file_metadata(self, file_id: str):
+    def get_file_metadata(self, file_id: str) -> Response:
         """Get the file metadata from the server.
 
         Args:
@@ -42,7 +44,7 @@ class FilesRouter:
         except Exception as e:
             raise to_genai_error(e)
 
-    def read_file(self, file_id: str):
+    def read_file(self, file_id: str) -> Response:
         """Read the content of a file from the server.
 
         Args:
@@ -57,7 +59,7 @@ class FilesRouter:
         except Exception as e:
             raise to_genai_error(e)
 
-    def delete_file(self, file_id: str):
+    def delete_file(self, file_id: str) -> Response:
         """Delete a file from the server.
 
         Args:
@@ -72,7 +74,7 @@ class FilesRouter:
         except Exception as e:
             raise to_genai_error(e)
 
-    def upload_file(self, multipart_form_data: MultipartFormData):
+    def upload_file(self, multipart_form_data: MultipartFormData) -> Response:
         """Upload a file to the server.
 
         Args:
