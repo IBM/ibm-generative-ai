@@ -39,7 +39,7 @@ class FileManager:
         try:
             response = service._files.list_files(params=params)
 
-            if response.status_code == 200:
+            if response.is_success:
                 response = response.json()
                 responses = FilesListResponse(**response)
                 return responses
@@ -69,7 +69,7 @@ class FileManager:
         try:
             response = service._files.get_file_metadata(file_id=file_id)
 
-            if response.status_code == 200:
+            if response.is_success:
                 response = response.json()
                 return FileInfoResult(**response["results"])
             else:
@@ -96,7 +96,7 @@ class FileManager:
         try:
             response = service._files.read_file(file_id=file_id)
 
-            if response.status_code == 200:
+            if response.is_success:
                 return response.content.decode("utf-8")
             else:
                 raise GenAiException(response)
@@ -151,7 +151,7 @@ class FileManager:
         try:
             response = service._files.upload_file(multipart_form_data=multipart_form_data)
 
-            if response.status_code == 201:
+            if response.is_success:
                 response = response.json()
                 return FileInfoResult(**response["results"])
             else:
@@ -177,7 +177,7 @@ class FileManager:
 
         try:
             response = service._files.delete_file(file_id=file_id)
-            if response.status_code == 204:
+            if response.is_success:
                 return {"status": "success"}
             else:
                 raise GenAiException(response)
