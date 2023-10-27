@@ -3,8 +3,8 @@ import os
 from dotenv import load_dotenv
 
 try:
-    from langchain.chains import LLMChain, SimpleSequentialChain
     from langchain.prompts import PromptTemplate
+    from langchain.schema import StrOutputParser
 except ImportError:
     raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")
 
@@ -41,7 +41,9 @@ pt2 = PromptTemplate(
 creds = Credentials(api_key, api_endpoint)
 flan = LangChainInterface(model="google/flan-ul2", credentials=creds, params=params)
 model = LangChainInterface(model="google/flan-ul2", credentials=creds)
-prompt_to_flan = LLMChain(llm=flan, prompt=pt1)
-flan_to_model = LLMChain(llm=model, prompt=pt2)
-qa = SimpleSequentialChain(chains=[prompt_to_flan, flan_to_model], verbose=True)
-qa.run("life")
+
+prompt_to_flan_chain = pt1 | flan | StrOutputParser()
+flan_to_model_chain = pt2 | model | StrOutputParser()
+
+chain = {"question": prompt_to_flan_chain} | flan_to_model_chain
+print(chain.invoke({"topic": "life"}))
