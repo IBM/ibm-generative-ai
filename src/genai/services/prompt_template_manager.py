@@ -16,7 +16,7 @@ class PromptTemplateManager:
 
         try:
             response = service._prompt_templating.prompt_templates(name, value=template)
-            if response.status_code == 200:
+            if response.is_success:
                 response_result = WatsonxTemplate(**response.json()["results"])
                 return response_result
             raise GenAiException(response)
@@ -29,7 +29,7 @@ class PromptTemplateManager:
 
         try:
             response = service._prompt_templating.update_prompt_templates(id=id, name=name, value=template)
-            if response.status_code == 200:
+            if response.is_success:
                 response_result = WatsonxTemplate(**response.json()["results"])
                 return response_result
             raise GenAiException(response)
@@ -42,7 +42,7 @@ class PromptTemplateManager:
 
         try:
             response = service._prompt_templating.prompt_output(inputs, template=data)
-            if response.status_code == 200:
+            if response.is_success:
                 response_result = WatsonxRenderedPrompts(**response.json())
                 return response_result.results
             raise GenAiException(response)
@@ -67,7 +67,7 @@ class PromptTemplateManager:
 
         try:
             response = service._prompt_templating.get_prompt_templates()
-            if response.status_code == 200:
+            if response.is_success:
                 return WatsonxTemplatesResponse(**response.json())
             raise GenAiException(response)
         except Exception as ex:
@@ -79,7 +79,7 @@ class PromptTemplateManager:
 
         try:
             response = service._prompt_templating.get_prompt_templates(id)
-            if response.status_code == 200:
+            if response.is_success:
                 return WatsonxTemplate(**response.json()["results"])
             raise GenAiException(response)
         except Exception as ex:
@@ -115,7 +115,7 @@ class PromptTemplateManager:
 
         try:
             response = service._prompt_templating.delete_prompt_templates(id)
-            if response.status_code == 204:
+            if response.is_success:
                 return id
             raise GenAiException(response)
         except GenAiException as ex:

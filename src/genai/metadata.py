@@ -33,7 +33,7 @@ class Metadata:
         try:
             tou_response = self.service.terms_of_use(True)
 
-            if tou_response.status_code == 200:
+            if tou_response.is_success:
                 tou_data = TermsOfUse(**tou_response.json())
                 return tou_data
             else:
@@ -56,7 +56,7 @@ class Metadata:
         try:
             history_response = self.service.history(params)
 
-            if history_response.status_code == 200:
+            if history_response.is_success:
                 history_data = HistoryResponse(**history_response.json())
                 return history_data
             else:

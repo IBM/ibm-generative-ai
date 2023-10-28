@@ -1,10 +1,9 @@
-from unittest.mock import MagicMock, patch
-
 import pytest
+from pytest_httpx import HTTPXMock
 
 from genai.schemas import GenerateParams, ReturnOptions
 from genai.services import ServiceInterface
-from genai.utils.request_utils import sanitize_params
+from genai.utils.request_utils import match_endpoint, sanitize_params
 from tests.assets.response_helper import SimpleResponse
 
 
@@ -12,7 +11,7 @@ from tests.assets.response_helper import SimpleResponse
 class TestServiceInterface:
     def setup_method(self):
         # mock object for the API call
-        self.service = ServiceInterface(service_url="SERVICE_URL", api_key="API_KEY")
+        self.service = ServiceInterface(service_url="http://service_url", api_key="API_KEY")
         self.model = "google/ul2"
         self.inputs = ["Write a tagline for an alumni association: Together we"]
 
@@ -20,22 +19,18 @@ class TestServiceInterface:
     def params(seld):
         return GenerateParams(decoding_method="greedy", return_options=ReturnOptions(input_text=True))
 
-    @patch("genai.services.RequestHandler.patch")
-    def test_tou(self, mocked_post_request):
+    def test_tou(self, httpx_mock: HTTPXMock):
         expected_resp = SimpleResponse.terms_of_use()
-        expected = MagicMock(status_code=200, json=expected_resp)
-        mocked_post_request.return_value = expected
-
+        httpx_mock.add_response(url=match_endpoint(ServiceInterface.TOU), method="PATCH", json=expected_resp)
         resp = self.service.terms_of_use(True)
 
-        assert resp == expected
-        assert resp.status_code == 200
+        assert resp.json() == expected_resp
+        assert resp.is_success
 
-    @patch(
-        "genai.services.RequestHandler.patch",
-        side_effect=Exception("some general error"),
-    )
-    def test_tou_exception(self, mock):
+    def test_tou_exception(self, httpx_mock: HTTPXMock):
+        httpx_mock.add_exception(
+            Exception("some general error"), url=match_endpoint(ServiceInterface.TOU), method="PATCH"
+        )
         with pytest.raises(BaseException, match="some general error"):
             self.service.terms_of_use(True)
 

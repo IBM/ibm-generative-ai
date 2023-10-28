@@ -137,7 +137,7 @@ class Model:
                 params=params,
                 options=options,
             )
-            if response.status_code == 200:
+            if response.is_success:
                 raw_response = response.json()
                 for i, result in enumerate(raw_response["results"]):
                     result["input_text"] = inputs[i]
@@ -273,7 +273,7 @@ class Model:
                     options=options,
                 )
 
-                if tokenize_response.status_code == 200:
+                if tokenize_response.is_success:
                     response_json = tokenize_response.json()
                     for y, result in enumerate(response_json["results"]):
                         result["input_text"] = prompts[i + y]

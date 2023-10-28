@@ -1,8 +1,9 @@
 import os
 import pathlib
-from unittest.mock import MagicMock, mock_open, patch
+from unittest.mock import mock_open, patch
 
 import pytest
+from pytest_httpx import HTTPXMock
 
 from genai import Credentials
 from genai.exceptions import GenAiException
@@ -18,13 +19,14 @@ from genai.schemas.tunes_params import (
     TunesListParams,
 )
 from genai.services.tune_manager import TuneManager
+from genai.utils.request_utils import match_endpoint
 from tests.assets.response_helper import SimpleResponse
 
 
 @pytest.mark.unit
 class TestTunes:
     def setup_method(self):
-        self.service_router = TunesRouter(service_url="SERVICE_URL", api_key="API_KEY")
+        self.service_router = TunesRouter(service_url="http://service_url", api_key="API_KEY")
         self.path = pathlib.Path(__file__).parent.resolve()
         self.asset_path = pathlib.Path(__file__, "..", "assets").resolve()
 
@@ -51,26 +53,27 @@ class TestTunes:
         return Credentials("GENAI_KEY")
 
     # Test list tunes function
-    @patch("genai.services.RequestHandler.get")
-    def test_list_tunes(self, mock_requests, credentials, list_params):
+    def test_list_tunes(self, credentials, list_params, httpx_mock: HTTPXMock):
         list_response = SimpleResponse.tunes(params=list_params)
         expected_response = TunesListResponse(**list_response)
 
-        mock_response = MagicMock(status_code=200)
-        mock_response.json.return_value = list_response
-        mock_requests.return_value = mock_response
+        httpx_mock.add_response(
+            url=match_endpoint(TunesRouter.TUNES, query_params=list_params), method="GET", json=list_response
+        )
 
         f = TuneManager.list_tunes(credentials=credentials, params=list_params)
         assert f == expected_response
 
-    @patch("genai.services.RequestHandler.get")
-    def test_tune_list_api_call(self, mock_requests, list_params):
-        mock_response = MagicMock(status_code=200)
-        mock_response.json.return_value = SimpleResponse.tunes()
-        mock_requests.return_value = mock_response
+    def test_tune_list_api_call(self, list_params, httpx_mock: HTTPXMock):
+        list_response = SimpleResponse.tunes(params=list_params)
+        httpx_mock.add_response(
+            url=match_endpoint(TunesRouter.TUNES, query_params=list_params),
+            method="GET",
+            json=SimpleResponse.tunes(params=list_params),
+        )
 
         g = self.service_router.list_tunes(params=list_params)
-        assert g == mock_response
+        assert g.json() == list_response
 
     def test_list_tunes_wrong_params(self):
         with pytest.raises(GenAiException) as e:
@@ -83,27 +86,24 @@ class TestTunes:
             assert e.message == "params must be of type TunesListParams."
 
     # Test delete tunes function
-    @patch("genai.services.RequestHandler.delete")
-    def test_delete_tune(self, mocker, credentials):
+    def test_delete_tune(self, credentials, httpx_mock: HTTPXMock):
         expected_response = {"status": "success"}
-        response = MagicMock(status_code=204)
-        response.json.return_value = expected_response
-        mocker.return_value = response
+        httpx_mock.add_response(
+            url=match_endpoint(TunesRouter.TUNES, "tune_id"), method="DELETE", json=expected_response
+        )
 
         with pytest.raises(Exception) as e:
             file_response = TuneManager.delete_tune(credentials=credentials, tune_id="tune_id")
             assert e.message == "Tune can not be deleted until is completed or failed."
             assert file_response == expected_response
 
-    @patch("genai.services.RequestHandler.delete")
-    def test_delete_tune_api_call(self, mocker):
-        response = MagicMock(status_code=204)
-        response.json.return_value = {"status": "success"}
-        mocker.return_value = response
+    def test_delete_tune_api_call(self, httpx_mock: HTTPXMock):
+        expected = {"status": "success"}
+        httpx_mock.add_response(url=match_endpoint(TunesRouter.TUNES, "tune_id"), method="DELETE", json=expected)
 
         tune_response = self.service_router.delete_tune(tune_id="tune_id")
 
-        assert tune_response == response
+        assert tune_response.json() == {"status": "success"}
 
     def test_tune_delete_wrong_params(self):
         with pytest.raises(Exception) as e:
@@ -112,25 +112,20 @@ class TestTunes:
 
     # Test get tune function
 
-    @patch("genai.services.RequestHandler.get")
-    def test_get_tune(self, mock_requests, credentials):
+    def test_get_tune(self, credentials, httpx_mock: HTTPXMock):
         get_tune_response = SimpleResponse.tunes(tune_id="tune_id")
         expected_response = TuneInfoResult(**get_tune_response["results"])
 
-        mock_response = MagicMock(status_code=200)
-        mock_response.json.return_value = get_tune_response
-        mock_requests.return_value = mock_response
+        httpx_mock.add_response(url=match_endpoint(TunesRouter.TUNES, "tune_id"), method="GET", json=get_tune_response)
 
         tune_response = TuneManager.get_tune(credentials=credentials, tune_id="tune_id")
         assert tune_response == expected_response
 
-    @patch("genai.services.RequestHandler.get")
-    def test_get_tune_api_call(self, mock_requests):
-        mock_response = MagicMock(status_code=200)
-        mock_response.json.return_value = SimpleResponse.tunes()
-        mock_requests.return_value = mock_response
+    def test_get_tune_api_call(self, httpx_mock: HTTPXMock):
+        expected = SimpleResponse.tunes()
+        httpx_mock.add_response(url=match_endpoint(TunesRouter.TUNES, "tune_id"), method="GET", json=expected)
         g = self.service_router.get_tune(tune_id="tune_id")
-        assert g == mock_response
+        assert g.json() == expected
 
     def test_get_tune_wrong_params(self):
         with pytest.raises(Exception) as e:
@@ -139,27 +134,22 @@ class TestTunes:
 
     # Test create tune function
 
-    @patch("genai.services.RequestHandler.post")
-    def test_create_tune(self, mocker, create_params, credentials):
+    def test_create_tune(self, create_params, credentials, httpx_mock: HTTPXMock):
         create_response = SimpleResponse.tunes(params=create_params)
         expected_create_response = TuneInfoResult(**create_response["results"])
 
-        response = MagicMock(status_code=200)
-        response.json.return_value = create_response
-        mocker.return_value = response
+        httpx_mock.add_response(url=match_endpoint(TunesRouter.TUNES), method="POST", json=create_response)
 
         tune_response = TuneManager.create_tune(credentials=credentials, params=create_params)
 
         assert tune_response == expected_create_response
 
-    @patch("genai.services.RequestHandler.post")
-    def test_create_tune_api_call(self, mock_requests, create_params):
-        mock_response = MagicMock(status_code=200)
-        mock_response.json.return_value = SimpleResponse.tunes()
-        mock_requests.return_value = mock_response
+    def test_create_tune_api_call(self, create_params, httpx_mock: HTTPXMock):
+        expected = SimpleResponse.tunes()
+        httpx_mock.add_response(url=match_endpoint(TunesRouter.TUNES), method="POST", json=expected)
 
         g = self.service_router.create_tune(params=create_params)
-        assert g == mock_response
+        assert g.json() == expected
 
     def test_create_tune_wrong_params(self):
         with pytest.raises(GenAiException) as e:
@@ -173,33 +163,34 @@ class TestTunes:
 
     # Test get tune methods function
 
-    @patch("genai.services.RequestHandler.get")
-    def test_get_tune_methods(self, mock_requests, credentials):
+    def test_get_tune_methods(self, credentials, httpx_mock: HTTPXMock):
         tune_methods_response = SimpleResponse.get_tune_methods()
         expected_response = TuneMethodsGetResponse(**tune_methods_response)
 
-        mock_response = MagicMock(status_code=200)
-        mock_response.json.return_value = tune_methods_response
-        mock_requests.return_value = mock_response
+        httpx_mock.add_response(url=match_endpoint(TunesRouter.TUNE_METHODS), method="GET", json=tune_methods_response)
 
         tune_response = TuneManager.get_tune_methods(credentials=credentials)
         assert tune_response.results == expected_response.results
 
-    @patch("genai.services.RequestHandler.get")
-    def test_get_tune_methods_api_call(self, mock_requests):
-        mock_response = MagicMock(status_code=200)
-        mock_response.json.return_value = SimpleResponse.get_tune_methods()
-        mock_requests.return_value = mock_response
+    def test_get_tune_methods_api_call(self, httpx_mock: HTTPXMock):
+        expected = SimpleResponse.get_tune_methods()
+
+        httpx_mock.add_response(url=match_endpoint(TunesRouter.TUNE_METHODS), method="GET", json=expected)
+
         g = self.service_router.get_tune_methods()
-        assert g == mock_response
+        assert g.json() == expected
 
     # Test download tune assets function
-
-    @patch("genai.services.RequestHandler.get")
     @patch("builtins.open", new=mock_open(read_data="some data"), create=True)
-    def test_download_assets(self, mock_request, credentials, download_assets_params, tmp_path):
+    def test_download_assets(self, credentials, download_assets_params, tmp_path, httpx_mock: HTTPXMock):
         output_path = pathlib.Path(self.asset_path, tmp_path, "tune_assets").resolve()
-        mock_request.json.return_value = MagicMock(status_code=200)
+
+        httpx_mock.add_response(
+            url=match_endpoint(TunesRouter.TUNES, "/some-tune-id"),
+            method="GET",
+            status_code=500,
+        )
+        httpx_mock.add_response(url=match_endpoint(TunesRouter.TUNES, "tune_id/content/encoder"), method="GET")
 
         with pytest.raises(Exception) as e:
             TuneManager.download_tune_assets(
