@@ -13,8 +13,8 @@ from genai.schemas.responses import (
 )
 from genai.schemas.tunes_params import CreateTuneHyperParams
 from genai.services import ServiceInterface
-from genai.utils.request_utils import match_endpoint
 from tests.assets.response_helper import SimpleResponse
+from tests.utils import match_endpoint
 
 
 @pytest.mark.unit

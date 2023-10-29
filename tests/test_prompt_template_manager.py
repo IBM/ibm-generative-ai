@@ -8,8 +8,8 @@ from genai.exceptions import GenAiException
 from genai.routers.prompt_template import PromptTemplateRouter
 from genai.schemas.responses import WatsonxTemplate, WatsonxTemplatesResponse
 from genai.services import PromptTemplateManager
-from genai.utils.request_utils import match_endpoint
 from tests.assets.response_helper import SimpleResponse
+from tests.utils import match_endpoint
 
 
 @pytest.mark.unit

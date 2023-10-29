@@ -3,8 +3,9 @@ from pytest_httpx import HTTPXMock
 
 from genai.schemas import GenerateParams, ReturnOptions
 from genai.services import ServiceInterface
-from genai.utils.request_utils import match_endpoint, sanitize_params
+from genai.utils.request_utils import sanitize_params
 from tests.assets.response_helper import SimpleResponse
+from tests.utils import match_endpoint
 
 
 @pytest.mark.unit

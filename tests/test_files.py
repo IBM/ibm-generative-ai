@@ -11,8 +11,8 @@ from genai.routers import FilesRouter
 from genai.schemas import FileListParams
 from genai.schemas.responses import FileInfoResult, FilesListResponse
 from genai.services.file_manager import FileManager
-from genai.utils.request_utils import match_endpoint
 from tests.assets.response_helper import SimpleResponse
+from tests.utils import match_endpoint
 
 
 @pytest.mark.unit

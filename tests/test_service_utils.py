@@ -1,10 +1,9 @@
 import unittest
-from re import Match
 
 import pytest
 
 from genai.schemas import GenerateParams, ReturnOptions
-from genai.utils.request_utils import match_endpoint, sanitize_params
+from genai.utils.request_utils import sanitize_params
 
 # API Reference : https://workbench.res.ibm.com/docs/api-reference#generate
 
@@ -21,12 +20,3 @@ class TestServiceUtils(unittest.TestCase):
 
         sanitized_dict = sanitize_params(input_genParams)
         self.assertEqual(expected_genParams, sanitized_dict)
-
-    def test_match_endpoint(self):
-        match_ep = match_endpoint("v1/generate")
-        url = "http://service_url/v1/tokenize"
-        assert match_ep.match(url) is None
-
-        match_ep = match_endpoint("v1/generate", "path", query_params={"parameter": 20, "test": "test"})
-        url = "http://service_url/v1/generate/path?parameter=20&test=test"
-        assert isinstance(match_ep.match(url), Match) is True

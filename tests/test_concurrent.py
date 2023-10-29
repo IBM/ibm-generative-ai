@@ -14,8 +14,9 @@ from genai.schemas import GenerateParams, ReturnOptions, TokenParams
 from genai.schemas.responses import GenerateResponse, TokenizeResponse
 from genai.services import AsyncResponseGenerator, RequestHandler, ServiceInterface
 from genai.services.connection_manager import ConnectionManager
-from genai.utils.request_utils import match_endpoint, sanitize_params
+from genai.utils.request_utils import sanitize_params
 from tests.assets.response_helper import SimpleResponse
+from tests.utils import match_endpoint
 
 logger = logging.getLogger(__name__)
 

@@ -5,8 +5,8 @@ from genai import Credentials
 from genai.extensions.huggingface import IBMGenAIAgent
 from genai.schemas import GenerateParams
 from genai.services import ServiceInterface
-from genai.utils.request_utils import match_endpoint
 from tests.assets.response_helper import SimpleResponse
+from tests.utils import match_endpoint
 
 
 @pytest.mark.extension

@@ -7,8 +7,8 @@ from genai.credentials import Credentials
 from genai.prompt_pattern import PromptPattern
 from genai.routers import PromptTemplateRouter
 from genai.schemas.responses import WatsonxTemplate
-from genai.utils.request_utils import match_endpoint
 from tests.assets.response_helper import SimpleResponse
+from tests.utils import match_endpoint
 
 
 @pytest.mark.unit

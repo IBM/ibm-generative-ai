@@ -3,8 +3,8 @@ from pytest_httpx import HTTPXMock
 
 from genai.schemas import HistoryParams
 from genai.services import ServiceInterface
-from genai.utils.request_utils import match_endpoint
 from tests.assets.response_helper import SimpleResponse
+from tests.utils import match_endpoint
 
 # API Reference : https://workbench.res.ibm.com/docs/api-reference#generate
 

@@ -3,7 +3,7 @@ from pytest_httpx import HTTPXMock
 
 from genai.schemas import GenerateParams
 from genai.services import RequestHandler, ServiceInterface
-from genai.utils.request_utils import match_endpoint
+from tests.utils import match_endpoint
 
 
 @pytest.mark.unit
