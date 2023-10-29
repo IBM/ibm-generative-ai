@@ -38,6 +38,7 @@ class FileManager:
 
         try:
             response = service._files.list_files(params=params)
+
             if response.is_success:
                 response = response.json()
                 responses = FilesListResponse(**response)

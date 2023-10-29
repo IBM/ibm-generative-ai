@@ -7,7 +7,7 @@ from pytest_httpx import HTTPXMock, IteratorStream
 
 from genai import Credentials
 from genai.schemas import GenerateParams
-from genai.schemas.responses import GenerateResponse, GenerateStreamResult
+from genai.schemas.responses import GenerateResponse, GenerateStreamResponse
 from genai.services import ServiceInterface
 from genai.utils.request_utils import match_endpoint
 from tests.assets.response_helper import SimpleResponse
@@ -85,7 +85,7 @@ class TestLangChain:
         GENERATE_STREAM_RESPONSES = SimpleResponse.generate_stream(
             model="google/flan-ul2", inputs=prompts, params=params
         )
-        expected_generated_responses = [GenerateStreamResult(**result) for result in GENERATE_STREAM_RESPONSES]
+        expected_generated_responses = [GenerateStreamResponse(**result) for result in GENERATE_STREAM_RESPONSES]
         stream_responses = [(f"data: {json.dumps(response)}\n\n").encode() for response in GENERATE_STREAM_RESPONSES]
         httpx_mock.add_response(
             url=match_endpoint(ServiceInterface.GENERATE),
@@ -106,16 +106,16 @@ class TestLangChain:
         # Verify results
         for idx, result in enumerate(model.stream(input=prompts[0])):
             expected_result = expected_generated_responses[idx]
-            assert result == expected_result.results[0]["generated_text"]
+            assert result == expected_result.results[0].generated_text
 
         # Verify that callbacks were called
         assert callback.on_llm_new_token.call_count == len(expected_generated_responses)
         for idx, result in enumerate(expected_generated_responses):
             retrieved_kwargs = callback.on_llm_new_token.call_args_list[idx].kwargs
             token = retrieved_kwargs["token"]
-            assert token == result.results[0]["generated_text"]
+            assert token == result.results[0].generated_text
             response = retrieved_kwargs["response"]
-            assert response == GenerateStreamResult(**result.results[0])
+            assert response == result.results[0]
 
     def test_prompt_translator(self):
         from langchain.prompts import PromptTemplate
