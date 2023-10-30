@@ -1,14 +1,16 @@
 import json
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 from langchain.callbacks.base import BaseCallbackHandler
+from pytest_httpx import HTTPXMock, IteratorStream
 
 from genai import Credentials
 from genai.schemas import GenerateParams
 from genai.schemas.responses import GenerateResponse, GenerateStreamResponse
 from genai.services import ServiceInterface
 from tests.assets.response_helper import SimpleResponse
+from tests.utils import match_endpoint
 
 
 @pytest.mark.extension
@@ -34,37 +36,26 @@ class TestLangChain:
     def multi_prompts(self):
         return ["What is IBM?", "What is AI?"]
 
-    @patch("httpx.Client.post")
-    def test_langchain_interface(
-        self,
-        mocked_post_request,
-        credentials,
-        params,
-        prompts,
-    ):
+    def test_langchain_interface(self, credentials, params, prompts, httpx_mock: HTTPXMock):
         from genai.extensions.langchain import LangChainInterface
 
         GENERATE_RESPONSE = SimpleResponse.generate(model="google/flan-ul2", inputs=prompts, params=params)
-        expected_generated_response = GenerateResponse(**GENERATE_RESPONSE)
+        expected_response = GenerateResponse(**GENERATE_RESPONSE)
 
-        response = MagicMock(status_code=200)
-        response.json.return_value = GENERATE_RESPONSE
-        mocked_post_request.return_value = response
+        httpx_mock.add_response(url=match_endpoint(ServiceInterface.GENERATE), method="POST", json=GENERATE_RESPONSE)
 
         model = LangChainInterface(model="google/flan-ul2", params=params, credentials=credentials)
         results = model(prompts[0])
-        assert results == expected_generated_response.results[0].generated_text
+        assert results == expected_response.results[0].generated_text
 
     @pytest.mark.asyncio
-    @patch("httpx.Client.post")
-    async def test_async_langchain_interface(self, mocked_post_request, credentials, params, multi_prompts):
+    async def test_async_langchain_interface(self, credentials, params, multi_prompts, httpx_mock: HTTPXMock):
         from genai.extensions.langchain import LangChainInterface
 
-        server_response = SimpleResponse.generate(model="google/flan-ul2", inputs=multi_prompts, params=params)
-        expected_response = GenerateResponse(**server_response)
-        mock_response = MagicMock(status_code=200)
-        mock_response.json.return_value = server_response
-        mocked_post_request.return_value = mock_response
+        GENERATE_RESPONSE = SimpleResponse.generate(model="google/flan-ul2", inputs=multi_prompts, params=params)
+        expected_response = GenerateResponse(**GENERATE_RESPONSE)
+
+        httpx_mock.add_response(url=match_endpoint(ServiceInterface.GENERATE), method="POST", json=GENERATE_RESPONSE)
 
         model = LangChainInterface(model="google/flan-ul2", params=params, credentials=credentials)
         observed = await model.agenerate(prompts=multi_prompts)
@@ -88,17 +79,19 @@ class TestLangChain:
             for key in {"generated_token_count", "input_text", "stop_reason"}:
                 assert generation.generation_info[key] == expected_result[key]
 
-    @patch("genai.services.RequestHandler.post_stream")
-    def test_langchain_stream(self, mock_post_stream, credentials, params, prompts):
+    def test_langchain_stream(self, credentials, params, prompts, httpx_mock: HTTPXMock):
         from genai.extensions.langchain import LangChainInterface
 
         GENERATE_STREAM_RESPONSES = SimpleResponse.generate_stream(
             model="google/flan-ul2", inputs=prompts, params=params
         )
-
-        response = MagicMock(status_code=200)
-        response.__iter__.return_value = (json.dumps(response) for response in GENERATE_STREAM_RESPONSES)
-        mock_post_stream.return_value = response
+        expected_generated_responses = [GenerateStreamResponse(**result) for result in GENERATE_STREAM_RESPONSES]
+        stream_responses = [(f"data: {json.dumps(response)}\n\n").encode() for response in GENERATE_STREAM_RESPONSES]
+        httpx_mock.add_response(
+            url=match_endpoint(ServiceInterface.GENERATE),
+            stream=IteratorStream(stream_responses),
+            headers={"Content-Type": "text/event-stream"},
+        )
 
         callback = BaseCallbackHandler()
         callback.on_llm_new_token = MagicMock()
@@ -109,7 +102,6 @@ class TestLangChain:
             credentials=credentials,
             callbacks=[callback],
         )
-        expected_generated_responses = [GenerateStreamResponse(**result) for result in GENERATE_STREAM_RESPONSES]
 
         # Verify results
         for idx, result in enumerate(model.stream(input=prompts[0])):

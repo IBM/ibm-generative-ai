@@ -1,7 +1,6 @@
 import re
 import signal
 from contextlib import nullcontext as does_not_raise
-from unittest.mock import AsyncMock
 
 import httpx
 import pytest
@@ -13,55 +12,38 @@ from genai.schemas import GenerateParams, TokenParams
 from genai.schemas.responses import GenerateResponse, GenerateResult, TokenizeResponse
 from genai.services import ServiceInterface
 from tests.assets.response_helper import SimpleResponse
+from tests.utils import match_endpoint
 
 
 @pytest.mark.unit
 class TestModelAsync:
     def setup_method(self):
-        self.service = ServiceInterface(service_url="SERVICE_URL", api_key="API_KEY")
+        self.service = ServiceInterface(service_url="http://service_url", api_key="API_KEY")
+        self.creds = Credentials("TEST_API_KEY")
         self.model = "google/ul2"
         self.inputs = ["Write a tagline for an alumni association: Together we"]
-
-    @pytest.fixture
-    def mock_generate_json(self, mocker):
-        async_mock = AsyncMock()
-        mocker.patch(
-            "genai.services.AsyncResponseGenerator._get_response_json",
-            side_effect=async_mock,
-        )
-        return async_mock
 
     @pytest.fixture
     def generate_params(self):
         return GenerateParams(decoding_method="sample", max_new_tokens=5, min_new_tokens=0)
 
     @pytest.fixture
-    def mock_tokenize_json(self, mocker):
-        async_mock = AsyncMock()
-        mocker.patch(
-            "genai.services.AsyncResponseGenerator._get_response_json",
-            side_effect=async_mock,
-        )
-        return async_mock
-
-    @pytest.fixture
     def tokenize_params(self):
         return TokenParams(return_tokens=True)
 
     @pytest.mark.asyncio
-    async def test_generate_async(self, mock_generate_json, generate_params):
+    async def test_generate_async(self, generate_params, httpx_mock: HTTPXMock):
         num_prompts = 31
         prompts = ["TEST_PROMPT"] * num_prompts
         expected = SimpleResponse.generate_response_array_async(
             model=self.model, inputs=prompts, params=generate_params
         )
-        creds = Credentials("TEST_API_KEY")
-        mock_generate_json.side_effect = expected
+        httpx_mock.add_response(url=match_endpoint(ServiceInterface.GENERATE), method="POST", json=expected[0])
 
         model = Model(
             "google/flan-ul2",
             params=generate_params,
-            credentials=creds,
+            credentials=self.creds,
         )
 
         counter = 0
@@ -73,6 +55,7 @@ class TestModelAsync:
                 assert prompts[counter] == result.input_text
                 counter += 1
         assert counter == num_prompts
+        assert len(httpx_mock.get_requests(url=match_endpoint(ServiceInterface.GENERATE))) == counter
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -88,7 +71,7 @@ class TestModelAsync:
     async def test_generate_custom_concurrency_limit(
         self, generate_params, httpx_mock: HTTPXMock, max_concurrency_limit: int, expectation, patch_generate_limits
     ):
-        generate_request_url = re.compile(f".+{ServiceInterface.GENERATE}$")
+        generate_request_url = match_endpoint(ServiceInterface.GENERATE)
 
         num_prompts = 10
         prompts = ["TEST_PROMPT"] * num_prompts
@@ -117,16 +100,17 @@ class TestModelAsync:
                 assert response is not None
 
     @pytest.mark.asyncio
-    async def test_tokenize_async(self, mock_tokenize_json, tokenize_params):
+    async def test_tokenize_async(self, tokenize_params, httpx_mock: HTTPXMock):
         num_prompts = 31
+        num_of_batches = num_prompts // 5 + 1
         prompts = ["TEST_PROMPT " + str(i) for i in range(num_prompts)]
         expected = SimpleResponse.tokenize_response_array_async(
             model=self.model, inputs=prompts, params=tokenize_params
         )
-        creds = Credentials("TEST_API_KEY")
-        mock_tokenize_json.side_effect = expected
+        for response in expected:
+            httpx_mock.add_response(url=match_endpoint(ServiceInterface.TOKENIZE), method="POST", json=response)
 
-        model = Model("google/flan-ul2", params=tokenize_params, credentials=creds)
+        model = Model("google/flan-ul2", params=tokenize_params, credentials=self.creds)
 
         counter = 0
         responses = list(model.tokenize_async(prompts))
@@ -136,14 +120,13 @@ class TestModelAsync:
                 assert prompts[counter] == result.input_text
                 counter += 1
         assert counter == num_prompts
+        assert len(httpx_mock.get_requests(url=match_endpoint(ServiceInterface.TOKENIZE))) == num_of_batches
 
     @pytest.mark.asyncio
-    async def test_generate_callback(self, mock_generate_json, generate_params):
+    async def test_generate_callback(self, generate_params, httpx_mock: HTTPXMock):
         num_prompts = 41
         single_response = SimpleResponse.generate(model=self.model, inputs=self.inputs, params=generate_params)
-        creds = Credentials("TEST_API_KEY")
-        mock_generate_json.return_value = single_response
-
+        httpx_mock.add_response(url=match_endpoint(ServiceInterface.GENERATE), method="POST", json=single_response)
         message = ""
 
         def tasks_completed(result):
@@ -151,7 +134,7 @@ class TestModelAsync:
             message += result.generated_text
 
         prompts = ["TEST_PROMPT"] * num_prompts
-        model = Model("google/flan-ul2", params=generate_params, credentials=creds)
+        model = Model("google/flan-ul2", params=generate_params, credentials=self.creds)
 
         for result in model.generate_async(prompts, callback=tasks_completed):
             pass
@@ -159,12 +142,12 @@ class TestModelAsync:
         assert message == GenerateResponse(**single_response).results[0].generated_text * num_prompts
 
     @pytest.mark.asyncio
-    async def test_tokenize_callback(self, mock_tokenize_json, tokenize_params):
+    async def test_tokenize_callback(self, tokenize_params, httpx_mock: HTTPXMock):
         num_prompts = 29
         inputs = ["Input input" for i in range(num_prompts)]
         expected = SimpleResponse.tokenize_response_array_async(model=self.model, inputs=inputs, params=tokenize_params)
-        creds = Credentials("TEST_API_KEY")
-        mock_tokenize_json.side_effect = expected
+        for response in expected:
+            httpx_mock.add_response(url=match_endpoint(ServiceInterface.TOKENIZE), method="POST", json=response)
 
         message = []
 
@@ -173,7 +156,7 @@ class TestModelAsync:
             message += result.tokens
 
         prompts = ["TEST_PROMPT"] * num_prompts
-        model = Model("google/flan-ul2", params=tokenize_params, credentials=creds)
+        model = Model("google/flan-ul2", params=tokenize_params, credentials=self.creds)
 
         for result in model.tokenize_async(prompts, callback=tasks_completed):
             pass

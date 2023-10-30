@@ -48,7 +48,7 @@ class TuneManager:
         try:
             response = service._tunes.list_tunes(params=params)
 
-            if response.status_code == 200:
+            if response.is_success:
                 response = response.json()
                 responses = TunesListResponse(**response)
                 return responses
@@ -76,7 +76,7 @@ class TuneManager:
         service = _get_service(credentials, service)
         try:
             response = service._tunes.get_tune(tune_id=tune_id)
-            if response.status_code == 200:
+            if response.is_success:
                 response = response.json()
                 responses = TuneGetResponse(**response)
                 return responses.results
@@ -118,7 +118,7 @@ class TuneManager:
         service = _get_service(credentials, service)
         try:
             response = service._tunes.create_tune(params=params)
-            if response.status_code == 200:
+            if response.is_success:
                 response = response.json()
                 responses = TuneInfoResult(**response["results"])
                 return responses
@@ -149,7 +149,7 @@ class TuneManager:
 
         try:
             response = service._tunes.delete_tune(tune_id=tune_id)
-            if response.status_code == 204:
+            if response.is_success:
                 return {"status": "success"}
             else:
                 raise GenAiException(response)
@@ -172,7 +172,7 @@ class TuneManager:
         service = _get_service(credentials, service)
         try:
             response = service._tunes.get_tune_methods()
-            if response.status_code == 200:
+            if response.is_success:
                 response = response.json()
                 responses = TuneMethodsGetResponse(**response)
                 return responses
@@ -204,7 +204,7 @@ class TuneManager:
         """Get status of a tuned model."""
         try:
             response = service._tunes.get_tune(tune_id=tune_id)
-            if response.status_code == 200:
+            if response.is_success:
                 response = response.json()
                 return response["results"]["status"]
         except Exception as e:
@@ -241,7 +241,7 @@ class TuneManager:
 
         try:
             response = service._tunes.download_tune_assets(params=params)
-            if response.status_code == 200:
+            if response.is_success:
                 path = TuneManager.get_complete_path(output_path, filename)
                 with open(path, "wb") as f:
                     f.write(response.content)

@@ -1,5 +1,3 @@
-# from unittest.mock import MagicMock, patch
-
 import pytest
 
 from genai.utils.json_utils import json_extract, json_get_all_keys

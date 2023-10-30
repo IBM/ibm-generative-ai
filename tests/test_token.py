@@ -1,12 +1,13 @@
 from unittest import TestCase
-from unittest.mock import MagicMock, patch
 
 import pytest
 from pydantic import ValidationError
+from pytest_httpx import HTTPXMock
 
 from genai.schemas import TokenParams
 from genai.services import ServiceInterface
 from tests.assets.response_helper import SimpleResponse
+from tests.utils import match_endpoint
 
 # API Reference : https://workbench.res.ibm.com/docs/api-reference#generate
 
@@ -15,7 +16,7 @@ from tests.assets.response_helper import SimpleResponse
 class TestTokenize:
     def setup_method(self):
         # mock object for the API call
-        self.service = ServiceInterface(service_url="SERVICE_URL", api_key="API_KEY")
+        self.service = ServiceInterface(service_url="http://service_url", api_key="API_KEY")
         self.model = "google/ul2"
         self.inputs = ["Write a tagline for an alumni association: Together we"]
 
@@ -35,27 +36,22 @@ class TestTokenize:
     def no_token_params(self):
         return TokenParams(return_tokens=False)
 
-    @patch("genai.services.RequestHandler.post")
-    def test_tokenize(self, mock_requests, params):
+    def test_tokenize(self, params, httpx_mock: HTTPXMock):
         expected_resp = SimpleResponse.tokenize(model=self.model, inputs=self.inputs, params=params)
-        mock_response = MagicMock(status_code=200, json=expected_resp)
 
-        mock_requests.return_value = mock_response
+        httpx_mock.add_response(url=match_endpoint(ServiceInterface.TOKENIZE), method="POST", json=expected_resp)
         t = self.service.tokenize(model=self.model, inputs=self.inputs, params=params)
 
-        assert t == mock_response
-        assert t.status_code == 200
+        assert t.json() == expected_resp
+        assert t.is_success
 
-    @patch("genai.services.RequestHandler.post")
-    def test_no_tokens(self, mock_requests, no_token_params):
+    def test_no_tokens(self, no_token_params, httpx_mock: HTTPXMock):
         expected_resp = SimpleResponse.tokenize(model=self.model, inputs=self.inputs, params=no_token_params)
-        mock_response = MagicMock(status_code=200, json=expected_resp)
 
-        mock_requests.return_value = mock_response
+        httpx_mock.add_response(url=match_endpoint(ServiceInterface.TOKENIZE), method="POST", json=expected_resp)
         t = self.service.tokenize(model=self.model, inputs=self.inputs, params=no_token_params)
 
-        assert t == mock_response
-        TestCase().assertDictEqual(t.json, expected_resp)
+        TestCase().assertDictEqual(t.json(), expected_resp)
 
     def test_required_fields(self, request_body):
         assert "model" in request_body
@@ -73,10 +69,7 @@ class TestTokenize:
         with pytest.raises(ValidationError):
             TokenParams(return_tokens="dummy")
 
-    @patch(
-        "genai.services.RequestHandler.post",
-        side_effect=Exception("some general error"),
-    )
-    def test_tokenize_general_exception(self, mock):
+    def test_tokenize_general_exception(self, httpx_mock: HTTPXMock):
+        httpx_mock.add_exception(Exception("some general error"), url=match_endpoint(ServiceInterface.TOKENIZE))
         with pytest.raises(BaseException, match="some general error"):
             self.service.tokenize(model="somemodel", inputs=["inputs"])

@@ -1,10 +1,10 @@
-from unittest.mock import MagicMock, patch
-
 import pytest
+from pytest_httpx import HTTPXMock
 
 from genai.schemas import HistoryParams
 from genai.services import ServiceInterface
 from tests.assets.response_helper import SimpleResponse
+from tests.utils import match_endpoint
 
 # API Reference : https://workbench.res.ibm.com/docs/api-reference#generate
 
@@ -13,7 +13,7 @@ from tests.assets.response_helper import SimpleResponse
 class TestHistory:
     def setup_method(self):
         # mock object for the API call
-        self.service = ServiceInterface(service_url="SERVICE_URL", api_key="API_KEY")
+        self.service = ServiceInterface(service_url="http://service_url", api_key="API_KEY")
         # test all GenerateParams fields
 
     @pytest.fixture
@@ -25,16 +25,18 @@ class TestHistory:
             origin="API",
         )
 
-    @patch("genai.services.RequestHandler.get")
-    def test_history_api_call(self, mock_requests, params):
-        mock_response = MagicMock(status_code=200)
-        mock_response.json.return_value = SimpleResponse.history()
-        mock_requests.return_value = mock_response
+    def test_history_api_call(self, params, httpx_mock: HTTPXMock):
+        response = SimpleResponse.history()
+        httpx_mock.add_response(
+            url=match_endpoint(ServiceInterface.HISTORY, query_params=params), method="GET", json=response
+        )
 
         g = self.service.history(params=params)
-        assert g == mock_response
+        assert g.json() == response
 
-    @patch("genai.services.RequestHandler.get", side_effect=Exception("some general error"))
-    def test_history_general_exception(self, mock):
+    def test_history_general_exception(self, httpx_mock: HTTPXMock):
+        httpx_mock.add_exception(
+            Exception("some general error"), url=match_endpoint(ServiceInterface.HISTORY), method="GET"
+        )
         with pytest.raises(BaseException, match="some general error"):
             self.service.history()

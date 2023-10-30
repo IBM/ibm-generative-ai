@@ -2,9 +2,8 @@ import json
 import logging
 import queue
 import random
-import re
 import time
-from unittest.mock import AsyncMock, patch
+from unittest.mock import patch
 
 import httpx
 import pytest
@@ -17,6 +16,7 @@ from genai.services import AsyncResponseGenerator, RequestHandler, ServiceInterf
 from genai.services.connection_manager import ConnectionManager
 from genai.utils.request_utils import sanitize_params
 from tests.assets.response_helper import SimpleResponse
+from tests.utils import match_endpoint
 
 logger = logging.getLogger(__name__)
 
@@ -29,15 +29,6 @@ class TestAsyncResponseGenerator:
         self.inputs = ["Write a tagline for an alumni association: Together we"]
 
     @pytest.fixture
-    def mock_generate_json(self, mocker):
-        async_mock = AsyncMock()
-        mocker.patch(
-            "genai.services.AsyncResponseGenerator._get_response_json",
-            side_effect=async_mock,
-        )
-        return async_mock
-
-    @pytest.fixture
     def generate_params(self):
         return GenerateParams(
             temperature=0.05,
@@ -46,22 +37,14 @@ class TestAsyncResponseGenerator:
         )
 
     @pytest.fixture
-    def mock_tokenize_json(self, mocker):
-        async_mock = AsyncMock()
-        mocker.patch(
-            "genai.services.AsyncResponseGenerator._get_response_json",
-            side_effect=async_mock,
-        )
-        return async_mock
-
-    @pytest.fixture
     def tokenize_params(self):
         return TokenParams(return_tokens=True)
 
     @pytest.mark.asyncio
-    async def test_concurrent_generate(self, mock_generate_json, generate_params):
+    async def test_concurrent_generate(self, generate_params, httpx_mock: HTTPXMock):
         expected = SimpleResponse.generate(model=self.model, inputs=self.inputs)
-        mock_generate_json.return_value = expected
+
+        httpx_mock.add_response(url=match_endpoint(self.service.GENERATE), method="POST", json=expected)
         num_prompts = 3
 
         counter = 0
@@ -76,9 +59,10 @@ class TestAsyncResponseGenerator:
         assert ConnectionManager.async_generate_client is None
 
     @pytest.mark.asyncio
-    async def test_concurrent_tokenize(self, mock_tokenize_json, tokenize_params):
+    async def test_concurrent_tokenize(self, tokenize_params, httpx_mock: HTTPXMock):
         expected = SimpleResponse.tokenize(model=self.model, inputs=self.inputs, params=tokenize_params)
-        mock_tokenize_json.return_value = expected
+
+        httpx_mock.add_response(url=match_endpoint(self.service.TOKENIZE), method="POST", json=expected)
 
         with AsyncResponseGenerator(
             self.model, self.inputs, tokenize_params, self.service, fn="tokenize"
@@ -89,18 +73,11 @@ class TestAsyncResponseGenerator:
         assert ConnectionManager.async_tokenize_client is None
 
     @pytest.mark.asyncio
-    async def test_async_helper_total_generate_responses(self, mock_generate_json, generate_params):
+    async def test_async_helper_total_generate_responses(self, generate_params, httpx_mock: HTTPXMock):
         num_prompts = 7
         single_response = SimpleResponse.generate(model=self.model, inputs=self.inputs, params=generate_params)
 
-        def side_effect(model, inputs, params):
-            response = {}
-            response["model_id"] = single_response["model_id"]
-            response["created_at"] = single_response["created_at"]
-            response["results"] = single_response["results"] * len(inputs)
-            return response
-
-        mock_generate_json.side_effect = side_effect
+        httpx_mock.add_response(url=match_endpoint(self.service.GENERATE), method="POST", json=single_response)
 
         with AsyncResponseGenerator(
             self.model, self.inputs * num_prompts, generate_params, self.service
@@ -113,18 +90,12 @@ class TestAsyncResponseGenerator:
         assert ConnectionManager.async_generate_client is None
 
     @pytest.mark.asyncio
-    async def test_async_helper_total_tokenize_responses(self, mock_tokenize_json, tokenize_params):
+    async def test_async_helper_total_tokenize_responses(self, tokenize_params, httpx_mock: HTTPXMock):
         num_prompts = 7
         single_response = SimpleResponse.tokenize(model=self.model, inputs=self.inputs, params=tokenize_params)
+        single_response["results"] = single_response["results"] * num_prompts
 
-        def side_effect(model, inputs, params):
-            response = {}
-            response["model_id"] = single_response["model_id"]
-            response["created_at"] = single_response["created_at"]
-            response["results"] = single_response["results"] * len(inputs)
-            return response
-
-        mock_tokenize_json.side_effect = side_effect
+        httpx_mock.add_response(url=match_endpoint(self.service.TOKENIZE), method="POST", json=single_response)
 
         with AsyncResponseGenerator(
             self.model,
@@ -143,7 +114,7 @@ class TestAsyncResponseGenerator:
     @pytest.mark.asyncio
     async def test_concurrent_tokenize_dropped_request(self, httpx_mock, tokenize_params):
         # Return a 429 for a tokenize request from RequestHandler
-        httpx_mock.add_response(method="POST", status_code=429, json={})
+        httpx_mock.add_response(url=match_endpoint(self.service.TOKENIZE), method="POST", status_code=429, json={})
         num_prompts = 17
         counter = 0
         with AsyncResponseGenerator(
@@ -172,12 +143,12 @@ class TestAsyncResponseGenerator:
                     assert response[0] is None
                     assert response[1] is not None
 
-                requests = httpx_mock.get_requests(url=re.compile(f".+{ServiceInterface.GENERATE}$"), method="POST")
+                requests = httpx_mock.get_requests(url=match_endpoint(ServiceInterface.GENERATE), method="POST")
                 assert len(requests) == 2
 
     @pytest.mark.asyncio
     @pytest.mark.skip(reason="pytest_httpx does not handle custom transports")
-    async def test_concurrent_tokenize_retry(self, httpx_mock, tokenize_params):
+    async def test_concurrent_tokenize_retry(self, httpx_mock: HTTPXMock, tokenize_params):
         saved = ConnectionManager.MAX_RETRIES_TOKENIZE
         ConnectionManager.MAX_RETRIES_TOKENIZE = 2
         for code in [httpx.codes.SERVICE_UNAVAILABLE, httpx.codes.TOO_MANY_REQUESTS]:
@@ -193,7 +164,7 @@ class TestAsyncResponseGenerator:
         ConnectionManager.MAX_RETRIES_TOKENIZE = saved
 
     @pytest.mark.asyncio
-    async def test_concurrent_generate_dropped_request(self, httpx_mock, generate_params):
+    async def test_concurrent_generate_dropped_request(self, httpx_mock: HTTPXMock, generate_params):
         failed_id = 4
         single_response = SimpleResponse.generate(model=self.model, inputs=self.inputs, params=generate_params)
         headers, json_data, _ = RequestHandler._metadata(
@@ -204,8 +175,9 @@ class TestAsyncResponseGenerator:
             parameters=sanitize_params(generate_params),
         )
         # Following two lines: Selected input id should return 429, others should succeed
-        httpx_mock.add_response(method="POST", json=single_response)
+        httpx_mock.add_response(url=match_endpoint(self.service.GENERATE), method="POST", json=single_response)
         httpx_mock.add_response(
+            url=match_endpoint(self.service.GENERATE),
             method="POST",
             status_code=429,
             match_content=bytes(json.dumps(json_data), encoding="utf-8"),
@@ -215,24 +187,23 @@ class TestAsyncResponseGenerator:
         inputs = ["Input " + str(i) for i in range(num_prompts)]
         with AsyncResponseGenerator(self.model, inputs, generate_params, self.service) as asynchelper:
             assert ConnectionManager.async_generate_client is not None
-            for _ in asynchelper.generate_response():
+            for response in asynchelper.generate_response():
                 if counter == failed_id:
-                    # print(response)
-                    assert True
-                    # assert response is None
+                    assert response is None
                 else:
-                    assert True
-                    # assert response is not None
+                    assert response is not None
                 counter += 1
             assert counter == num_prompts
         assert ConnectionManager.async_generate_client is None
 
     @pytest.mark.asyncio
-    async def test_concurrent_generate_inorder(self, mock_generate_json, generate_params, mocker):
+    async def test_concurrent_generate_inorder(self, generate_params, mocker, httpx_mock: HTTPXMock):
         num_prompts = 31
         inputs = ["This is input number " + str(i) for i in range(num_prompts)]
         expected = SimpleResponse.generate_response_array_async(model=self.model, inputs=inputs)
-        mock_generate_json.side_effect = expected
+
+        for response in expected:
+            httpx_mock.add_response(url=match_endpoint(self.service.GENERATE), method="POST", json=response)
 
         counter = 0
         permutation = list(range(num_prompts))
@@ -261,16 +232,17 @@ class TestAsyncResponseGenerator:
                 assert result.generated_text == expected_result.generated_text
                 assert result.input_text == inputs[counter]
                 counter += 1
-                mock_generate_json.return_value = expected[counter] if counter < num_prompts else None
             assert counter == num_prompts
         assert ConnectionManager.async_generate_client is None
 
     @pytest.mark.asyncio
-    async def test_concurrent_generate_not_inorder(self, mock_generate_json, generate_params, mocker):
+    async def test_concurrent_generate_not_inorder(self, generate_params, mocker, httpx_mock: HTTPXMock):
         num_prompts = 5
         inputs = ["This is input number " + str(i) for i in range(num_prompts)]
         expected = SimpleResponse.generate_response_array_async(model=self.model, inputs=inputs)
-        mock_generate_json.side_effect = expected
+
+        for response in expected:
+            httpx_mock.add_response(url=match_endpoint(self.service.GENERATE), method="POST", json=response)
 
         counter = 0
         permutation = list(range(num_prompts))
@@ -300,16 +272,17 @@ class TestAsyncResponseGenerator:
                 assert result.generated_text == expected_result.generated_text
                 assert result.input_text == inputs[permutation[counter]]
                 counter += 1
-                mock_generate_json.return_value = expected[counter] if counter < num_prompts else None
             assert counter == num_prompts
         assert ConnectionManager.async_generate_client is None
 
     @pytest.mark.asyncio
-    async def test_concurrent_tokenize_inorder(self, mock_tokenize_json, tokenize_params, mocker):
+    async def test_concurrent_tokenize_inorder(self, tokenize_params, mocker, httpx_mock: HTTPXMock):
         num_prompts = 143
         inputs = ["This is input number " + str(i) for i in range(num_prompts)]
         expected = SimpleResponse.tokenize_response_array_async(model=self.model, inputs=inputs)
-        mock_tokenize_json.side_effect = expected
+
+        for response in expected:
+            httpx_mock.add_response(url=match_endpoint(self.service.TOKENIZE), method="POST", json=response)
 
         permutation = list(range(len(expected)))
         random.shuffle(permutation)
@@ -351,11 +324,13 @@ class TestAsyncResponseGenerator:
         assert ConnectionManager.async_tokenize_client is None
 
     @pytest.mark.asyncio
-    async def test_concurrent_tokenize_not_inorder(self, mock_tokenize_json, tokenize_params, mocker):
+    async def test_concurrent_tokenize_not_inorder(self, tokenize_params, mocker, httpx_mock):
         num_prompts = 143
         inputs = ["This is input number " + str(i) for i in range(num_prompts)]
         expected = SimpleResponse.tokenize_response_array_async(model=self.model, inputs=inputs)
-        mock_tokenize_json.side_effect = expected
+
+        for response in expected:
+            httpx_mock.add_response(url=match_endpoint(self.service.TOKENIZE), method="POST", json=response)
 
         permutation = list(range(len(expected)))
         random.shuffle(permutation)
@@ -397,12 +372,14 @@ class TestAsyncResponseGenerator:
         assert ConnectionManager.async_tokenize_client is None
 
     @pytest.mark.asyncio
-    async def test_concurrent_tokenize_nones(self, mock_tokenize_json, tokenize_params, mocker):
+    async def test_concurrent_tokenize_nones(self, tokenize_params, mocker, httpx_mock: HTTPXMock):
         # test that if one request gets dropped, we get appropriate number of nones
         num_prompts = 18
         inputs = ["This is input number " + str(i) for i in range(num_prompts)]
         expected = SimpleResponse.tokenize_response_array_async(model=self.model, inputs=inputs)
-        mock_tokenize_json.side_effect = expected
+
+        for response in expected:
+            httpx_mock.add_response(url=match_endpoint(self.service.TOKENIZE), method="POST", json=response)
 
         batch_indices = list(range(len(expected)))
         side_effect = [

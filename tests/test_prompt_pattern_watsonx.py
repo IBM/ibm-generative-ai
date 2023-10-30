@@ -1,26 +1,30 @@
 from unittest.mock import MagicMock, patch
 
 import pytest
+from pytest_httpx import HTTPXMock
 
 from genai.credentials import Credentials
 from genai.prompt_pattern import PromptPattern
+from genai.routers import PromptTemplateRouter
 from genai.schemas.responses import WatsonxTemplate
 from tests.assets.response_helper import SimpleResponse
+from tests.utils import match_endpoint
 
 
 @pytest.mark.unit
 class TestPromptPattern:
     def setup_method(self):
-        self.credentials = Credentials("KEY", "ENDPOINT")
+        self.credentials = Credentials("KEY")
         self.string_template = "{{input}}:{{ouptu}}"
         self.name = "io"
 
         self.expected_resp = SimpleResponse.prompt_template(template=self.string_template, name=self.name)
         self.template = WatsonxTemplate.model_validate(self.expected_resp["results"])
 
-    @patch("genai.services.PromptTemplateManager.save_template")
-    def test_from_watsonx(self, save):
-        save.return_value = self.template
+    def test_from_watsonx(self, httpx_mock: HTTPXMock):
+        httpx_mock.add_response(
+            url=match_endpoint(PromptTemplateRouter.PROMPT_TEMPLATES), method="POST", json=self.expected_resp
+        )
 
         pt = PromptPattern.from_watsonx(credentials=self.credentials, template=self.string_template, name=self.name)
         assert isinstance(pt, PromptPattern)
@@ -65,11 +69,15 @@ class TestPromptPattern:
         PromptPattern.from_watsonx(credentials=self.credentials, template="Instruction: {{instruction}}", name=_name)
         save.assert_called_with(credentials=self.credentials, template="Instruction: {{instruction}}", name=_name)
 
-    @patch("genai.services.RequestHandler.delete")
-    @patch("genai.services.PromptTemplateManager.save_template")
-    def test_pp_watsonx_delete(self, save, delete):
-        save.return_value = self.template
-        delete.return_value = MagicMock(status_code=204)
+    def test_pp_watsonx_delete(self, httpx_mock: HTTPXMock):
+        httpx_mock.add_response(
+            url=match_endpoint(PromptTemplateRouter.PROMPT_TEMPLATES), method="POST", json=self.expected_resp
+        )
+        httpx_mock.add_response(
+            url=match_endpoint(PromptTemplateRouter.PROMPT_TEMPLATES, self.template.id),
+            method="DELETE",
+            json=self.expected_resp,
+        )
 
         pt = PromptPattern.from_watsonx(credentials=self.credentials, template=self.string_template, name=self.name)
 
