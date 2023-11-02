@@ -1,3 +1,5 @@
+from typing import List, Optional
+
 import cachetools.func
 from httpx import ConnectError, Response
 
@@ -5,6 +7,7 @@ from genai.exceptions import GenAiException
 from genai.options import Options
 from genai.routers import FilesRouter, PromptTemplateRouter, TunesRouter
 from genai.schemas import GenerateParams, HistoryParams, TokenParams
+from genai.schemas.chat import BaseMessage
 from genai.schemas.responses import GenerateLimits
 from genai.services.request_handler import RequestHandler
 from genai.utils.errors import to_genai_error
@@ -15,6 +18,7 @@ __all__ = ["ServiceInterface"]
 
 class ServiceInterface:
     GENERATE = "/v1/generate"
+    CHAT = "/v0/generate/chat"
     TOKENIZE = "/v1/tokenize"
     HISTORY = "/v1/requests"
     TOU = "/v1/user"
@@ -64,6 +68,29 @@ class ServiceInterface:
         except Exception as e:
             raise to_genai_error(e)
 
+    def chat(
+        self,
+        model: str,
+        messages: List[BaseMessage],
+        params: Optional[GenerateParams],
+        streaming: bool = False,
+        options: Optional[Options] = None,
+    ):
+        try:
+            endpoint = self.service_url + ServiceInterface.CHAT
+            params = sanitize_params(params) if params else None
+            return RequestHandler.post(
+                endpoint,
+                key=self.key,
+                model_id=model,
+                messages=[message.model_dump() for message in messages],
+                parameters=params,
+                streaming=streaming,
+                options=options,
+            )
+        except Exception as e:
+            raise to_genai_error(e)
+
     def generate(
         self,
         model: str,
@@ -85,14 +112,14 @@ class ServiceInterface:
             Any: json from querying for text completion.
         """
         try:
-            params = sanitize_params(params)
+            parameters: Optional[dict] = sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.GENERATE
             res = RequestHandler.post(
                 endpoint,
                 key=self.key,
                 model_id=model,
                 inputs=inputs,
-                parameters=params,
+                parameters=parameters,
                 streaming=streaming,
                 options=options,
             )

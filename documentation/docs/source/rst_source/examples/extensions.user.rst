@@ -27,6 +27,20 @@ LangChain generate
     :caption: See `langchain_generate.py <https://github.com/IBM/ibm-generative-ai/blob/main/examples/user/langchain_generate.py>`_ on GitHub.
 
 -----------------
+LangChain chat
+-----------------
+
+.. literalinclude:: ../../../../../examples/user/langchain_chat_generate.py
+    :caption: See `langchain_chat_generate.py <https://github.com/IBM/ibm-generative-ai/blob/main/examples/user/langchain_chat_generate.py>`_ on GitHub.
+
+-----------------
+LangChain chat with streaming
+-----------------
+
+.. literalinclude:: ../../../../../examples/user/langchain_chat_stream.py
+    :caption: See `langchain_chat_generate.py <https://github.com/IBM/ibm-generative-ai/blob/main/examples/user/langchain_chat_stream.py>`_ on GitHub.
+
+-----------------
 Pandas
 -----------------
 

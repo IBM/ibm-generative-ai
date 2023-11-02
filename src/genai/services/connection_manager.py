@@ -10,6 +10,7 @@ from genai.utils.http_utils import AsyncRateLimitTransport, AsyncRetryTransport
 
 class ConnectionManager:
     MAX_RETRIES_GENERATE = 5
+    MAX_RETRIES_CHAT = 3
     TIMEOUT_GENERATE = 600
     MAX_RETRIES_TOKENIZE = 5
     MAX_REQ_PER_SECOND_TOKENIZE = 10

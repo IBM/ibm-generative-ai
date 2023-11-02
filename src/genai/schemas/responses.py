@@ -3,7 +3,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Any, List, Optional, Type, Union
 
-from pydantic import BaseModel, ConfigDict, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from genai.schemas.generate_params import GenerateParams
 
@@ -116,7 +116,7 @@ class GenerateStreamResponse(GenAiResponseModel):
     id: str
     model_id: str
     created_at: str
-    results: List[GenerateStreamResult]
+    results: List[GenerateStreamResult] = Field(default=[])
 
 
 class TokenizeResult(GenAiResponseModel):
@@ -281,3 +281,12 @@ class ModelList(GenAiResponseModel):
 class GenerateLimits(GenAiResponseModel):
     tokenCapacity: int
     tokensUsed: int
+
+
+class ChatResponse(GenerateResponse):
+    conversation_id: str
+
+
+class ChatStreamResponse(GenerateStreamResponse):
+    conversation_id: str
+    moderation: Optional[ModerationResult] = None

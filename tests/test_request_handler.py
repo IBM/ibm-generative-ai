@@ -13,7 +13,7 @@ class TestRequestHandler:
         self.inputs = ["a"]
 
     @pytest.fixture
-    def params(seld):
+    def params(self):
         return GenerateParams(decoding_method="greedy").model_dump(by_alias=True, exclude_none=True)
 
     def test_metadata_post(self, params):
