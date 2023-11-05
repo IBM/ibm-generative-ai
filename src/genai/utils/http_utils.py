@@ -7,6 +7,8 @@ from httpx import HTTPStatusError, Request, RequestError, Response
 
 __all__ = ["AsyncRateLimiter", "AsyncRateLimitTransport", "AsyncRetryTransport"]
 
+from genai.exceptions import GenAiException
+
 
 class AsyncRateLimiter(AsyncLimiter):
     def update_limit(self, *, max_rate: Optional[float] = None, time_period: Optional[float] = None):
@@ -50,7 +52,12 @@ class AsyncRetryTransport(httpx.AsyncHTTPTransport):
                 latest_err = ex
                 if ex.response.status_code in self.retry_status_codes:
                     continue
-                raise ex
+
+                if ex.response and "application/json" in ex.response.headers["Content-Type"]:
+                    await ex.response.aread()
+                    raise GenAiException(ex.response)
+                else:
+                    raise ex
 
         raise RequestError(f"Failed to handle request to {request.url}", request=request) from latest_err
 
