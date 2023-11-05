@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 class TestSchemas:
     def setup_method(self):
         self.service = ServiceInterface(service_url="SERVICE_URL", api_key="API_KEY")
-        self.model = "google/ul2"
+        self.model = "google/flan-ul2"
         self.inputs = ["Write a tagline for an alumni association: Together we"]
 
     def _validate_extra_field(self, input_dict, model_type):

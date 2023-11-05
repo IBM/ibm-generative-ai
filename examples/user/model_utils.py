@@ -18,12 +18,12 @@ for m in Model.models(credentials=creds):
     print(m)
 
 print("====== Checking model availability =======")
-model = Model("google/ul2", params=None, credentials=creds)
-print("Model availability for 'google/ul2': ", model.available())
+model = Model("google/flan-ul2", params=None, credentials=creds)
+print("Model availability for 'google/flan-ul2': ", model.available())
 
 model = Model("random", params=None, credentials=creds)
 print("Model availability for 'random': ", model.available())
 
 print("====== Display model card =======")
-model = Model("google/ul2", params=None, credentials=creds)
-print("Model info for 'google/ul2': \n", model.info())
+model = Model("google/flan-ul2", params=None, credentials=creds)
+print("Model info for 'google/flan-ul2': \n", model.info())

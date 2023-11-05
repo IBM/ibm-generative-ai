@@ -127,12 +127,12 @@ class SimpleResponse:
                     "duration": 431,
                     "request": {
                         "inputs": ["Write a tagline for an alumni association: Together we"],
-                        "model_id": "google/ul2",
+                        "model_id": "google/flan-ul2",
                         "parameters": {},
                     },
                     "status": "SUCCESS",
                     "created_at": "2022-12-19T22:53:22.000Z",
-                    "response": SimpleResponse.generate(model="google/ul2", inputs=["some input"]),
+                    "response": SimpleResponse.generate(model="google/flan-ul2", inputs=["some input"]),
                 }
             ],
             "totalCount": 62,
