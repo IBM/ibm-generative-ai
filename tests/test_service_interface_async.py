@@ -21,7 +21,7 @@ class TestServiceInterfaceAsync:
     def setup_method(self):
         # mock object for the API call
         self.service = ServiceInterface(service_url="http://SERVICE_URL", api_key="API_KEY")
-        self.model = "google/ul2"
+        self.model = "google/flan-ul2"
         self.inputs = ["Write a tagline for an alumni association: Together we"]
 
     # GENERATE ASYNC

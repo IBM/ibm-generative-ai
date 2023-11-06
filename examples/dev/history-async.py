@@ -14,7 +14,7 @@ api_key = os.getenv("GENAI_KEY")
 SERVICE_URL = "https://workbench-api.res.ibm.com"
 
 service = ServiceInterface(service_url=SERVICE_URL, api_key=api_key)
-model = "google/ul2"
+model = "google/flan-ul2"
 inputs = ["Hello! How are you today?"]
 
 params = HistoryParams(

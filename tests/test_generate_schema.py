@@ -10,7 +10,7 @@ from genai.schemas import GenerateParams, LengthPenalty, Return, ReturnOptions
 class TestGenerateSchema:
     def setup_method(self):
         # mock object for the API call
-        self.model = "google/ul2"
+        self.model = "google/flan-ul2"
         self.inputs = ["Write a tagline for an alumni association: Together we"]
 
         # test all GenerateParams fields

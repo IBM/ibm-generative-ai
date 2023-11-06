@@ -17,7 +17,7 @@ class TestTokenize:
     def setup_method(self):
         # mock object for the API call
         self.service = ServiceInterface(service_url="http://service_url", api_key="API_KEY")
-        self.model = "google/ul2"
+        self.model = "google/flan-ul2"
         self.inputs = ["Write a tagline for an alumni association: Together we"]
 
     @pytest.fixture
