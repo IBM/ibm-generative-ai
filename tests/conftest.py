@@ -5,12 +5,18 @@ import pytest
 from _pytest.fixtures import SubRequest
 from pytest_httpx import HTTPXMock
 
+from genai import Credentials
 from genai.services import AsyncResponseGenerator, ServiceInterface
 
 
 @pytest.fixture
 def assert_all_responses_were_requested() -> bool:
     return False
+
+
+@pytest.fixture(scope="function")
+def credentials():
+    return Credentials("GENAI_APY_KEY")
 
 
 @pytest.fixture

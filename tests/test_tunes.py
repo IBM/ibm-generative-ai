@@ -5,7 +5,6 @@ from unittest.mock import mock_open, patch
 import pytest
 from pytest_httpx import HTTPXMock
 
-from genai import Credentials
 from genai.exceptions import GenAiException
 from genai.routers.tunes import TunesRouter
 from genai.schemas.responses import (
@@ -47,10 +46,6 @@ class TestTunes:
             task_id="generation",
             training_file_ids=["some-file-id"],
         )
-
-    @pytest.fixture
-    def credentials(self):
-        return Credentials("GENAI_KEY")
 
     # Test list tunes function
     def test_list_tunes(self, credentials, list_params, httpx_mock: HTTPXMock):

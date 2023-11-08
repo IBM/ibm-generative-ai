@@ -53,6 +53,13 @@ class Descriptions:
     HAP_OUTPUT = "Enable/Disable HAP detection on the generated output."
     HAP_THRESHOLD = "The number from interval <0, 1> that causes the sentence to be flagged (default is 0.75)."
 
+    # Params.Chat
+    CONVERSATION_ID = "ID of the conversation. Always empty for the first request. Pass only in case you want to join existing conversation."
+    PARENT_ID = "The ID of the previous request. Always empty for the first request. If it is omitted, the parent of the request will be the last request in the same conversation."
+    PROMPT_ID = "The ID of a saved prompt. The prompt messages will be prepended to the messages array."
+    TEMPLATE_ID = "This target template will be used to generate a prompt from all messages. The array can be used inside the template. Each message will have exactly one of the following properties filled: systemMessage, userMessage, or assistantMessage."
+    USE_CONVERSATION_PARAMETERS = "When it is true, all parameters are inherited from the conversation."
+
 
 class TunesAPIDescriptions:
     # Params.CreateTune

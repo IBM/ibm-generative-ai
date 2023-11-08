@@ -1,3 +1,6 @@
+from langchain.schema import BaseMessage
+
+
 class SimpleResponse:
     @staticmethod
     def generate(**kwargs):
@@ -38,6 +41,50 @@ class SimpleResponse:
                     }
                 ],
             }
+            responses.append(response)
+
+        return responses
+
+    @staticmethod
+    def generate_chat(model_id: str, messages: list[BaseMessage], generated_text: str):
+        return {
+            "id": "76526458-e8bf-496a-a84e-e8184b19d1f2",
+            "model_id": model_id,
+            "created_at": "2023-11-07T10:18:20.932Z",
+            "results": [
+                {
+                    "generated_text": generated_text,
+                    "generated_token_count": len(generated_text.split()),
+                    "input_token_count": sum([len(message.content.split()) for message in messages]),
+                    "stop_reason": "MAX_TOKENS",
+                }
+            ],
+            "conversation_id": "9d616a0b-2b43-49e7-a8ee-462073ca5928",
+        }
+
+    @staticmethod
+    def generate_chat_stream(model_id: str, generated_text: str):
+        tokens = generated_text.split(" ")
+
+        def create_response(result: dict):
+            return {
+                "id": "76526458-e8bf-496a-a84e-e8184b19d1f2",
+                "model_id": model_id,
+                "created_at": "2023-11-07T10:18:20.932Z",
+                "results": [result],
+                "conversation_id": "9d616a0b-2b43-49e7-a8ee-462073ca5928",
+            }
+
+        responses = [create_response({"input_token_count": 15, "seed": 4183416463})]
+        for idx, token in enumerate(tokens):
+            result = {
+                "generated_text": token,
+                "generated_token_count": idx + 1,
+                "seed": 4183416463,
+            }
+            if idx == len(tokens) - 1:
+                result["stop_reason"] = "MAX_TOKENS"
+            response = create_response(result)
             responses.append(response)
 
         return responses

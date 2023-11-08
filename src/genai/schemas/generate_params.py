@@ -79,3 +79,11 @@ class GenerateParams(BaseModel):
     )
     moderations: Optional[ModerationsOptions] = Field(None, description=tx.MODERATIONS)
     include_stop_sequence: Optional[bool] = Field(None, description=tx.INCLUDE_STOP_SEQUENCE)
+
+
+class ChatOptions(BaseModel):
+    conversation_id: Optional[str] = None
+    parent_id: Optional[str] = None
+    prompt_id: Optional[str] = None
+    template_id: Optional[str] = None
+    use_conversation_parameters: Optional[bool] = False

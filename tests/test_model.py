@@ -26,10 +26,6 @@ class TestModel:
         self.inputs = ["Write a tagline for an alumni association: Together we"]
 
     @pytest.fixture
-    def credentials(self):
-        return Credentials("GENAI_APY_KEY")
-
-    @pytest.fixture
     def params(self):
         return GenerateParams(
             decoding_method="sample",

@@ -3,11 +3,13 @@ from unittest.mock import MagicMock
 
 import pytest
 from langchain.callbacks.base import BaseCallbackHandler
+from langchain.schema.output import GenerationChunk
 from pytest_httpx import HTTPXMock, IteratorStream
 
-from genai import Credentials
+from genai.extensions.langchain import LangChainInterface
 from genai.schemas import GenerateParams
-from genai.schemas.responses import GenerateResponse, GenerateStreamResponse
+from genai.schemas.api_responses import ApiGenerateStreamResponse
+from genai.schemas.responses import GenerateResponse
 from genai.services import ServiceInterface
 from tests.assets.response_helper import SimpleResponse
 from tests.utils import match_endpoint
@@ -19,10 +21,6 @@ class TestLangChain:
         self.service = ServiceInterface(service_url="SERVICE_URL", api_key="API_KEY")
         self.model = "google/flan-ul2"
         self.inputs = ["Write a tagline for an alumni association: Together we"]
-
-    @pytest.fixture
-    def credentials(self):
-        return Credentials("GENAI_APY_KEY")
 
     @pytest.fixture
     def params(self):
@@ -37,8 +35,6 @@ class TestLangChain:
         return ["What is IBM?", "What is AI?"]
 
     def test_langchain_interface(self, credentials, params, prompts, httpx_mock: HTTPXMock):
-        from genai.extensions.langchain import LangChainInterface
-
         GENERATE_RESPONSE = SimpleResponse.generate(model="google/flan-ul2", inputs=prompts, params=params)
         expected_response = GenerateResponse(**GENERATE_RESPONSE)
 
@@ -50,8 +46,6 @@ class TestLangChain:
 
     @pytest.mark.asyncio
     async def test_async_langchain_interface(self, credentials, params, multi_prompts, httpx_mock: HTTPXMock):
-        from genai.extensions.langchain import LangChainInterface
-
         GENERATE_RESPONSE = SimpleResponse.generate(model="google/flan-ul2", inputs=multi_prompts, params=params)
         expected_response = GenerateResponse(**GENERATE_RESPONSE)
 
@@ -63,12 +57,17 @@ class TestLangChain:
         assert len(observed.generations[0]) == 1
         assert len(observed.generations[1]) == 1
 
-        assert observed.llm_output["token_usage"]["input_token_count"] == sum(
-            c.input_token_count for c in expected_response.results
-        )
-        assert observed.llm_output["token_usage"]["generated_token_count"] == sum(
-            c.generated_token_count for c in expected_response.results
-        )
+        input_token_count = sum(c.input_token_count for c in expected_response.results)
+        generated_token_count = sum(c.generated_token_count for c in expected_response.results)
+        total_token_count = input_token_count + generated_token_count
+
+        assert observed.llm_output["token_usage"]["prompt_tokens"] == input_token_count
+        assert observed.llm_output["token_usage"]["completion_tokens"] == generated_token_count
+        assert observed.llm_output["token_usage"]["total_tokens"] == total_token_count
+        assert observed.llm_output["token_usage"]["generated_token_count"] == generated_token_count
+        assert observed.llm_output["token_usage"]["input_token_count"] == input_token_count
+        assert observed.llm_output["token_usage"]["input_token_count"] == input_token_count
+        assert observed.llm_output["token_usage"]["generated_token_count"] == generated_token_count
 
         for idx, generation_list in enumerate(observed.generations):
             assert len(generation_list) == 1
@@ -80,12 +79,10 @@ class TestLangChain:
                 assert generation.generation_info[key] == expected_result[key]
 
     def test_langchain_stream(self, credentials, params, prompts, httpx_mock: HTTPXMock):
-        from genai.extensions.langchain import LangChainInterface
-
         GENERATE_STREAM_RESPONSES = SimpleResponse.generate_stream(
             model="google/flan-ul2", inputs=prompts, params=params
         )
-        expected_generated_responses = [GenerateStreamResponse(**result) for result in GENERATE_STREAM_RESPONSES]
+        expected_generated_responses = [ApiGenerateStreamResponse(**result) for result in GENERATE_STREAM_RESPONSES]
         stream_responses = [(f"data: {json.dumps(response)}\n\n").encode() for response in GENERATE_STREAM_RESPONSES]
         httpx_mock.add_response(
             url=match_endpoint(ServiceInterface.GENERATE),
@@ -114,6 +111,8 @@ class TestLangChain:
             retrieved_kwargs = callback.on_llm_new_token.call_args_list[idx].kwargs
             token = retrieved_kwargs["token"]
             assert token == result.results[0].generated_text
+            chunk = retrieved_kwargs["chunk"]
+            assert isinstance(chunk, GenerationChunk)
             response = retrieved_kwargs["response"]
             assert response == result.results[0]
 

@@ -5,7 +5,7 @@ from genai.schemas.responses import (
     WatsonxTemplate,
     WatsonxTemplatesResponse,
 )
-from genai.services import ServiceInterface
+from genai.services.service_interface import ServiceInterface
 from genai.utils.errors import to_genai_error
 
 

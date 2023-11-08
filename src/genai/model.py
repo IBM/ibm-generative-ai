@@ -1,4 +1,3 @@
-import json
 import logging
 import time
 from collections import deque
@@ -13,7 +12,12 @@ from genai.metadata import Metadata
 from genai.options import Options
 from genai.prompt_pattern import PromptPattern
 from genai.schemas import GenerateParams, TokenParams
+from genai.schemas.api_responses import ApiGenerateStreamResponse
+from genai.schemas.chat import BaseMessage
+from genai.schemas.generate_params import ChatOptions
 from genai.schemas.responses import (
+    ChatResponse,
+    ChatStreamResponse,
     GenerateResponse,
     GenerateResult,
     GenerateStreamResult,
@@ -32,6 +36,7 @@ from genai.services import AsyncResponseGenerator, ServiceInterface
 from genai.services.tune_manager import TuneManager
 from genai.utils.errors import to_genai_error
 from genai.utils.general import to_model_instance
+from genai.utils.generate_utils import create_chat_handler, generation_stream_handler
 from genai.utils.service_utils import _get_service
 
 logger = logging.getLogger(__name__)
@@ -61,7 +66,7 @@ class Model:
 
     def generate_stream(
         self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
-    ) -> Generator[GenerateStreamResult]:
+    ) -> Generator[GenerateStreamResult, None, None]:
         if len(prompts) > 0 and isinstance(prompts[0], PromptPattern):
             prompts = PromptPattern.list_str(prompts)
 
@@ -71,37 +76,53 @@ class Model:
         try:
             for i in range(0, len(prompts), Metadata.DEFAULT_MAX_PROMPTS):
                 batch = prompts[i : min(i + Metadata.DEFAULT_MAX_PROMPTS, len(prompts))]
-
                 response_gen = self.service.generate(self.model, batch, params, options=options, streaming=True)
-
-                for response in response_gen:
-                    if not response:
-                        continue
-
-                    if "status_code" in response:
-                        error = json.loads(response)
-                        raise GenAiException(error)
-
-                    try:
-                        parsed_response = json.loads(response)
-                        if "moderation" in parsed_response:
-                            result = {
-                                "id": parsed_response["id"],
-                                "results": [],
-                                "model_id": parsed_response["model_id"],
-                                "created_at": parsed_response["created_at"],
-                                "moderation": parsed_response["moderation"],
-                            }
-                            yield GenerateStreamResult(**result)
-
-                        for result in parsed_response["results"]:
-                            yield GenerateStreamResult(**result)
-
-                    except Exception:
-                        logger.error("Could not parse {} as literal_eval".format(response))
+                for response in generation_stream_handler(
+                    response_gen,
+                    logger=logger,
+                    ResponseModel=ApiGenerateStreamResponse,
+                ):
+                    if response.moderation:
+                        yield GenerateStreamResult(moderation=response.moderation)
+                    for result in response.results:
+                        yield result
 
         except Exception as ex:
             raise to_genai_error(ex)
+
+    def chat(
+        self,
+        messages: List[BaseMessage],
+        *,
+        options: Optional[ChatOptions] = None,
+        **kwargs,
+    ) -> ChatResponse:
+        chat_handler = create_chat_handler(service=self.service, model_id=self.model, params=self.params)
+        raw_response = chat_handler(
+            messages=messages,
+            options=options,
+            streaming=False,
+            **kwargs,
+        )
+        response = raw_response.json()
+        return ChatResponse(**response)
+
+    def chat_stream(
+        self,
+        messages: List[BaseMessage],
+        *,
+        options: Optional[ChatOptions] = None,
+        **kwargs,
+    ) -> Generator[ChatStreamResponse, None, None]:
+        logger.debug(f"Calling Chat Stream. Messages: {messages}, params: {self.params}, options: ${options}")
+        chat_handler = create_chat_handler(service=self.service, model_id=self.model, params=self.params)
+        response_stream = chat_handler(
+            messages=messages,
+            options=options,
+            streaming=True,
+            **kwargs,
+        )
+        yield from generation_stream_handler(response_stream, logger=logger, ResponseModel=ChatStreamResponse)
 
     def generate_as_completed(
         self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
@@ -130,7 +151,9 @@ class Model:
             limits = self.service.generate_limits()
             return limits.tokenCapacity - limits.tokensUsed
 
-        def execute(inputs: List[str], attempt=0) -> List[GenerateResult]:
+        remaining_limit = get_remaining_limit()
+
+        def execute(inputs: list, attempt=0) -> List[GenerateResult]:
             response = self.service.generate(
                 model=self.model,
                 inputs=inputs,
@@ -153,7 +176,6 @@ class Model:
 
         try:
             remaining_prompts = deque(prompts)
-            remaining_limit = get_remaining_limit()
             while remaining_prompts:
                 while remaining_limit <= 0:
                     time.sleep(1)

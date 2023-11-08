@@ -1,7 +1,6 @@
 import pytest
 from pytest_httpx import HTTPXMock
 
-from genai import Credentials
 from genai.extensions.huggingface import IBMGenAIAgent
 from genai.schemas import GenerateParams
 from genai.services import ServiceInterface
@@ -11,10 +10,6 @@ from tests.utils import match_endpoint
 
 @pytest.mark.extension
 class TestHuggingfaceAgent:
-    @pytest.fixture
-    def credentials(self):
-        return Credentials("GENAI_APY_KEY")
-
     @pytest.fixture
     def params(self):
         return GenerateParams()

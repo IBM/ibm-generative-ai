@@ -22,9 +22,11 @@ class RequestHandler:
         key: str,
         model_id: str = None,
         inputs: list = None,
-        parameters: dict = None,
+        parameters: Optional[dict] = None,
         options: Options = None,
         files: dict = None,
+        *,
+        messages: list = None,
     ):
         """General function to build header and/or json_data for /post and /get requests.
 
@@ -62,12 +64,17 @@ class RequestHandler:
             if inputs is not None:
                 json_data["inputs"] = inputs
 
+            if messages is not None:
+                json_data["messages"] = messages
+
             if parameters is not None:
                 json_data["parameters"] = parameters
 
             if options is not None:
                 for key in options.keys():
-                    json_data[key] = options[key]
+                    value = options[key]
+                    if value is not None:
+                        json_data[key] = options[key]
 
         if method == "PATCH":
             headers["Content-Type"] = "application/json"
@@ -216,9 +223,10 @@ class RequestHandler:
         key: str,
         model_id: str = None,
         inputs: list = None,
-        parameters: dict = None,
+        messages: list = None,
+        parameters: Optional[dict] = None,
         streaming: bool = False,
-        options: Options = None,
+        options: Optional[Options] = None,
         files: dict = None,
     ):
         """Low level API for /post request to REST API.
@@ -243,6 +251,7 @@ class RequestHandler:
             key=key,
             model_id=model_id,
             inputs=inputs,
+            messages=messages,
             parameters=parameters,
             options=options,
             files=files,
