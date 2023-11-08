@@ -38,7 +38,7 @@ LangChain chat with streaming
 -----------------
 
 .. literalinclude:: ../../../../../examples/user/langchain_chat_stream.py
-    :caption: See `langchain_chat_generate.py <https://github.com/IBM/ibm-generative-ai/blob/main/examples/user/langchain_chat_stream.py>`_ on GitHub.
+    :caption: See `langchain_chat_stream.py <https://github.com/IBM/ibm-generative-ai/blob/main/examples/user/langchain_chat_stream.py>`_ on GitHub.
 
 -----------------
 Pandas
