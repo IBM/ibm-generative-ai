@@ -1,6 +1,14 @@
+from genai.schemas.chat import (
+    AIMessage,
+    BaseMessage,
+    ChatRole,
+    HumanMessage,
+    SystemMessage,
+)
 from genai.schemas.descriptions import Descriptions
 from genai.schemas.files_params import FileListParams, MultipartFormData
 from genai.schemas.generate_params import (
+    ChatOptions,
     GenerateParams,
     LengthPenalty,
     Return,
@@ -21,6 +29,7 @@ __all__ = [
     "LengthPenalty",
     "Return",
     "ReturnOptions",
+    "ChatOptions",
     "TokenParams",
     "HistoryParams",
     "GenerateResult",
@@ -30,4 +39,9 @@ __all__ = [
     "TunesListParams",
     "CreateTuneParams",
     "CreateTuneHyperParams",
+    "HumanMessage",
+    "SystemMessage",
+    "BaseMessage",
+    "ChatRole",
+    "AIMessage",
 ]

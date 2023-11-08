@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from genai.credentials import Credentials
 from genai.model import Model
 from genai.schemas import GenerateParams
-from genai.schemas.chat import BaseMessage, ChatRole
+from genai.schemas.chat import HumanMessage, SystemMessage
 from genai.schemas.generate_params import ChatOptions
 
 # make sure you have a .env file under genai root with
@@ -24,12 +24,10 @@ params = GenerateParams(
 creds = Credentials(api_key, api_endpoint)
 model = Model("meta-llama/llama-2-70b-chat", params=params, credentials=creds)
 
-
 prompt = "What is NLP and how it has evolved over the years?"
 response = model.chat(
     [
-        BaseMessage(
-            role=ChatRole.system,
+        SystemMessage(
             content="""You are a helpful, respectful and honest assistant.
 Always answer as helpfully as possible, while being safe.
 Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content.
@@ -38,7 +36,7 @@ any sense, or is not factually coherent, explain why instead of answering someth
 If you don't know the answer to a question, please don't share false information.
 """,
         ),
-        BaseMessage(role=ChatRole.user, content=prompt),
+        HumanMessage(content=prompt),
     ]
 )
 print(f"Conversation ID: {response.conversation_id}")
@@ -48,7 +46,7 @@ print(f"Response: {response.results[0].generated_text}")
 prompt = "How can I start?"
 response = model.chat(
     [
-        BaseMessage(role=ChatRole.user, content=prompt),
+        HumanMessage(content=prompt),
     ],
     options=ChatOptions(
         conversation_id=response.conversation_id,
