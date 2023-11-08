@@ -4,6 +4,7 @@ from collections import deque
 from collections.abc import Generator
 from typing import Any, Callable, List, Optional, Union
 
+import httpx
 from tqdm.auto import tqdm
 
 from genai.credentials import Credentials
@@ -33,6 +34,7 @@ from genai.schemas.tunes_params import (
     TunesListParams,
 )
 from genai.services import AsyncResponseGenerator, ServiceInterface
+from genai.services.connection_manager import ConnectionManager
 from genai.services.tune_manager import TuneManager
 from genai.utils.errors import to_genai_error
 from genai.utils.general import to_model_instance
@@ -166,7 +168,10 @@ class Model:
                     result["input_text"] = inputs[i]
                 generate_response = GenerateResponse(**raw_response)
                 return generate_response.results
-            elif response.status_code == 429:
+            elif (
+                response.status_code == httpx.codes.TOO_MANY_REQUESTS
+                and attempt < ConnectionManager.MAX_RETRIES_GENERATE
+            ):
                 nonlocal remaining_limit
                 remaining_limit = 0
                 time.sleep(2 ** (attempt + 1))
