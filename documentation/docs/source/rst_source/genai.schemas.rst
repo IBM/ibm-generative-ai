@@ -9,6 +9,7 @@ Submodules
 
    genai.schemas.descriptions
    genai.schemas.generate_params
+   genai.schemas.chat
    genai.schemas.history_params
    genai.schemas.responses
    genai.schemas.token_params
