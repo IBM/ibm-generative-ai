@@ -74,7 +74,7 @@ class LocalLLMServer:
 
         # Set the API Key
         if api_key is None and insecure_api is False:
-            self.api_key = uuid.uuid4()
+            self.api_key = str(uuid.uuid4())
         elif api_key is None and insecure_api is True:
             self.api_key = "test"
 
