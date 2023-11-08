@@ -5,8 +5,8 @@ from langchain.schema import HumanMessage, SystemMessage
 
 from genai.credentials import Credentials
 from genai.extensions.langchain.chat_llm import LangChainChatInterface
-from genai.schemas import GenerateParams
-from genai.schemas.generate_params import ChatOptions
+from genai.schemas import ChatOptions, GenerateParams, ReturnOptions
+from genai.schemas.generate_params import HAPOptions, ModerationsOptions
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -25,6 +25,13 @@ llm = LangChainChatInterface(
         temperature=0.5,
         top_k=50,
         top_p=1,
+        stream=True,
+        return_options=ReturnOptions(input_text=False, input_tokens=True),
+        moderations=ModerationsOptions(
+            # Threshold is set to very low level to flag everything (testing purposes)
+            # or set to True to enable HAP with default settings
+            hap=HAPOptions(input=True, output=False, threshold=0.01)
+        ),
     ),
 )
 
@@ -50,6 +57,8 @@ If you don't know the answer to a question, please don't share false information
 conversation_id = result.generations[0][0].generation_info["meta"]["conversation_id"]
 print(f"New conversation with ID '{conversation_id}' has been created!")
 print(f"Response: {result.generations[0][0].text}")
+print(result.llm_output)
+print(result.generations[0][0].generation_info)
 
 prompt = "Show me some simple code example."
 print(f"Request: {prompt}")

@@ -305,5 +305,5 @@ class ChatResponse(GenerateResponse):
 
 
 class ChatStreamResponse(GenerateStreamResponse):
-    conversation_id: str
+    conversation_id: Optional[str] = None
     moderation: Optional[ModerationResult] = None

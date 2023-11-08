@@ -95,9 +95,9 @@ class ServiceInterface:
         self,
         model: str,
         inputs: list,
-        params: GenerateParams = None,
+        params: Optional[GenerateParams] = None,
         streaming: bool = False,
-        options: Options = None,
+        options: Optional[Options] = None,
     ):
         """Generate a completion text for the given model, inputs, and params.
 
@@ -114,7 +114,7 @@ class ServiceInterface:
         try:
             parameters: Optional[dict] = sanitize_params(params)
             endpoint = self.service_url + ServiceInterface.GENERATE
-            res = RequestHandler.post(
+            return RequestHandler.post(
                 endpoint,
                 key=self.key,
                 model_id=model,
@@ -123,7 +123,6 @@ class ServiceInterface:
                 streaming=streaming,
                 options=options,
             )
-            return res
         except Exception as e:
             raise to_genai_error(e)
 
