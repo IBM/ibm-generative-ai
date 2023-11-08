@@ -1,8 +1,10 @@
+from pathlib import Path
 from typing import Any, Optional, Union
 
 from langchain.schema import LLMResult
 from pydantic import BaseModel
 
+from genai.schemas import GenerateParams
 from genai.schemas.responses import (
     ChatResponse,
     ChatStreamResponse,
@@ -64,3 +66,24 @@ def create_llm_output(*, model: str, token_usage: Optional[dict] = None, **kwarg
     final_token_usage = extract_token_usage({})
     update_token_usage(target=final_token_usage, sources=[token_usage])
     return {"model_name": model, "token_usage": final_token_usage, **kwargs}
+
+
+def load_config(file: Union[str, Path]) -> dict:
+    def parse_config() -> dict:
+        file_path = Path(file) if isinstance(file, str) else file
+        if file_path.suffix == ".json":
+            with open(file_path) as f:
+                import json
+
+                return json.load(f)
+        elif file_path.suffix == ".yaml":
+            with open(file_path, "r") as f:
+                import yaml
+
+                return yaml.safe_load(f)
+        else:
+            raise ValueError("File type must be json or yaml")
+
+    config = parse_config()
+    config["params"] = GenerateParams(**config.get("params", {}))
+    return config

@@ -1,9 +1,7 @@
 import os
-from typing import Any, Optional
-from uuid import UUID
+import tempfile
 
 from dotenv import load_dotenv
-from langchain.callbacks.base import BaseCallbackHandler
 
 from genai.credentials import Credentials
 from genai.extensions.langchain import LangChainInterface
@@ -14,23 +12,11 @@ from genai.schemas import GenerateParams, ReturnOptions
 load_dotenv()
 api_key = os.getenv("GENAI_KEY", None)
 api_endpoint = os.getenv("GENAI_API", None)
-
-
-class Callback(BaseCallbackHandler):
-    def on_llm_new_token(
-        self,
-        token: str,
-        *,
-        run_id: UUID,
-        parent_run_id: Optional[UUID] = None,
-        **kwargs: Any,
-    ) -> Any:
-        print(f"Token received: {token}")
-
+credentials = Credentials(api_key, api_endpoint)
 
 llm = LangChainInterface(
     model="google/flan-ul2",
-    credentials=Credentials(api_key, api_endpoint),
+    credentials=credentials,
     params=GenerateParams(
         decoding_method="sample",
         max_new_tokens=10,
@@ -43,8 +29,11 @@ llm = LangChainInterface(
     ),
 )
 
-result = llm.generate(
-    prompts=["Tell me about IBM."],
-    callbacks=[Callback()],
-)
-print(result)
+with tempfile.NamedTemporaryFile(suffix=".json") as tmp:
+    print(f"Serializing LLM instance into '{tmp.name}'")
+    llm.save(tmp.name)
+    print(f"Loading serialized instance from '{tmp.name}'")
+    llm_new = LangChainInterface.load_from_file(file=tmp.name, credentials=credentials)
+    print("Comparing old instance with the new instance")
+    assert llm == llm_new
+    print(f"Done, removing '{tmp.name}'")

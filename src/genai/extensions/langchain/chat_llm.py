@@ -1,17 +1,12 @@
 """Wrapper around IBM GENAI APIs for use in Langchain"""
 import logging
+from pathlib import Path
 from typing import Any, Dict, Iterator, Optional, Union
 
 from pydantic import ConfigDict
 
 from genai import Credentials, Model
 from genai.exceptions import GenAiException
-from genai.extensions.langchain.utils import (
-    create_generation_info_from_response,
-    create_llm_output,
-    extract_token_usage,
-    update_token_usage,
-)
 from genai.schemas import GenerateParams
 from genai.schemas.chat import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from genai.schemas.generate_params import ChatOptions
@@ -28,6 +23,14 @@ try:
     from langchain.schema.messages import SystemMessage as LCSystemMessage
     from langchain.schema.messages import get_buffer_string
     from langchain.schema.output import ChatGeneration, ChatGenerationChunk, ChatResult
+
+    from .utils import (
+        create_generation_info_from_response,
+        create_llm_output,
+        extract_token_usage,
+        load_config,
+        update_token_usage,
+    )
 except ImportError:
     raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")
 
@@ -75,6 +78,14 @@ class LangChainChatInterface(BaseChatModel):
     params: Optional[GenerateParams] = None
     model_config = ConfigDict(extra="forbid", protected_namespaces=())
 
+    @classmethod
+    def is_lc_serializable(cls) -> bool:
+        return True
+
+    @property
+    def lc_secrets(self) -> Dict[str, str]:
+        return {"credentials": "CREDENTIALS"}
+
     @property
     def _llm_type(self) -> str:
         return "Chat IBM GENAI"
@@ -83,9 +94,14 @@ class LangChainChatInterface(BaseChatModel):
     def _identifying_params(self) -> Dict[str, Any]:
         _params = to_model_instance(self.params, GenerateParams)
         return {
-            **{"model": self.model},
-            **{"params": _params},
+            "model": self.model,
+            "params": _params.model_dump(),
         }
+
+    @classmethod
+    def load_from_file(cls, file: Union[str, Path], *, credentials: Credentials):
+        config = load_config(file)
+        return cls(**config, credentials=credentials)
 
     class Config:
         """Configuration for this pydantic object."""

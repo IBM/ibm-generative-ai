@@ -2,18 +2,19 @@
 import asyncio
 import logging
 from functools import partial
-from typing import Any, Iterator, List, Mapping, Optional
+from pathlib import Path
+from typing import Any, Iterator, List, Mapping, Optional, Union
 
-from langchain.callbacks.manager import (
-    AsyncCallbackManagerForLLMRun,
-    CallbackManagerForLLMRun,
-)
 from pydantic import ConfigDict
 
 from genai.exceptions import GenAiException
 from genai.utils.general import to_model_instance
 
 try:
+    from langchain.callbacks.manager import (
+        AsyncCallbackManagerForLLMRun,
+        CallbackManagerForLLMRun,
+    )
     from langchain.llms.base import LLM
     from langchain.schema import LLMResult
     from langchain.schema.output import GenerationChunk
@@ -21,6 +22,7 @@ try:
     from .utils import (
         create_generation_info_from_result,
         create_llm_output,
+        load_config,
         update_llm_result,
         update_token_usage,
     )
@@ -57,15 +59,25 @@ class LangChainInterface(LLM):
     def _identifying_params(self) -> Mapping[str, Any]:
         """Get the identifying parameters."""
         _params = to_model_instance(self.params, GenerateParams)
-        return {
-            **{"model": self.model},
-            **{"params": _params},
-        }
+        return {"model": self.model, "params": _params.model_dump()}
+
+    @classmethod
+    def load_from_file(cls, file: Union[str, Path], *, credentials: Credentials):
+        config = load_config(file)
+        return cls(**config, credentials=credentials)
 
     @property
     def _llm_type(self) -> str:
         """Return type of llm."""
         return "IBM GENAI"
+
+    @classmethod
+    def is_lc_serializable(cls) -> bool:
+        return True
+
+    @property
+    def lc_secrets(self) -> dict[str, str]:
+        return {"credentials": "CREDENTIALS"}
 
     def _call(
         self,
@@ -104,6 +116,7 @@ class LangChainInterface(LLM):
 
         params = to_model_instance(self.params, GenerateParams)
         params.stop_sequences = stop or params.stop_sequences
+
         if params.stream:
             if len(prompts) != 1:
                 raise GenAiException(ValueError("Streaming works only for a single prompt."))
