@@ -66,15 +66,29 @@ class TextPosition(GenAiResponseModel):
     end: int
 
 
-class HAPResult(GenAiResponseModel):
+class ModerationTypeResult(GenAiResponseModel):
     flagged: bool
     score: float
     success: bool
     position: TextPosition
 
 
+class HAPResult(ModerationTypeResult):
+    pass
+
+
+class StigmaResult(ModerationTypeResult):
+    pass
+
+
+class ImplicitHateResult(ModerationTypeResult):
+    pass
+
+
 class ModerationResult(GenAiResponseModel):
-    hap: List[HAPResult]
+    hap: Optional[List[HAPResult]] = None
+    stigma: Optional[List[StigmaResult]] = None
+    implicit_hate: Optional[List[ImplicitHateResult]] = None
 
 
 class GeneratedToken(GenAiResponseModel):
