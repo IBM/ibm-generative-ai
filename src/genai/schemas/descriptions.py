@@ -48,10 +48,14 @@ class Descriptions:
 
     # Params.Moderations
     MODERATIONS = "Leverages various models to detect hate speech in the provided inputs and generated outputs."
-    HAP = "Mechanism for detecting hate/abuse/profanity on a sentence level."
-    HAP_INPUT = "Enable/Disable HAP detection on the provided input."
-    HAP_OUTPUT = "Enable/Disable HAP detection on the generated output."
-    HAP_THRESHOLD = "The number from interval <0, 1> that causes the sentence to be flagged (default is 0.75)."
+    MODERATION_HAP = "Mechanism for detecting hate/abuse/profanity on a sentence level."
+    MODERATION_STIGMA = "Mechanism for detecting stigma-based discrimination (i.e., discrimination against an individual or group based on an attribute or characteristic that is devalued in a particular social context)."  # noqa
+    MODERATION_IMPLICIT_HATE = "Mechanism for detecting implicit hate (i.e., subtle hatred against a specific individual or group of individuals)."  # noqa
+    MODERATION_TYPE_INPUT = "Enable/Disable detection on the provided input."
+    MODERATION_TYPE_OUTPUT = "Enable/Disable detection on the generated output."
+    MODERATION_TYPE_THRESHOLD = (
+        "The number from interval <0, 1> that causes the sentence to be flagged (default is 0.75)."
+    )
 
     # Params.Chat
     CONVERSATION_ID = "ID of the conversation. Always empty for the first request. Pass only in case you want to join existing conversation."

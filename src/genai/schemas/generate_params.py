@@ -41,16 +41,30 @@ class Return(ReturnOptions):
 # Link to doc : https://workbench.res.ibm.com/docs/api-reference#generate
 
 
-class HAPOptions(BaseModel):
-    input: bool = Field(description=tx.HAP_INPUT, default=True)
-    output: bool = Field(description=tx.HAP_OUTPUT, default=True)
-    threshold: float = Field(description=tx.HAP_THRESHOLD, ge=0, le=1, multiple_of=0.01, default=0.75)
+class ModerationTypeOptions(BaseModel):
+    input: bool = Field(description=tx.MODERATION_TYPE_INPUT, default=True)
+    output: bool = Field(description=tx.MODERATION_TYPE_OUTPUT, default=True)
+    threshold: float = Field(description=tx.MODERATION_TYPE_THRESHOLD, ge=0, le=1, multiple_of=0.01, default=0.75)
+
+
+class HAPOptions(ModerationTypeOptions):
+    pass
+
+
+class StigmaOptions(ModerationTypeOptions):
+    pass
+
+
+class ImplicitHateOptions(ModerationTypeOptions):
+    pass
 
 
 class ModerationsOptions(BaseModel):
     model_config = ConfigDict(extra="allow", populate_by_name=True)
 
-    hap: Union[bool, HAPOptions] = Field(description=tx.HAP, default=False)
+    hap: Union[bool, HAPOptions] = Field(description=tx.MODERATION_HAP, default=False)
+    stigma: Union[bool, StigmaOptions] = Field(description=tx.MODERATION_STIGMA, default=False)
+    implicit_hate: Union[bool, ImplicitHateOptions] = Field(description=tx.MODERATION_IMPLICIT_HATE, default=False)
 
 
 class GenerateParams(BaseModel):
