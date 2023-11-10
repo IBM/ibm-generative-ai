@@ -1,3 +1,4 @@
+import json
 import logging
 from typing import Optional
 
@@ -7,6 +8,7 @@ from httpx_sse import SSEError, connect_sse
 from genai._version import version
 from genai.exceptions import GenAiException
 from genai.options import Options
+from genai.schemas.responses import ErrorResponse
 from genai.services.connection_manager import ConnectionManager
 from genai.utils.http_provider import HttpProvider
 
@@ -297,6 +299,14 @@ class RequestHandler:
             ) as event_source:
                 try:
                     for sse in event_source.iter_sse():
+                        if sse.event == "error":
+                            if sse.data.startswith("{") and sse.data.endswith("}"):
+                                raise GenAiException(ErrorResponse(**json.loads(sse.data)))
+
+                            raise GenAiException(
+                                f"Invalid server response during streaming!\nRetrieved data: {sse.data}"
+                            )
+
                         yield sse.data
                 except SSEError as e:
                     response: Response = event_source.response

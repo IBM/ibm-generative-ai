@@ -3,7 +3,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Any, List, Optional, Type, Union
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import AliasChoices, BaseModel, ConfigDict, Field, model_validator
 
 from genai.schemas.generate_params import GenerateParams
 
@@ -179,12 +179,13 @@ class ErrorExtensionState(GenAiResponseModel):
 
 class ErrorExtensions(GenAiResponseModel):
     code: str
-    state: list[ErrorExtensionState]
+    state: Optional[list[ErrorExtensionState]] = None
+    reason: Optional[str] = None
 
 
 class ErrorResponse(GenAiResponseModel):
-    status_code: int
-    error: str
+    status_code: int = Field(validation_alias=AliasChoices("status_code", "statusCode"))
+    error: str = ""
     message: str
     extensions: Optional[ErrorExtensions] = None
 
