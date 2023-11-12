@@ -16,7 +16,7 @@ try:
         CallbackManagerForLLMRun,
     )
     from langchain.llms.base import LLM
-    from langchain.schema import LLMResult
+    from langchain.schema import BaseMessage, LLMResult, get_buffer_string
     from langchain.schema.output import GenerationChunk
 
     from .utils import (
@@ -219,3 +219,17 @@ class LangChainInterface(LLM):
             for result in response.results or []:
                 generation_info = create_generation_info_from_response(response, result=result)
                 yield from send_chunk(text=result.generated_text, generation_info=generation_info)
+
+    def get_num_tokens(self, text: str) -> int:
+        model = Model(self.model, params=self.params, credentials=self.credentials)
+        response = model.tokenize([text], return_tokens=False)[0]
+        assert response.token_count is not None
+        return response.token_count
+
+    def get_num_tokens_from_messages(self, messages: list[BaseMessage]) -> int:
+        model = Model(self.model, params=self.params, credentials=self.credentials)
+        responses = model.tokenize([get_buffer_string([message]) for message in messages], return_tokens=False)
+        return sum([response.token_count for response in responses if response.token_count])
+
+    def get_token_ids(self, text: str) -> List[int]:
+        raise NotImplementedError("API does not support returning token ids.")
