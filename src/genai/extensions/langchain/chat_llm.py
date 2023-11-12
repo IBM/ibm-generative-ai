@@ -136,6 +136,7 @@ class LangChainChatInterface(BaseChatModel):
                 if run_manager:
                     run_manager.on_llm_new_token(token=text, chunk=chunk, response=response)
 
+            # TODO: remove once API will return 'conversation_id' for every message
             if not conversation_id:
                 conversation_id = response.conversation_id
             else:
@@ -227,3 +228,6 @@ class LangChainChatInterface(BaseChatModel):
     def _combine_llm_outputs(self, llm_outputs: list[Optional[dict]]) -> dict:
         token_usages = [output.get("token_usage") for output in llm_outputs if output]
         return create_llm_output(model=self.model, token_usages=token_usages)
+
+    def get_token_ids(self, text: str) -> list[int]:
+        raise NotImplementedError("API does not support returning token ids.")
