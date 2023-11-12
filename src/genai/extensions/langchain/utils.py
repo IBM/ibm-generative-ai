@@ -72,10 +72,20 @@ def create_generation_info_from_response(
     result: BaseModel,
 ) -> dict[str, Any]:
     result_meta = result.model_dump(exclude={"generated_text"}, exclude_none=True)
-    return {
-        "meta": response.model_dump(exclude={"results", "model_id", "moderation"}, exclude_none=True),
-        "token_usage": extract_token_usage(result_meta),
+    return create_generation_info(
+        meta=response.model_dump(exclude={"results", "model_id", "moderation"}, exclude_none=True),
+        token_usage=extract_token_usage(result_meta),
         **result_meta,
+    )
+
+
+def create_generation_info(
+    *, meta: Optional[dict] = None, token_usage: Optional[dict] = None, **kwargs
+) -> dict[str, Any]:
+    return {
+        "meta": meta or {},
+        "token_usage": token_usage or extract_token_usage({}),
+        **kwargs,
     }
 
 

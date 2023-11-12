@@ -20,9 +20,9 @@ try:
     from langchain.schema.output import GenerationChunk
 
     from .utils import (
+        create_generation_info,
         create_generation_info_from_response,
         create_llm_output,
-        extract_token_usage,
         load_config,
         update_token_usage,
         update_token_usage_stream,
@@ -124,7 +124,7 @@ class LangChainInterface(LLM):
             if len(prompts) != 1:
                 raise GenAiException(ValueError("Streaming works only for a single prompt."))
 
-            generation = GenerationChunk(text="", generation_info={"token_usage": extract_token_usage({})})
+            generation = GenerationChunk(text="", generation_info=create_generation_info())
 
             for result in self._stream(
                 prompt=prompts[0],

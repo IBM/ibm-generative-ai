@@ -305,5 +305,6 @@ class ChatResponse(GenerateResponse):
 
 
 class ChatStreamResponse(GenerateStreamResponse):
+    # TODO: remove optional when API starts returning 'conversation_id' for each message
     conversation_id: Optional[str] = None
     moderation: Optional[ModerationResult] = None

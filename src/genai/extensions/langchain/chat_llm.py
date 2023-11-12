@@ -136,7 +136,7 @@ class LangChainChatInterface(BaseChatModel):
                 if run_manager:
                     run_manager.on_llm_new_token(token=text, chunk=chunk, response=response)
 
-            # TODO: remove once API will return 'conversation_id' for every message
+            # TODO: remove when API starts returning 'conversation_id' for each message
             if not conversation_id:
                 conversation_id = response.conversation_id
             else:
