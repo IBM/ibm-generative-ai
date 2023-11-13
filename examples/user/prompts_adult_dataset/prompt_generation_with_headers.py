@@ -28,7 +28,7 @@ def get_dataset(datafile, headers=None):
     if os.path.exists(datafile):
         print("Data already downloaded. Skipping the download.")
         return
-    with requests.get(url) as response:
+    with requests.get(url, verify=False) as response:
         print("Saving data to {}".format(datafile))
         # Add header
         if headers is not None:
