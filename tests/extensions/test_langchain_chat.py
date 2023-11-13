@@ -66,6 +66,13 @@ class TestLangChainChat:
             "generated_token_count": expected_result.generated_token_count,
             "input_token_count": expected_result.input_token_count,
             "stop_reason": expected_result.stop_reason,
+            "token_usage": {
+                "prompt_tokens": expected_result.input_token_count,
+                "completion_tokens": expected_result.generated_token_count,
+                "total_tokens": expected_result.generated_token_count + (expected_result.input_token_count or 0),
+                "generated_token_count": expected_result.generated_token_count,
+                "input_token_count": expected_result.input_token_count,
+            },
         }
         assert result.llm_output == {
             "model_name": self.model,
@@ -122,7 +129,9 @@ class TestLangChainChat:
             assert isinstance(result, AIMessage)
             expected_response = expected_generated_responses[idx]
             assert (result.content or "") == (expected_response.results[0].generated_text or "")
-            assert result.generation_info == create_generation_info_from_response(expected_response)
+            assert result.generation_info == create_generation_info_from_response(
+                expected_response, result=expected_response.results[0]
+            )
 
         # Verify that callbacks were called
         assert callback.on_llm_new_token.call_count == len(expected_generated_responses)

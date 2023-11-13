@@ -6,7 +6,6 @@ from typing import Any, Dict, Iterator, Optional, Union
 from pydantic import ConfigDict
 
 from genai import Credentials, Model
-from genai.exceptions import GenAiException
 from genai.schemas import GenerateParams
 from genai.schemas.chat import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from genai.schemas.generate_params import ChatOptions
@@ -27,15 +26,13 @@ try:
     from .utils import (
         create_generation_info_from_response,
         create_llm_output,
-        extract_token_usage,
         load_config,
-        update_token_usage,
+        update_token_usage_stream,
     )
 except ImportError:
     raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")
 
 __all__ = ["LangChainChatInterface"]
-
 
 logger = logging.getLogger(__name__)
 
@@ -77,6 +74,7 @@ class LangChainChatInterface(BaseChatModel):
     model: str
     params: Optional[GenerateParams] = None
     model_config = ConfigDict(extra="forbid", protected_namespaces=())
+    streaming: Optional[bool] = None
 
     @classmethod
     def is_lc_serializable(cls) -> bool:
@@ -123,20 +121,34 @@ class LangChainChatInterface(BaseChatModel):
         model = Model(self.model, params=params, credentials=self.credentials)
 
         stream = model.chat_stream(messages=convert_messages_to_genai(messages), options=options, **kwargs)
+        conversation_id: Optional[str] = None
         for response in stream:
-            result = response.results[0] if response else None
-            if not result:
+            if not response:
                 continue
 
-            generated_text = result.generated_text or ""
-            generation_info = create_generation_info_from_response(response)
-            chunk = ChatGenerationChunk(
-                message=LCAIMessageChunk(content=generated_text, generation_info=generation_info),
-                generation_info=generation_info,
-            )
-            yield chunk
-            if run_manager:
-                run_manager.on_llm_new_token(token=generated_text, chunk=chunk, response=response)
+            def send_chunk(*, text: str = "", generation_info: dict):
+                logger.info("Chunk received: {}".format(text))
+                chunk = ChatGenerationChunk(
+                    message=LCAIMessageChunk(content=text, generation_info=generation_info),
+                    generation_info=generation_info,
+                )
+                yield chunk
+                if run_manager:
+                    run_manager.on_llm_new_token(token=text, chunk=chunk, response=response)
+
+            # TODO: remove when API starts returning 'conversation_id' for each message
+            if not conversation_id:
+                conversation_id = response.conversation_id
+            else:
+                response.conversation_id = conversation_id
+
+            if response.moderation:
+                generation_info = create_generation_info_from_response(response, result=response.moderation)
+                yield from send_chunk(generation_info=generation_info)
+
+            for result in response.results or []:
+                generation_info = create_generation_info_from_response(response, result=result)
+                yield from send_chunk(text=result.generated_text or "", generation_info=generation_info)
 
     def _generate(
         self,
@@ -149,28 +161,63 @@ class LangChainChatInterface(BaseChatModel):
     ) -> ChatResult:
         params = to_model_instance(self.params, GenerateParams)
         params.stop_sequences = stop or params.stop_sequences
+        params.stream = params.stream or self.streaming
 
-        model = Model(self.model, params=params, credentials=self.credentials)
-        response = model.chat(messages=convert_messages_to_genai(messages), options=options, **kwargs)
-        result = response.results[0]
-        assert result
+        def handle_stream():
+            final_generation: Optional[ChatGenerationChunk] = None
+            for result in self._stream(
+                messages=messages,
+                stop=stop,
+                run_manager=run_manager,
+                options=options,
+                **kwargs,
+            ):
+                if final_generation:
+                    token_usage = result.generation_info.pop("token_usage")
+                    final_generation += result
+                    update_token_usage_stream(
+                        target=final_generation.generation_info["token_usage"],
+                        source=token_usage,
+                    )
+                else:
+                    final_generation = result
 
-        message = LCAIMessage(content=result.generated_text or "")
+            assert final_generation and final_generation.generation_info
+            return {
+                "text": final_generation.text,
+                "generation_info": final_generation.generation_info.copy(),
+            }
+
+        def handle_non_stream():
+            model = Model(self.model, params=params, credentials=self.credentials)
+            response = model.chat(messages=convert_messages_to_genai(messages), options=options, **kwargs)
+
+            assert response.results
+            result = response.results[0]
+
+            return {
+                "text": result.generated_text or "",
+                "generation_info": create_generation_info_from_response(response, result=result),
+            }
+
+        result = handle_stream() if params.stream else handle_non_stream()
         return ChatResult(
             generations=[
-                ChatGeneration(message=message, generation_info=create_generation_info_from_response(response))
+                ChatGeneration(
+                    message=LCAIMessage(content=result["text"]),
+                    generation_info=result["generation_info"].copy(),
+                )
             ],
             llm_output=create_llm_output(
                 model=self.model,
-                token_usage=extract_token_usage(result.model_dump()),
+                token_usages=[result["generation_info"]["token_usage"]],
             ),
         )
 
     def get_num_tokens(self, text: str) -> int:
         model = Model(self.model, params=self.params, credentials=self.credentials)
         response = model.tokenize([text], return_tokens=False)[0]
-        if response.token_count is None:
-            raise GenAiException("Invalid tokenize result!")
+        assert response.token_count is not None
         return response.token_count
 
     def get_num_tokens_from_messages(self, messages: list[LCBaseMessage]) -> int:
@@ -179,8 +226,8 @@ class LangChainChatInterface(BaseChatModel):
         return sum([response.token_count for response in responses if response.token_count])
 
     def _combine_llm_outputs(self, llm_outputs: list[Optional[dict]]) -> dict:
-        overall_token_usage: dict = extract_token_usage({})
-        update_token_usage(
-            target=overall_token_usage, sources=[output.get("token_usage") for output in llm_outputs if output]
-        )
-        return {"model_name": self.model, "token_usage": overall_token_usage}
+        token_usages = [output.get("token_usage") for output in llm_outputs if output]
+        return create_llm_output(model=self.model, token_usages=token_usages)
+
+    def get_token_ids(self, text: str) -> list[int]:
+        raise NotImplementedError("API does not support returning token ids.")

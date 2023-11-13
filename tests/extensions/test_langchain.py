@@ -75,8 +75,10 @@ class TestLangChain:
             assert generation.text == expected_response.results[idx].generated_text
 
             expected_result = expected_response.results[idx].model_dump()
-            for key in {"generated_token_count", "input_text", "stop_reason"}:
+            for key in {"input_text", "stop_reason"}:
                 assert generation.generation_info[key] == expected_result[key]
+            for key in {"input_token_count", "generated_token_count"}:
+                assert generation.generation_info["token_usage"][key] == expected_result[key]
 
     def test_langchain_stream(self, credentials, params, prompts, httpx_mock: HTTPXMock):
         GENERATE_STREAM_RESPONSES = SimpleResponse.generate_stream(
@@ -114,7 +116,7 @@ class TestLangChain:
             chunk = retrieved_kwargs["chunk"]
             assert isinstance(chunk, GenerationChunk)
             response = retrieved_kwargs["response"]
-            assert response == result.results[0]
+            assert response == result
 
     def test_prompt_translator(self):
         from langchain.prompts import PromptTemplate

@@ -2,7 +2,7 @@ import logging
 import time
 from collections import deque
 from collections.abc import Generator
-from typing import Any, Callable, List, Optional, Union
+from typing import Any, Callable, List, Literal, Optional, Union, overload
 
 import httpx
 from tqdm.auto import tqdm
@@ -66,9 +66,33 @@ class Model:
         self.creds = credentials
         self.service = ServiceInterface(service_url=credentials.api_endpoint, api_key=credentials.api_key)
 
+    @overload
     def generate_stream(
-        self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
+        self,
+        prompts: Union[list[str], list[PromptPattern]],
+        options: Optional[Options] = None,
+        *,
+        raw_response: Optional[Literal[False]] = None,
     ) -> Generator[GenerateStreamResult, None, None]:
+        ...
+
+    @overload
+    def generate_stream(
+        self,
+        prompts: Union[list[str], list[PromptPattern]],
+        options: Optional[Options] = None,
+        *,
+        raw_response: Literal[True],
+    ) -> Generator[ApiGenerateStreamResponse, None, None]:
+        ...
+
+    def generate_stream(
+        self,
+        prompts: Union[list[str], list[PromptPattern]],
+        options: Optional[Options] = None,
+        *,
+        raw_response: Optional[bool] = False,
+    ):
         if len(prompts) > 0 and isinstance(prompts[0], PromptPattern):
             prompts = PromptPattern.list_str(prompts)
 
@@ -84,9 +108,14 @@ class Model:
                     logger=logger,
                     ResponseModel=ApiGenerateStreamResponse,
                 ):
+                    if raw_response:
+                        yield response
+                        continue
+
                     if response.moderation:
                         yield GenerateStreamResult(moderation=response.moderation)
-                    for result in response.results:
+
+                    for result in response.results or []:
                         yield result
 
         except Exception as ex:
@@ -126,9 +155,33 @@ class Model:
         )
         yield from generation_stream_handler(response_stream, logger=logger, ResponseModel=ChatStreamResponse)
 
+    @overload
     def generate_as_completed(
-        self, prompts: Union[list[str], list[PromptPattern]], options: Options = None
-    ) -> Generator[GenerateResult]:
+        self,
+        prompts: Union[list[str], list[PromptPattern]],
+        options: Optional[Options] = None,
+        *,
+        raw_response: Optional[Literal[False]] = None,
+    ) -> Generator[GenerateResult, None, None]:
+        ...
+
+    @overload
+    def generate_as_completed(
+        self,
+        prompts: Union[list[str], list[PromptPattern]],
+        options: Optional[Options] = None,
+        *,
+        raw_response: Literal[True],
+    ) -> Generator[GenerateResponse, None, None]:
+        ...
+
+    def generate_as_completed(
+        self,
+        prompts: Union[list[str], list[PromptPattern]],
+        options: Optional[Options] = None,
+        *,
+        raw_response: Optional[bool] = False,
+    ):
         """The generate endpoint is the centerpiece of the GENAI alpha.
         It provides a simplified and flexible, yet powerful interface to the supported
         models as a service. Given a text prompt as inputs, and required parameters
@@ -137,9 +190,7 @@ class Model:
         Args:
             prompts (list[str]): The list of one or more prompt strings.
             options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
-
-        Yields:
-            Generator[GenerateResult]: A generator of results
+            raw_response (optional bool): Yields the whole response object instead of it's results.
         """
         if len(prompts) > 0 and isinstance(prompts[0], PromptPattern):
             prompts = PromptPattern.list_str(prompts)
@@ -155,7 +206,7 @@ class Model:
 
         remaining_limit = get_remaining_limit()
 
-        def execute(inputs: list, attempt=0) -> List[GenerateResult]:
+        def execute(inputs: list, attempt=0) -> GenerateResponse:
             response = self.service.generate(
                 model=self.model,
                 inputs=inputs,
@@ -166,8 +217,7 @@ class Model:
                 raw_response = response.json()
                 for i, result in enumerate(raw_response["results"]):
                     result["input_text"] = inputs[i]
-                generate_response = GenerateResponse(**raw_response)
-                return generate_response.results
+                return GenerateResponse(**raw_response)
             elif (
                 response.status_code == httpx.codes.TOO_MANY_REQUESTS
                 and attempt < ConnectionManager.MAX_RETRIES_GENERATE
@@ -189,12 +239,20 @@ class Model:
                 prompts_to_process = min(remaining_limit, Metadata.DEFAULT_MAX_PROMPTS, len(remaining_prompts))
                 remaining_limit -= prompts_to_process
                 inputs = [remaining_prompts.popleft() for _ in range(prompts_to_process)]
-                for result in execute(inputs):
-                    yield result
+                response = execute(inputs)
+                if raw_response:
+                    yield response
+                else:
+                    yield from response.results
         except Exception as ex:
             raise to_genai_error(ex)
 
-    def generate(self, prompts: Union[list[str], list[PromptPattern]], options: Options = None) -> list[GenerateResult]:
+    def generate(
+        self,
+        prompts: Union[list[str], list[PromptPattern]],
+        options: Optional[Options] = None,
+        **kwargs,
+    ):
         """The generate endpoint is the centerpiece of the GENAI alpha.
         It provides a simplified and flexible, yet powerful interface to the supported
         models as a service. Given a text prompt as inputs, and required parameters
@@ -203,11 +261,8 @@ class Model:
         Args:
             prompts (list[str]): The list of one or more prompt strings.
             options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
-
-        Returns:
-            list[GenerateResult]: A list of results
         """
-        return list(self.generate_as_completed(prompts, options))
+        return list(self.generate_as_completed(prompts, options, **kwargs))
 
     def generate_async(
         self,

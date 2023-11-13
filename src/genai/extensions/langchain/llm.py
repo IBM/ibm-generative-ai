@@ -16,15 +16,16 @@ try:
         CallbackManagerForLLMRun,
     )
     from langchain.llms.base import LLM
-    from langchain.schema import LLMResult
+    from langchain.schema import BaseMessage, LLMResult, get_buffer_string
     from langchain.schema.output import GenerationChunk
 
     from .utils import (
-        create_generation_info_from_result,
+        create_generation_info,
+        create_generation_info_from_response,
         create_llm_output,
         load_config,
-        update_llm_result,
         update_token_usage,
+        update_token_usage_stream,
     )
 except ImportError:
     raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")
@@ -54,6 +55,7 @@ class LangChainInterface(LLM):
     model: str
     params: Optional[GenerateParams] = None
     model_config = ConfigDict(extra="forbid", protected_namespaces=())
+    streaming: Optional[bool] = None
 
     @property
     def _identifying_params(self) -> Mapping[str, Any]:
@@ -116,41 +118,50 @@ class LangChainInterface(LLM):
 
         params = to_model_instance(self.params, GenerateParams)
         params.stop_sequences = stop or params.stop_sequences
+        params.stream = params.stream or self.streaming
 
         if params.stream:
             if len(prompts) != 1:
                 raise GenAiException(ValueError("Streaming works only for a single prompt."))
 
-            generation = GenerationChunk(text="", generation_info={})
+            generation = GenerationChunk(text="", generation_info=create_generation_info())
+
             for result in self._stream(
                 prompt=prompts[0],
                 stop=params.stop_sequences,
                 run_manager=run_manager,
                 **kwargs,
             ):
-                chunk = GenerationChunk(text=result.text)
-                if result.generation_info:
-                    update_token_usage(
-                        target=final_result.llm_output, sources=[result.generation_info.get("token_usage")]
-                    )
-                    chunk.generation_info = result.generation_info.copy()
-                generation += chunk
+                token_usage = result.generation_info.pop("token_usage")
+                generation += result
+                update_token_usage_stream(
+                    target=generation.generation_info["token_usage"],
+                    source=token_usage,
+                )
 
             final_result.generations.append([generation])
+            update_token_usage(
+                target=final_result.llm_output["token_usage"], source=generation.generation_info["token_usage"]
+            )
+
             return final_result
 
         model = Model(model=self.model, params=params, credentials=self.credentials)
-        for response in model.generate(
+        for response in model.generate_as_completed(
             prompts=prompts,
             **kwargs,
+            raw_response=True,
         ):
-            chunk = GenerationChunk(
-                text=response.generated_text or "",
-            )
-            logger.info("Output of GENAI call: {}".format(chunk.text))
-            chunk.generation_info = create_generation_info_from_result(response)
-            update_llm_result(current=final_result, generation_info=chunk.generation_info)
-            final_result.generations.append([chunk])
+            for result in response.results:
+                generation_info = create_generation_info_from_response(response, result=result)
+
+                chunk = GenerationChunk(
+                    text=result.generated_text or "",
+                    generation_info=generation_info,
+                )
+                logger.info("Output of GENAI call: {}".format(chunk.text))
+                update_token_usage(target=final_result.llm_output["token_usage"], source=generation_info["token_usage"])
+                final_result.generations.append([chunk])
 
         return final_result
 
@@ -189,12 +200,36 @@ class LangChainInterface(LLM):
         params.stop_sequences = stop or params.stop_sequences
 
         model = Model(model=self.model, params=params, credentials=self.credentials)
-        for result in model.generate_stream(prompts=[prompt], **kwargs):
-            logger.info("Chunk received: {}".format(result.generated_text))
-            chunk = GenerationChunk(
-                text=result.generated_text or "",
-                generation_info=create_generation_info_from_result(result),
-            )
-            yield chunk
-            if run_manager:
-                run_manager.on_llm_new_token(token=chunk.text, chunk=chunk, response=result)
+        for response in model.generate_stream(prompts=[prompt], raw_response=True, **kwargs):
+
+            def send_chunk(*, text: Optional[str] = None, generation_info: dict):
+                logger.info("Chunk received: {}".format(text))
+                chunk = GenerationChunk(
+                    text=text or "",
+                    generation_info=generation_info.copy(),
+                )
+                yield chunk
+                if run_manager:
+                    run_manager.on_llm_new_token(token=chunk.text, chunk=chunk, response=response)
+
+            if response.moderation:
+                generation_info = create_generation_info_from_response(response, result=response.moderation)
+                yield from send_chunk(generation_info=generation_info)
+
+            for result in response.results or []:
+                generation_info = create_generation_info_from_response(response, result=result)
+                yield from send_chunk(text=result.generated_text, generation_info=generation_info)
+
+    def get_num_tokens(self, text: str) -> int:
+        model = Model(self.model, params=self.params, credentials=self.credentials)
+        response = model.tokenize([text], return_tokens=False)[0]
+        assert response.token_count is not None
+        return response.token_count
+
+    def get_num_tokens_from_messages(self, messages: list[BaseMessage]) -> int:
+        model = Model(self.model, params=self.params, credentials=self.credentials)
+        responses = model.tokenize([get_buffer_string([message]) for message in messages], return_tokens=False)
+        return sum([response.token_count for response in responses if response.token_count])
+
+    def get_token_ids(self, text: str) -> List[int]:
+        raise NotImplementedError("API does not support returning token ids.")
