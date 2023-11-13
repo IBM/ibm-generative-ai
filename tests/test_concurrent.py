@@ -2,7 +2,6 @@ import json
 import logging
 import queue
 import random
-import time
 from unittest.mock import patch
 
 import httpx
@@ -130,71 +129,82 @@ class TestAsyncResponseGenerator:
             assert counter == num_prompts
 
     @pytest.mark.asyncio
-    @pytest.mark.skip(reason="pytest_httpx does not handle custom transports")
-    async def test_concurrent_generate_retry(self, httpx_mock: HTTPXMock, generate_params):
-        with patch.multiple(AsyncResponseGenerator, MAX_RETRIES_GENERATE=1):
-            for code in [httpx.codes.SERVICE_UNAVAILABLE, httpx.codes.TOO_MANY_REQUESTS]:
-                httpx_mock.add_response(method="POST", status_code=code, json={})
-                httpx_mock.add_response(method="POST", status_code=httpx.codes.OK, json={})
+    @pytest.mark.parametrize("status_code", [httpx.codes.SERVICE_UNAVAILABLE, httpx.codes.TOO_MANY_REQUESTS])
+    async def test_concurrent_generate_retry(self, status_code: int, httpx_mock: HTTPXMock, generate_params):
+        endpoint_url = match_endpoint(ServiceInterface.GENERATE)
+        with patch.multiple(ConnectionManager, MAX_RETRIES_GENERATE=1):
+            httpx_mock.add_response(url=endpoint_url, method="POST", status_code=status_code, json={})
+            httpx_mock.add_response(
+                url=endpoint_url,
+                method="POST",
+                status_code=httpx.codes.OK,
+                json=SimpleResponse.generate(model="google/flan-ul2", inputs=["Hello world!"]),
+            )
 
-                with AsyncResponseGenerator(self.model, self.inputs, generate_params, self.service) as asynchelper:
-                    response = list(asynchelper.generate_response())
-                    assert len(response) == 2
-                    assert response[0] is None
-                    assert response[1] is not None
+            with AsyncResponseGenerator(self.model, self.inputs, generate_params, self.service) as asynchelper:
+                response = list(asynchelper.generate_response())
+                assert len(response) == 1
+                assert response[0]
 
-                requests = httpx_mock.get_requests(url=match_endpoint(ServiceInterface.GENERATE), method="POST")
-                assert len(requests) == 2
+            requests = httpx_mock.get_requests(url=endpoint_url, method="POST")
+            assert len(requests) == 2
 
     @pytest.mark.asyncio
-    @pytest.mark.skip(reason="pytest_httpx does not handle custom transports")
-    async def test_concurrent_tokenize_retry(self, httpx_mock: HTTPXMock, tokenize_params):
-        saved = ConnectionManager.MAX_RETRIES_TOKENIZE
-        ConnectionManager.MAX_RETRIES_TOKENIZE = 2
-        for code in [httpx.codes.SERVICE_UNAVAILABLE, httpx.codes.TOO_MANY_REQUESTS]:
-            httpx_mock.add_response(method="POST", status_code=code, json={})
+    @pytest.mark.parametrize("status_code", [httpx.codes.SERVICE_UNAVAILABLE, httpx.codes.TOO_MANY_REQUESTS])
+    async def test_concurrent_tokenize_retry(self, status_code: int, httpx_mock: HTTPXMock, tokenize_params):
+        with patch.multiple(ConnectionManager, MAX_RETRIES_GENERATE=1):
+            endpoint_url = match_endpoint(ServiceInterface.TOKENIZE)
+            httpx_mock.add_response(url=endpoint_url, method="POST", status_code=status_code, json={})
+            httpx_mock.add_response(
+                url=endpoint_url,
+                method="POST",
+                status_code=httpx.codes.OK,
+                json=SimpleResponse.tokenize(model=self.model, inputs=self.inputs),
+            )
+
             with AsyncResponseGenerator(
                 self.model, self.inputs, tokenize_params, self.service, fn="tokenize"
             ) as asynchelper:
-                time_start = time.time()
-                for result in asynchelper.generate_response():
-                    assert result is None
-                time_end = time.time()
-                assert time_end - time_start > 5
-        ConnectionManager.MAX_RETRIES_TOKENIZE = saved
+                response = list(asynchelper.generate_response())
+                assert len(response) == 1
+                assert response[0]
+
+            requests = httpx_mock.get_requests(url=endpoint_url, method="POST")
+            assert len(requests) == 2
 
     @pytest.mark.asyncio
     async def test_concurrent_generate_dropped_request(self, httpx_mock: HTTPXMock, generate_params):
-        failed_id = 4
-        single_response = SimpleResponse.generate(model=self.model, inputs=self.inputs, params=generate_params)
-        headers, json_data, _ = RequestHandler._metadata(
-            "POST",
-            key="TEST_KEY",
-            model_id=self.model,
-            inputs=["Input " + str(failed_id)],
-            parameters=sanitize_params(generate_params),
-        )
-        # Following two lines: Selected input id should return 429, others should succeed
-        httpx_mock.add_response(url=match_endpoint(self.service.GENERATE), method="POST", json=single_response)
-        httpx_mock.add_response(
-            url=match_endpoint(self.service.GENERATE),
-            method="POST",
-            status_code=429,
-            match_content=bytes(json.dumps(json_data), encoding="utf-8"),
-        )
-        num_prompts = 9
-        counter = 0
-        inputs = ["Input " + str(i) for i in range(num_prompts)]
-        with AsyncResponseGenerator(self.model, inputs, generate_params, self.service) as asynchelper:
-            assert ConnectionManager.async_generate_client is not None
-            for response in asynchelper.generate_response():
-                if counter == failed_id:
-                    assert response is None
-                else:
-                    assert response is not None
-                counter += 1
-            assert counter == num_prompts
-        assert ConnectionManager.async_generate_client is None
+        with patch.multiple(ConnectionManager, MAX_RETRIES_GENERATE=0):
+            failed_id = 4
+            single_response = SimpleResponse.generate(model=self.model, inputs=self.inputs, params=generate_params)
+            headers, json_data, _ = RequestHandler._metadata(
+                "POST",
+                key="TEST_KEY",
+                model_id=self.model,
+                inputs=["Input " + str(failed_id)],
+                parameters=sanitize_params(generate_params),
+            )
+            # Following two lines: Selected input id should return 429, others should succeed
+            httpx_mock.add_response(url=match_endpoint(self.service.GENERATE), method="POST", json=single_response)
+            httpx_mock.add_response(
+                url=match_endpoint(self.service.GENERATE),
+                method="POST",
+                status_code=429,
+                match_content=bytes(json.dumps(json_data), encoding="utf-8"),
+            )
+            num_prompts = 9
+            counter = 0
+            inputs = ["Input " + str(i) for i in range(num_prompts)]
+            with AsyncResponseGenerator(self.model, inputs, generate_params, self.service) as asynchelper:
+                assert ConnectionManager.async_generate_client is not None
+                for response in asynchelper.generate_response():
+                    if counter == failed_id:
+                        assert response is None
+                    else:
+                        assert response is not None
+                    counter += 1
+                assert counter == num_prompts
+            assert ConnectionManager.async_generate_client is None
 
     @pytest.mark.asyncio
     async def test_concurrent_generate_inorder(self, generate_params, mocker, httpx_mock: HTTPXMock):
