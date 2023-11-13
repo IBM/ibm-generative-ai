@@ -248,8 +248,11 @@ class Model:
             raise to_genai_error(ex)
 
     def generate(
-        self, prompts: Union[list[str], list[PromptPattern]], options: Optional[Options] = None
-    ) -> list[GenerateResult]:
+        self,
+        prompts: Union[list[str], list[PromptPattern]],
+        options: Optional[Options] = None,
+        **kwargs,
+    ):
         """The generate endpoint is the centerpiece of the GENAI alpha.
         It provides a simplified and flexible, yet powerful interface to the supported
         models as a service. Given a text prompt as inputs, and required parameters
@@ -258,11 +261,8 @@ class Model:
         Args:
             prompts (list[str]): The list of one or more prompt strings.
             options (Options, optional): Additional parameters to pass in the query payload. Defaults to None.
-
-        Returns:
-            list[GenerateResult]: A list of results
         """
-        return list(self.generate_as_completed(prompts, options))
+        return list(self.generate_as_completed(prompts, options, **kwargs))
 
     def generate_async(
         self,
