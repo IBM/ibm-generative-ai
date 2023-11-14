@@ -55,7 +55,7 @@ class AsyncRetryTransport(httpx.AsyncHTTPTransport):
 
                 if ex.response and "application/json" in ex.response.headers["Content-Type"]:
                     await ex.response.aread()
-                    raise GenAiException(ex.response)
+                    raise GenAiException(ex.response) from None
                 else:
                     raise ex
 

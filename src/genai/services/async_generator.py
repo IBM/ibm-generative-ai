@@ -121,7 +121,7 @@ class AsyncResponseGenerator:
             response_raw = await self._service_fn(model, inputs, params, options)
             response = response_raw.json()
             if response_raw and not response_raw.is_success:
-                raise Exception(response)
+                raise GenAiException(response)
         except Exception as ex:
             logger.error("Error in _get_response_json {}: {}".format(type(ex), str(ex)))
             if self.throw_on_error:
