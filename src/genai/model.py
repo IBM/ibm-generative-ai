@@ -345,25 +345,36 @@ class Model:
         if len(prompts) > 0 and isinstance(prompts[0], PromptPattern):
             prompts = PromptPattern.list_str(prompts)
 
-        try:
-            params = TokenParams(return_tokens=return_tokens)
+        params = TokenParams(return_tokens=return_tokens)
+
+        def execute(attempt=0):
             for i in range(0, len(prompts), Metadata.DEFAULT_MAX_PROMPTS):
-                tokenize_response = self.service.tokenize(
+                response = self.service.tokenize(
                     model=self.model,
                     inputs=prompts[i : min(i + Metadata.DEFAULT_MAX_PROMPTS, len(prompts))],
                     params=params,
                     options=options,
                 )
 
-                if tokenize_response.is_success:
-                    response_json = tokenize_response.json()
+                if response.is_success:
+                    response_json = response.json()
                     for y, result in enumerate(response_json["results"]):
                         result["input_text"] = prompts[i + y]
                     responses = TokenizeResponse(**response_json)
-                    for token in responses.results:
-                        yield token
+                    return responses
+                elif (
+                    response.status_code == httpx.codes.TOO_MANY_REQUESTS
+                    and attempt < ConnectionManager.MAX_RETRIES_TOKENIZE
+                ):
+                    time.sleep(2 ** (attempt + 1))
+                    return execute(attempt + 1)
                 else:
-                    raise GenAiException(tokenize_response)
+                    raise GenAiException(response)
+
+        try:
+            response = execute()
+            for token in response.results:
+                yield token
         except Exception as ex:
             raise to_genai_error(ex)
 
