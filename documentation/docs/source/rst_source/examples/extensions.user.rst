@@ -41,6 +41,13 @@ LangChain chat with streaming
     :caption: See `langchain_chat_stream.py <https://github.com/IBM/ibm-generative-ai/blob/main/examples/user/langchain_chat_stream.py>`_ on GitHub.
 
 -----------------
+LlamaIndex
+-----------------
+
+.. literalinclude:: ../../../../../examples/user/llama_index_llm.py.py
+    :caption: See `llama_index_llm.py <https://github.com/IBM/ibm-generative-ai/blob/main/examples/user/llama_index_llm.py>`_ on GitHub.
+
+-----------------
 Pandas
 -----------------
 
