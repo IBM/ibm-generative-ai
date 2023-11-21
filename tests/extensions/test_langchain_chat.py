@@ -7,8 +7,8 @@ from langchain.schema import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from langchain.schema.output import ChatGenerationChunk
 from pytest_httpx import HTTPXMock, IteratorStream
 
+from genai.extensions.common.utils import create_generation_info_from_response
 from genai.extensions.langchain import LangChainChatInterface
-from genai.extensions.langchain.utils import create_generation_info_from_response
 from genai.schemas import GenerateParams
 from genai.schemas.responses import ChatResponse, ChatStreamResponse
 from genai.services import ServiceInterface

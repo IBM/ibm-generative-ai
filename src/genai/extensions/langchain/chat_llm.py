@@ -6,6 +6,7 @@ from typing import Any, Dict, Iterator, Optional, Union
 from pydantic import ConfigDict
 
 from genai import Credentials, Model
+from genai.extensions.common.utils import create_generation_info_from_response
 from genai.schemas import GenerateParams
 from genai.schemas.chat import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from genai.schemas.generate_params import ChatOptions
@@ -23,12 +24,7 @@ try:
     from langchain.schema.messages import get_buffer_string
     from langchain.schema.output import ChatGeneration, ChatGenerationChunk, ChatResult
 
-    from .utils import (
-        create_generation_info_from_response,
-        create_llm_output,
-        load_config,
-        update_token_usage_stream,
-    )
+    from .utils import create_llm_output, load_config, update_token_usage_stream
 except ImportError:
     raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")
 

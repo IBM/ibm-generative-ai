@@ -1,9 +1,6 @@
 import json
 
 import pytest
-from llama_index.llms.base import ChatMessage
-from llama_index.llms.base import ChatResponse as LlamaIndexChatResponse
-from llama_index.llms.base import CompletionResponse, MessageRole
 from pytest_httpx import HTTPXMock, IteratorStream
 
 from genai import Credentials, Model
@@ -13,15 +10,23 @@ from genai.schemas.api_responses import ApiGenerateStreamResponse
 from genai.schemas.chat import BaseMessage
 from genai.schemas.responses import ChatResponse, ChatStreamResponse, GenerateResponse
 from genai.services import ServiceInterface
+from src.genai.extensions.common.utils import create_generation_info_from_response
 from tests.assets.response_helper import SimpleResponse
 from tests.utils import match_endpoint
+
+try:
+    from llama_index.llms.base import ChatMessage
+    from llama_index.llms.base import ChatResponse as LlamaIndexChatResponse
+    from llama_index.llms.base import CompletionResponse, MessageRole
+
+except ImportError:
+    raise ImportError("Could not import llamaindex: Please install ibm-generative-ai[llama-index] extension.")
 
 
 @pytest.mark.extension
 class TestLlamaIndex:
     def setup_method(self):
         self.service = ServiceInterface(service_url="SERVICE_URL", api_key="API_KEY")
-        self.credantials = Credentials(api_key="API_KEY")
         self.inputs = ["Write a tagline for an alumni association: Together we"]
         self.model = "google/flan-ul2"
 
@@ -30,7 +35,9 @@ class TestLlamaIndex:
         models_info_response = SimpleResponse.models()
         httpx_mock.add_response(url=match_endpoint(ServiceInterface.MODELS), method="GET", json=models_info_response)
 
-        return IBMGenAILlamaIndex(model=Model("google/flan-ul2", credentials=self.credantials, params=GenerateParams()))
+        return IBMGenAILlamaIndex(
+            model=Model(self.model, credentials=Credentials(api_key="API_KEY"), params=GenerateParams())
+        )
 
     @pytest.fixture
     def params(self):
@@ -57,19 +64,23 @@ class TestLlamaIndex:
         ]
 
     def test_llama_index_complete(self, llm, params, prompts, httpx_mock: HTTPXMock):
-        GENERATE_RESPONSE = SimpleResponse.generate(model="google/flan-ul2", inputs=prompts, params=params)
-        expected_response = GenerateResponse(**GENERATE_RESPONSE)
+        generate_response = SimpleResponse.generate(model=self.model, inputs=prompts, params=params)
+        expected_response = GenerateResponse(**generate_response)
 
-        httpx_mock.add_response(url=match_endpoint(ServiceInterface.GENERATE), method="POST", json=GENERATE_RESPONSE)
-        results = llm.complete(prompts[0])
-        assert results.text == expected_response.results[0].generated_text
+        httpx_mock.add_response(url=match_endpoint(ServiceInterface.GENERATE), method="POST", json=generate_response)
+        result = llm.complete(prompts[0])
+        assert result.text == expected_response.results[0].generated_text
+
+        expected_result = expected_response.results[0].model_dump()
+        for key in {"input_text", "stop_reason"}:
+            assert result.additional_kwargs[key] == expected_result[key]
+        for key in {"input_token_count", "generated_token_count"}:
+            assert result.additional_kwargs["token_usage"][key] == expected_result[key]
 
     def test_llama_index_complete_stream(self, llm, params, prompts, httpx_mock: HTTPXMock):
-        GENERATE_STREAM_RESPONSES = SimpleResponse.generate_stream(
-            model="google/flan-ul2", inputs=prompts, params=params
-        )
-        expected_generated_responses = [ApiGenerateStreamResponse(**result) for result in GENERATE_STREAM_RESPONSES]
-        stream_responses = [(f"data: {json.dumps(response)}\n\n").encode() for response in GENERATE_STREAM_RESPONSES]
+        generate_stream_responses = SimpleResponse.generate_stream(model=self.model, inputs=prompts, params=params)
+        expected_generated_responses = [ApiGenerateStreamResponse(**result) for result in generate_stream_responses]
+        stream_responses = [(f"data: {json.dumps(response)}\n\n").encode() for response in generate_stream_responses]
         httpx_mock.add_response(
             url=match_endpoint(ServiceInterface.GENERATE),
             stream=IteratorStream(stream_responses),
@@ -77,24 +88,31 @@ class TestLlamaIndex:
         )
         expected_text = ""
         for idx, result in enumerate(llm.stream_complete(prompts[0])):
-            expected_delta = expected_generated_responses[idx].results[0].generated_text
+            expected_response = expected_generated_responses[idx]
+            expected_delta = expected_response.results[0].generated_text
             expected_text += expected_delta
             assert isinstance(result, CompletionResponse) is True
             assert result.delta == expected_delta
             assert result.text == expected_text
+            assert result.additional_kwargs == create_generation_info_from_response(
+                expected_response, result=expected_response.results[0]
+            )
 
     def test_llama_index_chat(self, llm, params, messages, httpx_mock: HTTPXMock):
-        GENERATE_RESPONSE = SimpleResponse.generate_chat(
+        generate_response = SimpleResponse.generate_chat(
             model_id=self.model,
             messages=messages,
             generated_text="What is a molecule?",
         )
-        expected_response = ChatResponse(**GENERATE_RESPONSE)
-        httpx_mock.add_response(url=match_endpoint(ServiceInterface.CHAT), method="POST", json=GENERATE_RESPONSE)
+        expected_response = ChatResponse(**generate_response)
+        httpx_mock.add_response(url=match_endpoint(ServiceInterface.CHAT), method="POST", json=generate_response)
 
         result = llm.chat(messages=messages)
         assert isinstance(result, LlamaIndexChatResponse) is True
         assert result.message.content == expected_response.results[0].generated_text
+        assert result.additional_kwargs == create_generation_info_from_response(
+            expected_response, result=expected_response.results[0]
+        )
 
     def test_llama_index_stream_chat(self, llm, params, messages, httpx_mock: HTTPXMock):
         server_response = SimpleResponse.generate_chat_stream(
@@ -110,18 +128,22 @@ class TestLlamaIndex:
         )
         expected_text = ""
         for idx, result in enumerate(llm.stream_chat(messages=messages)):
-            expected_delta = expected_generated_responses[idx].results[0].generated_text or ""
+            expected_response = expected_generated_responses[idx]
+            expected_delta = expected_response.results[0].generated_text or ""
             expected_text += expected_delta
             assert isinstance(result, LlamaIndexChatResponse) is True
             assert result.delta == expected_delta
             assert result.message.content == expected_text
+            assert result.additional_kwargs == create_generation_info_from_response(
+                expected_response, result=expected_response.results[0]
+            )
 
     @pytest.mark.asyncio
     async def test_async_llama_index_interface(self, llm, params, prompts, httpx_mock: HTTPXMock):
-        GENERATE_RESPONSE = SimpleResponse.generate(model="google/flan-ul2", inputs=prompts, params=params)
-        expected_response = GenerateResponse(**GENERATE_RESPONSE)
+        generate_response = SimpleResponse.generate(model=self.model, inputs=prompts, params=params)
+        expected_response = GenerateResponse(**generate_response)
 
-        httpx_mock.add_response(url=match_endpoint(ServiceInterface.GENERATE), method="POST", json=GENERATE_RESPONSE)
+        httpx_mock.add_response(url=match_endpoint(ServiceInterface.GENERATE), method="POST", json=generate_response)
 
         result = await llm.acomplete(prompts[0])
         assert isinstance(result, CompletionResponse)

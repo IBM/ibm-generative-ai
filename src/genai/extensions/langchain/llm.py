@@ -20,8 +20,6 @@ try:
     from langchain.schema.output import GenerationChunk
 
     from .utils import (
-        create_generation_info,
-        create_generation_info_from_response,
         create_llm_output,
         load_config,
         update_token_usage,
@@ -31,6 +29,10 @@ except ImportError:
     raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")
 
 from genai import Credentials, Model
+from genai.extensions.common.utils import (
+    create_generation_info,
+    create_generation_info_from_response,
+)
 from genai.schemas import GenerateParams
 
 logger = logging.getLogger(__name__)

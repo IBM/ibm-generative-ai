@@ -4,6 +4,8 @@ from functools import partial
 from typing import Any, List, Optional, Sequence
 
 from genai import Model
+from genai.extensions.common.utils import create_generation_info_from_response
+from genai.options import Options
 from genai.schemas.chat import (
     AIMessage,
     BaseMessage,
@@ -33,10 +35,6 @@ try:
         llm_completion_callback,
     )
 
-    class LlamaIndexChatMessageClasses:
-        user = ChatMessage
-        system = ChatMessage
-        assistant = ChatMessage
 
 except ImportError:
     raise ImportError("Could not import llamaindex: Please install ibm-generative-ai[llama-index] extension.")
@@ -80,49 +78,71 @@ class IBMGenAILlamaIndex(LLM):
         )
 
     @llm_completion_callback()
-    def complete(self, prompt: str, **kwargs: Any) -> CompletionResponse:
-        generation = self.model.generate(prompts=[prompt], **kwargs)[0]
+    def complete(self, prompt: str, options: Optional[Options] = None) -> CompletionResponse:
+        generation = self.model.generate(prompts=[prompt], options=options, raw_response=True)[0]
+        result = generation.results[0]
+        generation_info = create_generation_info_from_response(generation, result=result)
 
-        return CompletionResponse(text=generation.generated_text or "")
+        return CompletionResponse(text=result.generated_text or "", additional_kwargs=generation_info)
 
     @llm_completion_callback()
-    def stream_complete(self, prompt: str, **kwargs: Any) -> CompletionResponseGen:
+    def stream_complete(self, prompt: str, options: Optional[Options] = None) -> CompletionResponseGen:
         text = ""
-        for response in self.model.generate_stream(prompts=[prompt], **kwargs):
-            generated_text = response.generated_text or ""
+        for response in self.model.generate_stream(prompts=[prompt], options=options, raw_response=True):
+            result = response.results[0]
+            generated_text = result.generated_text or ""
+            generation_info = create_generation_info_from_response(response, result=result)
+
             text += generated_text
-            yield CompletionResponse(text=text, delta=generated_text)
+            yield CompletionResponse(text=text, delta=generated_text, additional_kwargs=generation_info)
 
     @llm_chat_callback()
-    def chat(self, messages: Sequence[ChatMessage], **kwargs: Any) -> ChatResponse:
+    def chat(self, messages: Sequence[ChatMessage], options: Optional[Options] = None) -> ChatResponse:
         genai_messages = to_genai_messages(messages)
-        response = self.model.chat(messages=genai_messages, **kwargs)
-        generated_text = response.results[0].generated_text or ""
-        return ChatResponse(message=ChatMessage(role=MessageRole.ASSISTANT, content=generated_text))
+        response = self.model.chat(messages=genai_messages, options=options)
+        result = response.results[0]
+        generation_info = create_generation_info_from_response(response, result=result)
+
+        return ChatResponse(
+            message=ChatMessage(
+                role=MessageRole.ASSISTANT,
+                content=result.generated_text or "",
+            ),
+            additional_kwargs=generation_info,
+        )
 
     @llm_chat_callback()
-    def stream_chat(self, messages: Sequence[ChatMessage], **kwargs: Any) -> ChatResponseGen:
+    def stream_chat(self, messages: Sequence[ChatMessage], options: Optional[Options] = None) -> ChatResponseGen:
         genai_messages = to_genai_messages(messages)
         text = ""
 
-        for response in self.model.chat_stream(messages=genai_messages, **kwargs):
-            generated_text = response.results[0].generated_text or ""
+        for response in self.model.chat_stream(messages=genai_messages, options=options):
+            result = response.results[0]
+            generated_text = result.generated_text or ""
+            generation_info = create_generation_info_from_response(response, result=result)
+
             text += generated_text
             message = ChatMessage(role=ChatRole.assistant, content=text)
-            yield ChatResponse(message=message, delta=generated_text)
+            yield ChatResponse(message=message, delta=generated_text, additional_kwargs=generation_info)
 
     @llm_completion_callback()
-    async def acomplete(self, prompt: str, **kwargs: Any) -> CompletionResponse:
-        return await asyncio.get_running_loop().run_in_executor(None, partial(self.complete, prompt, **kwargs))
+    async def acomplete(self, prompt: str, options: Optional[Options] = None) -> CompletionResponse:
+        return await asyncio.get_running_loop().run_in_executor(None, partial(self.complete, prompt, options=options))
 
     @llm_completion_callback()
-    async def astream_complete(self, prompt: str, **kwargs: Any) -> CompletionResponseAsyncGen:
-        return await asyncio.get_running_loop().run_in_executor(None, partial(self.stream_complete, prompt, **kwargs))
+    async def astream_complete(self, prompt: str, options: Optional[Options] = None) -> CompletionResponseAsyncGen:
+        return await asyncio.get_running_loop().run_in_executor(
+            None, partial(self.stream_complete, prompt, options=options)
+        )
 
     @llm_chat_callback()
-    async def achat(self, messages: Sequence[ChatMessage], **kwargs: Any) -> ChatResponse:
-        return await asyncio.get_running_loop().run_in_executor(None, partial(self.achat, messages, **kwargs))
+    async def achat(self, messages: Sequence[ChatMessage], options: Optional[Options] = None) -> ChatResponse:
+        return await asyncio.get_running_loop().run_in_executor(None, partial(self.chat, messages, options=options))
 
     @llm_chat_callback()
-    async def astream_chat(self, messages: Sequence[ChatMessage], **kwargs: Any) -> ChatResponseAsyncGen:
-        return await asyncio.get_running_loop().run_in_executor(None, partial(self.stream_chat, messages, **kwargs))
+    async def astream_chat(
+        self, messages: Sequence[ChatMessage], options: Optional[Options] = None
+    ) -> ChatResponseAsyncGen:
+        return await asyncio.get_running_loop().run_in_executor(
+            None, partial(self.stream_chat, messages, options=options)
+        )
