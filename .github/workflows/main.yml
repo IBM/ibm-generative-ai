@@ -35,5 +35,3 @@ jobs:
       run: pytest -m 'unit or extension' --cov-report=lcov:coverage/lcov.info --cov=genai
     - name: Coveralls
       uses: coverallsapp/github-action@v2
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
