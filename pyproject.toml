@@ -60,6 +60,9 @@ huggingface = [
   "datasets>=2.13.0",
   "transformers[agents]>=4.33.3"
 ]
+llama-index = [
+  "llama-index>=0.9.2"
+]
 pandas = [
   "pandas>=2.0.0"
 ]
@@ -70,7 +73,7 @@ localserver = [
 
 # As new extensions are added, they should also be added
 all = [
-  "ibm-generative-ai[langchain, pandas, huggingface, localserver]"
+  "ibm-generative-ai[langchain, pandas, huggingface, llama-index, localserver]"
 ]
 
 [options]
