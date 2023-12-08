@@ -160,12 +160,17 @@ class AsyncResponseGenerator:
     async def _schedule_requests(self):
         local_concurrency_limit = max(self._max_concurrency_limit or math.inf, 1)
 
+        is_tokenize_request = self.fn == "tokenize"
+        if not is_tokenize_request:
+            max_generate_capacity = self.service.generate_limits().tokenCapacity
+            local_concurrency_limit = min(local_concurrency_limit, max_generate_capacity)
+
         async def get_limits():
             nonlocal local_concurrency_limit
             if local_concurrency_limit <= 0:
                 return local_concurrency_limit
 
-            if self.fn == "tokenize":
+            if is_tokenize_request:
                 return min(local_concurrency_limit, len(self.prompts))
 
             limits = self.service.generate_limits()
