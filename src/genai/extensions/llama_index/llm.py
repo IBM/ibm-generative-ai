@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 try:
     from llama_index.callbacks import CallbackManager
     from llama_index.llms.base import (
-        LLM,
+        BaseLLM,
         ChatMessage,
         ChatResponse,
         ChatResponseAsyncGen,
@@ -30,10 +30,10 @@ try:
         CompletionResponseAsyncGen,
         CompletionResponseGen,
         LLMMetadata,
-        MessageRole,
         llm_chat_callback,
         llm_completion_callback,
     )
+    from llama_index.llms.types import MessageRole
 
 
 except ImportError:
@@ -55,7 +55,7 @@ def to_genai_messages(messages: List[ChatMessage]) -> List[BaseMessage]:
     return [to_genai_message(msg) for msg in messages]
 
 
-class IBMGenAILlamaIndex(LLM):
+class IBMGenAILlamaIndex(BaseLLM):
     model: Model
     model_info: Optional[ModelCard]
 

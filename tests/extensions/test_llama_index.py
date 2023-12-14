@@ -17,7 +17,8 @@ from tests.utils import match_endpoint
 try:
     from llama_index.llms.base import ChatMessage
     from llama_index.llms.base import ChatResponse as LlamaIndexChatResponse
-    from llama_index.llms.base import CompletionResponse, MessageRole
+    from llama_index.llms.base import CompletionResponse
+    from llama_index.llms.types import MessageRole
 
 except ImportError:
     raise ImportError("Could not import llamaindex: Please install ibm-generative-ai[llama-index] extension.")
