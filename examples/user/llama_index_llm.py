@@ -1,7 +1,8 @@
 import os
 
 from dotenv import load_dotenv
-from llama_index.llms import ChatMessage, MessageRole
+from llama_index.llms.base import ChatMessage
+from llama_index.llms.types import MessageRole
 
 from genai import Model
 from genai.credentials import Credentials
