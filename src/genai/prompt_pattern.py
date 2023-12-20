@@ -88,6 +88,8 @@ class PromptPattern:
         name: str = None,
         template: str = None,
         id: str = None,
+        *,
+        allow_duplicate: bool = False,
     ):
         # Cases :
         # fetching an existing template : name OR id
@@ -105,7 +107,10 @@ class PromptPattern:
             id = saved_template.id
             name = name if name else saved_template.name
             wx = PromptTemplateManager.update_template(credentials=credentials, id=id, name=name, template=template)
-        except Exception:
+        except Exception as e:
+            if "More than one template found" in str(e) and not allow_duplicate:
+                raise e
+
             # Template with name doesn't exist. Save template
             wx = PromptTemplateManager.save_template(template=template, name=name, credentials=credentials)
 
