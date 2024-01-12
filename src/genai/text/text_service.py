@@ -38,8 +38,8 @@ class TextService(BaseService[BaseServiceConfig, BaseServices]):
         if not services:
             services = self.Services()
 
-        self.moderation = services.ModerationService(api_client=api_client)
-        self.generation = services.GenerationService(api_client=api_client)
-        self.tokenization = services.TokenizationService(api_client=api_client)
-        self.chat = services.ChatService(api_client=api_client)
-        self.embedding = services.EmbeddingService(api_client=api_client)
+        self.moderation: ModerationService = services.ModerationService(api_client=api_client)
+        self.generation: GenerationService = services.GenerationService(api_client=api_client)
+        self.tokenization: TokenizationService = services.TokenizationService(api_client=api_client)
+        self.chat: ChatService = services.ChatService(api_client=api_client)
+        self.embedding: EmbeddingService = services.EmbeddingService(api_client=api_client)
