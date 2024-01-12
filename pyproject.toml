@@ -6,37 +6,53 @@ build-backend = "setuptools.build_meta"
 name = "ibm-generative-ai"
 dynamic = ["version"]
 authors = [
-  {name="Lee Martie", email="lee.martie@ibm.com"},
-  {name="Ana Fucs", email="ana.fucs@ibm.com"},
-  {name="Veronique Demers", email="vdemers@ibm.com"},
-  {name="Mairead O'Neill", email="moneill@ibm.com"},
-  {name="Mirian Silva", email="mirianfrsilva@ibm.com"},
-  {name="Onkar Bhardwaj", email="onkarbhardwaj@ibm.com"},
-  {name="James Sutton", email="james.sutton@uk.ibm.com"},
-  {name="Ja Young Lee", email="younglee@ibm.com"},
-  {name="Adriana Meza Soria", email="adriana.meza.soria@ibm.com"},
   {name = "Tomas Dvorak", email = "tomas.dvorak@ibm.com"},
+  {name = "Radek Jezek", email = "radek.jezek@ibm.com"},
   {name = "David Kristek", email = "david.kristek@ibm.com"},
 ]
 maintainers = [
   {name = "Tomas Dvorak", email = "tomas.dvorak@ibm.com"},
+  {name = "Radek Jezek", email = "radek.jezek@ibm.com"},
 ]
 description = "IBM Generative AI is a Python library built on IBM's large language model REST interface."
 readme = "README.md"
 dependencies = [
-    "urllib3<2", # https://github.com/psf/requests/issues/6432
-    "requests>=2.31.0",
     "pydantic>=2.0.0",
     "python-dotenv>=1.0.0",
     "aiohttp>=3.9.0",
-    "pyyaml>=6.0.0",
-    "httpx>=0.24.1,<1",
+    "httpx>=0.25.0,<1",
     "aiolimiter>=1.1.0",
-    "tqdm>=4.65.0",
-    "httpx-sse>=0.3.1",
-    "cachetools>=5.0.0"
+    "httpx-sse>=0.3.1"
 ]
 requires-python = ">=3.9"
+
+[tool.black] # left for IDE compatibility (pycharm)
+line-length = 120
+
+[tool.ruff]
+line-length = 120
+extend-exclude = ['src/genai/_version.py']
+select = [ # See docs for available rules: https://docs.astral.sh/ruff/rules
+  "B",   # bugbear (assignment to os.environ, assert False, ...)
+  "C",   # mccabe (too complex structures, ...)
+  "E",   # error (line too long, syntax error, ...)
+  "F",   # pyflakes (unused imports, variables, ...)
+  "I",   # isort
+  "W",   # pycodestyle (indentation, whitespace, ...)
+  "T20", # flake8-print (print found, pprint found, ...)
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 18
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401", "F403"] # Ignore import violations in all `__init__.py` files.
+"examples/**/*.py" = ["T201", "T203", "B904"] # Examples can include print and pprint, ignore exception propagation
+"src/genai/_generated/*.py" = ["E501"] # Generated can include long lines
+"tests/unit/docs_examples_generator/assets/**/*.py" = ["T201"] # Allow prints
+
+[tool.ruff.lint.isort]
+known-first-party = ["genai"]
 
 [project.optional-dependencies]
 dev = [
@@ -50,11 +66,20 @@ dev = [
   "pytest-asyncio>=0.21.1",
   "pytest-mock>=3.10.0",
   "setuptools-scm>=7.1.0",
-  "pytest-httpx>=0.27.0",
-  "build>=0.10.0"
+  "pytest-httpx>=0.28.0",
+  "build>=0.10.0",
+  "datamodel-code-generator[http]>=0.25.2,<1",
+  # We need this fix for httpx (merged but not released yet): https://github.com/kevin1024/vcrpy/pull/784
+  "vcrpy @ git+https://github.com/kevin1024/vcrpy.git",
+  "pytest-recording>=0.13.1,<1",
+  "pytest-subtests>=0.11.0",
+  "pyyaml>=6.0.0",
+  "autodoc_pydantic>=2.0.0",
+  "ruff>=0.1.11",
 ]
 langchain = [
-  "langchain>=0.0.267"
+  "langchain>=0.0.267",
+  "pyyaml>=6.0.0"
 ]
 huggingface = [
   "datasets>=2.13.0",
@@ -73,7 +98,7 @@ localserver = [
 
 # As new extensions are added, they should also be added
 all = [
-  "ibm-generative-ai[langchain, pandas, huggingface, llama-index, localserver]"
+  "ibm-generative-ai[langchain, huggingface, llama-index, localserver]"
 ]
 
 [options]
@@ -89,13 +114,15 @@ where=[
 [tool.pytest.ini_options]
 addopts = "--cov --cov-report term-missing --cov-fail-under 80"
 markers = [
-    "unit: tests that can run completely independently of the GENAI API",
-    "integration: tests that require the GENAI API to run",
-    "extension: tests for an extension"
+    "unit",
+    "integration",
+    "e2e",
+    "extension"
 ]
 env_files = [
     ".test.env"
 ]
+pythonpath = ["src", "scripts"]
 
 [tool.coverage.run]
 source = ["src"]
@@ -104,8 +131,113 @@ source = ["src"]
 write_to = "src/genai/_version.py"
 local_scheme = "no-local-version"
 
-[tool.black]
-line-length = 120
+[tool.mypy]
+mypy_path = "$MYPY_CONFIG_FILE_DIR/src,$MYPY_CONFIG_FILE_DIR/scripts,$MYPY_CONFIG_FILE_DIR/tests"
+exclude = "^build/$"
+check_untyped_defs = true
+plugins = ["pydantic.mypy"]
 
-[tool.isort]
-profile = "black"
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+
+[tool.poe.tasks.install]
+help = "Install dependencies for the SDK core and it's extensions"
+cmd = "pip install -e '.[all]' --require-virtualenv --disable-pip-version-check"
+
+[tool.poe.tasks.install-dev]
+help = "Install dependencies and related tooling for development"
+sequence = [{ cmd = "pip install -e '.[dev]' --require-virtualenv --disable-pip-version-check" }, { cmd = "pre-commit install" }]
+deps = ["install"]
+
+[tool.poe.tasks.clean]
+help = "Remove all artifacts and builds"
+sequence = [
+    { script = "shutil:rmtree('build/', ignore_errors=1)"},
+    { ref = "docs --type=clear" }
+]
+
+[tool.poe.tasks.format]
+help = "Run all formating tools"
+sequence = [
+  { "cmd" = "ruff format"}, # format code
+  { "cmd" = "ruff check --select I --fix" } # sort imports
+]
+
+
+[tool.poe.tasks.lint]
+help = "Check for errors and fix them using ruff (includes isort)"
+cmd = "ruff check --fix"
+
+[tool.poe.tasks.schema]
+help = "Generate Pydantic models and endpoints information from OpenAPI"
+env = { "PYTHONPATH" = "scripts" }
+sequence = [{ cmd = "python scripts/types_generator/main.py" }, { ref = "format", "cwd" = "src/genai/_generated"}]
+
+
+[tool.poe.tasks.docs]
+help = "Documentation related commands"
+control.expr = "type"
+args = ["type"]
+
+    [[tool.poe.tasks.docs.switch]]
+    case = "help"
+    help = "Show help"
+    cwd = "documentation"
+    cmd = "make"
+
+    [[tool.poe.tasks.docs.switch]]
+    case = "build"
+    help = "Update sources for the documentation and build static HTML"
+    sequence = [
+        "docs --type=clear",
+        { cmd = "make apidoc", cwd = "documentation" },
+        { cmd = "python scripts/docs_examples_generator/main.py", env = { PYTHONPATH="scripts" }},
+        { cmd = "make html", cwd = "documentation" }
+    ]
+
+    [[tool.poe.tasks.docs.switch]]
+    case = "open"
+    cwd = "documentation"
+    help = "Open HTML Documentation"
+    cmd = "open build/html/index.html"
+
+    [[tool.poe.tasks.docs.switch]]
+    case = "clear"
+    cwd = "documentation"
+    help = "Remove build"
+    sequence = [{ "script" = "shutil:rmtree('build/', ignore_errors=1)" }, { "script" = "shutil:rmtree('source/rst_source', ignore_errors=1)" }, { cmd = "make clean" }]
+
+[tool.poe.tasks.test]
+args = ["type"]
+control.expr = "type"
+
+    [[tool.poe.tasks.test.switch]]
+    case = "unit"
+    help = "Run Unit Tests"
+    cmd = "pytest -m 'unit'"
+
+    [[tool.poe.tasks.test.switch]]
+    case = "integration"
+    help = "Run Integration Tests"
+    cmd = "pytest -m 'integration' tests/integration"
+
+    [[tool.poe.tasks.test.switch]]
+    case = "extension"
+    help = "Run Extension Tests"
+    cmd = "pytest -m 'integration'"
+
+    [[tool.poe.tasks.test.switch]]
+    case = "e2e"
+    help = "Run E2E Tests"
+    cmd = "pytest -m 'e2e'"
+
+    [[tool.poe.tasks.test.switch]]
+    case = "rewrite_casettes"
+    help = "Rewrite casettes for failed tests (usually due to API endpoint version update)"
+    cmd = "scripts/rewrite_casettes.sh"
+
+    [[tool.poe.tasks.test.switch]]
+    help = "Run All Tests"
+    cmd = "pytest"

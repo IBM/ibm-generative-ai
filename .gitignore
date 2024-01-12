@@ -1,6 +1,8 @@
-# Data downloaded by examples and tests
-examples/user/adult.data.csv
+# Playground
+playground/
 
+# Downloaded data for examples
+examples/.data
 
 # Pickle files
 *.pkl
@@ -80,7 +82,8 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+/documentation/build/
+/documentation/source/rst_source/
 
 # PyBuilder
 .pybuilder/

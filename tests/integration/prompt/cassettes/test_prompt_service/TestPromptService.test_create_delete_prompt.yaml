@@ -1,0 +1,193 @@
+interactions:
+- request:
+    body: '{"data": {"meal": "goulash", "author": "Shakespeare"}, "input": "Write
+      the recipe for {{meal}} in the style of {{author}}", "model_id": "google/flan-t5-xl",
+      "moderations": {}, "name": "My test prompt"}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '201'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/prompts?version=2024-01-10
+  response:
+    content: '{"result":{"id":"5Q19lWkC837FTj0z","name":"My test prompt","data":{"meal":"goulash","author":"Shakespeare"},"input":"Write
+      the recipe for {{meal}} in the style of {{author}}","model_id":"google/flan-t5-xl","parameters":null,"moderations":{},"created_at":"2024-01-10T13:44:28.000Z","type":"private","public":false,"metadata":{"keywords":["meal","author"]},"author":{"id":924,"first_name":"Radek","last_name":"Jezek"},"messages":null}}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 10 Jan 2024 13:44:28 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '433'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-01-10'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    http_version: HTTP/1.1
+    status_code: 200
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/prompts/5Q19lWkC837FTj0z?version=2024-01-10
+  response:
+    content: '{"result":{"id":"5Q19lWkC837FTj0z","name":"My test prompt","description":null,"data":{"meal":"goulash","author":"Shakespeare"},"input":"Write
+      the recipe for {{meal}} in the style of {{author}}","output":null,"model_id":"google/flan-t5-xl","parameters":null,"moderations":{},"created_at":"2024-01-10T13:44:28.000Z","type":"private","public":false,"metadata":{"keywords":["meal","author"]},"author":{"id":924,"first_name":"Radek","last_name":"Jezek"},"messages":null}}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 10 Jan 2024 13:44:29 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '466'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-01-10'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    http_version: HTTP/1.1
+    status_code: 200
+- request:
+    body: '{"parameters": {"return_options": {"generated_tokens": false, "input_text":
+      true, "input_tokens": false, "token_logprobs": false, "token_ranks": false}},
+      "prompt_id": "5Q19lWkC837FTj0z"}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '186'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation?version=2024-01-10
+  response:
+    content: '{"id":"07bafe60-2ea5-4a25-8288-db6c6d4a1dab","model_id":"google/flan-t5-xl","created_at":"2024-01-10T13:44:33.830Z","results":[{"input_text":"Write
+      the recipe for goulash in the style of Shakespeare","generated_text":"Pomegranates:
+      1 cup, 1 1/2 cups pistachios, finely","generated_token_count":20,"input_token_count":13,"stop_reason":"max_tokens","seed":1943578716}]}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 10 Jan 2024 13:44:33 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '367'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-01-10'
+      vary:
+      - accept-encoding
+    http_version: HTTP/1.1
+    status_code: 200
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: DELETE
+    uri: https://api.com/v2/prompts/5Q19lWkC837FTj0z?version=2023-11-22
+  response:
+    content: ''
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 10 Jan 2024 13:44:34 GMT
+      Keep-Alive:
+      - timeout=72
+      content-version:
+      - '2023-11-22'
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    http_version: HTTP/1.1
+    status_code: 204
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/prompts?search=My%20test%20prompt&model_id=google%2Fflan-t5-xl&version=2024-01-10
+  response:
+    content: '{"results":[{"id":"B2Y8qx0h70btfBvN","name":"My test prompt","description":null,"data":{"meal":"goulash","author":"Shakespeare"},"input":"Write
+      the recipe for {{meal}} in the style of {{author}}","output":null,"model_id":"google/flan-t5-xl","parameters":null,"moderations":{},"created_at":"2023-12-28T08:35:06.000Z","type":"private","public":false,"metadata":{"keywords":["meal","author"]},"author":{"id":924,"first_name":"Radek","last_name":"Jezek"},"messages":null},{"id":"2rgiK90Gw5lKVPym","name":"My
+      test prompt","description":null,"data":{"meal":"goulash","author":"Shakespeare"},"input":"Write
+      the recipe for {{meal}} in the style of {{author}}","output":null,"model_id":"google/flan-t5-xl","parameters":null,"moderations":{},"created_at":"2023-12-28T08:34:53.000Z","type":"private","public":false,"metadata":{"keywords":["meal","author"]},"author":{"id":924,"first_name":"Radek","last_name":"Jezek"},"messages":null},{"id":"oLT2bwM1sBcQtQvE","name":"My
+      test prompt","description":null,"data":{"meal":"goulash","author":"Shakespeare"},"input":"Write
+      the recipe for {{meal}} in the style of {{author}}","output":null,"model_id":"google/flan-t5-xl","parameters":null,"moderations":{},"created_at":"2023-12-27T15:35:12.000Z","type":"private","public":false,"metadata":{"keywords":["meal","author"]},"author":{"id":924,"first_name":"Radek","last_name":"Jezek"},"messages":null}],"total_count":3}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 10 Jan 2024 13:44:35 GMT
+      Keep-Alive:
+      - timeout=72
+      Transfer-Encoding:
+      - chunked
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-01-10'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    http_version: HTTP/1.1
+    status_code: 200
+version: 1

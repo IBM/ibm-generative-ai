@@ -1,4 +1,5 @@
-from genai.extensions.huggingface.agent import IBMGenAIAgent
-from genai.extensions.huggingface.save_huggingface import HuggingFaceDatasetExtension
+"""Extension for transformers library"""
 
-__all__ = ["HuggingFaceDatasetExtension", "IBMGenAIAgent"]
+from genai.extensions.huggingface.agent import IBMGenAIAgent
+
+__all__ = ["IBMGenAIAgent"]

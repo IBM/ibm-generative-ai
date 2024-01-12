@@ -1,15 +1,17 @@
 from pathlib import Path
-from typing import Any, Optional, Union
+from typing import Any, Mapping, Optional, Union
 
-from genai.extensions.common.utils import extract_token_usage
-from genai.schemas import GenerateParams
+from pydantic import BaseModel
+
+from genai.extensions._common.utils import extract_token_usage
+from genai.text.generation.schema import TextGenerationParameters
 
 
 def update_token_usage(*, target: dict[str, Any], source: Optional[dict[str, Any]]):
     if not source:
         return
 
-    for key, value in extract_token_usage(source).items():
+    for key, value in source.items():
         if key in target:
             target[key] += value
         else:
@@ -66,5 +68,9 @@ def load_config(file: Union[str, Path]) -> dict:
             raise ValueError("File type must be json or yaml")
 
     config = parse_config()
-    config["params"] = GenerateParams(**config.get("params", {}))
+    config["parameters"] = TextGenerationParameters(**config.get("parameters", {}))
     return config
+
+
+def dump_optional_model(model: Optional[BaseModel]) -> Optional[Mapping[str, Any]]:
+    return model.model_dump(exclude_none=True) if model else None

@@ -1,0 +1,32 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/text/generation/limits?version=2023-11-22
+  response:
+    content: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Fri, 05 Jan 2024 09:58:18 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '54'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+    http_version: HTTP/1.1
+    status_code: 200
+version: 1

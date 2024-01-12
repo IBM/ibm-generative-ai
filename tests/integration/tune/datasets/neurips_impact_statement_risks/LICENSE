@@ -1,0 +1,21 @@
+This is a sample of a neurips_impact_statement_risks dataset taken from HuggingFace ought/raft collection licensed under
+MIT/CC BY 4.0:
+
+CONSIDERATIONS:
+
+This dataset has limitations that should be taken into consideration when using it. In particular, the method used to
+collect broader impact statements involved automated downloads, conversions and scraping and was not error-proof.
+Although care has been taken to identify and correct as many errors as possible, not all texts have been reviewed by a
+human. This means it is possible some of the broader impact statements contained in the dataset are truncated or
+otherwise incorrectly extracted from their original article.
+
+The dataset contains authors' names. These were scraped from publicly available scientific papers submitted to
+NeurIPS 2020.
+
+NeurIPS impact statement risks Volunteers working with researchers affiliated to Oxford's Future of Humanity
+Institute (Carolyn Ashurst, now at The Alan Turing Institute) created the impact statements dataset.
+
+TAI Safety Research Don't use it to create a dangerous AI that could bring the end of days.
+
+https://huggingface.co/datasets/ought/raft/viewer/
+https://raft.elicit.org/

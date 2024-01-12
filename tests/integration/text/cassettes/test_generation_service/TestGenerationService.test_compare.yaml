@@ -1,0 +1,48 @@
+interactions:
+- request:
+    body: '{"compare_parameters": {"length_penalty": [{"decay_factor": 1.2, "start_index":
+      50}, {"decay_factor": 1.5, "start_index": 50}], "temperature": [0.5, 1.0]},
+      "name": "my comparison", "request": {"input": "hahaha", "model_id": "google/flan-t5-xxl",
+      "moderations": {"hap": {"input": true, "output": true, "send_tokens": true,
+      "threshold": 0.75}, "implicit_hate": {"input": true, "output": true, "send_tokens":
+      true, "threshold": 0.7}, "stigma": {"input": true, "output": true, "send_tokens":
+      false, "threshold": 0.75}}}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '516'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation/comparison?version=2023-11-22
+  response:
+    content: '{"results":[{"parameters":{"length_penalty":{"decay_factor":1.2,"start_index":50},"temperature":0.5},"result":{"id":"3b181997-d3d5-457d-b04b-12faa723754c","model_id":"google/flan-t5-xxl","created_at":"2024-01-05T09:58:16.196Z","results":[{"generated_text":"i''m
+      so sorry for my sarcasm","generated_token_count":15,"input_token_count":4,"stop_reason":"eos_token","seed":2925494398,"moderation":{"hap":[],"implicit_hate":[],"stigma":[]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.2,"start_index":50},"temperature":1},"result":{"id":"3b181997-d3d5-457d-b04b-12faa723754c","model_id":"google/flan-t5-xxl","created_at":"2024-01-05T09:58:15.707Z","results":[{"generated_text":"Thank
+      you Sue","generated_token_count":4,"input_token_count":4,"stop_reason":"eos_token","seed":3369373416,"moderation":{"hap":[],"implicit_hate":[],"stigma":[]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.5,"start_index":50},"temperature":0.5},"result":{"id":"3b181997-d3d5-457d-b04b-12faa723754c","model_id":"google/flan-t5-xxl","created_at":"2024-01-05T09:58:17.204Z","results":[{"generated_text":"i''m
+      glad you said that. i couldn''t figure out why he was","generated_token_count":20,"input_token_count":4,"stop_reason":"max_tokens","seed":2496143101,"moderation":{"hap":[],"implicit_hate":[],"stigma":[]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.5,"start_index":50},"temperature":1},"result":{"id":"3b181997-d3d5-457d-b04b-12faa723754c","model_id":"google/flan-t5-xxl","created_at":"2024-01-05T09:58:16.671Z","results":[{"generated_text":"aza
+      yoyo yoyo, she can say","generated_token_count":17,"input_token_count":4,"stop_reason":"eos_token","seed":1126134773,"moderation":{"hap":[],"implicit_hate":[{"score":0.9991229176521301,"flagged":true,"tokens":[{"token":"aza","index":0,"score":0.058836933225393295},{"token":"yoyo","index":4,"score":0.030931846238672733},{"token":"yoyo","index":9,"score":0.03440999612212181},{"token":",","index":13,"score":0.3960377871990204},{"token":"she","index":15,"score":0.0793938860297203},{"token":"can","index":19,"score":0.05297059193253517},{"token":"say","index":23,"score":0.07183100283145905}],"success":true,"position":{"start":6,"end":31}}],"stigma":[]}}]}}]}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Fri, 05 Jan 2024 09:58:17 GMT
+      Keep-Alive:
+      - timeout=72
+      Transfer-Encoding:
+      - chunked
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+    http_version: HTTP/1.1
+    status_code: 200
+version: 1

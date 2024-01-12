@@ -1,4 +1,6 @@
-from genai.extensions.localserver.custom_model_interface import CustomModel
-from genai.extensions.localserver.local_api_server import LocalLLMServer
+"""Extension for running local simplified inference API compatible with current version of SDK"""
 
-__all__ = ["CustomModel", "LocalLLMServer"]
+from genai.extensions.localserver.local_api_server import LocalLLMServer
+from genai.extensions.localserver.local_base_model import LocalModel
+
+__all__ = ["LocalModel", "LocalLLMServer"]

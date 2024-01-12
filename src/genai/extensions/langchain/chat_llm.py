@@ -1,16 +1,25 @@
 """Wrapper around IBM GENAI APIs for use in Langchain"""
+
 import logging
 from pathlib import Path
 from typing import Any, Dict, Iterator, Optional, Union
 
 from pydantic import ConfigDict
 
-from genai import Credentials, Model
-from genai.extensions.common.utils import create_generation_info_from_response
-from genai.schemas import GenerateParams
-from genai.schemas.chat import AIMessage, BaseMessage, HumanMessage, SystemMessage
-from genai.schemas.generate_params import ChatOptions
-from genai.utils.general import to_model_instance
+from genai import Client
+from genai._generated.api import ModerationParameters, TrimMethod
+from genai._types import EnumLike
+from genai.extensions._common.utils import (
+    _prepare_chat_generation_request,
+    create_generation_info_from_response,
+)
+from genai.text.chat.schema import (
+    AIMessage,
+    BaseMessage,
+    HumanMessage,
+    SystemMessage,
+    TextGenerationParameters,
+)
 
 try:
     from langchain.callbacks.manager import CallbackManagerForLLMRun
@@ -24,9 +33,14 @@ try:
     from langchain.schema.messages import get_buffer_string
     from langchain.schema.output import ChatGeneration, ChatGenerationChunk, ChatResult
 
-    from .utils import create_llm_output, load_config, update_token_usage_stream
+    from genai.extensions.langchain.utils import (
+        create_llm_output,
+        dump_optional_model,
+        load_config,
+        update_token_usage_stream,
+    )
 except ImportError:
-    raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")
+    raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")  # noqa: B904
 
 __all__ = ["LangChainChatInterface"]
 
@@ -36,40 +50,66 @@ Message = Union[LCBaseMessage, BaseMessage]
 Messages = Union[list[LCBaseMessage], list[Message]]
 
 
-def convert_message_to_genai(message: Message) -> BaseMessage:
+def _convert_message_to_genai(message: Message) -> BaseMessage:
+    def convert_message_content(content: Any) -> str:
+        if not isinstance(content, str):
+            raise TypeError(
+                f"Cannot convert non-string message content. Got {content} of type {type(content)}, expected string."
+            )
+
+        return content
+
     if isinstance(message, BaseMessage):
         return message
     elif isinstance(message, LCChatMessage) or isinstance(message, LCHumanMessage):
-        return HumanMessage(content=message.content)
+        return HumanMessage(content=convert_message_content(message.content))
     elif isinstance(message, LCAIMessage):
-        return AIMessage(content=message.content)
+        return AIMessage(content=convert_message_content(message.content))
     elif isinstance(message, LCSystemMessage):
-        return SystemMessage(content=message.content)
+        return SystemMessage(content=convert_message_content(message.content))
     else:
-        raise ValueError(f"Got unknown message type {message}")
+        raise ValueError(f"Got unknown message type '{message}'")
 
 
-def convert_messages_to_genai(messages: Messages) -> list[BaseMessage]:
-    return [convert_message_to_genai(msg) for msg in messages]
+def _convert_messages_to_genai(messages: Messages) -> list[BaseMessage]:
+    return [_convert_message_to_genai(msg) for msg in messages]
 
 
 class LangChainChatInterface(BaseChatModel):
     """
-    Wrapper around IBM GENAI models.
-    To use, you should have the ``genai`` python package installed
-    and initialize the credentials attribute of this class with
-    an instance of ``genai.Credentials``. Model specific parameters
-    can be passed through to the constructor using the ``params``
-    parameter, which is an instance of GenerateParams.
-    Example:
-        .. code-block:: python
-            llm = ChatGenAI(model="meta-llama/llama-2-70b-chat", credentials=creds)
+    Class representing the LangChainChatInterface for interacting with the LangChain chat API.
+
+    Example::
+        from genai import Client, Credentials
+        from genai.extensions.langchain import LangChainChatInterface
+        from langchain.schema import HumanMessage, SystemMessage
+
+        client = Client(credentials=Credentials.from_env())
+        llm = LangChainChatInterface(
+            client=client,
+            model_id="meta-llama/llama-2-70b-chat",
+            parameters=TextGenerationParameters(
+                max_new_tokens=250,
+            )
+        )
+
+        response = chat_model.generate(messages=[HumanMessage(content="Hello world!")])
+        print(response)
+    )
     """
 
-    credentials: Credentials
-    model: str
-    params: Optional[GenerateParams] = None
     model_config = ConfigDict(extra="forbid", protected_namespaces=())
+
+    client: Client
+    model_id: str
+    prompt_id: Optional[str] = None
+    parameters: Optional[TextGenerationParameters] = None
+    moderations: Optional[ModerationParameters] = None
+    parent_id: Optional[str] = None
+    prompt_template_id: Optional[str] = None
+    trim_method: Optional[EnumLike[TrimMethod]] = None
+    use_conversation_parameters: Optional[bool] = None
+    conversation_id: Optional[str] = None
     streaming: Optional[bool] = None
 
     @classmethod
@@ -77,48 +117,46 @@ class LangChainChatInterface(BaseChatModel):
         return True
 
     @property
-    def lc_secrets(self) -> Dict[str, str]:
-        return {"credentials": "CREDENTIALS"}
+    def lc_secrets(self) -> dict[str, str]:
+        return {"client": "CLIENT"}
 
-    @property
-    def _llm_type(self) -> str:
-        return "Chat IBM GENAI"
+    @classmethod
+    def load_from_file(cls, file: Union[str, Path], *, client: Client):
+        config = load_config(file)
+        return cls(**config, client=client)
 
     @property
     def _identifying_params(self) -> Dict[str, Any]:
-        _params = to_model_instance(self.params, GenerateParams)
         return {
-            "model": self.model,
-            "params": _params.model_dump(),
+            "model_id": self.model_id,
+            "prompt_id": self.prompt_id,
+            "parameters": dump_optional_model(self.parameters),
+            "moderations": dump_optional_model(self.moderations),
+            "parent_id": self.parent_id,
+            "prompt_template_id": self.prompt_template_id,
+            "trim_method": self.trim_method,
+            "use_conversation_parameters": self.use_conversation_parameters,
+            **super()._identifying_params,
         }
 
-    @classmethod
-    def load_from_file(cls, file: Union[str, Path], *, credentials: Credentials):
-        config = load_config(file)
-        return cls(**config, credentials=credentials)
+    @property
+    def _llm_type(self) -> str:
+        return "ibmgenai_chat_llm"
 
-    class Config:
-        """Configuration for this pydantic object."""
-
-        allow_population_by_field_name = True
-        arbitrary_types_allowed = True
+    def _prepare_request(self, **kwargs):
+        updated = {k: kwargs.pop(k, v) for k, v in self._identifying_params.items()}
+        return _prepare_chat_generation_request(**kwargs, **updated)
 
     def _stream(
         self,
         messages: Messages,
         stop: Optional[list[str]] = None,
         run_manager: Optional[CallbackManagerForLLMRun] = None,
-        *,
-        options: Optional[ChatOptions] = None,
         **kwargs: Any,
     ) -> Iterator[ChatGenerationChunk]:
-        params = to_model_instance(self.params, GenerateParams)
-        params.stop_sequences = stop or params.stop_sequences
-        model = Model(self.model, params=params, credentials=self.credentials)
-
-        stream = model.chat_stream(messages=convert_messages_to_genai(messages), options=options, **kwargs)
-        conversation_id: Optional[str] = None
-        for response in stream:
+        for response in self.client.text.chat.create_stream(
+            **self._prepare_request(messages=_convert_messages_to_genai(messages), stop=stop, **kwargs)
+        ):
             if not response:
                 continue
 
@@ -130,13 +168,8 @@ class LangChainChatInterface(BaseChatModel):
                 )
                 yield chunk
                 if run_manager:
-                    run_manager.on_llm_new_token(token=text, chunk=chunk, response=response)
-
-            # TODO: remove when API starts returning 'conversation_id' for each message
-            if not conversation_id:
-                conversation_id = response.conversation_id
-            else:
-                response.conversation_id = conversation_id
+                    run_manager.on_llm_new_token(token=text, chunk=chunk, response=response)  # noqa: B023
+                    # Function definition does not bind loop variable `response`: linter is probably just confused here
 
             if response.moderation:
                 generation_info = create_generation_info_from_response(response, result=response.moderation)
@@ -151,21 +184,14 @@ class LangChainChatInterface(BaseChatModel):
         messages: Messages,
         stop: Optional[list[str]] = None,
         run_manager: Optional[CallbackManagerForLLMRun] = None,
-        *,
-        options: Optional[ChatOptions] = None,
         **kwargs: Any,
     ) -> ChatResult:
-        params = to_model_instance(self.params, GenerateParams)
-        params.stop_sequences = stop or params.stop_sequences
-        params.stream = params.stream or self.streaming
-
         def handle_stream():
             final_generation: Optional[ChatGenerationChunk] = None
             for result in self._stream(
                 messages=messages,
                 stop=stop,
                 run_manager=run_manager,
-                options=options,
                 **kwargs,
             ):
                 if final_generation:
@@ -185,8 +211,9 @@ class LangChainChatInterface(BaseChatModel):
             }
 
         def handle_non_stream():
-            model = Model(self.model, params=params, credentials=self.credentials)
-            response = model.chat(messages=convert_messages_to_genai(messages), options=options, **kwargs)
+            response = self.client.text.chat.create(
+                **self._prepare_request(messages=_convert_messages_to_genai(messages), stop=stop, **kwargs),
+            )
 
             assert response.results
             result = response.results[0]
@@ -196,7 +223,7 @@ class LangChainChatInterface(BaseChatModel):
                 "generation_info": create_generation_info_from_response(response, result=result),
             }
 
-        result = handle_stream() if params.stream else handle_non_stream()
+        result = handle_stream() if self.streaming else handle_non_stream()
         return ChatResult(
             generations=[
                 ChatGeneration(
@@ -205,25 +232,33 @@ class LangChainChatInterface(BaseChatModel):
                 )
             ],
             llm_output=create_llm_output(
-                model=self.model,
+                model=result["generation_info"].get("model_id", self.model_id or ""),
                 token_usages=[result["generation_info"]["token_usage"]],
             ),
         )
 
     def get_num_tokens(self, text: str) -> int:
-        model = Model(self.model, params=self.params, credentials=self.credentials)
-        response = model.tokenize([text], return_tokens=False)[0]
-        assert response.token_count is not None
-        return response.token_count
+        response = list(self.client.text.tokenization.create(model_id=self.model_id, input=[text]))[0]
+        return response.results[0].token_count
 
     def get_num_tokens_from_messages(self, messages: list[LCBaseMessage]) -> int:
-        model = Model(self.model, params=self.params, credentials=self.credentials)
-        responses = model.tokenize([get_buffer_string([message]) for message in messages], return_tokens=False)
-        return sum([response.token_count for response in responses if response.token_count])
+        return sum(
+            sum(result.token_count for result in response.results)
+            for response in self.client.text.tokenization.create(
+                model_id=self.model_id, input=[get_buffer_string([message]) for message in messages]
+            )
+        )
 
     def _combine_llm_outputs(self, llm_outputs: list[Optional[dict]]) -> dict:
-        token_usages = [output.get("token_usage") for output in llm_outputs if output]
-        return create_llm_output(model=self.model, token_usages=token_usages)
+        token_usages: list[Optional[dict]] = []
+        model = ""
+
+        for output in llm_outputs:
+            if output:
+                model = model or output.get("meta", {}).get("model_id")
+                token_usages.append(output.get("token_usage"))
+
+        return create_llm_output(model=model or self.model_id, token_usages=token_usages)
 
     def get_token_ids(self, text: str) -> list[int]:
         raise NotImplementedError("API does not support returning token ids.")

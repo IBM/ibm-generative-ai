@@ -1,0 +1,68 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/text/generation/limits?version=2023-11-22
+  response:
+    content: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 10 Jan 2024 13:44:24 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '54'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+    http_version: HTTP/1.1
+    status_code: 200
+- request:
+    body: '{"input": "Hi! How''s the weather, eh?", "model_id": "google/flan-ul2",
+      "parameters": {}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '88'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation?version=2024-01-10
+  response:
+    content: '{"id":"6cb49ae6-c728-4aa9-83ec-24d2e3dd7ab8","model_id":"google/flan-ul2","created_at":"2024-01-10T13:44:25.313Z","results":[{"generated_text":"It''s
+      raining.","generated_token_count":7,"input_token_count":13,"stop_reason":"eos_token"}]}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 10 Jan 2024 13:44:25 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '236'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-01-10'
+      vary:
+      - accept-encoding
+    http_version: HTTP/1.1
+    status_code: 200
+version: 1

@@ -1,0 +1,94 @@
+interactions:
+- request:
+    body: '{"input": "Poop stinks. This is why my favorite color is green: ", "model_id":
+      "google/flan-t5-xxl", "moderations": {"hap": {"input": true, "output": true,
+      "send_tokens": true, "threshold": 0.75}}, "parameters": {"decoding_method":
+      "sample", "max_new_tokens": 10, "min_new_tokens": 3, "return_options": {"generated_tokens":
+      false, "input_text": true, "input_tokens": false, "token_logprobs": false, "token_ranks":
+      false}, "temperature": 0.0}}'
+    headers:
+      accept:
+      - '*/*, text/event-stream'
+      accept-encoding:
+      - gzip, deflate
+      cache-control:
+      - no-store
+      connection:
+      - keep-alive
+      content-length:
+      - '442'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation_stream?version=2024-01-10
+  response:
+    content: 'retry: 3000
+
+
+      data: {"id":"31c16cc0-7012-4f87-b75b-1086392ed905","model_id":"google/flan-t5-xxl","created_at":"2024-01-10T13:45:02.130Z","results":[{"input_text":"Poop
+      stinks. This is why my favorite color is green: ","generated_text":"","generated_token_count":0,"input_token_count":16,"stop_reason":"not_finished","seed":276926974}]}
+
+
+      data: {"id":"31c16cc0-7012-4f87-b75b-1086392ed905","model_id":"google/flan-t5-xxl","created_at":"2024-01-10T13:45:02.154Z","results":[{"input_text":"Poop
+      stinks. This is why my favorite color is green: ","generated_text":"green","generated_token_count":1,"input_token_count":0,"stop_reason":"not_finished"}]}
+
+
+      data: {"id":"31c16cc0-7012-4f87-b75b-1086392ed905","model_id":"google/flan-t5-xxl","created_at":"2024-01-10T13:45:02.169Z","results":[{"input_text":"Poop
+      stinks. This is why my favorite color is green: ","generated_text":" mask","generated_token_count":2,"input_token_count":0,"stop_reason":"not_finished"}]}
+
+
+      data: {"id":"31c16cc0-7012-4f87-b75b-1086392ed905","model_id":"google/flan-t5-xxl","created_at":"2024-01-10T13:45:02.187Z","results":[{"input_text":"Poop
+      stinks. This is why my favorite color is green: ","generated_text":"s","generated_token_count":3,"input_token_count":0,"stop_reason":"not_finished"}]}
+
+
+      data: {"id":"31c16cc0-7012-4f87-b75b-1086392ed905","model_id":"google/flan-t5-xxl","created_at":"2024-01-10T13:45:02.196Z","results":[{"input_text":"Poop
+      stinks. This is why my favorite color is green: ","generated_text":" the","generated_token_count":4,"input_token_count":0,"stop_reason":"not_finished"}]}
+
+
+      data: {"id":"31c16cc0-7012-4f87-b75b-1086392ed905","model_id":"google/flan-t5-xxl","created_at":"2024-01-10T13:45:02.208Z","results":[{"input_text":"Poop
+      stinks. This is why my favorite color is green: ","generated_text":" ","generated_token_count":5,"input_token_count":0,"stop_reason":"not_finished"}]}
+
+
+      data: {"id":"31c16cc0-7012-4f87-b75b-1086392ed905","model_id":"google/flan-t5-xxl","created_at":"2024-01-10T13:45:02.219Z","results":[{"input_text":"Poop
+      stinks. This is why my favorite color is green: ","generated_text":"sten","generated_token_count":6,"input_token_count":0,"stop_reason":"not_finished"}]}
+
+
+      data: {"id":"31c16cc0-7012-4f87-b75b-1086392ed905","model_id":"google/flan-t5-xxl","created_at":"2024-01-10T13:45:02.232Z","results":[{"input_text":"Poop
+      stinks. This is why my favorite color is green: ","generated_text":"ch","generated_token_count":7,"input_token_count":0,"stop_reason":"not_finished"}]}
+
+
+      data: {"id":"31c16cc0-7012-4f87-b75b-1086392ed905","model_id":"google/flan-t5-xxl","created_at":"2024-01-10T13:45:02.234Z","moderation":{"hap":[{"score":0.8364071249961853,"flagged":true,"tokens":[{"token":"poop","index":0,"score":0.25126079469919205},{"token":"stinks","index":5,"score":0.14067339524626732},{"token":".","index":11,"score":0.08593343943357468}],"success":true,"position":{"start":0,"end":12}}]}}
+
+
+      data: {"id":"31c16cc0-7012-4f87-b75b-1086392ed905","model_id":"google/flan-t5-xxl","created_at":"2024-01-10T13:45:02.244Z","results":[{"input_text":"Poop
+      stinks. This is why my favorite color is green: ","generated_text":" from","generated_token_count":8,"input_token_count":0,"stop_reason":"not_finished"}]}
+
+
+      data: {"id":"31c16cc0-7012-4f87-b75b-1086392ed905","model_id":"google/flan-t5-xxl","created_at":"2024-01-10T13:45:02.257Z","results":[{"input_text":"Poop
+      stinks. This is why my favorite color is green: ","generated_text":" my","generated_token_count":9,"input_token_count":0,"stop_reason":"not_finished"}]}
+
+
+      data: {"id":"31c16cc0-7012-4f87-b75b-1086392ed905","model_id":"google/flan-t5-xxl","created_at":"2024-01-10T13:45:02.271Z","results":[{"input_text":"Poop
+      stinks. This is why my favorite color is green: ","generated_text":" de","generated_token_count":10,"input_token_count":0,"stop_reason":"max_tokens","seed":276926974}]}
+
+
+      event: close
+
+
+      '
+    headers:
+      Cache-Control:
+      - no-cache,no-transform
+      Connection:
+      - keep-alive
+      Content-Type:
+      - text/event-stream
+      Date:
+      - Wed, 10 Jan 2024 13:45:02 GMT
+      Transfer-Encoding:
+      - chunked
+      x-no-compression:
+      - '1'
+    http_version: HTTP/1.1
+    status_code: 200
+version: 1
