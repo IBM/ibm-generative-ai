@@ -213,8 +213,8 @@ New way:
 
 .. code:: python
 
-   from genai import Client
-   from genai.text.tokenization import TextTokenizationParameters, CreateExecutionOptions
+   from genai import Client, Credentials
+   from genai.text.tokenization import TextTokenizationParameters, CreateExecutionOptions, TextTokenizationReturnOptions
 
    credentials = Credentials.from_env()
    client = Client(credentials=credentials)
@@ -223,12 +223,16 @@ New way:
    for response in client.text.tokenization.create(
        model_id="google/flan-ul2",
        input=prompts,
-       parameters=TextTokenizationParameters(return_tokens=True),
+       parameters=TextTokenizationParameters(
+          return_options=TextTokenizationReturnOptions(
+                tokens=True,  # return tokens
+          )
+       ),
        execution_options=CreateExecutionOptions(
-           ordered=True,
-           batch_size=5, # (optional) every HTTP request will contain maximally requests,
-           concurrency_limit=10 # (optional) maximally 10 requests wil run at the same time
-       )
+          ordered=True,
+          batch_size=5,  # (optional) every HTTP request will contain maximally requests,
+          concurrency_limit=10,  # (optional) maximally 10 requests wil run at the same time
+       ),
    ):
        print(response.results)
 
