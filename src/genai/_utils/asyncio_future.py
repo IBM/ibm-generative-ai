@@ -9,7 +9,7 @@ class _LoopPlaceholder:
 __all__ = ["AsyncioLock", "AsyncioSemaphore"]
 
 
-class _AsyncioLoopFix:
+class _AsyncioLoopMixin:
     """
     In asyncio prior Python 3.10 the loop being set directly in the constructor.
     Mentioned behaviour is not therefore compatible with our 'SharedEventLoop' approach.
@@ -49,10 +49,10 @@ class _AsyncioLoopFix:
 
 if sys.version_info < (3, 10, 0):
 
-    class AsyncioLock(_AsyncioLoopFix, Lock):
+    class AsyncioLock(_AsyncioLoopMixin, Lock):
         pass
 
-    class AsyncioSemaphore(_AsyncioLoopFix, Semaphore):
+    class AsyncioSemaphore(_AsyncioLoopMixin, Semaphore):
         pass
 
 

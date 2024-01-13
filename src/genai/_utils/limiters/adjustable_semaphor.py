@@ -1,6 +1,6 @@
 import asyncio
-import sys
-from asyncio import Future
+from asyncio import CancelledError, Future
+from collections import deque
 from contextlib import suppress
 
 from genai._utils.asyncio_future import AsyncioSemaphore
@@ -15,8 +15,7 @@ class AdjustableAsyncSemaphore(AsyncioSemaphore):
     def __init__(self, value: int = 1):
         super().__init__(value)
         self._max_limit = value
-
-        # Note: not used in Python < 3.10 due to different Semaphore implementation
+        self._waiters = deque()
         self._dummy_waiters: set[Future] = set()
 
     @property
@@ -32,10 +31,50 @@ class AdjustableAsyncSemaphore(AsyncioSemaphore):
         if self._waiters is None:
             return 0
 
-        if sys.version_info < (3, 10, 0):
-            return len(self._waiters)
-
         return len(self._waiters) - len(self._dummy_waiters)
+
+    async def acquire(self):
+        """Taken from Python 3.11"""
+        if not self.locked():
+            self._value -= 1
+            return True
+
+        fut = self._get_loop().create_future()
+        self._waiters.append(fut)
+
+        # Finally block should be called before the CancelledError
+        # handling as we don't want CancelledError to call
+        # _wake_up_first() and attempt to wake up itself.
+        try:
+            try:
+                await fut
+            finally:
+                self._waiters.remove(fut)
+        except CancelledError:
+            if not fut.cancelled():
+                self._value += 1
+                self._wake_up_next()
+            raise
+
+        if self._value > 0:
+            self._wake_up_next()
+        return True
+
+    def release(self):
+        """Taken from Python 3.11"""
+        self._value += 1
+        self._wake_up_next()
+
+    def _wake_up_next(self):
+        """Taken from Python 3.11"""
+        if not self._waiters:
+            return
+
+        for fut in self._waiters:
+            if not fut.done():
+                self._value -= 1
+                fut.set_result(True)
+                return
 
     def change_max_limit(self, new_limit: int) -> bool:
         """
@@ -68,19 +107,18 @@ class AdjustableAsyncSemaphore(AsyncioSemaphore):
             points_to_remove = running - new_limit
 
             for _ in range(0, points_to_remove):
-                if self._value == 0 or self._waiters:
-                    fut: asyncio.Future = self._loop.create_future()
+                if self.locked():
+                    fut: asyncio.Future = self._get_loop().create_future()
 
                     def handle_done(f: Future):
                         assert f.done()
 
-                        with suppress(ValueError):
-                            self._waiters.remove(f)
                         with suppress(KeyError):
                             self._dummy_waiters.remove(f)
+                        with suppress(ValueError):
+                            self._waiters.remove(f)
 
                         if self._value > 0:
-                            # because it gets immediately incremented in release() method
                             self._value -= 1
                             self.release()
 
