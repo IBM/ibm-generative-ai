@@ -1,8 +1,12 @@
 import asyncio
-from asyncio import Future, Semaphore
+import sys
+from asyncio import Future
+from contextlib import suppress
+
+from genai._utils.asyncio_future import AsyncioSemaphore
 
 
-class AdjustableAsyncSemaphore(Semaphore):
+class AdjustableAsyncSemaphore(AsyncioSemaphore):
     """
     AdjustableAsyncSemaphore is a subclass of Semaphore that allows for dynamic adjustment of its maximum limit.
     It includes methods for changing the maximum limit and getting information about the current state of the semaphore.
@@ -11,6 +15,8 @@ class AdjustableAsyncSemaphore(Semaphore):
     def __init__(self, value: int = 1):
         super().__init__(value)
         self._max_limit = value
+
+        # Note: not used in Python < 3.10 due to different Semaphore implementation
         self._dummy_waiters: set[Future] = set()
 
     @property
@@ -25,6 +31,9 @@ class AdjustableAsyncSemaphore(Semaphore):
     def waiting(self):
         if self._waiters is None:
             return 0
+
+        if sys.version_info < (3, 10, 0):
+            return len(self._waiters)
 
         return len(self._waiters) - len(self._dummy_waiters)
 
@@ -59,15 +68,21 @@ class AdjustableAsyncSemaphore(Semaphore):
             points_to_remove = running - new_limit
 
             for _ in range(0, points_to_remove):
-                if self.locked():
-                    fut: asyncio.Future = self._get_loop().create_future()  # type: ignore
+                if self._value == 0 or self._waiters:
+                    fut: asyncio.Future = self._loop.create_future()
 
                     def handle_done(f: Future):
                         assert f.done()
-                        self._waiters.remove(f)
-                        self._dummy_waiters.remove(f)
+
+                        with suppress(ValueError):
+                            self._waiters.remove(f)
+                        with suppress(KeyError):
+                            self._dummy_waiters.remove(f)
+
                         if self._value > 0:
-                            self._wake_up_next()
+                            # because it gets immediately incremented in release() method
+                            self._value -= 1
+                            self.release()
 
                     fut.add_done_callback(handle_done)
 

@@ -1,8 +1,8 @@
-import asyncio
 from typing import Awaitable, Callable
 
 from pydantic import BaseModel, Field
 
+from genai._utils.asyncio_future import AsyncioLock
 from genai._utils.limiters.adjustable_semaphor import AdjustableAsyncSemaphore
 from genai._utils.limiters.base_limiter import BaseLimiter
 
@@ -20,7 +20,7 @@ class ExternalLimiter(BaseLimiter):
 
     def __init__(self, *, handler: ExternalLimiterHandler):
         self._handler = handler
-        self._lock = asyncio.Lock()
+        self._lock = AsyncioLock()
         self._sp = AdjustableAsyncSemaphore(0)
         self._last_retrieved_limit = 0
         self._synced = False

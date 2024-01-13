@@ -41,6 +41,7 @@ select = [ # See docs for available rules: https://docs.astral.sh/ruff/rules
   "W",   # pycodestyle (indentation, whitespace, ...)
   "T20", # flake8-print (print found, pprint found, ...)
 ]
+target-version = "py39"
 
 [tool.ruff.lint.mccabe]
 max-complexity = 18

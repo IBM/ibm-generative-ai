@@ -1,7 +1,8 @@
-from typing import Any, Optional, TypeGuard
+from typing import Any, Optional
 
 import httpx
 from httpx import Response
+from typing_extensions import TypeGuard
 
 from genai._generated.api import (
     BadRequestResponse,

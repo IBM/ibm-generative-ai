@@ -1,6 +1,7 @@
 import asyncio
 from typing import Optional
 
+from genai._utils.asyncio_future import AsyncioLock
 from genai._utils.limiters.base_limiter import BaseLimiter
 
 
@@ -11,7 +12,7 @@ class LimiterContainer(BaseLimiter):
 
     def __init__(self, *limiters: Optional[BaseLimiter]):
         self._limiters = [limiter for limiter in limiters if limiter]
-        self._lock = asyncio.Lock()
+        self._lock = AsyncioLock()
 
     async def acquire(self):
         """
