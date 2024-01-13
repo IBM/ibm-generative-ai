@@ -51,7 +51,7 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
         if not services:
             services = BaseServices()
 
-        self._request = services.RequestService(api_client=api_client)
+        self._request: RequestService = services.RequestService(api_client=api_client)
 
     def create(
         self,

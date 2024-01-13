@@ -91,8 +91,8 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
             services = BaseServices()
 
         self._concurrency_limiter = self._get_concurrency_limiter()
-        self.feedback = services.FeedbackService(api_client=api_client)
-        self.limit = services.LimitService(api_client=api_client)
+        self.feedback: FeedbackService = services.FeedbackService(api_client=api_client)
+        self.limit: LimitService = services.LimitService(api_client=api_client)
 
     def _get_concurrency_limiter(self) -> LoopBoundLimiter:
         async def handler():

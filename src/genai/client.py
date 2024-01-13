@@ -123,10 +123,10 @@ class Client(BaseService[BaseConfig, BaseServices]):
         if not services:
             services = self.Services()
 
-        self.text = services.TextService(api_client=api_client)
-        self.request = services.RequestService(api_client=api_client)
-        self.tune = services.TuneService(api_client=api_client)
-        self.model = services.ModelService(api_client=api_client)
-        self.file = services.FileService(api_client=api_client)
-        self.prompt = services.PromptService(api_client=api_client)
-        self.user = services.UserService(api_client=api_client)
+        self.text: TextService = services.TextService(api_client=api_client)
+        self.request: RequestService = services.RequestService(api_client=api_client)
+        self.tune: TuneService = services.TuneService(api_client=api_client)
+        self.model: ModelService = services.ModelService(api_client=api_client)
+        self.file: FileService = services.FileService(api_client=api_client)
+        self.prompt: PromptService = services.PromptService(api_client=api_client)
+        self.user: UserService = services.UserService(api_client=api_client)

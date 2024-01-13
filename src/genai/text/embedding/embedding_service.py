@@ -63,7 +63,7 @@ class EmbeddingService(BaseService[BaseConfig, BaseServices]):
             services = BaseServices()
 
         self._concurrency_limiter = self._get_concurrency_limiter()
-        self.limit = services.LimitService(api_client=api_client)
+        self.limit: LimitService = services.LimitService(api_client=api_client)
 
     def create(
         self,
