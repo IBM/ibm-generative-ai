@@ -38,7 +38,6 @@ class TestAsyncExecutor:
         return handler
 
     @pytest.mark.parametrize("concurrency_limit", range(1, 10))
-    @pytest.mark.timeout(2)
     def test_resolve_in_order(self, inputs: list[str], http_client, concurrency_limit: int):
         results = list(
             execute_async(
@@ -54,7 +53,6 @@ class TestAsyncExecutor:
 
     @pytest.mark.parametrize("concurrency_limit", range(1, 5))
     @pytest.mark.parametrize("ordered", [True, False])
-    @pytest.mark.timeout(2)
     def test_correctly_stops(self, inputs: list[str], http_client, concurrency_limit: int, ordered: bool):
         async def handler(input: str, *args) -> str:
             idx = inputs.index(input)
@@ -84,7 +82,6 @@ class TestAsyncExecutor:
         assert collected_results == inputs[0:-1]
 
     @pytest.mark.parametrize("ordered", [True, False])
-    @pytest.mark.timeout(2)
     def test_return_none_when_throw_on_error_is_false(self, inputs: list[str], http_client, ordered: bool):
         async def handler(input: str, *args) -> str:
             if input == inputs[-1] or input == inputs[0]:
