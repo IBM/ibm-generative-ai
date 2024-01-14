@@ -1,3 +1,5 @@
+import sys
+
 import pytest
 
 from genai import Client
@@ -6,6 +8,7 @@ from genai.text.generation import TextGenerationParameters
 
 
 @pytest.mark.integration
+@pytest.mark.xfail(sys.platform.startswith("linux"), reason="problem with 3rd libraries")
 class TestHuggingfaceAgent:
     @pytest.mark.vcr
     def test_agent(self, client: Client):
