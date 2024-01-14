@@ -34,8 +34,8 @@ class LocalModel(ABC):
         """Generate a response from your llm using the provided input text and parameters
 
         Args:
-            input_text (str): The input prompt chat
-            parameters (TextGenerationParameters): The parameters that the user code wishes to be used
+            input_text: The input prompt chat
+            parameters: The parameters that the user code wishes to be used
 
         Raises:
             NotImplementedError: If you do not implement this function.

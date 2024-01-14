@@ -151,7 +151,7 @@ Each SDK release is only compatible with the latest API version at the time of r
 
 
 Types / Schemas
-^^^^^^^
+^^^^^^^^^^^^^^^
 
 Wast the majority of service methods accepts complex parameters either as instances of appropriate Pydantic class or plain dictionary which is converted to the Pydantic class under the hood.
 Analogy with enums - you can pass either enum's value or a plain string. Types for inputs/outputs are automatically generated from the OpenAPI definition to Pydantic models.

@@ -33,7 +33,7 @@ def _create_python_example(py_file: PythonFile, *, relative_path: str, config: G
     path.write_text(
         data="\n".join(
             [
-                *["-----------------", title.strip(), "-----------------"],
+                *[title, "=" * len(title)],
                 "",
                 description,
                 "",

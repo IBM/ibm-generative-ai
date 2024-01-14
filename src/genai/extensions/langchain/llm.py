@@ -51,20 +51,19 @@ class LangChainInterface(LLM):
     Class representing the LangChainChatInterface for interacting with the LangChain chat API.
 
     Example::
-    from genai import Client, Credentials
-    from genai.extensions.langchain import LangChainInterface
 
-    client = Client(credentials=Credentials.from_env())
-    llm = LangChainInterface(
-        client=client,
-        model_id="meta-llama/llama-2-70b-chat",
-        parameters=TextGenerationParameters(
-            max_new_tokens=50,
+        from genai import Client, Credentials
+        from genai.extensions.langchain import LangChainInterface
+
+        client = Client(credentials=Credentials.from_env())
+        llm = LangChainInterface(
+            client=client,
+            model_id="meta-llama/llama-2-70b-chat",
+            parameters=TextGenerationParameters(max_new_tokens=50)
         )
-    )
 
-    response = chat_model.generate(prompts=["Hello world!"])
-    print(response)
+        response = chat_model.generate(prompts=["Hello world!"])
+        print(response)
     """
 
     model_config = ConfigDict(extra="forbid", protected_namespaces=())

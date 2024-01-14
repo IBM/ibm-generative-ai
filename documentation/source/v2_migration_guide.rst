@@ -11,7 +11,7 @@ changes.
 -  New interface design that can support more modalities (code, image,
    audio) and tasks (chat, classification, transcription). We have
    worked on the interfaces together with watsonx.ai and OpenShift AI.
--  Closer alignment with `watsonx.ai<https://watsonx.ai>`_, so incubating new features in BAM
+-  Closer alignment with `watsonx.ai <https://watsonx.ai>`_, so incubating new features in BAM
    is technically feasible.
 -  Unified experience across REST API, SDKs, CLI and docs.
 -  New SDK design that allows extensibility and reusability across teams

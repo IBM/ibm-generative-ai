@@ -50,7 +50,7 @@ class PythonFile(BaseModel):
         title, *description = doc.split("\n\n", maxsplit=1)
         code_start_line = self._find_code_start_line(source_code)
 
-        return title, description[0].strip() if description else "", code_start_line
+        return title.strip(), description[0].strip() if description else "", code_start_line
 
 
 def get_rst_filename(path: str, *, prefix: str):

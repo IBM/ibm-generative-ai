@@ -80,6 +80,7 @@ class LangChainChatInterface(BaseChatModel):
     Class representing the LangChainChatInterface for interacting with the LangChain chat API.
 
     Example::
+
         from genai import Client, Credentials
         from genai.extensions.langchain import LangChainChatInterface
         from langchain.schema import HumanMessage, SystemMessage
@@ -95,7 +96,7 @@ class LangChainChatInterface(BaseChatModel):
 
         response = chat_model.generate(messages=[HumanMessage(content="Hello world!")])
         print(response)
-    )
+
     """
 
     model_config = ConfigDict(extra="forbid", protected_namespaces=())
