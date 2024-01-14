@@ -77,6 +77,7 @@ dev = [
   "pyyaml>=6.0.0",
   "autodoc_pydantic>=2.0.0",
   "ruff>=0.1.11",
+  "poethepoet>=0.24.4",
 ]
 langchain = [
   "langchain>=0.0.267",
@@ -145,11 +146,11 @@ warn_required_dynamic_aliases = true
 
 [tool.poe.tasks.install]
 help = "Install dependencies for the SDK core and it's extensions"
-cmd = "pip install -e '.[all]' --require-virtualenv --disable-pip-version-check"
+cmd = "pip install -e '.[all]' --disable-pip-version-check"
 
 [tool.poe.tasks.install-dev]
 help = "Install dependencies and related tooling for development"
-sequence = [{ cmd = "pip install -e '.[dev]' --require-virtualenv --disable-pip-version-check" }, { cmd = "pre-commit install" }]
+sequence = [{ cmd = "pip install -e '.[dev]' --disable-pip-version-check" }, { cmd = "pre-commit install" }]
 deps = ["install"]
 
 [tool.poe.tasks.clean]
