@@ -32,8 +32,8 @@ from genai._utils.general import (
     to_model_optional,
 )
 from genai.text.generation._generation_utils import generation_stream_handler
-from genai.text.generation.feedback.feedback_service import FeedbackService
-from genai.text.generation.limits.limit_service import LimitService
+from genai.text.generation.feedback.feedback_service import FeedbackService as _FeedbackService
+from genai.text.generation.limits.limit_service import LimitService as _LimitService
 from genai.text.generation.schema import (
     ModerationParameters,
     PromptTemplateData,
@@ -55,8 +55,8 @@ from genai._utils.limiters.shared_limiter import LoopBoundLimiter
 
 
 class BaseServices(BaseServiceServices):
-    LimitService: type[LimitService] = LimitService
-    FeedbackService: type[FeedbackService] = FeedbackService
+    LimitService: type[_LimitService] = _LimitService
+    FeedbackService: type[_FeedbackService] = _FeedbackService
 
 
 class CreateExecutionOptions(BaseModel):
@@ -91,8 +91,8 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
             services = BaseServices()
 
         self._concurrency_limiter = self._get_concurrency_limiter()
-        self.feedback: FeedbackService = services.FeedbackService(api_client=api_client)
-        self.limit: LimitService = services.LimitService(api_client=api_client)
+        self.feedback = services.FeedbackService(api_client=api_client)
+        self.limit = services.LimitService(api_client=api_client)
 
     def _get_concurrency_limiter(self) -> LoopBoundLimiter:
         async def handler():

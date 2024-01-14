@@ -19,7 +19,7 @@ from genai._utils.base_service import (
 )
 from genai._utils.general import cast_list, to_model_instance
 from genai._utils.shared_options import CommonExecutionOptions
-from genai.text.embedding.limit.limit_service import LimitService
+from genai.text.embedding.limit.limit_service import LimitService as _LimitService
 from genai.text.embedding.schema import TextEmbeddingCreateResponse
 
 __all__ = ["EmbeddingService", "BaseConfig", "BaseServices", "CreateExecutionOptions"]
@@ -32,7 +32,7 @@ from genai._utils.limiters.shared_limiter import LoopBoundLimiter
 
 
 class BaseServices(BaseServiceServices):
-    LimitService: type[LimitService] = LimitService
+    LimitService: type[_LimitService] = _LimitService
 
 
 class CreateExecutionOptions(BaseModel):
@@ -63,7 +63,7 @@ class EmbeddingService(BaseService[BaseConfig, BaseServices]):
             services = BaseServices()
 
         self._concurrency_limiter = self._get_concurrency_limiter()
-        self.limit: LimitService = services.LimitService(api_client=api_client)
+        self.limit = services.LimitService(api_client=api_client)
 
     def create(
         self,

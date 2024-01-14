@@ -18,7 +18,7 @@ from genai._utils.base_service import (
     BaseServiceServices,
 )
 from genai._utils.general import to_enum_optional, to_model_instance, to_model_optional
-from genai.request.request_service import RequestService
+from genai.request.request_service import RequestService as _RequestService
 from genai.text.chat.schema import (
     BaseMessage,
     ModerationParameters,
@@ -34,7 +34,7 @@ __all__ = ["ChatService", "BaseServices"]
 
 
 class BaseServices(BaseServiceServices):
-    RequestService: type[RequestService] = RequestService
+    RequestService: type[_RequestService] = _RequestService
 
 
 class ChatService(BaseService[BaseServiceConfig, BaseServices]):
@@ -51,7 +51,7 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
         if not services:
             services = BaseServices()
 
-        self._request: RequestService = services.RequestService(api_client=api_client)
+        self._request = services.RequestService(api_client=api_client)
 
     def create(
         self,

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional, Type, overload
+from typing import Optional, overload
 
 from genai._types import ModelLike
 from genai._utils.api_client import ApiClient
@@ -12,13 +12,13 @@ from genai._utils.base_service import (
 )
 from genai._utils.general import to_model_instance
 from genai.credentials import Credentials
-from genai.file import FileService
-from genai.model import ModelService
-from genai.prompt import PromptService
-from genai.request import RequestService
-from genai.text import TextService
-from genai.tune import TuneService
-from genai.user import UserService
+from genai.file import FileService as _FileService
+from genai.model import ModelService as _ModelService
+from genai.prompt import PromptService as _PromptService
+from genai.request import RequestService as _RequestService
+from genai.text import TextService as _TextService
+from genai.tune import TuneService as _TuneService
+from genai.user import UserService as _UserService
 
 __all__ = ["Client", "BaseConfig", "BaseServices"]
 
@@ -26,13 +26,13 @@ __all__ = ["Client", "BaseConfig", "BaseServices"]
 class BaseServices(BaseServiceServices):
     """Appropriate services used by the Client"""
 
-    TextService: Type[TextService] = TextService
-    RequestService: Type[RequestService] = RequestService
-    TuneService: Type[TuneService] = TuneService
-    ModelService: Type[ModelService] = ModelService
-    FileService: Type[FileService] = FileService
-    PromptService: Type[PromptService] = PromptService
-    UserService: Type[UserService] = UserService
+    TextService: type[_TextService] = _TextService
+    RequestService: type[_RequestService] = _RequestService
+    TuneService: type[_TuneService] = _TuneService
+    ModelService: type[_ModelService] = _ModelService
+    FileService: type[_FileService] = _FileService
+    PromptService: type[_PromptService] = _PromptService
+    UserService: type[_UserService] = _UserService
 
 
 class BaseConfig(BaseServiceConfig):
@@ -123,10 +123,10 @@ class Client(BaseService[BaseConfig, BaseServices]):
         if not services:
             services = self.Services()
 
-        self.text: TextService = services.TextService(api_client=api_client)
-        self.request: RequestService = services.RequestService(api_client=api_client)
-        self.tune: TuneService = services.TuneService(api_client=api_client)
-        self.model: ModelService = services.ModelService(api_client=api_client)
-        self.file: FileService = services.FileService(api_client=api_client)
-        self.prompt: PromptService = services.PromptService(api_client=api_client)
-        self.user: UserService = services.UserService(api_client=api_client)
+        self.text = services.TextService(api_client=api_client)
+        self.request = services.RequestService(api_client=api_client)
+        self.tune = services.TuneService(api_client=api_client)
+        self.model = services.ModelService(api_client=api_client)
+        self.file = services.FileService(api_client=api_client)
+        self.prompt = services.PromptService(api_client=api_client)
+        self.user = services.UserService(api_client=api_client)
