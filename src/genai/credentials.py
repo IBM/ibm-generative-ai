@@ -28,10 +28,10 @@ class Credentials(BaseModel):
     """
 
     api_key: SecretStr = Field(..., description="The GENAI API Key")
-    api_endpoint: str = Field(..., description="GENAI API Endpoint")
+    api_endpoint: str = Field(..., description="GENAI API Endpoint", min_length=1)
 
     def __init__(self, api_key: str, api_endpoint: Optional[str] = None, **kwargs):
-        api_endpoint = "https://bam-api.res.ibm.com" if api_endpoint is None else api_endpoint
+        api_endpoint = api_endpoint or "https://bam-api.res.ibm.com"
 
         if api_key is None:
             raise ValueError("api_key must be provided")
