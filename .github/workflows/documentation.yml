@@ -1,6 +1,7 @@
-name: Build and deploy docs
+name: Build and deploy documentation
 
 on:
+  workflow_dispatch:
   release:
     types: [published]
 
@@ -17,6 +18,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -26,7 +28,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install -e ".[dev]"
+        python -m pip install -e ".[dev]" --disable-pip-version-check
     - name: Build documentation
       run: poe docs --type build
     - name: Setup Pages
@@ -35,7 +37,6 @@ jobs:
       uses: actions/upload-pages-artifact@v1
       with:
         path: "documentation/build/html"
-  # Deployment job
   deploy:
     environment:
       name: github-pages
