@@ -28,7 +28,7 @@ class BaseRetryTransport(ABC):
     for a retry transport in an API client.
 
     Attributes:
-        Callback (enum.Enum): An enumeration of callback types for retry handling.
+        Callback: An enumeration of callback types for retry handling.
 
             - Success: Indicates a successful request.
             - Retry: Indicates a retry attempt.
@@ -78,20 +78,25 @@ class BaseRetryTransport(ABC):
         self.retries = kwargs.get("retries", 3)
         super().__init__(*args, **kwargs)
 
-    def _get_retry_delays(self):
-        yield 0
-        for i in range(self.retries):
-            yield self._backoff_factor * (2**i)
+    def _get_execution_plan(self):
+        for idx in range(self.retries):
+            yield self._backoff_factor * (2**idx)
 
     def _is_json_response(self, response: Optional[Response]) -> bool:
         return response is not None and "application/json" in response.headers.get("Content-Type", "")
 
     def _create_exception(
-        self, *, exception: Exception, request: Request
+        self, *, exception: Exception, request: Request, requests_count: int
     ) -> Union[ApiResponseException, ApiNetworkException]:
         if isinstance(exception, HTTPStatusError):
+            message = (
+                f"Failed to handle request after {requests_count - 1} retries to {request.url}."
+                if requests_count > 1
+                else f"Failed to handle request to {request.url}."
+            )
+
             return ApiResponseException(
-                message=f"Failed to handle request after {self.retries} retries to {request.url}.",
+                message=message,
                 response=exception.response,
             )
         else:
@@ -113,8 +118,9 @@ class RetryTransport(BaseRetryTransport, HTTPTransport):
             HTTPError: If an HTTP error occurs.
         """
         latest_err: Optional[HTTPError] = None
+        requests_count: int = 0
 
-        for delay in self._get_retry_delays():
+        for requests_count, delay in enumerate(self._get_execution_plan(), start=1):  # noqa: B007
             if delay > 0:
                 time.sleep(delay)
 
@@ -138,7 +144,9 @@ class RetryTransport(BaseRetryTransport, HTTPTransport):
 
         assert latest_err
         self._execute_callback(self.Callback.ThresholdReached, request=request, callback_args=[])
-        raise self._create_exception(exception=latest_err, request=request) from latest_err
+        raise self._create_exception(
+            exception=latest_err, request=request, requests_count=requests_count
+        ) from latest_err
 
     def _execute_callback(self, name: BaseRetryTransport.Callback, request: Request, callback_args: list):
         callback = request.extensions.get(name)
@@ -157,12 +165,13 @@ class AsyncRetryTransport(BaseRetryTransport, AsyncHTTPTransport):
     ) -> Response:
         """
         Raises:
-            ApiResponseException: ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
         """
         latest_err: Optional[HTTPError] = None
+        requests_count: int = 0
 
-        for delay in self._get_retry_delays():
+        for requests_count, delay in enumerate(self._get_execution_plan(), start=1):  # noqa: B007
             if delay > 0:
                 await asyncio.sleep(delay)
 
@@ -186,7 +195,9 @@ class AsyncRetryTransport(BaseRetryTransport, AsyncHTTPTransport):
 
         assert latest_err
         await self._execute_async_callback(self.Callback.ThresholdReached, request=request, callback_args=[])
-        raise self._create_exception(exception=latest_err, request=request) from latest_err
+        raise self._create_exception(
+            exception=latest_err, request=request, requests_count=requests_count
+        ) from latest_err
 
     async def _execute_async_callback(self, name: BaseRetryTransport.Callback, request: Request, callback_args: list):
         callback = request.extensions.get(name)
