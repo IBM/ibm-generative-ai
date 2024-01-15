@@ -14,7 +14,7 @@ from genai._utils.http_client.httpx_client import (
 from genai._utils.http_client.rate_limit_transport import AsyncRateLimitTransport
 from genai._utils.http_client.retry_transport import AsyncRetryTransport, RetryTransport
 from genai._utils.shared_loop import shared_event_loop
-from genai._version import version
+from genai._version import __version__
 from genai.credentials import Credentials
 
 __all__ = ["HttpClientOptions", "HttpTransportOptions", "BaseConfig"]
@@ -127,8 +127,8 @@ class ApiClient:
         headers = {
             **(override or {}),
             "Authorization": f"Bearer {self._credentials.api_key.get_secret_value()}",
-            "x-request-origin": f"python-sdk/{version}",
-            "user-agent": f"python-sdk/{version}",
+            "x-request-origin": f"python-sdk/{__version__}",
+            "user-agent": f"python-sdk/{__version__}",
         }
 
         return headers

@@ -14,20 +14,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Set up Python
-      uses: actions/setup-python@v3
+    - name: Build and Publish to pypi
+      uses: JRubics/poetry-publish@v1.17
       with:
-        python-version: "3.11"
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install -e ".[dev]"
-    - name: Version and package
-      run: |
-        python -m build
-    - name: Publish package
-      uses: pypa/gh-action-pypi-publish@f9ed8ba9ad06d20b1ebb6002ffb93050ed9a1951
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}
-        repository-url: ${{ vars.PYPI_REPOSITORY }}
+        python_version: "3.11"
+        pypi_token: ${{ secrets.PYPI_API_TOKEN }}
+        repository_url: ${{ vars.PYPI_REPOSITORY }}
