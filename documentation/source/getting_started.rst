@@ -84,6 +84,7 @@ This approach reflects the Rest API Structure; all request parameters remains th
     # client.text.generation
     client.text.generation.create(...)
     client.text.generation.create_stream(...)
+    client.text.generation.limit.retrieve(...)
 
     # client.text.chat
     client.text.chat.create(...)
@@ -91,6 +92,7 @@ This approach reflects the Rest API Structure; all request parameters remains th
 
     # client.text.embedding
     client.text.embedding.create(...)
+    client.text.embedding.limit.retrieve(...)
 
     # client.tokenization
     client.text.tokenization.create(...)

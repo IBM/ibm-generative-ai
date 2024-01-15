@@ -22,7 +22,6 @@ from genai.request.request_service import RequestService as _RequestService
 from genai.text.chat.schema import (
     BaseMessage,
     ModerationParameters,
-    RequestChatConversationIdRetrieveResponse,
     TextChatCreateResponse,
     TextChatStreamCreateResponse,
     TextGenerationParameters,
@@ -180,15 +179,6 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
                     json=request_body,
                 ),
             )
-
-    def history(self, conversation_id: str) -> RequestChatConversationIdRetrieveResponse:
-        """
-        Raises:
-            ValueError: If the ID is an empty string.
-            ApiResponseException: If target feedback/generation does not exist or cannot be updated.
-            ApiNetworkException: In case of unhandled network error.
-        """
-        return self._request.chat(conversation_id=conversation_id)
 
     def _prepare_messages(self, messages: Sequence[Union[BaseMessage, dict]]) -> list[BaseMessage]:
         return [to_model_instance(msg, BaseMessage) for msg in messages]

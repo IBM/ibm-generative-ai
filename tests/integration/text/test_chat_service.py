@@ -24,7 +24,7 @@ class TestChatService:
             assert "no" in ai_message.lower()  # AI is still safe for humanity
 
         with subtests.test("Get history of the conversation"):
-            history = client.text.chat.history(chat.conversation_id)
+            history = client.request.chat(chat.conversation_id)
             [history_result] = history.results
             assert history_result.request.messages and history_result.response.results
             [request_message] = history_result.request.messages
@@ -45,7 +45,7 @@ class TestChatService:
 
         with subtests.test("History contains new entries"):
             prev_history_result = history_result
-            history = client.text.chat.history(chat.conversation_id)
+            history = client.request.chat(chat.conversation_id)
             history_result_1, history_result_2 = history.results
             assert history_result_1 == prev_history_result
             assert history_result_2.request.messages and history_result_2.response.results

@@ -1,4 +1,4 @@
-"""Run huggingface agent with genai models"""
+"""Run Transformers Agents"""
 
 from dotenv import load_dotenv
 
