@@ -27,9 +27,9 @@ from genai._utils.validators import assert_is_not_empty_string
 from genai.file.schema import (
     FileCreateResponse,
     FileIdRetrieveResponse,
+    FileListSortBy,
     FilePurpose,
     FileRetrieveResponse,
-    FileSortBy,
     SortDirection,
 )
 
@@ -131,7 +131,7 @@ class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
         *,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
-        sort_by: Optional[EnumLike[FileSortBy]] = None,
+        sort_by: Optional[EnumLike[FileListSortBy]] = None,
         direction: Optional[EnumLike[SortDirection]] = None,
         search: Optional[str] = None,
         purpose: Optional[EnumLike[FilePurpose]] = None,
@@ -155,7 +155,7 @@ class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
         request_params = FileRetrieveParametersQuery(
             limit=limit,
             offset=offset,
-            sort_by=to_enum_optional(sort_by, FileSortBy),
+            sort_by=to_enum_optional(sort_by, FileListSortBy),
             direction=to_enum_optional(direction, SortDirection),
             search=search,
             purpose=to_enum_optional(purpose, FilePurpose),

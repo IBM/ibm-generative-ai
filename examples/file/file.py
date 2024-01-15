@@ -11,7 +11,7 @@ from pprint import pprint
 from dotenv import load_dotenv
 
 from genai.client import Client, Credentials
-from genai.file import FileSortBy, SortDirection
+from genai.file import FileListSortBy, SortDirection
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -43,7 +43,7 @@ with tempfile.NamedTemporaryFile(delete=True, suffix=".json") as tmp:
         for file in client.file.list(
             limit=5,
             search=filename,
-            sort_by=FileSortBy.CREATED_AT,
+            sort_by=FileListSortBy.CREATED_AT,
             direction=SortDirection.DESC,
         ).results:
             pprint(file.model_dump())

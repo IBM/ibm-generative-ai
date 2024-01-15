@@ -1,22 +1,19 @@
 from genai._generated.api import (
+    RequestApiVersion,
     RequestChatConversationIdRetrieveResponse,
+    RequestEndpoint,
+    RequestOrigin,
     RequestRetrieveParametersQuery,
-    RequestRetrieveRequestParamsApi,
-    RequestRetrieveRequestParamsEndpoint,
-    RequestRetrieveRequestParamsOrigin,
     RequestRetrieveResponse,
     RequestStatus,
 )
-
-RequestRetrieveApiParameter = RequestRetrieveRequestParamsApi
-RequestRetrieveOriginParameter = RequestRetrieveRequestParamsOrigin
 
 __all__ = [
     "RequestChatConversationIdRetrieveResponse",
     "RequestRetrieveParametersQuery",
     "RequestRetrieveResponse",
-    "RequestRetrieveApiParameter",
-    "RequestRetrieveOriginParameter",
+    "RequestApiVersion",
+    "RequestOrigin",
     "RequestStatus",
-    "RequestRetrieveRequestParamsEndpoint",
+    "RequestEndpoint",
 ]

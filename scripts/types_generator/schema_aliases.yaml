@@ -28,6 +28,8 @@ alias:
     - FileRetrieve_results
     - FileCreate_result
     - FileIdRetrieve_result
+  FileListSortBy:
+    - FileRetrieveRequestParamsSortBy
 
   # MODERATIONS ------------------------------------------------------------------
   ModerationParameters:
@@ -180,6 +182,14 @@ alias:
   ModelTokenLimits:
     - ModelRetrieve_results_token_limits
     - ModelIdRetrieve_result_token_limits
+  ModelFamily:
+    - ModelIdRetrieve_result_model_family
+  RequestApiVersion:
+    - RequestRetrieveRequestParamsApi
+  RequestEndpoint:
+    - RequestRetrieveRequestParamsEndpoint
+  RequestOrigin:
+    - RequestRetrieveRequestParamsOrigin
   TextGenerationReturnOptions:
     - TextGenerationOutputCreateRequest_parameters_return_options
     - PromptRetrieve_results_parameters_return_options

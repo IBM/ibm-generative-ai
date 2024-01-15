@@ -23,11 +23,11 @@ from genai._utils.base_service import (
 from genai._utils.general import cast_list, to_enum, to_enum_optional
 from genai._utils.validators import assert_is_not_empty_string
 from genai.request.schema import (
+    RequestApiVersion,
     RequestChatConversationIdRetrieveResponse,
-    RequestRetrieveApiParameter,
-    RequestRetrieveOriginParameter,
+    RequestEndpoint,
+    RequestOrigin,
     RequestRetrieveParametersQuery,
-    RequestRetrieveRequestParamsEndpoint,
     RequestRetrieveResponse,
     RequestStatus,
 )
@@ -80,16 +80,14 @@ class RequestService(BaseService[BaseServiceConfig, BaseServiceServices]):
     def list(
         self,
         *,
-        api: Optional[RequestRetrieveApiParameter] = None,
+        api: Optional[RequestApiVersion] = None,
         limit: Optional[int] = None,
         offset: Optional[int] = None,
         status: Optional[EnumLike[RequestStatus]] = None,
-        origin: Optional[EnumLike[RequestRetrieveOriginParameter]] = None,
+        origin: Optional[EnumLike[RequestOrigin]] = None,
         before: Optional[datetime] = None,
         after: Optional[datetime] = None,
-        endpoint: Optional[
-            Union[RequestRetrieveRequestParamsEndpoint, list[RequestRetrieveRequestParamsEndpoint]]
-        ] = None,
+        endpoint: Optional[Union[RequestEndpoint, list[RequestEndpoint]]] = None,
         date: Optional[datetime] = None,
     ) -> RequestRetrieveResponse:
         """
@@ -104,15 +102,13 @@ class RequestService(BaseService[BaseServiceConfig, BaseServiceServices]):
             limit=limit,
             offset=offset,
             status=to_enum_optional(status, RequestStatus),
-            origin=to_enum_optional(origin, RequestRetrieveOriginParameter),
+            origin=to_enum_optional(origin, RequestOrigin),
             before=before,
             after=after,
-            api=to_enum_optional(api, RequestRetrieveApiParameter),
+            api=to_enum_optional(api, RequestApiVersion),
             date=date,
             endpoint=(
-                [to_enum(RequestRetrieveRequestParamsEndpoint, e) for e in cast_list(endpoint) if e is not None]
-                if endpoint
-                else None
+                [to_enum(RequestEndpoint, e) for e in cast_list(endpoint) if e is not None] if endpoint else None
             ),
         ).model_dump()
 

@@ -1,22 +1,19 @@
 from genai._generated.api import (
     FileCreateResponse,
     FileIdRetrieveResponse,
+    FileListSortBy,
     FilePurpose,
     FileRetrieveParametersQuery,
-    FileRetrieveRequestParamsSortBy,
     FileRetrieveResponse,
     SortDirection,
 )
-
-FileSortBy = FileRetrieveRequestParamsSortBy
-
 
 __all__ = [
     "FileRetrieveResponse",
     "FileCreateResponse",
     "FileIdRetrieveResponse",
     "FileRetrieveParametersQuery",
-    "FileSortBy",
+    "FileListSortBy",
     "FilePurpose",
     "SortDirection",
 ]
