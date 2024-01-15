@@ -24,20 +24,22 @@ jobs:
       matrix:
         python-version: ["3.9", "3.10", "3.11"]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
+    - name: Install poetry
+      run: pipx install poetry
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
+        cache: 'poetry'
     - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install -e ".[dev]" --disable-pip-version-check
-        python -m pip install -e ".[all]" --disable-pip-version-check
+      run: poetry install --no-interaction --all-extras
     - name: Lint with pre-commit
-      run: pre-commit run --all-files
+      run: |
+        poetry run pre-commit install
+        poetry run pre-commit run --all-files
     - name: Tests (unit / integration / extension)
-      run: pytest -m 'unit or integration or extension' --cov-report=lcov:coverage/lcov.info --cov=genai
+      run: poetry run pytest -m 'unit or integration or extension' --cov-report=lcov:coverage/lcov.info --cov=genai
       env:
         GENAI_API: ${{ vars.DUMMY_GENAI_API }}
         GENAI_KEY: ${{ vars.DUMMY_GENAI_KEY }}
