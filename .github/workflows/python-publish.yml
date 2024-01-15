@@ -11,12 +11,18 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: publish
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Build and Publish to pypi
-      uses: JRubics/poetry-publish@v1.17
+    - uses: actions/checkout@v4
+    - name: Install poetry
+      run: pipx install poetry
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
       with:
-        python_version: "3.11"
-        pypi_token: ${{ secrets.PYPI_API_TOKEN }}
-        repository_url: ${{ vars.PYPI_REPOSITORY }}
+        python-version: 3.11
+        cache: 'poetry'
+    - name: Install dependencies
+      run: poetry install --no-interaction --all-extras
+    - name: Setup Credentials
+      run: poetry config pypi-token.pypi "${{ secrets.PYPI_API_TOKEN }}"
+    - name: Publish package
+      run: poetry publish --build
