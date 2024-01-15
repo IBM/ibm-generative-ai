@@ -1,11 +1,11 @@
 from operator import itemgetter
 from pathlib import Path
 
+from _common.logger import get_logger
 from dotenv import load_dotenv
 from pydantic import BaseModel
 
 from docs_examples_generator.config import DefaultGeneratorConfig, GeneratorConfig
-from docs_examples_generator.logger import get_logger
 from docs_examples_generator.utils import (
     PythonFile,
     PythonHierarchy,

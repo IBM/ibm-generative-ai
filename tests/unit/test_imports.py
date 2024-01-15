@@ -26,8 +26,8 @@ def _import_submodules(package_name):
     }
 
 
-def _get_all_subclasses(clazz: type) -> list[type]:
-    subclasses = clazz.__subclasses__()
+def _get_all_subclasses(cls: type) -> list[type]:
+    subclasses = cls.__subclasses__()
     for subclass in subclasses:
         subclasses.extend(_get_all_subclasses(subclass))
     return subclasses

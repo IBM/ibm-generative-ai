@@ -12,6 +12,7 @@ You can start a trial version or request a demo via https://www.ibm.com/products
     V2 Migration Guide <v2_migration_guide>
     Examples <rst_source/examples>
     FAQ <faq>
+    Changelog <changelog>
 
 
 .. admonition:: Migration to V2

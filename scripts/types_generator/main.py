@@ -4,13 +4,13 @@ from pathlib import Path
 
 import httpx
 import yaml
+from _common.logger import get_logger
 from datamodel_code_generator import DataModelType, InputFileType, LiteralType, OpenAPIScope, PythonVersion, generate
 from dotenv import load_dotenv
 
 import types_generator.formatter as code_formatter
 from types_generator.config import ExtractorConfig
 from types_generator.extractor import ApiEndpoint, extract_endpoints
-from types_generator.logger import get_logger
 from types_generator.schema_transformer import SchemaOverrides, transform_schema
 from types_generator.utils import dump_model, serialize_model, serialize_model_definition
 

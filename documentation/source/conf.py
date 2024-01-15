@@ -50,6 +50,7 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
     "sphinxcontrib.autodoc_pydantic",
+    "sphinx_toolbox.collapse",
 ]
 
 napoleon_use_admonition_for_examples = True

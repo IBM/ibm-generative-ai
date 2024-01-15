@@ -6,9 +6,9 @@ from collections.abc import Mapping
 from typing import Any, Union
 
 import yaml
+from _common.logger import get_logger
 from pydantic import BaseModel
 
-from types_generator.logger import get_logger
 from types_generator.utils import from_camel_case_to_snake_case
 
 Schema = dict

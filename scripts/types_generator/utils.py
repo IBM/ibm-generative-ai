@@ -2,9 +2,8 @@ import re
 from pathlib import Path
 from typing import Any, Callable
 
+from _common.logger import get_logger
 from pydantic import BaseModel
-
-from types_generator.logger import get_logger
 
 logger = get_logger(__name__)
 
