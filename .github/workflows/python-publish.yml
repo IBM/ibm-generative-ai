@@ -27,7 +27,9 @@ jobs:
         python-version: 3.11
         cache: 'poetry'
     - name: Install dependencies
-      run: poetry install --no-interaction --all-extras
+      run: |
+        poetry install --no-interaction --all-extras
+        poetry self add "poetry-dynamic-versioning[plugin]"
     - name: Setup Credentials
       run: poetry config pypi-token.pypi "${{ secrets.PYPI_API_TOKEN }}"
     - name: Publish package
