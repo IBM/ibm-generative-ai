@@ -49,7 +49,7 @@ class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
 
         Raises:
             ValueError: If the file does not exist or if the file format is not supported.
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
         """
         file_path = Path(file_path)
@@ -85,7 +85,7 @@ class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
 
         Raises:
             ValueError: If the provided `id` is an empty string.
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
 
         """
@@ -112,7 +112,7 @@ class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
 
         Raises:
             ValueError: If the ID is an empty string.
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
 
         """
@@ -148,7 +148,7 @@ class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
             format_id: The ID of the file format. Defaults to None.
 
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
@@ -179,7 +179,7 @@ class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
 
         Raises:
             ValueError: If the ID is an empty string.
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
         """
         assert_is_not_empty_string(id)

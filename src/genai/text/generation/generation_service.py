@@ -129,7 +129,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
             TextGenerationCreateResponse object (server response without modification).
 
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
 
@@ -232,7 +232,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
             TextGenerationStreamCreateResponse (raw server response object)
 
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
@@ -275,7 +275,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
     ) -> TextGenerationComparisonCreateResponse:
         """
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """

@@ -164,6 +164,24 @@ Logging
 SDK uses the standard python `logging module <https://docs.python.org/3/library/logging.html>`_ for logging messages within the module.
 Unless the consuming application explicitly enables logging, no logging messages from GenAI should appear in stdout or stderr e.g. no `print` statements, we should also always log to the `genai` namespace so that logs are easily identifiable.
 
+Error Handling
+^^^^^^^^^^^^^^
+
+SDK exception classes (besides Python's built-in) can be imported from ``genai.exceptions``.
+
+Validation errors
+
+- ``ValueError``, ``TypeError``
+- ``ValidationError`` - Pydantic class
+
+API / Network errors
+
+- ``ApiNetworkException`` - Unhandled network error (timeout, `httpx` error).
+- ``ApiResponseException`` - Real API response with non 2xx status code.
+
+
+Example can be found :ref:`here <examples.extra.error_handling>`.
+
 
 Citation
 --------

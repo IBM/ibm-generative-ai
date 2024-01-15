@@ -73,7 +73,7 @@ class ModerationService(BaseService[BaseConfig, BaseServiceServices]):
                     print(f"Response for {input}", result.hap)
 
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """

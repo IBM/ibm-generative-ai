@@ -93,7 +93,7 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
             print(f"Response: {response.results[0].generated_text}")
 
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
@@ -151,7 +151,7 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
                 print(f"Chunk retrieved: {response.results[0].generated_text}")
 
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """

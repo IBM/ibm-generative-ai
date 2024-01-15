@@ -37,7 +37,7 @@ class UserService(BaseService[BaseServiceConfig, BaseServiceServices]):
     ) -> UserCreateResponse:
         """
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
         """
         request_body = UserCreateRequest(first_name=first_name, last_name=last_name).model_dump()
@@ -54,7 +54,7 @@ class UserService(BaseService[BaseServiceConfig, BaseServiceServices]):
     def retrieve(self) -> UserRetrieveResponse:
         """
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
         """
         self._log_method_execution("User Retrieve")
@@ -68,7 +68,7 @@ class UserService(BaseService[BaseServiceConfig, BaseServiceServices]):
     def update(self, *, tou_accepted: Optional[bool] = None) -> UserPatchResponse:
         """
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
         """
         request_body = UserPatchRequest(tou_accepted=tou_accepted).model_dump()
@@ -85,7 +85,7 @@ class UserService(BaseService[BaseServiceConfig, BaseServiceServices]):
     def delete(self) -> None:
         """
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
         """
         self._log_method_execution("User Delete")

@@ -33,6 +33,8 @@ def _create_python_example(py_file: PythonFile, *, relative_path: str, config: G
     path.write_text(
         data="\n".join(
             [
+                f".. _{rst_filename}:",
+                "",
                 *[title, "=" * len(title)],
                 "",
                 description,
@@ -68,11 +70,14 @@ def _create_python_examples_toc(hierarchy: PythonHierarchy, config: GeneratorCon
         roots_with_order.sort(key=itemgetter(0))
         return list(map(itemgetter(1), roots_with_order))
 
-    path = Path(config.output_directory, f"{_get_rst_filename(hierarchy.root)}.rst")
+    rst_filename = _get_rst_filename(hierarchy.root)
+    path = Path(config.output_directory, f"{rst_filename}.rst")
     [title, description, *_] = hierarchy.root.meta()
     path.write_text(
         data="\n".join(
             [
+                f".. _{rst_filename}:",
+                "",
                 *[title, "=" * len(title)],
                 "",
                 description,

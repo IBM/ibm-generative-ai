@@ -53,7 +53,7 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
     ) -> TuneCreateResponse:
         """
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
@@ -82,7 +82,7 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
 
         Raises:
             ValueError: if the tune status is not 'COMPLETED'.
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
@@ -109,7 +109,7 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
     ) -> TuneIdRetrieveResponse:
         """
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
         """
         assert_is_not_empty_string(id)
@@ -132,7 +132,7 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
     ) -> TuneRetrieveResponse:
         """
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
         """
         self._log_method_execution("Tune List")
@@ -149,7 +149,7 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
     def types(self) -> TuningTypeRetrieveResponse:
         """
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
         """
         with self._get_http_client() as client:
@@ -167,7 +167,7 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
     ) -> None:
         """
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
         """
         assert_is_not_empty_string(id)

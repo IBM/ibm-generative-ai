@@ -93,7 +93,7 @@ class EmbeddingService(BaseService[BaseConfig, BaseServices]):
             TextEmbeddingCreateResponse object.
 
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """

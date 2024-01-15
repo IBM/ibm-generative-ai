@@ -16,7 +16,7 @@ class LimitService(BaseService[BaseServiceConfig, BaseServiceServices]):
         Retrieves the current text generation limit from the server.
 
         Raises:
-            ApiResponseException: ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
         """
         self._log_method_execution("Text Generation Limit Retrieve")

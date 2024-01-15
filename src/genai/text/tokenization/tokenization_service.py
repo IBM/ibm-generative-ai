@@ -68,7 +68,7 @@ class TokenizationService(BaseService[BaseConfig, BaseServiceServices]):
             execution_options: The execution options for tokenization like batch size, callbacks and cetra.
 
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """

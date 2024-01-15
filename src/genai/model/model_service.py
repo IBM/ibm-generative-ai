@@ -25,7 +25,7 @@ class ModelService(BaseService[BaseServiceConfig, BaseServiceServices]):
         """
         Raises:
             ValueError: If the id parameter is an empty string.
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
@@ -46,7 +46,7 @@ class ModelService(BaseService[BaseServiceConfig, BaseServiceServices]):
             offset: The number of models to skip before starting to retrieve.
 
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """

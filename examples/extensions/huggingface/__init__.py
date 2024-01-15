@@ -1,3 +1,3 @@
 """
-HuggingFace (Transformers)
+Transformers (HuggingFace)
 """

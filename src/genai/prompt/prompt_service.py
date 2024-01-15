@@ -65,7 +65,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
     ) -> PromptCreateResponse:
         """
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
@@ -100,7 +100,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
     ) -> PromptIdRetrieveResponse:
         """
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
@@ -132,7 +132,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
     ) -> PromptIdUpdateResponse:
         """
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
@@ -173,7 +173,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
     ) -> PromptRetrieveResponse:
         """
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
@@ -197,7 +197,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
     ) -> None:
         """
         Raises:
-            ApiResponseException: If case of an API error.
+            ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """

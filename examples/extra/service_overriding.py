@@ -1,12 +1,15 @@
 """
 Overriding built-in services
+
+If you want to override or extend the behaviour of some service, you can do so by providing your own class.
+Generally, you can achieve it by supplying your service on the local level (preferred) or global level.
 """
 
 from dotenv import load_dotenv
 
 from genai import ApiClient, Client, Credentials
 from genai.text import TextService
-from genai.text.generation import GenerationService
+from genai.text.generation import GenerationService as OriginalGenerationService
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -15,14 +18,14 @@ load_dotenv()
 
 
 def local_approach(api_client: ApiClient):
-    """Globally override services"""
+    """Locally override services (preferred)"""
 
-    class MyGenerationService(GenerationService):
+    class MyGenerationService(OriginalGenerationService):
         def my_custom_method(self):
             return "Greeting!"
 
     class TextServiceServices(TextService.Services):
-        GenerationService: type[GenerationService] = MyGenerationService
+        GenerationService: type[OriginalGenerationService] = MyGenerationService
 
     class MyTextService(TextService):
         Services = TextServiceServices
@@ -32,14 +35,14 @@ def local_approach(api_client: ApiClient):
 
 
 def global_approach(api_client: ApiClient):
-    """Globally override services"""
+    """Globally override services (non preferred)"""
 
-    class MyGenerationService(GenerationService):
+    class MyGenerationService(OriginalGenerationService):
         def my_custom_method(self):
             pass
 
     class MyTextService(TextService.Services):
-        GenerationService: type[GenerationService] = MyGenerationService
+        GenerationService: type[OriginalGenerationService] = MyGenerationService
 
     TextService.Services = MyTextService
 
