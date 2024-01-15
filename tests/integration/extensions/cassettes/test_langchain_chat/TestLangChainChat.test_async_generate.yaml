@@ -1,0 +1,45 @@
+interactions:
+- request:
+    body: '{"messages": [{"content": "You are a helpful, respectful and honest assistant.\n    Always
+      answer as helpfully as possible, while being safe.\n    Your answers should
+      not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal
+      content.\n    Please ensure that your responses are socially unbiased and positive
+      in nature. If a question does not make\n    any sense, or is not factually coherent,
+      explain why instead of answering something incorrectly.\n    If you don''t know
+      the answer to a question, please don''t share false information.\n    ", "role":
+      "system"}, {"content": "What is NLP and how it has evolved over the years?",
+      "role": "user"}], "model_id": "meta-llama/llama-2-70b-chat", "parameters": {}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '730'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/chat?version=2024-01-10
+  response:
+    content: '{"id":"5db560f1-d6f9-4573-8aa3-a2b2f1a95ada","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-01-10T13:44:16.176Z","results":[{"generated_text":"  NLP,
+      or Natural Language Processing, is a subfield of artificial intelligence (AI)","generated_token_count":20,"input_token_count":161,"stop_reason":"max_tokens","seed":1599074471}],"conversation_id":"e78d7f8d-030a-44e7-8097-eeed7b65f0e3"}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 10 Jan 2024 13:44:16 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '397'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-01-10'
+      vary:
+      - accept-encoding
+    http_version: HTTP/1.1
+    status_code: 200
+version: 1

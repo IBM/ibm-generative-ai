@@ -1,0 +1,220 @@
+interactions:
+- request:
+    body: "--BOUNDARY\r\nContent-Disposition: form-data; name=\"purpose\"\r\n\r\ntemplate\r\n--BOUNDARY\r\nContent-Disposition:
+      form-data; name=\"file\"; filename=\"file.json\"\r\nContent-Type: application/json\r\n\r\n{\"data\":
+      \"EXAMPLE TEMPLATE {{variable}}}\"}\r\n--BOUNDARY--\r\n"
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '315'
+      content-type:
+      - multipart/form-data; boundary=BOUNDARY
+    method: POST
+    uri: https://api.com/v2/files?version=2023-12-15
+  response:
+    content: '{"result":{"id":"042eb275-ebc9-41a8-8bb5-bc4a6bd9fad6","bytes":42,"file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-01-05T09:57:28.000Z","file_formats":[]}}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Fri, 05 Jan 2024 09:57:27 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '208'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-12-15'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    http_version: HTTP/1.1
+    status_code: 200
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/files?search=file.json&version=2023-12-15
+  response:
+    content: '{"results":[{"id":"042eb275-ebc9-41a8-8bb5-bc4a6bd9fad6","bytes":"42","file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-01-05T09:57:28.000Z","file_formats":[]}],"total_count":1}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Fri, 05 Jan 2024 09:57:28 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '229'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-12-15'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    http_version: HTTP/1.1
+    status_code: 200
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/files/042eb275-ebc9-41a8-8bb5-bc4a6bd9fad6?version=2023-12-15
+  response:
+    content: '{"result":{"id":"042eb275-ebc9-41a8-8bb5-bc4a6bd9fad6","bytes":"42","file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-01-05T09:57:28.000Z","file_formats":[]}}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Fri, 05 Jan 2024 09:57:29 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '210'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-12-15'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '23'
+      x-ratelimit-reset:
+      - '0'
+    http_version: HTTP/1.1
+    status_code: 200
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/files/042eb275-ebc9-41a8-8bb5-bc4a6bd9fad6/content?version=2023-11-22
+  response:
+    content: '{"data": "EXAMPLE TEMPLATE {{variable}}}"}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Fri, 05 Jan 2024 09:57:30 GMT
+      Keep-Alive:
+      - timeout=72
+      Transfer-Encoding:
+      - chunked
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    http_version: HTTP/1.1
+    status_code: 200
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: DELETE
+    uri: https://api.com/v2/files/042eb275-ebc9-41a8-8bb5-bc4a6bd9fad6?version=2023-11-22
+  response:
+    content: ''
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Fri, 05 Jan 2024 09:57:31 GMT
+      Keep-Alive:
+      - timeout=72
+      content-version:
+      - '2023-11-22'
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    http_version: HTTP/1.1
+    status_code: 204
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/files?search=file.json&version=2023-12-15
+  response:
+    content: '{"results":[],"total_count":0}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Fri, 05 Jan 2024 09:57:32 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '30'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-12-15'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    http_version: HTTP/1.1
+    status_code: 200
+version: 1

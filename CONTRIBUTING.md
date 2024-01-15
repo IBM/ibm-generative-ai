@@ -70,13 +70,11 @@ pre-commit install
 ```
 
 ### Setup your IBM Generative AI token
-Login to [workbench.res.ibm.com/](https://workbench.res.ibm.com/) and get your IBM Generative AI API key. Then, create a `genai/.env` and assign the `GENAI_KEY` value as:
+Login to [bam.res.ibm.com/](https://bam.res.ibm.com/) and get your API key. Then, create the following `.env` file:
+
 ```
 GENAI_KEY=<your key here>
 ```
-
-Once done, you and genai can use your key using `os.getenv("GENAI_KEY")` and you will not
-have to worry about committing it to GitHub.
 
 ## Make Changes
 Create a branch for making changes
@@ -108,8 +106,6 @@ Push your changes
 git push origin HEAD
 ```
 Raise a pull request from your `<my_awesome_branch>` in the `head repository` to the `main` branch in the `base repository`. To do so go to the github page of the repo. The image below shows an example:
-
-![image](/documentation/assets/pull_request_from_fork_to_base.png)
 
 - Add a description for your PR.
 - Link any issues.

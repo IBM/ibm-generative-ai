@@ -1,0 +1,154 @@
+interactions:
+- request:
+    body: '{"tou_accepted": false}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '23'
+      content-type:
+      - application/json
+    method: PATCH
+    uri: https://api.com/v2/user?version=2023-11-22
+  response:
+    content: '{"result":{"id":924,"first_name":"Radek","last_name":"Jezek","tou_accepted":false,"generate_default":null,"data_usage_consent":true}}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 11 Jan 2024 16:41:19 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '133'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    http_version: HTTP/1.1
+    status_code: 200
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/user?version=2023-11-22
+  response:
+    content: '{"result":{"id":924,"first_name":"Radek","last_name":"Jezek","tou_accepted":false,"generate_default":null,"data_usage_consent":true}}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 11 Jan 2024 16:41:20 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '133'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    http_version: HTTP/1.1
+    status_code: 200
+- request:
+    body: '{"tou_accepted": true}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '22'
+      content-type:
+      - application/json
+    method: PATCH
+    uri: https://api.com/v2/user?version=2023-11-22
+  response:
+    content: '{"result":{"id":924,"first_name":"Radek","last_name":"Jezek","tou_accepted":true,"tou_accepted_at":"2024-01-11T16:41:21.105Z","generate_default":null,"data_usage_consent":true}}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 11 Jan 2024 16:41:21 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '177'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '23'
+      x-ratelimit-reset:
+      - '0'
+    http_version: HTTP/1.1
+    status_code: 200
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/user?version=2023-11-22
+  response:
+    content: '{"result":{"id":924,"first_name":"Radek","last_name":"Jezek","tou_accepted":true,"tou_accepted_at":"2024-01-11T16:41:21.000Z","generate_default":null,"data_usage_consent":true}}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 11 Jan 2024 16:41:22 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '177'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    http_version: HTTP/1.1
+    status_code: 200
+version: 1

@@ -1,0 +1,523 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      X-Amzn-Trace-Id:
+      - eedf27ad-6842-4b11-8d84-ae074e978c96
+    method: GET
+    uri: https://api.com/api/spaces?author=huggingface-tools
+  response:
+    body:
+      string: '[{"_id":"6452aa3ca0c0a664a246bd51","id":"huggingface-tools/text-download","likes":4,"private":false,"sdk":"gradio","tags":["gradio","tool"],"createdAt":"2023-05-03T18:38:52.000Z"},{"_id":"6452ab2c5ac68a5b01a2aacf","id":"huggingface-tools/text-to-image","likes":11,"private":false,"sdk":"gradio","tags":["gradio","tool"],"createdAt":"2023-05-03T18:42:52.000Z"},{"_id":"6452b1088fe6558e32819408","id":"huggingface-tools/text-to-video","likes":13,"private":false,"sdk":"gradio","tags":["gradio","tool"],"createdAt":"2023-05-03T19:07:52.000Z"},{"_id":"6452b2428fe6558e3281c3ef","id":"huggingface-tools/image-transformation","likes":2,"private":false,"sdk":"gradio","tags":["gradio","tool"],"createdAt":"2023-05-03T19:13:06.000Z"}]'
+    headers:
+      Access-Control-Allow-Origin:
+      - https://huggingface.co
+      Access-Control-Expose-Headers:
+      - X-Repo-Commit,X-Request-Id,X-Error-Code,X-Error-Message,ETag,Link,Accept-Ranges,Content-Range
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '726'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 10 Jan 2024 13:55:25 GMT
+      ETag:
+      - W/"2d6-y013bMbtnZZ+ecV7Eahe+v1ayiU"
+      Vary:
+      - Origin
+      Via:
+      - 1.1 badae0844eca8f0bad6677607d947120.cloudfront.net (CloudFront)
+      X-Amz-Cf-Id:
+      - CFpvyeoH7Nu0zZjFLWJC_2MPW0RjCqwM2MYplGQyVV3gtqBzxQ4ZIg==
+      X-Amz-Cf-Pop:
+      - PRG50-C1
+      X-Cache:
+      - Miss from cloudfront
+      X-Powered-By:
+      - huggingface-moon
+      X-Request-Id:
+      - Root=1-659ea1cd-663995ed477527cf25c31ee5;eedf27ad-6842-4b11-8d84-ae074e978c96
+      X-Total-Count:
+      - '4'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - identity
+      Connection:
+      - keep-alive
+      X-Amzn-Trace-Id:
+      - af60a5c1-e096-4bb9-9770-16cb76d2b2cc
+    method: HEAD
+    uri: https://api.com/spaces/huggingface-tools/text-download/resolve/main/tool_config.json
+  response:
+    body:
+      string: ''
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Origin:
+      - https://huggingface.co
+      Access-Control-Expose-Headers:
+      - X-Repo-Commit,X-Request-Id,X-Error-Code,X-Error-Message,ETag,Link,Accept-Ranges,Content-Range
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '226'
+      Content-Security-Policy:
+      - default-src none; sandbox
+      Content-Type:
+      - text/plain; charset=utf-8
+      Date:
+      - Wed, 10 Jan 2024 13:55:25 GMT
+      ETag:
+      - '"11db24e5c89dac5373f0a734cce5daa20fd001e0"'
+      Vary:
+      - Origin
+      Via:
+      - 1.1 c76f57c516237f120f723cde4dab446e.cloudfront.net (CloudFront)
+      X-Amz-Cf-Id:
+      - pnNWG9AgvIhlsABhuaTSWh7XrLqZv2uzFT9z_YsNNMJWs2mzlR8sxg==
+      X-Amz-Cf-Pop:
+      - PRG50-C1
+      X-Cache:
+      - Miss from cloudfront
+      X-Powered-By:
+      - huggingface-moon
+      X-Repo-Commit:
+      - 6ef9fa4bdebec79aa57243f21bb8d7ef76e06ea5
+      X-Request-Id:
+      - Root=1-659ea1cd-0b344a57266ceba75068bf89;af60a5c1-e096-4bb9-9770-16cb76d2b2cc
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - identity
+      Connection:
+      - keep-alive
+      X-Amzn-Trace-Id:
+      - 6516916f-1ef6-462b-b063-a9316d239541
+    method: HEAD
+    uri: https://api.com/spaces/huggingface-tools/text-to-image/resolve/main/tool_config.json
+  response:
+    body:
+      string: ''
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Origin:
+      - https://huggingface.co
+      Access-Control-Expose-Headers:
+      - X-Repo-Commit,X-Request-Id,X-Error-Code,X-Error-Message,ETag,Link,Accept-Ranges,Content-Range
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '282'
+      Content-Security-Policy:
+      - default-src none; sandbox
+      Content-Type:
+      - text/plain; charset=utf-8
+      Date:
+      - Wed, 10 Jan 2024 13:55:25 GMT
+      ETag:
+      - '"2e6c61bdb02ac01362e0a962bee74f6195f5e5a7"'
+      Vary:
+      - Origin
+      Via:
+      - 1.1 32f35b6a71829a460d6fdae31f270164.cloudfront.net (CloudFront)
+      X-Amz-Cf-Id:
+      - 4xhyEKiiA8s9nJbJZ3T4axj0Mo4FzHrLxo_46e9fcsZ2SAynOKTSYw==
+      X-Amz-Cf-Pop:
+      - PRG50-C1
+      X-Cache:
+      - Miss from cloudfront
+      X-Powered-By:
+      - huggingface-moon
+      X-Repo-Commit:
+      - 8a3d5357ffa541880148f2425c83ba89f7d56172
+      X-Request-Id:
+      - Root=1-659ea1cd-3d9821d0270089d9792ca771;6516916f-1ef6-462b-b063-a9316d239541
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - identity
+      Connection:
+      - keep-alive
+      X-Amzn-Trace-Id:
+      - 2755e564-ecc7-4153-b999-651f7844de2d
+    method: HEAD
+    uri: https://api.com/spaces/huggingface-tools/text-to-video/resolve/main/tool_config.json
+  response:
+    body:
+      string: ''
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Origin:
+      - https://huggingface.co
+      Access-Control-Expose-Headers:
+      - X-Repo-Commit,X-Request-Id,X-Error-Code,X-Error-Message,ETag,Link,Accept-Ranges,Content-Range
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '385'
+      Content-Security-Policy:
+      - default-src none; sandbox
+      Content-Type:
+      - text/plain; charset=utf-8
+      Date:
+      - Wed, 10 Jan 2024 13:55:25 GMT
+      ETag:
+      - '"cdd6dceccef5e71a9da37ad76998b89854413a66"'
+      Vary:
+      - Origin
+      Via:
+      - 1.1 d19bc25644fc0cb24d9e1c2cb87755ca.cloudfront.net (CloudFront)
+      X-Amz-Cf-Id:
+      - LLHo1j29CEb158I2ifuk-zBOPHyoUsiSC15c3pgAYaVVDU8em2URWQ==
+      X-Amz-Cf-Pop:
+      - PRG50-C1
+      X-Cache:
+      - Miss from cloudfront
+      X-Powered-By:
+      - huggingface-moon
+      X-Repo-Commit:
+      - 15f8f33935f9653aa806382d1536f8a48a0c6cc0
+      X-Request-Id:
+      - Root=1-659ea1cd-685f0dc453d3a44f05651d89;2755e564-ecc7-4153-b999-651f7844de2d
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - identity
+      Connection:
+      - keep-alive
+      X-Amzn-Trace-Id:
+      - 0a099591-fbb1-420f-a785-f3ccf2c22fba
+    method: HEAD
+    uri: https://api.com/spaces/huggingface-tools/image-transformation/resolve/main/tool_config.json
+  response:
+    body:
+      string: ''
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Origin:
+      - https://huggingface.co
+      Access-Control-Expose-Headers:
+      - X-Repo-Commit,X-Request-Id,X-Error-Code,X-Error-Message,ETag,Link,Accept-Ranges,Content-Range
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '450'
+      Content-Security-Policy:
+      - default-src none; sandbox
+      Content-Type:
+      - text/plain; charset=utf-8
+      Date:
+      - Wed, 10 Jan 2024 13:55:26 GMT
+      ETag:
+      - '"dd329192016966c852bc1d5e1087a841d657fd5c"'
+      Vary:
+      - Origin
+      Via:
+      - 1.1 b031f43146c9801101822eabdc464390.cloudfront.net (CloudFront)
+      X-Amz-Cf-Id:
+      - 1cMBkWApELkeI5JiCSICmtTGZH_dJoJ5LyMXkwtD6lwazo5QV7_dVA==
+      X-Amz-Cf-Pop:
+      - PRG50-C1
+      X-Cache:
+      - Miss from cloudfront
+      X-Powered-By:
+      - huggingface-moon
+      X-Repo-Commit:
+      - e68ce70e5ed0a15ee73c385bc61940dde6f94307
+      X-Request-Id:
+      - Root=1-659ea1cd-0cf2016854e047fb0245f64d;0a099591-fbb1-420f-a785-f3ccf2c22fba
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - identity
+      Connection:
+      - keep-alive
+      X-Amzn-Trace-Id:
+      - 17effe5e-0168-4ec9-aad8-86829b1dcf99
+    method: HEAD
+    uri: https://api.com/datasets/huggingface-tools/default-prompts/resolve/main/chat_prompt_template.txt
+  response:
+    body:
+      string: ''
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Origin:
+      - https://huggingface.co
+      Access-Control-Expose-Headers:
+      - X-Repo-Commit,X-Request-Id,X-Error-Code,X-Error-Message,ETag,Link,Accept-Ranges,Content-Range
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2827'
+      Content-Security-Policy:
+      - default-src none; sandbox
+      Content-Type:
+      - text/plain; charset=utf-8
+      Date:
+      - Wed, 10 Jan 2024 13:55:26 GMT
+      ETag:
+      - '"28270d79a186420801acd69a51a09558446675e0"'
+      Vary:
+      - Origin
+      Via:
+      - 1.1 d9c696d6d0c92f63870873ced2895baa.cloudfront.net (CloudFront)
+      X-Amz-Cf-Id:
+      - YYFger9SdG2-UCrsNw90P1oC5j2ZKqRZuvpE6BEb8AxTOiIiuxxKJA==
+      X-Amz-Cf-Pop:
+      - PRG50-C1
+      X-Cache:
+      - Miss from cloudfront
+      X-Powered-By:
+      - huggingface-moon
+      X-Repo-Commit:
+      - a77371d1fbdd6e79c535e68847468dcdfcf45fc6
+      X-Request-Id:
+      - Root=1-659ea1ce-31dc95272595011f26f586ec;17effe5e-0168-4ec9-aad8-86829b1dcf99
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - identity
+      Connection:
+      - keep-alive
+      X-Amzn-Trace-Id:
+      - 6200a5a6-f4bc-4f63-b968-5eb00fe980fd
+    method: HEAD
+    uri: https://api.com/datasets/huggingface-tools/default-prompts/resolve/main/run_prompt_template.txt
+  response:
+    body:
+      string: ''
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Origin:
+      - https://huggingface.co
+      Access-Control-Expose-Headers:
+      - X-Repo-Commit,X-Request-Id,X-Error-Code,X-Error-Message,ETag,Link,Accept-Ranges,Content-Range
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2723'
+      Content-Security-Policy:
+      - default-src none; sandbox
+      Content-Type:
+      - text/plain; charset=utf-8
+      Date:
+      - Wed, 10 Jan 2024 13:55:26 GMT
+      ETag:
+      - '"6f0a74693aceb739d5311b23d460f0499b449c16"'
+      Vary:
+      - Origin
+      Via:
+      - 1.1 2a5c925255bb252ff0ed65977311f74e.cloudfront.net (CloudFront)
+      X-Amz-Cf-Id:
+      - 6RkSRstL7E2_1T-YXMjLfNoi2wNk6oMuyFAq6ZMpGB4prEj9afXbBQ==
+      X-Amz-Cf-Pop:
+      - PRG50-C1
+      X-Cache:
+      - Miss from cloudfront
+      X-Powered-By:
+      - huggingface-moon
+      X-Repo-Commit:
+      - a77371d1fbdd6e79c535e68847468dcdfcf45fc6
+      X-Request-Id:
+      - Root=1-659ea1ce-72acd6ca301a7e9058497707;6200a5a6-f4bc-4f63-b968-5eb00fe980fd
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/text/generation/limits?version=2023-11-22
+  response:
+    content: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 10 Jan 2024 13:55:28 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '54'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+    http_version: HTTP/1.1
+    status_code: 200
+- request:
+    body: '{"input": "I will ask you to perform a task, your job is to come up with
+      a series of simple commands in Python that will perform the task.\nTo help you,
+      I will give you access to a set of tools that you can use. Each tool is a Python
+      function and has a description explaining the task it performs, the inputs it
+      expects and the outputs it returns.\nYou should first explain which tool you
+      will use to perform the task and for what reason, then write the code in Python.\nEach
+      instruction in Python should be a simple assignment. You can print intermediate
+      results if it makes sense to do so.\n\nTools:\n- document_qa: This is a tool
+      that answers a question about an document (pdf). It takes an input named `document`
+      which should be the document containing the information, as well as a `question`
+      that is the question about the document. It returns a text that contains the
+      answer to the question.\n- image_captioner: This is a tool that generates a
+      description of an image. It takes an input named `image` which should be the
+      image to caption, and returns a text that contains the description in English.\n-
+      image_qa: This is a tool that answers a question about an image. It takes an
+      input named `image` which should be the image containing the information, as
+      well as a `question` which should be the question in English. It returns a text
+      that is the answer to the question.\n- image_segmenter: This is a tool that
+      creates a segmentation mask of an image according to a label. It cannot create
+      an image. It takes two arguments named `image` which should be the original
+      image, and `label` which should be a text describing the elements what should
+      be identified in the segmentation mask. The tool returns the mask.\n- transcriber:
+      This is a tool that transcribes an audio into text. It takes an input named
+      `audio` and returns the transcribed text.\n- summarizer: This is a tool that
+      summarizes an English text. It takes an input `text` containing the text to
+      summarize, and returns a summary of the text.\n- text_classifier: This is a
+      tool that classifies an English text using provided labels. It takes two inputs:
+      `text`, which should be the text to classify, and `labels`, which should be
+      the list of labels to use for classification. It returns the most likely label
+      in the list of provided `labels` for the input text.\n- text_qa: This is a tool
+      that answers questions related to a text. It takes two arguments named `text`,
+      which is the text where to find the answer, and `question`, which is the question,
+      and returns the answer to the question.\n- text_reader: This is a tool that
+      reads an English text out loud. It takes an input named `text` which should
+      contain the text to read (in English) and returns a waveform object containing
+      the sound.\n- translator: This is a tool that translates text from a language
+      to another. It takes three inputs: `text`, which should be the text to translate,
+      `src_lang`, which should be the language of the text to translate and `tgt_lang`,
+      which should be the language for the desired ouput language. Both `src_lang`
+      and `tgt_lang` are written in plain English, such as ''Romanian'', or ''Albanian''.
+      It returns the text translated in `tgt_lang`.\n- image_transformer: This is
+      a tool that transforms an image according to a prompt. It takes two inputs:
+      `image`, which should be the image to transform, and `prompt`, which should
+      be the prompt to use to change it. The prompt should only contain descriptive
+      adjectives, as if completing the prompt of the original image. It returns the
+      modified image.\n- text_downloader: This is a tool that downloads a file from
+      a `url`. It takes the `url` as input, and returns the text contained in the
+      file.\n- image_generator: This is a tool that creates an image according to
+      a prompt, which is a text description. It takes an input named `prompt` which
+      contains the image description and outputs an image.\n- video_generator: This
+      is a tool that creates a video according to a text description. It takes an
+      input named `prompt` which contains the image description, as well as an optional
+      input `seconds` which will be the duration of the video. The default is of two
+      seconds. The tool outputs a video object.\n\n\nTask: \"Answer the question in
+      the variable `question` about the image stored in the variable `image`. The
+      question is in French.\"\n\nI will use the following tools: `translator` to
+      translate the question into English and then `image_qa` to answer the question
+      on the input image.\n\nAnswer:\n```py\ntranslated_question = translator(question=question,
+      src_lang=\"French\", tgt_lang=\"English\")\nprint(f\"The translated question
+      is {translated_question}.\")\nanswer = image_qa(image=image, question=translated_question)\nprint(f\"The
+      answer is {answer}\")\n```\n\nTask: \"Identify the oldest person in the `document`
+      and create an image showcasing the result.\"\n\nI will use the following tools:
+      `document_qa` to find the oldest person in the document, then `image_generator`
+      to generate an image according to the answer.\n\nAnswer:\n```py\nanswer = document_qa(document,
+      question=\"What is the oldest person?\")\nprint(f\"The answer is {answer}.\")\nimage
+      = image_generator(answer)\n```\n\nTask: \"Generate an image using the text given
+      in the variable `caption`.\"\n\nI will use the following tool: `image_generator`
+      to generate an image.\n\nAnswer:\n```py\nimage = image_generator(prompt=caption)\n```\n\nTask:
+      \"Summarize the text given in the variable `text` and read it out loud.\"\n\nI
+      will use the following tools: `summarizer` to create a summary of the input
+      text, then `text_reader` to read it out loud.\n\nAnswer:\n```py\nsummarized_text
+      = summarizer(text)\nprint(f\"Summary: {summarized_text}\")\naudio_summary =
+      text_reader(summarized_text)\n```\n\nTask: \"Answer the question in the variable
+      `question` about the text in the variable `text`. Use the answer to generate
+      an image.\"\n\nI will use the following tools: `text_qa` to create the answer,
+      then `image_generator` to generate an image according to the answer.\n\nAnswer:\n```py\nanswer
+      = text_qa(text=text, question=question)\nprint(f\"The answer is {answer}.\")\nimage
+      = image_generator(answer)\n```\n\nTask: \"Caption the following `image`.\"\n\nI
+      will use the following tool: `image_captioner` to generate a caption for the
+      image.\n\nAnswer:\n```py\ncaption = image_captioner(image)\n```\n\nTask: \"Summarize
+      the chat\"\n\nI will use the following", "model_id": "meta-llama/llama-2-70b",
+      "parameters": {"max_new_tokens": 500, "stop_sequences": ["Task:"]}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '6535'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation?version=2024-01-10
+  response:
+    content: '{"id":"d0bee33f-8c9a-4653-987d-7cc17b7b21d9","model_id":"meta-llama/llama-2-70b","created_at":"2024-01-10T13:55:34.036Z","results":[{"generated_text":"
+      tool `summarizer` to summarize the chat into two to three sentences.\n\nAnswer:\n```py\nsummarized_text
+      = summarizer(specific part of the chat)\nprint(f\" Summary : {summarized_text}\")\n```\n\nTask:","generated_token_count":61,"input_token_count":1580,"stop_reason":"stop_sequence","stop_sequence":"Task:","seed":2368613394}]}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 10 Jan 2024 13:55:34 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '479'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-01-10'
+      vary:
+      - accept-encoding
+    http_version: HTTP/1.1
+    status_code: 200
+version: 1

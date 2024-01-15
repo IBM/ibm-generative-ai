@@ -1,0 +1,39 @@
+interactions:
+- request:
+    body: '{"input": ["What did the large language model say to its programmer?",
+      "I''m sorry, I''m feeling a bit recursive today. Can you give me a break...
+      statement?"], "model_id": "google/flan-t5-xl", "parameters": {"return_options":
+      {"tokens": true}}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '243'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/tokenization?version=2024-01-10
+  response:
+    content: "{\"model_id\":\"google/flan-t5-xl\",\"created_at\":\"2024-01-10T13:45:04.556Z\",\"results\":[{\"token_count\":13,\"tokens\":[\"\u2581What\",\"\u2581did\",\"\u2581the\",\"\u2581large\",\"\u2581language\",\"\u2581model\",\"\u2581say\",\"\u2581to\",\"\u2581its\",\"\u2581programme\",\"r\",\"?\",\"</s>\"]},{\"token_count\":29,\"tokens\":[\"\u2581I\",\"'\",\"m\",\"\u2581sorry\",\",\",\"\u2581I\",\"'\",\"m\",\"\u2581feeling\",\"\u2581\",\"a\",\"\u2581bit\",\"\u2581\",\"re\",\"curs\",\"ive\",\"\u2581today\",\".\",\"\u2581Can\",\"\u2581you\",\"\u2581give\",\"\u2581me\",\"\u2581\",\"a\",\"\u2581break\",\"...\",\"\u2581statement\",\"?\",\"</s>\"]}]}"
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 10 Jan 2024 13:45:04 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '469'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-01-10'
+      vary:
+      - accept-encoding
+    http_version: HTTP/1.1
+    status_code: 200
+version: 1

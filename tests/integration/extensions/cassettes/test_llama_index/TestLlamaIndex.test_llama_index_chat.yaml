@@ -1,0 +1,45 @@
+interactions:
+- request:
+    body: '{"messages": [{"content": "You are a helpful, respectful and honest assistant.\n    Always
+      answer as helpfully as possible, while being safe.\n    Your answers should
+      not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal
+      content.\n    Please ensure that your responses are socially unbiased and positive
+      in nature. If a question does not make\n    any sense, or is not factually coherent,
+      explain why instead of answering something incorrectly.\n    If you don''t know
+      the answer to a question, please don''t share false information.\n    ", "role":
+      "system"}, {"content": "What is NLP and how it has evolved over the years?",
+      "role": "user"}], "model_id": "google/flan-ul2", "parameters": {}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '718'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/chat?version=2024-01-10
+  response:
+    content: '{"id":"0ea0d534-3171-45ba-af1d-b32126f0ce5a","model_id":"google/flan-ul2","created_at":"2024-01-10T13:44:22.255Z","results":[{"generated_text":"Neuro-Linguistic
+      Programming (NLP) is a set of techniques for communication and personal development.","generated_token_count":25,"input_token_count":130,"stop_reason":"eos_token"}],"conversation_id":"9ea6ffa7-fe6c-4fc1-83ae-9c06cdcbbc6a"}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 10 Jan 2024 13:44:22 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '383'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-01-10'
+      vary:
+      - accept-encoding
+    http_version: HTTP/1.1
+    status_code: 200
+version: 1
