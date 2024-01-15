@@ -30,7 +30,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
         cache: 'poetry'
     - name: Install dependencies
-      run: poetry install --no-interaction
+      run: poetry install --no-interaction --all-extras
     - name: Run E2E Tests
       env:
         GENAI_API: ${{ vars.GENAI_API }}
