@@ -22,6 +22,8 @@ build-backend = "poetry_dynamic_versioning.backend"
 enable = true
 vcs = "git"
 style = "semver"
+strict = true
+metadata = false
 
 [tool.poetry-dynamic-versioning.substitution]
 folders = [
