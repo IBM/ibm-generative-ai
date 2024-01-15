@@ -4,8 +4,8 @@
 ![PyPI](https://img.shields.io/pypi/v/ibm-generative-ai)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/ibm-generative-ai)
 [![Coverage Status](https://coveralls.io/repos/github/IBM/ibm-generative-ai/badge.svg?branch=main)](https://coveralls.io/github/IBM/ibm-generative-ai?branch=main)
-[![Build & Test](https://github.com/IBM/ibm-generative-ai/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/IBM/ibm-generative-ai/actions/workflows/main.yml)
-[![Integration Tests](https://github.com/IBM/ibm-generative-ai/actions/workflows/integration-test.yml/badge.svg)](https://github.com/IBM/ibm-generative-ai/actions/workflows/integration-test.yml)
+[![Build & Unit/Integration Tests](https://github.com/IBM/ibm-generative-ai/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/IBM/ibm-generative-ai/actions/workflows/main.yml)
+[![E2E Tests](https://github.com/IBM/ibm-generative-ai/actions/workflows/integration-test.yml/badge.svg)](https://github.com/IBM/ibm-generative-ai/actions/workflows/e2e-test.yml)
 
 
 This is not the [watsonx.ai](https://www.ibm.com/products/watsonx-ai) Python SDK. This is the Python SDK for the Tech Preview program for IBM Foundation Models Studio. This SDK brings IBM Generative AI (GenAI) into Python programs and provides useful operations and types.
