@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 
 from genai.client import Client
 from genai.credentials import Credentials
+from genai.request import RequestEndpoint, RequestOrigin, RequestStatus
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -26,7 +27,13 @@ def heading(text: str) -> str:
 client = Client(credentials=Credentials.from_env())
 
 print(heading("History of my requests"))
-for history_item in client.request.list(limit=8, offset=0, status="success", origin="api").results:
+for history_item in client.request.list(
+    limit=8,
+    offset=0,
+    status=RequestStatus.SUCCESS,
+    origin=RequestOrigin.API,
+    endpoint=RequestEndpoint.GENERATE,
+).results:
     pprint(history_item.model_dump(include=["request", "created_at", "duration"]))
 
 # Deletes a request

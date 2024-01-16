@@ -97,6 +97,7 @@ ruff = "^0.1.11"
 poethepoet = "^0.24.4"
 pandas = "^2.0.0"
 pyyaml = "^6.0.0"
+tqdm = "^4.66.1"
 
 [tool.poetry.extras]
 langchain = ["langchain", "pyyaml"]
@@ -105,7 +106,7 @@ llama-index = ["llama-index"]
 localserver = ["uvicorn", "fastapi"]
 
 [tool.pytest.ini_options]
-addopts = "--cov --cov-report term-missing --cov-fail-under 80"
+addopts = "--cov --cov-report term-missing --cov-fail-under 80 -v"
 markers = [
     "unit",
     "integration",

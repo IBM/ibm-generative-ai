@@ -9,6 +9,11 @@ from dotenv import load_dotenv
 from genai.client import Client
 from genai.credentials import Credentials
 from genai.text.generation import (
+    CreateExecutionOptions,
+    DecodingMethod,
+    LengthPenalty,
+    ModerationParameters,
+    ModerationStigma,
     TextGenerationParameters,
     TextGenerationReturnOptions,
 )
@@ -34,6 +39,23 @@ client = Client(credentials=Credentials.from_env())
 greeting = "Hello! How are you?"
 lots_of_greetings = [greeting] * 20
 
+moderations = ModerationParameters(
+    stigma=ModerationStigma(input=False, threshold=0.8),
+    # possibly add more moderations:
+    # implicit_hate=ModerationImplicitHate(...),
+    # hap=ModerationHAP(...),
+)
+
+parameters = TextGenerationParameters(
+    max_new_tokens=10,
+    decoding_method=DecodingMethod.SAMPLE,
+    length_penalty=LengthPenalty(start_index=5, decay_factor=1.5),
+    return_options=TextGenerationReturnOptions(
+        # if ordered is False, you can use return_options to retrieve the corresponding prompt
+        input_text=True,
+    ),
+)
+
 print(heading("Generating responses in parallel"))
 # yields batch of results that are produced asynchronously and in parallel
 for idx, response in tqdm(
@@ -41,15 +63,10 @@ for idx, response in tqdm(
         client.text.generation.create(
             model_id="meta-llama/llama-2-70b",
             inputs=lots_of_greetings,
+            moderations=moderations,
             # set to ordered to True if you need results in the same order as prompts
-            execution_options={"ordered": False},
-            parameters=TextGenerationParameters(
-                max_new_tokens=5,
-                return_options=TextGenerationReturnOptions(
-                    # if ordered is False, you can use return_options to retrieve the corresponding prompt
-                    input_text=True,
-                ),
-            ),
+            execution_options=CreateExecutionOptions(ordered=False),
+            parameters=parameters,
         )
     ),
     total=len(lots_of_greetings),

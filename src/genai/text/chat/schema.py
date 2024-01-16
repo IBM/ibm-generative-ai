@@ -3,6 +3,7 @@ from __future__ import annotations
 from genai._generated.api import (
     BaseMessage,
     ChatRole,
+    DecodingMethod,
     LengthPenalty,
     ModerationHAP,
     ModerationImplicitHate,
@@ -48,4 +49,5 @@ __all__ = [
     "StopReason",
     "ModerationParameters",
     "RequestChatConversationIdRetrieveResponse",
+    "DecodingMethod",
 ]
