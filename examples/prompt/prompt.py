@@ -8,10 +8,7 @@ from dotenv import load_dotenv
 
 from genai.client import Client
 from genai.credentials import Credentials
-from genai.text.generation import (
-    TextGenerationParameters,
-    TextGenerationReturnOptions,
-)
+from genai.text.generation import DecodingMethod, LengthPenalty, TextGenerationParameters, TextGenerationReturnOptions
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -35,6 +32,10 @@ create_response = client.prompt.create(
     name=prompt_name,
     input=template,
     data={"meal": "goulash", "author": "Shakespeare"},
+    parameters=TextGenerationParameters(
+        length_penalty=LengthPenalty(decay_factor=1.5),
+        decoding_method=DecodingMethod.SAMPLE,
+    ),
 )
 prompt_id = create_response.result.id
 print(f"Prompt id: {prompt_id}")

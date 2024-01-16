@@ -4,8 +4,14 @@ from dotenv import load_dotenv
 
 from genai.client import Client
 from genai.credentials import Credentials
-from genai.text.chat import HumanMessage, SystemMessage
-from genai.text.generation import DecodingMethod, TextGenerationParameters
+from genai.text.chat import (
+    DecodingMethod,
+    HumanMessage,
+    ModerationHAP,
+    ModerationParameters,
+    SystemMessage,
+    TextGenerationParameters,
+)
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -18,7 +24,7 @@ def heading(text: str) -> str:
     return "\n" + f" {text} ".center(80, "=") + "\n"
 
 
-params = TextGenerationParameters(
+parameters = TextGenerationParameters(
     decoding_method=DecodingMethod.SAMPLE, max_new_tokens=128, min_new_tokens=30, temperature=0.7, top_k=50, top_p=1
 )
 
@@ -41,6 +47,7 @@ If you don't know the answer to a question, please don't share false information
         ),
         HumanMessage(content=prompt),
     ],
+    parameters=parameters,
 )
 conversation_id = response.conversation_id
 print(f"Conversation ID: {conversation_id}")
@@ -51,6 +58,7 @@ print(heading("Continue with a conversation"))
 prompt = "How can I start?"
 response = client.text.chat.create(
     messages=[HumanMessage(content=prompt)],
+    moderations=ModerationParameters(hap=ModerationHAP(threshold=0.8)),
     conversation_id=conversation_id,
     use_conversation_parameters=True,
 )

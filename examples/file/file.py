@@ -11,7 +11,7 @@ from pprint import pprint
 from dotenv import load_dotenv
 
 from genai.client import Client, Credentials
-from genai.file import FileListSortBy, SortDirection
+from genai.file import FileListSortBy, FilePurpose, SortDirection
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -34,7 +34,7 @@ with tempfile.NamedTemporaryFile(delete=True, suffix=".json") as tmp:
     filename = os.path.basename(tmp.name)
 
     print(heading("Upload file"))
-    upload_result = client.file.create(file_path=tmp.name, purpose="tune")
+    upload_result = client.file.create(file_path=tmp.name, purpose=FilePurpose.TUNE)
     file_id = upload_result.result.id
     print(f"File ID: {file_id}")
 
@@ -45,6 +45,7 @@ with tempfile.NamedTemporaryFile(delete=True, suffix=".json") as tmp:
             search=filename,
             sort_by=FileListSortBy.CREATED_AT,
             direction=SortDirection.DESC,
+            purpose=FilePurpose.TUNE,
         ).results:
             pprint(file.model_dump())
 

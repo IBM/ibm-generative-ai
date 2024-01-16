@@ -7,7 +7,12 @@ import pytest
 logger = logging.getLogger(__name__)
 
 all_scripts = list(pathlib.Path(__file__, "../../../examples").resolve().rglob("*.py"))
-ignore_files = {"huggingface_agent.py", "tune.py"}  # exclude long-running examples (resort to integration tests)
+ignore_files = {
+    "__init__.py",
+    # exclude long-running examples (resort to integration tests)
+    "huggingface_agent.py",
+    "tune.py",
+}
 scripts = {script for script in all_scripts if script.name not in ignore_files}
 
 
