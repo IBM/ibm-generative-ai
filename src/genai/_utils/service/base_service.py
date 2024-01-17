@@ -12,6 +12,7 @@ from genai._generated.endpoints import ApiEndpoint
 from genai._utils.api_client import ApiClient
 from genai._utils.general import to_model_instance
 from genai._utils.http_client.httpx_client import AsyncHttpxClient, HttpxClient
+from genai._utils.service.metadata import inherit_metadata
 from genai._utils.shared_options import CommonExecutionOptions
 from genai._utils.validators import assert_is_not_empty_string
 
@@ -47,6 +48,25 @@ class BaseService(Generic[TConfig, TServices], ABC):
 
     Config: type[TConfig] = cast(type[TConfig], BaseServiceConfig)
     Services: type[TServices] = cast(type[TServices], BaseServiceServices)
+
+    @classmethod
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+
+        for name in dir(cls):
+            method = getattr(cls, name, None)
+            if not callable(method) or name.startswith("__"):
+                continue
+
+            for base_cls in cls.__bases__:
+                if not issubclass(base_cls, BaseService):
+                    continue
+
+                target = getattr(base_cls, name, None)
+                if not target:
+                    continue
+
+                inherit_metadata(source=target, target=method)
 
     def __init__(
         self,

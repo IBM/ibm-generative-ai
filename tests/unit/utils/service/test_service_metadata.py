@@ -1,3 +1,5 @@
+import pytest
+
 from genai._generated.endpoints import ApiEndpoint
 from genai._utils.service.metadata import (
     get_service_action_metadata,
@@ -9,6 +11,7 @@ class DummyEndpoint(ApiEndpoint):
     pass
 
 
+@pytest.mark.unit
 def test_metadata_retrieval():
     @set_service_action_metadata(endpoint=DummyEndpoint)
     def create():
@@ -18,6 +21,7 @@ def test_metadata_retrieval():
     assert metadata.endpoint == DummyEndpoint
 
 
+@pytest.mark.unit
 def test_parameters_not_influenced():
     @set_service_action_metadata(endpoint=DummyEndpoint)
     def create(a: int, b: int, c: int):
