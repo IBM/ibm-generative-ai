@@ -18,8 +18,18 @@ call our prepared function.
 Example can be found :ref:`here <examples.extra.shutdown_handling>`.
 
 
-When I run multiple text generations simultaneously one is hanging.
--------------------------------------------------------------------
+Which endpoints version SDK uses?
+---------------------------------
+
+Use the following options to determine which version of a given endpoint SDK uses.
+
+1. From the :doc:`Changelog <changelog>` ("API Endpoint Versions" section) under concrete release.
+
+2. Find it programmatically by retrieving the concrete method's metadata (see :ref:`example <examples.extra.service_metadata>`).
+
+
+When I run multiple text generations simultaneously one is hanging, how to fix that?
+------------------------------------------------------------------------------------
 
 When you run a text generation task, the SDK first retrieves your maximal concurrency limit (this limit can vary from
 user to user, but generally, there is a default) and use it as the upper bound.

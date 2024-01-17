@@ -9,7 +9,7 @@ from typing import Iterator
 
 import pytest
 
-from genai._utils.base_service import BaseService
+from genai._utils.service import BaseService
 
 
 def _import_submodules(package_name):

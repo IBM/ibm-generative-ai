@@ -18,17 +18,19 @@ from genai._generated.endpoints import (
     PromptRetrieveEndpoint,
 )
 from genai._types import EnumLike, EnumLikeOrEnumLikeList, ModelLike
-from genai._utils.base_service import (
-    BaseService,
-    BaseServiceConfig,
-    BaseServiceServices,
-)
 from genai._utils.general import (
     cast_list,
     to_enum,
     to_enum_optional,
     to_model_instance,
     to_model_optional,
+)
+from genai._utils.service import (
+    BaseService,
+    BaseServiceConfig,
+    BaseServiceServices,
+    get_service_action_metadata,
+    set_service_action_metadata,
 )
 from genai._utils.validators import assert_is_not_empty_string
 from genai.prompt.schema import (
@@ -47,6 +49,7 @@ __all__ = ["PromptService"]
 
 
 class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
+    @set_service_action_metadata(endpoint=PromptCreateEndpoint)
     def create(
         self,
         *,
@@ -87,13 +90,15 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
         self._log_method_execution("Prompts Create", **request_body)
 
         with self._get_http_client() as client:
+            metadata = get_service_action_metadata(self.create)
             response = client.post(
-                url=self._get_endpoint(PromptCreateEndpoint),
+                url=self._get_endpoint(metadata.endpoint),
                 params=PromptCreateParametersQuery().model_dump(),
                 json=request_body,
             )
             return PromptCreateResponse(**response.json())
 
+    @set_service_action_metadata(endpoint=PromptIdRetrieveEndpoint)
     def retrieve(
         self,
         id: str,
@@ -108,12 +113,14 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
         self._log_method_execution("Prompts Retrieve", id=id)
 
         with self._get_http_client() as client:
+            metadata = get_service_action_metadata(self.retrieve)
             response = client.get(
-                url=self._get_endpoint(PromptIdRetrieveEndpoint, id=id),
+                url=self._get_endpoint(metadata.endpoint, id=id),
                 params=PromptIdRetrieveParametersQuery().model_dump(),
             )
             return PromptIdRetrieveResponse(**response.json())
 
+    @set_service_action_metadata(endpoint=PromptIdUpdateEndpoint)
     def update(
         self,
         id: str,
@@ -154,13 +161,15 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
         self._log_method_execution("Prompts Update", **request_body)
 
         with self._get_http_client() as client:
+            metadata = get_service_action_metadata(self.update)
             response = client.post(
-                url=self._get_endpoint(PromptIdUpdateEndpoint, id=id),
+                url=self._get_endpoint(metadata.endpoint, id=id),
                 params=PromptIdUpdateParametersQuery().model_dump(),
                 json=request_body,
             )
             return PromptIdUpdateResponse(**response.json())
 
+    @set_service_action_metadata(endpoint=PromptRetrieveEndpoint)
     def list(
         self,
         *,
@@ -188,9 +197,11 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
         self._log_method_execution("Prompts List", **request_parameters)
 
         with self._get_http_client() as client:
-            response = client.get(url=self._get_endpoint(PromptRetrieveEndpoint), params=request_parameters)
+            metadata = get_service_action_metadata(self.list)
+            response = client.get(url=self._get_endpoint(metadata.endpoint), params=request_parameters)
             return PromptRetrieveResponse(**response.json())
 
+    @set_service_action_metadata(endpoint=PromptIdDeleteEndpoint)
     def delete(
         self,
         id: str,
@@ -205,7 +216,8 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
         self._log_method_execution("Prompts Delete", id=id)
 
         with self._get_http_client() as client:
+            metadata = get_service_action_metadata(self.delete)
             client.delete(
-                url=self._get_endpoint(PromptIdDeleteEndpoint, id=id),
+                url=self._get_endpoint(metadata.endpoint, id=id),
                 params=PromptIdDeleteParametersQuery().model_dump(),
             )

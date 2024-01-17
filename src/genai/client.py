@@ -5,12 +5,12 @@ from typing import Optional, overload
 from genai._types import ModelLike
 from genai._utils.api_client import ApiClient
 from genai._utils.api_client import BaseConfig as ApiClientConfig
-from genai._utils.base_service import (
+from genai._utils.general import to_model_instance
+from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
     BaseServiceServices,
 )
-from genai._utils.general import to_model_instance
 from genai.credentials import Credentials
 from genai.file import FileService as _FileService
 from genai.model import ModelService as _ModelService

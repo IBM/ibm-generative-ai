@@ -5,8 +5,8 @@ from pydantic import BaseModel, ValidationError
 
 from genai._generated.endpoints import ApiEndpoint
 from genai._utils.api_client import ApiClient
-from genai._utils.base_service import BaseService
 from genai._utils.http_client.httpx_client import AsyncHttpxClient, HttpxClient
+from genai._utils.service import BaseService
 from genai._utils.shared_loop import shared_event_loop
 from genai.credentials import Credentials
 
