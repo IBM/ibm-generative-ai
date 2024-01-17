@@ -4,6 +4,7 @@ repos:
     hooks:
       - id: check-yaml
       - id: end-of-file-fixer
+        exclude: ^(scripts/docs_changelog_generator/.*\.tpl)$
       - id: trailing-whitespace
       - id: check-merge-conflict
       - id: check-case-conflict

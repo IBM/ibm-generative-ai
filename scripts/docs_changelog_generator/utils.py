@@ -1,20 +1,25 @@
+import contextlib
 import unicodedata
+from contextvars import ContextVar
 from pathlib import Path
+from typing import TypeVar
 
 from gitchangelog.gitchangelog import GitCommit, GitRepos
 
-DEFAULT_REPO_URL = "https://github.com/IBM/ibm-generative-ai"
+from docs_changelog_generator.config import config_context_var
 
 
 def output_engine_pipeline(render_fn):
+    config = config_context_var.get()
+
     def _process(output_engine):
-        return lambda data, opts: output_engine(*render_fn(data, opts))
+        return lambda data, opts: output_engine(*render_fn(data, opts, config))
 
     return _process
 
 
 class GithubRSTLinks:
-    def __init__(self, repo_url=DEFAULT_REPO_URL):
+    def __init__(self, repo_url: str):
         self._repo_url = repo_url
 
     def _link(self, text: str, url: str):
@@ -27,7 +32,7 @@ class GithubRSTLinks:
         return self._link(f"#({pr_id})", f"{self._repo_url}/pull/{pr_id}")
 
     def link_to_compare(self, ref1: str, ref2: str) -> str:
-        return f'**Full Changelog**: {self._link(f"{ref1}...{ref2}", f"{self._repo_url}/compare/{ref1}...{ref2}")}'
+        return self._link(f"{ref1}...{ref2}", f"{self._repo_url}/compare/{ref1}...{ref2}")
 
 
 def shave_marks(txt: str) -> str:
@@ -43,3 +48,15 @@ def shave_marks(txt: str) -> str:
 def get_git_tags() -> list[GitCommit]:
     repository = GitRepos(Path(__file__).parent.absolute())
     return repository.tags()
+
+
+T = TypeVar("T")
+
+
+@contextlib.contextmanager
+def use_context(context_var: ContextVar[T], value: T) -> None:
+    reset_token = context_var.set(value)
+    try:
+        yield
+    finally:
+        context_var.reset(reset_token)

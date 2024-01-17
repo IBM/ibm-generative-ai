@@ -1,61 +1,22 @@
+from contextvars import ContextVar
 from pathlib import Path
 
 import dotenv
-from gitchangelog.gitchangelog import Caret, FileFirstRegexMatch, FileRegexSubst, mustache
+from pydantic import BaseModel
 
-from docs_changelog_generator.generate_changelog import (
-    DIRNAME,
-    inject_author_usernames,
-    inject_compare_link,
-    inject_versions,
-    subject_process,
-)
-
+dirname = Path(__file__).parent.absolute()
 dotenv.load_dotenv()
 
-MUSTACHE_TEMPLATE_PATH = str(DIRNAME / Path("mustache_rst.tpl"))
-OUTPUT_FILE = Path(DIRNAME) / Path("../../documentation/source/changelog.rst")
-INSERT_POINT_REGEX = r"""(?isxu)
-^
-(
-  \s*Changelog\s*(\n|\r\n|\r)        ## ``Changelog`` line
-  ==+\s*(\n|\r\n|\r){2}              ## ``=========`` rest underline
-)
 
-(                     ## Match all between changelog and release rev
-    (
-      (?!
-         (?<=(\n|\r))                ## look back for newline
-         %(rev)s                     ## revision
-         \s+
-         \([0-9]+-[0-9]{2}-[0-9]{2}\)(\n|\r\n|\r)   ## date
-           --+(\n|\r\n|\r)                          ## ``---`` underline
-      )
-      .
-    )*
-)
-
-(?P<rev>%(rev)s)
-""" % {"rev": r"v[0-9]+\.[0-9]+(\.[0-9]+)?"}
-
-section_regexps = [
-    ("New", [r"^[nN]ew\s*:\s*((dev|use?r|pkg|test|doc)\s*:\s*)?([^\n]*)$"]),
-    ("Changes", [r"^[cC]hg\s*:\s*((dev|use?r|pkg|test|doc)\s*:\s*)?([^\n]*)$"]),
-    ("🐛 Bug Fixes", [r"^[fF]ix\s*:\s*((dev|use?r|pkg|test|doc)\s*:\s*)?([^\n]*)$"]),
-    ("🚀 Features / Enhancements", [r"^[fF]eat\s*:\s*((dev|use?r|pkg|test|doc)\s*:\s*)?([^\n]*)$"]),
-    ("📖 Docs", [r"^[dD]ocs?\s*:\s*((dev|use?r|pkg|test|doc)\s*:\s*)?([^\n]*)$"]),
-    ("⚙️ Other", None),  ## Match all lines
-]
+class ChangelogConfig(BaseModel):
+    output_file_path: Path = Path(dirname, "../../documentation/source/changelog.rst")
+    author_names_mapping_path: Path = dirname / Path("authors_by_name.yaml")
+    mustache_template_path: Path = dirname / Path("mustache_rst.tpl")
+    gitchangelog_config_path: Path = dirname / Path("gitchangelog_config.py")
+    repo_url: str = "https://github.com/IBM/ibm-generative-ai"
+    repo_api_url: str = "https://api.github.com/repos/IBM/ibm-generative-ai"
+    unreleased_version_label: str = "(unreleased)"  # Changing this requires manual update in existing changelog
 
 
-subject_process = subject_process
-unreleased_version_label = "(unreleased)"
-
-revs = [Caret(FileFirstRegexMatch(OUTPUT_FILE, INSERT_POINT_REGEX)), "HEAD"]
-
-output_engine = mustache(MUSTACHE_TEMPLATE_PATH)
-output_engine = inject_author_usernames(output_engine)
-output_engine = inject_compare_link(output_engine)
-output_engine = inject_versions(output_engine)
-
-publish = FileRegexSubst(OUTPUT_FILE, INSERT_POINT_REGEX, r"\1\o\g<rev>")
+DefaultChangelogConfig = ChangelogConfig()
+config_context_var = ContextVar[ChangelogConfig]("config", default=DefaultChangelogConfig)

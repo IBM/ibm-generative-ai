@@ -8,6 +8,7 @@ Changelog
 📖 Docs
 ^^^^^^
 - docs: add changelog [`@jezekra1 <https://github.com/jezekra1>`_]
+- docs: improve examples `#(258) <https://github.com/IBM/ibm-generative-ai/pull/258>`_ [`@jezekra1 <https://github.com/jezekra1>`_]
 - docs: update badges [`@Tomas2D <https://github.com/Tomas2D>`_]
 
 **Full Changelog**: `v2.0.0...HEAD <https://github.com/IBM/ibm-generative-ai/compare/v2.0.0...HEAD>`_
@@ -148,14 +149,13 @@ Here is a little sneak peek.
     POST      /v2/user                            2023-11-22
     ========  ==================================  ======================
 
-
 v0.6.1 (2023-12-20)
 -------------------
 
 
-* fix: correct llama-index import for new version by @David-Kristek in `#243 <https://github.com/IBM/ibm-generative-ai/pull/243>`_
-* fix(examples): correct Hugging Face example prompt by @David-Kristek in `#244 <https://github.com/IBM/ibm-generative-ai/pull/244>`_
-* fix: prevent duplicating template with same name by @Tomas2D in `#245 <https://github.com/IBM/ibm-generative-ai/pull/245>`_
+* fix: correct llama-index import for new version by `@David-Kristek <https://github.com/David-Kristek>`_ in `#(243) <https://github.com/IBM/ibm-generative-ai/pull/243>`_
+* fix(examples): correct Hugging Face example prompt by `@David-Kristek <https://github.com/David-Kristek>`_ in `#(244) <https://github.com/IBM/ibm-generative-ai/pull/244>`_
+* fix: prevent duplicating template with same name by `@Tomas2D <https://github.com/Tomas2D>`_ in `#(245) <https://github.com/IBM/ibm-generative-ai/pull/245>`_
 
 **Full Changelog**: `v0.6.0...v0.6.1 <https://github.com/IBM/ibm-generative-ai/compare/v0.6.0...v0.6.1>`_
 
@@ -164,16 +164,16 @@ v0.6.0 (2023-12-08)
 -------------------
 
 
-* feat(extensions): add support for llamaindex by @David-Kristek in `#238 <https://github.com/IBM/ibm-generative-ai/pull/238>`_
-* fix: update aiohttp to support python 3.12 by @Tomas2D in `#239 <https://github.com/IBM/ibm-generative-ai/pull/239>`_
-* fix: add missing **init**.py in package to fix broken import by @jezekra1 in `#241 <https://github.com/IBM/ibm-generative-ai/pull/241>`_
-* fix: update maximal local concurrency limit based on API response by @Tomas2D in `#242 <https://github.com/IBM/ibm-generative-ai/pull/242>`_
+* feat(extensions): add support for llamaindex by `@David-Kristek <https://github.com/David-Kristek>`_ in `#(238) <https://github.com/IBM/ibm-generative-ai/pull/238>`_
+* fix: update aiohttp to support python 3.12 by `@Tomas2D <https://github.com/Tomas2D>`_ in `#(239) <https://github.com/IBM/ibm-generative-ai/pull/239>`_
+* fix: add missing **init**.py in package to fix broken import by `@jezekra1 <https://github.com/jezekra1>`_ in `#(241) <https://github.com/IBM/ibm-generative-ai/pull/241>`_
+* fix: update maximal local concurrency limit based on API response by `@Tomas2D <https://github.com/Tomas2D>`_ in `#(242) <https://github.com/IBM/ibm-generative-ai/pull/242>`_
 
 New Contributors
 ^^^^^^^^^^^^^^^^
 
 
-* @jezekra1 made their first contribution in `#241 <https://github.com/IBM/ibm-generative-ai/pull/241>`_
+* `@jezekra1 <https://github.com/jezekra1>`_ made their first contribution in `#(241) <https://github.com/IBM/ibm-generative-ai/pull/241>`_
 
 **Full Changelog**: `v0.5.1...v0.5.2 <https://github.com/IBM/ibm-generative-ai/compare/v0.5.1...v0.5.2>`_
 
@@ -341,9 +341,9 @@ v0.2.7 (2023-09-15)
 -------------------
 
 
-* feat(langchain) - generate method by @Tomas2D in `#157 <https://github.com/IBM/ibm-generative-ai/pull/157>`_
-* fix(params): do not strip special characters by @Tomas2D in `#153 <https://github.com/IBM/ibm-generative-ai/pull/153>`_
-* fix: correct httpx dependency version by @Tomas2D in `#158 <https://github.com/IBM/ibm-generative-ai/pull/158>`_
+* feat(langchain) - generate method by `@Tomas2D <https://github.com/Tomas2D>`_ in `#(157) <https://github.com/IBM/ibm-generative-ai/pull/157>`_
+* fix(params): do not strip special characters by `@Tomas2D <https://github.com/Tomas2D>`_ in `#(153) <https://github.com/IBM/ibm-generative-ai/pull/153>`_
+* fix: correct httpx dependency version by `@Tomas2D <https://github.com/Tomas2D>`_ in `#(158) <https://github.com/IBM/ibm-generative-ai/pull/158>`_
 
 **Full Changelog**: `v0.2.6...v0.2.7 <https://github.com/IBM/ibm-generative-ai/compare/v0.2.6...v0.2.7>`_
 
@@ -352,21 +352,21 @@ v0.2.6 (2023-09-11)
 -------------------
 
 
-* feat(langchain): add streaming support by @Tomas2D in `#144 <https://github.com/IBM/ibm-generative-ai/pull/144>`_
-* feat(http): allow override httpx options by @Tomas2D in `#149 <https://github.com/IBM/ibm-generative-ai/pull/149>`_
-* feat: add typical_p parameter by @Tomas2D in `#135 <https://github.com/IBM/ibm-generative-ai/pull/135>`_
-* chore: update examples by @Tomas2D in `#136 <https://github.com/IBM/ibm-generative-ai/pull/136>`_
-* docs: mention CLI in README by @Tomas2D in `#143 <https://github.com/IBM/ibm-generative-ai/pull/143>`_
-* chore: adding escapting of backslashes for re.sub value by @assaftibm in `#84 <https://github.com/IBM/ibm-generative-ai/pull/84>`_
-* chore: correct README.md typo by @ind1go in `#148 <https://github.com/IBM/ibm-generative-ai/pull/148>`_
-* update schema for stop_sequences generate param by @mirianfsilva in `#142 <https://github.com/IBM/ibm-generative-ai/pull/142>`_
+* feat(langchain): add streaming support by `@Tomas2D <https://github.com/Tomas2D>`_ in `#(144) <https://github.com/IBM/ibm-generative-ai/pull/144>`_
+* feat(http): allow override httpx options by `@Tomas2D <https://github.com/Tomas2D>`_ in `#(149) <https://github.com/IBM/ibm-generative-ai/pull/149>`_
+* feat: add typical_p parameter by `@Tomas2D <https://github.com/Tomas2D>`_ in `#(135) <https://github.com/IBM/ibm-generative-ai/pull/135>`_
+* chore: update examples by `@Tomas2D <https://github.com/Tomas2D>`_ in `#(136) <https://github.com/IBM/ibm-generative-ai/pull/136>`_
+* docs: mention CLI in README by `@Tomas2D <https://github.com/Tomas2D>`_ in `#(143) <https://github.com/IBM/ibm-generative-ai/pull/143>`_
+* chore: adding escapting of backslashes for re.sub value by `@assaftibm <https://github.com/assaftibm>`_ in `#(84) <https://github.com/IBM/ibm-generative-ai/pull/84>`_
+* chore: correct README.md typo by `@ind1go <https://github.com/ind1go>`_ in `#(148) <https://github.com/IBM/ibm-generative-ai/pull/148>`_
+* update schema for stop_sequences generate param by `@mirianfsilva <https://github.com/mirianfsilva>`_ in `#(142) <https://github.com/IBM/ibm-generative-ai/pull/142>`_
 
 New Contributors
 ^^^^^^^^^^^^^^^^
 
 
-* @assaftibm made their first contribution in `#84 <https://github.com/IBM/ibm-generative-ai/pull/84>`_
-* @ind1go made their first contribution in `#148 <https://github.com/IBM/ibm-generative-ai/pull/148>`_
+* `@assaftibm <https://github.com/assaftibm>`_ made their first contribution in `#(84) <https://github.com/IBM/ibm-generative-ai/pull/84>`_
+* `@ind1go <https://github.com/ind1go>`_ made their first contribution in `#(148) <https://github.com/IBM/ibm-generative-ai/pull/148>`_
 
 **Full Changelog**: `v0.2.5...v0.2.6 <https://github.com/IBM/ibm-generative-ai/compare/v0.2.5...v0.2.6>`_
 

@@ -4,12 +4,14 @@ from datetime import datetime
 import m2r
 import requests
 
-from docs_changelog_generator.config import OUTPUT_FILE
+from docs_changelog_generator.config import ChangelogConfig, DefaultChangelogConfig
+from docs_changelog_generator.utils import GithubRSTLinks
 
 
-def _parse_github_releases() -> list[str]:
+def parse_github_releases(config: ChangelogConfig) -> list[str]:
     """Function to parse github release notes, if that's ever needed again."""
-    releases = requests.get("https://api.github.com/repos/ibm/ibm-generative-ai/releases").json()
+    releases = requests.get(f"{config.repo_api_url}/releases").json()
+    github_links = GithubRSTLinks(config.repo_url)
 
     result = ["Changelog", "=========", "\n"]
     for release in releases:
@@ -21,7 +23,7 @@ def _parse_github_releases() -> list[str]:
         result += ["-" * len(name)]
 
         class MyRenderer(m2r.RestRenderer):
-            hmarks = {1: "^", 2: "^", 3: "^", 4: "^", 5: "^", 6: "^"}
+            hmarks = {1: "^", 2: "^", 3: "^", 4: "^", 5: "^", 6: "^"}  # unify all headings to the same level
 
         body_pre_convert = release["body"]
         # Remove "What's changed" header
@@ -32,17 +34,14 @@ def _parse_github_releases() -> list[str]:
 
         # Convert compare links
         body_converted = re.sub(
-            r"https://github.com/IBM/ibm-generative-ai/compare/v([0-9]\.[0-9]\.[0-9])...v([0-9]\.[0-9]\.[0-9])",
-            "`v\\1...v\\2 <https://github.com/IBM/ibm-generative-ai/compare/v\\1...v\\2>`_",
+            rf"{config.repo_url}/compare/(v[0-9]\.[0-9]\.[0-9])...(v[0-9]\.[0-9]\.[0-9])",
+            github_links.link_to_compare("\\1", "\\2"),
             body_converted,
         )
-
         # Convert PR links
-        body_converted = re.sub(
-            "https://github.com/IBM/ibm-generative-ai/pull/([0-9]*)",
-            "`#\\1 <https://github.com/IBM/ibm-generative-ai/pull/\\1>`_",
-            body_converted,
-        )
+        body_converted = re.sub(rf"{config.repo_url}/pull/([0-9]*)", github_links.link_to_pr("\\1"), body_converted)
+        # Convert User links
+        body_converted = re.sub(r"@(\S+)", github_links.link_to_user("\\1"), body_converted)
 
         # Convert emojis
         body_converted = (
@@ -59,6 +58,7 @@ def _parse_github_releases() -> list[str]:
 
 
 if __name__ == "__main__":
-    changelog = _parse_github_releases()
-    with open(OUTPUT_FILE, "w") as f:
+    config = DefaultChangelogConfig
+    changelog = parse_github_releases(config)
+    with open(config.output_file_path, "w") as f:
         f.writelines(changelog)
