@@ -23,13 +23,13 @@ from genai.text.generation import (
 )
 
 try:
-    from langchain.callbacks.manager import (
+    from langchain_core.callbacks.manager import (
         AsyncCallbackManagerForLLMRun,
         CallbackManagerForLLMRun,
     )
-    from langchain.llms.base import LLM
-    from langchain.schema import BaseMessage, LLMResult, get_buffer_string
-    from langchain.schema.output import GenerationChunk
+    from langchain_core.language_models.llms import LLM
+    from langchain_core.messages import BaseMessage, get_buffer_string
+    from langchain_core.outputs import GenerationChunk, LLMResult
 
     from genai.extensions.langchain.utils import (
         create_llm_output,
