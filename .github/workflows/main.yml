@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11"]
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
     steps:
     - uses: actions/checkout@v4
     - name: Install poetry
@@ -33,7 +33,12 @@ jobs:
         python-version: ${{ matrix.python-version }}
         cache: 'poetry'
     - name: Install dependencies
-      run: poetry install --no-interaction --all-extras
+      run: |
+        if [[ $(python -c "import sys; print(sys.version_info[:2] >= (3, 12))") == "True" ]]; then
+          poetry install --no-interaction -E llama-index -E localserver -E langchain
+        else
+          poetry install --no-interaction --all-extras
+        fi
     - name: Lint with pre-commit
       run: |
         poetry run pre-commit install
