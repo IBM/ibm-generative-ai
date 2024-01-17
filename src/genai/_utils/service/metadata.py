@@ -4,7 +4,7 @@ from pydantic import BaseModel, ConfigDict, field_serializer
 
 from genai._generated.endpoints import ApiEndpoint
 
-__all__ = ["set_service_action_metadata", "get_service_action_metadata"]
+__all__ = ["set_service_action_metadata", "get_service_action_metadata", "inherit_metadata"]
 
 
 class ServiceActionMetadata(BaseModel):
@@ -25,6 +25,14 @@ class ServiceActionMetadata(BaseModel):
 _METADATA_KEY = "_metadata"
 
 T = TypeVar("T", bound=Callable)
+
+
+def inherit_metadata(*, source: Callable, target: Callable) -> None:
+    source_meta = getattr(source, _METADATA_KEY, None)
+    target_meta = getattr(target, _METADATA_KEY, None)
+
+    if source_meta is not None and target_meta is None:
+        setattr(target, _METADATA_KEY, source_meta)
 
 
 def set_service_action_metadata(*, endpoint: type[ApiEndpoint]):
