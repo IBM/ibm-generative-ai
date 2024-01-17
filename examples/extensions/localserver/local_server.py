@@ -1,4 +1,12 @@
-"""Use a local server with a custom model"""
+"""
+Use a local server with a custom model
+
+.. admonition:: Python 3.12 support
+    :class: warning
+
+    The transformers library is not supported in python 3.12 yet due to the lack of pytorch support for 3.12.
+    Follow the `pytorch issue <https://github.com/pytorch/pytorch/issues/110436>`_ for more information.
+"""
 
 import logging
 
