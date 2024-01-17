@@ -17,12 +17,14 @@ from genai._generated.endpoints import (
     FileRetrieveEndpoint,
 )
 from genai._types import EnumLike
-from genai._utils.base_service import (
+from genai._utils.general import to_enum, to_enum_optional
+from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
     BaseServiceServices,
+    get_service_action_metadata,
+    set_service_action_metadata,
 )
-from genai._utils.general import to_enum, to_enum_optional
 from genai._utils.validators import assert_is_not_empty_string
 from genai.file.schema import (
     FileCreateResponse,
@@ -37,6 +39,7 @@ __all__ = ["FileService"]
 
 
 class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
+    @set_service_action_metadata(endpoint=FileCreateEndpoint)
     def create(
         self,
         file_path: Union[str, Path],
@@ -64,14 +67,16 @@ class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
             self._log_method_execution("File Create", **request_body)
 
             with self._get_http_client() as client:
+                metadata = get_service_action_metadata(self.create)
                 response = client.post(
-                    url=self._get_endpoint(FileCreateEndpoint),
+                    url=self._get_endpoint(metadata.endpoint),
                     params=FileCreateParametersQuery().model_dump(),
                     files={"file": (file_path.name, file_read_stream)},
                     data=request_body,
                 )
                 return FileCreateResponse(**response.json())
 
+    @set_service_action_metadata(endpoint=FileIdContentRetrieveEndpoint)
     def read(
         self,
         id: str,
@@ -91,14 +96,16 @@ class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
         """
         assert_is_not_empty_string(id)
         self._log_method_execution("File Read", id=id)
+        metadata = get_service_action_metadata(self.read)
 
         with self._get_http_client() as client:
             response = client.get(
-                url=self._get_endpoint(FileIdContentRetrieveEndpoint, id=id),
+                url=self._get_endpoint(metadata.endpoint, id=id),
                 params=FileIdContentRetrieveParametersQuery().model_dump(),
             )
             return response.content.decode("utf-8")
 
+    @set_service_action_metadata(endpoint=FileIdRetrieveEndpoint)
     def retrieve(
         self,
         id: str,
@@ -120,12 +127,14 @@ class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
         self._log_method_execution("File Retrieve", id=id)
 
         with self._get_http_client() as client:
+            metadata = get_service_action_metadata(self.retrieve)
             response = client.get(
-                url=self._get_endpoint(FileIdRetrieveEndpoint, id=id),
+                url=self._get_endpoint(metadata.endpoint, id=id),
                 params=FileIdRetrieveParametersQuery().model_dump(),
             )
             return FileIdRetrieveResponse(**response.json())
 
+    @set_service_action_metadata(endpoint=FileRetrieveEndpoint)
     def list(
         self,
         *,
@@ -164,12 +173,14 @@ class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
         self._log_method_execution("File List", **request_params)
 
         with self._get_http_client() as client:
+            metadata = get_service_action_metadata(self.list)
             response = client.get(
-                url=self._get_endpoint(FileRetrieveEndpoint),
+                url=self._get_endpoint(metadata.endpoint),
                 params=request_params,
             )
             return FileRetrieveResponse(**response.json())
 
+    @set_service_action_metadata(endpoint=FileIdDeleteEndpoint)
     def delete(self, id: str) -> None:
         """
         Deletes a file with the given ID.
@@ -186,7 +197,8 @@ class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
         self._log_method_execution("File Delete", id=id)
 
         with self._get_http_client() as client:
+            metadata = get_service_action_metadata(self.delete)
             client.delete(
-                url=self._get_endpoint(FileIdDeleteEndpoint, id=id),
+                url=self._get_endpoint(metadata.endpoint, id=id),
                 params=FileIdDeleteParametersQuery().model_dump(),
             )

@@ -20,16 +20,18 @@ from genai._generated.endpoints import (
 from genai._types import ModelLike
 from genai._utils.api_client import ApiClient
 from genai._utils.async_executor import execute_async
-from genai._utils.base_service import (
-    BaseService,
-    BaseServiceConfig,
-    BaseServiceServices,
-    CommonExecutionOptions,
-)
 from genai._utils.general import (
     prompts_to_strings,
     to_model_instance,
     to_model_optional,
+)
+from genai._utils.service import (
+    BaseService,
+    BaseServiceConfig,
+    BaseServiceServices,
+    CommonExecutionOptions,
+    get_service_action_metadata,
+    set_service_action_metadata,
 )
 from genai.text.generation._generation_utils import generation_stream_handler
 from genai.text.generation.feedback.feedback_service import FeedbackService as _FeedbackService
@@ -104,6 +106,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
 
         return LoopBoundLimiter(lambda: ExternalLimiter(handler=handler))
 
+    @set_service_action_metadata(endpoint=TextGenerationCreateEndpoint)
     def create(
         self,
         *,
@@ -136,6 +139,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
         Note:
             To limit number of concurrent requests or change execution procedure, see 'execute_options' parameter.
         """
+        metadata = get_service_action_metadata(self.create)
         prompts: list[str] = prompts_to_strings(inputs)
         parameters_formatted = to_model_optional(parameters, TextGenerationParameters)
         moderations_formatted = to_model_optional(moderations, ModerationParameters)
@@ -158,7 +162,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
         if prompt_id is not None:
             with self._get_http_client() as client:
                 http_response = client.post(
-                    url=self._get_endpoint(TextGenerationCreateEndpoint),
+                    url=self._get_endpoint(metadata.endpoint),
                     params=TextGenerationCreateParametersQuery().model_dump(),
                     json=TextGenerationCreateRequest(
                         input=None,
@@ -183,7 +187,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
                 await limiter.report_success()
 
             http_response = await http_client.post(
-                url=self._get_endpoint(TextGenerationCreateEndpoint),
+                url=self._get_endpoint(metadata.endpoint),
                 extensions={
                     BaseRetryTransport.Callback.Retry: handle_retry,
                     BaseRetryTransport.Callback.Success: handle_success,
@@ -217,6 +221,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
             throw_on_error=execution_options_formatted.throw_on_error,
         )
 
+    @set_service_action_metadata(endpoint=TextGenerationStreamCreateEndpoint)
     def create_stream(
         self,
         *,
@@ -236,6 +241,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
+        metadata = get_service_action_metadata(self.create_stream)
         parameters_formatted = to_model_optional(parameters, TextGenerationParameters)
         moderations_formatted = to_model_optional(moderations, ModerationParameters)
         template_formatted = to_model_optional(data, PromptTemplateData)
@@ -253,7 +259,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
                 ResponseModel=TextGenerationStreamCreateResponse,
                 logger=self._logger,
                 generator=client.post_stream(
-                    url=self._get_endpoint(TextGenerationStreamCreateEndpoint),
+                    url=self._get_endpoint(metadata.endpoint),
                     params=TextGenerationStreamCreateParametersQuery().model_dump(),
                     json=TextGenerationStreamCreateRequest(
                         input=input,
@@ -266,6 +272,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
                 ),
             )
 
+    @set_service_action_metadata(endpoint=TextGenerationComparisonCreateEndpoint)
     def compare(
         self,
         *,
@@ -279,6 +286,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
+        metadata = get_service_action_metadata(self.compare)
         request_formatted = to_model_instance(request, TextGenerationComparisonCreateRequestRequest)
         compare_parameters_formatted = to_model_instance(compare_parameters, TextGenerationComparisonParameters)
 
@@ -291,7 +299,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
 
         with self._get_http_client() as client:
             http_response = client.post(
-                url=self._get_endpoint(TextGenerationComparisonCreateEndpoint),
+                url=self._get_endpoint(metadata.endpoint),
                 params=TextGenerationComparisonCreateParametersQuery().model_dump(),
                 json=TextGenerationComparisonCreateRequest(
                     name=name,

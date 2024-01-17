@@ -7,12 +7,6 @@ from genai._generated.api import (
 from genai._generated.endpoints import TextTokenizationCreateEndpoint
 from genai._types import ModelLike
 from genai._utils.async_executor import execute_async
-from genai._utils.base_service import (
-    BaseService,
-    BaseServiceConfig,
-    BaseServiceServices,
-    CommonExecutionOptions,
-)
 from genai._utils.general import (
     batch_by_size_constraint,
     cast_list,
@@ -22,6 +16,14 @@ from genai._utils.general import (
 )
 from genai._utils.http_client.httpx_client import AsyncHttpxClient
 from genai._utils.limiters.local_limiter import LocalLimiter
+from genai._utils.service import (
+    BaseService,
+    BaseServiceConfig,
+    BaseServiceServices,
+    CommonExecutionOptions,
+    get_service_action_metadata,
+    set_service_action_metadata,
+)
 from genai.text.tokenization.schema import (
     TextTokenizationCreateResponse,
     TextTokenizationParameters,
@@ -50,6 +52,7 @@ class BaseConfig(BaseServiceConfig):
 class TokenizationService(BaseService[BaseConfig, BaseServiceServices]):
     Config = BaseConfig
 
+    @set_service_action_metadata(endpoint=TextTokenizationCreateEndpoint)
     def create(
         self,
         *,
@@ -72,6 +75,7 @@ class TokenizationService(BaseService[BaseConfig, BaseServiceServices]):
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
+        metadata = get_service_action_metadata(self.create)
         prompts = cast_list(input)
         options = to_model_instance([self.config.create_execution_options, execution_options], CreateExecutionOptions)
         parameters_validated = to_model_instance(parameters, TextTokenizationParameters)
@@ -90,7 +94,7 @@ class TokenizationService(BaseService[BaseConfig, BaseServiceServices]):
 
         async def handler(inputs_chunk: list[str], http_client: AsyncHttpxClient, *_) -> TextTokenizationCreateResponse:
             http_response = await http_client.post(
-                url=self._get_endpoint(TextTokenizationCreateEndpoint),
+                url=self._get_endpoint(metadata.endpoint),
                 params=TextTokenizationCreateParametersQuery().model_dump(),
                 json=TextTokenizationCreateRequest(
                     input=inputs_chunk,
