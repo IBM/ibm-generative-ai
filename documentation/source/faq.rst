@@ -17,6 +17,28 @@ call our prepared function.
 
 Example can be found :ref:`here <examples.extra.shutdown_handling>`.
 
+Which API Endpoint should I use?
+--------------------------------
+
+In previous version, you were used to pass the whole URL including it's path and version - this is not true anymore.
+See following examples to get it right.
+
+
+.. admonition:: Correct Example
+   :class: success
+
+   ``https://bam-api.res.ibm.com``
+
+
+.. admonition:: Wrong Example
+   :class: error
+
+   ``https://bam-api.res.ibm.com/v1`` (V1 is not supported)
+
+   ``https://bam-api.res.ibm.com/v2`` (V2 is automatically appended)
+
+   ``https://bam-api.res.ibm.com/v2?version=2024-01-01`` (SDK handles API versions internally)
+
 
 Which endpoints version SDK uses?
 ---------------------------------
@@ -26,6 +48,7 @@ Use the following options to determine which version of a given endpoint SDK use
 1. From the :doc:`Changelog <changelog>` ("API Endpoint Versions" section) under concrete release.
 
 2. Find it programmatically by retrieving the concrete method's metadata (see :ref:`example <examples.extra.service_metadata>`).
+
 
 
 When I run multiple text generations simultaneously one is hanging, how to fix that?
