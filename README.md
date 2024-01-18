@@ -5,16 +5,18 @@
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/ibm-generative-ai)
 [![Coverage Status](https://coveralls.io/repos/github/IBM/ibm-generative-ai/badge.svg?branch=main)](https://coveralls.io/github/IBM/ibm-generative-ai?branch=main)
 [![Build & Unit/Integration Tests](https://github.com/IBM/ibm-generative-ai/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/IBM/ibm-generative-ai/actions/workflows/main.yml)
-[![E2E Tests](https://github.com/IBM/ibm-generative-ai/actions/workflows/integration-test.yml/badge.svg)](https://github.com/IBM/ibm-generative-ai/actions/workflows/e2e-test.yml)
+[![E2E Tests](https://github.com/IBM/ibm-generative-ai/actions/workflows/e2e-test.yml/badge.svg)](https://github.com/IBM/ibm-generative-ai/actions/workflows/e2e-test.yml)
 
 
 This is not the [watsonx.ai](https://www.ibm.com/products/watsonx-ai) Python SDK. This is the Python SDK for the Tech Preview program for IBM Foundation Models Studio. This SDK brings IBM Generative AI (GenAI) into Python programs and provides useful operations and types.
 
 *You can start a trial version or request a demo via https://www.ibm.com/products/watsonx-ai.*
-*Looking for the [watsonx.ai](https://www.ibm.com/products/watsonx-ai) Python SDK? Check out https://ibm.github.io/watson-machine-learning-sdk/foundation_models.html.*
 
-*Looking for the JavaScript/TypeScript version? Check out [IBM Generateive AI NodeJS SDK](https://github.com/IBM/ibm-generative-ai-node-sdk.)*
-*Looking for a command-line interface? Check out [IBM Generative AI CLI](https://github.com/IBM/ibm-generative-ai-cli).*
+*Looking for the [watsonx.ai](https://www.ibm.com/products/watsonx-ai) Python SDK? Check out [watson-machine-learning-sdk](https://ibm.github.io/watson-machine-learning-sdk/foundation_models.html).*
+
+*Looking for a NodeJS SDK version? Check out [IBM Generative AI NodeJS SDK](https://github.com/IBM/ibm-generative-ai-node-sdk.)*
+
+*Looking for a CLI? Check out [IBM Generative AI CLI](https://github.com/IBM/ibm-generative-ai-cli).*
 
 > [!IMPORTANT]
 > The SDK was recently rewritten and released under V2 (2024). See the [V2 migration guide](https://ibm.github.io/ibm-generative-ai/v2_migration_guide.html).
