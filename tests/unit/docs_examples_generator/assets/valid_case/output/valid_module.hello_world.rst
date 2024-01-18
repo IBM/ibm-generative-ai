@@ -1,6 +1,7 @@
------------------
+.. _valid_module.hello_world:
+
 Hello world
------------------
+===========
 
 This is very simple Python program
 
