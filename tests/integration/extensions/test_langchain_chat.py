@@ -1,9 +1,9 @@
 from unittest.mock import MagicMock
 
 import pytest
-from langchain.callbacks.base import BaseCallbackHandler
-from langchain.schema import AIMessage, BaseMessage, HumanMessage, SystemMessage
-from langchain.schema.output import ChatGenerationChunk
+from langchain_core.callbacks.base import BaseCallbackHandler
+from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
+from langchain_core.outputs import ChatGenerationChunk
 
 from genai._generated.api import TextChatCreateResponse, TextChatStreamCreateResponse
 from genai._generated.endpoints import TextChatCreateEndpoint

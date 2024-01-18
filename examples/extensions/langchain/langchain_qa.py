@@ -7,8 +7,8 @@ from genai.extensions.langchain import LangChainInterface
 from genai.text.generation import DecodingMethod, TextGenerationParameters
 
 try:
-    from langchain.prompts import PromptTemplate
-    from langchain.schema import StrOutputParser
+    from langchain_core.output_parsers import StrOutputParser
+    from langchain_core.prompts import PromptTemplate
 except ImportError:
     raise ImportError("Could not import langchain: Please install ibm-generative-ai[langchain] extension.")
 

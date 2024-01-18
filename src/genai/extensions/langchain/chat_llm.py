@@ -22,16 +22,16 @@ from genai.text.chat.schema import (
 )
 
 try:
-    from langchain.callbacks.manager import CallbackManagerForLLMRun
-    from langchain.chat_models.base import BaseChatModel
-    from langchain.schema.messages import AIMessage as LCAIMessage
-    from langchain.schema.messages import AIMessageChunk as LCAIMessageChunk
-    from langchain.schema.messages import BaseMessage as LCBaseMessage
-    from langchain.schema.messages import ChatMessage as LCChatMessage
-    from langchain.schema.messages import HumanMessage as LCHumanMessage
-    from langchain.schema.messages import SystemMessage as LCSystemMessage
-    from langchain.schema.messages import get_buffer_string
-    from langchain.schema.output import ChatGeneration, ChatGenerationChunk, ChatResult
+    from langchain_core.callbacks.manager import CallbackManagerForLLMRun
+    from langchain_core.language_models.chat_models import BaseChatModel
+    from langchain_core.messages import AIMessage as LCAIMessage
+    from langchain_core.messages import AIMessageChunk as LCAIMessageChunk
+    from langchain_core.messages import BaseMessage as LCBaseMessage
+    from langchain_core.messages import ChatMessage as LCChatMessage
+    from langchain_core.messages import HumanMessage as LCHumanMessage
+    from langchain_core.messages import SystemMessage as LCSystemMessage
+    from langchain_core.messages import get_buffer_string
+    from langchain_core.outputs import ChatGeneration, ChatGenerationChunk, ChatResult
 
     from genai.extensions.langchain.utils import (
         create_llm_output,
@@ -83,7 +83,7 @@ class LangChainChatInterface(BaseChatModel):
 
         from genai import Client, Credentials
         from genai.extensions.langchain import LangChainChatInterface
-        from langchain.schema import HumanMessage, SystemMessage
+        from langchain_core.messages import HumanMessage, SystemMessage
 
         client = Client(credentials=Credentials.from_env())
         llm = LangChainChatInterface(

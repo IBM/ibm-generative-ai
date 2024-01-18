@@ -1,7 +1,7 @@
 """Streaming response from LangChain"""
 
 from dotenv import load_dotenv
-from langchain.schema import HumanMessage, SystemMessage
+from langchain_core.messages import HumanMessage, SystemMessage
 
 from genai import Client, Credentials
 from genai.extensions.langchain import LangChainChatInterface

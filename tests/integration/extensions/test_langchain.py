@@ -1,8 +1,8 @@
 from unittest.mock import MagicMock
 
 import pytest
-from langchain.callbacks.base import BaseCallbackHandler
-from langchain.schema.output import GenerationChunk
+from langchain_core.callbacks.base import BaseCallbackHandler
+from langchain_core.outputs import GenerationChunk
 
 from genai import Client
 from genai._generated.api import TextGenerationCreateResponse
