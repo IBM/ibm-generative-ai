@@ -261,5 +261,10 @@ control.expr = "type"
     cmd = "scripts/rewrite_casettes.sh"
 
     [[tool.poe.tasks.test.switch]]
+    case = "check_markers"
+    help = "Check if all tests have proper markers (unit, integration or e2e)"
+    cmd = "scripts/check_markers.sh"
+
+    [[tool.poe.tasks.test.switch]]
     help = "Run All Tests"
     cmd = "pytest"

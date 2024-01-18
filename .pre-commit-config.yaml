@@ -17,3 +17,12 @@ repos:
       - id: ruff
       # Run the formatter.
       - id: ruff-format
+  - repo: local
+    hooks:
+      - id: check-markers
+        name: check-markers
+        entry: ./scripts/check_markers.sh
+        language: script
+        files: '^tests/'
+        types: [python]
+        pass_filenames: false

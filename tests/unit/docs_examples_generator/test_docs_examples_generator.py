@@ -33,6 +33,7 @@ def assert_same_directories(a: Path, b: Path) -> None:
     "name,expectation",
     [("valid_case", does_not_raise()), ("invalid_case", pytest.raises(ValueError, match="Missing docstring *"))],
 )
+@pytest.mark.unit
 def test_docs_examples_generator(name: str, expectation):
     assets_dir = Path(Path(__file__).parent.resolve(), "assets", name)
     expected_output_directory = Path(assets_dir, "output")

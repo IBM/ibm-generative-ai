@@ -1,3 +1,5 @@
+.. _valid_module:
+
 This file should be ignored during generation.
 ==============================================
 
