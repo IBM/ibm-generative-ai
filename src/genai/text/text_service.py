@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 from genai._utils.api_client import ApiClient
-from genai._utils.base_service import (
+from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
 )

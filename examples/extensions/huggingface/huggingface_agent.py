@@ -1,4 +1,13 @@
-"""Run Transformers Agents"""
+"""
+Run Transformers Agents
+
+.. admonition:: Python 3.12 support
+    :class: warning
+
+    The huggingface extension (:bash:`pip install 'ibm-generative-ai[huggingface]'`) is not supported in python 3.12 yet
+    due to the lack of pytorch support for 3.12.
+    Follow the `pytorch issue <https://github.com/pytorch/pytorch/issues/110436>`_ for more information.
+"""
 
 from dotenv import load_dotenv
 

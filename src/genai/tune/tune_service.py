@@ -18,12 +18,14 @@ from genai._generated.endpoints import (
     TuningTypeRetrieveEndpoint,
 )
 from genai._types import EnumLike, ModelLike
-from genai._utils.base_service import (
+from genai._utils.general import to_enum, to_enum_optional, to_model_optional
+from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
     BaseServiceServices,
+    get_service_action_metadata,
+    set_service_action_metadata,
 )
-from genai._utils.general import to_enum, to_enum_optional, to_model_optional
 from genai._utils.validators import assert_is_not_empty_string
 from genai.tune.schema import (
     TuneAssetType,
@@ -40,6 +42,7 @@ __all__ = ["TuneService"]
 
 
 class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
+    @set_service_action_metadata(endpoint=TuneCreateEndpoint)
     def create(
         self,
         *,
@@ -58,6 +61,7 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
             ValidationError: In case of provided parameters are invalid.
         """
         with self._get_http_client() as client:
+            metadata = get_service_action_metadata(self.create)
             request_body = TuneCreateRequest(
                 model_id=model_id,
                 name=name,
@@ -70,12 +74,13 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
 
             self._log_method_execution("Tune Create", **request_body)
             response = client.post(
-                url=self._get_endpoint(TuneCreateEndpoint),
+                url=self._get_endpoint(metadata.endpoint),
                 params=TuneCreateParametersQuery().model_dump(),
                 json=request_body,
             )
             return TuneCreateResponse(**response.json())
 
+    @set_service_action_metadata(endpoint=TuneIdContentTypeRetrieveEndpoint)
     def read(self, *, id: str, type: EnumLike[TuneAssetType]) -> bytes:
         """
         Download tune assets.
@@ -96,13 +101,15 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
                 f"Tune can not be downloaded if status is not '{TuneStatus.COMPLETED.value}'."
             )
 
+        metadata = get_service_action_metadata(self.read)
         with self._get_http_client() as client:
             response = client.get(
-                url=self._get_endpoint(TuneIdContentTypeRetrieveEndpoint, id=id, type=to_enum(TuneAssetType, type)),
+                url=self._get_endpoint(metadata.endpoint, id=id, type=to_enum(TuneAssetType, type)),
                 params=TuneIdContentTypeRetrieveParametersQuery().model_dump(),
             )
             return response.content
 
+    @set_service_action_metadata(endpoint=TuneIdRetrieveEndpoint)
     def retrieve(
         self,
         id: str,
@@ -112,16 +119,18 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
             ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
         """
+        metadata = get_service_action_metadata(self.retrieve)
         assert_is_not_empty_string(id)
         self._log_method_execution("Tune Retrieve", id=id)
 
         with self._get_http_client() as client:
             response = client.get(
-                url=self._get_endpoint(TuneIdRetrieveEndpoint, id=id),
+                url=self._get_endpoint(metadata.endpoint, id=id),
                 params=TuneIdRetrieveParametersQuery().model_dump(),
             )
             return TuneIdRetrieveResponse(**response.json())
 
+    @set_service_action_metadata(endpoint=TuneRetrieveEndpoint)
     def list(
         self,
         *,
@@ -138,14 +147,16 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
         self._log_method_execution("Tune List")
 
         with self._get_http_client() as client:
+            metadata = get_service_action_metadata(self.list)
             response = client.get(
-                url=self._get_endpoint(TuneRetrieveEndpoint),
+                url=self._get_endpoint(metadata.endpoint),
                 params=TuneRetrieveParametersQuery(
                     limit=limit, offset=offset, status=to_enum_optional(status, TuneStatus), search=search
                 ).model_dump(),
             )
             return TuneRetrieveResponse(**response.json())
 
+    @set_service_action_metadata(endpoint=TuningTypeRetrieveEndpoint)
     def types(self) -> TuningTypeRetrieveResponse:
         """
         Raises:
@@ -153,14 +164,16 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
             ApiNetworkException: In case of unhandled network error.
         """
         with self._get_http_client() as client:
+            metadata = get_service_action_metadata(self.types)
             response = client.get(
-                url=self._get_endpoint(TuningTypeRetrieveEndpoint),
+                url=self._get_endpoint(metadata.endpoint),
                 params=TuningTypeRetrieveParametersQuery().model_dump(),
             )
 
             self._log_method_execution("Tune Types")
             return TuningTypeRetrieveResponse(**response.json())
 
+    @set_service_action_metadata(endpoint=TuneIdDeleteEndpoint)
     def delete(
         self,
         id: str,
@@ -174,6 +187,7 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
         self._log_method_execution("Tune Delete")
 
         with self._get_http_client() as client:
+            metadata = get_service_action_metadata(self.delete)
             client.delete(
-                url=self._get_endpoint(TuneIdDeleteEndpoint, id=id), params=TuneIdDeleteParametersQuery().model_dump()
+                url=self._get_endpoint(metadata.endpoint, id=id), params=TuneIdDeleteParametersQuery().model_dump()
             )

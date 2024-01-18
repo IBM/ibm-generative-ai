@@ -14,7 +14,7 @@ from vcr.request import Request
 from genai import Client, Credentials
 from genai._generated.endpoints import ApiEndpoint, TextGenerationLimitRetrieveEndpoint
 from genai._utils.async_executor import BaseConfig
-from genai._utils.base_service import BaseService
+from genai._utils.service import BaseService
 from genai.text.generation.limits import (
     ConcurrencyLimit,
     TextGenerationLimit,

@@ -15,12 +15,14 @@ from genai._generated.endpoints import (
     TextGenerationIdFeedbackUpdateEndpoint,
 )
 from genai._types import EnumLike
-from genai._utils.base_service import (
+from genai._utils.general import to_enum
+from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
     BaseServiceServices,
+    get_service_action_metadata,
+    set_service_action_metadata,
 )
-from genai._utils.general import to_enum
 from genai._utils.validators import assert_is_not_empty_string
 from genai.text.generation.feedback.schema import (
     TextGenerationFeedbackCategory,
@@ -35,6 +37,7 @@ __all__ = ["FeedbackService"]
 
 
 class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
+    @set_service_action_metadata(endpoint=TextGenerationIdFeedbackRetrieveEndpoint)
     def retrieve(
         self,
         generation_id: str,
@@ -46,16 +49,18 @@ class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
             ApiResponseException: If target feedback/generation does not exist or cannot be updated.
             ApiNetworkException: In case of unhandled network error.
         """
+        metadata = get_service_action_metadata(self.retrieve)
         assert_is_not_empty_string(generation_id)
         self._log_method_execution("Text Generation Feedback Retrieve", generation_id=generation_id)
 
         with self._get_http_client() as client:
             http_response = client.get(
-                url=self._get_endpoint(TextGenerationIdFeedbackRetrieveEndpoint, id=generation_id),
+                url=self._get_endpoint(metadata.endpoint, id=generation_id),
                 params=TextGenerationIdFeedbackRetrieveParametersQuery().model_dump(),
             )
             return TextGenerationIdFeedbackRetrieveResponse(**http_response.json())
 
+    @set_service_action_metadata(endpoint=TextGenerationIdFeedbackCreateEndpoint)
     def create(
         self,
         generation_id: str,
@@ -81,8 +86,9 @@ class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
         )
 
         with self._get_http_client() as client:
+            metadata = get_service_action_metadata(self.create)
             http_response = client.post(
-                url=self._get_endpoint(TextGenerationIdFeedbackCreateEndpoint, id=generation_id),
+                url=self._get_endpoint(metadata.endpoint, id=generation_id),
                 params=TextGenerationIdFeedbackCreateParametersQuery().model_dump(),
                 json=TextGenerationIdFeedbackCreateRequest(
                     comment=comment,
@@ -95,6 +101,7 @@ class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
             )
             return TextGenerationIdFeedbackCreateResponse(**http_response.json())
 
+    @set_service_action_metadata(endpoint=TextGenerationIdFeedbackUpdateEndpoint)
     def update(
         self,
         generation_id: str,
@@ -119,8 +126,9 @@ class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
         )
 
         with self._get_http_client() as client:
+            metadata = get_service_action_metadata(self.update)
             http_response = client.put(
-                url=self._get_endpoint(TextGenerationIdFeedbackUpdateEndpoint, id=generation_id),
+                url=self._get_endpoint(metadata.endpoint, id=generation_id),
                 params=TextGenerationIdFeedbackUpdateParametersQuery().model_dump(),
                 json=TextGenerationIdFeedbackUpdateRequest(comment=comment, categories=categories).model_dump(),
             )

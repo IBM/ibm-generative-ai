@@ -12,12 +12,14 @@ from genai._generated.endpoints import (
 )
 from genai._types import EnumLike, ModelLike
 from genai._utils.api_client import ApiClient
-from genai._utils.base_service import (
+from genai._utils.general import to_enum_optional, to_model_instance, to_model_optional
+from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
     BaseServiceServices,
+    get_service_action_metadata,
+    set_service_action_metadata,
 )
-from genai._utils.general import to_enum_optional, to_model_instance, to_model_optional
 from genai.request.request_service import RequestService as _RequestService
 from genai.text.chat.schema import (
     BaseMessage,
@@ -52,6 +54,7 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
 
         self._request = services.RequestService(api_client=api_client)
 
+    @set_service_action_metadata(endpoint=TextChatCreateEndpoint)
     def create(
         self,
         *,
@@ -96,6 +99,7 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
+        metadata = get_service_action_metadata(self.create)
         request_body = TextChatCreateRequest(
             model_id=model_id,
             conversation_id=conversation_id,
@@ -113,12 +117,13 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
 
         with self._get_http_client() as client:
             http_response = client.post(
-                url=self._get_endpoint(TextChatCreateEndpoint),
+                url=self._get_endpoint(metadata.endpoint),
                 params=TextChatCreateParametersQuery().model_dump(),
                 json=request_body,
             )
             return TextChatCreateResponse(**http_response.json())
 
+    @set_service_action_metadata(endpoint=TextChatStreamCreateEndpoint)
     def create_stream(
         self,
         *,
@@ -154,6 +159,7 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
+        metadata = get_service_action_metadata(self.create_stream)
         request_body = TextChatStreamCreateRequest(
             model_id=model_id,
             conversation_id=conversation_id,
@@ -174,7 +180,7 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
                 ResponseModel=TextChatStreamCreateResponse,
                 logger=self._logger,
                 generator=client.post_stream(
-                    url=self._get_endpoint(TextChatStreamCreateEndpoint),
+                    url=self._get_endpoint(metadata.endpoint),
                     params=TextGenerationStreamCreateParametersQuery().model_dump(),
                     json=request_body,
                 ),

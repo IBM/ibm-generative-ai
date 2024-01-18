@@ -7,18 +7,20 @@ from genai._generated.api import (
 from genai._generated.endpoints import TextModerationCreateEndpoint
 from genai._types import ModelLike
 from genai._utils.async_executor import execute_async
-from genai._utils.base_service import (
-    BaseService,
-    BaseServiceConfig,
-    BaseServiceServices,
-    CommonExecutionOptions,
-)
 from genai._utils.general import (
     prompts_to_strings,
     to_model_instance,
     to_model_optional,
 )
 from genai._utils.http_client.httpx_client import AsyncHttpxClient
+from genai._utils.service import (
+    BaseService,
+    BaseServiceConfig,
+    BaseServiceServices,
+    CommonExecutionOptions,
+    get_service_action_metadata,
+    set_service_action_metadata,
+)
 from genai.text.moderation.schema import (
     HAPOptions,
     ImplicitHateOptions,
@@ -41,6 +43,7 @@ class BaseConfig(BaseServiceConfig):
 class ModerationService(BaseService[BaseConfig, BaseServiceServices]):
     Config = BaseConfig
 
+    @set_service_action_metadata(endpoint=TextModerationCreateEndpoint)
     def create(
         self,
         inputs: Union[str, list[str]],
@@ -77,6 +80,7 @@ class ModerationService(BaseService[BaseConfig, BaseServiceServices]):
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
+        metadata = get_service_action_metadata(self.create)
         execution_options_formatted = to_model_instance(
             [self.config.create_execution_options, execution_options], CreateExecutionOptions
         )
@@ -93,7 +97,7 @@ class ModerationService(BaseService[BaseConfig, BaseServiceServices]):
             self._log_method_execution("Moderation Create - processing input", input=input)
 
             http_response = await http_client.post(
-                url=self._get_endpoint(TextModerationCreateEndpoint),
+                url=self._get_endpoint(metadata.endpoint),
                 params=TextModerationCreateParametersQuery().model_dump(),
                 json=TextModerationCreateRequest(
                     input=input,

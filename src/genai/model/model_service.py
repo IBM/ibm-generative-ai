@@ -2,10 +2,12 @@ from typing import Optional
 
 from genai._generated.api import ModelIdRetrieveParametersQuery
 from genai._generated.endpoints import ModelIdRetrieveEndpoint, ModelRetrieveEndpoint
-from genai._utils.base_service import (
+from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
     BaseServiceServices,
+    get_service_action_metadata,
+    set_service_action_metadata,
 )
 from genai._utils.validators import assert_is_not_empty_string
 from genai.model.schema import (
@@ -18,6 +20,7 @@ __all__ = ["ModelService"]
 
 
 class ModelService(BaseService[BaseServiceConfig, BaseServiceServices]):
+    @set_service_action_metadata(endpoint=ModelIdRetrieveEndpoint)
     def retrieve(
         self,
         id: str,
@@ -33,12 +36,14 @@ class ModelService(BaseService[BaseServiceConfig, BaseServiceServices]):
         self._log_method_execution("Models Retrieve", id=id)
 
         with self._get_http_client() as client:
+            metadata = get_service_action_metadata(self.retrieve)
             response = client.get(
-                url=self._get_endpoint(ModelIdRetrieveEndpoint, id=id),
+                url=self._get_endpoint(metadata.endpoint, id=id),
                 params=ModelIdRetrieveParametersQuery().model_dump(),
             )
             return ModelIdRetrieveResponse(**response.json())
 
+    @set_service_action_metadata(endpoint=ModelRetrieveEndpoint)
     def list(self, *, limit: Optional[int] = None, offset: Optional[int] = None) -> ModelRetrieveResponse:
         """
         Args:
@@ -54,5 +59,6 @@ class ModelService(BaseService[BaseServiceConfig, BaseServiceServices]):
         self._log_method_execution("Models List", **request_parameters)
 
         with self._get_http_client() as client:
-            response = client.get(url=self._get_endpoint(ModelRetrieveEndpoint), params=request_parameters)
+            metadata = get_service_action_metadata(self.list)
+            response = client.get(url=self._get_endpoint(metadata.endpoint), params=request_parameters)
             return ModelRetrieveResponse(**response.json())

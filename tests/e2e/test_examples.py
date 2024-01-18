@@ -1,6 +1,7 @@
 import logging
 import pathlib
 import runpy
+import sys
 
 import pytest
 
@@ -13,7 +14,14 @@ ignore_files = {
     "huggingface_agent.py",
     "tune.py",
 }
-scripts = {script for script in all_scripts if script.name not in ignore_files}
+skip_for_python_3_12 = {
+    # These files are skipped for python >= 3.12 because transformers library cannot be installed
+    "local_server.py",
+    "huggingface_agent.py",
+}
+
+scripts_lt_3_12 = {script for script in all_scripts if script.name not in ignore_files | skip_for_python_3_12}
+scripts_3_12 = {script for script in all_scripts if script.name in skip_for_python_3_12}
 
 
 def idfn(val):
@@ -26,7 +34,15 @@ def test_finds_examples():
 
 
 @pytest.mark.e2e
-@pytest.mark.parametrize("script", scripts, ids=idfn)
-def test_example_execution(script):
+@pytest.mark.skipif(sys.version_info >= (3, 12), reason="transformers can't be installed for python 3.12 yet")
+@pytest.mark.parametrize("script", scripts_3_12, ids=idfn)
+def test_example_execution_for_python_3_12(script):
+    logger.info(f"Executing Example script: {script}")
+    runpy.run_path(str(script), run_name="__main__")
+
+
+@pytest.mark.e2e
+@pytest.mark.parametrize("script", scripts_lt_3_12, ids=idfn)
+def test_example_execution_for_python_lt_3_12(script):
     logger.info(f"Executing Example script: {script}")
     runpy.run_path(str(script), run_name="__main__")

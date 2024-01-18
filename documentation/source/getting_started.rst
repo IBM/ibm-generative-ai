@@ -23,6 +23,13 @@ Prerequisites
 
 - pip version >= 22.0.1
 
+.. admonition:: Python 3.12 support
+    :class: warning
+
+    The huggingface extension (:bash:`pip install 'ibm-generative-ai[huggingface]'`) is not supported in python 3.12 yet
+    due to the lack of pytorch support for 3.12.
+    Follow the `pytorch issue <https://github.com/pytorch/pytorch/issues/110436>`_ for more information.
+
 
 Check your pip version with ``pip --version`` and if needed, run the following command to upgrade pip:
 

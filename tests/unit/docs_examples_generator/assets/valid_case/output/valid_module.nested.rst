@@ -1,3 +1,5 @@
+.. _valid_module.nested:
+
 Nested Module
 =============
 

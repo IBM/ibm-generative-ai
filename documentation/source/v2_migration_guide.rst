@@ -466,5 +466,7 @@ Extensions
 Notes
 
 - ``PandasExtension`` was removed, because the functionality was replaced by API's prompt templates.
+- The ``params`` class attribute has been renamed to `parameters` (everywhere).
+- The ``model`` class attribute has been renamed to `model_id` (everywhere).
 - Third party extensions were updated to work with latest versions of the libraries
 - If you were using local models through a ``LocalLLMServer``, you may need to adjust them to the new parameter and return types.

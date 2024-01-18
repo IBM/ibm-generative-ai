@@ -14,10 +14,12 @@ from genai._generated.endpoints import (
     UserPatchEndpoint,
     UserRetrieveEndpoint,
 )
-from genai._utils.base_service import (
+from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
     BaseServiceServices,
+    get_service_action_metadata,
+    set_service_action_metadata,
 )
 from genai.user.schema import (
     UserCreateResponse,
@@ -29,6 +31,7 @@ __all__ = ["UserService"]
 
 
 class UserService(BaseService[BaseServiceConfig, BaseServiceServices]):
+    @set_service_action_metadata(endpoint=UserCreateEndpoint)
     def create(
         self,
         *,
@@ -44,13 +47,15 @@ class UserService(BaseService[BaseServiceConfig, BaseServiceServices]):
         self._log_method_execution("User Create", **request_body)
 
         with self._get_http_client() as client:
+            metadata = get_service_action_metadata(self.create)
             response = client.post(
-                url=self._get_endpoint(UserCreateEndpoint),
+                url=self._get_endpoint(metadata.endpoint),
                 json=request_body,
                 params=UserCreateParametersQuery().model_dump(),
             )
             return UserCreateResponse(**response.json())
 
+    @set_service_action_metadata(endpoint=UserRetrieveEndpoint)
     def retrieve(self) -> UserRetrieveResponse:
         """
         Raises:
@@ -60,11 +65,13 @@ class UserService(BaseService[BaseServiceConfig, BaseServiceServices]):
         self._log_method_execution("User Retrieve")
 
         with self._get_http_client() as client:
+            metadata = get_service_action_metadata(self.retrieve)
             response = client.get(
-                url=self._get_endpoint(UserRetrieveEndpoint), params=UserRetrieveParametersQuery().model_dump()
+                url=self._get_endpoint(metadata.endpoint), params=UserRetrieveParametersQuery().model_dump()
             )
             return UserRetrieveResponse(**response.json())
 
+    @set_service_action_metadata(endpoint=UserPatchEndpoint)
     def update(self, *, tou_accepted: Optional[bool] = None) -> UserPatchResponse:
         """
         Raises:
@@ -75,13 +82,15 @@ class UserService(BaseService[BaseServiceConfig, BaseServiceServices]):
         self._log_method_execution("User Update", **request_body)
 
         with self._get_http_client() as client:
+            metadata = get_service_action_metadata(self.update)
             response = client.patch(
-                url=self._get_endpoint(UserPatchEndpoint),
+                url=self._get_endpoint(metadata.endpoint),
                 json=request_body,
                 params=UserPatchParametersQuery().model_dump(),
             )
             return UserPatchResponse(**response.json())
 
+    @set_service_action_metadata(endpoint=UserDeleteEndpoint)
     def delete(self) -> None:
         """
         Raises:
@@ -91,4 +100,5 @@ class UserService(BaseService[BaseServiceConfig, BaseServiceServices]):
         self._log_method_execution("User Delete")
 
         with self._get_http_client() as client:
-            client.delete(url=self._get_endpoint(UserDeleteEndpoint), params=UserDeleteParametersQuery().model_dump())
+            metadata = get_service_action_metadata(self.delete)
+            client.delete(url=self._get_endpoint(metadata.endpoint), params=UserDeleteParametersQuery().model_dump())

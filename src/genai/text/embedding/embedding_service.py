@@ -12,12 +12,14 @@ from genai._generated.endpoints import TextEmbeddingCreateEndpoint
 from genai._types import ModelLike
 from genai._utils.api_client import ApiClient
 from genai._utils.async_executor import execute_async
-from genai._utils.base_service import (
+from genai._utils.general import cast_list, to_model_instance
+from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
     BaseServiceServices,
+    get_service_action_metadata,
+    set_service_action_metadata,
 )
-from genai._utils.general import cast_list, to_model_instance
 from genai._utils.shared_options import CommonExecutionOptions
 from genai.text.embedding.limit.limit_service import LimitService as _LimitService
 from genai.text.embedding.schema import TextEmbeddingCreateResponse
@@ -65,6 +67,7 @@ class EmbeddingService(BaseService[BaseConfig, BaseServices]):
         self._concurrency_limiter = self._get_concurrency_limiter()
         self.limit = services.LimitService(api_client=api_client)
 
+    @set_service_action_metadata(endpoint=TextEmbeddingCreateEndpoint)
     def create(
         self,
         *,
@@ -97,6 +100,7 @@ class EmbeddingService(BaseService[BaseConfig, BaseServices]):
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
+        metadata = get_service_action_metadata(self.create)
         prompts: list[str] = cast_list(inputs)
         execution_options_formatted = to_model_instance(
             [self.config.create_execution_options, execution_options], CreateExecutionOptions
@@ -120,7 +124,7 @@ class EmbeddingService(BaseService[BaseConfig, BaseServices]):
                 await limiter.report_success()
 
             http_response = await http_client.post(
-                url=self._get_endpoint(TextEmbeddingCreateEndpoint),
+                url=self._get_endpoint(metadata.endpoint),
                 extensions={
                     BaseRetryTransport.Callback.Retry: handle_retry,
                     BaseRetryTransport.Callback.Success: handle_success,
