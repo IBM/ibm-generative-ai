@@ -1,0 +1,230 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/text/generation/limits?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '54'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Tue, 02 Apr 2024 16:30:51 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=85b373fa0b9c193f95d2f0987342a678; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": "The best ice cream flavor is:", "model_id": "tiiuae/falcon-40b",
+      "parameters": {"max_new_tokens": 1, "return_options": {"generated_tokens": false,
+      "input_text": false, "input_tokens": true, "token_logprobs": true, "token_ranks":
+      true}}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '247'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation?version=2024-03-19
+  response:
+    body:
+      string: "{\"id\":\"51b58fa3-e8bd-477d-b2e3-e1d7de92e85e\",\"model_id\":\"tiiuae/falcon-40b\",\"created_at\":\"2024-04-02T16:30:51.515Z\",\"results\":[{\"generated_text\":\"
+        Chocolate\",\"generated_token_count\":1,\"input_token_count\":7,\"stop_reason\":\"max_tokens\",\"input_tokens\":[{\"text\":\"The\",\"logprob\":null},{\"text\":\"\u0120best\",\"logprob\":-5.19140625,\"rank\":7},{\"text\":\"\u0120ice\",\"logprob\":-7.53125,\"rank\":193},{\"text\":\"\u0120cream\",\"logprob\":-0.77978515625,\"rank\":1},{\"text\":\"\u0120flavor\",\"logprob\":-5.53515625,\"rank\":35},{\"text\":\"\u0120is\",\"logprob\":-1.68359375,\"rank\":2},{\"text\":\":\",\"logprob\":-3.53515625,\"rank\":8}],\"seed\":1656840585}]}"
+    headers:
+      content-length:
+      - '592'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-03-19'
+      date:
+      - Tue, 02 Apr 2024 16:30:51 GMT
+      keep-alive:
+      - timeout=72
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": ["Classify the following tweet: ''No this is my first job'' into
+      ''complaint'' or ''no complaint'':", "Classify the following tweet: ''Please
+      just give me my money back.'' into ''complaint'' or ''no complaint'':"], "model_id":
+      "tiiuae/falcon-40b", "parameters": {"return_options": {"tokens": true}}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '297'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/tokenization?version=2024-01-10
+  response:
+    body:
+      string: "{\"model_id\":\"tiiuae/falcon-40b\",\"created_at\":\"2024-04-02T16:30:51.916Z\",\"results\":[{\"token_count\":27,\"tokens\":[\"Class\",\"ify\",\"\u0120the\",\"\u0120following\",\"\u0120tweet\",\":\",\"\u0120\",\"'\",\"No\",\"\u0120this\",\"\u0120is\",\"\u0120my\",\"\u0120first\",\"\u0120job\",\"'\",\"\u0120into\",\"\u0120\",\"'\",\"compl\",\"aint\",\"'\",\"\u0120or\",\"\u0120\",\"'\",\"no\",\"\u0120complaint\",\"':\"]},{\"token_count\":28,\"tokens\":[\"Class\",\"ify\",\"\u0120the\",\"\u0120following\",\"\u0120tweet\",\":\",\"\u0120\",\"'\",\"Please\",\"\u0120just\",\"\u0120give\",\"\u0120me\",\"\u0120my\",\"\u0120money\",\"\u0120back\",\".'\",\"\u0120into\",\"\u0120\",\"'\",\"compl\",\"aint\",\"'\",\"\u0120or\",\"\u0120\",\"'\",\"no\",\"\u0120complaint\",\"':\"]}]}"
+    headers:
+      content-length:
+      - '531'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-01-10'
+      date:
+      - Tue, 02 Apr 2024 16:30:51 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=8037b965638f6f2fcbf28b6380782b2a; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/text/generation/limits?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '54'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Tue, 02 Apr 2024 16:30:52 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=6e96b2939356f29ea99dc5efdefbb9c6; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": "Classify the following tweet: ''No this is my first job'' into
+      ''complaint'' or ''no complaint'':no complaint", "model_id": "tiiuae/falcon-40b",
+      "parameters": {"max_new_tokens": 1, "return_options": {"generated_tokens": false,
+      "input_text": false, "input_tokens": true, "token_logprobs": true, "token_ranks":
+      true}}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '321'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation?version=2024-03-19
+  response:
+    body:
+      string: "{\"id\":\"a4146a19-0857-4e5b-a347-5b84fe98968c\",\"model_id\":\"tiiuae/falcon-40b\",\"created_at\":\"2024-04-02T16:30:52.504Z\",\"results\":[{\"generated_text\":\"\\n\",\"generated_token_count\":1,\"input_token_count\":29,\"stop_reason\":\"max_tokens\",\"input_tokens\":[{\"text\":\"Class\",\"logprob\":null},{\"text\":\"ify\",\"logprob\":-5.9921875,\"rank\":37},{\"text\":\"\u0120the\",\"logprob\":-2.6015625,\"rank\":2},{\"text\":\"\u0120following\",\"logprob\":-1.3134765625,\"rank\":1},{\"text\":\"\u0120tweet\",\"logprob\":-13.1640625,\"rank\":10122},{\"text\":\":\",\"logprob\":-2.064453125,\"rank\":2},{\"text\":\"\u0120\",\"logprob\":-2.048828125,\"rank\":2},{\"text\":\"'\",\"logprob\":-4.15625,\"rank\":8},{\"text\":\"No\",\"logprob\":-5.609375,\"rank\":35},{\"text\":\"\u0120this\",\"logprob\":-7.58203125,\"rank\":179},{\"text\":\"\u0120is\",\"logprob\":-0.5751953125,\"rank\":1},{\"text\":\"\u0120my\",\"logprob\":-4.05859375,\"rank\":6},{\"text\":\"\u0120first\",\"logprob\":-3.880859375,\"rank\":4},{\"text\":\"\u0120job\",\"logprob\":-4.578125,\"rank\":11},{\"text\":\"'\",\"logprob\":-2.646484375,\"rank\":4},{\"text\":\"\u0120into\",\"logprob\":-4.51171875,\"rank\":5},{\"text\":\"\u0120\",\"logprob\":-2.5859375,\"rank\":5},{\"text\":\"'\",\"logprob\":-0.82421875,\"rank\":1},{\"text\":\"compl\",\"logprob\":-5.7109375,\"rank\":34},{\"text\":\"aint\",\"logprob\":-0.1875,\"rank\":1},{\"text\":\"'\",\"logprob\":-0.6171875,\"rank\":1},{\"text\":\"\u0120or\",\"logprob\":-0.316162109375,\"rank\":1},{\"text\":\"\u0120\",\"logprob\":-0.039520263671875,\"rank\":1},{\"text\":\"'\",\"logprob\":-0.00476837158203125,\"rank\":1},{\"text\":\"no\",\"logprob\":-3.275390625,\"rank\":7},{\"text\":\"\u0120complaint\",\"logprob\":-1.0419921875,\"rank\":1},{\"text\":\"':\",\"logprob\":-4.83984375,\"rank\":6},{\"text\":\"no\",\"logprob\":-9.5234375,\"rank\":546},{\"text\":\"\u0120complaint\",\"logprob\":-1.6064453125,\"rank\":2}],\"seed\":3788404351}]}"
+    headers:
+      content-length:
+      - '1640'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-03-19'
+      date:
+      - Tue, 02 Apr 2024 16:30:52 GMT
+      keep-alive:
+      - timeout=72
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": "Classify the following tweet: ''Please just give me my money
+      back.'' into ''complaint'' or ''no complaint'':complaint", "model_id": "tiiuae/falcon-40b",
+      "parameters": {"max_new_tokens": 1, "return_options": {"generated_tokens": false,
+      "input_text": false, "input_tokens": true, "token_logprobs": true, "token_ranks":
+      true}}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '329'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation?version=2024-03-19
+  response:
+    body:
+      string: "{\"id\":\"f2e9a973-fd18-4b21-8a8f-a48481d2ccc3\",\"model_id\":\"tiiuae/falcon-40b\",\"created_at\":\"2024-04-02T16:30:52.753Z\",\"results\":[{\"generated_text\":\"\\n\",\"generated_token_count\":1,\"input_token_count\":30,\"stop_reason\":\"max_tokens\",\"input_tokens\":[{\"text\":\"Class\",\"logprob\":null},{\"text\":\"ify\",\"logprob\":-5.9921875,\"rank\":37},{\"text\":\"\u0120the\",\"logprob\":-2.6015625,\"rank\":2},{\"text\":\"\u0120following\",\"logprob\":-1.310546875,\"rank\":1},{\"text\":\"\u0120tweet\",\"logprob\":-13.1640625,\"rank\":10123},{\"text\":\":\",\"logprob\":-2.064453125,\"rank\":2},{\"text\":\"\u0120\",\"logprob\":-2.048828125,\"rank\":2},{\"text\":\"'\",\"logprob\":-4.15625,\"rank\":7},{\"text\":\"Please\",\"logprob\":-6.17578125,\"rank\":72},{\"text\":\"\u0120just\",\"logprob\":-7.22265625,\"rank\":146},{\"text\":\"\u0120give\",\"logprob\":-3.197265625,\"rank\":6},{\"text\":\"\u0120me\",\"logprob\":-0.4345703125,\"rank\":1},{\"text\":\"\u0120my\",\"logprob\":-3.30078125,\"rank\":6},{\"text\":\"\u0120money\",\"logprob\":-2.970703125,\"rank\":1},{\"text\":\"\u0120back\",\"logprob\":-0.470703125,\"rank\":1},{\"text\":\".'\",\"logprob\":-3.076171875,\"rank\":7},{\"text\":\"\u0120into\",\"logprob\":-7.015625,\"rank\":59},{\"text\":\"\u0120\",\"logprob\":-2.826171875,\"rank\":4},{\"text\":\"'\",\"logprob\":-0.8671875,\"rank\":1},{\"text\":\"compl\",\"logprob\":-3.986328125,\"rank\":8},{\"text\":\"aint\",\"logprob\":-0.08642578125,\"rank\":1},{\"text\":\"'\",\"logprob\":-0.6650390625,\"rank\":1},{\"text\":\"\u0120or\",\"logprob\":-0.314697265625,\"rank\":1},{\"text\":\"\u0120\",\"logprob\":-0.0396728515625,\"rank\":1},{\"text\":\"'\",\"logprob\":-0.0052337646484375,\"rank\":1},{\"text\":\"no\",\"logprob\":-3.81640625,\"rank\":6},{\"text\":\"\u0120complaint\",\"logprob\":-0.7177734375,\"rank\":1},{\"text\":\"':\",\"logprob\":-4.4453125,\"rank\":6},{\"text\":\"compl\",\"logprob\":-10.25,\"rank\":999},{\"text\":\"aint\",\"logprob\":-0.07476806640625,\"rank\":1}],\"seed\":4272011226}]}"
+    headers:
+      content-length:
+      - '1701'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-03-19'
+      date:
+      - Tue, 02 Apr 2024 16:30:52 GMT
+      keep-alive:
+      - timeout=72
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+version: 1
