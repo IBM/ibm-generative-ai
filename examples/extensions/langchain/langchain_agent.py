@@ -30,14 +30,6 @@ class WordLengthTool(BaseTool):
 
 tools: list[BaseTool] = [WordLengthTool()]
 
-# @tool
-# def get_word_length(word: str) -> int:
-#     """Returns the length of a word."""
-#     return len(word)
-
-
-# tools = [get_word_length]
-
 system = """Respond to the human as helpfully and accurately as possible. You have access to the following tools:
 {tools}
 Use a json blob to specify a tool by providing an action key (tool name) and an action_input key (tool input).
