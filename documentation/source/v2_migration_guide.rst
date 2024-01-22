@@ -77,13 +77,21 @@ New way:
 .. code:: python
 
    from genai import Credentials, Client
-   from genai.text.generation import TextGenerationParameters
+   from genai.text.generation import TextGenerationParameters, TextGenerationReturnOptions
 
    credentials = Credentials.from_env()
    parameters = TextGenerationParameters(max_new_tokens=10)
 
    client = Client(credentials=credentials)
-   responses = list(client.text.generation.create(model_id="google/flan-ul2", inputs=["What is IBM?"]))
+   responses = list(
+       client.text.generation.create(
+           model_id="google/flan-ul2",
+           inputs=["What is IBM?"],
+           parameters=parameters,
+           # optionally request more details in the output:
+           return_options=TextGenerationReturnOptions(generated_token=True, token_logprobs=True)
+       )
+   )
    print(f"Generated Text: {responses[0].results[0].generated_text}")
 
 You can see that the newer way is more typing, but you can retrieve
