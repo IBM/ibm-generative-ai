@@ -105,7 +105,7 @@ class TestAdjustableSemaphore:
     )
     async def test_semaphore_processing(self, state: TestState):
         # Saves workers in order they finishes
-        execution_order: list[int] = []
+        final_execution_order: list[int] = []
 
         semaphore = AdjustableAsyncSemaphore(0)
         assert semaphore.locked()
@@ -119,7 +119,7 @@ class TestAdjustableSemaphore:
             async with semaphore:
                 sleep_interval = state.execution_time[worker_id]
                 await asyncio.sleep(get_sleep_time(sleep_interval))
-                execution_order.append(worker_id)
+                final_execution_order.append(worker_id)
 
         tasks = [asyncio.create_task(semaphore_worker(i)) for i in range(state.tasks)]
         for idx, (new_limit, sleep_interval, waiting_count) in enumerate(
@@ -128,10 +128,11 @@ class TestAdjustableSemaphore:
             logger.info(f"Current iteration {idx}/{len(state.limits)}")
             await asyncio.sleep(get_sleep_time(sleep_interval))
             assert semaphore.waiting == waiting_count
+            assert semaphore.processing >= 0
+            assert semaphore.processing == state.tasks - waiting_count - len(final_execution_order)
             logger.info(f"Changing max limit from {semaphore.limit} to {new_limit}")
             semaphore.change_max_limit(new_limit)
             assert semaphore.limit == new_limit
-            assert semaphore.processing <= new_limit
 
         await asyncio.gather(*tasks)
-        assert execution_order == state.final_order
+        assert final_execution_order == state.final_order
