@@ -24,6 +24,9 @@ class AdjustableAsyncSemaphore(AsyncioSemaphore):
 
     @property
     def processing(self):
+        if self._value > 0:
+            return 0
+
         return self._max_limit - self._value
 
     @property
@@ -87,24 +90,25 @@ class AdjustableAsyncSemaphore(AsyncioSemaphore):
             bool: Returns `True` if the maximum limit was changed, `False` otherwise.
 
         Raises:
-            ValueError: If `new_limit` is less than 1.
+            ValueError: If `new_limit` is less than 0.
         """
-        if new_limit < 1:
+        if new_limit < 0:
             raise ValueError("Semaphore concurrency cannot be less than 1!")
 
         if new_limit == self._max_limit:
             return False
 
         old_limit = self._max_limit
+        free_capacity = self._value
+        future_capacity = free_capacity if free_capacity > 0 else old_limit
         self._max_limit = new_limit
-        running = old_limit - self._value
 
         if new_limit > old_limit:
-            points_to_add = new_limit - running
+            points_to_add = new_limit - future_capacity
             for _ in range(0, points_to_add):
                 self.release()
         else:
-            points_to_remove = running - new_limit
+            points_to_remove = future_capacity - new_limit
 
             for _ in range(0, points_to_remove):
                 if self.locked():

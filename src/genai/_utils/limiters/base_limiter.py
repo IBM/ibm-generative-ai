@@ -10,11 +10,13 @@ class BaseLimiter(ABC):
     def release(self):
         ...
 
-    async def report_error(self):  # noqa: B027 # empty body without being abstract
-        pass
+    @abstractmethod
+    async def report_error(self):
+        ...
 
-    async def report_success(self):  # noqa: B027 # empty body without being abstract
-        pass
+    @abstractmethod
+    async def report_success(self):
+        ...
 
     async def __aenter__(self):
         await self.acquire()

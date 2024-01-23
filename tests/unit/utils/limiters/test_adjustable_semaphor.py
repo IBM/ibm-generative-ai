@@ -41,6 +41,15 @@ logger = logging.getLogger()
 @pytest.mark.unit
 class TestAdjustableSemaphore:
     @pytest.mark.asyncio
+    async def test_limit_edge_case(self):
+        semaphore = AdjustableAsyncSemaphore(0)
+        for new_limit in [5, 10, 15, 1, 2]:
+            semaphore.change_max_limit(new_limit)
+            assert semaphore.limit == new_limit
+            assert semaphore.waiting == 0
+            assert semaphore.processing == 0
+
+    @pytest.mark.asyncio
     @pytest.mark.parametrize(
         "state",
         [
