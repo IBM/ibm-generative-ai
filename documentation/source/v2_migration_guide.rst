@@ -89,7 +89,7 @@ Replacing ``generate``/``generate_as_completed``
            inputs=["What is IBM?"],
            parameters=parameters,
            # optionally request more details in the output:
-           return_options=TextGenerationReturnOptions(generated_token=True, token_logprobs=True)
+           return_options=TextGenerationReturnOptions(generated_tokens=True, token_logprobs=True)
        )
    )
    print(f"Generated Text: {responses[0].results[0].generated_text}")

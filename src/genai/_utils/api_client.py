@@ -51,7 +51,10 @@ class BaseConfig(BaseModel, extra="forbid"):
 
     client_options: HttpClientOptions = HttpClientOptions()
     transport_options: HttpTransportOptions = HttpTransportOptions()
-    max_payload_size_bytes: int = Field(1024**2, description="Max payload size of body payload which API can process.")
+    max_payload_size_bytes: int = Field(
+        1024**2 // 2,  # 0.5 MiB
+        description="Max payload size of body payload which API can process.",
+    )
 
 
 class ApiClient:
