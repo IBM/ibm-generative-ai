@@ -1,8 +1,12 @@
+from __future__ import annotations
+
 from pathlib import Path
 from typing import Any, Mapping, Optional, Union
 
+from langchain_core.outputs import ChatGenerationChunk, GenerationChunk
 from pydantic import BaseModel
 
+from genai._utils.general import merge_objects
 from genai.extensions._common.utils import extract_token_usage
 from genai.text.generation.schema import TextGenerationParameters
 
@@ -74,3 +78,36 @@ def load_config(file: Union[str, Path]) -> dict:
 
 def dump_optional_model(model: Optional[BaseModel]) -> Optional[Mapping[str, Any]]:
     return model.model_dump(exclude_none=True) if model else None
+
+
+class CustomChatGenerationChunk(ChatGenerationChunk):
+    def __add__(self, other: ChatGenerationChunk) -> CustomChatGenerationChunk:
+        """ "Replaces LangChain's 'merge_dicts' with our simplified 'merge_objects' utility"""
+        if isinstance(other, ChatGenerationChunk):
+            generation_info = merge_objects(
+                self.generation_info or {},
+                other.generation_info or {},
+            )
+            return CustomChatGenerationChunk(
+                message=self.message + other.message,
+                generation_info=generation_info or None,
+            )
+        else:
+            raise TypeError(f"unsupported operand type(s) for +: '{type(self)}' and '{type(other)}'")
+
+
+class CustomGenerationChunk(GenerationChunk):
+    def __add__(self, other: GenerationChunk) -> CustomGenerationChunk:
+        """Replaces LangChain's 'merge_dicts' with our simplified 'merge_objects' utility"""
+
+        if isinstance(other, GenerationChunk):
+            generation_info = merge_objects(
+                self.generation_info or {},
+                other.generation_info or {},
+            )
+            return CustomGenerationChunk(
+                text=self.text + other.text,
+                generation_info=generation_info or None,
+            )
+        else:
+            raise TypeError(f"unsupported operand type(s) for +: '{type(self)}' and '{type(other)}'")

@@ -29,9 +29,10 @@ try:
     )
     from langchain_core.language_models.llms import LLM
     from langchain_core.messages import BaseMessage, get_buffer_string
-    from langchain_core.outputs import GenerationChunk, LLMResult
+    from langchain_core.outputs import LLMResult
 
     from genai.extensions.langchain.utils import (
+        CustomGenerationChunk,
         create_llm_output,
         dump_optional_model,
         load_config,
@@ -152,7 +153,7 @@ class LangChainInterface(LLM):
             if len(prompts) != 1:
                 raise ValueError("Streaming works only for a single prompt.")
 
-            generation = GenerationChunk(text="", generation_info=create_generation_info())
+            generation = CustomGenerationChunk(text="", generation_info=create_generation_info())
 
             for chunk_result in self._stream(
                 prompt=prompts[0],
@@ -184,7 +185,7 @@ class LangChainInterface(LLM):
                 for result in response.results:
                     generation_info = create_generation_info_from_response(response, result=result)
 
-                    chunk = GenerationChunk(
+                    chunk = CustomGenerationChunk(
                         text=result.generated_text or "",
                         generation_info=generation_info,
                     )
@@ -213,7 +214,7 @@ class LangChainInterface(LLM):
         stop: Optional[List[str]] = None,
         run_manager: Optional[CallbackManagerForLLMRun] = None,
         **kwargs: Any,
-    ) -> Iterator[GenerationChunk]:
+    ) -> Iterator[CustomGenerationChunk]:
         params = to_model_instance(self.parameters, TextGenerationParameters)
         params.stop_sequences = stop or params.stop_sequences
 
@@ -221,7 +222,7 @@ class LangChainInterface(LLM):
             *, text: Optional[str] = None, generation_info: dict, response: TextGenerationStreamCreateResponse
         ):
             logger.info("Chunk received: {}".format(text))
-            chunk = GenerationChunk(
+            chunk = CustomGenerationChunk(
                 text=text or "",
                 generation_info=generation_info.copy(),
             )

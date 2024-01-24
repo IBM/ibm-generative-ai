@@ -79,6 +79,7 @@ class BaseRetryTransport(ABC):
         super().__init__(*args, **kwargs)
 
     def _get_execution_plan(self):
+        yield 0
         for idx in range(self.retries):
             yield self._backoff_factor * (2**idx)
 
@@ -120,7 +121,8 @@ class RetryTransport(BaseRetryTransport, HTTPTransport):
         latest_err: Optional[HTTPError] = None
         requests_count: int = 0
 
-        for requests_count, delay in enumerate(self._get_execution_plan(), start=1):  # noqa: B007
+        for delay in self._get_execution_plan():
+            requests_count += 1
             if delay > 0:
                 time.sleep(delay)
 
@@ -142,7 +144,6 @@ class RetryTransport(BaseRetryTransport, HTTPTransport):
                 latest_err = e
                 self._execute_callback(self.Callback.Retry, request=request, callback_args=[e])
 
-        assert latest_err
         self._execute_callback(self.Callback.ThresholdReached, request=request, callback_args=[])
         raise self._create_exception(
             exception=latest_err, request=request, requests_count=requests_count
@@ -171,7 +172,8 @@ class AsyncRetryTransport(BaseRetryTransport, AsyncHTTPTransport):
         latest_err: Optional[HTTPError] = None
         requests_count: int = 0
 
-        for requests_count, delay in enumerate(self._get_execution_plan(), start=1):  # noqa: B007
+        for delay in self._get_execution_plan():
+            requests_count += 1
             if delay > 0:
                 await asyncio.sleep(delay)
 
@@ -193,7 +195,6 @@ class AsyncRetryTransport(BaseRetryTransport, AsyncHTTPTransport):
                 latest_err = e
                 await self._execute_async_callback(self.Callback.Retry, request=request, callback_args=[e])
 
-        assert latest_err
         await self._execute_async_callback(self.Callback.ThresholdReached, request=request, callback_args=[])
         raise self._create_exception(
             exception=latest_err, request=request, requests_count=requests_count
