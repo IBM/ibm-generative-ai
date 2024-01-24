@@ -31,9 +31,10 @@ try:
     from langchain_core.messages import HumanMessage as LCHumanMessage
     from langchain_core.messages import SystemMessage as LCSystemMessage
     from langchain_core.messages import get_buffer_string
-    from langchain_core.outputs import ChatGeneration, ChatGenerationChunk, ChatResult
+    from langchain_core.outputs import ChatGeneration, ChatResult
 
     from genai.extensions.langchain.utils import (
+        CustomChatGenerationChunk,
         create_llm_output,
         dump_optional_model,
         load_config,
@@ -154,7 +155,7 @@ class LangChainChatInterface(BaseChatModel):
         stop: Optional[list[str]] = None,
         run_manager: Optional[CallbackManagerForLLMRun] = None,
         **kwargs: Any,
-    ) -> Iterator[ChatGenerationChunk]:
+    ) -> Iterator[CustomChatGenerationChunk]:
         for response in self.client.text.chat.create_stream(
             **self._prepare_request(messages=_convert_messages_to_genai(messages), stop=stop, **kwargs)
         ):
@@ -163,7 +164,7 @@ class LangChainChatInterface(BaseChatModel):
 
             def send_chunk(*, text: str = "", generation_info: dict):
                 logger.info("Chunk received: {}".format(text))
-                chunk = ChatGenerationChunk(
+                chunk = CustomChatGenerationChunk(
                     message=LCAIMessageChunk(content=text, generation_info=generation_info),
                     generation_info=generation_info,
                 )
@@ -188,7 +189,7 @@ class LangChainChatInterface(BaseChatModel):
         **kwargs: Any,
     ) -> ChatResult:
         def handle_stream():
-            final_generation: Optional[ChatGenerationChunk] = None
+            final_generation: Optional[CustomChatGenerationChunk] = None
             for result in self._stream(
                 messages=messages,
                 stop=stop,
