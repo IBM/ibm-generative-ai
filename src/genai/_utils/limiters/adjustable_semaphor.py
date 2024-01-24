@@ -97,7 +97,7 @@ class AdjustableAsyncSemaphore(AsyncioSemaphore):
             ValueError: If `new_limit` is less than 0.
         """
         if new_limit < 0:
-            raise ValueError("Semaphore concurrency cannot be less than 1!")
+            raise ValueError("Semaphore concurrency cannot be less than 0!")
 
         if new_limit == self._max_limit:
             return False
@@ -124,9 +124,7 @@ class AdjustableAsyncSemaphore(AsyncioSemaphore):
                             self._waiters.remove(f)
 
                         if self._value > 0:
-                            self._value -= 1
-                            self._processing += 1
-                            self.release()
+                            self._wake_up_next()
 
                         with suppress(KeyError):
                             self._dummy_waiters.remove(f)
