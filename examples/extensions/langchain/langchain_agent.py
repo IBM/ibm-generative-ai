@@ -1,4 +1,8 @@
-"""LangChain agent using tools to answer questions."""
+"""LangChain agent
+
+The agent chooses a sequence of actions to respond to a human's question. It has access to a set of tools.
+The agent memorizes the conversation history and can use it to make decisions.
+"""
 
 from typing import Optional
 
