@@ -447,6 +447,8 @@ alias:
     - RequestChatConversationIdRetrieve_results_response_results_stop_reason
   TextGenerationLimit:
     - TextGenerationLimitRetrieve_result
+  TextEmbeddingParameters:
+    - TextEmbeddingCreateRequest_parameters
   TextEmbeddingLimit:
     - TextEmbeddingLimitRetrieve_result
   ConcurrencyLimit:
