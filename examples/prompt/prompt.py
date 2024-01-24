@@ -67,6 +67,11 @@ print(heading("Override prompt template variables"))
 print(f"Prompt: {result.input_text}")
 print(f"Answer: {result.generated_text}")
 
+print(heading("Show all existing prompts"))
+prompt_list_response = client.prompt.list(search=prompt_name, limit=10, offset=0)
+print("Total Count: ", prompt_list_response.total_count)
+print("Results: ", prompt_list_response.results)
+
 print(heading("Delete prompt"))
 client.prompt.delete(id=prompt_id)
 print("OK")
