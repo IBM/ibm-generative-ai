@@ -11,24 +11,29 @@ interactions:
     method: GET
     uri: https://api.com/v2/text/generation/limits?version=2023-11-22
   response:
-    content: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
+    body:
+      string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Wed, 10 Jan 2024 13:44:24 GMT
-      Keep-Alive:
-      - timeout=72
+      cache-control:
+      - private
       content-length:
       - '54'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
+      date:
+      - Thu, 25 Jan 2024 15:50:16 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=538060a726cc3a9c230fa5d1269356eb; path=/;
+        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
-    http_version: HTTP/1.1
-    status_code: 200
+    status:
+      code: 200
+      message: OK
 - request:
     body: '{"input": "Hi! How''s the weather, eh?", "model_id": "google/flan-ul2",
       "parameters": {}}'
@@ -46,23 +51,22 @@ interactions:
     method: POST
     uri: https://api.com/v2/text/generation?version=2024-01-10
   response:
-    content: '{"id":"6cb49ae6-c728-4aa9-83ec-24d2e3dd7ab8","model_id":"google/flan-ul2","created_at":"2024-01-10T13:44:25.313Z","results":[{"generated_text":"It''s
-      raining.","generated_token_count":7,"input_token_count":13,"stop_reason":"eos_token"}]}'
+    body:
+      string: '{"id":"b32c92e8-d42e-46c6-8a1c-17dcbef33db9","model_id":"google/flan-ul2","created_at":"2024-01-25T15:50:16.931Z","results":[{"generated_text":"Nice","generated_token_count":3,"input_token_count":13,"stop_reason":"eos_token","seed":678201370}]}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Wed, 10 Jan 2024 13:44:25 GMT
-      Keep-Alive:
-      - timeout=72
       content-length:
-      - '236'
+      - '244'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2024-01-10'
+      date:
+      - Thu, 25 Jan 2024 15:50:16 GMT
+      keep-alive:
+      - timeout=72
       vary:
       - accept-encoding
-    http_version: HTTP/1.1
-    status_code: 200
+    status:
+      code: 200
+      message: OK
 version: 1

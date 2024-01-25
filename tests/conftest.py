@@ -93,6 +93,7 @@ def vcr_config():
         "match_on": ["method", "path", "query", "body"],
         "before_record_request": _compose_vcr_transformers([_anonymize_host, _normalize_multipart_boundary_hash]),
         "before_record_response": _compose_vcr_transformers([_filter_response_headers]),
+        "decode_compressed_response": True,
         "ignore_hosts": [
             "huggingface.co",  # requests cannot be captured because they are influenced by the operating system
         ],
