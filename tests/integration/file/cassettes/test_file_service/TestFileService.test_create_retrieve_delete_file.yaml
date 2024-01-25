@@ -17,20 +17,22 @@ interactions:
     method: POST
     uri: https://api.com/v2/files?version=2023-12-15
   response:
-    content: '{"result":{"id":"042eb275-ebc9-41a8-8bb5-bc4a6bd9fad6","bytes":42,"file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-01-05T09:57:28.000Z","file_formats":[]}}'
+    body:
+      string: '{"result":{"id":"09462f6b-7b34-489a-9690-a9e66ce511d0","bytes":42,"file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-01-25T15:50:18.000Z","file_formats":[]}}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Fri, 05 Jan 2024 09:57:27 GMT
-      Keep-Alive:
-      - timeout=72
       content-length:
       - '208'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-12-15'
+      date:
+      - Thu, 25 Jan 2024 15:50:18 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=538060a726cc3a9c230fa5d1269356eb; path=/;
+        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -39,8 +41,9 @@ interactions:
       - '24'
       x-ratelimit-reset:
       - '1'
-    http_version: HTTP/1.1
-    status_code: 200
+    status:
+      code: 200
+      message: OK
 - request:
     body: ''
     headers:
@@ -53,56 +56,24 @@ interactions:
     method: GET
     uri: https://api.com/v2/files?search=file.json&version=2023-12-15
   response:
-    content: '{"results":[{"id":"042eb275-ebc9-41a8-8bb5-bc4a6bd9fad6","bytes":"42","file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-01-05T09:57:28.000Z","file_formats":[]}],"total_count":1}'
+    body:
+      string: '{"results":[{"id":"09462f6b-7b34-489a-9690-a9e66ce511d0","bytes":"42","file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-01-25T15:50:18.000Z","file_formats":[]}],"total_count":1}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Fri, 05 Jan 2024 09:57:28 GMT
-      Keep-Alive:
-      - timeout=72
+      cache-control:
+      - private
       content-length:
       - '229'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-12-15'
-      vary:
-      - accept-encoding
-      x-ratelimit-limit:
-      - '25'
-      x-ratelimit-remaining:
-      - '24'
-      x-ratelimit-reset:
-      - '1'
-    http_version: HTTP/1.1
-    status_code: 200
-- request:
-    body: ''
-    headers:
-      accept:
-      - '*/*'
-      accept-encoding:
-      - gzip, deflate
-      connection:
-      - keep-alive
-    method: GET
-    uri: https://api.com/v2/files/042eb275-ebc9-41a8-8bb5-bc4a6bd9fad6?version=2023-12-15
-  response:
-    content: '{"result":{"id":"042eb275-ebc9-41a8-8bb5-bc4a6bd9fad6","bytes":"42","file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-01-05T09:57:28.000Z","file_formats":[]}}'
-    headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Fri, 05 Jan 2024 09:57:29 GMT
-      Keep-Alive:
+      date:
+      - Thu, 25 Jan 2024 15:50:18 GMT
+      keep-alive:
       - timeout=72
-      content-length:
-      - '210'
-      content-type:
-      - application/json; charset=utf-8
-      content-version:
-      - '2023-12-15'
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=6d247d6198597e887510d8e26f4d2793; path=/;
+        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -111,8 +82,9 @@ interactions:
       - '23'
       x-ratelimit-reset:
       - '0'
-    http_version: HTTP/1.1
-    status_code: 200
+    status:
+      code: 200
+      message: OK
 - request:
     body: ''
     headers:
@@ -123,24 +95,69 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/files/042eb275-ebc9-41a8-8bb5-bc4a6bd9fad6/content?version=2023-11-22
+    uri: https://api.com/v2/files/09462f6b-7b34-489a-9690-a9e66ce511d0?version=2023-12-15
   response:
-    content: '{"data": "EXAMPLE TEMPLATE {{variable}}}"}'
+    body:
+      string: '{"result":{"id":"09462f6b-7b34-489a-9690-a9e66ce511d0","bytes":"42","file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-01-25T15:50:18.000Z","file_formats":[]}}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Fri, 05 Jan 2024 09:57:30 GMT
-      Keep-Alive:
+      cache-control:
+      - private
+      content-length:
+      - '210'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-12-15'
+      date:
+      - Thu, 25 Jan 2024 15:50:18 GMT
+      keep-alive:
       - timeout=72
-      Transfer-Encoding:
-      - chunked
-      content-encoding:
-      - gzip
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '22'
+      x-ratelimit-reset:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/files/09462f6b-7b34-489a-9690-a9e66ce511d0/content?version=2023-11-22
+  response:
+    body:
+      string: '{"data": "EXAMPLE TEMPLATE {{variable}}}"}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '42'
       content-type:
       - application/json
       content-version:
       - '2023-11-22'
+      date:
+      - Thu, 25 Jan 2024 15:50:19 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=6d247d6198597e887510d8e26f4d2793; path=/;
+        HttpOnly; Secure; SameSite=None
+      transfer-encoding:
+      - chunked
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -149,8 +166,9 @@ interactions:
       - '24'
       x-ratelimit-reset:
       - '1'
-    http_version: HTTP/1.1
-    status_code: 200
+    status:
+      code: 200
+      message: OK
 - request:
     body: ''
     headers:
@@ -161,26 +179,29 @@ interactions:
       connection:
       - keep-alive
     method: DELETE
-    uri: https://api.com/v2/files/042eb275-ebc9-41a8-8bb5-bc4a6bd9fad6?version=2023-11-22
+    uri: https://api.com/v2/files/09462f6b-7b34-489a-9690-a9e66ce511d0?version=2023-11-22
   response:
-    content: ''
+    body:
+      string: ''
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Fri, 05 Jan 2024 09:57:31 GMT
-      Keep-Alive:
-      - timeout=72
       content-version:
       - '2023-11-22'
+      date:
+      - Thu, 25 Jan 2024 15:50:19 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=ab61fe594e37cae048810df94b864b98; path=/;
+        HttpOnly; Secure; SameSite=None
       x-ratelimit-limit:
       - '25'
       x-ratelimit-remaining:
-      - '24'
+      - '23'
       x-ratelimit-reset:
-      - '1'
-    http_version: HTTP/1.1
-    status_code: 204
+      - '0'
+    status:
+      code: 204
+      message: No Content
 - request:
     body: ''
     headers:
@@ -193,20 +214,24 @@ interactions:
     method: GET
     uri: https://api.com/v2/files?search=file.json&version=2023-12-15
   response:
-    content: '{"results":[],"total_count":0}'
+    body:
+      string: '{"results":[],"total_count":0}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Fri, 05 Jan 2024 09:57:32 GMT
-      Keep-Alive:
-      - timeout=72
+      cache-control:
+      - private
       content-length:
       - '30'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-12-15'
+      date:
+      - Thu, 25 Jan 2024 15:50:20 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=538060a726cc3a9c230fa5d1269356eb; path=/;
+        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -215,6 +240,7 @@ interactions:
       - '24'
       x-ratelimit-reset:
       - '1'
-    http_version: HTTP/1.1
-    status_code: 200
+    status:
+      code: 200
+      message: OK
 version: 1
