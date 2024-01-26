@@ -85,6 +85,7 @@ class LangChainChatInterface(BaseChatModel):
         from genai import Client, Credentials
         from genai.extensions.langchain import LangChainChatInterface
         from langchain_core.messages import HumanMessage, SystemMessage
+        from genai.text.generation import TextGenerationParameters
 
         client = Client(credentials=Credentials.from_env())
         llm = LangChainChatInterface(

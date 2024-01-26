@@ -55,6 +55,7 @@ class LangChainInterface(LLM):
 
         from genai import Client, Credentials
         from genai.extensions.langchain import LangChainInterface
+        from genai.text.generation import TextGenerationParameters
 
         client = Client(credentials=Credentials.from_env())
         llm = LangChainInterface(
