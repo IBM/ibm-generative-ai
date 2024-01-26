@@ -94,12 +94,13 @@ class EmbeddingService(BaseService[BaseConfig, BaseServices]):
 
             client = Client(credentials=Credentials.from_env())
 
-            # Create a new conversation
-            response = client.text.embedding.create(
-                model_id="sentence-transformers/all-minilm-l6-v2",
-                input="Write a tagline for an alumni association: Together we"
+            responses = list(
+                client.text.embedding.create(
+                    model_id="sentence-transformers/all-minilm-l6-v2",
+                    input="Write a tagline for an alumni association: Together we"
+                )
             )
-            print("Output vectors", response.results)
+            print("Output vector", responses[0].results[0])
 
         Yields:
             TextEmbeddingCreateResponse object.
