@@ -16,25 +16,28 @@ interactions:
     method: POST
     uri: https://api.com/v2/text/chat?version=2024-01-10
   response:
-    content: '{"id":"84a571ad-748f-4435-a51b-a4f7153401ab","model_id":"google/flan-t5-xl","created_at":"2024-01-10T13:44:41.772Z","results":[{"generated_text":"How
-      are you?","generated_token_count":5,"input_token_count":15,"stop_reason":"eos_token","seed":3720614942}],"conversation_id":"fb759af5-5b36-4a75-bb0f-a4108346bc69"}'
+    body:
+      string: '{"id":"7e40a5fc-eb09-4dce-a301-5c038a4502ac","model_id":"google/flan-t5-xl","created_at":"2024-01-25T15:50:36.025Z","results":[{"generated_text":"Happy
+        to hear that Marvin, will have ","generated_token_count":10,"input_token_count":15,"stop_reason":"max_tokens","seed":674475362}],"conversation_id":"0a9375fd-262d-4784-9456-a89472660fc7"}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Wed, 10 Jan 2024 13:44:41 GMT
-      Keep-Alive:
-      - timeout=72
       content-length:
-      - '312'
+      - '338'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2024-01-10'
+      date:
+      - Thu, 25 Jan 2024 15:50:36 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=ab61fe594e37cae048810df94b864b98; path=/;
+        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
-    http_version: HTTP/1.1
-    status_code: 200
+    status:
+      code: 200
+      message: OK
 - request:
     body: ''
     headers:
@@ -45,24 +48,28 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/requests/chat/fb759af5-5b36-4a75-bb0f-a4108346bc69?version=2023-11-22
+    uri: https://api.com/v2/requests/chat/0a9375fd-262d-4784-9456-a89472660fc7?version=2023-11-22
   response:
-    content: '{"results":[{"id":"84a571ad-748f-4435-a51b-a4f7153401ab","duration":295,"request":{"messages":[{"role":"user","tokens":10,"content":"Hello
-      Marvin, how are you today?"}],"model_id":"google/flan-t5-xl","parameters":{"max_new_tokens":10},"conversation_id":"fb759af5-5b36-4a75-bb0f-a4108346bc69"},"status":"success","created_at":"2024-01-10T13:44:42.000Z","response":{"id":"84a571ad-748f-4435-a51b-a4f7153401ab","results":[{"seed":3720614942,"stop_reason":"eos_token","generated_text":"How
-      are you?","input_token_count":15,"generated_token_count":5}],"model_id":"google/flan-t5-xl","created_at":"2024-01-10T13:44:41.772Z","conversation_id":"fb759af5-5b36-4a75-bb0f-a4108346bc69"},"version":{"api":"v2","date":"2024-01-10"}}]}'
+    body:
+      string: '{"results":[{"id":"7e40a5fc-eb09-4dce-a301-5c038a4502ac","duration":329,"request":{"messages":[{"role":"user","content":"Hello
+        Marvin, how are you today?"}],"model_id":"google/flan-t5-xl","parameters":{"max_new_tokens":10},"conversation_id":"0a9375fd-262d-4784-9456-a89472660fc7"},"status":"success","created_at":"2024-01-25T15:50:36.000Z","response":{"id":"7e40a5fc-eb09-4dce-a301-5c038a4502ac","results":[{"seed":674475362,"stop_reason":"max_tokens","generated_text":"Happy
+        to hear that Marvin, will have ","input_token_count":15,"generated_token_count":10}],"model_id":"google/flan-t5-xl","created_at":"2024-01-25T15:50:36.025Z","conversation_id":"0a9375fd-262d-4784-9456-a89472660fc7"},"version":{"api":"v2","date":"2024-01-10"}}]}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Wed, 10 Jan 2024 13:44:42 GMT
-      Keep-Alive:
-      - timeout=72
+      cache-control:
+      - private
       content-length:
-      - '721'
+      - '735'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
+      date:
+      - Thu, 25 Jan 2024 15:50:36 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=ab61fe594e37cae048810df94b864b98; path=/;
+        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -71,8 +78,9 @@ interactions:
       - '24'
       x-ratelimit-reset:
       - '1'
-    http_version: HTTP/1.1
-    status_code: 200
+    status:
+      code: 200
+      message: OK
 - request:
     body: ''
     headers:
@@ -83,28 +91,31 @@ interactions:
       connection:
       - keep-alive
     method: DELETE
-    uri: https://api.com/v2/requests/chat/fb759af5-5b36-4a75-bb0f-a4108346bc69?version=2023-11-22
+    uri: https://api.com/v2/requests/chat/0a9375fd-262d-4784-9456-a89472660fc7?version=2023-11-22
   response:
-    content: ''
+    body:
+      string: ''
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Wed, 10 Jan 2024 13:44:43 GMT
-      Keep-Alive:
-      - timeout=72
       content-length:
       - '0'
       content-version:
       - '2023-11-22'
+      date:
+      - Thu, 25 Jan 2024 15:50:36 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
+        HttpOnly; Secure; SameSite=None
       x-ratelimit-limit:
       - '25'
       x-ratelimit-remaining:
       - '23'
       x-ratelimit-reset:
       - '0'
-    http_version: HTTP/1.1
-    status_code: 200
+    status:
+      code: 200
+      message: OK
 - request:
     body: ''
     headers:
@@ -115,30 +126,35 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/requests/chat/fb759af5-5b36-4a75-bb0f-a4108346bc69?version=2023-11-22
+    uri: https://api.com/v2/requests/chat/0a9375fd-262d-4784-9456-a89472660fc7?version=2023-11-22
   response:
-    content: '{"results":[]}'
+    body:
+      string: '{"results":[]}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Wed, 10 Jan 2024 13:44:44 GMT
-      Keep-Alive:
-      - timeout=72
+      cache-control:
+      - private
       content-length:
       - '14'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
+      date:
+      - Thu, 25 Jan 2024 15:50:37 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
+        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
       x-ratelimit-limit:
       - '25'
       x-ratelimit-remaining:
-      - '24'
+      - '22'
       x-ratelimit-reset:
-      - '1'
-    http_version: HTTP/1.1
-    status_code: 200
+      - '0'
+    status:
+      code: 200
+      message: OK
 version: 1

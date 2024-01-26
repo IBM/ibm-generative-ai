@@ -11,24 +11,29 @@ interactions:
     method: GET
     uri: https://api.com/v2/text/generation/limits?version=2023-11-22
   response:
-    content: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
+    body:
+      string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Wed, 10 Jan 2024 13:44:36 GMT
-      Keep-Alive:
-      - timeout=72
+      cache-control:
+      - private
       content-length:
       - '54'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
+      date:
+      - Thu, 25 Jan 2024 15:50:25 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=6d247d6198597e887510d8e26f4d2793; path=/;
+        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
-    http_version: HTTP/1.1
-    status_code: 200
+    status:
+      code: 200
+      message: OK
 - request:
     body: '{"input": "Hello Marvin, how are you today?", "model_id": "google/flan-t5-xl",
       "parameters": {"max_new_tokens": 10}}'
@@ -46,25 +51,25 @@ interactions:
     method: POST
     uri: https://api.com/v2/text/generation?version=2024-01-10
   response:
-    content: '{"id":"f43f143e-8aa5-43b6-a194-05df0ab753f5","model_id":"google/flan-t5-xl","created_at":"2024-01-10T13:44:37.499Z","results":[{"generated_text":"I''ve
-      had a nasty cold so ","generated_token_count":10,"input_token_count":10,"stop_reason":"max_tokens","seed":3239301227}]}'
+    body:
+      string: '{"id":"7904480c-4dfe-4d81-b7cf-d686c9a2ed61","model_id":"google/flan-t5-xl","created_at":"2024-01-25T15:50:25.542Z","results":[{"generated_text":"Happy
+        and satisfied with the night''s movie","generated_token_count":10,"input_token_count":10,"stop_reason":"eos_token","seed":1556817837}]}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Wed, 10 Jan 2024 13:44:37 GMT
-      Keep-Alive:
-      - timeout=72
       content-length:
-      - '270'
+      - '286'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2024-01-10'
+      date:
+      - Thu, 25 Jan 2024 15:50:25 GMT
+      keep-alive:
+      - timeout=72
       vary:
       - accept-encoding
-    http_version: HTTP/1.1
-    status_code: 200
+    status:
+      code: 200
+      message: OK
 - request:
     body: ''
     headers:
@@ -77,22 +82,26 @@ interactions:
     method: GET
     uri: https://api.com/v2/requests?limit=1&offset=0&status=success&version=2023-11-22
   response:
-    content: '{"results":[{"id":"f43f143e-8aa5-43b6-a194-05df0ab753f5","duration":316,"request":{"input":"Hello
-      Marvin, how are you today?","model_id":"google/flan-t5-xl","parameters":{"max_new_tokens":10}},"status":"success","created_at":"2024-01-10T13:44:38.000Z","response":{"id":"f43f143e-8aa5-43b6-a194-05df0ab753f5","results":[{"seed":3239301227,"stop_reason":"max_tokens","generated_text":"I''ve
-      had a nasty cold so ","input_token_count":10,"generated_token_count":10}],"model_id":"google/flan-t5-xl","created_at":"2024-01-10T13:44:37.499Z"},"version":{"api":"v2","date":"2024-01-10"}}],"total_count":829}'
+    body:
+      string: '{"results":[{"id":"7904480c-4dfe-4d81-b7cf-d686c9a2ed61","duration":281,"request":{"input":"Hello
+        Marvin, how are you today?","model_id":"google/flan-t5-xl","parameters":{"max_new_tokens":10}},"status":"success","created_at":"2024-01-25T15:50:26.000Z","response":{"id":"7904480c-4dfe-4d81-b7cf-d686c9a2ed61","results":[{"seed":1556817837,"stop_reason":"eos_token","generated_text":"Happy
+        and satisfied with the night''s movie","input_token_count":10,"generated_token_count":10}],"model_id":"google/flan-t5-xl","created_at":"2024-01-25T15:50:25.542Z"},"version":{"api":"v2","date":"2024-01-10"}}],"total_count":90303}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Wed, 10 Jan 2024 13:44:38 GMT
-      Keep-Alive:
-      - timeout=72
+      cache-control:
+      - private
       content-length:
-      - '597'
+      - '615'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
+      date:
+      - Thu, 25 Jan 2024 15:50:30 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
+        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -101,8 +110,9 @@ interactions:
       - '24'
       x-ratelimit-reset:
       - '1'
-    http_version: HTTP/1.1
-    status_code: 200
+    status:
+      code: 200
+      message: OK
 - request:
     body: ''
     headers:
@@ -113,26 +123,29 @@ interactions:
       connection:
       - keep-alive
     method: DELETE
-    uri: https://api.com/v2/requests/f43f143e-8aa5-43b6-a194-05df0ab753f5?version=2023-11-22
+    uri: https://api.com/v2/requests/7904480c-4dfe-4d81-b7cf-d686c9a2ed61?version=2023-11-22
   response:
-    content: ''
+    body:
+      string: ''
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Wed, 10 Jan 2024 13:44:39 GMT
-      Keep-Alive:
-      - timeout=72
       content-version:
       - '2023-11-22'
+      date:
+      - Thu, 25 Jan 2024 15:50:30 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=ab61fe594e37cae048810df94b864b98; path=/;
+        HttpOnly; Secure; SameSite=None
       x-ratelimit-limit:
       - '25'
       x-ratelimit-remaining:
       - '24'
       x-ratelimit-reset:
       - '1'
-    http_version: HTTP/1.1
-    status_code: 204
+    status:
+      code: 204
+      message: No Content
 - request:
     body: ''
     headers:
@@ -145,22 +158,26 @@ interactions:
     method: GET
     uri: https://api.com/v2/requests?limit=1&offset=0&status=success&version=2023-11-22
   response:
-    content: '{"results":[{"id":"07bafe60-2ea5-4a25-8288-db6c6d4a1dab","duration":3597,"request":{"prompt_id":"5Q19lWkC837FTj0z","parameters":{"return_options":{"input_text":true,"token_ranks":false,"input_tokens":false,"token_logprobs":false,"generated_tokens":false}}},"status":"success","created_at":"2024-01-10T13:44:34.000Z","response":{"id":"07bafe60-2ea5-4a25-8288-db6c6d4a1dab","results":[{"seed":1943578716,"input_text":"Write
-      the recipe for goulash in the style of Shakespeare","stop_reason":"max_tokens","generated_text":"Pomegranates:
-      1 cup, 1 1/2 cups pistachios, finely","input_token_count":13,"generated_token_count":20}],"model_id":"google/flan-t5-xl","created_at":"2024-01-10T13:44:33.830Z"},"version":{"api":"v2","date":"2024-01-10"}}],"total_count":828}'
+    body:
+      string: '{"results":[{"id":"f6ab357f-a662-4064-a476-1e8b42d60493","duration":681,"request":{"prompt_id":"KzkY6DMNGjZeu4bA","parameters":{"return_options":{"input_text":true,"token_ranks":false,"input_tokens":false,"token_logprobs":false,"generated_tokens":false}}},"status":"success","created_at":"2024-01-25T15:50:24.000Z","response":{"id":"f6ab357f-a662-4064-a476-1e8b42d60493","results":[{"seed":3255482813,"input_text":"Write
+        the recipe for goulash in the style of Shakespeare","stop_reason":"max_tokens","generated_text":"stir
+        together the minced meat, onion, bell pepper, tomatoes, and carrots in a","input_token_count":13,"generated_token_count":20}],"model_id":"google/flan-t5-xl","created_at":"2024-01-25T15:50:23.924Z"},"version":{"api":"v2","date":"2024-01-10"}}],"total_count":90302}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Wed, 10 Jan 2024 13:44:40 GMT
-      Keep-Alive:
-      - timeout=72
+      cache-control:
+      - private
       content-length:
-      - '758'
+      - '786'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
+      date:
+      - Thu, 25 Jan 2024 15:50:35 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
+        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -169,6 +186,7 @@ interactions:
       - '23'
       x-ratelimit-reset:
       - '0'
-    http_version: HTTP/1.1
-    status_code: 200
+    status:
+      code: 200
+      message: OK
 version: 1

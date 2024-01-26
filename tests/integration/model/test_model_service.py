@@ -15,7 +15,7 @@ class TestModelService:
         all_models = client.model.list(limit=None)
         assert len(first_page.results) == 5
         assert all_models.results == first_page.results + rest_models.results
-        assert all_models.results[0].token_limits[0].token_limit
+        assert all_models.results[0].id
 
     @pytest.mark.vcr
     def test_retrieve_model(self, client: Client) -> None:

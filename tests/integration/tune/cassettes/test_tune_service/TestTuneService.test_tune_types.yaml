@@ -11,112 +11,103 @@ interactions:
     method: GET
     uri: https://api.com/v2/tuning_types?version=2023-11-22
   response:
-    content: "{\"results\":[{\"id\":\"multitask_prompt_tuning\",\"name\":\"Multitask
-      Prompt Tuning\",\"schema\":{\"type\":\"object\",\"required\":[\"name\",\"model_id\",\"training_file_ids\",\"task_id\",\"tuning_type\"],\"properties\":{\"name\":{\"type\":\"string\",\"nullable\":false},\"task_id\":{\"type\":\"string\",\"nullable\":true},\"model_id\":{\"type\":\"string\",\"title\":\"Model
-      ID\",\"nullable\":false,\"description\":\"Base model ID used for underlying
-      generation.\"},\"parameters\":{\"type\":\"object\",\"properties\":{\"batch_size\":{\"type\":\"integer\",\"title\":\"Batch
-      size\",\"default\":16,\"maximum\":16,\"minimum\":1,\"nullable\":true,\"defaultUi\":16,\"description\":\"The
-      number of samples to work through before updating the internal model parameters.
-      Optimal batch size set points are based on a combination of the number of examples
-      you\u2019ve uploaded as well as other parameters. If you\u2019ve uploaded a
-      smaller training data set, you should set your batch size lower. The range is
-      1 to 16, defaults to 16.\"},\"num_epochs\":{\"type\":\"integer\",\"title\":\"Number
-      of epochs\",\"default\":20,\"maximum\":50,\"minimum\":1,\"nullable\":true,\"defaultUi\":20,\"description\":\"The
-      number of times to cycle through the training data set. If you have a large
-      training data set, a high number of epochs will take a very long time to finish
-      tuning. The range is 1 to 50, defaults to 20.\"},\"verbalizer\":{\"type\":\"string\",\"title\":\"Verbalizer\",\"default\":\"Input:
-      {{input}} Output:\",\"nullable\":true,\"defaultUi\":\"Input: {{input}} Output:\",\"description\":\"Verbalizer
-      template to be used for formatting data at train and inference time. This template
-      may use double brackets to indicate where fields from training data should be
-      rendered. The template can contain one or both of `{{input}}` and `{{output}}`.
-      Defaults to `Input: {{input}} Output:`. For classification tasks, we recommend
-      using the following template and updating the labels accordingly `classify {
-      \\\"label1\\\", \\\"label2\\\"} Input: {{input}} Output:`.\"},\"learning_rate\":{\"type\":\"number\",\"title\":\"Learning
-      rate\",\"default\":0.3,\"maximum\":0.5,\"minimum\":0.01,\"nullable\":true,\"defaultUi\":0.3,\"description\":\"Learning
-      rate to be used while tuning prompt vectors. The range is 0.01 to 0.5, defaults
-      to 0.3.\"},\"accumulate_steps\":{\"type\":\"integer\",\"title\":\"Gradient accumulation
-      steps\",\"default\":16,\"maximum\":128,\"minimum\":1,\"nullable\":true,\"defaultUi\":16,\"description\":\"Number
-      of training steps to use to combine gradients. This helps overcome the limitation
-      of smaller batch sizes due to GPU memory limitations. The range is 1 to 128,
-      defaults to 16.\"},\"max_input_tokens\":{\"type\":\"integer\",\"title\":\"Max
-      input tokens\",\"default\":256,\"maximum\":1024,\"minimum\":1,\"nullable\":true,\"defaultUi\":256,\"description\":\"The
-      maximum number of tokens that are accepted in the input field for each example.
-      If any of the input rows in your training data set exceed this value, the input
-      data will be truncated at the set maximum value. The range is 1 to 256, defaults
-      to 256.\"},\"max_output_tokens\":{\"type\":\"integer\",\"title\":\"Max output
-      tokens\",\"default\":128,\"maximum\":512,\"minimum\":1,\"nullable\":true,\"defaultUi\":128,\"description\":\"The
-      maximum number of tokens that are accepted in the output field for each example.
-      If any of the output rows in your training data set exceed this value, the output
-      data will be truncated at the set maximum value. The range is 1 to 128, defaults
-      to 128.\"},\"num_virtual_tokens\":{\"enum\":[20,50,100],\"type\":\"integer\",\"title\":\"Number
-      of virtual tokens\",\"default\":100,\"nullable\":true,\"defaultUi\":100,\"description\":\"Number
-      of virtual tokens to be used for training. This is purely experimental. If the
-      default value doesn\u2019t provide good results, you may want to try selecting
-      another value. Possible values are 20, 50, or 100, defaults to 100.\"}},\"additionalProperties\":true},\"tuning_type\":{\"enum\":[\"prompt_tuning\",\"multitask_prompt_tuning\"],\"type\":\"string\",\"title\":\"Tuning
-      type\",\"nullable\":false,\"description\":\"Type of tuning to be used.\"},\"training_file_ids\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"minItems\":1,\"nullable\":false},\"validation_file_ids\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"nullable\":true}},\"additionalProperties\":false},\"model_ids\":[\"google/flan-t5-xl\"]},{\"id\":\"prompt_tuning\",\"name\":\"Prompt
-      Tuning\",\"schema\":{\"type\":\"object\",\"required\":[\"name\",\"model_id\",\"training_file_ids\",\"task_id\",\"tuning_type\"],\"properties\":{\"name\":{\"type\":\"string\",\"nullable\":false},\"task_id\":{\"type\":\"string\",\"nullable\":true},\"model_id\":{\"type\":\"string\",\"title\":\"Model
-      ID\",\"nullable\":false,\"description\":\"Base model ID used for underlying
-      generation.\"},\"parameters\":{\"type\":\"object\",\"properties\":{\"batch_size\":{\"type\":\"integer\",\"title\":\"Batch
-      size\",\"default\":16,\"maximum\":16,\"minimum\":1,\"nullable\":true,\"defaultUi\":16,\"description\":\"The
-      number of samples to work through before updating the internal model parameters.
-      Optimal batch size set points are based on a combination of the number of examples
-      you\u2019ve uploaded as well as other parameters. If you\u2019ve uploaded a
-      smaller training data set, you should set your batch size lower. The range is
-      1 to 16, defaults to 16.\"},\"num_epochs\":{\"type\":\"integer\",\"title\":\"Number
-      of epochs\",\"default\":20,\"maximum\":50,\"minimum\":1,\"nullable\":true,\"defaultUi\":20,\"description\":\"The
-      number of times to cycle through the training data set. If you have a large
-      training data set, a high number of epochs will take a very long time to finish
-      tuning. The range is 1 to 50, defaults to 20.\"},\"verbalizer\":{\"type\":\"string\",\"title\":\"Verbalizer\",\"default\":\"Input:
-      {{input}} Output:\",\"nullable\":true,\"defaultUi\":\"Input: {{input}} Output:\",\"description\":\"Verbalizer
-      template to be used for formatting data at train and inference time. This template
-      may use double brackets to indicate where fields from training data should be
-      rendered. The template can contain one or both of `{{input}}` and `{{output}}`.
-      Defaults to `Input: {{input}} Output:`. For classification tasks, we recommend
-      using the following template and updating the labels accordingly `classify {
-      \\\"label1\\\", \\\"label2\\\"} Input: {{input}} Output:`.\"},\"learning_rate\":{\"type\":\"number\",\"title\":\"Learning
-      rate\",\"default\":0.3,\"maximum\":0.5,\"minimum\":0.01,\"nullable\":true,\"defaultUi\":0.3,\"description\":\"Learning
-      rate to be used while tuning prompt vectors. The range is 0.01 to 0.5, defaults
-      to 0.3.\"},\"accumulate_steps\":{\"type\":\"integer\",\"title\":\"Gradient accumulation
-      steps\",\"default\":16,\"maximum\":128,\"minimum\":1,\"nullable\":true,\"defaultUi\":16,\"description\":\"Number
-      of training steps to use to combine gradients. This helps overcome the limitation
-      of smaller batch sizes due to GPU memory limitations. The range is 1 to 128,
-      defaults to 16.\"},\"max_input_tokens\":{\"type\":\"integer\",\"title\":\"Max
-      input tokens\",\"default\":256,\"maximum\":1024,\"minimum\":1,\"nullable\":true,\"defaultUi\":256,\"description\":\"The
-      maximum number of tokens that are accepted in the input field for each example.
-      If any of the input rows in your training data set exceed this value, the input
-      data will be truncated at the set maximum value. The range is 1 to 256, defaults
-      to 256.\"},\"max_output_tokens\":{\"type\":\"integer\",\"title\":\"Max output
-      tokens\",\"default\":128,\"maximum\":512,\"minimum\":1,\"nullable\":true,\"defaultUi\":128,\"description\":\"The
-      maximum number of tokens that are accepted in the output field for each example.
-      If any of the output rows in your training data set exceed this value, the output
-      data will be truncated at the set maximum value. The range is 1 to 128, defaults
-      to 128.\"},\"num_virtual_tokens\":{\"enum\":[20,50,100],\"type\":\"integer\",\"title\":\"Number
-      of virtual tokens\",\"default\":100,\"nullable\":true,\"defaultUi\":100,\"description\":\"Number
-      of virtual tokens to be used for training. This is purely experimental. If the
-      default value doesn\u2019t provide good results, you may want to try selecting
-      another value. Possible values are 20, 50, or 100, defaults to 100.\"},\"init_text\":{\"type\":\"string\",\"title\":\"Initialization
-      text\",\"nullable\":true,\"description\":\"This text field is used to initialize
-      the prompt vector parameters. A common text-based initialization method is to
-      include a task description and instructions similar to what you would use for
-      zero-shot prompting.\"},\"init_method\":{\"enum\":[\"random\",\"text\"],\"type\":\"string\",\"title\":\"Initialization
-      method\",\"default\":\"random\",\"nullable\":true,\"defaultUi\":\"random\",\"description\":\"Initialization
-      method to be used\"}},\"additionalProperties\":true},\"tuning_type\":{\"enum\":[\"prompt_tuning\",\"multitask_prompt_tuning\"],\"type\":\"string\",\"title\":\"Tuning
-      type\",\"nullable\":false,\"description\":\"Type of tuning to be used.\"},\"training_file_ids\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"minItems\":1,\"nullable\":false},\"validation_file_ids\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"nullable\":true}},\"additionalProperties\":false},\"model_ids\":[\"google/flan-t5-xl\",\"ibm/granite-13b-chat-v2\",\"ibm/granite-13b-instruct-v2\"]}]}"
+    body:
+      string: "{\"results\":[{\"id\":\"prompt_tuning\",\"name\":\"Prompt Tuning\",\"schema\":{\"type\":\"object\",\"required\":[\"name\",\"model_id\",\"training_file_ids\",\"task_id\",\"tuning_type\"],\"properties\":{\"name\":{\"type\":\"string\",\"nullable\":false},\"task_id\":{\"type\":\"string\",\"nullable\":true},\"model_id\":{\"type\":\"string\",\"title\":\"Model
+        ID\",\"nullable\":false,\"description\":\"Base model ID used for underlying
+        generation.\"},\"parameters\":{\"type\":\"object\",\"properties\":{\"batch_size\":{\"type\":\"integer\",\"title\":\"Batch
+        size\",\"default\":16,\"maximum\":16,\"minimum\":1,\"nullable\":true,\"defaultUi\":16,\"description\":\"The
+        number of samples to work through before updating the internal model parameters.
+        Optimal batch size set points are based on a combination of the number of
+        examples you\u2019ve uploaded as well as other parameters. If you\u2019ve
+        uploaded a smaller training data set, you should set your batch size lower.\"},\"num_epochs\":{\"type\":\"integer\",\"title\":\"Number
+        of epochs\",\"default\":20,\"maximum\":200,\"minimum\":1,\"nullable\":true,\"defaultUi\":20,\"description\":\"The
+        number of times to cycle through the training data set. If you have a large
+        training data set, a high number of epochs will take a very long time to finish
+        tuning.\"},\"verbalizer\":{\"type\":\"string\",\"title\":\"Verbalizer\",\"default\":\"{{input}}\",\"nullable\":true,\"defaultUi\":\"{{input}}\",\"description\":\"Verbalizer
+        template to be used for formatting data at train and inference time. This
+        template may use double brackets to indicate where fields from training data
+        should be rendered. The template can contain one or both of `{{input}}` and
+        `{{output}}`. Defaults to `{{input}}`. For classification tasks, we recommend
+        using the following template and updating the labels accordingly `classify
+        { \\\"label1\\\", \\\"label2\\\"} Input: {{input}} Output:`.\"},\"learning_rate\":{\"type\":\"number\",\"title\":\"Learning
+        rate\",\"default\":0.3,\"maximum\":0.5,\"minimum\":0.000001,\"nullable\":true,\"defaultUi\":0.3,\"description\":\"Learning
+        rate to be used while tuning prompt vectors.\"},\"accumulate_steps\":{\"type\":\"integer\",\"title\":\"Gradient
+        accumulation steps\",\"default\":16,\"maximum\":128,\"minimum\":1,\"nullable\":true,\"defaultUi\":16,\"description\":\"Number
+        of training steps to use to combine gradients. This helps overcome the limitation
+        of smaller batch sizes due to GPU memory limitations.\"},\"max_input_tokens\":{\"type\":\"integer\",\"title\":\"Max
+        input tokens\",\"default\":256,\"maximum\":1024,\"minimum\":1,\"nullable\":true,\"defaultUi\":256,\"description\":\"The
+        maximum number of tokens that are accepted in the input field for each example.
+        If any of the input rows in your training data set exceed this value, the
+        input data will be truncated at the set maximum value.\"},\"max_output_tokens\":{\"type\":\"integer\",\"title\":\"Max
+        output tokens\",\"default\":128,\"maximum\":512,\"minimum\":1,\"nullable\":true,\"defaultUi\":128,\"description\":\"The
+        maximum number of tokens that are accepted in the output field for each example.
+        If any of the output rows in your training data set exceed this value, the
+        output data will be truncated at the set maximum value.\"},\"num_virtual_tokens\":{\"enum\":[20,50,100,250,500],\"type\":\"integer\",\"title\":\"Number
+        of virtual tokens\",\"default\":100,\"nullable\":true,\"defaultUi\":100,\"description\":\"Number
+        of virtual tokens to be used for training. This is purely experimental. If
+        the default value doesn\u2019t provide good results, you may want to try selecting
+        another value.\"},\"init_text\":{\"type\":\"string\",\"title\":\"Initialization
+        text\",\"nullable\":true,\"description\":\"This text field is used to initialize
+        the prompt vector parameters. A common text-based initialization method is
+        to include a task description and instructions similar to what you would use
+        for zero-shot prompting.\"},\"init_method\":{\"enum\":[\"random\",\"text\"],\"type\":\"string\",\"title\":\"Initialization
+        method\",\"default\":\"random\",\"nullable\":true,\"defaultUi\":\"random\",\"description\":\"Initialization
+        method to be used\"}},\"additionalProperties\":true},\"tuning_type\":{\"enum\":[\"prompt_tuning\",\"multitask_prompt_tuning\"],\"type\":\"string\",\"title\":\"Tuning
+        type\",\"nullable\":false,\"description\":\"Type of tuning to be used.\"},\"training_file_ids\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"minItems\":1,\"nullable\":false},\"validation_file_ids\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"nullable\":true}},\"additionalProperties\":false},\"model_ids\":[\"google/flan-t5-xl\",\"ibm/granite-13b-chat-v2\",\"ibm/granite-13b-instruct-v2\"]},{\"id\":\"multitask_prompt_tuning\",\"name\":\"Multitask
+        Prompt Tuning\",\"schema\":{\"type\":\"object\",\"required\":[\"name\",\"model_id\",\"training_file_ids\",\"task_id\",\"tuning_type\"],\"properties\":{\"name\":{\"type\":\"string\",\"nullable\":false},\"task_id\":{\"type\":\"string\",\"nullable\":true},\"model_id\":{\"type\":\"string\",\"title\":\"Model
+        ID\",\"nullable\":false,\"description\":\"Base model ID used for underlying
+        generation.\"},\"parameters\":{\"type\":\"object\",\"properties\":{\"batch_size\":{\"type\":\"integer\",\"title\":\"Batch
+        size\",\"default\":16,\"maximum\":16,\"minimum\":1,\"nullable\":true,\"defaultUi\":16,\"description\":\"The
+        number of samples to work through before updating the internal model parameters.
+        Optimal batch size set points are based on a combination of the number of
+        examples you\u2019ve uploaded as well as other parameters. If you\u2019ve
+        uploaded a smaller training data set, you should set your batch size lower.\"},\"num_epochs\":{\"type\":\"integer\",\"title\":\"Number
+        of epochs\",\"default\":20,\"maximum\":200,\"minimum\":1,\"nullable\":true,\"defaultUi\":20,\"description\":\"The
+        number of times to cycle through the training data set. If you have a large
+        training data set, a high number of epochs will take a very long time to finish
+        tuning.\"},\"verbalizer\":{\"type\":\"string\",\"title\":\"Verbalizer\",\"default\":\"{{input}}\",\"nullable\":true,\"defaultUi\":\"{{input}}\",\"description\":\"Verbalizer
+        template to be used for formatting data at train and inference time. This
+        template may use double brackets to indicate where fields from training data
+        should be rendered. The template can contain one or both of `{{input}}` and
+        `{{output}}`. Defaults to `{{input}}`. For classification tasks, we recommend
+        using the following template and updating the labels accordingly `classify
+        { \\\"label1\\\", \\\"label2\\\"} Input: {{input}} Output:`.\"},\"learning_rate\":{\"type\":\"number\",\"title\":\"Learning
+        rate\",\"default\":0.3,\"maximum\":0.5,\"minimum\":0.000001,\"nullable\":true,\"defaultUi\":0.3,\"description\":\"Learning
+        rate to be used while tuning prompt vectors.\"},\"accumulate_steps\":{\"type\":\"integer\",\"title\":\"Gradient
+        accumulation steps\",\"default\":16,\"maximum\":128,\"minimum\":1,\"nullable\":true,\"defaultUi\":16,\"description\":\"Number
+        of training steps to use to combine gradients. This helps overcome the limitation
+        of smaller batch sizes due to GPU memory limitations.\"},\"max_input_tokens\":{\"type\":\"integer\",\"title\":\"Max
+        input tokens\",\"default\":256,\"maximum\":1024,\"minimum\":1,\"nullable\":true,\"defaultUi\":256,\"description\":\"The
+        maximum number of tokens that are accepted in the input field for each example.
+        If any of the input rows in your training data set exceed this value, the
+        input data will be truncated at the set maximum value.\"},\"max_output_tokens\":{\"type\":\"integer\",\"title\":\"Max
+        output tokens\",\"default\":128,\"maximum\":512,\"minimum\":1,\"nullable\":true,\"defaultUi\":128,\"description\":\"The
+        maximum number of tokens that are accepted in the output field for each example.
+        If any of the output rows in your training data set exceed this value, the
+        output data will be truncated at the set maximum value.\"},\"num_virtual_tokens\":{\"enum\":[20,50,100,250,500],\"type\":\"integer\",\"title\":\"Number
+        of virtual tokens\",\"default\":100,\"nullable\":true,\"defaultUi\":100,\"description\":\"Number
+        of virtual tokens to be used for training. This is purely experimental. If
+        the default value doesn\u2019t provide good results, you may want to try selecting
+        another value.\"}},\"additionalProperties\":true},\"tuning_type\":{\"enum\":[\"prompt_tuning\",\"multitask_prompt_tuning\"],\"type\":\"string\",\"title\":\"Tuning
+        type\",\"nullable\":false,\"description\":\"Type of tuning to be used.\"},\"training_file_ids\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"minItems\":1,\"nullable\":false},\"validation_file_ids\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"nullable\":true}},\"additionalProperties\":false},\"model_ids\":[]}]}"
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Fri, 05 Jan 2024 10:00:44 GMT
-      Keep-Alive:
-      - timeout=72
-      Transfer-Encoding:
-      - chunked
-      content-encoding:
-      - gzip
+      cache-control:
+      - private
+      content-length:
+      - '8113'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
+      date:
+      - Thu, 25 Jan 2024 15:53:19 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
+        HttpOnly; Secure; SameSite=None
+      transfer-encoding:
+      - chunked
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -125,6 +116,7 @@ interactions:
       - '24'
       x-ratelimit-reset:
       - '1'
-    http_version: HTTP/1.1
-    status_code: 200
+    status:
+      code: 200
+      message: OK
 version: 1
