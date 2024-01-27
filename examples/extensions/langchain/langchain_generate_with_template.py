@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 from genai import Client, Credentials
 from genai.extensions.langchain import LangChainInterface
-from genai.text.generation import TextGenerationParameters, TextGenerationReturnOptions
+from genai.schema import TextGenerationParameters, TextGenerationReturnOptions
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
