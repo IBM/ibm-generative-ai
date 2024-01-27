@@ -460,6 +460,22 @@ alias:
     - TextTokenizationCreateRequest_parameters
   TextTokenizationReturnOptions:
     - TextTokenizationCreateRequest_parameters_return_options
+  # SYSTEM PROMPTS -------------------------------------------------------------
+  SystemPrompt:
+    - SystemPromptCreate_result
+    - SystemPromptIdRetrieve_result
+    - SystemPromptIdUpdate_result
+    - SystemPromptRetrieve_results
+  SystemPromptAuthor:
+    - SystemPromptIdRetrieve_result_author
+    - SystemPromptCreate_result_author
+    - SystemPromptIdUpdate_result_author
+    - SystemPromptRetrieve_results_author
+  SystemPromptType:
+    - SystemPromptCreate_result_type
+    - SystemPromptIdRetrieve_result_type
+    - SystemPromptIdUpdate_result_type
+    - SystemPromptRetrieve_results_type
 replace:
   # Override schema by a different equivalent schema
   # For example override A: B is means: schemas[A] = schemas[B]; del schemas[B]

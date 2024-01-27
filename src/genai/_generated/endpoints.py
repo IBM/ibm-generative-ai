@@ -120,6 +120,36 @@ class RequestIdDeleteEndpoint(ApiEndpoint):
     version: str = "2023-11-22"
 
 
+class SystemPromptRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/system_prompts"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
+class SystemPromptCreateEndpoint(ApiEndpoint):
+    path: str = "/v2/system_prompts"
+    method: str = "POST"
+    version: str = "2023-11-22"
+
+
+class SystemPromptIdDeleteEndpoint(ApiEndpoint):
+    path: str = "/v2/system_prompts/{id}"
+    method: str = "DELETE"
+    version: str = "2023-11-22"
+
+
+class SystemPromptIdRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/system_prompts/{id}"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
+class SystemPromptIdUpdateEndpoint(ApiEndpoint):
+    path: str = "/v2/system_prompts/{id}"
+    method: str = "PUT"
+    version: str = "2023-11-22"
+
+
 class TaskRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/tasks"
     method: str = "GET"

@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 import re
 from abc import ABC
+from enum import Enum
 from typing import Generic, Optional, TypeVar, Union, cast
 from urllib.parse import quote
 
@@ -90,13 +91,14 @@ class BaseService(Generic[TConfig, TServices], ABC):
     @staticmethod
     def _get_endpoint(
         endpoint: type[ApiEndpoint],
-        **params: str,
+        **params: Union[int, str, Enum],
     ) -> str:
         target_endpoint = endpoint.path
         if not target_endpoint:
             raise ValueError("Endpoint was not found in the provided config.")
 
         for k, v in params.items():
+            v = v.value if isinstance(v, Enum) else str(v)
             assert_is_not_empty_string(v)
             parameter_expression = f"{{{k}}}"
             if parameter_expression not in target_endpoint:

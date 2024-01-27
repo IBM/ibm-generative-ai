@@ -1,0 +1,225 @@
+interactions:
+- request:
+    body: '{"content": "My system prompt description", "name": "My system prompt"}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '71'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/system_prompts?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"id":36,"name":"My system prompt","content":"My system prompt
+        description","created_at":"2024-01-27T10:51:34.000Z","type":"private","author":{"id":453,"first_name":"Tomas","last_name":"Dvorak"}}}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 27 Jan 2024 10:51:33 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '206'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/system_prompts?version=2023-11-22
+  response:
+    body:
+      string: '{"results":[{"id":36,"name":"My system prompt","content":"My system
+        prompt description","created_at":"2024-01-27T10:51:34.000Z","type":"private","author":{"id":453,"first_name":"Tomas","last_name":"Dvorak"}},{"id":35,"name":"My
+        system prompt","content":"My system prompt description","created_at":"2024-01-27T10:51:23.000Z","type":"private","author":{"id":453,"first_name":"Tomas","last_name":"Dvorak"}},{"id":34,"name":"My
+        system prompt","content":"My system prompt description","created_at":"2024-01-27T10:49:07.000Z","type":"private","author":{"id":453,"first_name":"Tomas","last_name":"Dvorak"}},{"id":4,"name":"meta-llama/llama-2-13b-chat
+        default","content":"You are a helpful, respectful and honest assistant. Always
+        answer as helpfully as possible, while being safe.  Your answers should not
+        include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal
+        content. Please ensure that your responses are socially unbiased and positive
+        in nature.\n\nIf a question does not make any sense, or is not factually coherent,
+        explain why instead of answering something not correct. If you don''t know
+        the answer to a question, please don''t share false information.","created_at":"2024-01-23T08:20:28.000Z","type":"system"},{"id":5,"name":"meta-llama/llama-2-7b-chat
+        default","content":"You are a helpful, respectful and honest assistant. Always
+        answer as helpfully as possible, while being safe.  Your answers should not
+        include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal
+        content. Please ensure that your responses are socially unbiased and positive
+        in nature.\n\nIf a question does not make any sense, or is not factually coherent,
+        explain why instead of answering something not correct. If you don''t know
+        the answer to a question, please don''t share false information.","created_at":"2024-01-23T08:20:28.000Z","type":"system"},{"id":1,"name":"ibm/granite-13b-chat-3lang
+        default","content":"Below are a series of dialogues between various people
+        and an AI assistant. The AI tries to be helpful, polite, honest, sophisticated,
+        emotionally aware, and humble-but-knowledgeable. The assistant is happy to
+        help with almost anything, and will do its best to understand exactly what
+        is needed. It also tries to avoid giving false or misleading information,
+        and it caveats when it isn''t entirely sure about the right answer. Moreover,
+        the assistant prioritizes caution over usefulness, refusing to answer questions
+        that it considers unsafe, immoral, unethical or dangerous.","created_at":"2024-01-23T08:20:28.000Z","type":"system"},{"id":7,"name":"ibm/granite-13b-chat-v2
+        default","content":"Given the document and the current conversation between
+        a user and an agent, your task is as follows: Answer any user query by using
+        information from the document. The response should be detailed.\n","created_at":"2024-01-23T08:20:28.000Z","type":"system"},{"id":6,"name":"meta-llama/llama-2-70b-chat
+        default","content":"You are a helpful, respectful and honest assistant. Always
+        answer as helpfully as possible, while being safe.  Your answers should not
+        include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal
+        content. Please ensure that your responses are socially unbiased and positive
+        in nature.\n\nIf a question does not make any sense, or is not factually coherent,
+        explain why instead of answering something not correct. If you don''t know
+        the answer to a question, please don''t share false information.","created_at":"2024-01-23T08:20:28.000Z","type":"system"},{"id":2,"name":"meta-llama/llama-2-13b-chat-beam
+        default","content":"You are a helpful, respectful and honest assistant. Always
+        answer as helpfully as possible, while being safe.  Your answers should not
+        include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal
+        content. Please ensure that your responses are socially unbiased and positive
+        in nature.\n\nIf a question does not make any sense, or is not factually coherent,
+        explain why instead of answering something not correct. If you don''t know
+        the answer to a question, please don''t share false information.","created_at":"2024-01-23T08:20:28.000Z","type":"system"},{"id":3,"name":"ibm/granite-13b-chat-v1
+        default","content":"Below are a series of dialogues between various people
+        and an AI assistant. The AI tries to be helpful, polite, honest, sophisticated,
+        emotionally aware, and humble-but-knowledgeable. The assistant is happy to
+        help with almost anything, and will do its best to understand exactly what
+        is needed. It also tries to avoid giving false or misleading information,
+        and it caveats when it isn''t entirely sure about the right answer. Moreover,
+        the assistant prioritizes caution over usefulness, refusing to answer questions
+        that it considers unsafe, immoral, unethical or dangerous.","created_at":"2024-01-23T08:20:28.000Z","type":"system"}],"total_count":10}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 27 Jan 2024 10:51:34 GMT
+      Keep-Alive:
+      - timeout=72
+      Transfer-Encoding:
+      - chunked
+      content-length:
+      - '4860'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '23'
+      x-ratelimit-reset:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/system_prompts?version=2023-11-22
+  response:
+    body:
+      string: '{"results":[{"id":36,"name":"My system prompt","content":"My system
+        prompt description","created_at":"2024-01-27T10:51:34.000Z","type":"private","author":{"id":453,"first_name":"Tomas","last_name":"Dvorak"}},{"id":35,"name":"My
+        system prompt","content":"My system prompt description","created_at":"2024-01-27T10:51:23.000Z","type":"private","author":{"id":453,"first_name":"Tomas","last_name":"Dvorak"}},{"id":34,"name":"My
+        system prompt","content":"My system prompt description","created_at":"2024-01-27T10:49:07.000Z","type":"private","author":{"id":453,"first_name":"Tomas","last_name":"Dvorak"}},{"id":4,"name":"meta-llama/llama-2-13b-chat
+        default","content":"You are a helpful, respectful and honest assistant. Always
+        answer as helpfully as possible, while being safe.  Your answers should not
+        include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal
+        content. Please ensure that your responses are socially unbiased and positive
+        in nature.\n\nIf a question does not make any sense, or is not factually coherent,
+        explain why instead of answering something not correct. If you don''t know
+        the answer to a question, please don''t share false information.","created_at":"2024-01-23T08:20:28.000Z","type":"system"},{"id":5,"name":"meta-llama/llama-2-7b-chat
+        default","content":"You are a helpful, respectful and honest assistant. Always
+        answer as helpfully as possible, while being safe.  Your answers should not
+        include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal
+        content. Please ensure that your responses are socially unbiased and positive
+        in nature.\n\nIf a question does not make any sense, or is not factually coherent,
+        explain why instead of answering something not correct. If you don''t know
+        the answer to a question, please don''t share false information.","created_at":"2024-01-23T08:20:28.000Z","type":"system"},{"id":1,"name":"ibm/granite-13b-chat-3lang
+        default","content":"Below are a series of dialogues between various people
+        and an AI assistant. The AI tries to be helpful, polite, honest, sophisticated,
+        emotionally aware, and humble-but-knowledgeable. The assistant is happy to
+        help with almost anything, and will do its best to understand exactly what
+        is needed. It also tries to avoid giving false or misleading information,
+        and it caveats when it isn''t entirely sure about the right answer. Moreover,
+        the assistant prioritizes caution over usefulness, refusing to answer questions
+        that it considers unsafe, immoral, unethical or dangerous.","created_at":"2024-01-23T08:20:28.000Z","type":"system"},{"id":7,"name":"ibm/granite-13b-chat-v2
+        default","content":"Given the document and the current conversation between
+        a user and an agent, your task is as follows: Answer any user query by using
+        information from the document. The response should be detailed.\n","created_at":"2024-01-23T08:20:28.000Z","type":"system"},{"id":6,"name":"meta-llama/llama-2-70b-chat
+        default","content":"You are a helpful, respectful and honest assistant. Always
+        answer as helpfully as possible, while being safe.  Your answers should not
+        include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal
+        content. Please ensure that your responses are socially unbiased and positive
+        in nature.\n\nIf a question does not make any sense, or is not factually coherent,
+        explain why instead of answering something not correct. If you don''t know
+        the answer to a question, please don''t share false information.","created_at":"2024-01-23T08:20:28.000Z","type":"system"},{"id":2,"name":"meta-llama/llama-2-13b-chat-beam
+        default","content":"You are a helpful, respectful and honest assistant. Always
+        answer as helpfully as possible, while being safe.  Your answers should not
+        include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal
+        content. Please ensure that your responses are socially unbiased and positive
+        in nature.\n\nIf a question does not make any sense, or is not factually coherent,
+        explain why instead of answering something not correct. If you don''t know
+        the answer to a question, please don''t share false information.","created_at":"2024-01-23T08:20:28.000Z","type":"system"},{"id":3,"name":"ibm/granite-13b-chat-v1
+        default","content":"Below are a series of dialogues between various people
+        and an AI assistant. The AI tries to be helpful, polite, honest, sophisticated,
+        emotionally aware, and humble-but-knowledgeable. The assistant is happy to
+        help with almost anything, and will do its best to understand exactly what
+        is needed. It also tries to avoid giving false or misleading information,
+        and it caveats when it isn''t entirely sure about the right answer. Moreover,
+        the assistant prioritizes caution over usefulness, refusing to answer questions
+        that it considers unsafe, immoral, unethical or dangerous.","created_at":"2024-01-23T08:20:28.000Z","type":"system"}],"total_count":10}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 27 Jan 2024 10:51:35 GMT
+      Keep-Alive:
+      - timeout=72
+      Transfer-Encoding:
+      - chunked
+      content-length:
+      - '4860'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    status:
+      code: 200
+      message: OK
+version: 1
