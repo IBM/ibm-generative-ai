@@ -20,7 +20,6 @@ def setup_paths():
 
 setup_paths()
 
-from genai import __version__  # noqa: E402
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -33,6 +32,8 @@ author = "IBM Research"
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
+    "sphinx_copybutton",
+    "notfound.extension",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.autosummary",
@@ -51,6 +52,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinxcontrib.autodoc_pydantic",
     "sphinx_toolbox.collapse",
+    "sphinx_multiversion",
 ]
 
 napoleon_use_admonition_for_examples = True
@@ -59,8 +61,42 @@ napoleon_use_ivar = False
 
 autosectionlabel_prefix_document = True
 templates_path = ["_templates"]
+html_sidebars = {
+    "**": [
+        "sidebar/brand.html",
+        "sidebar/search.html",
+        "sidebar/scroll-start.html",
+        "sidebar/navigation.html",
+        "versioning.html",
+        "sidebar/scroll-end.html",
+        "sidebar/variant-selector.html",
+    ]
+}
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
+# Whitelist pattern for tags (set to None to ignore all tags)
+smv_tag_whitelist = r"^.*$"
+smv_branch_whitelist = os.environ["CURRENT_BRANCH"]
+smv_released_pattern = r"^refs/tags/.*$"
+smv_latest_version = os.environ["LATEST_VERSION"]
+notfound_urls_prefix = f"/{smv_latest_version}/"
+notfound_template = "page.html"
+version = smv_latest_version.replace("v", "")
+release = version
+smv_prebuild_command = " && ".join(
+    [
+        "cd ..",  # go to the project root
+        "make -C documentation/ apidoc",  # generates `modules` index
+        " ".join(
+            [
+                "PYTHONPATH='scripts'",
+                "BRANCH_NAME=$(cat ../versions.json | jq -r --arg DIR_NAME `basename $PWD` '.[] | select(.basedir | endswith($DIR_NAME)) | .name')",  # noqa
+                "python scripts/docs_examples_generator/main.py",
+                "scripts/docs_fix_schema_private.sh",
+            ]
+        ),
+    ]
+)
 # https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#confval-autoclass_content
 autoclass_content = "class"
 
@@ -96,7 +132,6 @@ html_theme = "furo"
 # html_theme = "alabaster"
 html_static_path = ["_static"]
 html_title = "IBM Generative AI Python SDK (Tech Preview)"
-release = __version__
 
 html_theme_options = {
     "light_css_variables": {
