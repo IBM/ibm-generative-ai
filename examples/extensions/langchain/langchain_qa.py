@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 from genai import Client, Credentials
 from genai.extensions.langchain import LangChainInterface
-from genai.text.generation import DecodingMethod, TextGenerationParameters
+from genai.schema import DecodingMethod, TextGenerationParameters
 
 try:
     from langchain_core.output_parsers import StrOutputParser

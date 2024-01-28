@@ -16,7 +16,8 @@ def run(model_id: str, limit: int):
     from dotenv import load_dotenv
 
     from genai import Client, Credentials
-    from genai.text.generation import CreateExecutionOptions, TextGenerationParameters
+    from genai.schema import TextGenerationParameters
+    from genai.text.generation import CreateExecutionOptions
 
     # make sure you have a .env file under genai root with
     # GENAI_KEY=<your-genai-key>

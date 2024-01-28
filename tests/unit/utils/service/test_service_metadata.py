@@ -1,10 +1,10 @@
 import pytest
 
-from genai._generated.endpoints import ApiEndpoint
 from genai._utils.service.metadata import (
     get_service_action_metadata,
     set_service_action_metadata,
 )
+from genai.schema._endpoints import ApiEndpoint
 
 
 class DummyEndpoint(ApiEndpoint):

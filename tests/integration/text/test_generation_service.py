@@ -1,7 +1,7 @@
 import pytest
 
 from genai import Client
-from genai.text.generation import (
+from genai.schema import (
     DecodingMethod,
     LengthPenalty,
     ModerationHAP,

@@ -1,12 +1,7 @@
 import pytest
 
 from genai import Client
-from genai.text.chat import (
-    HumanMessage,
-    ModerationHAP,
-    ModerationParameters,
-    TextGenerationParameters,
-)
+from genai.schema import HumanMessage, ModerationHAP, ModerationParameters, TextGenerationParameters
 
 TEST_MODEL_ID = "meta-llama/llama-2-13b-chat"
 

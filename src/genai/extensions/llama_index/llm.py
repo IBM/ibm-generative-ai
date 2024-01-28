@@ -4,14 +4,21 @@ from functools import partial
 from typing import Any, List, Optional, Sequence
 
 from genai import Client
-from genai._generated.api import ModerationParameters, PromptTemplateData, TrimMethod
 from genai._types import EnumLike
 from genai.extensions._common.utils import (
     _prepare_chat_generation_request,
     create_generation_info_from_response,
 )
-from genai.text.chat.schema import AIMessage, BaseMessage, HumanMessage, SystemMessage
-from genai.text.generation.schema import TextGenerationParameters
+from genai.schema import (
+    AIMessage,
+    BaseMessage,
+    HumanMessage,
+    ModerationParameters,
+    PromptTemplateData,
+    SystemMessage,
+    TextGenerationParameters,
+    TrimMethod,
+)
 
 logger = logging.getLogger(__name__)
 

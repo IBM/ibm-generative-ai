@@ -67,7 +67,7 @@ max-complexity = 18
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["F401", "F403"] # Ignore import violations in all `__init__.py` files.
 "examples/**/*.py" = ["T201", "T203", "B904"] # Examples can include print and pprint, ignore exception propagation
-"src/genai/_generated/*.py" = ["E501"] # Generated can include long lines
+"src/genai/schema/_api.py" = ["E501"] # Generated can include long lines
 "tests/unit/docs_examples_generator/assets/**/*.py" = ["T201"] # Allow prints
 
 [tool.ruff.lint.isort]
@@ -171,7 +171,7 @@ cmd = "ruff check --fix"
 [tool.poe.tasks.schema]
 help = "Generate Pydantic models and endpoints information from OpenAPI"
 env = { "PYTHONPATH" = "scripts" }
-sequence = [{ cmd = "python scripts/types_generator/main.py" }, { ref = "format", "cwd" = "src/genai/_generated"}]
+sequence = [{ cmd = "python scripts/types_generator/main.py" }, { ref = "format", "cwd" = "src/genai/schema"}]
 
 
 [tool.poe.tasks.docs]
@@ -191,6 +191,7 @@ args = ["type"]
     sequence = [
         "docs --type=clear",
         { cmd = "make apidoc", cwd = "documentation" },
+        { cmd = "scripts/docs_fix_schema_private.sh" },
         { cmd = "python scripts/docs_examples_generator/main.py", env = { PYTHONPATH="scripts" }},
         { cmd = "make html", cwd = "documentation" }
     ]

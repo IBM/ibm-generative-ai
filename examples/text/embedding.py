@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 from genai.client import Client
 from genai.credentials import Credentials
-from genai.text.embedding import TextEmbeddingParameters
+from genai.schema import TextEmbeddingParameters
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>

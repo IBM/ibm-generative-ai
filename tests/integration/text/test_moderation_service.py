@@ -1,12 +1,12 @@
 import pytest
 
 from genai import Client
-from genai.text.moderation import (
-    CreateExecutionOptions,
+from genai.schema import (
     HAPOptions,
     ImplicitHateOptions,
     StigmaOptions,
 )
+from genai.text.moderation import CreateExecutionOptions
 
 TEST_MODEL_ID = "google/flan-t5-xl"
 

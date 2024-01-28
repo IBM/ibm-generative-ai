@@ -6,8 +6,6 @@ from genai._version import __version__ as v
 from genai.client import Client
 from genai.credentials import Credentials
 
-logging.getLogger(__name__).addHandler(logging.NullHandler())
-
 __version__ = v
 
 

@@ -1,8 +1,7 @@
 import pytest
 
 from genai import Client
-from genai.request import RequestStatus
-from genai.text.chat import HumanMessage
+from genai.schema import HumanMessage, RequestStatus
 
 TEST_MODEL_ID = "google/flan-t5-xl"
 

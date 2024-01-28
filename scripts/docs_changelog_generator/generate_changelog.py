@@ -15,7 +15,7 @@ from docs_changelog_generator.utils import (
     shave_marks,
     use_context,
 )
-from genai._generated.endpoints import ApiEndpoint
+from genai.schema._endpoints import ApiEndpoint
 
 load_dotenv()
 

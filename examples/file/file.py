@@ -11,7 +11,7 @@ from pprint import pprint
 from dotenv import load_dotenv
 
 from genai.client import Client, Credentials
-from genai.file import FileListSortBy, FilePurpose, SortDirection
+from genai.schema import FileListSortBy, FilePurpose, SortDirection
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>

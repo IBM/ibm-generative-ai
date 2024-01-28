@@ -19,7 +19,7 @@ from langchain_core.tools import BaseTool
 
 from genai import Client, Credentials
 from genai.extensions.langchain import LangChainChatInterface
-from genai.text.generation import TextGenerationParameters
+from genai.schema import TextGenerationParameters
 
 load_dotenv()
 

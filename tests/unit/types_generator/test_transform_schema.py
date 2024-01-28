@@ -22,20 +22,7 @@ def to_object(obj_properties):
     return {"properties": obj_properties, "type": "object"}
 
 
-@pytest.fixture
-def propagate_caplog(caplog):
-    logger = None
-
-    def _propagate_caplog(name: str):
-        nonlocal logger
-        logger = logging.getLogger(name)
-        logger.addHandler(caplog.handler)
-        return caplog
-
-    yield _propagate_caplog
-
-    if logger:
-        logger.removeHandler(caplog.handler)
+OPERATION_ID_PREFIX = "TESTOPERATIONID"
 
 
 @pytest.fixture
@@ -68,27 +55,27 @@ def test_transform_schema_no_aliases(process_schema_test_input: ProcessSchemaTes
     """Extracts all schemas with fully qualified names."""
     caplog = propagate_caplog("types_generator.schema_transformer")
     api, input_schemas = process_schema_test_input
-    transform_schema(api, schema_overrides=SchemaOverrides())
+    transform_schema(api, SchemaOverrides(), OPERATION_ID_PREFIX)
     extracted_schemas = api["components"]["schemas"]
     input_schemas = process_schema_test_input.schemas
     assert extracted_schemas == {
-        "TestpathCreateRequest_testproperty": input_schemas["TestpathCreateRequest_testproperty"],
-        "TestpathCreate_result": {
+        "_TestpathCreateRequest_testproperty": input_schemas["TestpathCreateRequest_testproperty"],
+        "_TestpathCreate_result": {
             "properties": {
-                "nested_schema": {"$ref": "#/components/schemas/TestpathCreate_result_nested_schema"},
+                "nested_schema": {"$ref": "#/components/schemas/_TestpathCreate_result_nested_schema"},
                 "prop1": {"type": "string"},
             },
             "type": "object",
         },
-        "TestpathCreate_result_nested_schema": input_schemas["TestpathCreateRequest_testproperty"],
+        "_TestpathCreate_result_nested_schema": input_schemas["TestpathCreateRequest_testproperty"],
     }
     testpath_schema = api["paths"]["/testpath"]["post"]
     requestBody = testpath_schema["requestBody"]["content"]["application/json"]["schema"]
     response = testpath_schema["responses"]["200"]["content"]["application/json"]["schema"]
     assert requestBody == to_object(
-        {"testproperty": {"$ref": "#/components/schemas/TestpathCreateRequest_testproperty"}}
+        {"testproperty": {"$ref": "#/components/schemas/_TestpathCreateRequest_testproperty"}}
     )
-    assert response == to_object({"result": {"$ref": "#/components/schemas/TestpathCreate_result"}})
+    assert response == to_object({"result": {"$ref": "#/components/schemas/_TestpathCreate_result"}})
 
     # Warn about non-unified schemas
     with caplog.at_level(logging.WARNING):
@@ -103,10 +90,10 @@ def test_transform_schema_correct_aliases(process_schema_test_input: ProcessSche
     caplog = propagate_caplog("types_generator.schema_transformer")
     api, input_schemas = process_schema_test_input
     schema_aliases = {
-        "MyReusableProperty": ["TestpathCreateRequest_testproperty", "TestpathCreate_result_nested_schema"],
-        "BetterNameForResult": ["TestpathCreate_result"],
+        "MyReusableProperty": ["_TestpathCreateRequest_testproperty", "_TestpathCreate_result_nested_schema"],
+        "BetterNameForResult": ["_TestpathCreate_result"],
     }
-    transform_schema(api, SchemaOverrides(alias=schema_aliases))
+    transform_schema(api, SchemaOverrides(alias=schema_aliases), OPERATION_ID_PREFIX)
     extracted_schemas = api["components"]["schemas"]
     input_schemas = process_schema_test_input.schemas
     assert extracted_schemas == {
@@ -127,17 +114,17 @@ def test_transform_schema_correct_aliases(process_schema_test_input: ProcessSche
 @pytest.mark.unit
 def test_transform_schema_raises_when_aliases_collide(process_schema_test_input: ProcessSchemaTestInput) -> None:
     """Raises when aliases would merge two distinct schemas."""
-    schema_aliases = {"Alias1": ["TestpathCreateRequest_testproperty", "TestpathCreate_result"]}
+    schema_aliases = {"Alias1": ["_TestpathCreateRequest_testproperty", "_TestpathCreate_result"]}
     with pytest.raises(ValueError, match="The schemas in the following group are not identical"):
-        transform_schema(process_schema_test_input.api, SchemaOverrides(alias=schema_aliases))
+        transform_schema(process_schema_test_input.api, SchemaOverrides(alias=schema_aliases), OPERATION_ID_PREFIX)
 
 
 @pytest.mark.unit
 def test_transform_schema_raises_when_aliases_overlap_api(process_schema_test_input: ProcessSchemaTestInput) -> None:
     """Raises when aliases would override fully qualified API names."""
-    schema_aliases = {"TestpathCreateRequest_testproperty": ["TestpathCreate_result"]}
-    with pytest.raises(ValueError, match="would override openapi names: {'TestpathCreateRequest_testproperty'}"):
-        transform_schema(process_schema_test_input.api, SchemaOverrides(alias=schema_aliases))
+    schema_aliases = {"_TestpathCreateRequest_testproperty": ["_TestpathCreate_result"]}
+    with pytest.raises(ValueError, match="would override openapi names: {'_TestpathCreateRequest_testproperty'}"):
+        transform_schema(process_schema_test_input.api, SchemaOverrides(alias=schema_aliases), OPERATION_ID_PREFIX)
 
 
 @pytest.mark.unit
@@ -147,7 +134,7 @@ def test_transform_schema_raises_when_unknown_name_is_aliased(
     """Raises when some name is aliased twice."""
     schema_aliases = {"42": ["the_answer_to_life_the_universe_and_everything"]}
     with pytest.raises(ValueError, match="The following schemas are not part of openapi specification"):
-        transform_schema(process_schema_test_input.api, SchemaOverrides(alias=schema_aliases))
+        transform_schema(process_schema_test_input.api, SchemaOverrides(alias=schema_aliases), OPERATION_ID_PREFIX)
 
 
 @pytest.mark.unit
@@ -155,4 +142,17 @@ def test_transform_schema_raises_when_name_is_aliased_twice(process_schema_test_
     """Raises when some name is aliased twice."""
     schema_aliases = {"Alias1": ["TestpathCreate_result"], "Alias2": ["TestpathCreate_result"]}
     with pytest.raises(ValueError, match="The following names are aliased more than once:"):
-        transform_schema(process_schema_test_input.api, SchemaOverrides(alias=schema_aliases))
+        transform_schema(process_schema_test_input.api, SchemaOverrides(alias=schema_aliases), OPERATION_ID_PREFIX)
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("is_private", [True, False])
+def test_transform_schema_correctly_sets_operation_ids(
+    process_schema_test_input: ProcessSchemaTestInput, is_private
+) -> None:
+    api, input_schemas = process_schema_test_input
+    schema_overrides = SchemaOverrides(private_operations={"TestpathCreate"}) if is_private else SchemaOverrides()
+    transform_schema(api, schema_overrides, OPERATION_ID_PREFIX)
+    private_prefix = "_" if is_private else ""
+    expected_operation_id = f"{OPERATION_ID_PREFIX}{private_prefix}TestpathCreate"
+    assert api["paths"]["/testpath"]["post"]["operationId"] == expected_operation_id

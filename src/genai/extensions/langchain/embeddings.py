@@ -6,8 +6,8 @@ from pydantic import BaseModel, ConfigDict
 
 from genai._types import ModelLike
 from genai.client import Client
+from genai.schema import TextEmbeddingParameters
 from genai.text.embedding.embedding_service import CreateExecutionOptions
-from genai.text.embedding.schema import TextEmbeddingParameters
 
 __all__ = ["LangChainEmbeddingsInterface"]
 

@@ -3,16 +3,17 @@ from llama_index.llms.base import ChatMessage, CompletionResponse
 from llama_index.llms.base import ChatResponse as LlamaIndexChatResponse
 from llama_index.llms.types import MessageRole
 
-from genai._generated.endpoints import (
-    TextChatCreateEndpoint,
-    TextChatStreamCreateEndpoint,
-    TextGenerationCreateEndpoint,
-    TextGenerationStreamCreateEndpoint,
-)
 from genai.extensions._common.utils import create_generation_info_from_response
 from genai.extensions.llama_index import IBMGenAILlamaIndex
-from genai.text.chat import TextChatCreateResponse
-from genai.text.generation import TextGenerationCreateResponse, TextGenerationStreamCreateResponse
+from genai.schema import (
+    TextChatCreateEndpoint,
+    TextChatCreateResponse,
+    TextChatStreamCreateEndpoint,
+    TextGenerationCreateEndpoint,
+    TextGenerationCreateResponse,
+    TextGenerationStreamCreateEndpoint,
+    TextGenerationStreamCreateResponse,
+)
 
 
 @pytest.mark.integration

@@ -11,7 +11,7 @@ import signal
 from dotenv import load_dotenv
 
 from genai import Client, Credentials, handle_shutdown_event
-from genai.text.generation import TextGenerationParameters
+from genai.schema import TextGenerationParameters
 
 load_dotenv()
 

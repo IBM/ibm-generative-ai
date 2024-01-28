@@ -36,6 +36,8 @@ def generate_models(schema_path: Path, output: Path):
         input_=schema_path.resolve(),
         input_filename=f"{time.strftime('%Y-%m-%d')}_openapi_schema",
         input_file_type=InputFileType.OpenAPI,
+        # replaces prefix of field names starting with special characters (including '_') by this value
+        special_field_name_prefix=ExtractorConfig.private_field_name,
         output=output,
         output_model_type=DataModelType.PydanticV2BaseModel,
         apply_default_values_for_required_fields=True,
@@ -77,7 +79,7 @@ def run():
         logger.info("Transforming schema...")
         with open(ExtractorConfig.schema_aliases_path) as f:
             schema_overrides = SchemaOverrides.model_validate(yaml.safe_load(f))
-        transform_schema(schema, schema_overrides)
+        transform_schema(schema, schema_overrides, ExtractorConfig.operation_id_prefix)
 
         endpoints_output = Path(ExtractorConfig.base_output_path, ExtractorConfig.endpoint_models_filename)
         logger.info(f"Saving extracted endpoints information to '{endpoints_output.resolve()}'")

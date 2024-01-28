@@ -1,5 +1,3 @@
-from genai._generated.api import TextGenerationLimitRetrieveParametersQuery
-from genai._generated.endpoints import TextGenerationLimitRetrieveEndpoint
 from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
@@ -7,7 +5,8 @@ from genai._utils.service import (
     get_service_action_metadata,
     set_service_action_metadata,
 )
-from genai.text.generation.limits.schema import TextGenerationLimitRetrieveResponse
+from genai.schema import TextGenerationLimitRetrieveEndpoint, TextGenerationLimitRetrieveResponse
+from genai.schema._api import _TextGenerationLimitRetrieveParametersQuery
 
 __all__ = ["LimitService"]
 
@@ -28,7 +27,7 @@ class LimitService(BaseService[BaseServiceConfig, BaseServiceServices]):
             metadata = get_service_action_metadata(self.retrieve)
             response = client.get(
                 url=self._get_endpoint(metadata.endpoint),
-                params=TextGenerationLimitRetrieveParametersQuery().model_dump(),
+                params=_TextGenerationLimitRetrieveParametersQuery().model_dump(),
             )
             return TextGenerationLimitRetrieveResponse(**response.json())
 
@@ -47,6 +46,6 @@ class LimitService(BaseService[BaseServiceConfig, BaseServiceServices]):
             metadata = get_service_action_metadata(self.aretrieve)
             response = await client.get(
                 url=self._get_endpoint(metadata.endpoint),
-                params=TextGenerationLimitRetrieveParametersQuery().model_dump(),
+                params=_TextGenerationLimitRetrieveParametersQuery().model_dump(),
             )
             return TextGenerationLimitRetrieveResponse(**response.json())

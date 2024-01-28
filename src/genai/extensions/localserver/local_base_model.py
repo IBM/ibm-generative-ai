@@ -1,19 +1,13 @@
 from abc import ABC, abstractmethod
 
-from genai._generated.api import (
+from genai.schema import (
     TextGenerationParameters,
     TextGenerationResult,
     TextTokenizationCreateResults,
     TextTokenizationParameters,
 )
 
-__all__ = [
-    "LocalModel",
-    "TextGenerationParameters",
-    "TextGenerationResult",
-    "TextTokenizationParameters",
-    "TextTokenizationCreateResults",
-]
+__all__ = ["LocalModel"]
 
 
 class LocalModel(ABC):

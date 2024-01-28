@@ -2,7 +2,7 @@ from typing import Callable, TypeVar
 
 from pydantic import BaseModel, ConfigDict, field_serializer
 
-from genai._generated.endpoints import ApiEndpoint
+from genai.schema._endpoints import ApiEndpoint
 
 __all__ = ["set_service_action_metadata", "get_service_action_metadata", "inherit_metadata"]
 

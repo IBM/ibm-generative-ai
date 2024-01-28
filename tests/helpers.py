@@ -12,7 +12,7 @@ from httpx_sse import EventSource
 from pydantic import BaseModel
 
 import genai
-from genai._generated.endpoints import ApiEndpoint
+from genai.schema._endpoints import ApiEndpoint
 
 _PATH_TEMPLATE_PARAMS = re.compile(r"{([a-zA-Z_][a-zA-Z0-9_]*)}")
 _ID_REGEX = re.compile(".*[iI]d")

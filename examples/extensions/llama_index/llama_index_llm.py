@@ -7,7 +7,7 @@ from llama_index.llms.types import MessageRole
 from genai import Client
 from genai.credentials import Credentials
 from genai.extensions.llama_index import IBMGenAILlamaIndex
-from genai.text.generation import DecodingMethod, TextGenerationParameters
+from genai.schema import DecodingMethod, TextGenerationParameters
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>

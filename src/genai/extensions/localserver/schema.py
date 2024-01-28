@@ -1,23 +1,7 @@
 from pydantic import Field
 
-from genai._generated.api import (
-    TextGenerationCreateRequest as _TextGenerationCreateRequest,
-)
-from genai._generated.api import (
-    TextTokenizationCreateRequest as _TextTokenizationCreateRequest,
-)
-from genai.text.generation.schema import (
-    TextGenerationParameters,
-    TextGenerationReturnOptions,
-)
-from genai.text.tokenization.schema import TextTokenizationParameters
-
-__all__ = [
-    "TextGenerationParameters",
-    "TextGenerationReturnOptions",
-    "TextGenerationCreateRequest",
-    "TextTokenizationCreateRequest",
-]
+from genai.schema import TextGenerationParameters, TextTokenizationParameters
+from genai.schema._api import _TextGenerationCreateRequest, _TextTokenizationCreateRequest
 
 
 class TextGenerationCreateRequest(_TextGenerationCreateRequest):
@@ -33,3 +17,6 @@ class TextTokenizationCreateRequest(_TextTokenizationCreateRequest):
 
     model_id: str
     parameters: TextTokenizationParameters = Field(default_factory=lambda: TextTokenizationParameters())
+
+
+__all__ = ["TextGenerationCreateRequest", "TextTokenizationCreateRequest"]

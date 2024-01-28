@@ -5,7 +5,7 @@ How to handle SDK exceptions.
 """
 from genai import Client, Credentials
 from genai.exceptions import ApiNetworkException, ApiResponseException, ValidationError
-from genai.text.generation import TextGenerationParameters
+from genai.schema import TextGenerationParameters
 
 credentials = Credentials.from_env()
 client = Client(credentials=credentials)

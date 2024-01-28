@@ -12,7 +12,7 @@ from typing import List, Optional
 
 from genai._utils.general import to_model_instance
 from genai.client import Client
-from genai.text.generation.schema import TextGenerationParameters
+from genai.schema import TextGenerationParameters
 
 logger = logging.getLogger(__name__)
 

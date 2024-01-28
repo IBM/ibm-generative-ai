@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 from genai import Client
 from genai.credentials import Credentials
 from genai.extensions.huggingface.agent import IBMGenAIAgent
-from genai.text.generation import TextGenerationParameters
+from genai.schema import TextGenerationParameters
 
 
 def heading(text: str) -> str:

@@ -11,11 +11,8 @@ from dotenv import load_dotenv
 
 from genai.client import Client
 from genai.credentials import Credentials
-from genai.text.tokenization import (
-    CreateExecutionOptions,
-    TextTokenizationParameters,
-    TextTokenizationReturnOptions,
-)
+from genai.schema import TextTokenizationParameters, TextTokenizationReturnOptions
+from genai.text.tokenization import CreateExecutionOptions
 
 try:
     from tqdm.auto import tqdm

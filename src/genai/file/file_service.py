@@ -1,21 +1,6 @@
 from pathlib import Path
 from typing import Optional, Union
 
-from genai._generated.api import (
-    FileCreateParametersQuery,
-    FileCreateRequest,
-    FileIdContentRetrieveParametersQuery,
-    FileIdDeleteParametersQuery,
-    FileIdRetrieveParametersQuery,
-    FileRetrieveParametersQuery,
-)
-from genai._generated.endpoints import (
-    FileCreateEndpoint,
-    FileIdContentRetrieveEndpoint,
-    FileIdDeleteEndpoint,
-    FileIdRetrieveEndpoint,
-    FileRetrieveEndpoint,
-)
 from genai._types import EnumLike
 from genai._utils.general import to_enum, to_enum_optional
 from genai._utils.service import (
@@ -26,13 +11,28 @@ from genai._utils.service import (
     set_service_action_metadata,
 )
 from genai._utils.validators import assert_is_not_empty_string
-from genai.file.schema import (
+from genai.schema import (
     FileCreateResponse,
     FileIdRetrieveResponse,
     FileListSortBy,
     FilePurpose,
     FileRetrieveResponse,
     SortDirection,
+)
+from genai.schema._api import (
+    _FileCreateParametersQuery,
+    _FileCreateRequest,
+    _FileIdContentRetrieveParametersQuery,
+    _FileIdDeleteParametersQuery,
+    _FileIdRetrieveParametersQuery,
+    _FileRetrieveParametersQuery,
+)
+from genai.schema._endpoints import (
+    FileCreateEndpoint,
+    FileIdContentRetrieveEndpoint,
+    FileIdDeleteEndpoint,
+    FileIdRetrieveEndpoint,
+    FileRetrieveEndpoint,
 )
 
 __all__ = ["FileService"]
@@ -63,14 +63,16 @@ class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
             raise ValueError(f"File {file_path} must be in 'json' or jsonl 'format'!")
 
         with file_path.open("rb") as file_read_stream:
-            request_body = FileCreateRequest(purpose=to_enum(FilePurpose, purpose), file=b"").model_dump(exclude="file")
+            request_body = _FileCreateRequest(purpose=to_enum(FilePurpose, purpose), file=b"").model_dump(
+                exclude="file"
+            )
             self._log_method_execution("File Create", **request_body)
 
             with self._get_http_client() as client:
                 metadata = get_service_action_metadata(self.create)
                 response = client.post(
                     url=self._get_endpoint(metadata.endpoint),
-                    params=FileCreateParametersQuery().model_dump(),
+                    params=_FileCreateParametersQuery().model_dump(),
                     files={"file": (file_path.name, file_read_stream)},
                     data=request_body,
                 )
@@ -101,7 +103,7 @@ class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
         with self._get_http_client() as client:
             response = client.get(
                 url=self._get_endpoint(metadata.endpoint, id=id),
-                params=FileIdContentRetrieveParametersQuery().model_dump(),
+                params=_FileIdContentRetrieveParametersQuery().model_dump(),
             )
             return response.content.decode("utf-8")
 
@@ -130,7 +132,7 @@ class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
             metadata = get_service_action_metadata(self.retrieve)
             response = client.get(
                 url=self._get_endpoint(metadata.endpoint, id=id),
-                params=FileIdRetrieveParametersQuery().model_dump(),
+                params=_FileIdRetrieveParametersQuery().model_dump(),
             )
             return FileIdRetrieveResponse(**response.json())
 
@@ -161,7 +163,7 @@ class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
-        request_params = FileRetrieveParametersQuery(
+        request_params = _FileRetrieveParametersQuery(
             limit=limit,
             offset=offset,
             sort_by=to_enum_optional(sort_by, FileListSortBy),
@@ -200,5 +202,5 @@ class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
             metadata = get_service_action_metadata(self.delete)
             client.delete(
                 url=self._get_endpoint(metadata.endpoint, id=id),
-                params=FileIdDeleteParametersQuery().model_dump(),
+                params=_FileIdDeleteParametersQuery().model_dump(),
             )

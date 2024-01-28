@@ -1,10 +1,5 @@
 from typing import Generator, Optional, Union
 
-from genai._generated.api import (
-    TextTokenizationCreateParametersQuery,
-    TextTokenizationCreateRequest,
-)
-from genai._generated.endpoints import TextTokenizationCreateEndpoint
 from genai._types import ModelLike
 from genai._utils.async_executor import execute_async
 from genai._utils.general import (
@@ -24,9 +19,14 @@ from genai._utils.service import (
     get_service_action_metadata,
     set_service_action_metadata,
 )
-from genai.text.tokenization.schema import (
+from genai.schema import (
+    TextTokenizationCreateEndpoint,
     TextTokenizationCreateResponse,
     TextTokenizationParameters,
+)
+from genai.schema._api import (
+    _TextTokenizationCreateParametersQuery,
+    _TextTokenizationCreateRequest,
 )
 
 __all__ = ["CreateExecutionOptions", "BaseConfig", "TokenizationService"]
@@ -95,8 +95,8 @@ class TokenizationService(BaseService[BaseConfig, BaseServiceServices]):
         async def handler(inputs_chunk: list[str], http_client: AsyncHttpxClient, *_) -> TextTokenizationCreateResponse:
             http_response = await http_client.post(
                 url=self._get_endpoint(metadata.endpoint),
-                params=TextTokenizationCreateParametersQuery().model_dump(),
-                json=TextTokenizationCreateRequest(
+                params=_TextTokenizationCreateParametersQuery().model_dump(),
+                json=_TextTokenizationCreateRequest(
                     input=inputs_chunk,
                     model_id=model_id,
                     prompt_id=prompt_id,

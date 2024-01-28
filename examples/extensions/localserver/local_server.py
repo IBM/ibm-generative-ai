@@ -14,14 +14,12 @@ from genai.client import Client
 
 # Import the ibm-generative-ai library and local server extension
 from genai.extensions.localserver import LocalLLMServer, LocalModel
-from genai.text.generation import (
+from genai.schema import (
     DecodingMethod,
     StopReason,
     TextGenerationParameters,
     TextGenerationResult,
     TextGenerationReturnOptions,
-)
-from genai.text.tokenization import (
     TextTokenizationCreateResults,
     TextTokenizationParameters,
 )

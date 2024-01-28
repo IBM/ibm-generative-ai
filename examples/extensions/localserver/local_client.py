@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 from genai import Client, Credentials
 from genai.client import BaseServices as ClientServices
-from genai.text.generation import TextGenerationCreateResponse
+from genai.schema import TextGenerationCreateResponse
 from genai.text.generation.generation_service import GenerationService
 from genai.text.text_service import TextService
 

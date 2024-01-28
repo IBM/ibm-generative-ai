@@ -1,5 +1,3 @@
-from genai._generated.api import TextEmbeddingLimitRetrieveParametersQuery
-from genai._generated.endpoints import TextEmbeddingLimitRetrieveEndpoint
 from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
@@ -7,7 +5,8 @@ from genai._utils.service import (
     get_service_action_metadata,
     set_service_action_metadata,
 )
-from genai.text.embedding.limit.schema import TextEmbeddingLimitRetrieveResponse
+from genai.schema import TextEmbeddingLimitRetrieveEndpoint, TextEmbeddingLimitRetrieveResponse
+from genai.schema._api import _TextEmbeddingLimitRetrieveParametersQuery
 
 __all__ = ["LimitService"]
 
@@ -28,7 +27,7 @@ class LimitService(BaseService[BaseServiceConfig, BaseServiceServices]):
         with self._get_http_client() as client:
             response = client.get(
                 url=self._get_endpoint(metadata.endpoint),
-                params=TextEmbeddingLimitRetrieveParametersQuery().model_dump(),
+                params=_TextEmbeddingLimitRetrieveParametersQuery().model_dump(),
             )
             return TextEmbeddingLimitRetrieveResponse(**response.json())
 
@@ -47,6 +46,6 @@ class LimitService(BaseService[BaseServiceConfig, BaseServiceServices]):
         async with self._get_async_http_client() as client:
             response = await client.get(
                 url=self._get_endpoint(metadata.endpoint),
-                params=TextEmbeddingLimitRetrieveParametersQuery().model_dump(),
+                params=_TextEmbeddingLimitRetrieveParametersQuery().model_dump(),
             )
             return TextEmbeddingLimitRetrieveResponse(**response.json())
