@@ -65,8 +65,9 @@ def _prepare_generation_request(
     request["parameters"] = parameters
 
     if request.get("prompt_id") is not None:
-        request.pop("model_id", None)
         request.pop("input", None)
+    elif request.get("input") is not None:
+        request.pop("prompt_id", None)
 
     return request
 

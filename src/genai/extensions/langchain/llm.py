@@ -7,9 +7,10 @@ from pathlib import Path
 from typing import Any, Iterator, List, Optional, Union
 
 from pydantic import ConfigDict
+from pydantic.v1 import validator
 
 from genai import Client
-from genai._utils.general import to_model_instance
+from genai._utils.general import to_model_instance, to_model_optional
 from genai.extensions._common.utils import (
     _prepare_generation_request,
     create_generation_info,
@@ -56,7 +57,7 @@ class LangChainInterface(LLM):
 
         from genai import Client, Credentials
         from genai.extensions.langchain import LangChainInterface
-        from genai.text.generation import TextGenerationParameters
+        from genai.schema import TextGenerationParameters
 
         client = Client(credentials=Credentials.from_env())
         llm = LangChainInterface(
@@ -79,6 +80,11 @@ class LangChainInterface(LLM):
     data: Optional[PromptTemplateData] = None
     streaming: Optional[bool] = None
     execution_options: Optional[CreateExecutionOptions] = None
+
+    @validator("parameters", "moderations", "data", "execution_options", pre=True, always=True)
+    @classmethod
+    def _validate_data_models(cls, value, values, config, field):
+        return to_model_optional(value, Model=field.type_, copy=False)
 
     @property
     def _common_identifying_params(self):
