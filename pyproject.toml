@@ -205,7 +205,7 @@ uses = { LATEST_VERSION = "_git --type latest_tag", CURRENT_BRANCH="_git --type 
     case = "build"
     help = "Update sources for the documentation and build static HTML"
     sequence = [
-        { shell = '[[ -z $(git status -uno --porcelain) ]] || (echo "Your index contains uncommitted changes! Commit them and try again." && exit 1)' },
+        { shell = '[ -z "$(git status -uno --porcelain)" ] || { echo "Your index contains uncommitted changes! Commit them and try again." && exit 1; }' },
         "docs --type=clear",
         { cmd = "make docs", cwd = "documentation" },
         { cmd = 'python scripts/docs_root_redirect.py --version="${LATEST_VERSION}" --output="./documentation/build"', env = { "PYTHONPATH" = "scripts" } },
