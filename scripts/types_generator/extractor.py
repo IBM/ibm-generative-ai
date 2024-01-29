@@ -29,7 +29,7 @@ def extract_endpoints(api: Schema):
                 if value.get("in") == "query" and value.get("name") == "version":
                     endpoints.append(
                         ApiEndpoint(
-                            class_name=to_classname(f"{path_formatted}_{http_method.title()}_endpoint"),
+                            class_name=to_classname(f"{path_formatted}_{http_method.title()}_endpoint", True),
                             path=path,
                             method=str(http_method_raw).upper(),
                             version=value.get("schema", {}).get("enum")[0],

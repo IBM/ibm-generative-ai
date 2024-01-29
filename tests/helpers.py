@@ -12,7 +12,7 @@ from httpx_sse import EventSource
 from pydantic import BaseModel
 
 import genai
-from genai._generated.endpoints import ApiEndpoint
+from genai.schema._endpoints import ApiEndpoint
 
 _PATH_TEMPLATE_PARAMS = re.compile(r"{([a-zA-Z_][a-zA-Z0-9_]*)}")
 _ID_REGEX = re.compile(".*[iI]d")
@@ -128,12 +128,12 @@ def parse_vcr_response_body(response: dict[str, Any]) -> Iterator[dict[str, Any]
     headers = response["headers"]
     content_type = headers.get("Content-Type", headers.get("content-type"))[0]
     if content_type.startswith("application/json"):
-        yield json.loads(response["content"])
+        yield json.loads(response["body"]["string"])
     elif content_type.startswith("text/event-stream"):
         httpx_response = Response(
-            content=response["content"],
+            content=response["body"]["string"],
             headers={header: value[0] for header, value in response["headers"].items()},
-            status_code=response["status_code"],
+            status_code=response["status"]["code"],
         )
         for event in EventSource(httpx_response).iter_sse():
             if event.data:

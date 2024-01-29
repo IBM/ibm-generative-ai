@@ -9,7 +9,7 @@ import logging
 from dotenv import load_dotenv
 
 from genai import Client, Credentials
-from genai.text.generation import (
+from genai.schema import (
     DecodingMethod,
     TextGenerationParameters,
     TextGenerationReturnOptions,

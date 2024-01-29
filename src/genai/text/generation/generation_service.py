@@ -4,19 +4,6 @@ import httpx
 from httpx import AsyncClient, HTTPStatusError
 from pydantic import BaseModel
 
-from genai._generated.api import (
-    TextGenerationComparisonCreateParametersQuery,
-    TextGenerationComparisonCreateRequest,
-    TextGenerationCreateParametersQuery,
-    TextGenerationCreateRequest,
-    TextGenerationStreamCreateParametersQuery,
-    TextGenerationStreamCreateRequest,
-)
-from genai._generated.endpoints import (
-    TextGenerationComparisonCreateEndpoint,
-    TextGenerationCreateEndpoint,
-    TextGenerationStreamCreateEndpoint,
-)
 from genai._types import ModelLike
 from genai._utils.api_client import ApiClient
 from genai._utils.async_executor import execute_async
@@ -33,19 +20,30 @@ from genai._utils.service import (
     get_service_action_metadata,
     set_service_action_metadata,
 )
-from genai.text.generation._generation_utils import generation_stream_handler
-from genai.text.generation.feedback.feedback_service import FeedbackService as _FeedbackService
-from genai.text.generation.limits.limit_service import LimitService as _LimitService
-from genai.text.generation.schema import (
+from genai.schema import (
     ModerationParameters,
     PromptTemplateData,
+    TextGenerationComparisonCreateEndpoint,
     TextGenerationComparisonCreateRequestRequest,
     TextGenerationComparisonCreateResponse,
     TextGenerationComparisonParameters,
+    TextGenerationCreateEndpoint,
     TextGenerationCreateResponse,
     TextGenerationParameters,
+    TextGenerationStreamCreateEndpoint,
     TextGenerationStreamCreateResponse,
 )
+from genai.schema._api import (
+    _TextGenerationComparisonCreateParametersQuery,
+    _TextGenerationComparisonCreateRequest,
+    _TextGenerationCreateParametersQuery,
+    _TextGenerationCreateRequest,
+    _TextGenerationStreamCreateParametersQuery,
+    _TextGenerationStreamCreateRequest,
+)
+from genai.text.generation._generation_utils import generation_stream_handler
+from genai.text.generation.feedback.feedback_service import FeedbackService as _FeedbackService
+from genai.text.generation.limits.limit_service import LimitService as _LimitService
 
 __all__ = ["GenerationService", "BaseConfig", "BaseServices", "CreateExecutionOptions"]
 
@@ -163,8 +161,8 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
             with self._get_http_client() as client:
                 http_response = client.post(
                     url=self._get_endpoint(metadata.endpoint),
-                    params=TextGenerationCreateParametersQuery().model_dump(),
-                    json=TextGenerationCreateRequest(
+                    params=_TextGenerationCreateParametersQuery().model_dump(),
+                    json=_TextGenerationCreateRequest(
                         input=None,
                         model_id=model_id,
                         moderations=moderations_formatted,
@@ -192,8 +190,8 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
                     BaseRetryTransport.Callback.Retry: handle_retry,
                     BaseRetryTransport.Callback.Success: handle_success,
                 },
-                params=TextGenerationCreateParametersQuery().model_dump(),
-                json=TextGenerationCreateRequest(
+                params=_TextGenerationCreateParametersQuery().model_dump(),
+                json=_TextGenerationCreateRequest(
                     input=input,
                     model_id=model_id,
                     moderations=moderations_formatted,
@@ -260,8 +258,8 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
                 logger=self._logger,
                 generator=client.post_stream(
                     url=self._get_endpoint(metadata.endpoint),
-                    params=TextGenerationStreamCreateParametersQuery().model_dump(),
-                    json=TextGenerationStreamCreateRequest(
+                    params=_TextGenerationStreamCreateParametersQuery().model_dump(),
+                    json=_TextGenerationStreamCreateRequest(
                         input=input,
                         parameters=parameters_formatted,
                         model_id=model_id,
@@ -300,8 +298,8 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
         with self._get_http_client() as client:
             http_response = client.post(
                 url=self._get_endpoint(metadata.endpoint),
-                params=TextGenerationComparisonCreateParametersQuery().model_dump(),
-                json=TextGenerationComparisonCreateRequest(
+                params=_TextGenerationComparisonCreateParametersQuery().model_dump(),
+                json=_TextGenerationComparisonCreateRequest(
                     name=name,
                     compare_parameters=compare_parameters_formatted,
                     request=request_formatted,

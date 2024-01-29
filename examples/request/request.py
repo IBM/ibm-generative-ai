@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 
 from genai.client import Client
 from genai.credentials import Credentials
-from genai.request import RequestEndpoint, RequestOrigin, RequestStatus
+from genai.schema import RequestEndpoint, RequestOrigin, RequestStatus
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>

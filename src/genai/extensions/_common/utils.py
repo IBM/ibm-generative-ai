@@ -2,13 +2,11 @@ from typing import Any, Optional, Union
 
 from genai._types import ApiBaseModel
 from genai._utils.general import to_model_instance
-from genai.text.chat.schema import (
+from genai.schema import (
     TextChatCreateResponse,
     TextChatStreamCreateResponse,
-    TextGenerationParameters,
-)
-from genai.text.generation import (
     TextGenerationCreateResponse,
+    TextGenerationParameters,
     TextGenerationStreamCreateResponse,
 )
 
@@ -67,8 +65,9 @@ def _prepare_generation_request(
     request["parameters"] = parameters
 
     if request.get("prompt_id") is not None:
-        request.pop("model_id", None)
         request.pop("input", None)
+    elif request.get("input") is not None:
+        request.pop("prompt_id", None)
 
     return request
 

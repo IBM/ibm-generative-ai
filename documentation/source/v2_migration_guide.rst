@@ -77,7 +77,7 @@ Replacing ``generate``/``generate_as_completed``
 .. code:: python
 
    from genai import Credentials, Client
-   from genai.text.generation import TextGenerationParameters, TextGenerationReturnOptions
+   from genai.schema import TextGenerationParameters, TextGenerationReturnOptions
 
    credentials = Credentials.from_env()
    parameters = TextGenerationParameters(max_new_tokens=10)
@@ -126,7 +126,7 @@ Replacing `stream` parameter
 .. code:: python
 
    from genai import Credentials, Client
-   from genai.text.generation import TextGenerationParameters
+   from genai.schema import TextGenerationParameters
 
    credentials = Credentials.from_env()
    parameters = TextGenerationParameters(max_new_tokens=30)
@@ -233,7 +233,8 @@ Replacing ``tokenize`` / ``tokenize_as_completed`` / ``tokenize_async``
 .. code:: python
 
    from genai import Client, Credentials
-   from genai.text.tokenization import TextTokenizationParameters, CreateExecutionOptions, TextTokenizationReturnOptions
+   from genai.schema import TextTokenizationParameters, TextTokenizationReturnOptions
+   from genai.text.tokenization import CreateExecutionOptions
 
    credentials = Credentials.from_env()
    client = Client(credentials=credentials)
@@ -327,7 +328,7 @@ Files
 .. code:: python
 
    from genai import Client, Credentials
-   from genai.file import FilePurpose
+   from genai.schema import FilePurpose
 
    credentials = Credentials.from_env()
    client = Client(credentials=credentials)
@@ -385,7 +386,7 @@ Tunes
 .. code:: python
 
    from genai import Client, Credentials
-   from genai.tune import TuneStatus, TuningType, TuneAssetType
+   from genai.schema import TuneStatus, TuningType, TuneAssetType
 
    credentials = Credentials.from_env()
    client = Client(credentials=credentials)

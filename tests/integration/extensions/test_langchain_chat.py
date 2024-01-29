@@ -5,11 +5,14 @@ from langchain_core.callbacks.base import BaseCallbackHandler
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from langchain_core.outputs import ChatGenerationChunk
 
-from genai._generated.api import TextChatCreateResponse, TextChatStreamCreateResponse
-from genai._generated.endpoints import TextChatCreateEndpoint
 from genai.extensions._common.utils import create_generation_info_from_response
 from genai.extensions.langchain import LangChainChatInterface
-from genai.text.generation import TextGenerationParameters
+from genai.schema import (
+    TextChatCreateEndpoint,
+    TextChatCreateResponse,
+    TextChatStreamCreateResponse,
+    TextGenerationParameters,
+)
 
 
 @pytest.mark.integration

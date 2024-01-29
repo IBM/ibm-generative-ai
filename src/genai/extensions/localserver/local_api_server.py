@@ -10,11 +10,6 @@ from typing import Optional
 from fastapi.utils import is_body_allowed_for_status_code
 from starlette.responses import Response
 
-from genai._generated.api import (
-    InternalServerErrorResponse,
-    NotFoundResponse,
-    UnauthorizedResponse,
-)
 from genai._utils.general import cast_list
 from genai._utils.responses import BaseErrorResponse, get_api_error_class_by_status_code
 from genai.credentials import Credentials
@@ -23,12 +18,16 @@ from genai.extensions.localserver.schema import (
     TextGenerationCreateRequest,
     TextTokenizationCreateRequest,
 )
-from genai.text.generation.limits.schema import ConcurrencyLimit, TextGenerationLimit
-from genai.text.generation.schema import (
+from genai.schema import (
+    ConcurrencyLimit,
+    InternalServerErrorResponse,
+    NotFoundResponse,
     TextGenerationCreateResponse,
+    TextGenerationLimit,
     TextGenerationLimitRetrieveResponse,
+    TextTokenizationCreateResponse,
+    UnauthorizedResponse,
 )
-from genai.text.tokenization.schema import TextTokenizationCreateResponse
 
 try:
     import uvicorn

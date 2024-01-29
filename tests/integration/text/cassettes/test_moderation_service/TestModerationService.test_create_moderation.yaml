@@ -1,48 +1,6 @@
 interactions:
 - request:
     body: '{"hap": {"send_tokens": true, "threshold": 0.5}, "implicit_hate": {"send_tokens":
-      true, "threshold": 0.5}, "input": "Ice cream sucks!", "stigma": {"send_tokens":
-      true, "threshold": 0.5}}'
-    headers:
-      accept:
-      - '*/*'
-      accept-encoding:
-      - gzip, deflate
-      connection:
-      - keep-alive
-      content-length:
-      - '186'
-      content-type:
-      - application/json
-    method: POST
-    uri: https://api.com/v2/text/moderations?version=2023-11-22
-  response:
-    content: '{"results":[{"hap":[{"score":0.13099461793899536,"flagged":false,"success":true,"position":{"start":0,"end":15}}],"implicit_hate":[{"score":0.0025604967959225178,"flagged":false,"success":true,"position":{"start":0,"end":15}}],"stigma":[{"score":0.17938657104969025,"flagged":false,"success":true,"position":{"start":0,"end":15}}]}]}'
-    headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Fri, 05 Jan 2024 09:58:20 GMT
-      Keep-Alive:
-      - timeout=72
-      content-length:
-      - '333'
-      content-type:
-      - application/json; charset=utf-8
-      content-version:
-      - '2023-11-22'
-      vary:
-      - accept-encoding
-      x-ratelimit-limit:
-      - '25'
-      x-ratelimit-remaining:
-      - '23'
-      x-ratelimit-reset:
-      - '0'
-    http_version: HTTP/1.1
-    status_code: 200
-- request:
-    body: '{"hap": {"send_tokens": true, "threshold": 0.5}, "implicit_hate": {"send_tokens":
       true, "threshold": 0.5}, "input": "It tastes like poop.", "stigma": {"send_tokens":
       true, "threshold": 0.5}}'
     headers:
@@ -59,22 +17,24 @@ interactions:
     method: POST
     uri: https://api.com/v2/text/moderations?version=2023-11-22
   response:
-    content: '{"results":[{"hap":[{"score":0.8111817240715027,"flagged":true,"tokens":[{"token":"it","index":0,"score":0.1462331861257553},{"token":"tastes","index":3,"score":0.1076018288731575},{"token":"like","index":10,"score":0.12123598903417587},{"token":"poop","index":15,"score":0.19853029400110245},{"token":".","index":19,"score":0.07889079302549362}],"success":true,"position":{"start":0,"end":19}}],"implicit_hate":[{"score":0.9981448650360107,"flagged":true,"tokens":[{"token":"it","index":0,"score":0.11787553876638412},{"token":"tastes","index":3,"score":0.16052716970443726},{"token":"like","index":10,"score":0.0725414827466011},{"token":"poop","index":15,"score":0.10483773425221443},{"token":".","index":19,"score":0.12613803148269653}],"success":true,"position":{"start":0,"end":19}}],"stigma":[{"score":0.8026911616325378,"flagged":true,"tokens":[{"token":"it","index":0,"score":0.1775500327348709},{"token":"tastes","index":3,"score":0.11649750918149948},{"token":"like","index":10,"score":0.1322403997182846},{"token":"poop","index":15,"score":0.16683607548475266},{"token":".","index":19,"score":0.08629968017339706}],"success":true,"position":{"start":0,"end":19}}]}]}'
+    body:
+      string: '{"results":[{"hap":[{"score":0.8111816644668579,"flagged":true,"tokens":[{"token":"it","index":0,"score":0.14623324573040009},{"token":"tastes","index":3,"score":0.10760173201560974},{"token":"like","index":10,"score":0.12123600393533707},{"token":"poop","index":15,"score":0.19853028655052185},{"token":".","index":19,"score":0.07889077812433243}],"success":true,"position":{"start":0,"end":19}}],"implicit_hate":[{"score":0.9981448650360107,"flagged":true,"tokens":[{"token":"it","index":0,"score":0.11787550896406174},{"token":"tastes","index":3,"score":0.1605272889137268},{"token":"like","index":10,"score":0.07254142314195633},{"token":"poop","index":15,"score":0.10483767092227936},{"token":".","index":19,"score":0.12613795697689056}],"success":true,"position":{"start":0,"end":19}}],"stigma":[{"score":0.8026910424232483,"flagged":true,"tokens":[{"token":"it","index":0,"score":0.1775500774383545},{"token":"tastes","index":3,"score":0.11649749428033829},{"token":"like","index":10,"score":0.1322404146194458},{"token":"poop","index":15,"score":0.16683606058359146},{"token":".","index":19,"score":0.08629963546991348}],"success":true,"position":{"start":0,"end":19}}]}]}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Fri, 05 Jan 2024 09:58:20 GMT
-      Keep-Alive:
-      - timeout=72
-      Transfer-Encoding:
-      - chunked
-      content-encoding:
-      - gzip
+      content-length:
+      - '1180'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
+      date:
+      - Thu, 25 Jan 2024 15:50:46 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
+        HttpOnly; Secure; SameSite=None
+      transfer-encoding:
+      - chunked
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -83,6 +43,52 @@ interactions:
       - '24'
       x-ratelimit-reset:
       - '1'
-    http_version: HTTP/1.1
-    status_code: 200
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"hap": {"send_tokens": true, "threshold": 0.5}, "implicit_hate": {"send_tokens":
+      true, "threshold": 0.5}, "input": "Ice cream sucks!", "stigma": {"send_tokens":
+      true, "threshold": 0.5}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '186'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/moderations?version=2023-11-22
+  response:
+    body:
+      string: '{"results":[{"hap":[{"score":0.13099458813667297,"flagged":false,"success":true,"position":{"start":0,"end":15}}],"implicit_hate":[{"score":0.0025605005212128162,"flagged":false,"success":true,"position":{"start":0,"end":15}}],"stigma":[{"score":0.17938658595085144,"flagged":false,"success":true,"position":{"start":0,"end":15}}]}]}'
+    headers:
+      content-length:
+      - '333'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Thu, 25 Jan 2024 15:50:46 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '23'
+      x-ratelimit-reset:
+      - '0'
+    status:
+      code: 200
+      message: OK
 version: 1

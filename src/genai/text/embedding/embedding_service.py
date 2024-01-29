@@ -4,12 +4,6 @@ import httpx
 from httpx import AsyncClient, HTTPStatusError
 from pydantic import BaseModel
 
-from genai._generated.api import (
-    TextEmbeddingCreateParametersQuery,
-    TextEmbeddingCreateRequest,
-    TextEmbeddingParameters,
-)
-from genai._generated.endpoints import TextEmbeddingCreateEndpoint
 from genai._types import ModelLike
 from genai._utils.api_client import ApiClient
 from genai._utils.async_executor import execute_async
@@ -22,8 +16,12 @@ from genai._utils.service import (
     set_service_action_metadata,
 )
 from genai._utils.shared_options import CommonExecutionOptions
+from genai.schema import TextEmbeddingCreateEndpoint, TextEmbeddingCreateResponse, TextEmbeddingParameters
+from genai.schema._api import (
+    _TextEmbeddingCreateParametersQuery,
+    _TextEmbeddingCreateRequest,
+)
 from genai.text.embedding.limit.limit_service import LimitService as _LimitService
-from genai.text.embedding.schema import TextEmbeddingCreateResponse
 
 __all__ = ["EmbeddingService", "BaseConfig", "BaseServices", "CreateExecutionOptions"]
 
@@ -94,12 +92,13 @@ class EmbeddingService(BaseService[BaseConfig, BaseServices]):
 
             client = Client(credentials=Credentials.from_env())
 
-            # Create a new conversation
-            response = client.text.embedding.create(
-                model_id="sentence-transformers/all-minilm-l6-v2",
-                input="Write a tagline for an alumni association: Together we"
+            responses = list(
+                client.text.embedding.create(
+                    model_id="sentence-transformers/all-minilm-l6-v2",
+                    input="Write a tagline for an alumni association: Together we"
+                )
             )
-            print("Output vectors", response.results)
+            print("Output vector", responses[0].results[0])
 
         Yields:
             TextEmbeddingCreateResponse object.
@@ -139,8 +138,8 @@ class EmbeddingService(BaseService[BaseConfig, BaseServices]):
                     BaseRetryTransport.Callback.Retry: handle_retry,
                     BaseRetryTransport.Callback.Success: handle_success,
                 },
-                params=TextEmbeddingCreateParametersQuery().model_dump(),
-                json=TextEmbeddingCreateRequest(
+                params=_TextEmbeddingCreateParametersQuery().model_dump(),
+                json=_TextEmbeddingCreateRequest(
                     input=input, model_id=model_id, parameters=parameters_formatted
                 ).model_dump(),
             )

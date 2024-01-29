@@ -8,7 +8,7 @@ from langchain_core.callbacks.base import BaseCallbackHandler
 
 from genai import Client, Credentials
 from genai.extensions.langchain import LangChainInterface
-from genai.text.generation import (
+from genai.schema import (
     DecodingMethod,
     ModerationHAP,
     ModerationParameters,

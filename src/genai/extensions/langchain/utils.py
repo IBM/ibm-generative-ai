@@ -8,7 +8,7 @@ from pydantic import BaseModel
 
 from genai._utils.general import merge_objects
 from genai.extensions._common.utils import extract_token_usage
-from genai.text.generation.schema import TextGenerationParameters
+from genai.schema import TextGenerationParameters
 
 
 def update_token_usage(*, target: dict[str, Any], source: Optional[dict[str, Any]]):

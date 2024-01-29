@@ -1,22 +1,5 @@
 from typing import Optional, Union
 
-from genai._generated.api import (
-    PromptCreateParametersQuery,
-    PromptCreateRequest,
-    PromptIdDeleteParametersQuery,
-    PromptIdRetrieveParametersQuery,
-    PromptIdUpdateParametersQuery,
-    PromptIdUpdateRequest,
-    PromptRetrieveParametersQuery,
-    PromptTemplateData,
-)
-from genai._generated.endpoints import (
-    PromptCreateEndpoint,
-    PromptIdDeleteEndpoint,
-    PromptIdRetrieveEndpoint,
-    PromptIdUpdateEndpoint,
-    PromptRetrieveEndpoint,
-)
 from genai._types import EnumLike, EnumLikeOrEnumLikeList, ModelLike
 from genai._utils.general import (
     cast_list,
@@ -33,7 +16,7 @@ from genai._utils.service import (
     set_service_action_metadata,
 )
 from genai._utils.validators import assert_is_not_empty_string
-from genai.prompt.schema import (
+from genai.schema import (
     BaseMessage,
     ModerationParameters,
     PromptCreateResponse,
@@ -41,8 +24,25 @@ from genai.prompt.schema import (
     PromptIdUpdateResponse,
     PromptRetrieveRequestParamsSource,
     PromptRetrieveResponse,
+    PromptTemplateData,
     PromptType,
     TextGenerationParameters,
+)
+from genai.schema._api import (
+    _PromptCreateParametersQuery,
+    _PromptCreateRequest,
+    _PromptIdDeleteParametersQuery,
+    _PromptIdRetrieveParametersQuery,
+    _PromptIdUpdateParametersQuery,
+    _PromptIdUpdateRequest,
+    _PromptRetrieveParametersQuery,
+)
+from genai.schema._endpoints import (
+    PromptCreateEndpoint,
+    PromptIdDeleteEndpoint,
+    PromptIdRetrieveEndpoint,
+    PromptIdUpdateEndpoint,
+    PromptRetrieveEndpoint,
 )
 
 __all__ = ["PromptService"]
@@ -72,7 +72,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
-        request_body = PromptCreateRequest(
+        request_body = _PromptCreateRequest(
             name=name,
             model_id=model_id,
             prompt_id=prompt_id,
@@ -93,7 +93,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             metadata = get_service_action_metadata(self.create)
             response = client.post(
                 url=self._get_endpoint(metadata.endpoint),
-                params=PromptCreateParametersQuery().model_dump(),
+                params=_PromptCreateParametersQuery().model_dump(),
                 json=request_body,
             )
             return PromptCreateResponse(**response.json())
@@ -116,7 +116,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             metadata = get_service_action_metadata(self.retrieve)
             response = client.get(
                 url=self._get_endpoint(metadata.endpoint, id=id),
-                params=PromptIdRetrieveParametersQuery().model_dump(),
+                params=_PromptIdRetrieveParametersQuery().model_dump(),
             )
             return PromptIdRetrieveResponse(**response.json())
 
@@ -144,7 +144,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             ValidationError: In case of provided parameters are invalid.
         """
         assert_is_not_empty_string(id)
-        request_body = PromptIdUpdateRequest(
+        request_body = _PromptIdUpdateRequest(
             name=name,
             model_id=model_id,
             messages=[to_model_instance(msg, BaseMessage) for msg in messages] if messages else None,
@@ -164,7 +164,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             metadata = get_service_action_metadata(self.update)
             response = client.post(
                 url=self._get_endpoint(metadata.endpoint, id=id),
-                params=PromptIdUpdateParametersQuery().model_dump(),
+                params=_PromptIdUpdateParametersQuery().model_dump(),
                 json=request_body,
             )
             return PromptIdUpdateResponse(**response.json())
@@ -186,7 +186,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
-        request_parameters = PromptRetrieveParametersQuery(
+        request_parameters = _PromptRetrieveParametersQuery(
             limit=limit,
             offset=offset,
             search=search,
@@ -219,5 +219,5 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             metadata = get_service_action_metadata(self.delete)
             client.delete(
                 url=self._get_endpoint(metadata.endpoint, id=id),
-                params=PromptIdDeleteParametersQuery().model_dump(),
+                params=_PromptIdDeleteParametersQuery().model_dump(),
             )

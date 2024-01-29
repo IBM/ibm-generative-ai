@@ -7,7 +7,7 @@ from chromadb.api.types import Documents, EmbeddingFunction, Embeddings
 from dotenv import load_dotenv
 
 from genai import Client, Credentials
-from genai._generated.api import TextEmbeddingParameters
+from genai.schema import TextEmbeddingParameters
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>

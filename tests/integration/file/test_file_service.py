@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 
 from genai import Client
-from genai.file import FilePurpose
+from genai.schema import FilePurpose
 
 
 @pytest.mark.integration

@@ -26,6 +26,7 @@ class SchemaReplacement(BaseModel):
 class SchemaOverrides(BaseModel):
     alias: dict[str, list[str]] = {}
     replace: dict[str, Union[str, SchemaReplacement]] = {}
+    private_operations: set[str] = set()
 
     @property
     def replacements(self) -> dict[str, SchemaReplacement]:
@@ -74,8 +75,9 @@ def path_to_schema_name(path: str, delimiter: str) -> str:
     )
 
 
-def to_classname(snake_string: str) -> str:
-    return snake_string.title().replace("_", "")
+def to_classname(snake_string: str, public=False) -> str:
+    classname = snake_string.title().replace("_", "")
+    return classname if public else f"_{classname}"
 
 
 def _is_any_dictionary(schema: Schema):
@@ -307,7 +309,7 @@ def _replace_schemas(api: Schema, schema_replacements: dict[str, SchemaReplaceme
     _replace_recursive(api, "$ref", src_to_dst)
 
 
-def transform_schema(api: Schema, schema_overrides: SchemaOverrides):
+def transform_schema(api: Schema, schema_overrides: SchemaOverrides, operation_id_prefix: str):
     """
     1. Remove Simple Composites (oneOf, anyOf, allOf)
     2. Extract request/response objects into standalone schemas
@@ -328,6 +330,7 @@ def transform_schema(api: Schema, schema_overrides: SchemaOverrides):
     for name, schema in sorted(api["components"]["schemas"].items()):
         process_schema(name, {"schema": schema}, extract_top_level=False)
 
+    private_operations = schema_overrides.private_operations.copy()
     # Process all existing paths
     for path, http_methods in sorted(api.get("paths", {}).items()):
         base_schema_name = path_to_schema_name(path, delimiter="_")
@@ -338,8 +341,12 @@ def transform_schema(api: Schema, schema_overrides: SchemaOverrides):
             http_method = http_method_mapper[http_method]
             assert http_method
 
+            operation_id = to_classname(f"{base_schema_name}_{http_method.title()}", public=True)
+            if operation_id in private_operations:
+                private_operations.remove(operation_id)
+                operation_id = f"_{operation_id}"
             # Adding operationId instructs the generator to use given name instead generated one
-            properties["operationId"] = to_classname(f"{base_schema_name}_{http_method.title()}")
+            properties["operationId"] = f"{operation_id_prefix}{operation_id}"
 
             # Process request parameters
             for parameter in list(properties.get("parameters", [])):
@@ -381,6 +388,8 @@ def transform_schema(api: Schema, schema_overrides: SchemaOverrides):
                     suffix = f"_{status_code}" if str(status_code) != "200" else ""
                     name = to_classname(f"{base_schema_name}_{http_method.title()}{suffix}")
                     process_schema(name, value, extract_top_level=False)
+    if private_operations:
+        raise ValueError(f"The following operations are not in schema: {list(private_operations)}")
     _validate_schema_aliases(schema_hashes, schema_overrides.alias)
     _validate_schema_replacements(api, schema_overrides.replacements)
     _replace_schemas(api, schema_overrides.replacements)

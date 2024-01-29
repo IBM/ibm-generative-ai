@@ -11,22 +11,27 @@ interactions:
     method: GET
     uri: https://api.com/v2/text/generation/limits?version=2023-11-22
   response:
-    content: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
+    body:
+      string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Fri, 05 Jan 2024 09:58:18 GMT
-      Keep-Alive:
-      - timeout=72
+      cache-control:
+      - private
       content-length:
       - '54'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
+      date:
+      - Thu, 25 Jan 2024 15:50:45 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=538060a726cc3a9c230fa5d1269356eb; path=/;
+        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
-    http_version: HTTP/1.1
-    status_code: 200
+    status:
+      code: 200
+      message: OK
 version: 1

@@ -1,15 +1,5 @@
 from typing import Generator, Optional, Sequence, Union
 
-from genai._generated.api import (
-    TextChatCreateParametersQuery,
-    TextChatCreateRequest,
-    TextChatStreamCreateRequest,
-    TextGenerationStreamCreateParametersQuery,
-)
-from genai._generated.endpoints import (
-    TextChatCreateEndpoint,
-    TextChatStreamCreateEndpoint,
-)
 from genai._types import EnumLike, ModelLike
 from genai._utils.api_client import ApiClient
 from genai._utils.general import to_enum_optional, to_model_instance, to_model_optional
@@ -21,13 +11,23 @@ from genai._utils.service import (
     set_service_action_metadata,
 )
 from genai.request.request_service import RequestService as _RequestService
-from genai.text.chat.schema import (
+from genai.schema import (
     BaseMessage,
     ModerationParameters,
     TextChatCreateResponse,
     TextChatStreamCreateResponse,
     TextGenerationParameters,
     TrimMethod,
+)
+from genai.schema._api import (
+    _TextChatCreateParametersQuery,
+    _TextChatCreateRequest,
+    _TextChatStreamCreateRequest,
+    _TextGenerationStreamCreateParametersQuery,
+)
+from genai.schema._endpoints import (
+    TextChatCreateEndpoint,
+    TextChatStreamCreateEndpoint,
 )
 from genai.text.generation._generation_utils import generation_stream_handler
 
@@ -100,7 +100,7 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
             ValidationError: In case of provided parameters are invalid.
         """
         metadata = get_service_action_metadata(self.create)
-        request_body = TextChatCreateRequest(
+        request_body = _TextChatCreateRequest(
             model_id=model_id,
             conversation_id=conversation_id,
             messages=self._prepare_messages(messages) if messages is not None else None,
@@ -118,7 +118,7 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
         with self._get_http_client() as client:
             http_response = client.post(
                 url=self._get_endpoint(metadata.endpoint),
-                params=TextChatCreateParametersQuery().model_dump(),
+                params=_TextChatCreateParametersQuery().model_dump(),
                 json=request_body,
             )
             return TextChatCreateResponse(**http_response.json())
@@ -160,7 +160,7 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
             ValidationError: In case of provided parameters are invalid.
         """
         metadata = get_service_action_metadata(self.create_stream)
-        request_body = TextChatStreamCreateRequest(
+        request_body = _TextChatStreamCreateRequest(
             model_id=model_id,
             conversation_id=conversation_id,
             messages=self._prepare_messages(messages) if messages is not None else None,
@@ -181,7 +181,7 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
                 logger=self._logger,
                 generator=client.post_stream(
                     url=self._get_endpoint(metadata.endpoint),
-                    params=TextGenerationStreamCreateParametersQuery().model_dump(),
+                    params=_TextGenerationStreamCreateParametersQuery().model_dump(),
                     json=request_body,
                 ),
             )

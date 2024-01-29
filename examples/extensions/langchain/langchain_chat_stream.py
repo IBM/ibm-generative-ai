@@ -5,7 +5,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 
 from genai import Client, Credentials
 from genai.extensions.langchain import LangChainChatInterface
-from genai.text.generation import DecodingMethod, TextGenerationParameters
+from genai.schema import DecodingMethod, TextGenerationParameters
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>

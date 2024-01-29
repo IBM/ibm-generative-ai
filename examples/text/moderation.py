@@ -10,12 +10,12 @@ from dotenv import load_dotenv
 
 from genai.client import Client
 from genai.credentials import Credentials
-from genai.text.moderation import (
-    CreateExecutionOptions,
+from genai.schema import (
     HAPOptions,
     ImplicitHateOptions,
     StigmaOptions,
 )
+from genai.text.moderation import CreateExecutionOptions
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>

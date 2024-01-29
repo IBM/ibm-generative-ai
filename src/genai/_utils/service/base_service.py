@@ -3,18 +3,19 @@ from __future__ import annotations
 import logging
 import re
 from abc import ABC
+from enum import Enum
 from typing import Generic, Optional, TypeVar, Union, cast
 from urllib.parse import quote
 
 from pydantic import BaseModel, ConfigDict
 
-from genai._generated.endpoints import ApiEndpoint
 from genai._utils.api_client import ApiClient
 from genai._utils.general import to_model_instance
 from genai._utils.http_client.httpx_client import AsyncHttpxClient, HttpxClient
 from genai._utils.service.metadata import inherit_metadata
 from genai._utils.shared_options import CommonExecutionOptions
 from genai._utils.validators import assert_is_not_empty_string
+from genai.schema._endpoints import ApiEndpoint
 
 __all__ = ["BaseService", "BaseServiceConfig", "BaseServiceServices", "CommonExecutionOptions"]
 
@@ -90,13 +91,14 @@ class BaseService(Generic[TConfig, TServices], ABC):
     @staticmethod
     def _get_endpoint(
         endpoint: type[ApiEndpoint],
-        **params: str,
+        **params: Union[int, str, Enum],
     ) -> str:
         target_endpoint = endpoint.path
         if not target_endpoint:
             raise ValueError("Endpoint was not found in the provided config.")
 
         for k, v in params.items():
+            v = v.value if isinstance(v, Enum) else str(v)
             assert_is_not_empty_string(v)
             parameter_expression = f"{{{k}}}"
             if parameter_expression not in target_endpoint:

@@ -6,8 +6,8 @@ from httpx import HTTPError, Response
 from pydantic import ValidationError as _ValidationError
 from typing_extensions import TypeAlias
 
-from genai._generated.api import BaseErrorResponse
 from genai._utils.responses import is_api_error_response, to_api_error
+from genai.schema import BaseErrorResponse
 
 logger = logging.getLogger(__name__)
 

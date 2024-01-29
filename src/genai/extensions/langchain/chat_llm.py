@@ -5,20 +5,23 @@ from pathlib import Path
 from typing import Any, Dict, Iterator, Optional, Union
 
 from pydantic import ConfigDict
+from pydantic.v1 import validator
 
 from genai import Client
-from genai._generated.api import ModerationParameters, TrimMethod
 from genai._types import EnumLike
+from genai._utils.general import to_model_optional
 from genai.extensions._common.utils import (
     _prepare_chat_generation_request,
     create_generation_info_from_response,
 )
-from genai.text.chat.schema import (
+from genai.schema import (
     AIMessage,
     BaseMessage,
     HumanMessage,
+    ModerationParameters,
     SystemMessage,
     TextGenerationParameters,
+    TrimMethod,
 )
 
 try:
@@ -85,6 +88,7 @@ class LangChainChatInterface(BaseChatModel):
         from genai import Client, Credentials
         from genai.extensions.langchain import LangChainChatInterface
         from langchain_core.messages import HumanMessage, SystemMessage
+        from genai.schema import TextGenerationParameters
 
         client = Client(credentials=Credentials.from_env())
         llm = LangChainChatInterface(
@@ -113,6 +117,11 @@ class LangChainChatInterface(BaseChatModel):
     use_conversation_parameters: Optional[bool] = None
     conversation_id: Optional[str] = None
     streaming: Optional[bool] = None
+
+    @validator("parameters", "moderations", pre=True, always=True)
+    @classmethod
+    def validate_data_models(cls, value, values, config, field):
+        return to_model_optional(value, Model=field.type_, copy=False)
 
     @classmethod
     def is_lc_serializable(cls) -> bool:

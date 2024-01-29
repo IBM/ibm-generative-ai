@@ -4,7 +4,7 @@ import httpx
 from httpx import Response
 from typing_extensions import TypeGuard
 
-from genai._generated.api import (
+from genai.schema import (
     BadRequestResponse,
     BaseErrorResponse,
     InternalServerErrorResponse,
