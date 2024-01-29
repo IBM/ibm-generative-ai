@@ -73,6 +73,6 @@ for idx, response in tqdm(
     desc="Progress",
     unit="input",
 ):
-    [result] = response.results[0]
+    result = response.results[0]
     print(f"Input text ({idx}): {result.input_text}")
     print(f"Generated text ({idx}): {result.generated_text}")

@@ -3,6 +3,7 @@ import importlib.util
 import inspect
 import pkgutil
 import sys
+import warnings
 from importlib.machinery import SourceFileLoader
 from pathlib import Path
 from typing import Iterator
@@ -146,10 +147,8 @@ def test_backwards_compatibility(propagate_caplog):
 
 
 @pytest.mark.unit
-def test_backwards_compatibility_warnings(propagate_caplog):
-    caplog = propagate_caplog("genai.schema")
+def test_backwards_compatibility_warnings():
     # Try a few imports from services:
-
     services = [
         "file",
         "model",
@@ -170,9 +169,11 @@ def test_backwards_compatibility_warnings(propagate_caplog):
     example_symbol = "DecodingMethod"
     for service in services:
         module = f"genai.{service}"
-        with caplog.at_level("WARNING"):
+        with warnings.catch_warnings(record=True) as warning_log:
             exec(f"from {module} import {example_symbol}")
-            assert f"Deprecated import of {example_symbol} from module {module}" in caplog.text
+            warning = warning_log[0]
+            assert f"Deprecated import of {example_symbol} from module {module}" in warning.message.args[0]
+            assert warning.category == DeprecationWarning
 
 
 @pytest.mark.unit
