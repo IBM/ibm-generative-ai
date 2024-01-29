@@ -7,18 +7,19 @@ from typing import Any, Dict, Iterator, Optional, Union
 from pydantic import ConfigDict
 
 from genai import Client
-from genai._generated.api import ModerationParameters, TrimMethod
 from genai._types import EnumLike
 from genai.extensions._common.utils import (
     _prepare_chat_generation_request,
     create_generation_info_from_response,
 )
-from genai.text.chat.schema import (
+from genai.schema import (
     AIMessage,
     BaseMessage,
     HumanMessage,
+    ModerationParameters,
     SystemMessage,
     TextGenerationParameters,
+    TrimMethod,
 )
 
 try:

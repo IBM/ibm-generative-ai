@@ -1,3 +1,4 @@
+import logging
 import os
 import re
 from typing import Any, Optional
@@ -12,12 +13,13 @@ from vcr.cassette import Cassette
 from vcr.request import Request
 
 from genai import Client, Credentials
-from genai._generated.endpoints import ApiEndpoint, TextGenerationLimitRetrieveEndpoint
 from genai._utils.async_executor import BaseConfig
 from genai._utils.service import BaseService
-from genai.text.generation.limits import (
+from genai.schema import (
+    ApiEndpoint,
     ConcurrencyLimit,
     TextGenerationLimit,
+    TextGenerationLimitRetrieveEndpoint,
     TextGenerationLimitRetrieveResponse,
 )
 from tests.helpers import (
@@ -155,3 +157,19 @@ def patch_async_requests_limits(request: SubRequest):
     sleep_duration = custom_params.get("duration", 0.1)
     with patch.multiple(BaseConfig, limit_reach_retry_threshold=sleep_duration):
         yield
+
+
+@pytest.fixture
+def propagate_caplog(caplog):
+    logger = None
+
+    def _propagate_caplog(name: str):
+        nonlocal logger
+        logger = logging.getLogger(name)
+        logger.addHandler(caplog.handler)
+        return caplog
+
+    yield _propagate_caplog
+
+    if logger:
+        logger.removeHandler(caplog.handler)

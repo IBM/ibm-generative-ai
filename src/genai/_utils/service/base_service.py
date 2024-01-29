@@ -9,13 +9,13 @@ from urllib.parse import quote
 
 from pydantic import BaseModel, ConfigDict
 
-from genai._generated.endpoints import ApiEndpoint
 from genai._utils.api_client import ApiClient
 from genai._utils.general import to_model_instance
 from genai._utils.http_client.httpx_client import AsyncHttpxClient, HttpxClient
 from genai._utils.service.metadata import inherit_metadata
 from genai._utils.shared_options import CommonExecutionOptions
 from genai._utils.validators import assert_is_not_empty_string
+from genai.schema._endpoints import ApiEndpoint
 
 __all__ = ["BaseService", "BaseServiceConfig", "BaseServiceServices", "CommonExecutionOptions"]
 

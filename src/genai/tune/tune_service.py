@@ -1,22 +1,5 @@
 from typing import Optional
 
-from genai._generated.api import (
-    TuneCreateParametersQuery,
-    TuneCreateRequest,
-    TuneIdContentTypeRetrieveParametersQuery,
-    TuneIdDeleteParametersQuery,
-    TuneIdRetrieveParametersQuery,
-    TuneRetrieveParametersQuery,
-    TuningTypeRetrieveParametersQuery,
-)
-from genai._generated.endpoints import (
-    TuneCreateEndpoint,
-    TuneIdContentTypeRetrieveEndpoint,
-    TuneIdDeleteEndpoint,
-    TuneIdRetrieveEndpoint,
-    TuneRetrieveEndpoint,
-    TuningTypeRetrieveEndpoint,
-)
 from genai._types import EnumLike, ModelLike
 from genai._utils.general import to_enum, to_enum_optional, to_model_optional
 from genai._utils.service import (
@@ -27,15 +10,30 @@ from genai._utils.service import (
     set_service_action_metadata,
 )
 from genai._utils.validators import assert_is_not_empty_string
-from genai.tune.schema import (
+from genai.schema import (
     TuneAssetType,
+    TuneCreateEndpoint,
     TuneCreateResponse,
+    TuneIdContentTypeRetrieveEndpoint,
+    TuneIdDeleteEndpoint,
+    TuneIdRetrieveEndpoint,
     TuneIdRetrieveResponse,
     TuneParameters,
+    TuneRetrieveEndpoint,
     TuneRetrieveResponse,
     TuneStatus,
     TuningType,
+    TuningTypeRetrieveEndpoint,
     TuningTypeRetrieveResponse,
+)
+from genai.schema._api import (
+    _TuneCreateParametersQuery,
+    _TuneCreateRequest,
+    _TuneIdContentTypeRetrieveParametersQuery,
+    _TuneIdDeleteParametersQuery,
+    _TuneIdRetrieveParametersQuery,
+    _TuneRetrieveParametersQuery,
+    _TuningTypeRetrieveParametersQuery,
 )
 
 __all__ = ["TuneService"]
@@ -62,7 +60,7 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
         """
         with self._get_http_client() as client:
             metadata = get_service_action_metadata(self.create)
-            request_body = TuneCreateRequest(
+            request_body = _TuneCreateRequest(
                 model_id=model_id,
                 name=name,
                 parameters=to_model_optional(parameters, TuneParameters),
@@ -75,7 +73,7 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
             self._log_method_execution("Tune Create", **request_body)
             response = client.post(
                 url=self._get_endpoint(metadata.endpoint),
-                params=TuneCreateParametersQuery().model_dump(),
+                params=_TuneCreateParametersQuery().model_dump(),
                 json=request_body,
             )
             return TuneCreateResponse(**response.json())
@@ -105,7 +103,7 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
         with self._get_http_client() as client:
             response = client.get(
                 url=self._get_endpoint(metadata.endpoint, id=id, type=to_enum(TuneAssetType, type)),
-                params=TuneIdContentTypeRetrieveParametersQuery().model_dump(),
+                params=_TuneIdContentTypeRetrieveParametersQuery().model_dump(),
             )
             return response.content
 
@@ -126,7 +124,7 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
         with self._get_http_client() as client:
             response = client.get(
                 url=self._get_endpoint(metadata.endpoint, id=id),
-                params=TuneIdRetrieveParametersQuery().model_dump(),
+                params=_TuneIdRetrieveParametersQuery().model_dump(),
             )
             return TuneIdRetrieveResponse(**response.json())
 
@@ -150,7 +148,7 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
             metadata = get_service_action_metadata(self.list)
             response = client.get(
                 url=self._get_endpoint(metadata.endpoint),
-                params=TuneRetrieveParametersQuery(
+                params=_TuneRetrieveParametersQuery(
                     limit=limit, offset=offset, status=to_enum_optional(status, TuneStatus), search=search
                 ).model_dump(),
             )
@@ -167,7 +165,7 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
             metadata = get_service_action_metadata(self.types)
             response = client.get(
                 url=self._get_endpoint(metadata.endpoint),
-                params=TuningTypeRetrieveParametersQuery().model_dump(),
+                params=_TuningTypeRetrieveParametersQuery().model_dump(),
             )
 
             self._log_method_execution("Tune Types")
@@ -189,5 +187,5 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
         with self._get_http_client() as client:
             metadata = get_service_action_metadata(self.delete)
             client.delete(
-                url=self._get_endpoint(metadata.endpoint, id=id), params=TuneIdDeleteParametersQuery().model_dump()
+                url=self._get_endpoint(metadata.endpoint, id=id), params=_TuneIdDeleteParametersQuery().model_dump()
             )

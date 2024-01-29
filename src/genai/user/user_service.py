@@ -1,19 +1,5 @@
 from typing import Optional
 
-from genai._generated.api import (
-    UserCreateParametersQuery,
-    UserCreateRequest,
-    UserDeleteParametersQuery,
-    UserPatchParametersQuery,
-    UserPatchRequest,
-    UserRetrieveParametersQuery,
-)
-from genai._generated.endpoints import (
-    UserCreateEndpoint,
-    UserDeleteEndpoint,
-    UserPatchEndpoint,
-    UserRetrieveEndpoint,
-)
 from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
@@ -21,10 +7,22 @@ from genai._utils.service import (
     get_service_action_metadata,
     set_service_action_metadata,
 )
-from genai.user.schema import (
+from genai.schema import (
+    UserCreateEndpoint,
     UserCreateResponse,
+    UserDeleteEndpoint,
+    UserPatchEndpoint,
     UserPatchResponse,
+    UserRetrieveEndpoint,
     UserRetrieveResponse,
+)
+from genai.schema._api import (
+    _UserCreateParametersQuery,
+    _UserCreateRequest,
+    _UserDeleteParametersQuery,
+    _UserPatchParametersQuery,
+    _UserPatchRequest,
+    _UserRetrieveParametersQuery,
 )
 
 __all__ = ["UserService"]
@@ -43,7 +41,7 @@ class UserService(BaseService[BaseServiceConfig, BaseServiceServices]):
             ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
         """
-        request_body = UserCreateRequest(first_name=first_name, last_name=last_name).model_dump()
+        request_body = _UserCreateRequest(first_name=first_name, last_name=last_name).model_dump()
         self._log_method_execution("User Create", **request_body)
 
         with self._get_http_client() as client:
@@ -51,7 +49,7 @@ class UserService(BaseService[BaseServiceConfig, BaseServiceServices]):
             response = client.post(
                 url=self._get_endpoint(metadata.endpoint),
                 json=request_body,
-                params=UserCreateParametersQuery().model_dump(),
+                params=_UserCreateParametersQuery().model_dump(),
             )
             return UserCreateResponse(**response.json())
 
@@ -67,7 +65,7 @@ class UserService(BaseService[BaseServiceConfig, BaseServiceServices]):
         with self._get_http_client() as client:
             metadata = get_service_action_metadata(self.retrieve)
             response = client.get(
-                url=self._get_endpoint(metadata.endpoint), params=UserRetrieveParametersQuery().model_dump()
+                url=self._get_endpoint(metadata.endpoint), params=_UserRetrieveParametersQuery().model_dump()
             )
             return UserRetrieveResponse(**response.json())
 
@@ -78,7 +76,7 @@ class UserService(BaseService[BaseServiceConfig, BaseServiceServices]):
             ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
         """
-        request_body = UserPatchRequest(tou_accepted=tou_accepted).model_dump()
+        request_body = _UserPatchRequest(tou_accepted=tou_accepted).model_dump()
         self._log_method_execution("User Update", **request_body)
 
         with self._get_http_client() as client:
@@ -86,7 +84,7 @@ class UserService(BaseService[BaseServiceConfig, BaseServiceServices]):
             response = client.patch(
                 url=self._get_endpoint(metadata.endpoint),
                 json=request_body,
-                params=UserPatchParametersQuery().model_dump(),
+                params=_UserPatchParametersQuery().model_dump(),
             )
             return UserPatchResponse(**response.json())
 
@@ -101,4 +99,4 @@ class UserService(BaseService[BaseServiceConfig, BaseServiceServices]):
 
         with self._get_http_client() as client:
             metadata = get_service_action_metadata(self.delete)
-            client.delete(url=self._get_endpoint(metadata.endpoint), params=UserDeleteParametersQuery().model_dump())
+            client.delete(url=self._get_endpoint(metadata.endpoint), params=_UserDeleteParametersQuery().model_dump())

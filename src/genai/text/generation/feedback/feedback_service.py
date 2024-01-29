@@ -2,18 +2,6 @@ from typing import Optional, TypeVar
 
 from pydantic import BaseModel
 
-from genai._generated.api import (
-    TextGenerationIdFeedbackCreateParametersQuery,
-    TextGenerationIdFeedbackCreateRequest,
-    TextGenerationIdFeedbackRetrieveParametersQuery,
-    TextGenerationIdFeedbackUpdateParametersQuery,
-    TextGenerationIdFeedbackUpdateRequest,
-)
-from genai._generated.endpoints import (
-    TextGenerationIdFeedbackCreateEndpoint,
-    TextGenerationIdFeedbackRetrieveEndpoint,
-    TextGenerationIdFeedbackUpdateEndpoint,
-)
 from genai._types import EnumLike
 from genai._utils.general import to_enum
 from genai._utils.service import (
@@ -24,11 +12,21 @@ from genai._utils.service import (
     set_service_action_metadata,
 )
 from genai._utils.validators import assert_is_not_empty_string
-from genai.text.generation.feedback.schema import (
+from genai.schema import (
     TextGenerationFeedbackCategory,
+    TextGenerationIdFeedbackCreateEndpoint,
     TextGenerationIdFeedbackCreateResponse,
+    TextGenerationIdFeedbackRetrieveEndpoint,
     TextGenerationIdFeedbackRetrieveResponse,
+    TextGenerationIdFeedbackUpdateEndpoint,
     TextGenerationIdFeedbackUpdateResponse,
+)
+from genai.schema._api import (
+    _TextGenerationIdFeedbackCreateParametersQuery,
+    _TextGenerationIdFeedbackCreateRequest,
+    _TextGenerationIdFeedbackRetrieveParametersQuery,
+    _TextGenerationIdFeedbackUpdateParametersQuery,
+    _TextGenerationIdFeedbackUpdateRequest,
 )
 
 T = TypeVar("T", bound=BaseModel)
@@ -56,7 +54,7 @@ class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
         with self._get_http_client() as client:
             http_response = client.get(
                 url=self._get_endpoint(metadata.endpoint, id=generation_id),
-                params=TextGenerationIdFeedbackRetrieveParametersQuery().model_dump(),
+                params=_TextGenerationIdFeedbackRetrieveParametersQuery().model_dump(),
             )
             return TextGenerationIdFeedbackRetrieveResponse(**http_response.json())
 
@@ -89,8 +87,8 @@ class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
             metadata = get_service_action_metadata(self.create)
             http_response = client.post(
                 url=self._get_endpoint(metadata.endpoint, id=generation_id),
-                params=TextGenerationIdFeedbackCreateParametersQuery().model_dump(),
-                json=TextGenerationIdFeedbackCreateRequest(
+                params=_TextGenerationIdFeedbackCreateParametersQuery().model_dump(),
+                json=_TextGenerationIdFeedbackCreateRequest(
                     comment=comment,
                     categories=(
                         [to_enum(TextGenerationFeedbackCategory, category) for category in categories]
@@ -129,7 +127,7 @@ class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
             metadata = get_service_action_metadata(self.update)
             http_response = client.put(
                 url=self._get_endpoint(metadata.endpoint, id=generation_id),
-                params=TextGenerationIdFeedbackUpdateParametersQuery().model_dump(),
-                json=TextGenerationIdFeedbackUpdateRequest(comment=comment, categories=categories).model_dump(),
+                params=_TextGenerationIdFeedbackUpdateParametersQuery().model_dump(),
+                json=_TextGenerationIdFeedbackUpdateRequest(comment=comment, categories=categories).model_dump(),
             )
             return TextGenerationIdFeedbackUpdateResponse(**http_response.json())

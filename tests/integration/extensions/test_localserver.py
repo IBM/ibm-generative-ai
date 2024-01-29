@@ -4,12 +4,10 @@ from typing import Optional
 import pytest
 
 from genai.client import Client
-from genai.text.generation import (
+from genai.schema import (
     StopReason,
     TextGenerationParameters,
     TextGenerationResult,
-)
-from genai.text.tokenization import (
     TextTokenizationCreateResults,
     TextTokenizationParameters,
 )

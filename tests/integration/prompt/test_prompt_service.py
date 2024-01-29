@@ -1,11 +1,7 @@
 import pytest
 
 from genai import Client
-from genai.prompt import ModerationParameters
-from genai.text.chat import (
-    TextGenerationParameters,
-    TextGenerationReturnOptions,
-)
+from genai.schema import ModerationParameters, TextGenerationParameters, TextGenerationReturnOptions
 
 TEST_MODEL_ID = "google/flan-t5-xl"
 PROMPT_NAME = "My test prompt"

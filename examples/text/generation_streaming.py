@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 from genai.client import Client
 from genai.credentials import Credentials
-from genai.text.generation import (
+from genai.schema import (
     DecodingMethod,
     ModerationHAP,
     ModerationParameters,

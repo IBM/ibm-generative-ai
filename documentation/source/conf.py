@@ -87,6 +87,7 @@ autodoc_pydantic_model_show_field_summary = False
 autodoc_pydantic_model_show_json = False
 autodoc_pydantic_settings_show_json = False
 autodoc_mock_imports = ["transformers", "langchain", "llama-index", "localserver"]
+autodoc_default_options = {"exclude-members": "__weakref__,__new__"}
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

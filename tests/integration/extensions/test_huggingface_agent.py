@@ -3,7 +3,7 @@ import sys
 import pytest
 
 from genai import Client
-from genai.text.generation import TextGenerationParameters
+from genai.schema import TextGenerationParameters
 
 
 @pytest.mark.integration

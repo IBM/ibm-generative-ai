@@ -5,7 +5,7 @@ Customize underlying API (httpx) Client
 from dotenv import load_dotenv
 
 from genai import ApiClient, Client, Credentials
-from genai.text.generation import DecodingMethod, TextGenerationParameters
+from genai.schema import DecodingMethod, TextGenerationParameters
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>

@@ -9,18 +9,19 @@ from typing import Any, Iterator, List, Optional, Union
 from pydantic import ConfigDict
 
 from genai import Client
-from genai._generated.api import ModerationParameters, PromptTemplateData
 from genai._utils.general import to_model_instance
 from genai.extensions._common.utils import (
     _prepare_generation_request,
     create_generation_info,
     create_generation_info_from_response,
 )
-from genai.text.generation import (
-    CreateExecutionOptions,
+from genai.schema import (
+    ModerationParameters,
+    PromptTemplateData,
     TextGenerationParameters,
     TextGenerationStreamCreateResponse,
 )
+from genai.text.generation import CreateExecutionOptions
 
 try:
     from langchain_core.callbacks.manager import (

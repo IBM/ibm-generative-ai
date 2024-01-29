@@ -8,8 +8,7 @@ from dotenv import load_dotenv
 
 from genai.client import Client
 from genai.credentials import Credentials
-from genai.text.generation import (
-    CreateExecutionOptions,
+from genai.schema import (
     DecodingMethod,
     LengthPenalty,
     ModerationParameters,
@@ -17,6 +16,7 @@ from genai.text.generation import (
     TextGenerationParameters,
     TextGenerationReturnOptions,
 )
+from genai.text.generation import CreateExecutionOptions
 
 try:
     from tqdm.auto import tqdm
@@ -61,7 +61,7 @@ print(heading("Generating responses in parallel"))
 for idx, response in tqdm(
     enumerate(
         client.text.generation.create(
-            model_id="meta-llama/llama-2-70b",
+            model_id="google/flan-t5-xl",
             inputs=lots_of_greetings,
             moderations=moderations,
             # set to ordered to True if you need results in the same order as prompts
@@ -73,6 +73,6 @@ for idx, response in tqdm(
     desc="Progress",
     unit="input",
 ):
-    [result] = response.results
+    result = response.results[0]
     print(f"Input text ({idx}): {result.input_text}")
     print(f"Generated text ({idx}): {result.generated_text}")

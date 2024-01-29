@@ -13,6 +13,7 @@ ignore_files = {
     # exclude long-running examples (resort to integration tests)
     "huggingface_agent.py",
     "tune.py",
+    "parallel_processing.py",
 }
 skip_for_python_3_12 = {
     # These files are skipped for python >= 3.12 because transformers library cannot be installed
@@ -36,13 +37,13 @@ def test_finds_examples():
 @pytest.mark.e2e
 @pytest.mark.skipif(sys.version_info >= (3, 12), reason="transformers can't be installed for python 3.12 yet")
 @pytest.mark.parametrize("script", scripts_3_12, ids=idfn)
-def test_example_execution_for_python_3_12(script):
+def test_example_execution_for_python_lt_3_12(script):
     logger.info(f"Executing Example script: {script}")
     runpy.run_path(str(script), run_name="__main__")
 
 
 @pytest.mark.e2e
 @pytest.mark.parametrize("script", scripts_lt_3_12, ids=idfn)
-def test_example_execution_for_python_lt_3_12(script):
+def test_example_execution(script):
     logger.info(f"Executing Example script: {script}")
     runpy.run_path(str(script), run_name="__main__")

@@ -1,8 +1,7 @@
 import pytest
 
-from genai._generated.endpoints import TextEmbeddingCreateEndpoint
 from genai.extensions.langchain import LangChainEmbeddingsInterface
-from genai.text.embedding import TextEmbeddingParameters
+from genai.schema import TextEmbeddingCreateEndpoint, TextEmbeddingParameters
 
 
 @pytest.mark.integration

@@ -16,9 +16,15 @@ from dotenv import load_dotenv
 
 from genai.client import Client
 from genai.credentials import Credentials
-from genai.file import FilePurpose
-from genai.text.generation import DecodingMethod, TextGenerationParameters
-from genai.tune import TuneAssetType, TuneParameters, TuneStatus, TuningType
+from genai.schema import (
+    DecodingMethod,
+    FilePurpose,
+    TextGenerationParameters,
+    TuneAssetType,
+    TuneParameters,
+    TuneStatus,
+    TuningType,
+)
 
 load_dotenv()
 num_training_samples = 100

@@ -1,10 +1,5 @@
 from typing import Generator, Optional, Union
 
-from genai._generated.api import (
-    TextModerationCreateParametersQuery,
-    TextModerationCreateRequest,
-)
-from genai._generated.endpoints import TextModerationCreateEndpoint
 from genai._types import ModelLike
 from genai._utils.async_executor import execute_async
 from genai._utils.general import (
@@ -21,11 +16,16 @@ from genai._utils.service import (
     get_service_action_metadata,
     set_service_action_metadata,
 )
-from genai.text.moderation.schema import (
+from genai.schema import (
     HAPOptions,
     ImplicitHateOptions,
     StigmaOptions,
+    TextModerationCreateEndpoint,
     TextModerationCreateResponse,
+)
+from genai.schema._api import (
+    _TextModerationCreateParametersQuery,
+    _TextModerationCreateRequest,
 )
 
 __all__ = ["ModerationService", "BaseConfig", "CreateExecutionOptions"]
@@ -98,8 +98,8 @@ class ModerationService(BaseService[BaseConfig, BaseServiceServices]):
 
             http_response = await http_client.post(
                 url=self._get_endpoint(metadata.endpoint),
-                params=TextModerationCreateParametersQuery().model_dump(),
-                json=TextModerationCreateRequest(
+                params=_TextModerationCreateParametersQuery().model_dump(),
+                json=_TextModerationCreateRequest(
                     input=input,
                     hap=to_model_optional(hap, HAPOptions),
                     implicit_hate=to_model_optional(hap, ImplicitHateOptions),

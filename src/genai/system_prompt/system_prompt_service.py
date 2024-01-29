@@ -1,21 +1,5 @@
 from typing import Optional
 
-from genai._generated.api import (
-    SystemPromptCreateParametersQuery,
-    SystemPromptCreateRequest,
-    SystemPromptIdDeleteParametersQuery,
-    SystemPromptIdRetrieveParametersQuery,
-    SystemPromptIdUpdateParametersQuery,
-    SystemPromptIdUpdateRequest,
-    SystemPromptRetrieveParametersQuery,
-)
-from genai._generated.endpoints import (
-    SystemPromptCreateEndpoint,
-    SystemPromptIdDeleteEndpoint,
-    SystemPromptIdRetrieveEndpoint,
-    SystemPromptIdUpdateEndpoint,
-    SystemPromptRetrieveEndpoint,
-)
 from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
@@ -23,11 +7,25 @@ from genai._utils.service import (
     get_service_action_metadata,
     set_service_action_metadata,
 )
-from genai.system_prompt.schema import (
+from genai.schema import (
+    SystemPromptCreateEndpoint,
     SystemPromptCreateResponse,
+    SystemPromptIdDeleteEndpoint,
+    SystemPromptIdRetrieveEndpoint,
     SystemPromptIdRetrieveResponse,
+    SystemPromptIdUpdateEndpoint,
     SystemPromptIdUpdateResponse,
+    SystemPromptRetrieveEndpoint,
     SystemPromptRetrieveResponse,
+)
+from genai.schema._api import (
+    _SystemPromptCreateParametersQuery,
+    _SystemPromptCreateRequest,
+    _SystemPromptIdDeleteParametersQuery,
+    _SystemPromptIdRetrieveParametersQuery,
+    _SystemPromptIdUpdateParametersQuery,
+    _SystemPromptIdUpdateRequest,
+    _SystemPromptRetrieveParametersQuery,
 )
 
 __all__ = ["SystemPromptService"]
@@ -42,7 +40,7 @@ class SystemPromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
-        request_body = SystemPromptCreateRequest(name=name, content=content).model_dump()
+        request_body = _SystemPromptCreateRequest(name=name, content=content).model_dump()
 
         self._log_method_execution("System Prompt Create", **request_body)
 
@@ -50,7 +48,7 @@ class SystemPromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             metadata = get_service_action_metadata(self.create)
             response = client.post(
                 url=self._get_endpoint(metadata.endpoint),
-                params=SystemPromptCreateParametersQuery().model_dump(),
+                params=_SystemPromptCreateParametersQuery().model_dump(),
                 json=request_body,
             )
             return SystemPromptCreateResponse(**response.json())
@@ -72,7 +70,7 @@ class SystemPromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             metadata = get_service_action_metadata(self.retrieve)
             response = client.get(
                 url=self._get_endpoint(metadata.endpoint, id=id),
-                params=SystemPromptIdRetrieveParametersQuery().model_dump(),
+                params=_SystemPromptIdRetrieveParametersQuery().model_dump(),
             )
             return SystemPromptIdRetrieveResponse(**response.json())
 
@@ -84,7 +82,7 @@ class SystemPromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
-        request_body = SystemPromptIdUpdateRequest(name=name, content=content).model_dump()
+        request_body = _SystemPromptIdUpdateRequest(name=name, content=content).model_dump()
 
         self._log_method_execution("System Prompt Update", **request_body)
 
@@ -92,7 +90,7 @@ class SystemPromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             metadata = get_service_action_metadata(self.update)
             response = client.post(
                 url=self._get_endpoint(metadata.endpoint, id=id),
-                params=SystemPromptIdUpdateParametersQuery().model_dump(),
+                params=_SystemPromptIdUpdateParametersQuery().model_dump(),
                 json=request_body,
             )
             return SystemPromptIdUpdateResponse(**response.json())
@@ -110,7 +108,7 @@ class SystemPromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
-        request_parameters = SystemPromptRetrieveParametersQuery(
+        request_parameters = _SystemPromptRetrieveParametersQuery(
             limit=limit,
             offset=offset,
         ).model_dump()
@@ -138,5 +136,5 @@ class SystemPromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             metadata = get_service_action_metadata(self.delete)
             client.delete(
                 url=self._get_endpoint(metadata.endpoint, id=id),
-                params=SystemPromptIdDeleteParametersQuery().model_dump(),
+                params=_SystemPromptIdDeleteParametersQuery().model_dump(),
             )

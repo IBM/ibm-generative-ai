@@ -3,10 +3,7 @@ from typing import Optional
 import pytest
 
 from genai import Client
-from genai.text.tokenization import (
-    TextTokenizationParameters,
-    TextTokenizationReturnOptions,
-)
+from genai.schema import TextTokenizationParameters, TextTokenizationReturnOptions
 
 TEST_MODEL_ID = "google/flan-t5-xl"
 

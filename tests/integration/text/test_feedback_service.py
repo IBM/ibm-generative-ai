@@ -1,7 +1,7 @@
 import pytest
 
 from genai import Client
-from genai.text.generation.feedback import TextGenerationFeedbackCategory
+from genai.schema import TextGenerationFeedbackCategory
 
 TEST_MODEL_ID = "google/flan-t5-xl"
 

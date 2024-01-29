@@ -6,9 +6,7 @@ from typing import NamedTuple
 import pytest
 
 from genai import Client
-from genai._generated.api import TuneAssetType, TuneStatus
-from genai.file import FilePurpose
-from genai.tune import TuningType
+from genai.schema import FilePurpose, TuneAssetType, TuneStatus, TuningType
 
 TEST_MODEL_ID = "google/flan-t5-xl"
 TUNE_NAME = "test_tune"

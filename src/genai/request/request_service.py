@@ -3,17 +3,6 @@ from typing import Optional, TypeVar, Union
 
 from pydantic import BaseModel
 
-from genai._generated.api import (
-    RequestChatConversationIdDeleteParametersQuery,
-    RequestChatConversationIdRetrieveParametersQuery,
-    RequestIdDeleteParametersQuery,
-)
-from genai._generated.endpoints import (
-    RequestChatConversationIdDeleteEndpoint,
-    RequestChatConversationIdRetrieveEndpoint,
-    RequestIdDeleteEndpoint,
-    RequestRetrieveEndpoint,
-)
 from genai._types import EnumLike
 from genai._utils.general import cast_list, to_enum, to_enum_optional
 from genai._utils.service import (
@@ -24,14 +13,25 @@ from genai._utils.service import (
     set_service_action_metadata,
 )
 from genai._utils.validators import assert_is_not_empty_string
-from genai.request.schema import (
+from genai.schema import (
     RequestApiVersion,
     RequestChatConversationIdRetrieveResponse,
     RequestEndpoint,
     RequestOrigin,
-    RequestRetrieveParametersQuery,
     RequestRetrieveResponse,
     RequestStatus,
+)
+from genai.schema._api import (
+    _RequestChatConversationIdDeleteParametersQuery,
+    _RequestChatConversationIdRetrieveParametersQuery,
+    _RequestIdDeleteParametersQuery,
+    _RequestRetrieveParametersQuery,
+)
+from genai.schema._endpoints import (
+    RequestChatConversationIdDeleteEndpoint,
+    RequestChatConversationIdRetrieveEndpoint,
+    RequestIdDeleteEndpoint,
+    RequestRetrieveEndpoint,
 )
 
 T = TypeVar("T", bound=BaseModel)
@@ -58,7 +58,7 @@ class RequestService(BaseService[BaseServiceConfig, BaseServiceServices]):
             metadata = get_service_action_metadata(self.chat)
             http_response = client.get(
                 url=self._get_endpoint(metadata.endpoint, conversationId=conversation_id),
-                params=RequestChatConversationIdRetrieveParametersQuery().model_dump(),
+                params=_RequestChatConversationIdRetrieveParametersQuery().model_dump(),
             )
             return RequestChatConversationIdRetrieveResponse(**http_response.json())
 
@@ -80,7 +80,7 @@ class RequestService(BaseService[BaseServiceConfig, BaseServiceServices]):
             metadata = get_service_action_metadata(self.chat_delete)
             client.delete(
                 url=self._get_endpoint(metadata.endpoint, conversationId=conversation_id),
-                params=RequestChatConversationIdDeleteParametersQuery().model_dump(),
+                params=_RequestChatConversationIdDeleteParametersQuery().model_dump(),
             )
 
     @set_service_action_metadata(endpoint=RequestRetrieveEndpoint)
@@ -105,7 +105,7 @@ class RequestService(BaseService[BaseServiceConfig, BaseServiceServices]):
             ApiResponseException: If target feedback/generation does not exist or cannot be updated.
             ApiNetworkException: In case of unhandled network error.
         """
-        params = RequestRetrieveParametersQuery(
+        params = _RequestRetrieveParametersQuery(
             limit=limit,
             offset=offset,
             status=to_enum_optional(status, RequestStatus),
@@ -141,5 +141,5 @@ class RequestService(BaseService[BaseServiceConfig, BaseServiceServices]):
             metadata = get_service_action_metadata(self.delete)
             client.delete(
                 url=self._get_endpoint(metadata.endpoint, id=id),
-                params=RequestIdDeleteParametersQuery().model_dump(),
+                params=_RequestIdDeleteParametersQuery().model_dump(),
             )

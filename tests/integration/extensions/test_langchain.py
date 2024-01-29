@@ -5,14 +5,12 @@ from langchain_core.callbacks.base import BaseCallbackHandler
 from langchain_core.outputs import GenerationChunk
 
 from genai import Client
-from genai._generated.api import TextGenerationCreateResponse
-from genai._generated.endpoints import (
-    TextGenerationCreateEndpoint,
-    TextGenerationStreamCreateEndpoint,
-)
 from genai.extensions.langchain import LangChainInterface
-from genai.text.generation import (
+from genai.schema import (
+    TextGenerationCreateEndpoint,
+    TextGenerationCreateResponse,
     TextGenerationParameters,
+    TextGenerationStreamCreateEndpoint,
     TextGenerationStreamCreateResponse,
 )
 
