@@ -250,6 +250,17 @@ class StorageProviderLocation(str, Enum):
     US_EAST = "us-east"
 
 
+class SystemPromptAuthor(ApiBaseModel):
+    first_name: Optional[str] = None
+    id: int
+    last_name: Optional[str] = None
+
+
+class SystemPromptType(str, Enum):
+    PRIVATE = "private"
+    SYSTEM = "system"
+
+
 class Tasks(ApiBaseModel):
     csv_example: Optional[str] = None
     file_format_id: Optional[int] = None
@@ -582,6 +593,38 @@ class RequestIdDeleteParametersQuery(ApiBaseModel):
     version: Literal["2023-11-22"] = "2023-11-22"
 
 
+class SystemPromptRetrieveParametersQuery(ApiBaseModel):
+    limit: Optional[int] = Field(100, ge=1, le=100)
+    offset: Optional[int] = Field(0, ge=0)
+    version: Literal["2023-11-22"] = "2023-11-22"
+
+
+class SystemPromptCreateParametersQuery(ApiBaseModel):
+    version: Literal["2023-11-22"] = "2023-11-22"
+
+
+class SystemPromptCreateRequest(ApiBaseModel):
+    content: str
+    name: str
+
+
+class SystemPromptIdDeleteParametersQuery(ApiBaseModel):
+    version: Literal["2023-11-22"] = "2023-11-22"
+
+
+class SystemPromptIdRetrieveParametersQuery(ApiBaseModel):
+    version: Literal["2023-11-22"] = "2023-11-22"
+
+
+class SystemPromptIdUpdateParametersQuery(ApiBaseModel):
+    version: Literal["2023-11-22"] = "2023-11-22"
+
+
+class SystemPromptIdUpdateRequest(ApiBaseModel):
+    content: str
+    name: str
+
+
 class TaskRetrieveParametersQuery(ApiBaseModel):
     tune: Optional[bool] = True
     version: Literal["2023-11-22"] = "2023-11-22"
@@ -895,6 +938,15 @@ class RequestRetrieveResults(ApiBaseModel):
     version: Optional[RequestResultVersion] = None
 
 
+class SystemPrompt(ApiBaseModel):
+    author: Optional[SystemPromptAuthor] = None
+    content: str
+    created_at: AwareDatetime
+    id: int
+    name: str
+    type: SystemPromptType
+
+
 class TextCreateResponseModeration(ApiBaseModel):
     hap: Optional[list[TextModeration]] = None
     implicit_hate: Optional[list[TextModeration]] = None
@@ -1063,6 +1115,23 @@ class PromptIdUpdateRequest(ApiBaseModel):
 class RequestRetrieveResponse(ApiBaseModel):
     results: list[RequestRetrieveResults]
     total_count: int
+
+
+class SystemPromptRetrieveResponse(ApiBaseModel):
+    results: list[SystemPrompt]
+    total_count: int
+
+
+class SystemPromptCreateResponse(ApiBaseModel):
+    result: SystemPrompt
+
+
+class SystemPromptIdRetrieveResponse(ApiBaseModel):
+    result: SystemPrompt
+
+
+class SystemPromptIdUpdateResponse(ApiBaseModel):
+    result: SystemPrompt
 
 
 class TextChatCreateRequest(ApiBaseModel):

@@ -16,6 +16,7 @@ from genai.file import FileService as _FileService
 from genai.model import ModelService as _ModelService
 from genai.prompt import PromptService as _PromptService
 from genai.request import RequestService as _RequestService
+from genai.system_prompt import SystemPromptService as _SystemPromptService
 from genai.text import TextService as _TextService
 from genai.tune import TuneService as _TuneService
 from genai.user import UserService as _UserService
@@ -32,6 +33,7 @@ class BaseServices(BaseServiceServices):
     ModelService: type[_ModelService] = _ModelService
     FileService: type[_FileService] = _FileService
     PromptService: type[_PromptService] = _PromptService
+    SystemPromptService: type[_SystemPromptService] = _SystemPromptService
     UserService: type[_UserService] = _UserService
 
 
@@ -60,6 +62,7 @@ class Client(BaseService[BaseConfig, BaseServices]):
         model: An instance of the `ModelService` class for managing models.
         file: An instance of the `FileService` class for managing files.
         prompt: An instance of the `PromptService` class for working with prompts.
+        system_prompt: An instance of the `SystemPromptService` class for working with system prompts.
         user: An instance of the `UserService` class for managing user-related operations.
     """
 
@@ -129,4 +132,5 @@ class Client(BaseService[BaseConfig, BaseServices]):
         self.model = services.ModelService(api_client=api_client)
         self.file = services.FileService(api_client=api_client)
         self.prompt = services.PromptService(api_client=api_client)
+        self.system_prompt = services.SystemPromptService(api_client=api_client)
         self.user = services.UserService(api_client=api_client)
