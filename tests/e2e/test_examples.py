@@ -19,6 +19,7 @@ skip_for_python_3_12 = {
     # These files are skipped for python >= 3.12 because transformers library cannot be installed
     "local_server.py",
     "huggingface_agent.py",
+    "chroma_db_embedding.py",
 }
 
 scripts_lt_3_12 = {script for script in all_scripts if script.name not in ignore_files | skip_for_python_3_12}
