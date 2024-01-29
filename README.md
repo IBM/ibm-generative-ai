@@ -19,7 +19,7 @@ This is not the [watsonx.ai](https://www.ibm.com/products/watsonx-ai) Python SDK
 *Looking for a CLI? Check out [IBM Generative AI CLI](https://github.com/IBM/ibm-generative-ai-cli).*
 
 > [!IMPORTANT]
-> The SDK was recently rewritten and released under V2 (2024). See the [V2 migration guide](https://ibm.github.io/ibm-generative-ai/v2_migration_guide.html).
+> The SDK was recently rewritten and released under V2 (2024). See the [V2 migration guide](https://ibm.github.io/ibm-generative-ai/main/v2_migration_guide.html).
 
 ## Installation
 
@@ -30,7 +30,7 @@ pip install --upgrade ibm-generative-ai
 
 ### [📚 Documentation](https://ibm.github.io/ibm-generative-ai/)
 
-### [📚 Examples](https://ibm.github.io/ibm-generative-ai/rst_source/examples.html)
+### [📚 Examples](https://ibm.github.io/ibm-generative-ai/rst_source/main/examples.html)
 
 ### [📚 V2 Migration Guide](https://ibm.github.io/ibm-generative-ai/main/v2_migration_guide.html)
 
