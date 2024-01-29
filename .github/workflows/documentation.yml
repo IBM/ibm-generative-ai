@@ -34,6 +34,8 @@ jobs:
     - name: Install dependencies
       run: poetry install --no-interaction --all-extras
     - name: Build documentation
+      env:
+        DOCS_URL_PREFIX: "/ibm-generative-ai"
       run: |
         poetry run poe docs --type build
         touch documentation/build/.nojekyll
