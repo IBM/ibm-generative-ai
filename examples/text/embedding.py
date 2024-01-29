@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 from genai.client import Client
 from genai.credentials import Credentials
+from genai.text.embedding import TextEmbeddingParameters
 
 # make sure you have a .env file under genai root with
 # GENAI_KEY=<your-genai-key>
@@ -23,5 +24,12 @@ model_id = "sentence-transformers/all-minilm-l6-v2"
 
 print(heading("Running embedding for inputs in parallel"))
 # yields batch of results that are produced asynchronously and in parallel
-for input, response in zip(inputs, client.text.embedding.create(model_id=model_id, inputs=inputs)):
+for input, response in zip(
+    inputs,
+    client.text.embedding.create(
+        model_id=model_id,
+        inputs=inputs,
+        parameters=TextEmbeddingParameters(truncate_input_tokens=True),
+    ),
+):
     print(f"Embedding vector for '{input}': {response.results}")

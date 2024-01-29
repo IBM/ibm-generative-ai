@@ -7,12 +7,13 @@ from pydantic import BaseModel
 from genai._generated.api import (
     TextEmbeddingCreateParametersQuery,
     TextEmbeddingCreateRequest,
+    TextEmbeddingParameters,
 )
 from genai._generated.endpoints import TextEmbeddingCreateEndpoint
 from genai._types import ModelLike
 from genai._utils.api_client import ApiClient
 from genai._utils.async_executor import execute_async
-from genai._utils.general import cast_list, to_model_instance
+from genai._utils.general import cast_list, to_model_instance, to_model_optional
 from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
@@ -73,10 +74,18 @@ class EmbeddingService(BaseService[BaseConfig, BaseServices]):
         *,
         model_id: str,
         inputs: Union[str, list[str]],
+        parameters: Optional[ModelLike[TextEmbeddingParameters]] = None,
         execution_options: Optional[ModelLike[CreateExecutionOptions]] = None,
     ) -> Generator[TextEmbeddingCreateResponse, None, None]:
         """
         Creates embedding vectors from an input(s).
+
+        Args:
+            model_id: The ID of the model.
+            inputs: Text/texts to process. It is recommended not to leave any trailing spaces.
+            parameters: Parameters for embedding.
+            execution_options: An optional configuration how SDK should work (error handling, limits, callbacks, ...)
+
 
         Example::
 
@@ -102,6 +111,7 @@ class EmbeddingService(BaseService[BaseConfig, BaseServices]):
         """
         metadata = get_service_action_metadata(self.create)
         prompts: list[str] = cast_list(inputs)
+        parameters_formatted = to_model_optional(parameters, TextEmbeddingParameters)
         execution_options_formatted = to_model_instance(
             [self.config.create_execution_options, execution_options], CreateExecutionOptions
         )
@@ -130,7 +140,9 @@ class EmbeddingService(BaseService[BaseConfig, BaseServices]):
                     BaseRetryTransport.Callback.Success: handle_success,
                 },
                 params=TextEmbeddingCreateParametersQuery().model_dump(),
-                json=TextEmbeddingCreateRequest(input=input, model_id=model_id).model_dump(),
+                json=TextEmbeddingCreateRequest(
+                    input=input, model_id=model_id, parameters=parameters_formatted
+                ).model_dump(),
             )
             response = TextEmbeddingCreateResponse(**http_response.json())
 

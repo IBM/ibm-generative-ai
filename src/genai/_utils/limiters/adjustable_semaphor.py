@@ -16,6 +16,7 @@ class AdjustableAsyncSemaphore(AsyncioSemaphore):
         super().__init__(value)
         self._max_limit = value
         self._waiters = deque()
+        self._processing = 0
         self._dummy_waiters: set[Future] = set()
 
     @property
@@ -24,7 +25,7 @@ class AdjustableAsyncSemaphore(AsyncioSemaphore):
 
     @property
     def processing(self):
-        return self._max_limit - self._value
+        return self._processing
 
     @property
     def waiting(self):
@@ -35,8 +36,10 @@ class AdjustableAsyncSemaphore(AsyncioSemaphore):
 
     async def acquire(self):
         """Taken from Python 3.11"""
+
         if not self.locked():
             self._value -= 1
+            self._processing += 1
             return True
 
         fut = self._get_loop().create_future()
@@ -53,6 +56,7 @@ class AdjustableAsyncSemaphore(AsyncioSemaphore):
         except CancelledError:
             if not fut.cancelled():
                 self._value += 1
+                self._processing -= 1
                 self._wake_up_next()
             raise
 
@@ -63,6 +67,7 @@ class AdjustableAsyncSemaphore(AsyncioSemaphore):
     def release(self):
         """Taken from Python 3.11"""
         self._value += 1
+        self._processing -= 1
         self._wake_up_next()
 
     def _wake_up_next(self):
@@ -73,6 +78,8 @@ class AdjustableAsyncSemaphore(AsyncioSemaphore):
         for fut in self._waiters:
             if not fut.done():
                 self._value -= 1
+                if fut not in self._dummy_waiters:
+                    self._processing += 1
                 fut.set_result(True)
                 return
 
@@ -87,24 +94,24 @@ class AdjustableAsyncSemaphore(AsyncioSemaphore):
             bool: Returns `True` if the maximum limit was changed, `False` otherwise.
 
         Raises:
-            ValueError: If `new_limit` is less than 1.
+            ValueError: If `new_limit` is less than 0.
         """
-        if new_limit < 1:
-            raise ValueError("Semaphore concurrency cannot be less than 1!")
+        if new_limit < 0:
+            raise ValueError("Semaphore concurrency cannot be less than 0!")
 
         if new_limit == self._max_limit:
             return False
 
         old_limit = self._max_limit
         self._max_limit = new_limit
-        running = old_limit - self._value
 
         if new_limit > old_limit:
-            points_to_add = new_limit - running
+            points_to_add = new_limit - old_limit
             for _ in range(0, points_to_add):
+                self._processing += 1
                 self.release()
         else:
-            points_to_remove = running - new_limit
+            points_to_remove = old_limit - new_limit
 
             for _ in range(0, points_to_remove):
                 if self.locked():
@@ -113,14 +120,14 @@ class AdjustableAsyncSemaphore(AsyncioSemaphore):
                     def handle_done(f: Future):
                         assert f.done()
 
-                        with suppress(KeyError):
-                            self._dummy_waiters.remove(f)
                         with suppress(ValueError):
                             self._waiters.remove(f)
 
                         if self._value > 0:
-                            self._value -= 1
-                            self.release()
+                            self._wake_up_next()
+
+                        with suppress(KeyError):
+                            self._dummy_waiters.remove(f)
 
                     fut.add_done_callback(handle_done)
 

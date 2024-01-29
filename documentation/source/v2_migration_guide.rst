@@ -46,19 +46,19 @@ What has changed?
 - Errors are raised immediately instead of being swallowed (can be changed via an appropriate parameter).
 - The ``Credentials`` class throws when an invalid endpoint is passed.
 - The majority of schemas were renamed (``GenerateParams`` -> ``TextGenerationParameters``, …); for instance, if you work with text generation service (``client.text.generation.create``), all schemas can be found in ``genai.features.text.generation``, this analogy applies to every other service.
-- ``tqdm`` package has been removed as we think it should not be part of the core layer. One can easily use it by wrapping the given SDK function.
+- ``tqdm`` package has been removed as we think it should not be part of the core layer. One can easily use it by wrapping the given SDK function (see :ref:`example <examples.text.generation>`).
 - ``Model`` class has been replaced with a more general ``Client``, an entry point for all services.
 - ``Options`` class has been removed, as every parameter is unpacked at the method level.
 
 
 Text Generation
-----------------------
+---------------
 
 
-How to replace ``generate``/``generate_as_completed``?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Replacing ``generate``/``generate_as_completed``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Old way:
+❌ Old approach
 
 .. code:: python
 
@@ -72,27 +72,42 @@ Old way:
    results = model.generate(["What is IBM?"]) # or model.generate_as_completed(["What is IBM?"])
    print(f"Generated Text: {results[0].generated_text}")
 
-New way:
+✅ New approach
 
 .. code:: python
 
    from genai import Credentials, Client
-   from genai.text.generation import TextGenerationParameters
+   from genai.text.generation import TextGenerationParameters, TextGenerationReturnOptions
 
    credentials = Credentials.from_env()
    parameters = TextGenerationParameters(max_new_tokens=10)
 
    client = Client(credentials=credentials)
-   responses = list(client.text.generation.create(model_id="google/flan-ul2", inputs=["What is IBM?"]))
+   responses = list(
+       client.text.generation.create(
+           model_id="google/flan-ul2",
+           inputs=["What is IBM?"],
+           parameters=parameters,
+           # optionally request more details in the output:
+           return_options=TextGenerationReturnOptions(generated_tokens=True, token_logprobs=True)
+       )
+   )
    print(f"Generated Text: {responses[0].results[0].generated_text}")
 
 You can see that the newer way is more typing, but you can retrieve
 top-level information like: ``id``, ``created_at``, …
 
-Streaming
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+📝 Notes
 
-Old way:
+- Old ``generate`` method returns the list of generated responses whereas the new ``create`` method returns a generator
+
+👉 See more :ref:`Text Generation Examples <examples.text>`.
+
+
+Replacing `stream` parameter
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+❌ Old approach
 
 .. code:: python
 
@@ -106,7 +121,7 @@ Old way:
    for response in model.generate(["What is IBM?"], raw_response=True):
        print(response)
 
-New way:
+✅ New approach
 
 .. code:: python
 
@@ -120,13 +135,15 @@ New way:
    for response in client.text.generation.create_stream(model_id="google/flan-ul2", input="What is IBM?"):
        print(response)
 
-Notes
+📝 Notes
 
-- ``stream`` parameter is replaced by using method ``create_stream``.
+- ``stream`` parameter has been removed; use ``create_stream`` method instead.
+
+👉 See more complex :ref:`Text Generation Streaming Example <examples.text.generation_streaming>`.
 
 
-How to replace ``generate_async``?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Replacing ``generate_async``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The old ``generate_async`` method has worked by sending multiple requests asynchronously (it spawns a new thread and runs an event loop). This is now a default behaviour for the ``create`` method in ``GenerationService`` (``client.text.generation.create``).
 
@@ -151,7 +168,7 @@ The old ``generate_async`` method has worked by sending multiple requests asynch
        print(f"Response ID: {response.id}")
        print(response.results)
 
-Notes
+📝 Notes
 
 -  ``max_concurrency_limit``/``callback`` parameters are now located
    under ``execution_options`` parameter.
@@ -179,6 +196,8 @@ Notes
    been removed; you now have to use ``tqdm`` in your own (see example
    above).
 
+👉 See more complex :ref:`Text Generation Example <examples.text.generation>`.
+
 Tokenization
 ------------
 
@@ -192,10 +211,10 @@ dynamically chunked based on their byte size and by user-provided limit
 size.
 
 
-How to replace ``tokenize`` / ``tokenize_as_completed`` / ``tokenize_async``?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Replacing ``tokenize`` / ``tokenize_as_completed`` / ``tokenize_async``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Old way:
+❌ Old approach
 
 .. code:: python
 
@@ -209,7 +228,7 @@ Old way:
    for response in model.tokenize_async(prompts, return_tokens=True, ordered=True):
        print(response.results)
 
-New way:
+✅ New approach
 
 .. code:: python
 
@@ -236,18 +255,20 @@ New way:
    ):
        print(response.results)
 
-Notes
+📝 Notes
 
--  results are now ordered by default
+-  ``results`` are now ordered by default
 -  ``throw_on_error`` is by default set to ``True`` (old behaviour - set to ``False`` by default).In case of ``True``, you will never receive a ``None`` as a response.
 -  ``return_tokens``/``callbacks`` parameter is now located under ``parameters``.
 -  ``client.text.tokenization.create`` returns a ``generator`` instead of ``list``, to work with it as a list, just do ``responses = list(client.text.tokenization.create(...))``.
 -  ``stop_reason`` enums are changing from ``SCREAMING_SNAKE_CASE`` to ``snake_case`` (e.g. ``MAX_TOKENS`` -> ``max_tokens``), you can use the prepared ``StopReason`` enum.
 
+👉 See :ref:`Text Tokenization Example <examples.text.tokenization>`.
+
 Models
 ------
 
-Old way
+❌ Old approach
 
 .. code:: python
 
@@ -260,7 +281,7 @@ Old way
    detail = model.info() # get info about current model
    is_available = model.available() # check if model exists
 
-New way:
+✅ New approach
 
 .. code:: python
 
@@ -273,16 +294,19 @@ New way:
    detail = client.model.retrieve("google/flan-ul2")
    is_available = True # model exists otherwise previous line would throw an exception
 
-Notes
+📝 Notes
 
 -  Client throws an exception when a model does not exist instead of returning ``None``.
 -  Client always returns the whole response instead of the response results.
 -  Pagination has been added.
 
+👉 See :ref:`Model Example <examples.model.model>`.
+
+
 Files
 -----
 
-Old way
+❌ Old approach
 
 .. code:: python
 
@@ -298,7 +322,7 @@ Old way
    uploaded_file = FileManager.upload_file(credentials=credentials, file_path="path_on_your_system", purpose="tune")
    FileManager.delete_file(credentials=credentials, file_id="id")
 
-New way:
+✅ New approach
 
 .. code:: python
 
@@ -315,10 +339,13 @@ New way:
    client.file.delete(credentials=credentials, file_id="id")
 
 
+👉 See :ref:`Files Example <examples.file.file>`.
+
+
 Tunes
 -----
 
-Old way
+❌ Old approach
 
 .. code:: python
 
@@ -353,7 +380,7 @@ Old way
    tuned_model.info(...)
    tuned_model.delete(...)
 
-New way:
+✅ New approach
 
 .. code:: python
 
@@ -370,12 +397,15 @@ New way:
    upload_tune = client.tune.create(name="my tuned model", model_id="google/flan-ul2", task_id="generation", tuning_type=TuningType.PROMPT_TUNING) # tuning_type="prompt_tuning"
    client.tune.delete("tune_id")
 
-Notes
+📝 Notes
 
 - ``task`` is now ``task_id``
 - ``method_id`` is now ``tuning_type``, the list of allowable values has changed (use ``TuningType`` enum or values from the documentation; accepted values are changing from ``pt`` and ``mpt`` to ``prompt_tuning`` and ``multitask_prompt_tuning``).
 - ``init_method`` enums are changing from ``SCREAMING_SNAKE_CASE`` to ``snake_case`` (e.g. ``RANDOM`` -> ``random``)
 - ``status`` enums are changing from ``SCREAMING_SNAKE_CASE`` to ``snake_case`` (e.g. ``COMPLETED`` -> ``completed``), you can use the prepared ``TuneStatus`` enum.
+
+👉 See :ref:`Tune a Custom Model Example <examples.tune.tune>`.
+
 
 Prompt Template (Prompt Pattern)
 --------------------------------
@@ -414,10 +444,14 @@ See the following example if you want to create a reusable prompt
    # Response: Hello Alex, enjoy your flight to London!
    print(f"Response: {next(generate_response).results[0].generated_text}")
 
+
+👉 See :ref:`Custom prompt with variables Example <examples.prompt.prompt>`.
+
+
 History (Requests History)
 --------------------------
 
-Old way
+❌ Old approach
 
 .. code:: python
 
@@ -436,7 +470,7 @@ Old way
 
    history_response = metadata.get_history(params)
 
-New way:
+✅ New approach
 
 .. code:: python
 
@@ -452,21 +486,24 @@ New way:
        origin=RequestRetrieveOriginParameter.API,  # or origin="api"
    )
 
-Notes
+📝 Notes
 
 - ``status``, ``origin`` and endpoint ``enums`` are changing from ``SCREAMING_SNAKE_CASE`` to ``snake_case`` (e.g. ``SUCCESS`` -> ``success``). Feel free to use prepared Python enums.
 - By default, all origins are now returned (as opposed to generate only in v1).
 - Response object now includes ``version`` field describing major and minor version of API used when the request was created.
 - Requests made under v1 as well as v2 are returned (while v1/requests endpoint returns only v1 requests).
 
+👉 See :ref:`Requests (History) Example <examples.request.request>`.
 
 Extensions
---------------------------
+----------
 
-Notes
+📝 Notes
 
 - ``PandasExtension`` was removed, because the functionality was replaced by API's prompt templates.
 - The ``params`` class attribute has been renamed to `parameters` (everywhere).
 - The ``model`` class attribute has been renamed to `model_id` (everywhere).
-- Third party extensions were updated to work with latest versions of the libraries
+- Third party extensions were updated to work with latest versions of the libraries.
 - If you were using local models through a ``LocalLLMServer``, you may need to adjust them to the new parameter and return types.
+
+👉 See :ref:`All Extensions Examples <examples.extensions>`.

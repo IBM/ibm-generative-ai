@@ -22,6 +22,12 @@ class LoopBoundLimiter(BaseLimiter):
     def release(self):
         return self._get_limiter().release()
 
+    async def report_error(self):
+        return await self._limiter.report_error()
+
+    async def report_success(self):
+        return await self._limiter.report_success()
+
     def _get_limiter(self) -> BaseLimiter:
         loop = asyncio.get_running_loop()
         if loop is not self._loop:

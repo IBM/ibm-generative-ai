@@ -78,15 +78,13 @@ class _AsyncGenerator(Generic[TInput, TResult]):
         client: AsyncHttpxClient,
     ):
         async with limiter:
-            logger.debug("Creating task for batch_num {}".format(batch_num))
+            logger.debug(f"Creating task for batch_num: {batch_num}")
             try:
                 response = await self._handler(input, client, limiter)
                 logger.debug("Received response = {}".format(response))
                 self._add_to_queue(idx=batch_num, result=response, error=None)
             except Exception as e:
-                logger.error(
-                    f"Exception raised async_generate and casting : {str(e)}, response = {None}, inputs = {input}"
-                )
+                logger.error(f"Exception raised during processing\n{str(e)}")
                 self._add_to_queue(idx=batch_num, result=None, error=e)
 
     async def _schedule_requests(self, limiter: BaseLimiter, loop: AbstractEventLoop):
