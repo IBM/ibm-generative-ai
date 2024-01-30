@@ -46,23 +46,23 @@ for input_text, response in zip(
 ):
     print(f"Input text: {input_text}")
     assert response.results
-    [result] = response.results
+    result = response.results[0]
 
     # HAP
     assert result.hap
-    [hap] = result.hap
+    hap = result.hap[0]
     print("HAP:")
     pprint(hap.model_dump())
 
     # Stigma
     assert result.stigma
-    [stigma] = result.stigma
+    stigma = result.stigma[0]
     print("Stigma:")
     pprint(stigma.model_dump())
 
     # Implicit Hate
     assert result.implicit_hate
-    [implicit_hate] = result.implicit_hate
+    implicit_hate = result.implicit_hate[0]
     print("Implicit hate:")
     pprint(implicit_hate.model_dump())
 

@@ -45,33 +45,29 @@ retrieve_response = client.prompt.retrieve(id=prompt_id)
 pprint(retrieve_response.result.model_dump())
 
 print(heading("Generate text using prompt"))
-[generation_response] = list(
-    client.text.generation.create(
-        prompt_id=prompt_id,
-        parameters=TextGenerationParameters(return_options=TextGenerationReturnOptions(input_text=True)),
-    )
-)
-[result] = generation_response.results
-print(f"Prompt: {result.input_text}")
-print(f"Answer: {result.generated_text}")
+for generation_response in client.text.generation.create(
+    prompt_id=prompt_id,
+    parameters=TextGenerationParameters(return_options=TextGenerationReturnOptions(input_text=True)),
+):
+    result = generation_response.results[0]
+    print(f"Prompt: {result.input_text}")
+    print(f"Answer: {result.generated_text}")
 
 print(heading("Override prompt template variables"))
-[generation_response] = list(
-    client.text.generation.create(
-        prompt_id=prompt_id,
-        parameters=TextGenerationParameters(return_options=TextGenerationReturnOptions(input_text=True)),
-        data={"meal": "pancakes", "author": "Edgar Allan Poe"},
-    )
-)
-[result] = generation_response.results
-print(f"Prompt: {result.input_text}")
-print(f"Answer: {result.generated_text}")
+for generation_response in client.text.generation.create(
+    prompt_id=prompt_id,
+    parameters=TextGenerationParameters(return_options=TextGenerationReturnOptions(input_text=True)),
+    data={"meal": "pancakes", "author": "Edgar Allan Poe"},
+):
+    result = generation_response.results[0]
+    print(f"Prompt: {result.input_text}")
+    print(f"Answer: {result.generated_text}")
 
-print(heading("Show all existing prompts"))
-prompt_list_response = client.prompt.list(search=prompt_name, limit=10, offset=0)
-print("Total Count: ", prompt_list_response.total_count)
-print("Results: ", prompt_list_response.results)
+    print(heading("Show all existing prompts"))
+    prompt_list_response = client.prompt.list(search=prompt_name, limit=10, offset=0)
+    print("Total Count: ", prompt_list_response.total_count)
+    print("Results: ", prompt_list_response.results)
 
-print(heading("Delete prompt"))
-client.prompt.delete(id=prompt_id)
-print("OK")
+    print(heading("Delete prompt"))
+    client.prompt.delete(id=prompt_id)
+    print("OK")

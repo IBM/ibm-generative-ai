@@ -100,7 +100,7 @@ with server.run_locally():
 
     prompts = ["Hello! How are you?", "How's the weather?"]
     for response in client.text.generation.create(model_id=FlanT5Model.model_id, inputs=prompts, parameters=parameters):
-        [result] = response.results
+        result = response.results[0]
         print(f"Prompt: {result.input_text}\nResponse: {result.generated_text}")
 
 
