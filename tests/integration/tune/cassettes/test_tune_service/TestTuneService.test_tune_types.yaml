@@ -9,7 +9,7 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tuning_types?version=2023-11-22
+    uri: https://api.com/v2/tuning_types?version=2024-01-30
   response:
     body:
       string: "{\"results\":[{\"id\":\"prompt_tuning\",\"name\":\"Prompt Tuning\",\"schema\":{\"type\":\"object\",\"required\":[\"name\",\"model_id\",\"training_file_ids\",\"task_id\",\"tuning_type\"],\"properties\":{\"name\":{\"type\":\"string\",\"nullable\":false},\"task_id\":{\"type\":\"string\",\"nullable\":true},\"model_id\":{\"type\":\"string\",\"title\":\"Model
@@ -98,13 +98,13 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2023-11-22'
+      - '2024-01-30'
       date:
-      - Thu, 25 Jan 2024 15:53:19 GMT
+      - Tue, 30 Jan 2024 11:14:28 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=fe62af85768e0a9b84c0d2758f11b4b1; path=/;
         HttpOnly; Secure; SameSite=None
       transfer-encoding:
       - chunked

@@ -9,7 +9,7 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/models/google%2Fflan-t5-xl?version=2024-01-10
+    uri: https://api.com/v2/models/google%2Fflan-t5-xl?version=2024-01-30
   response:
     body:
       string: '{"result":{"id":"google/flan-t5-xl","name":"flan-t5-xl","developer":"google","size":"3B","label":"flan-t5-xl
@@ -28,26 +28,27 @@ interactions:
         More Information: [from Huggingface](https://huggingface.co/google/flan-t5-xl)","tags":[],"source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"tasks":[{"id":"classification","name":"Classification","json_example":"[\n  {\n    \"input\":
         \"<text>\",\n    \"output\": \"<text>\"\n  },\n  {\n    \"input\": \"<text>\",\n    \"output\":
         \"<text>\"\n  },\n  {\n    \"input\": \"<text>\",\n    \"output\": \"<text>\"\n  }\n]","jsonl_example":"{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}","csv_example":"input,output\n<text>,<text>\n<text>,<text>\n<text>,<text>","verbalizer":"classify
-        { \"label 1\", \"label 2\" } Input: {{input}} Output:","file_format_id":1,"tune":true},{"id":"summarization","name":"Summarization","json_example":"[\n  {\n    \"input\":
+        { \"label 1\", \"label 2\" } Input: {{input}} Output:","file_format_id":1,"tune":true,"categorization":true},{"id":"summarization","name":"Summarization","json_example":"[\n  {\n    \"input\":
         \"<text>\",\n    \"output\": \"<text>\"\n  },\n  {\n    \"input\": \"<text>\",\n    \"output\":
-        \"<text>\"\n  },\n  {\n    \"input\": \"<text>\",\n    \"output\": \"<text>\"\n  }\n]","jsonl_example":"{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}","csv_example":"input,output\n<text>,<text>\n<text>,<text>\n<text>,<text>","verbalizer":"{{input}}","file_format_id":1,"tune":true},{"id":"generation","name":"Generation","json_example":"[\n  {\n    \"input\":
+        \"<text>\"\n  },\n  {\n    \"input\": \"<text>\",\n    \"output\": \"<text>\"\n  }\n]","jsonl_example":"{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}","csv_example":"input,output\n<text>,<text>\n<text>,<text>\n<text>,<text>","verbalizer":"{{input}}","file_format_id":1,"tune":true,"categorization":true},{"id":"prompt-tuning","name":"Prompt
+        Tuning","jsonl_example":"undefined\nundefined\nundefined","csv_example":"undefined\nundefined\nundefined\nundefined","tune":false,"categorization":false},{"id":"generation","name":"Generation","json_example":"[\n  {\n    \"input\":
         \"<text>\",\n    \"output\": \"<text>\"\n  },\n  {\n    \"input\": \"<text>\",\n    \"output\":
-        \"<text>\"\n  },\n  {\n    \"input\": \"<text>\",\n    \"output\": \"<text>\"\n  }\n]","jsonl_example":"{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}","csv_example":"input,output\n<text>,<text>\n<text>,<text>\n<text>,<text>","verbalizer":"{{input}}","file_format_id":1,"tune":true}],"model_family":{"id":3,"name":"FLAN-T5"}}}'
+        \"<text>\"\n  },\n  {\n    \"input\": \"<text>\",\n    \"output\": \"<text>\"\n  }\n]","jsonl_example":"{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}","csv_example":"input,output\n<text>,<text>\n<text>,<text>\n<text>,<text>","verbalizer":"{{input}}","file_format_id":1,"tune":true,"categorization":true}],"model_family":{"id":3,"name":"FLAN-T5"}}}'
     headers:
       cache-control:
       - private
       content-length:
-      - '3074'
+      - '3331'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-01-10'
+      - '2024-01-30'
       date:
-      - Thu, 25 Jan 2024 15:50:22 GMT
+      - Tue, 30 Jan 2024 11:11:34 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=e308472f29f709b2348e49390a862943; path=/;
         HttpOnly; Secure; SameSite=None
       transfer-encoding:
       - chunked
@@ -56,9 +57,9 @@ interactions:
       x-ratelimit-limit:
       - '25'
       x-ratelimit-remaining:
-      - '23'
+      - '24'
       x-ratelimit-reset:
-      - '0'
+      - '1'
     status:
       code: 200
       message: OK

@@ -57,7 +57,7 @@ class ModelRetrieveEndpoint(ApiEndpoint):
 class ModelIdRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/models/{id}"
     method: str = "GET"
-    version: str = "2024-01-10"
+    version: str = "2024-01-30"
 
 
 class PromptRetrieveEndpoint(ApiEndpoint):
@@ -297,7 +297,7 @@ class TuneIdContentTypeRetrieveEndpoint(ApiEndpoint):
 class TuningTypeRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/tuning_types"
     method: str = "GET"
-    version: str = "2023-11-22"
+    version: str = "2024-01-30"
 
 
 class UserDeleteEndpoint(ApiEndpoint):
