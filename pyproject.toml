@@ -103,6 +103,7 @@ m2r = "^0.3.1"
 sphinx-multiversion = { "git" = "https://github.com/samtygier-stfc/sphinx-multiversion.git", branch = "prebuild_command" }
 sphinx-copybutton = "^0.5.2"
 sphinx-notfound-page = "^1.0.0"
+langchain = "^0.1.4"
 
 
 [tool.poetry.extras]
