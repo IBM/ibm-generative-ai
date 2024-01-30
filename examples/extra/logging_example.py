@@ -45,5 +45,5 @@ for response in client.text.generation.create(
         return_options=TextGenerationReturnOptions(input_text=True),
     ),
 ):
-    [result] = response.results
+    result = response.results[0]
     print(f"Prompt: {result.input_text}\nResponse: {result.generated_text}")
