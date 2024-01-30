@@ -1,6 +1,131 @@
 Changelog
 =========
 
+
+v2.1.0 (2024-01-30)
+-------------------
+
+.. admonition:: Schema Import (deprecation warning)
+    :class: warning
+
+    Schemas are now exported from genai.schema (the old way of importing remains to work, but you will receive a warning)
+
+
+🚀 Features / Enhancements
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+- feat: refactor schemas for better user experience `#(294) <https://github.com/IBM/ibm-generative-ai/pull/294>`_ [`@jezekra1 <https://github.com/jezekra1>`_]
+- feat: add truncate_input_tokens parameter for embeddings `#(280) <https://github.com/IBM/ibm-generative-ai/pull/280>`_ [`@jezekra1 <https://github.com/jezekra1>`_]
+- feat: migrate to langchain_core `#(261) <https://github.com/IBM/ibm-generative-ai/pull/261>`_ [`@David-Kristek <https://github.com/David-Kristek>`_]
+- feat: adjust tests and pipeline to ensure 3.12 compatibility `#(259) <https://github.com/IBM/ibm-generative-ai/pull/259>`_ [`@jezekra1 <https://github.com/jezekra1>`_]
+- feat: retrieve service actions metadata `#(260) <https://github.com/IBM/ibm-generative-ai/pull/260>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(example): add chromadb embedding function `#(270) <https://github.com/IBM/ibm-generative-ai/pull/270>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(langchain): correctly handles prompt_id and model_id `#(293) <https://github.com/IBM/ibm-generative-ai/pull/293>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(system-prompts): init module `#(292) <https://github.com/IBM/ibm-generative-ai/pull/292>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(langchain): add embeddings support `#(289) <https://github.com/IBM/ibm-generative-ai/pull/289>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(examples): add example of langchain agent with tools `#(268) <https://github.com/IBM/ibm-generative-ai/pull/268>`_ [`@David-Kristek <https://github.com/David-Kristek>`_]
+- feat(langchain): update core and related dependencies `#(282) <https://github.com/IBM/ibm-generative-ai/pull/282>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+
+🐛 Bug Fixes
+^^^^^^^^^^^^^
+- fix: rewrite test casettes due to vcrpy update `#(290) <https://github.com/IBM/ibm-generative-ai/pull/290>`_ [`@jezekra1 <https://github.com/jezekra1>`_]
+- fix: update vcrpy to released version `#(284) <https://github.com/IBM/ibm-generative-ai/pull/284>`_ [`@jezekra1 <https://github.com/jezekra1>`_]
+- fix: external limiter implementation `#(274) <https://github.com/IBM/ibm-generative-ai/pull/274>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+- fix: include overhead in payload size calculation when batching `#(266) <https://github.com/IBM/ibm-generative-ai/pull/266>`_ [`@jezekra1 <https://github.com/jezekra1>`_]
+- fix: reduce maximum payload size [`@jezekra1 <https://github.com/jezekra1>`_]
+- fix: schema action metadata inheritance `#(262) <https://github.com/IBM/ibm-generative-ai/pull/262>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+- fix(docs): redirects `#(298) <https://github.com/IBM/ibm-generative-ai/pull/298>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+- fix(langchain): templates and models `#(293) <https://github.com/IBM/ibm-generative-ai/pull/293>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+
+📖 Docs
+^^^^^^^
+- docs: update links in README [`@Tomas2D <https://github.com/Tomas2D>`_]
+- docs: update link to the migration guide [`@Tomas2D <https://github.com/Tomas2D>`_]
+- docs: init documentation versioning `#(296) <https://github.com/IBM/ibm-generative-ai/pull/296>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+- docs: add installation note for extensions `#(291) <https://github.com/IBM/ibm-generative-ai/pull/291>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+- docs: update prompt usage example `#(275) <https://github.com/IBM/ibm-generative-ai/pull/275>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+- docs: update migration guide, examples, deploy `#(271) <https://github.com/IBM/ibm-generative-ai/pull/271>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+- docs: update migration guide `#(269) <https://github.com/IBM/ibm-generative-ai/pull/269>`_ [`@jezekra1 <https://github.com/jezekra1>`_]
+- docs: update README [`@Tomas2D <https://github.com/Tomas2D>`_]
+- docs: update faq / credentials / migration guide `#(263) <https://github.com/IBM/ibm-generative-ai/pull/263>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+- docs: add changelog `#(257) <https://github.com/IBM/ibm-generative-ai/pull/257>`_ [`@jezekra1 <https://github.com/jezekra1>`_]
+- docs: improve examples `#(258) <https://github.com/IBM/ibm-generative-ai/pull/258>`_ [`@jezekra1 <https://github.com/jezekra1>`_]
+
+⚙️ Other
+^^^^^^^^
+- build: add langchain to dev dependencies [`@Tomas2D <https://github.com/Tomas2D>`_]
+- refactor: remove list comprehensions to preserve type-hints `#(301) <https://github.com/IBM/ibm-generative-ai/pull/301>`_ [`@jezekra1 <https://github.com/jezekra1>`_]
+- ci: update git checkout for documentation build [`@Tomas2D <https://github.com/Tomas2D>`_]
+- ci: update docs build script [`@Tomas2D <https://github.com/Tomas2D>`_]
+- ci: set CODEOWNERS `#(267) <https://github.com/IBM/ibm-generative-ai/pull/267>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+- build: remove unused dependencies and update versions `#(264) <https://github.com/IBM/ibm-generative-ai/pull/264>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+- ci: check if all tests have markers `#(265) <https://github.com/IBM/ibm-generative-ai/pull/265>`_ [`@jezekra1 <https://github.com/jezekra1>`_]
+
+**Full Changelog**: `v2.0.0...v2.1.0 <https://github.com/IBM/ibm-generative-ai/compare/v2.0.0...v2.1.0>`_
+
+
+🔗 API Endpoint Versions
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. collapse:: API Endpoint Versions
+
+    ========  ==================================  ======================
+    Method    Path                                Version (YYYY-MM-DD)
+    ========  ==================================  ======================
+    GET       /v2/api_key                         2023-11-22
+    POST      /v2/api_key/regenerate              2023-11-22
+    GET       /v2/files                           2023-12-15
+    POST      /v2/files                           2023-12-15
+    DELETE    /v2/files/{id}                      2023-11-22
+    GET       /v2/files/{id}                      2023-12-15
+    GET       /v2/files/{id}/content              2023-11-22
+    GET       /v2/models                          2023-11-22
+    GET       /v2/models/{id}                     2024-01-30
+    GET       /v2/prompts                         2024-01-10
+    POST      /v2/prompts                         2024-01-10
+    DELETE    /v2/prompts/{id}                    2023-11-22
+    GET       /v2/prompts/{id}                    2024-01-10
+    PATCH     /v2/prompts/{id}                    2024-01-10
+    PUT       /v2/prompts/{id}                    2024-01-10
+    GET       /v2/requests                        2023-11-22
+    DELETE    /v2/requests/chat/{conversationId}  2023-11-22
+    GET       /v2/requests/chat/{conversationId}  2023-11-22
+    DELETE    /v2/requests/{id}                   2023-11-22
+    GET       /v2/system_prompts                  2023-11-22
+    POST      /v2/system_prompts                  2023-11-22
+    DELETE    /v2/system_prompts/{id}             2023-11-22
+    GET       /v2/system_prompts/{id}             2023-11-22
+    PUT       /v2/system_prompts/{id}             2023-11-22
+    GET       /v2/tasks                           2023-11-22
+    POST      /v2/text/chat                       2024-01-10
+    POST      /v2/text/chat/output                2024-01-10
+    POST      /v2/text/chat_stream                2024-01-10
+    POST      /v2/text/embeddings                 2023-11-22
+    GET       /v2/text/embeddings/limits          2023-11-22
+    GET       /v2/text/extraction/limits          2023-11-22
+    POST      /v2/text/generation                 2024-01-10
+    POST      /v2/text/generation/comparison      2023-11-22
+    GET       /v2/text/generation/limits          2023-11-22
+    POST      /v2/text/generation/output          2023-11-22
+    GET       /v2/text/generation/{id}/feedback   2023-11-22
+    POST      /v2/text/generation/{id}/feedback   2023-11-22
+    PUT       /v2/text/generation/{id}/feedback   2023-11-22
+    POST      /v2/text/generation_stream          2024-01-10
+    POST      /v2/text/moderations                2023-11-22
+    POST      /v2/text/tokenization               2024-01-10
+    GET       /v2/tunes                           2023-11-22
+    POST      /v2/tunes                           2023-11-22
+    POST      /v2/tunes/import                    2023-11-22
+    DELETE    /v2/tunes/{id}                      2023-11-22
+    GET       /v2/tunes/{id}                      2023-11-22
+    PATCH     /v2/tunes/{id}                      2023-11-22
+    GET       /v2/tunes/{id}/content/{type}       2023-12-15
+    GET       /v2/tuning_types                    2024-01-30
+    DELETE    /v2/user                            2023-11-22
+    GET       /v2/user                            2023-11-22
+    PATCH     /v2/user                            2023-11-22
+    POST      /v2/user                            2023-11-22
+    ========  ==================================  ======================
+
 v2.0.0 (2024-01-15)
 -------------------
 

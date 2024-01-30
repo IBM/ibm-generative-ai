@@ -22,6 +22,7 @@ class GeneratorConfig(BaseModel):
             "examples.model",
             "examples.tune",
             "examples.prompt",
+            "examples.system_prompt",
             "examples.file",
             "examples.user",
             "examples.request",
