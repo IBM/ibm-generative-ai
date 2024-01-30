@@ -118,7 +118,7 @@ print(heading("Classify with a tuned model"))
 prompt = "Return on investment was 5.0 % , compared to a negative 4.1 % in 2009 ."
 print("Prompt: ", prompt)
 gen_params = TextGenerationParameters(decoding_method=DecodingMethod.SAMPLE, max_new_tokens=1, min_new_tokens=1)
-[gen_response] = list(client.text.generation.create(model_id=tune_result.id, inputs=[prompt]))
+gen_response = next(client.text.generation.create(model_id=tune_result.id, inputs=[prompt]))
 print("Answer: ", gen_response.results[0].generated_text)
 
 print(heading("Get list of tuned models"))
