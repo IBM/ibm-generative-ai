@@ -1,0 +1,44 @@
+{
+    "type": "task_card",
+    "loader": {
+        "type": "load_csv",
+        "files": {
+            "train": "unitxt_example/unfair_tos_train.csv",
+            "test": "unitxt_example/unfair_tos_test.csv"
+        }
+    },
+    "preprocess_steps": [
+        {
+            "type": "apply",
+            "function": "ast.literal_eval",
+            "to_field": "labels",
+            "_argv": [
+                "labels"
+            ]
+        },
+        {
+            "type": "add_fields",
+            "fields": {
+                "classes": [
+                    "Limitation of liability",
+                    "Unilateral termination",
+                    "Unilateral change",
+                    "Content removal",
+                    "Contract by using",
+                    "Choice of law",
+                    "Jurisdiction",
+                    "Arbitration"
+                ],
+                "text_type": "text",
+                "type_of_classes": "contractual clauses"
+            }
+        }
+    ],
+    "sampler": {
+        "type": "diverse_labels_sampler",
+        "choices": "classes",
+        "labels": "labels"
+    },
+    "task": "tasks.classification.multi_label",
+    "templates": "templates.classification.multi_label.all"
+}

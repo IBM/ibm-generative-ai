@@ -1,0 +1,22 @@
+group: glue
+task: unitxt_multi_label_example
+dataset_path: unitxt/data
+dataset_name: card=multi_label_example,template=multi_label_template_example,format=formats.user_agent
+output_type:  generate_until
+training_split: train
+validation_split: test
+doc_to_text: "{{source}}"
+doc_to_target: target
+process_results: !function unitxt_wrapper.process_results
+generation_kwargs:
+  until:
+    - "</s>"
+metric_list:
+  - metric: unitxt_f1_micro_multi_label
+    aggregation: unitxt
+  - metric: unitxt_f1_macro_multi_label
+    aggregation: unitxt
+  - metric: unitxt_accuracy
+    aggregation: unitxt
+metadata:
+  version: 1.0
