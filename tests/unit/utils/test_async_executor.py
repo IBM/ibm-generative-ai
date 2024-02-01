@@ -1,3 +1,4 @@
+import asyncio
 import logging
 from asyncio import sleep
 from unittest.mock import Mock
@@ -109,3 +110,25 @@ class TestAsyncExecutor:
     def test_execute_empty_inputs(self):
         for _ in execute_async(inputs=[], handler=Mock(), http_client=Mock(), throw_on_error=True):
             ...
+
+    @pytest.mark.asyncio
+    async def test_async_executor_can_be_used_in_async_context(self, http_client):
+        """Async executor can be used in asyncio event loop using asyncio.to_thread"""
+
+        def _execute(input: str):
+            return list(
+                execute_async(
+                    inputs=[input],
+                    handler=self.get_handler([input]),
+                    http_client=lambda: AsyncHttpxClient(),
+                    throw_on_error=True,
+                    ordered=True,
+                    limiters=[LoopBoundLimiter(lambda: LocalLimiter(limit=10))],
+                )
+            )[0]
+
+        inputs = ["Hello", "World", "here", "are", "some", "inputs"] * 50
+        tasks = [asyncio.to_thread(_execute, input) for input in inputs]
+        results = await asyncio.gather(*tasks)
+
+        assert results == inputs

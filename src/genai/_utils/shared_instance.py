@@ -1,3 +1,4 @@
+import threading
 from abc import abstractmethod
 from contextlib import AbstractAsyncContextManager, AbstractContextManager
 from typing import Generic, Optional, TypeVar
@@ -16,6 +17,7 @@ class SharedResource(Generic[T], AbstractContextManager):
     def __init__(self):
         self._ref_count = 0
         self._resource: Optional[T] = None
+        self._lock = threading.Lock()
 
     @abstractmethod
     def _enter(self) -> T:
@@ -35,18 +37,20 @@ class SharedResource(Generic[T], AbstractContextManager):
         raise NotImplementedError
 
     def __enter__(self) -> T:
-        self._ref_count += 1
-        if self._ref_count == 1:
-            self._resource = self._enter()
+        with self._lock:
+            self._ref_count += 1
+            if self._ref_count == 1:
+                self._resource = self._enter()
 
-        assert self._resource
-        return self._resource
+            assert self._resource
+            return self._resource
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self._ref_count -= 1
-        if self._ref_count == 0:
-            self._exit()
-            self._resource = None
+        with self._lock:
+            self._ref_count -= 1
+            if self._ref_count == 0:
+                self._exit()
+                self._resource = None
 
 
 class AsyncSharedResource(Generic[T], AbstractAsyncContextManager):
