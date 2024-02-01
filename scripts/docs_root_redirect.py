@@ -61,16 +61,24 @@ def create_not_found_page_redirect(config: RedirectConfig):
 
     dynamic_redirect = f"""<script>
     var prefix = '{config.prefix or "/"}'
-    var pathnameParts = window.location.pathname.replace(new RegExp('^' + prefix), '').split('/')
+    var pathname = window.location.pathname
+    var pathnameParts = pathname.replace(new RegExp('^' + prefix), '').replace(new RegExp('^/'), '').split('/')
     var fallbackVersions = JSON.parse('{json.dumps(supported_versions)}')
     var fallbackVersion = '{config.version}'
 
+    var newTarget = "404.html"
     var currentVersion = pathnameParts.shift()
+
+    if (currentVersion === "latest") {{
+        currentVersion = fallbackVersion
+        newTarget = pathnameParts.join('/')
+    }}
+
     if (!fallbackVersions.includes(currentVersion)) {{
         currentVersion = fallbackVersion
     }}
 
-    var target = [prefix, currentVersion, "404.html"].join('/')
+    var target = [prefix, currentVersion, newTarget].join('/')
     window.location.href = target
 </script>"""
 
