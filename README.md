@@ -30,9 +30,9 @@ pip install --upgrade ibm-generative-ai
 
 ### [📚 Documentation](https://ibm.github.io/ibm-generative-ai/)
 
-### [📚 Examples](https://ibm.github.io/ibm-generative-ai/rst_source/main/examples.html)
+### [📚 Examples](https://ibm.github.io/ibm-generative-ai/latest/rst_source/examples.html)
 
-### [📚 V2 Migration Guide](https://ibm.github.io/ibm-generative-ai/main/v2_migration_guide.html)
+### [📚 V2 Migration Guide](https://ibm.github.io/ibm-generative-ai/latest/v2_migration_guide.html)
 
 
 ## Important Information for Contributors
