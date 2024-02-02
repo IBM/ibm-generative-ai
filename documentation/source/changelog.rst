@@ -2,6 +2,85 @@ Changelog
 =========
 
 
+v2.1.1 (2024-02-02)
+-------------------
+
+🐛 Bug Fixes
+^^^^^^^^^^^
+- fix: make SharedResource threadsafe `#(307) <https://github.com/IBM/ibm-generative-ai/pull/307>`_ [`@jezekra1 <https://github.com/jezekra1>`_]
+- fix: point readme documentation links to latest version `#(306) <https://github.com/IBM/ibm-generative-ai/pull/306>`_ [`@jezekra1 <https://github.com/jezekra1>`_]
+
+⚙️ Other
+^^^^^^^^
+- feat(langchain): validate peer dependency `#(308) <https://github.com/IBM/ibm-generative-ai/pull/308>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+- fix(docs): update pre-build hook [`@Tomas2D <https://github.com/Tomas2D>`_]
+
+**Full Changelog**: `v2.1.0...v2.1.1 <https://github.com/IBM/ibm-generative-ai/compare/v2.1.0...v2.1.1>`_
+
+
+🔗 API Endpoint Versions
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. collapse:: API Endpoint Versions
+
+    ========  ==================================  ======================
+    Method    Path                                Version (YYYY-MM-DD)
+    ========  ==================================  ======================
+    GET       /v2/api_key                         2023-11-22
+    POST      /v2/api_key/regenerate              2023-11-22
+    GET       /v2/files                           2023-12-15
+    POST      /v2/files                           2023-12-15
+    DELETE    /v2/files/{id}                      2023-11-22
+    GET       /v2/files/{id}                      2023-12-15
+    GET       /v2/files/{id}/content              2023-11-22
+    GET       /v2/models                          2023-11-22
+    GET       /v2/models/{id}                     2024-01-30
+    GET       /v2/prompts                         2024-01-10
+    POST      /v2/prompts                         2024-01-10
+    DELETE    /v2/prompts/{id}                    2023-11-22
+    GET       /v2/prompts/{id}                    2024-01-10
+    PATCH     /v2/prompts/{id}                    2024-01-10
+    PUT       /v2/prompts/{id}                    2024-01-10
+    GET       /v2/requests                        2023-11-22
+    DELETE    /v2/requests/chat/{conversationId}  2023-11-22
+    GET       /v2/requests/chat/{conversationId}  2023-11-22
+    DELETE    /v2/requests/{id}                   2023-11-22
+    GET       /v2/system_prompts                  2023-11-22
+    POST      /v2/system_prompts                  2023-11-22
+    DELETE    /v2/system_prompts/{id}             2023-11-22
+    GET       /v2/system_prompts/{id}             2023-11-22
+    PUT       /v2/system_prompts/{id}             2023-11-22
+    GET       /v2/tasks                           2023-11-22
+    POST      /v2/text/chat                       2024-01-10
+    POST      /v2/text/chat/output                2024-01-10
+    POST      /v2/text/chat_stream                2024-01-10
+    POST      /v2/text/embeddings                 2023-11-22
+    GET       /v2/text/embeddings/limits          2023-11-22
+    GET       /v2/text/extraction/limits          2023-11-22
+    POST      /v2/text/generation                 2024-01-10
+    POST      /v2/text/generation/comparison      2023-11-22
+    GET       /v2/text/generation/limits          2023-11-22
+    POST      /v2/text/generation/output          2023-11-22
+    GET       /v2/text/generation/{id}/feedback   2023-11-22
+    POST      /v2/text/generation/{id}/feedback   2023-11-22
+    PUT       /v2/text/generation/{id}/feedback   2023-11-22
+    POST      /v2/text/generation_stream          2024-01-10
+    POST      /v2/text/moderations                2023-11-22
+    POST      /v2/text/tokenization               2024-01-10
+    GET       /v2/tunes                           2023-11-22
+    POST      /v2/tunes                           2023-11-22
+    POST      /v2/tunes/import                    2023-11-22
+    DELETE    /v2/tunes/{id}                      2023-11-22
+    GET       /v2/tunes/{id}                      2023-11-22
+    PATCH     /v2/tunes/{id}                      2023-11-22
+    GET       /v2/tunes/{id}/content/{type}       2023-12-15
+    GET       /v2/tuning_types                    2024-01-30
+    DELETE    /v2/user                            2023-11-22
+    GET       /v2/user                            2023-11-22
+    PATCH     /v2/user                            2023-11-22
+    POST      /v2/user                            2023-11-22
+    ========  ==================================  ======================
+
 v2.1.0 (2024-01-30)
 -------------------
 
