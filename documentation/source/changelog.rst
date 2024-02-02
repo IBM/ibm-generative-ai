@@ -2,6 +2,22 @@ Changelog
 =========
 
 
+v2.1.1 (2024-02-02)
+-------------------
+
+🐛 Bug Fixes
+^^^^^^^^^^^
+- fix: make SharedResource threadsafe `#(307) <https://github.com/IBM/ibm-generative-ai/pull/307>`_ [`@jezekra1 <https://github.com/jezekra1>`_]
+- fix: point readme documentation links to latest version `#(306) <https://github.com/IBM/ibm-generative-ai/pull/306>`_ [`@jezekra1 <https://github.com/jezekra1>`_]
+
+⚙️ Other
+^^^^^^^^
+- feat(langchain): validate peer dependency `#(308) <https://github.com/IBM/ibm-generative-ai/pull/308>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+- fix(docs): update pre-build hook [`@Tomas2D <https://github.com/Tomas2D>`_]
+
+**Full Changelog**: `v2.1.0...v2.1.1 <https://github.com/IBM/ibm-generative-ai/compare/v2.1.0...v2.1.1>`_
+
+
 v2.1.0 (2024-01-30)
 -------------------
 
