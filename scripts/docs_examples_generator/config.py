@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field
 dirname = Path(__file__).parent.absolute()
 dotenv.load_dotenv()
 
-_branch_name = os.environ["BRANCH_NAME"]
+_branch_name = os.environ.get("BRANCH_NAME", "main")
 
 
 class GeneratorConfig(BaseModel):
