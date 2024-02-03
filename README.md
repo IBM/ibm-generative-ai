@@ -14,7 +14,7 @@ This is not the [watsonx.ai](https://www.ibm.com/products/watsonx-ai) Python SDK
 
 *Looking for the [watsonx.ai](https://www.ibm.com/products/watsonx-ai) Python SDK? Check out [watson-machine-learning-sdk](https://ibm.github.io/watson-machine-learning-sdk/foundation_models.html).*
 
-*Looking for a NodeJS SDK version? Check out [IBM Generative AI NodeJS SDK](https://github.com/IBM/ibm-generative-ai-node-sdk.)*
+*Looking for a NodeJS SDK version? Check out [IBM Generative AI NodeJS SDK](https://github.com/IBM/ibm-generative-ai-node-sdk)*
 
 *Looking for a CLI? Check out [IBM Generative AI CLI](https://github.com/IBM/ibm-generative-ai-cli).*
 
