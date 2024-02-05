@@ -26,14 +26,14 @@ load_dotenv()
 
 client = Client(credentials=Credentials.from_env())
 
-print(heading("Use hugging face agent with genai sdk"))
+print(heading("Transformers Agent"))
 
 
 agent = IBMGenAIAgent(
     client=client,
     model="meta-llama/llama-2-70b-chat",
-    parameters=TextGenerationParameters(min_new_tokens=10, max_new_tokens=200),
+    parameters=TextGenerationParameters(min_new_tokens=10, max_new_tokens=200, random_seed=777, temperature=0),
 )
 
-agent.chat("Download the chat from the given url", url="https://research.ibm.com/blog/analog-ai-chip-low-power")
-agent.chat("Summarize the downloaded chat")
+agent.chat("Extract text from the given url", url="https://research.ibm.com/blog/analog-ai-chip-low-power")
+agent.chat("Do the text summarization on the downloaded text.")
