@@ -47,6 +47,8 @@ from genai.text.generation.limits.limit_service import LimitService as _LimitSer
 
 __all__ = ["GenerationService", "BaseConfig", "BaseServices", "CreateExecutionOptions"]
 
+from collections.abc import Sequence
+
 from genai._utils.http_client.retry_transport import BaseRetryTransport
 from genai._utils.limiters.base_limiter import BaseLimiter
 from genai._utils.limiters.external_limiter import ConcurrencyResponse, ExternalLimiter
@@ -110,7 +112,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
         *,
         model_id: Optional[str] = None,
         prompt_id: Optional[str] = None,
-        inputs: Optional[Union[list[str], str]] = None,
+        inputs: Optional[Union[Sequence[str], str]] = None,
         parameters: Optional[ModelLike[TextGenerationParameters]] = None,
         moderations: Optional[ModelLike[ModerationParameters]] = None,
         data: Optional[ModelLike[PromptTemplateData]] = None,
@@ -138,7 +140,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
             To limit number of concurrent requests or change execution procedure, see 'execute_options' parameter.
         """
         metadata = get_service_action_metadata(self.create)
-        prompts: list[str] = prompts_to_strings(inputs)
+        prompts = prompts_to_strings(inputs)
         parameters_formatted = to_model_optional(parameters, TextGenerationParameters)
         moderations_formatted = to_model_optional(moderations, ModerationParameters)
         template_formatted = to_model_optional(data, PromptTemplateData)

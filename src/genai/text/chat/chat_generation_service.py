@@ -1,4 +1,5 @@
-from typing import Generator, Optional, Sequence, Union
+from collections.abc import Sequence
+from typing import Generator, Optional, Union
 
 from genai._types import EnumLike, ModelLike
 from genai._utils.api_client import ApiClient
@@ -129,7 +130,7 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
         *,
         model_id: Optional[str] = None,
         conversation_id: Optional[str] = None,
-        messages: Optional[list[BaseMessage]] = None,
+        messages: Optional[Sequence[BaseMessage]] = None,
         moderations: Optional[ModelLike[ModerationParameters]] = None,
         parameters: Optional[ModelLike[TextGenerationParameters]] = None,
         parent_id: Optional[str] = None,

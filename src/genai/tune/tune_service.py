@@ -1,7 +1,8 @@
+from collections.abc import Sequence
 from typing import Optional
 
 from genai._types import EnumLike, ModelLike
-from genai._utils.general import to_enum, to_enum_optional, to_model_optional
+from genai._utils.general import to_enum, to_enum_optional, to_list_or_value, to_model_optional
 from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
@@ -47,9 +48,9 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
         model_id: str,
         name: str,
         task_id: str,
-        training_file_ids: list[str],
+        training_file_ids: Sequence[str],
         tuning_type: EnumLike[TuningType],
-        validation_file_ids: Optional[list[str]] = None,
+        validation_file_ids: Optional[Sequence[str]] = None,
         parameters: Optional[ModelLike[TuneParameters]] = None,
     ) -> TuneCreateResponse:
         """
@@ -65,9 +66,9 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
                 name=name,
                 parameters=to_model_optional(parameters, TuneParameters),
                 task_id=task_id,
-                training_file_ids=training_file_ids,
+                training_file_ids=list(training_file_ids),
                 tuning_type=to_enum(TuningType, tuning_type),
-                validation_file_ids=validation_file_ids,
+                validation_file_ids=to_list_or_value(validation_file_ids),
             ).model_dump()
 
             self._log_method_execution("Tune Create", **request_body)

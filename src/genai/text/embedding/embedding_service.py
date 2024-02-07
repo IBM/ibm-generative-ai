@@ -1,3 +1,4 @@
+from collections.abc import Sequence
 from typing import Generator, Optional, Union
 
 import httpx
@@ -71,7 +72,7 @@ class EmbeddingService(BaseService[BaseConfig, BaseServices]):
         self,
         *,
         model_id: str,
-        inputs: Union[str, list[str]],
+        inputs: Union[str, Sequence[str]],
         parameters: Optional[ModelLike[TextEmbeddingParameters]] = None,
         execution_options: Optional[ModelLike[CreateExecutionOptions]] = None,
     ) -> Generator[TextEmbeddingCreateResponse, None, None]:
@@ -109,7 +110,7 @@ class EmbeddingService(BaseService[BaseConfig, BaseServices]):
             ValidationError: In case of provided parameters are invalid.
         """
         metadata = get_service_action_metadata(self.create)
-        prompts: list[str] = cast_list(inputs)
+        prompts = cast_list(inputs)
         parameters_formatted = to_model_optional(parameters, TextEmbeddingParameters)
         execution_options_formatted = to_model_instance(
             [self.config.create_execution_options, execution_options], CreateExecutionOptions

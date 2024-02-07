@@ -1,3 +1,4 @@
+from collections.abc import Sequence
 from typing import Generator, Optional, Union
 
 from genai._types import ModelLike
@@ -46,7 +47,7 @@ class ModerationService(BaseService[BaseConfig, BaseServiceServices]):
     @set_service_action_metadata(endpoint=TextModerationCreateEndpoint)
     def create(
         self,
-        inputs: Union[str, list[str]],
+        inputs: Union[str, Sequence[str]],
         *,
         hap: Optional[ModelLike[HAPOptions]] = None,
         implicit_hate: Optional[ModelLike[ImplicitHateOptions]] = None,

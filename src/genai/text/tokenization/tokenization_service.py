@@ -1,3 +1,4 @@
+from collections.abc import Sequence
 from typing import Generator, Optional, Union
 
 from genai._types import ModelLike
@@ -6,7 +7,6 @@ from genai._utils.general import (
     batch_by_size_constraint,
     cast_list,
     merge_objects,
-    prompts_to_strings,
     to_model_instance,
 )
 from genai._utils.http_client.httpx_client import AsyncHttpxClient
@@ -56,7 +56,7 @@ class TokenizationService(BaseService[BaseConfig, BaseServiceServices]):
     def create(
         self,
         *,
-        input: Union[str, list[str]],
+        input: Union[str, Sequence[str]],
         model_id: Optional[str] = None,
         prompt_id: Optional[str] = None,
         parameters: Optional[ModelLike[TextTokenizationParameters]] = None,
@@ -80,7 +80,7 @@ class TokenizationService(BaseService[BaseConfig, BaseServiceServices]):
         options = to_model_instance([self.config.create_execution_options, execution_options], CreateExecutionOptions)
         parameters_validated = to_model_instance(parameters, TextTokenizationParameters)
         batches = batch_by_size_constraint(
-            prompts_to_strings(prompts),
+            list(prompts),
             max_size_bytes=self._api_client.config.max_payload_size_bytes,
             max_chunk_size=options.batch_size or len(prompts),
         )

@@ -1,3 +1,4 @@
+from collections.abc import Sequence
 from datetime import datetime
 from typing import Optional, TypeVar, Union
 
@@ -94,7 +95,7 @@ class RequestService(BaseService[BaseServiceConfig, BaseServiceServices]):
         origin: Optional[EnumLike[RequestOrigin]] = None,
         before: Optional[datetime] = None,
         after: Optional[datetime] = None,
-        endpoint: Optional[Union[RequestEndpoint, list[RequestEndpoint]]] = None,
+        endpoint: Optional[Union[RequestEndpoint, Sequence[RequestEndpoint]]] = None,
         date: Optional[datetime] = None,
     ) -> RequestRetrieveResponse:
         """

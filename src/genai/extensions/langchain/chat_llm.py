@@ -2,7 +2,7 @@
 
 import logging
 from pathlib import Path
-from typing import Any, Dict, Iterator, Optional, Union
+from typing import Any, Iterator, Optional, Union
 
 from pydantic import ConfigDict
 from pydantic.v1 import validator
@@ -137,7 +137,7 @@ class LangChainChatInterface(BaseChatModel):
         return cls(**config, client=client)
 
     @property
-    def _identifying_params(self) -> Dict[str, Any]:
+    def _identifying_params(self) -> dict[str, Any]:
         return {
             "model_id": self.model_id,
             "prompt_id": self.prompt_id,

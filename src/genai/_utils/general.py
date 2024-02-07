@@ -1,6 +1,7 @@
 import functools
 import hashlib
 import json
+from collections.abc import Sequence
 from enum import Enum
 from typing import Any, Callable, Generator, Mapping, Optional, Type, TypeVar, Union
 
@@ -152,8 +153,12 @@ def merge_objects(*objs: Optional[Mapping[_KT, _VT]]) -> dict[_KT, _VT]:
     return result
 
 
-def cast_list(input: Union[TInput, list[TInput]]) -> list[TInput]:
-    return input if isinstance(input, list) else [input]
+def is_sequence(value: Any) -> bool:
+    return isinstance(value, Sequence) if not isinstance(value, str) else False
+
+
+def cast_list(input: Union[TInput, Sequence[TInput]]) -> Sequence[TInput]:
+    return input if is_sequence(input) else [input]
 
 
 def first_defined(*args: Optional[TInput], default: TInput) -> TInput:
@@ -184,11 +189,17 @@ def single_execution(fn: T) -> T:
     return functools.cache(fn)  # type: ignore
 
 
-def prompts_to_strings(prompts: Union[list[str], str, None]) -> list[str]:
+def prompts_to_strings(prompts: Union[Sequence[str], str, None]) -> Sequence[str]:
     if prompts is None:
         return []
 
-    if not isinstance(prompts, list):
+    if not is_sequence(prompts):
         return [prompts]
 
     return prompts
+
+
+def to_list_or_value(value: Union[Sequence[TInput], TInput, None]) -> Union[list[TInput], TInput, None]:
+    if value is None:
+        return None
+    return list(value) if is_sequence(value) else value

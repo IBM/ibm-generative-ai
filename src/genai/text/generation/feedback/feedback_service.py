@@ -1,9 +1,10 @@
+from collections.abc import Sequence
 from typing import Optional, TypeVar
 
 from pydantic import BaseModel
 
 from genai._types import EnumLike
-from genai._utils.general import to_enum
+from genai._utils.general import to_enum, to_list_or_value
 from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
@@ -63,7 +64,7 @@ class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
         self,
         generation_id: str,
         *,
-        categories: Optional[list[EnumLike[TextGenerationFeedbackCategory]]] = None,
+        categories: Optional[Sequence[EnumLike[TextGenerationFeedbackCategory]]] = None,
         comment: Optional[str] = None,
     ) -> TextGenerationIdFeedbackCreateResponse:
         """
@@ -103,7 +104,7 @@ class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
     def update(
         self,
         generation_id: str,
-        categories: Optional[list[TextGenerationFeedbackCategory]] = None,
+        categories: Optional[Sequence[TextGenerationFeedbackCategory]] = None,
         comment: Optional[str] = None,
     ) -> TextGenerationIdFeedbackUpdateResponse:
         """
@@ -128,6 +129,8 @@ class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
             http_response = client.put(
                 url=self._get_endpoint(metadata.endpoint, id=generation_id),
                 params=_TextGenerationIdFeedbackUpdateParametersQuery().model_dump(),
-                json=_TextGenerationIdFeedbackUpdateRequest(comment=comment, categories=categories).model_dump(),
+                json=_TextGenerationIdFeedbackUpdateRequest(
+                    comment=comment, categories=to_list_or_value(categories)
+                ).model_dump(),
             )
             return TextGenerationIdFeedbackUpdateResponse(**http_response.json())

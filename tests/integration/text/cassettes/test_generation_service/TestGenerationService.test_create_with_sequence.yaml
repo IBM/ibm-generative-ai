@@ -1,0 +1,157 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/text/generation/limits?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '54'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Wed, 07 Feb 2024 10:52:50 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=8b795e933fe23741a5fd09cc4f1ebc07; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": "Here is a funny short joke about AI: ", "model_id": "google/flan-t5-xxl",
+      "parameters": {"decoding_method": "sample", "max_new_tokens": 40, "min_new_tokens":
+      1, "return_options": {"generated_tokens": false, "input_text": true, "input_tokens":
+      false, "token_logprobs": false, "token_ranks": false}, "temperature": 0.5, "top_k":
+      50, "top_p": 1.0}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '356'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation?version=2024-01-10
+  response:
+    body:
+      string: '{"id":"89ea4e99-4f02-4630-ada5-f3858af5e16e","model_id":"google/flan-t5-xxl","created_at":"2024-02-07T10:52:50.546Z","results":[{"input_text":"Here
+        is a funny short joke about AI: ","generated_text":"A group of researchers
+        at a Chinese university has developed a computer program that can play chess.","generated_token_count":23,"input_token_count":12,"stop_reason":"eos_token","seed":2627384067}]}'
+    headers:
+      content-length:
+      - '398'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-01-10'
+      date:
+      - Wed, 07 Feb 2024 10:52:50 GMT
+      keep-alive:
+      - timeout=72
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": "Here is a silly joke about AI: ", "model_id": "google/flan-t5-xxl",
+      "parameters": {"decoding_method": "sample", "max_new_tokens": 40, "min_new_tokens":
+      1, "return_options": {"generated_tokens": false, "input_text": true, "input_tokens":
+      false, "token_logprobs": false, "token_ranks": false}, "temperature": 0.5, "top_k":
+      50, "top_p": 1.0}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '350'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation?version=2024-01-10
+  response:
+    body:
+      string: '{"id":"617aa6be-dbc2-42c7-85a4-27403242cac8","model_id":"google/flan-t5-xxl","created_at":"2024-02-07T10:52:50.643Z","results":[{"input_text":"Here
+        is a silly joke about AI: ","generated_text":"The human race has been taking
+        over the world.","generated_token_count":11,"input_token_count":11,"stop_reason":"eos_token","seed":1624671321}]}'
+    headers:
+      content-length:
+      - '338'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-01-10'
+      date:
+      - Wed, 07 Feb 2024 10:52:50 GMT
+      keep-alive:
+      - timeout=72
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": "Here is a joke about AI: ", "model_id": "google/flan-t5-xxl",
+      "parameters": {"decoding_method": "sample", "max_new_tokens": 40, "min_new_tokens":
+      1, "return_options": {"generated_tokens": false, "input_text": true, "input_tokens":
+      false, "token_logprobs": false, "token_ranks": false}, "temperature": 0.5, "top_k":
+      50, "top_p": 1.0}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '344'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation?version=2024-01-10
+  response:
+    body:
+      string: '{"id":"8529167e-46e4-430a-9e07-aa0cd1f88c65","model_id":"google/flan-t5-xxl","created_at":"2024-02-07T10:52:50.744Z","results":[{"input_text":"Here
+        is a joke about AI: ","generated_text":"When a computer becomes smarter than
+        a human, what will the computer do?","generated_token_count":19,"input_token_count":10,"stop_reason":"eos_token","seed":2364934748}]}'
+    headers:
+      content-length:
+      - '358'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-01-10'
+      date:
+      - Wed, 07 Feb 2024 10:52:50 GMT
+      keep-alive:
+      - timeout=72
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+version: 1

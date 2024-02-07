@@ -1,7 +1,7 @@
 import asyncio
 import logging
 from asyncio import AbstractEventLoop, Task
-from collections.abc import Iterator
+from collections.abc import Iterator, Sequence
 from concurrent.futures import CancelledError, Future
 from contextlib import suppress
 from typing import Awaitable, Callable, Generator, Generic, Optional, TypeVar, Union
@@ -42,7 +42,7 @@ class _AsyncGenerator(Generic[TInput, TResult]):
     def __init__(
         self,
         *,
-        inputs: list[TInput],
+        inputs: Sequence[TInput],
         http_client: Callable[[], AsyncHttpxClient],
         handler: Callable[[TInput, AsyncHttpxClient, BaseLimiter], Awaitable[TResult]],
         limiters: Optional[list[Optional[LoopBoundLimiter]]] = None,
@@ -151,7 +151,7 @@ class _AsyncGenerator(Generic[TInput, TResult]):
 
 def execute_async(
     *,
-    inputs: list[TInput],
+    inputs: Sequence[TInput],
     http_client: Callable[[], AsyncHttpxClient],
     handler: Callable[[TInput, AsyncHttpxClient, BaseLimiter], Awaitable[TResult]],
     limiters: Optional[list[Optional[LoopBoundLimiter]]] = None,
