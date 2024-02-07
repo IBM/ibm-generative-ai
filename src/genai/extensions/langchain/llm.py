@@ -4,7 +4,7 @@ import asyncio
 import logging
 from functools import partial
 from pathlib import Path
-from typing import Any, Iterator, List, Optional, Union
+from typing import Any, Iterator, Optional, Union
 
 from pydantic import ConfigDict
 from pydantic.v1 import validator
@@ -137,7 +137,7 @@ class LangChainInterface(LLM):
     def _call(
         self,
         prompt: str,
-        stop: Optional[List[str]] = None,
+        stop: Optional[list[str]] = None,
         run_manager: Optional[CallbackManagerForLLMRun] = None,
         **kwargs: Any,
     ) -> str:
@@ -146,8 +146,8 @@ class LangChainInterface(LLM):
 
     def _generate(
         self,
-        prompts: List[str],
-        stop: Optional[List[str]] = None,
+        prompts: list[str],
+        stop: Optional[list[str]] = None,
         run_manager: Optional[CallbackManagerForLLMRun] = None,
         **kwargs: Any,
     ) -> LLMResult:
@@ -207,8 +207,8 @@ class LangChainInterface(LLM):
 
     async def _agenerate(
         self,
-        prompts: List[str],
-        stop: Optional[List[str]] = None,
+        prompts: list[str],
+        stop: Optional[list[str]] = None,
         run_manager: Optional[AsyncCallbackManagerForLLMRun] = None,
         **kwargs: Any,
     ) -> LLMResult:
@@ -219,7 +219,7 @@ class LangChainInterface(LLM):
     def _stream(
         self,
         prompt: str,
-        stop: Optional[List[str]] = None,
+        stop: Optional[list[str]] = None,
         run_manager: Optional[CallbackManagerForLLMRun] = None,
         **kwargs: Any,
     ) -> Iterator[CustomGenerationChunk]:
@@ -261,5 +261,5 @@ class LangChainInterface(LLM):
             )
         )
 
-    def get_token_ids(self, text: str) -> List[int]:
+    def get_token_ids(self, text: str) -> list[int]:
         raise NotImplementedError("API does not support returning token ids.")

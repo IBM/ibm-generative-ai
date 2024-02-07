@@ -182,13 +182,3 @@ T = TypeVar("T", bound=Callable)
 
 def single_execution(fn: T) -> T:
     return functools.cache(fn)  # type: ignore
-
-
-def prompts_to_strings(prompts: Union[list[str], str, None]) -> list[str]:
-    if prompts is None:
-        return []
-
-    if not isinstance(prompts, list):
-        return [prompts]
-
-    return prompts

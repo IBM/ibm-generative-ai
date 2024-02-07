@@ -1,13 +1,7 @@
 from typing import Optional, Union
 
 from genai._types import EnumLike, EnumLikeOrEnumLikeList, ModelLike
-from genai._utils.general import (
-    cast_list,
-    to_enum,
-    to_enum_optional,
-    to_model_instance,
-    to_model_optional,
-)
+from genai._utils.general import cast_list, to_enum, to_enum_optional, to_model_instance, to_model_optional
 from genai._utils.service import (
     BaseService,
     BaseServiceConfig,

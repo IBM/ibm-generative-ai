@@ -1,7 +1,7 @@
 import asyncio
 import logging
 from functools import partial
-from typing import Any, List, Optional, Sequence
+from typing import Any, Optional, Sequence
 
 from genai import Client
 from genai._types import EnumLike
@@ -57,7 +57,7 @@ def to_genai_message(message: ChatMessage) -> BaseMessage:
         raise ValueError(f"Got unknown message type {message}")
 
 
-def to_genai_messages(messages: Sequence[ChatMessage]) -> List[BaseMessage]:
+def to_genai_messages(messages: Sequence[ChatMessage]) -> list[BaseMessage]:
     return [to_genai_message(msg) for msg in messages]
 
 

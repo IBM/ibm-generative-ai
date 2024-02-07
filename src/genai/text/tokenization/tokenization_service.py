@@ -6,7 +6,6 @@ from genai._utils.general import (
     batch_by_size_constraint,
     cast_list,
     merge_objects,
-    prompts_to_strings,
     to_model_instance,
 )
 from genai._utils.http_client.httpx_client import AsyncHttpxClient
@@ -80,7 +79,7 @@ class TokenizationService(BaseService[BaseConfig, BaseServiceServices]):
         options = to_model_instance([self.config.create_execution_options, execution_options], CreateExecutionOptions)
         parameters_validated = to_model_instance(parameters, TextTokenizationParameters)
         batches = batch_by_size_constraint(
-            prompts_to_strings(prompts),
+            prompts,
             max_size_bytes=self._api_client.config.max_payload_size_bytes,
             max_chunk_size=options.batch_size or len(prompts),
         )
