@@ -1,11 +1,10 @@
-from collections.abc import Sequence
 from typing import Generator, Optional, Union
 
 from genai._types import ModelLike
 from genai._utils.async_executor import execute_async
 from genai._utils.general import (
     batch_by_size_constraint,
-    cast_sequence,
+    cast_list,
     merge_objects,
     to_model_instance,
 )
@@ -56,7 +55,7 @@ class TokenizationService(BaseService[BaseConfig, BaseServiceServices]):
     def create(
         self,
         *,
-        input: Union[str, Sequence[str]],
+        input: Union[str, list[str]],
         model_id: Optional[str] = None,
         prompt_id: Optional[str] = None,
         parameters: Optional[ModelLike[TextTokenizationParameters]] = None,
@@ -76,11 +75,11 @@ class TokenizationService(BaseService[BaseConfig, BaseServiceServices]):
             ValidationError: In case of provided parameters are invalid.
         """
         metadata = get_service_action_metadata(self.create)
-        prompts = cast_sequence(input)
+        prompts = cast_list(input)
         options = to_model_instance([self.config.create_execution_options, execution_options], CreateExecutionOptions)
         parameters_validated = to_model_instance(parameters, TextTokenizationParameters)
         batches = batch_by_size_constraint(
-            list(prompts),
+            prompts,
             max_size_bytes=self._api_client.config.max_payload_size_bytes,
             max_chunk_size=options.batch_size or len(prompts),
         )

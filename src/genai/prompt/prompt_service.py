@@ -1,15 +1,7 @@
-from collections.abc import Sequence
 from typing import Optional, Union
 
 from genai._types import EnumLike, EnumLikeOrEnumLikeList, ModelLike
-from genai._utils.general import (
-    cast_sequence,
-    to_enum,
-    to_enum_optional,
-    to_list_if_sequence,
-    to_model_instance,
-    to_model_optional,
-)
+from genai._utils.general import cast_list, to_enum, to_enum_optional, to_model_instance, to_model_optional
 from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
@@ -58,7 +50,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
         name: str,
         model_id: str,
         prompt_id: Optional[str] = None,
-        messages: Optional[Sequence[ModelLike[BaseMessage]]] = None,
+        messages: Optional[list[ModelLike[BaseMessage]]] = None,
         task_id: Optional[str] = None,
         description: Optional[str] = None,
         moderations: Optional[ModelLike[ModerationParameters]] = None,
@@ -134,7 +126,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
         output: Optional[str],
         task_id: Optional[str] = None,
         type: Optional[EnumLike[PromptType]] = None,
-        messages: Optional[Sequence[ModelLike[BaseMessage]]] = None,
+        messages: Optional[list[ModelLike[BaseMessage]]] = None,
         moderations: Optional[ModelLike[ModerationParameters]] = None,
         parameters: Optional[ModelLike[TextGenerationParameters]] = None,
         data: Optional[ModelLike[PromptTemplateData]] = None,
@@ -178,8 +170,8 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
         limit: Optional[int] = None,
         offset: Optional[int] = None,
         search: Optional[str] = None,
-        task_id: Optional[Union[str, Sequence[str]]] = None,
-        model_id: Optional[Union[str, Sequence[str]]] = None,
+        task_id: Optional[Union[str, list[str]]] = None,
+        model_id: Optional[Union[str, list[str]]] = None,
         source: Optional[EnumLikeOrEnumLikeList[PromptRetrieveRequestParamsSource]] = None,
     ) -> PromptRetrieveResponse:
         """
@@ -192,9 +184,9 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             limit=limit,
             offset=offset,
             search=search,
-            task_id=to_list_if_sequence(task_id),
-            model_id=to_list_if_sequence(model_id),
-            source=[to_enum(PromptRetrieveRequestParamsSource, s) for s in cast_sequence(source)] if source else None,
+            task_id=task_id,
+            model_id=model_id,
+            source=[to_enum(PromptRetrieveRequestParamsSource, s) for s in cast_list(source)] if source else None,
         ).model_dump()
         self._log_method_execution("Prompts List", **request_parameters)
 

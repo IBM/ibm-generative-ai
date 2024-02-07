@@ -1,5 +1,4 @@
 import logging
-from collections.abc import Sequence
 
 try:
     from transformers import Agent
@@ -26,7 +25,7 @@ class IBMGenAIAgent(Agent):
         parameters: Optional[TextGenerationParameters] = None,
         chat_prompt_template: Optional[str] = None,
         run_prompt_template: Optional[str] = None,
-        additional_tools: Optional[Sequence[str]] = None,
+        additional_tools: Optional[list[str]] = None,
     ):
         super().__init__(
             chat_prompt_template=chat_prompt_template,
@@ -40,10 +39,10 @@ class IBMGenAIAgent(Agent):
     def generate_one(self, prompt: str, stop: Optional[list[str]] = None):
         return self._generate([prompt], stop)[0]
 
-    def generate_many(self, prompts: Sequence[str], stop: Optional[list[str]] = None):
+    def generate_many(self, prompts: list[str], stop: Optional[list[str]] = None):
         return self._generate(prompts, stop)
 
-    def _generate(self, prompts: Sequence[str], stop: Optional[list[str]] = None) -> list[str]:
+    def _generate(self, prompts: list[str], stop: Optional[list[str]] = None) -> list[str]:
         final_results: list[str] = []
         if len(prompts) == 0:
             return final_results

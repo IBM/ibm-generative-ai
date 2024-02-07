@@ -10,7 +10,7 @@ from typing import Optional
 from fastapi.utils import is_body_allowed_for_status_code
 from starlette.responses import Response
 
-from genai._utils.general import cast_sequence
+from genai._utils.general import cast_list
 from genai._utils.responses import BaseErrorResponse, get_api_error_class_by_status_code
 from genai.credentials import Credentials
 from genai.extensions.localserver.local_base_model import LocalModel
@@ -203,7 +203,7 @@ class LocalLLMServer:
         logger.info(f"Tokenize called: {body}")
 
         model = self._get_model(body.model_id)
-        results = [model.tokenize(input_text=input, parameters=body.parameters) for input in cast_sequence(body.input)]
+        results = [model.tokenize(input_text=input, parameters=body.parameters) for input in cast_list(body.input)]
 
         return TextTokenizationCreateResponse(
             model_id=body.model_id,
@@ -215,7 +215,7 @@ class LocalLLMServer:
         logger.info(f"Text Generation Called: Model: {body.model_id}, Input: {body.input}")
 
         model = self._get_model(body.model_id)
-        results = [model.generate(input_text=input, parameters=body.parameters) for input in cast_sequence(body.input)]
+        results = [model.generate(input_text=input, parameters=body.parameters) for input in cast_list(body.input)]
         return TextGenerationCreateResponse(
             id=str(uuid.uuid4()),
             model_id=body.model_id,

@@ -1,8 +1,7 @@
 import asyncio
 import logging
-from collections.abc import Sequence
 from functools import partial
-from typing import Any, Optional
+from typing import Any, Optional, Sequence
 
 from genai import Client
 from genai._types import EnumLike

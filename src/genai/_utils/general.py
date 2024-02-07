@@ -1,7 +1,6 @@
 import functools
 import hashlib
 import json
-from collections.abc import Sequence
 from enum import Enum
 from typing import Any, Callable, Generator, Mapping, Optional, Type, TypeVar, Union
 
@@ -153,20 +152,8 @@ def merge_objects(*objs: Optional[Mapping[_KT, _VT]]) -> dict[_KT, _VT]:
     return result
 
 
-def is_list_like_sequence(value: Any) -> bool:
-    return isinstance(value, Sequence) and not isinstance(value, str)
-
-
-def cast_sequence(input: Union[TInput, Sequence[TInput]]) -> Sequence[TInput]:
-    return input if is_list_like_sequence(input) else [input]
-
-
-def cast_list_optional(input: Union[TInput, Sequence[TInput], None]) -> Optional[list[TInput]]:
-    return list(input) if input is not None else input
-
-
-def to_list_if_sequence(value: Union[Sequence[TInput], TInput, None]) -> Union[list[TInput], TInput, None]:
-    return list(value) if is_list_like_sequence(value) else value
+def cast_list(input: Union[TInput, list[TInput]]) -> list[TInput]:
+    return input if isinstance(input, list) else [input]
 
 
 def first_defined(*args: Optional[TInput], default: TInput) -> TInput:

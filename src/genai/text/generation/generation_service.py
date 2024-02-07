@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from genai._types import ModelLike
 from genai._utils.api_client import ApiClient
 from genai._utils.async_executor import execute_async
-from genai._utils.general import cast_sequence, to_model_instance, to_model_optional
+from genai._utils.general import cast_list, to_model_instance, to_model_optional
 from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
@@ -43,7 +43,6 @@ from genai.text.generation.limits.limit_service import LimitService as _LimitSer
 
 __all__ = ["GenerationService", "BaseConfig", "BaseServices", "CreateExecutionOptions"]
 
-from collections.abc import Sequence
 
 from genai._utils.http_client.retry_transport import BaseRetryTransport
 from genai._utils.limiters.base_limiter import BaseLimiter
@@ -108,7 +107,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
         *,
         model_id: Optional[str] = None,
         prompt_id: Optional[str] = None,
-        inputs: Optional[Union[Sequence[str], str]] = None,
+        inputs: Optional[Union[list[str], str]] = None,
         parameters: Optional[ModelLike[TextGenerationParameters]] = None,
         moderations: Optional[ModelLike[ModerationParameters]] = None,
         data: Optional[ModelLike[PromptTemplateData]] = None,
@@ -136,7 +135,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
             To limit number of concurrent requests or change execution procedure, see 'execute_options' parameter.
         """
         metadata = get_service_action_metadata(self.create)
-        prompts = cast_sequence(inputs) if inputs else []
+        prompts = cast_list(inputs) if inputs else []
         parameters_formatted = to_model_optional(parameters, TextGenerationParameters)
         moderations_formatted = to_model_optional(moderations, ModerationParameters)
         template_formatted = to_model_optional(data, PromptTemplateData)

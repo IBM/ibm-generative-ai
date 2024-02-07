@@ -1,9 +1,8 @@
-from collections.abc import Sequence
 from typing import Generator, Optional, Union
 
 from genai._types import ModelLike
 from genai._utils.async_executor import execute_async
-from genai._utils.general import cast_sequence, to_model_instance, to_model_optional
+from genai._utils.general import cast_list, to_model_instance, to_model_optional
 from genai._utils.http_client.httpx_client import AsyncHttpxClient
 from genai._utils.service import (
     BaseService,
@@ -43,7 +42,7 @@ class ModerationService(BaseService[BaseConfig, BaseServiceServices]):
     @set_service_action_metadata(endpoint=TextModerationCreateEndpoint)
     def create(
         self,
-        inputs: Union[str, Sequence[str]],
+        inputs: Union[str, list[str]],
         *,
         hap: Optional[ModelLike[HAPOptions]] = None,
         implicit_hate: Optional[ModelLike[ImplicitHateOptions]] = None,
@@ -106,7 +105,7 @@ class ModerationService(BaseService[BaseConfig, BaseServiceServices]):
             return TextModerationCreateResponse(**http_response.json())
 
         yield from execute_async(
-            inputs=cast_sequence(inputs),
+            inputs=cast_list(inputs),
             handler=handler,
             http_client=self._get_async_http_client,
             ordered=execution_options_formatted.ordered,
