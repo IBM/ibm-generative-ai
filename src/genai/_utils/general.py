@@ -154,7 +154,7 @@ def merge_objects(*objs: Optional[Mapping[_KT, _VT]]) -> dict[_KT, _VT]:
 
 
 def is_sequence(value: Any) -> bool:
-    return isinstance(value, Sequence) if not isinstance(value, str) else False
+    return False if isinstance(value, str) else isinstance(value, Sequence)
 
 
 def cast_list(input: Union[TInput, Sequence[TInput]]) -> Sequence[TInput]:
@@ -200,6 +200,4 @@ def prompts_to_strings(prompts: Union[Sequence[str], str, None]) -> Sequence[str
 
 
 def to_list_or_value(value: Union[Sequence[TInput], TInput, None]) -> Union[list[TInput], TInput, None]:
-    if value is None:
-        return None
     return list(value) if is_sequence(value) else value
