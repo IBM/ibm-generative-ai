@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from genai._types import ModelLike
 from genai._utils.api_client import ApiClient
 from genai._utils.async_executor import execute_async
-from genai._utils.general import cast_list, to_model_instance, to_model_optional
+from genai._utils.general import cast_sequence, to_model_instance, to_model_optional
 from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
@@ -110,7 +110,7 @@ class EmbeddingService(BaseService[BaseConfig, BaseServices]):
             ValidationError: In case of provided parameters are invalid.
         """
         metadata = get_service_action_metadata(self.create)
-        prompts = cast_list(inputs)
+        prompts = cast_sequence(inputs)
         parameters_formatted = to_model_optional(parameters, TextEmbeddingParameters)
         execution_options_formatted = to_model_instance(
             [self.config.create_execution_options, execution_options], CreateExecutionOptions

@@ -157,7 +157,7 @@ def is_sequence(value: Any) -> bool:
     return False if isinstance(value, str) else isinstance(value, Sequence)
 
 
-def cast_list(input: Union[TInput, Sequence[TInput]]) -> Sequence[TInput]:
+def cast_sequence(input: Union[TInput, Sequence[TInput]]) -> Sequence[TInput]:
     return input if is_sequence(input) else [input]
 
 

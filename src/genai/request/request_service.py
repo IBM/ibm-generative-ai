@@ -5,7 +5,7 @@ from typing import Optional, TypeVar, Union
 from pydantic import BaseModel
 
 from genai._types import EnumLike
-from genai._utils.general import cast_list, to_enum, to_enum_optional
+from genai._utils.general import cast_sequence, to_enum, to_enum_optional
 from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
@@ -116,7 +116,7 @@ class RequestService(BaseService[BaseServiceConfig, BaseServiceServices]):
             api=to_enum_optional(api, RequestApiVersion),
             date=date,
             endpoint=(
-                [to_enum(RequestEndpoint, e) for e in cast_list(endpoint) if e is not None] if endpoint else None
+                [to_enum(RequestEndpoint, e) for e in cast_sequence(endpoint) if e is not None] if endpoint else None
             ),
         ).model_dump()
 

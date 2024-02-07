@@ -109,7 +109,7 @@ class TestGenerationService:
             "Here is a joke about AI: ",
             "Here is a silly joke about AI: ",
         )
-        generator = client.text.generation.create(
+        results = client.text.generation.create(
             model_id=TEST_MODEL_ID,
             inputs=prompts,
             parameters=TextGenerationParameters(
@@ -122,7 +122,6 @@ class TestGenerationService:
                 temperature=0.5,
             ),
         )
-        results = list(generator)
         for result, test_prompt in zip(results, prompts):
             assert result.results[0].input_text == test_prompt
             assert len(result.results[0].generated_text) > 0

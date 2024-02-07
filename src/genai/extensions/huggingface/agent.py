@@ -37,10 +37,10 @@ class IBMGenAIAgent(Agent):
         self.model = model
         self.parameters = parameters
 
-    def generate_one(self, prompt: str, stop: str):
+    def generate_one(self, prompt: str, stop: Optional[list[str]] = None):
         return self._generate([prompt], stop)[0]
 
-    def generate_many(self, prompts: Sequence[str], stop):
+    def generate_many(self, prompts: Sequence[str], stop: Optional[list[str]] = None):
         return self._generate(prompts, stop)
 
     def _generate(self, prompts: Sequence[str], stop: Optional[list[str]] = None) -> list[str]:

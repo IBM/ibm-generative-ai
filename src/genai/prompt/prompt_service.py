@@ -3,7 +3,7 @@ from typing import Optional, Union
 
 from genai._types import EnumLike, EnumLikeOrEnumLikeList, ModelLike
 from genai._utils.general import (
-    cast_list,
+    cast_sequence,
     to_enum,
     to_enum_optional,
     to_list_or_value,
@@ -194,7 +194,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             search=search,
             task_id=to_list_or_value(task_id),
             model_id=to_list_or_value(model_id),
-            source=[to_enum(PromptRetrieveRequestParamsSource, s) for s in cast_list(source)] if source else None,
+            source=[to_enum(PromptRetrieveRequestParamsSource, s) for s in cast_sequence(source)] if source else None,
         ).model_dump()
         self._log_method_execution("Prompts List", **request_parameters)
 

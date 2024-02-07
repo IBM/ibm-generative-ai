@@ -5,7 +5,7 @@ from genai._types import ModelLike
 from genai._utils.async_executor import execute_async
 from genai._utils.general import (
     batch_by_size_constraint,
-    cast_list,
+    cast_sequence,
     merge_objects,
     to_model_instance,
 )
@@ -76,7 +76,7 @@ class TokenizationService(BaseService[BaseConfig, BaseServiceServices]):
             ValidationError: In case of provided parameters are invalid.
         """
         metadata = get_service_action_metadata(self.create)
-        prompts = cast_list(input)
+        prompts = cast_sequence(input)
         options = to_model_instance([self.config.create_execution_options, execution_options], CreateExecutionOptions)
         parameters_validated = to_model_instance(parameters, TextTokenizationParameters)
         batches = batch_by_size_constraint(
