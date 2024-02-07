@@ -104,6 +104,7 @@ sphinx-multiversion = { "git" = "https://github.com/samtygier-stfc/sphinx-multiv
 sphinx-copybutton = "^0.5.2"
 sphinx-notfound-page = "^1.0.0"
 langchain = "^0.1.4"
+sqlalchemy = "^2.0.25"
 
 
 [tool.poetry.extras]
