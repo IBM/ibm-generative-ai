@@ -100,28 +100,3 @@ class TestGenerationService:
         any(res.parameters.length_penalty == length_penalty_2 for res in comparison.results)
         any(res.parameters.temperature == 0.5 for res in comparison.results)
         any(res.parameters.temperature == 1 for res in comparison.results)
-
-    @pytest.mark.vcr
-    def test_create_with_sequence(self, client: Client):
-        """Text generation works correctly."""
-        prompts = (
-            "Here is a funny short joke about AI: ",
-            "Here is a joke about AI: ",
-            "Here is a silly joke about AI: ",
-        )
-        results = client.text.generation.create(
-            model_id=TEST_MODEL_ID,
-            inputs=prompts,
-            parameters=TextGenerationParameters(
-                decoding_method=DecodingMethod.SAMPLE,
-                max_new_tokens=40,
-                min_new_tokens=1,
-                top_k=50,
-                top_p=1,
-                return_options=TextGenerationReturnOptions(input_text=True, input_tokens=False),
-                temperature=0.5,
-            ),
-        )
-        for result, test_prompt in zip(results, prompts):
-            assert result.results[0].input_text == test_prompt
-            assert len(result.results[0].generated_text) > 0

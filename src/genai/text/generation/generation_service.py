@@ -7,11 +7,7 @@ from pydantic import BaseModel
 from genai._types import ModelLike
 from genai._utils.api_client import ApiClient
 from genai._utils.async_executor import execute_async
-from genai._utils.general import (
-    prompts_to_strings,
-    to_model_instance,
-    to_model_optional,
-)
+from genai._utils.general import cast_sequence, to_model_instance, to_model_optional
 from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
@@ -140,7 +136,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
             To limit number of concurrent requests or change execution procedure, see 'execute_options' parameter.
         """
         metadata = get_service_action_metadata(self.create)
-        prompts = prompts_to_strings(inputs)
+        prompts = cast_sequence(inputs) if inputs else []
         parameters_formatted = to_model_optional(parameters, TextGenerationParameters)
         moderations_formatted = to_model_optional(moderations, ModerationParameters)
         template_formatted = to_model_optional(data, PromptTemplateData)

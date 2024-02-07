@@ -153,12 +153,20 @@ def merge_objects(*objs: Optional[Mapping[_KT, _VT]]) -> dict[_KT, _VT]:
     return result
 
 
-def is_sequence(value: Any) -> bool:
+def is_list_like_sequence(value: Any) -> bool:
     return False if isinstance(value, str) else isinstance(value, Sequence)
 
 
 def cast_sequence(input: Union[TInput, Sequence[TInput]]) -> Sequence[TInput]:
-    return input if is_sequence(input) else [input]
+    return input if is_list_like_sequence(input) else [input]
+
+
+def cast_list_optional(input: Union[TInput, Sequence[TInput], None]) -> Optional[list[TInput]]:
+    return list(input) if input is not None else input
+
+
+def to_list_if_sequence(value: Union[Sequence[TInput], TInput, None]) -> Union[list[TInput], TInput, None]:
+    return list(value) if is_list_like_sequence(value) else value
 
 
 def first_defined(*args: Optional[TInput], default: TInput) -> TInput:
@@ -187,17 +195,3 @@ T = TypeVar("T", bound=Callable)
 
 def single_execution(fn: T) -> T:
     return functools.cache(fn)  # type: ignore
-
-
-def prompts_to_strings(prompts: Union[Sequence[str], str, None]) -> Sequence[str]:
-    if prompts is None:
-        return []
-
-    if not is_sequence(prompts):
-        return [prompts]
-
-    return prompts
-
-
-def to_list_or_value(value: Union[Sequence[TInput], TInput, None]) -> Union[list[TInput], TInput, None]:
-    return list(value) if is_sequence(value) else value

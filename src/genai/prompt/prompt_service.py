@@ -6,7 +6,7 @@ from genai._utils.general import (
     cast_sequence,
     to_enum,
     to_enum_optional,
-    to_list_or_value,
+    to_list_if_sequence,
     to_model_instance,
     to_model_optional,
 )
@@ -192,8 +192,8 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             limit=limit,
             offset=offset,
             search=search,
-            task_id=to_list_or_value(task_id),
-            model_id=to_list_or_value(model_id),
+            task_id=to_list_if_sequence(task_id),
+            model_id=to_list_if_sequence(model_id),
             source=[to_enum(PromptRetrieveRequestParamsSource, s) for s in cast_sequence(source)] if source else None,
         ).model_dump()
         self._log_method_execution("Prompts List", **request_parameters)

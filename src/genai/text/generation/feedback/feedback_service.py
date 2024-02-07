@@ -4,7 +4,7 @@ from typing import Optional, TypeVar
 from pydantic import BaseModel
 
 from genai._types import EnumLike
-from genai._utils.general import to_enum, to_list_or_value
+from genai._utils.general import cast_list_optional, to_enum
 from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
@@ -130,7 +130,7 @@ class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
                 url=self._get_endpoint(metadata.endpoint, id=generation_id),
                 params=_TextGenerationIdFeedbackUpdateParametersQuery().model_dump(),
                 json=_TextGenerationIdFeedbackUpdateRequest(
-                    comment=comment, categories=to_list_or_value(categories)
+                    comment=comment, categories=cast_list_optional(categories)
                 ).model_dump(),
             )
             return TextGenerationIdFeedbackUpdateResponse(**http_response.json())
