@@ -1,3 +1,5 @@
+import datetime
+
 from pydantic import BaseModel
 
 from types_generator.schema_transformer import http_method_mapper, path_to_schema_name, to_classname
@@ -27,12 +29,13 @@ def extract_endpoints(api: Schema):
             for value in list(properties.get("parameters", [])):
                 assert isinstance(value, dict)
                 if value.get("in") == "query" and value.get("name") == "version":
+                    version: datetime.date = value.get("schema", {}).get("enum")[0]
                     endpoints.append(
                         ApiEndpoint(
                             class_name=to_classname(f"{path_formatted}_{http_method.title()}_endpoint", True),
                             path=path,
                             method=str(http_method_raw).upper(),
-                            version=value.get("schema", {}).get("enum")[0],
+                            version=version.isoformat(),
                         )
                     )
                     break

@@ -1,3 +1,4 @@
+import functools
 import hashlib
 import json
 import re
@@ -65,14 +66,27 @@ def _remove_compositions(schema: Any, *, path="", delimiter="."):
 
 
 def path_to_schema_name(path: str, delimiter: str) -> str:
+    """
+    Example::
+
+        /users/{id}/do-something -> userIdDoSomething
+    """
+
     path_parts = path.replace("/v2/", "").strip(delimiter).split("/")
     path = delimiter.join(part.rstrip("s") for part in path_parts)  # make singular
-    return re.sub(
-        r"\{(.*?)}",
-        lambda m: from_camel_case_to_snake_case(m.groups()[0]),
-        path,
-        flags=re.MULTILINE,
-    )
+
+    def _process_parameters(value: str):
+        return re.sub(
+            r"\{(.*?)}",
+            lambda m: from_camel_case_to_snake_case(m.group(1)),
+            value,
+            flags=re.MULTILINE,
+        )
+
+    def _process_hyphens(value: str):
+        return re.sub(pattern=r"[-](.)", repl=lambda x: f"_{x.group(1)}", string=value, flags=re.MULTILINE)
+
+    return functools.reduce(lambda input, fn: fn(input), [_process_hyphens, _process_parameters], path)
 
 
 def to_classname(snake_string: str, public=False) -> str:
