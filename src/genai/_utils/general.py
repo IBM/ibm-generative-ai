@@ -154,7 +154,7 @@ def merge_objects(*objs: Optional[Mapping[_KT, _VT]]) -> dict[_KT, _VT]:
 
 
 def is_list_like_sequence(value: Any) -> bool:
-    return False if isinstance(value, str) else isinstance(value, Sequence)
+    return isinstance(value, Sequence) and not isinstance(value, str)
 
 
 def cast_sequence(input: Union[TInput, Sequence[TInput]]) -> Sequence[TInput]:
