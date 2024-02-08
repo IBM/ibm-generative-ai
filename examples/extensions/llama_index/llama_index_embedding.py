@@ -1,10 +1,10 @@
 """
-Llamaindex Embeddings
+LlamaIndex Embeddings
 """
 from dotenv import load_dotenv
 
 from genai import Client, Credentials
-from genai.extensions.llama_index import LlamaIndexEmbeddingsInterface
+from genai.extensions.llama_index import IBMGenAILlamaIndexEmbedding
 from genai.schema import TextEmbeddingParameters
 
 # make sure you have a .env file under genai root with
@@ -21,7 +21,7 @@ def heading(text: str) -> str:
 print(heading("LlamaIndex Embeddings"))
 
 client = Client(credentials=Credentials.from_env())
-embeddings = LlamaIndexEmbeddingsInterface(
+embeddings = IBMGenAILlamaIndexEmbedding(
     client=client,
     model_id="sentence-transformers/all-minilm-l6-v2",
     parameters=TextEmbeddingParameters(truncate_input_tokens=True),

@@ -12,7 +12,7 @@ except ImportError:
     raise ImportError("Could not import llamaindex: Please install ibm-generative-ai[llama-index] extension.")  # noqa: B904
 
 
-class LlamaIndexEmbeddingsInterface(BaseEmbedding):
+class IBMGenAILlamaIndexEmbedding(BaseEmbedding):
     client: Client
     model_id: str
     parameters: Optional[ModelLike[TextEmbeddingParameters]] = None
