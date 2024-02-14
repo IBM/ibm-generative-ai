@@ -16,7 +16,7 @@ class Credentials(BaseModel):
     Examples:
         Create a Credentials instance with explicit api_endpoint::
 
-            credentials = Credentials(api_key="your_api_key", api_endpoint="https://bam-api.res.ibm")
+            credentials = Credentials(api_key="your_api_key", api_endpoint="https://bam-api.res.ibm.com")
 
         Create a Credentials instance with default api_endpoint::
 
