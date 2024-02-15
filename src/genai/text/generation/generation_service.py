@@ -60,8 +60,6 @@ class CreateExecutionOptions(BaseModel):
     throw_on_error: CommonExecutionOptions.throw_on_error = True
     ordered: CommonExecutionOptions.ordered = True
     concurrency_limit: CommonExecutionOptions.concurrency_limit = None
-    batch_size: CommonExecutionOptions.batch_size = None
-    rate_limit_options: CommonExecutionOptions.rate_limit_options = None
     callback: CommonExecutionOptions.callback[
         Union[TextGenerationStreamCreateResponse, TextGenerationCreateResponse]
     ] = None
