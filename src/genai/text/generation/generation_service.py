@@ -172,8 +172,8 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
         async def handler(input: str, http_client: AsyncClient, limiter: BaseLimiter) -> TextGenerationCreateResponse:
             self._log_method_execution("Generate Create - processing input", input=input)
 
-            async def handle_retry(ex: HTTPStatusError):
-                if ex.response.status_code == httpx.codes.TOO_MANY_REQUESTS:
+            async def handle_retry(ex: Exception):
+                if isinstance(ex, HTTPStatusError) and ex.response.status_code == httpx.codes.TOO_MANY_REQUESTS:
                     await limiter.report_error()
 
             async def handle_success(*args):

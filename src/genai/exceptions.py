@@ -1,6 +1,5 @@
 import logging
-import typing
-from typing import Union
+from typing import Optional, Union
 
 from httpx import HTTPError, Response
 from pydantic import ValidationError as _ValidationError
@@ -34,19 +33,30 @@ class ApiResponseException(BaseApiException):
 
     def __init__(
         self,
-        response: Union[Response, BaseErrorResponse],
-        message: str = "Server Error",
+        response: Union[BaseErrorResponse, dict],
+        message: Optional[str] = None,
         *args,
     ) -> None:
         if is_api_error_response(response):
             self.response = response
-        elif isinstance(response, Response):
+        elif isinstance(response, dict):
             self.response = to_api_error(response)
         else:
             raise TypeError(f"Expected either Response or Api Error Response, but {type(response)} received.")
 
-        message = f"{message}\n{self.response.model_dump_json(indent=2)}"
-        super().__init__(message, *args)
+        self.message = f"{message or 'Server Error'}\n{self.response.model_dump_json(indent=2)}"
+        super().__init__(self.message, *args)
+
+    @classmethod
+    def from_http_response(cls, response: Response, message: Optional[str] = None):
+        if response.is_success:
+            raise ValueError("Cannot convert succeed HTTP response to error response.")
+
+        response_body = to_api_error(response.json())
+        return cls(message=message, response=response_body)
+
+    def __reduce__(self):
+        return self.__class__, (self.response.model_dump(), self.message)
 
 
 class ApiNetworkException(BaseApiException):
@@ -57,8 +67,8 @@ class ApiNetworkException(BaseApiException):
         message (str): Explanation of the error.
     """
 
-    __cause__: typing.Optional[HTTPError] = None
+    __cause__: Optional[HTTPError] = None
 
-    def __init__(self, message: typing.Optional[str] = None, *args) -> None:
+    def __init__(self, message: Optional[str] = None, *args) -> None:
         self.message = message or "Network Exception has occurred. Try again later."
         super().__init__(self.message, *args)

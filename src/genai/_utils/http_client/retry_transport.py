@@ -96,7 +96,7 @@ class BaseRetryTransport(ABC):
                 else f"Failed to handle request to {request.url}."
             )
 
-            return ApiResponseException(
+            return ApiResponseException.from_http_response(
                 message=message,
                 response=exception.response,
             )
