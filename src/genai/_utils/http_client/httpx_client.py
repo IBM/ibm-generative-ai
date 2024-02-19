@@ -48,10 +48,11 @@ class HttpxClient(httpx.Client):
                 response: Response = event_source.response
                 if "application/json" in response.headers["content-type"]:
                     response.read()
-                    raise ApiResponseException(  # noqa: B904
+                    raise ApiResponseException.from_http_response(
                         message="Invalid data chunk retrieved during streaming.", response=response
-                    )
-                raise e
+                    ) from None
+                else:
+                    raise e
 
 
 class AsyncHttpxClient(httpx.AsyncClient):
