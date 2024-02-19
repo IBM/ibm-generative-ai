@@ -1,5 +1,5 @@
 """
-Generate text using a model
+Complex text generation example with a progress bar
 
 Runs text generation asynchronously in parallel to achieve better performance
 """
