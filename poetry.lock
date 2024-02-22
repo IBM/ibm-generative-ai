@@ -3721,10 +3721,8 @@ develop = false
 sphinx = ">=2.1"
 
 [package.source]
-type = "git"
-url = "https://github.com/Tomas2D/sphinx-multiversion.git"
-reference = "HEAD"
-resolved_reference = "47327d9b8a31c9474566373dfdd6f713e91a3e9a"
+type = "directory"
+url = "external/sphinx_multiversion"
 
 [[package]]
 name = "sphinx-notfound-page"
@@ -4891,4 +4889,4 @@ localserver = ["fastapi", "uvicorn"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "722308ac7e5be46274086b35d477bca5b646cea856d3c4f19137a2c0da0365b8"
+content-hash = "009146205b2ff5dfe3f202f31ddae441c038c83576928ea438e0a074a32da19f"
