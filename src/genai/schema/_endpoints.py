@@ -186,6 +186,12 @@ class SystemPromptIdUpdateEndpoint(ApiEndpoint):
     version: str = "2023-11-22"
 
 
+class TagRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/tags"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
 class TaskRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/tasks"
     method: str = "GET"

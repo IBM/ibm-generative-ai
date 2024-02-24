@@ -1,0 +1,122 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/tags?limit=5&offset=0&version=2023-11-22
+  response:
+    body:
+      string: '{"results":[{"id":"Base","name":"Base","type":"model_type"},{"id":"Chat","name":"Chat","type":"model_type"},{"id":"Code","name":"Code","type":"model_type"},{"id":"DEV-test","name":"DEV
+        TEST","type":"model_type"},{"id":"Embeddings","name":"Embeddings","type":"model_type"}],"total_count":12}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 20:56:16 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '290'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/tags?offset=5&version=2023-11-22
+  response:
+    body:
+      string: '{"results":[{"id":"English","name":"English","type":"language"},{"id":"Instruct","name":"Instruct","type":"model_type"},{"id":"Japanese","name":"Japanese","type":"language"},{"id":"MoE","name":"Mixture
+        of Experts","type":"model_type"},{"id":"Multilingual","name":"Multilingual","type":"language"},{"id":"automotive","name":"Automotive","type":"industry"},{"id":"finance","name":"Banking
+        and Financial Services","type":"industry"}],"total_count":12}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 20:56:17 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '448'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '23'
+      x-ratelimit-reset:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/tags?version=2023-11-22
+  response:
+    body:
+      string: '{"results":[{"id":"Base","name":"Base","type":"model_type"},{"id":"Chat","name":"Chat","type":"model_type"},{"id":"Code","name":"Code","type":"model_type"},{"id":"DEV-test","name":"DEV
+        TEST","type":"model_type"},{"id":"Embeddings","name":"Embeddings","type":"model_type"},{"id":"English","name":"English","type":"language"},{"id":"Instruct","name":"Instruct","type":"model_type"},{"id":"Japanese","name":"Japanese","type":"language"},{"id":"MoE","name":"Mixture
+        of Experts","type":"model_type"},{"id":"Multilingual","name":"Multilingual","type":"language"},{"id":"automotive","name":"Automotive","type":"industry"},{"id":"finance","name":"Banking
+        and Financial Services","type":"industry"}],"total_count":12}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 20:56:18 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '708'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    status:
+      code: 200
+      message: OK
+version: 1

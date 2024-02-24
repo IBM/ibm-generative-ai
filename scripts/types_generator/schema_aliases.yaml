@@ -237,6 +237,11 @@ alias:
     - _PromptIdPatchRequest_type
     - _PromptCreateRequest_type
     - _PromptIdUpdateRequest_type
+  Tag:
+    - _TagRetrieve_results
+  TagType:
+    - _TagRetrieve_results_type
+    - _TagRetrieveRequestParamsType
   PromptResultAuthor:
     - _PromptRetrieve_results_author
     - _PromptCreate_result_author

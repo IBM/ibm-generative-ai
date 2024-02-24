@@ -195,6 +195,10 @@ class PromptRetrieveRequestParamsSource(str, Enum):
     USER = "user"
     EXAMPLE = "example"
     COMMUNITY = "community"
+class PromptTagType(str, Enum):
+    LANGUAGE = "language"
+    INDUSTRY = "industry"
+    MODEL_TYPE = "model_type"
 
 
 class PromptTemplateData(ApiBaseModel):
@@ -270,6 +274,12 @@ class SystemPromptAuthor(ApiBaseModel):
 class SystemPromptType(str, Enum):
     PRIVATE = "private"
     SYSTEM = "system"
+
+
+class TagType(str, Enum):
+    LANGUAGE = "language"
+    INDUSTRY = "industry"
+    MODEL_TYPE = "model_type"
 
 
 class Tasks(ApiBaseModel):
@@ -684,6 +694,13 @@ class _SystemPromptIdUpdateRequest(ApiBaseModel):
     name: str
 
 
+class _TagRetrieveParametersQuery(ApiBaseModel):
+    limit: Optional[int] = Field(100, ge=1, le=100)
+    offset: Optional[int] = Field(0, ge=0)
+    type: Optional[TagType] = None
+    version: Literal["2023-11-22"] = "2023-11-22"
+
+
 class _TaskRetrieveParametersQuery(ApiBaseModel):
     tune: Optional[bool] = True
     version: Literal["2023-11-22"] = "2023-11-22"
@@ -1006,6 +1023,12 @@ class SystemPrompt(ApiBaseModel):
     type: SystemPromptType
 
 
+class Tag(ApiBaseModel):
+    id: str
+    name: str
+    type: TagType
+
+
 class TextCreateResponseModeration(ApiBaseModel):
     hap: Optional[list[TextModeration]] = None
     implicit_hate: Optional[list[TextModeration]] = None
@@ -1201,6 +1224,10 @@ class SystemPromptIdRetrieveResponse(ApiBaseModel):
 
 class SystemPromptIdUpdateResponse(ApiBaseModel):
     result: SystemPrompt
+
+
+class TagRetrieveResponse(ApiBaseModel):
+    results: list[Tag]
 
 
 class _TextChatCreateRequest(ApiBaseModel):
@@ -1593,6 +1620,9 @@ __all__ = [
     "SystemPromptIdUpdateResponse",
     "SystemPromptRetrieveResponse",
     "SystemPromptType",
+    "Tag",
+    "TagRetrieveResponse",
+    "TagType",
     "TaskRetrieveResponse",
     "Tasks",
     "TextChatCreateResponse",
