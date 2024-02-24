@@ -241,9 +241,21 @@ alias:
     - _PromptIdUpdateRequest_type
   Tag:
     - _TagRetrieve_results
+  PromptTag:
+    - _PromptIdUpdate_result_tags
+    - _PromptCreate_result_tags
+    - _PromptIdPatch_result_tags
+    - _PromptRetrieve_results_tags
+    - _PromptIdRetrieve_result_tags
   TagType:
     - _TagRetrieve_results_type
     - _TagRetrieveRequestParamsType
+  PromptTagType:
+    - _PromptRetrieve_results_tags_type
+    - _PromptCreate_result_tags_type
+    - _PromptIdRetrieve_result_tags_type
+    - _PromptIdPatch_result_tags_type
+    - _PromptIdUpdate_result_tags_type
   TextClassificationCreateData:
     - _TextClassificationCreateRequest_data
   TextClassificationResult:
@@ -355,6 +367,10 @@ alias:
     - _TuneIdPatch_result_datapoints_loss_data
   TuneListSortBy:
     - _TuneRetrieveRequestParamsSortBy
+  PromptListSortBy:
+    - _PromptRetrieveRequestParamsSortBy
+  PromptListDirection:
+    - _PromptRetrieveRequestParamsDirection
   TuneResult:
     - _TuneIdPatch_result
     - _TuneFromFileCreate_result
@@ -404,7 +420,7 @@ alias:
   UserResponseResult:
     - _UserPatch_result
     - _UserRetrieve_result
-  PromptsResponseResult:
+  PromptResult:
     - _PromptCreate_result
     - _PromptIdPatch_result
     - _PromptIdRetrieve_result
@@ -495,7 +511,7 @@ alias:
   # OTHER PUBLIC SCHEMAS ---------------------------------------------------------
   ModelIdRetrieveResult: [ _ModelIdRetrieve_result ]
   ModelRetrieveResults: [ _ModelRetrieve_results ]
-  PromptRetrieveRequestParamsSource: [ _PromptRetrieveRequestParamsSource ]
+  PromptListSource: [ _PromptRetrieveRequestParamsSource ]
   TextGenerationComparisonCreateRequestRequest: [ _TextGenerationComparisonCreateRequest_request ]
   TextTokenizationCreateResults: [ _TextTokenizationCreate_results ]
   UserCreateResult: [ _UserCreate_result ]
