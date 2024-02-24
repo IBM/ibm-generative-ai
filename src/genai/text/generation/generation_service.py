@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from genai._types import ModelLike
 from genai._utils.api_client import ApiClient
 from genai._utils.async_executor import execute_async
-from genai._utils.general import cast_list, to_model_instance, to_model_optional
+from genai._utils.general import to_model_instance, to_model_optional
 from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
@@ -105,6 +105,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
         *,
         model_id: Optional[str] = None,
         prompt_id: Optional[str] = None,
+        input: Optional[str] = None,
         inputs: Optional[Union[list[str], str]] = None,
         parameters: Optional[ModelLike[TextGenerationParameters]] = None,
         moderations: Optional[ModelLike[ModerationParameters]] = None,
@@ -115,6 +116,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
         Args:
             model_id: The ID of the model.
             prompt_id: The ID of the prompt which should be used.
+            input: Prompt to process. It is recommended not to leave any trailing spaces.
             inputs: Prompt/prompts to process. It is recommended not to leave any trailing spaces.
             parameters: Parameters for text generation.
             moderations: Parameters for moderation.
@@ -132,8 +134,14 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
         Note:
             To limit number of concurrent requests or change execution procedure, see 'execute_options' parameter.
         """
+        if inputs is not None and input is not None:
+            raise ValueError("Either specify 'inputs' or 'input'!")
+
+        prompts: list[str] = inputs if inputs is not None else [input] if input is not None else None
+        if not prompts and not prompt_id:
+            raise ValueError("At least one of the following parameters input/inputs/prompt_id must be specified!")
+
         metadata = get_service_action_metadata(self.create)
-        prompts = cast_list(inputs) if inputs else []
         parameters_formatted = to_model_optional(parameters, TextGenerationParameters)
         moderations_formatted = to_model_optional(moderations, ModerationParameters)
         template_formatted = to_model_optional(data, PromptTemplateData)
@@ -169,8 +177,10 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
                 yield TextGenerationCreateResponse(**http_response.json())
                 return
 
-        async def handler(input: str, http_client: AsyncClient, limiter: BaseLimiter) -> TextGenerationCreateResponse:
-            self._log_method_execution("Generate Create - processing input", input=input)
+        async def handler(
+            batch_input: str, http_client: AsyncClient, limiter: BaseLimiter
+        ) -> TextGenerationCreateResponse:
+            self._log_method_execution("Generate Create - processing input", input=batch_input)
 
             async def handle_retry(ex: Exception):
                 if isinstance(ex, HTTPStatusError) and ex.response.status_code == httpx.codes.TOO_MANY_REQUESTS:
@@ -187,7 +197,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
                 },
                 params=_TextGenerationCreateParametersQuery().model_dump(),
                 json=_TextGenerationCreateRequest(
-                    input=input,
+                    input=batch_input,
                     model_id=model_id,
                     moderations=moderations_formatted,
                     parameters=parameters_formatted,
