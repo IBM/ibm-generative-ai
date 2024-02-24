@@ -210,6 +210,8 @@ alias:
   TextGenerationReturnOptionsFromDB:
     - _TextGenerationCreateRequest_parameters_return_options
     - _TextGenerationStreamCreateRequest_parameters_return_options
+  TextRerankReturnOptions:
+    - _TextRerankCreateRequest_parameters_return_options
   LengthPenalty:
     - _TextGenerationOutputCreateRequest_parameters_length_penalty
     - _PromptRetrieve_results_parameters_length_penalty
@@ -242,6 +244,18 @@ alias:
   TagType:
     - _TagRetrieve_results_type
     - _TagRetrieveRequestParamsType
+  TextClassificationCreateData:
+    - _TextClassificationCreateRequest_data
+  TextClassificationResult:
+    - _TextClassificationCreate_result
+  TextClassificationType:
+    - _TextClassificationCreate_result_classification_type
+  TextRerankParameters:
+    - _TextRerankCreateRequest_parameters
+  TextSentenceSimilarityParameters:
+    - _TextSentenceSimilarityCreateRequest_parameters
+  TextRerankResult:
+    - _TextRerankCreate_result_results
   PromptResultAuthor:
     - _PromptRetrieve_results_author
     - _PromptCreate_result_author
@@ -486,6 +500,7 @@ alias:
   TextTokenizationCreateResults: [ _TextTokenizationCreate_results ]
   UserCreateResult: [ _UserCreate_result ]
   UserCreateResultApiKey: [ _UserCreate_result_api_key ]
+  TextSentenceSimilarityCreateResult: [ _TextSentenceSimilarityCreate_results ]
   RequestRetrieveResults: [ _RequestRetrieve_results ]
   TuningTypeRetrieveResults: [ _TuningTypeRetrieve_results ]
   TextGenerationComparisonCreateResults: [ _TextGenerationComparisonCreate_results ]
@@ -496,6 +511,12 @@ alias:
   RequestChatConversationIdRetrieveResults: [ _RequestChatConversationIdRetrieve_results ]
 
 private_operations: [ ] # Response and Query schemas are public by default, but can be hidden if specified here
+
+endpoint_aliases:
+  /v2/beta/text/classification: '/v2/text/classification'
+  /v2/beta/text/rerank: '/v2/text/rerank'
+  /v2/beta/text/sentence-similarity: '/v2/text/sentence-similarity'
+  /v2/tunes/import: '/v2/tunes/from-file'
 
 replace:
   # Override schema by a different equivalent schema

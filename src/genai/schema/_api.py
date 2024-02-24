@@ -294,6 +294,17 @@ class Tasks(ApiBaseModel):
     verbalizer: Optional[str] = None
 
 
+class TextClassificationCreateData(ApiBaseModel):
+    labels: list[str]
+    text: str
+
+
+class TextClassificationType(str, Enum):
+    MULTI_CLASS = "multi_class"
+    MULTI_LABEL = "multi_label"
+    BINARY = "binary"
+
+
 class TextEmbeddingLimit(ApiBaseModel):
     concurrency: ConcurrencyLimit
 
@@ -369,6 +380,24 @@ class TextModeration(ApiBaseModel):
     score: float
     success: bool
     tokens: Optional[list[ModerationTokens]] = None
+
+
+class TextRerankResult(ApiBaseModel):
+    score: float
+
+
+class TextRerankReturnOptions(ApiBaseModel):
+    documents: Optional[bool] = None
+    query: Optional[bool] = None
+    top_n: Optional[float] = Field(None, ge=1.0)
+
+
+class TextSentenceSimilarityCreateResult(ApiBaseModel):
+    score: float
+
+
+class TextSentenceSimilarityParameters(ApiBaseModel):
+    truncate_input_tokens: Optional[bool] = None
 
 
 class TextTokenizationCreateResults(ApiBaseModel):
@@ -484,6 +513,9 @@ class UserCreateResultApiKey(ApiBaseModel):
     value: str
 
 
+class _TextRerankCreateResult(ApiBaseModel):
+    query: Optional[str] = None
+    results: list[TextRerankResult]
 
 
 class _ApiKeyRetrieveParametersQuery(ApiBaseModel):
@@ -500,6 +532,39 @@ class _ApiKeyRegenerateCreateParametersQuery(ApiBaseModel):
 
 class ApiKeyRegenerateCreateResponse(ApiBaseModel):
     result: Optional[ApiKeyResult] = None
+
+
+class _TextClassificationCreateParametersQuery(ApiBaseModel):
+    version: Literal["2023-11-22"] = "2023-11-22"
+
+
+class _TextClassificationCreateRequest(ApiBaseModel):
+    data: list[TextClassificationCreateData] = Field(..., min_length=1)
+    input: str
+    model_id: str
+
+
+class _TextRerankCreateParametersQuery(ApiBaseModel):
+    version: Literal["2023-11-22"] = "2023-11-22"
+
+
+class TextRerankCreateResponse(ApiBaseModel):
+    result: _TextRerankCreateResult
+
+
+class _TextSentenceSimilarityCreateParametersQuery(ApiBaseModel):
+    version: Literal["2023-11-22"] = "2023-11-22"
+
+
+class _TextSentenceSimilarityCreateRequest(ApiBaseModel):
+    model_id: str
+    parameters: Optional[TextSentenceSimilarityParameters] = None
+    sentences: list[str] = Field(..., min_length=1)
+    source_sentence: str
+
+
+class TextSentenceSimilarityCreateResponse(ApiBaseModel):
+    results: list[TextSentenceSimilarityCreateResult]
 
 
 class _FileRetrieveParametersQuery(ApiBaseModel):
@@ -1029,6 +1094,14 @@ class Tag(ApiBaseModel):
     type: TagType
 
 
+class TextClassificationResult(ApiBaseModel):
+    classification_type: TextClassificationType
+    log_likelihood: dict[str, Any]
+    model_input: str
+    model_output: str
+    predictions: list[str]
+
+
 class TextCreateResponseModeration(ApiBaseModel):
     hap: Optional[list[TextModeration]] = None
     implicit_hate: Optional[list[TextModeration]] = None
@@ -1127,6 +1200,11 @@ class TextGenerationStreamResult(ApiBaseModel):
     stop_sequence: Optional[str] = None
 
 
+class TextRerankParameters(ApiBaseModel):
+    return_options: Optional[TextRerankReturnOptions] = None
+    truncate_input_tokens: Optional[bool] = None
+
+
 class TextTokenizationParameters(ApiBaseModel):
     return_options: Optional[TextTokenizationReturnOptions] = None
 
@@ -1151,6 +1229,17 @@ class UserResponseResult(ApiBaseModel):
     last_name: Optional[str] = None
     tou_accepted: bool
     tou_accepted_at: Optional[str] = None
+
+
+class TextClassificationCreateResponse(ApiBaseModel):
+    result: TextClassificationResult
+
+
+class _TextRerankCreateRequest(ApiBaseModel):
+    documents: list[str] = Field(..., min_length=1)
+    model_id: str
+    parameters: Optional[TextRerankParameters] = None
+    query: str
 
 
 class FileRetrieveResponse(ApiBaseModel):
@@ -1628,6 +1717,10 @@ __all__ = [
     "TextChatCreateResponse",
     "TextChatOutputCreateResponse",
     "TextChatStreamCreateResponse",
+    "TextClassificationCreateData",
+    "TextClassificationCreateResponse",
+    "TextClassificationResult",
+    "TextClassificationType",
     "TextCreateResponseModeration",
     "TextEmbeddingCreateResponse",
     "TextEmbeddingLimit",
@@ -1655,6 +1748,13 @@ __all__ = [
     "TextGenerationStreamResult",
     "TextModeration",
     "TextModerationCreateResponse",
+    "TextRerankCreateResponse",
+    "TextRerankParameters",
+    "TextRerankResult",
+    "TextRerankReturnOptions",
+    "TextSentenceSimilarityCreateResponse",
+    "TextSentenceSimilarityCreateResult",
+    "TextSentenceSimilarityParameters",
     "TextTokenizationCreateResponse",
     "TextTokenizationCreateResults",
     "TextTokenizationParameters",
