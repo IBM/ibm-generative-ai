@@ -18,6 +18,24 @@ class ApiKeyRegenerateCreateEndpoint(ApiEndpoint):
     version: str = "2023-11-22"
 
 
+class TextClassificationCreateEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/text/classification"
+    method: str = "POST"
+    version: str = "2023-11-22"
+
+
+class TextRerankCreateEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/text/rerank"
+    method: str = "POST"
+    version: str = "2023-11-22"
+
+
+class TextSentenceSimilarityCreateEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/text/sentence-similarity"
+    method: str = "POST"
+    version: str = "2023-11-22"
+
+
 class FileRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/files"
     method: str = "GET"

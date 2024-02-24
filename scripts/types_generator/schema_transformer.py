@@ -28,6 +28,7 @@ class SchemaOverrides(BaseModel):
     alias: dict[str, list[str]] = {}
     replace: dict[str, Union[str, SchemaReplacement]] = {}
     private_operations: set[str] = set()
+    endpoint_aliases: dict[str, str] = {}
 
     @property
     def replacements(self) -> dict[str, SchemaReplacement]:
@@ -347,7 +348,7 @@ def transform_schema(api: Schema, schema_overrides: SchemaOverrides, operation_i
     private_operations = schema_overrides.private_operations.copy()
     # Process all existing paths
     for path, http_methods in sorted(api.get("paths", {}).items()):
-        base_schema_name = path_to_schema_name(path, delimiter="_")
+        base_schema_name = path_to_schema_name(schema_overrides.endpoint_aliases.get(path, path), delimiter="_")
 
         for http_method, properties in sorted(http_methods.items()):
             assert isinstance(properties, dict)
@@ -355,12 +356,14 @@ def transform_schema(api: Schema, schema_overrides: SchemaOverrides, operation_i
             http_method = http_method_mapper[http_method]
             assert http_method
 
-            operation_id = to_classname(f"{base_schema_name}_{http_method.title()}", public=True)
-            if operation_id in private_operations:
-                private_operations.remove(operation_id)
-                operation_id = f"_{operation_id}"
+            endpoint_class_name = to_classname(f"{base_schema_name}_{http_method.title()}", public=True)
+
+            if endpoint_class_name in private_operations:
+                private_operations.remove(endpoint_class_name)
+                endpoint_class_name = f"_{endpoint_class_name}"
+
             # Adding operationId instructs the generator to use given name instead generated one
-            properties["operationId"] = f"{operation_id_prefix}{operation_id}"
+            properties["operationId"] = f"{operation_id_prefix}{endpoint_class_name}"
 
             # Process request parameters
             for parameter in list(properties.get("parameters", [])):

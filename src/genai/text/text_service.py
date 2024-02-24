@@ -9,6 +9,7 @@ from genai._utils.service import (
 )
 from genai.text.chat.chat_generation_service import ChatService as _ChatService
 from genai.text.embedding.embedding_service import EmbeddingService as _EmbeddingService
+from genai.text.experimental.experimental_service import ExperimentalService as _ExperimentalService
 from genai.text.generation.generation_service import GenerationService as _GenerationService
 from genai.text.moderation.moderation_service import ModerationService as _ModerationService
 from genai.text.tokenization.tokenization_service import TokenizationService as _TokenizationService
@@ -24,6 +25,7 @@ class BaseServices(BaseModel):
     ChatService: type[_ChatService] = _ChatService
     ModerationService: type[_ModerationService] = _ModerationService
     EmbeddingService: type[_EmbeddingService] = _EmbeddingService
+    ExperimentalService: type[_ExperimentalService] = _ExperimentalService
 
 
 class TextService(BaseService[BaseServiceConfig, BaseServices]):
@@ -44,3 +46,4 @@ class TextService(BaseService[BaseServiceConfig, BaseServices]):
         self.tokenization = services.TokenizationService(api_client=api_client)
         self.chat = services.ChatService(api_client=api_client)
         self.embedding = services.EmbeddingService(api_client=api_client)
+        self.experimental = services.ExperimentalService(api_client=api_client)
