@@ -352,13 +352,18 @@ class TextGenerationComparisonCreateResultsParameters(ApiBaseModel):
 
 
 class TextGenerationFeedbackCategory(str, Enum):
-    NO_PROBLEM = "no_problem"
-    HAP = "hap"
-    PII = "pii"
-    SOCIAL_BIAS = "social_bias"
-    NOT_HONEST_OR_TRUTHFUL = "not_honest_or_truthful"
-    TABOO_TOPICS = "taboo_topics"
-    OTHER = "other"
+    INACCURATE = "inaccurate"
+    NOT_RELEVANT = "not_relevant"
+    OFFENSIVE_HARMFUL = "offensive_harmful"
+    KNOWLEDGE_GAP = "knowledge_gap"
+    OTHER_CONTENT = "other_content"
+    TOO_LONG = "too_long"
+    TOO_SHORT = "too_short"
+    WRONG_TONE = "wrong_tone"
+    WRONG_FORMAT = "wrong_format"
+    OTHER_STYLE = "other_style"
+    CORRECT_CONTENT = "correct_content"
+    CORRECT_STYLE = "correct_style"
 
 
 class TextGenerationFeedbackResult(ApiBaseModel):
@@ -896,7 +901,7 @@ class TextGenerationIdFeedbackRetrieveResponse(ApiBaseModel):
 
 
 class _TextGenerationIdFeedbackCreateParametersQuery(ApiBaseModel):
-    version: Literal["2023-11-22"] = "2023-11-22"
+    version: Literal["2024-02-20"] = "2024-02-20"
 
 
 class _TextGenerationIdFeedbackCreateRequest(ApiBaseModel):
@@ -909,7 +914,7 @@ class TextGenerationIdFeedbackCreateResponse(ApiBaseModel):
 
 
 class _TextGenerationIdFeedbackUpdateParametersQuery(ApiBaseModel):
-    version: Literal["2023-11-22"] = "2023-11-22"
+    version: Literal["2024-02-20"] = "2024-02-20"
 
 
 class _TextGenerationIdFeedbackUpdateRequest(ApiBaseModel):

@@ -285,13 +285,13 @@ class TextGenerationIdFeedbackRetrieveEndpoint(ApiEndpoint):
 class TextGenerationIdFeedbackCreateEndpoint(ApiEndpoint):
     path: str = "/v2/text/generation/{id}/feedback"
     method: str = "POST"
-    version: str = "2023-11-22"
+    version: str = "2024-02-20"
 
 
 class TextGenerationIdFeedbackUpdateEndpoint(ApiEndpoint):
     path: str = "/v2/text/generation/{id}/feedback"
     method: str = "PUT"
-    version: str = "2023-11-22"
+    version: str = "2024-02-20"
 
 
 class TextGenerationStreamCreateEndpoint(ApiEndpoint):

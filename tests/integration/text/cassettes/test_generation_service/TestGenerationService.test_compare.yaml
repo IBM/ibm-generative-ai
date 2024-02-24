@@ -2,7 +2,7 @@ interactions:
 - request:
     body: '{"compare_parameters": {"length_penalty": [{"decay_factor": 1.2, "start_index":
       50}, {"decay_factor": 1.5, "start_index": 50}], "temperature": [0.5, 1.0]},
-      "name": "my comparison", "request": {"input": "hahaha", "model_id": "google/flan-t5-xxl",
+      "name": "my comparison", "request": {"input": "hahaha", "model_id": "google/flan-t5-xl",
       "moderations": {"hap": {"input": true, "output": true, "send_tokens": true,
       "threshold": 0.75}, "implicit_hate": {"input": true, "output": true, "send_tokens":
       true, "threshold": 0.7}, "stigma": {"input": true, "output": true, "send_tokens":
@@ -15,34 +15,32 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '516'
+      - '515'
       content-type:
       - application/json
     method: POST
     uri: https://api.com/v2/text/generation/comparison?version=2023-11-22
   response:
     body:
-      string: '{"results":[{"parameters":{"length_penalty":{"decay_factor":1.2,"start_index":50},"temperature":0.5},"result":{"id":"abc352c4-53ab-4dd7-ba4f-50c2b0d3b5f9","model_id":"google/flan-t5-xxl","created_at":"2024-01-25T15:50:45.502Z","results":[{"generated_text":"I
-        love this song. I think it''s about a mother''s love for her child","generated_token_count":20,"input_token_count":4,"stop_reason":"max_tokens","seed":501745424,"moderation":{"hap":[],"implicit_hate":[],"stigma":[]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.2,"start_index":50},"temperature":1},"result":{"id":"abc352c4-53ab-4dd7-ba4f-50c2b0d3b5f9","model_id":"google/flan-t5-xxl","created_at":"2024-01-25T15:50:45.336Z","results":[{"generated_text":"damn
-        did that smell good or what","generated_token_count":8,"input_token_count":4,"stop_reason":"eos_token","seed":1044649787,"moderation":{"hap":[],"implicit_hate":[],"stigma":[{"score":0.7729578018188477,"flagged":true,"success":true,"position":{"start":6,"end":37}}]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.5,"start_index":50},"temperature":0.5},"result":{"id":"abc352c4-53ab-4dd7-ba4f-50c2b0d3b5f9","model_id":"google/flan-t5-xxl","created_at":"2024-01-25T15:50:45.498Z","results":[{"generated_text":"I
-        was thinking of getting one too, but I don''t have a car.","generated_token_count":19,"input_token_count":4,"stop_reason":"eos_token","seed":3466942680,"moderation":{"hap":[],"implicit_hate":[{"score":0.9984678626060486,"flagged":true,"tokens":[{"token":"i","index":0,"score":0.015206608921289444},{"token":"was","index":2,"score":0.0077315159142017365},{"token":"thinking","index":6,"score":0.007804704364389181},{"token":"of","index":15,"score":0.012245546095073223},{"token":"getting","index":18,"score":0.04496028646826744},{"token":"one","index":26,"score":0.07228508591651917},{"token":"too","index":30,"score":0.0199744775891304},{"token":",","index":33,"score":0.29813507199287415},{"token":"but","index":35,"score":0.033349525183439255},{"token":"i","index":39,"score":0.023969203233718872},{"token":"don","index":41,"score":0.03990275040268898},{"token":"''","index":44,"score":0.07279741019010544},{"token":"t","index":45,"score":0.027916518971323967},{"token":"have","index":47,"score":0.028143292292952538},{"token":"a","index":52,"score":0.040682338178157806},{"token":"car","index":54,"score":0.06094050034880638},{"token":".","index":57,"score":0.07394959777593613}],"success":true,"position":{"start":6,"end":63}}],"stigma":[]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.5,"start_index":50},"temperature":1},"result":{"id":"abc352c4-53ab-4dd7-ba4f-50c2b0d3b5f9","model_id":"google/flan-t5-xxl","created_at":"2024-01-25T15:50:45.424Z","results":[{"generated_text":"lol
-        ....that''s my black belt in karate","generated_token_count":14,"input_token_count":4,"stop_reason":"eos_token","seed":4109313064,"moderation":{"hap":[],"implicit_hate":[],"stigma":[]}}]}}]}'
+      string: '{"results":[{"parameters":{"length_penalty":{"decay_factor":1.2,"start_index":50},"temperature":0.5},"result":{"id":"fc625d6a-a82e-4ea4-b115-c83d66fd7a35","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:43.939Z","results":[{"generated_text":"hahahahahahahahahahahahahahahahahahahaha","generated_token_count":20,"input_token_count":4,"stop_reason":"max_tokens","seed":1217184253,"moderation":{"hap":[],"implicit_hate":[],"stigma":[]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.2,"start_index":50},"temperature":1},"result":{"id":"fc625d6a-a82e-4ea4-b115-c83d66fd7a35","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:42.938Z","results":[{"generated_text":"Haha
+        ok just got done with knitting centre, still working on the indigo wood quilt","generated_token_count":20,"input_token_count":4,"stop_reason":"max_tokens","seed":604894388,"moderation":{"hap":[],"implicit_hate":[{"score":0.9939548373222351,"flagged":true,"tokens":[{"token":"haha","index":0,"score":0.02127969078719616},{"token":"ok","index":5,"score":0.025499718263745308},{"token":"just","index":8,"score":0.029331112280488014},{"token":"got","index":13,"score":0.025046832859516144},{"token":"done","index":17,"score":0.013190396130084991},{"token":"with","index":22,"score":0.01881881058216095},{"token":"knitting","index":27,"score":0.10440972447395325},{"token":"centre","index":36,"score":0.03740357235074043},{"token":",","index":42,"score":0.38539040088653564},{"token":"still","index":44,"score":0.01694868691265583},{"token":"working","index":50,"score":0.016794778406620026},{"token":"on","index":58,"score":0.024396978318691254},{"token":"the","index":61,"score":0.0433080792427063},{"token":"indigo","index":65,"score":0.07745902985334396},{"token":"wood","index":72,"score":0.03392847254872322},{"token":"quilt","index":77,"score":0.03873193636536598}],"success":true,"position":{"start":6,"end":87}}],"stigma":[]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.5,"start_index":50},"temperature":0.5},"result":{"id":"fc625d6a-a82e-4ea4-b115-c83d66fd7a35","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:43.346Z","results":[{"generated_text":"i
+        love the dylan song! i did not know it was a ","generated_token_count":20,"input_token_count":4,"stop_reason":"max_tokens","seed":1640875312,"moderation":{"hap":[],"implicit_hate":[],"stigma":[]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.5,"start_index":50},"temperature":1},"result":{"id":"fc625d6a-a82e-4ea4-b115-c83d66fd7a35","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:43.641Z","results":[{"generated_text":"can
+        you believe people still have sanity after Lady Gaga her climb radio boa?","generated_token_count":20,"input_token_count":4,"stop_reason":"max_tokens","seed":2189432610,"moderation":{"hap":[],"implicit_hate":[],"stigma":[]}}]}}]}'
     headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:35:43 GMT
+      Keep-Alive:
+      - timeout=72
+      Transfer-Encoding:
+      - chunked
       content-length:
-      - '2925'
+      - '2853'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:50:45 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
-        HttpOnly; Secure; SameSite=None
-      transfer-encoding:
-      - chunked
       vary:
       - accept-encoding
     status:

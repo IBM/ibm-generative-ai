@@ -14,7 +14,7 @@ from genai.schema import (
     TextGenerationReturnOptions,
 )
 
-TEST_MODEL_ID = "google/flan-t5-xxl"
+TEST_MODEL_ID = "google/flan-t5-xl"
 
 
 @pytest.mark.integration
@@ -42,7 +42,7 @@ class TestGenerationService:
     @pytest.mark.vcr
     def test_create_stream(self, client: Client):
         """Streaming works correctly."""
-        prompt = "Poop stinks. This is why my favorite color is green: "
+        prompt = "I want to kill them! This is why my favorite color is green: "
         min_tokens, max_tokens = 3, 10
         generator = client.text.generation.create_stream(
             model_id=TEST_MODEL_ID,
@@ -57,9 +57,6 @@ class TestGenerationService:
             ),
         )
         all_responses = list(generator)
-        # First token is empty
-        [first_empty] = all_responses.pop(0).results
-        assert first_empty.generated_text == ""
 
         # Some results contain only response
         responses_with_result = [response for response in all_responses if response.results]

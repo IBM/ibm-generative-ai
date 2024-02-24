@@ -1,9 +1,9 @@
 interactions:
 - request:
-    body: '{"messages": [{"content": "Poop stinks, doesn''t it?", "role": "user"}],
-      "model_id": "meta-llama/llama-2-13b-chat", "moderations": {"hap": {"input":
-      true, "output": true, "send_tokens": true, "threshold": 0.75}}, "parameters":
-      {"max_new_tokens": 10, "min_new_tokens": 3}}'
+    body: '{"messages": [{"content": "I want to kill them! There are my enemies.",
+      "role": "user"}], "model_id": "meta-llama/llama-2-70b-chat", "moderations":
+      {"hap": {"input": true, "output": true, "send_tokens": true, "threshold": 0.7}},
+      "parameters": {"max_new_tokens": 10, "min_new_tokens": 3}}'
     headers:
       accept:
       - '*/*, text/event-stream'
@@ -14,7 +14,7 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '270'
+      - '287'
       content-type:
       - application/json
     method: POST
@@ -24,43 +24,42 @@ interactions:
       string: 'retry: 3000
 
 
-        data: {"id":"0a02975d-ba9a-41ba-bd36-8df22a247539","model_id":"meta-llama/llama-2-13b-chat","created_at":"2024-01-25T15:50:40.035Z","results":[{"generated_text":"","generated_token_count":0,"input_token_count":20,"stop_reason":"not_finished","seed":2387466843}],"conversation_id":"15e2f9ca-307e-410f-a69c-639940cc022d"}
+        data: {"id":"f75605d9-ed20-4b40-b693-e748e6533c9c","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-02-24T21:35:29.375Z","results":[{"generated_text":"  ","generated_token_count":2,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"de4b35a5-008e-4572-b750-ee5db1321685"}
 
 
-        data: {"id":"0a02975d-ba9a-41ba-bd36-8df22a247539","model_id":"meta-llama/llama-2-13b-chat","created_at":"2024-01-25T15:50:40.043Z","conversation_id":"15e2f9ca-307e-410f-a69c-639940cc022d","moderation":{"hap":[{"score":0.8494991660118103,"flagged":true,"tokens":[{"token":"poop","index":0,"score":0.13349691405892372},{"token":"stinks","index":5,"score":0.12222876027226448},{"token":",","index":11,"score":0.07386483997106552},{"token":"doesn","index":13,"score":0.04617568477988243},{"token":"''","index":18,"score":0.034434858709573746},{"token":"t","index":19,"score":0.03190023452043533},{"token":"it","index":21,"score":0.03568108007311821},{"token":"?","index":23,"score":0.1962689757347107}],"success":true,"position":{"start":0,"end":23}}]}}
+        data: {"id":"f75605d9-ed20-4b40-b693-e748e6533c9c","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-02-24T21:35:29.404Z","conversation_id":"de4b35a5-008e-4572-b750-ee5db1321685","moderation":{"hap":[{"score":0.8397554755210876,"flagged":true,"tokens":[{"token":"i","index":0,"score":0.06191760674118996},{"token":"want","index":2,"score":0.03426004573702812},{"token":"to","index":7,"score":0.06545773893594742},{"token":"kill","index":10,"score":0.15685372054576874},{"token":"them","index":15,"score":0.4736980199813843},{"token":"!","index":19,"score":0.07074116915464401}],"success":true,"position":{"start":0,"end":20}}]}}
 
 
-        data: {"id":"0a02975d-ba9a-41ba-bd36-8df22a247539","model_id":"meta-llama/llama-2-13b-chat","created_at":"2024-01-25T15:50:40.076Z","results":[{"generated_text":"  ","generated_token_count":2,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"15e2f9ca-307e-410f-a69c-639940cc022d"}
+        data: {"id":"f75605d9-ed20-4b40-b693-e748e6533c9c","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-02-24T21:35:29.413Z","results":[{"generated_text":"I
+        understan","generated_token_count":3,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"de4b35a5-008e-4572-b750-ee5db1321685"}
 
 
-        data: {"id":"0a02975d-ba9a-41ba-bd36-8df22a247539","model_id":"meta-llama/llama-2-13b-chat","created_at":"2024-01-25T15:50:40.095Z","results":[{"generated_text":"I
-        do","generated_token_count":3,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"15e2f9ca-307e-410f-a69c-639940cc022d"}
+        data: {"id":"f75605d9-ed20-4b40-b693-e748e6533c9c","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-02-24T21:35:29.450Z","results":[{"generated_text":"d
+        tha","generated_token_count":4,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"de4b35a5-008e-4572-b750-ee5db1321685"}
 
 
-        data: {"id":"0a02975d-ba9a-41ba-bd36-8df22a247539","model_id":"meta-llama/llama-2-13b-chat","created_at":"2024-01-25T15:50:40.114Z","results":[{"generated_text":"n","generated_token_count":4,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"15e2f9ca-307e-410f-a69c-639940cc022d"}
+        data: {"id":"f75605d9-ed20-4b40-b693-e748e6533c9c","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-02-24T21:35:29.489Z","results":[{"generated_text":"t
+        yo","generated_token_count":5,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"de4b35a5-008e-4572-b750-ee5db1321685"}
 
 
-        data: {"id":"0a02975d-ba9a-41ba-bd36-8df22a247539","model_id":"meta-llama/llama-2-13b-chat","created_at":"2024-01-25T15:50:40.134Z","results":[{"generated_text":"''","generated_token_count":5,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"15e2f9ca-307e-410f-a69c-639940cc022d"}
+        data: {"id":"f75605d9-ed20-4b40-b693-e748e6533c9c","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-02-24T21:35:29.527Z","results":[{"generated_text":"u
+        ma","generated_token_count":6,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"de4b35a5-008e-4572-b750-ee5db1321685"}
 
 
-        data: {"id":"0a02975d-ba9a-41ba-bd36-8df22a247539","model_id":"meta-llama/llama-2-13b-chat","created_at":"2024-01-25T15:50:40.153Z","results":[{"generated_text":"t
-        hav","generated_token_count":6,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"15e2f9ca-307e-410f-a69c-639940cc022d"}
+        data: {"id":"f75605d9-ed20-4b40-b693-e748e6533c9c","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-02-24T21:35:29.576Z","results":[{"generated_text":"y
+        fee","generated_token_count":7,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"de4b35a5-008e-4572-b750-ee5db1321685"}
 
 
-        data: {"id":"0a02975d-ba9a-41ba-bd36-8df22a247539","model_id":"meta-llama/llama-2-13b-chat","created_at":"2024-01-25T15:50:40.173Z","results":[{"generated_text":"e
-        ","generated_token_count":7,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"15e2f9ca-307e-410f-a69c-639940cc022d"}
+        data: {"id":"f75605d9-ed20-4b40-b693-e748e6533c9c","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-02-24T21:35:29.615Z","results":[{"generated_text":"l
+        angr","generated_token_count":8,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"de4b35a5-008e-4572-b750-ee5db1321685"}
 
 
-        data: {"id":"0a02975d-ba9a-41ba-bd36-8df22a247539","model_id":"meta-llama/llama-2-13b-chat","created_at":"2024-01-25T15:50:40.192Z","results":[{"generated_text":"a
-        persona","generated_token_count":8,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"15e2f9ca-307e-410f-a69c-639940cc022d"}
+        data: {"id":"f75605d9-ed20-4b40-b693-e748e6533c9c","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-02-24T21:35:29.652Z","results":[{"generated_text":"y
+        o","generated_token_count":9,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"de4b35a5-008e-4572-b750-ee5db1321685"}
 
 
-        data: {"id":"0a02975d-ba9a-41ba-bd36-8df22a247539","model_id":"meta-llama/llama-2-13b-chat","created_at":"2024-01-25T15:50:40.211Z","results":[{"generated_text":"l
-        experienc","generated_token_count":9,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"15e2f9ca-307e-410f-a69c-639940cc022d"}
-
-
-        data: {"id":"0a02975d-ba9a-41ba-bd36-8df22a247539","model_id":"meta-llama/llama-2-13b-chat","created_at":"2024-01-25T15:50:40.232Z","results":[{"generated_text":"e
-        of","generated_token_count":10,"input_token_count":0,"stop_reason":"max_tokens","seed":2387466843}],"conversation_id":"15e2f9ca-307e-410f-a69c-639940cc022d"}
+        data: {"id":"f75605d9-ed20-4b40-b693-e748e6533c9c","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-02-24T21:35:29.691Z","results":[{"generated_text":"r
+        ups","generated_token_count":10,"input_token_count":0,"stop_reason":"max_tokens","seed":1486693018}],"conversation_id":"de4b35a5-008e-4572-b750-ee5db1321685"}
 
 
         event: close
@@ -68,16 +67,15 @@ interactions:
 
         '
     headers:
-      cache-control:
+      Cache-Control:
       - no-cache,no-transform
-      content-type:
+      Connection:
+      - keep-alive
+      Content-Type:
       - text/event-stream
-      date:
-      - Thu, 25 Jan 2024 15:50:40 GMT
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=6d247d6198597e887510d8e26f4d2793; path=/;
-        HttpOnly; Secure; SameSite=None
-      transfer-encoding:
+      Date:
+      - Sat, 24 Feb 2024 21:35:29 GMT
+      Transfer-Encoding:
       - chunked
       x-no-compression:
       - '1'
