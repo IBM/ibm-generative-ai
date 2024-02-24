@@ -514,6 +514,12 @@ alias:
     - _SystemPromptIdRetrieve_result_type
     - _SystemPromptIdUpdate_result_type
     - _SystemPromptRetrieve_results_type
+  FolderResult:
+    - _FolderRetrieve_results
+    - _FolderCreate_result
+    - _FolderIdPatch_result
+    - _FolderIdRetrieve_result
+    - _FolderIdUpdate_result
   # OTHER PUBLIC SCHEMAS ---------------------------------------------------------
   ModelIdRetrieveResult: [ _ModelIdRetrieve_result ]
   ModelRetrieveResults: [ _ModelRetrieve_results ]
