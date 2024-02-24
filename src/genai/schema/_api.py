@@ -64,6 +64,13 @@ class FilePurpose(str, Enum):
     EXTRACTION = "extraction"
 
 
+class FolderResult(ApiBaseModel):
+    created_at: AwareDatetime
+    id: str
+    name: str
+    prompt_ids: Optional[list[str]] = None
+
+
 class GeneratedToken(ApiBaseModel):
     logprob: Optional[Union[float, str]] = None
     text: Optional[str] = None
@@ -467,6 +474,8 @@ class UserCreateResultApiKey(ApiBaseModel):
     value: str
 
 
+
+
 class _ApiKeyRetrieveParametersQuery(ApiBaseModel):
     version: Literal["2023-11-22"] = "2023-11-22"
 
@@ -513,6 +522,65 @@ class _FileIdRetrieveParametersQuery(ApiBaseModel):
 
 class _FileIdContentRetrieveParametersQuery(ApiBaseModel):
     version: Literal["2023-11-22"] = "2023-11-22"
+
+
+class _FolderRetrieveParametersQuery(ApiBaseModel):
+    limit: Optional[int] = Field(100, ge=1, le=100)
+    offset: Optional[int] = Field(0, ge=0)
+    version: Literal["2023-11-22"] = "2023-11-22"
+
+
+class FolderRetrieveResponse(ApiBaseModel):
+    results: list[FolderResult]
+    total_count: int
+
+
+class _FolderCreateParametersQuery(ApiBaseModel):
+    version: Literal["2023-11-22"] = "2023-11-22"
+
+
+class _FolderCreateRequest(ApiBaseModel):
+    name: str
+
+
+class FolderCreateResponse(ApiBaseModel):
+    result: FolderResult
+
+
+class _FolderIdDeleteParametersQuery(ApiBaseModel):
+    version: Literal["2023-11-22"] = "2023-11-22"
+
+
+class _FolderIdRetrieveParametersQuery(ApiBaseModel):
+    version: Literal["2023-11-22"] = "2023-11-22"
+
+
+class FolderIdRetrieveResponse(ApiBaseModel):
+    result: FolderResult
+
+
+class _FolderIdPatchParametersQuery(ApiBaseModel):
+    version: Literal["2024-01-10"] = "2024-01-10"
+
+
+class _FolderIdPatchRequest(ApiBaseModel):
+    position: Optional[int] = Field(None, ge=1)
+
+
+class FolderIdPatchResponse(ApiBaseModel):
+    result: FolderResult
+
+
+class _FolderIdUpdateParametersQuery(ApiBaseModel):
+    version: Literal["2023-11-22"] = "2023-11-22"
+
+
+class _FolderIdUpdateRequest(ApiBaseModel):
+    name: str
+
+
+class FolderIdUpdateResponse(ApiBaseModel):
+    result: FolderResult
 
 
 class _ModelRetrieveParametersQuery(ApiBaseModel):
@@ -1466,6 +1534,12 @@ __all__ = [
     "FilePurpose",
     "FileResult",
     "FileRetrieveResponse",
+    "FolderCreateResponse",
+    "FolderIdPatchResponse",
+    "FolderIdRetrieveResponse",
+    "FolderIdUpdateResponse",
+    "FolderResult",
+    "FolderRetrieveResponse",
     "GeneratedToken",
     "HAPOptions",
     "ImplicitHateOptions",

@@ -13,6 +13,7 @@ from genai._utils.service import (
 )
 from genai.credentials import Credentials
 from genai.file import FileService as _FileService
+from genai.folder import FolderService as _FolderService
 from genai.model import ModelService as _ModelService
 from genai.prompt import PromptService as _PromptService
 from genai.request import RequestService as _RequestService
@@ -35,6 +36,7 @@ class BaseServices(BaseServiceServices):
     PromptService: type[_PromptService] = _PromptService
     SystemPromptService: type[_SystemPromptService] = _SystemPromptService
     UserService: type[_UserService] = _UserService
+    FolderService: type[_FolderService] = _FolderService
 
 
 class BaseConfig(BaseServiceConfig):
@@ -64,6 +66,7 @@ class Client(BaseService[BaseConfig, BaseServices]):
         prompt: An instance of the `PromptService` class for working with prompts.
         system_prompt: An instance of the `SystemPromptService` class for working with system prompts.
         user: An instance of the `UserService` class for managing user-related operations.
+        folder: An instance of the `FolderService` class for working with folder.
     """
 
     Config = BaseConfig
@@ -134,3 +137,4 @@ class Client(BaseService[BaseConfig, BaseServices]):
         self.prompt = services.PromptService(api_client=api_client)
         self.system_prompt = services.SystemPromptService(api_client=api_client)
         self.user = services.UserService(api_client=api_client)
+        self.folder = services.FolderService(api_client=api_client)
