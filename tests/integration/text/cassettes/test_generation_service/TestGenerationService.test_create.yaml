@@ -14,28 +14,25 @@ interactions:
     body:
       string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
     headers:
-      cache-control:
-      - private
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:35:35 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
       - '54'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:50:43 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=538060a726cc3a9c230fa5d1269356eb; path=/;
-        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
     status:
       code: 200
       message: OK
 - request:
-    body: '{"input": "Here is a funny short joke about AI: ", "model_id": "google/flan-t5-xxl",
+    body: '{"input": "Here is a funny short joke about AI: ", "model_id": "google/flan-t5-xl",
       "parameters": {"decoding_method": "sample", "max_new_tokens": 40, "min_new_tokens":
       1, "return_options": {"generated_tokens": false, "input_text": true, "input_tokens":
       false, "token_logprobs": false, "token_ranks": false}, "temperature": 0.5, "top_k":
@@ -48,27 +45,29 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '356'
+      - '355'
       content-type:
       - application/json
     method: POST
     uri: https://api.com/v2/text/generation?version=2024-01-10
   response:
     body:
-      string: '{"id":"543d6aa1-ab6f-4fa0-9453-a2ffff144127","model_id":"google/flan-t5-xxl","created_at":"2024-01-25T15:50:44.164Z","results":[{"input_text":"Here
-        is a funny short joke about AI: ","generated_text":"A man asks a robot to
-        play chess. The robot asks if he is human.","generated_token_count":25,"input_token_count":12,"stop_reason":"eos_token","seed":837848384}]}'
+      string: '{"id":"6712ab96-59e6-4534-9dea-ac5ee4914cad","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:36.624Z","results":[{"input_text":"Here
+        is a funny short joke about AI: ","generated_text":"I''m going to the zoo
+        to see a lion.","generated_token_count":18,"input_token_count":12,"stop_reason":"eos_token","seed":4051020192}]}'
     headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:35:36 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
-      - '361'
+      - '332'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2024-01-10'
-      date:
-      - Thu, 25 Jan 2024 15:50:44 GMT
-      keep-alive:
-      - timeout=72
       vary:
       - accept-encoding
     status:

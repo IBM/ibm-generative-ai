@@ -22,23 +22,23 @@ class TestFeedbackService:
             comment = "Drugs are bad mkay?"
             result_create = client.text.generation.feedback.create(
                 generation_id,
-                categories=[TextGenerationFeedbackCategory.TABOO_TOPICS],
+                categories=[TextGenerationFeedbackCategory.OFFENSIVE_HARMFUL],
                 comment=comment,
             ).result
-            assert result_create.categories == [TextGenerationFeedbackCategory.TABOO_TOPICS]
+            assert result_create.categories == [TextGenerationFeedbackCategory.OFFENSIVE_HARMFUL]
             assert result_create.comment == comment
 
         with subtests.test("Update feedback"):
             comment = "I'm not sure about the category"
             result_update = client.text.generation.feedback.update(
                 generation_id,
-                categories=[TextGenerationFeedbackCategory.OTHER],
+                categories=[TextGenerationFeedbackCategory.OTHER_CONTENT],
                 comment=comment,
             ).result
-            assert result_update.categories == [TextGenerationFeedbackCategory.OTHER]
+            assert result_update.categories == [TextGenerationFeedbackCategory.OTHER_CONTENT]
             assert result_update.comment == comment
 
         with subtests.test("Retrieve feedback"):
             result_retrieve = client.text.generation.feedback.retrieve(generation_id).result
-            assert result_retrieve.categories == [TextGenerationFeedbackCategory.OTHER]
+            assert result_retrieve.categories == [TextGenerationFeedbackCategory.OTHER_CONTENT]
             assert result_retrieve.comment == comment

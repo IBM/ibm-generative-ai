@@ -3,7 +3,7 @@ import pytest
 from genai import Client
 from genai.schema import HumanMessage, ModerationHAP, ModerationParameters, TextGenerationParameters
 
-TEST_MODEL_ID = "meta-llama/llama-2-13b-chat"
+TEST_MODEL_ID = "meta-llama/llama-2-70b-chat"
 
 
 @pytest.mark.integration
@@ -52,19 +52,18 @@ class TestChatService:
     @pytest.mark.vcr
     def test_create_stream(self, client):
         min_tokens, max_tokens = 3, 10
-        human_message = HumanMessage(content="Poop stinks, doesn't it?")
+        human_message = HumanMessage(content="I want to kill them! There are my enemies.")
 
-        generator = client.text.chat.create_stream(
-            messages=[human_message],
-            model_id=TEST_MODEL_ID,
-            parameters=TextGenerationParameters(min_new_tokens=min_tokens, max_new_tokens=max_tokens),
-            moderations=ModerationParameters(hap=ModerationHAP(input=True, output=True, send_tokens=True)),
+        all_responses = list(
+            client.text.chat.create_stream(
+                messages=[human_message],
+                model_id=TEST_MODEL_ID,
+                parameters=TextGenerationParameters(min_new_tokens=min_tokens, max_new_tokens=max_tokens),
+                moderations=ModerationParameters(
+                    hap=ModerationHAP(input=True, output=True, send_tokens=True, threshold=0.7)
+                ),
+            )
         )
-
-        all_responses = list(generator)
-        # First token is empty
-        [first_empty] = all_responses.pop(0).results
-        assert first_empty.generated_text == ""
 
         # Some results contain only response
         responses_with_result = [response for response in all_responses if response.results]

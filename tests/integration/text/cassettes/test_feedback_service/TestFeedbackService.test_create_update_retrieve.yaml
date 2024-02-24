@@ -14,21 +14,18 @@ interactions:
     body:
       string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
     headers:
-      cache-control:
-      - private
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:35:32 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
       - '54'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:50:41 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
-        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
     status:
@@ -52,27 +49,28 @@ interactions:
     uri: https://api.com/v2/text/generation?version=2024-01-10
   response:
     body:
-      string: '{"id":"2db252c2-55bd-424b-a44d-45307e2cc878","model_id":"google/flan-t5-xl","created_at":"2024-01-25T15:50:42.094Z","results":[{"generated_text":"Plant
-        some different strains of cannabis. Keep mixing co-operatively to get a high
-        mix","generated_token_count":20,"input_token_count":7,"stop_reason":"max_tokens","seed":954977001}]}'
+      string: '{"id":"5bc7f023-6fb4-477b-8ad1-cebc46cb4ca9","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:32.714Z","results":[{"generated_text":"You
+        can make drugs by mixing chemical together.","generated_token_count":10,"input_token_count":7,"stop_reason":"eos_token","seed":224657856}]}'
     headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:35:32 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
-      - '329'
+      - '289'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2024-01-10'
-      date:
-      - Thu, 25 Jan 2024 15:50:42 GMT
-      keep-alive:
-      - timeout=72
       vary:
       - accept-encoding
     status:
       code: 200
       message: OK
 - request:
-    body: '{"categories": ["taboo_topics"], "comment": "Drugs are bad mkay?"}'
+    body: '{"categories": ["offensive_harmful"], "comment": "Drugs are bad mkay?"}'
     headers:
       accept:
       - '*/*'
@@ -81,29 +79,28 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '66'
+      - '71'
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/generation/2db252c2-55bd-424b-a44d-45307e2cc878/feedback?version=2023-11-22
+    uri: https://api.com/v2/text/generation/5bc7f023-6fb4-477b-8ad1-cebc46cb4ca9/feedback?version=2024-02-20
   response:
     body:
-      string: '{"result":{"id":738,"created_at":"2024-01-25T15:50:42.000Z","updated_at":"2024-01-25T15:50:42.000Z","comment":"Drugs
-        are bad mkay?","categories":["taboo_topics"],"api_request":"2db252c2-55bd-424b-a44d-45307e2cc878"}}'
+      string: '{"result":{"id":321,"created_at":"2024-02-24T21:35:34.000Z","updated_at":"2024-02-24T21:35:34.000Z","comment":"Drugs
+        are bad mkay?","categories":["offensive_harmful"],"api_request":"5bc7f023-6fb4-477b-8ad1-cebc46cb4ca9"}}'
     headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:35:33 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
-      - '216'
+      - '221'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:50:42 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=6d247d6198597e887510d8e26f4d2793; path=/;
-        HttpOnly; Secure; SameSite=None
+      - '2024-02-20'
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -116,7 +113,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"categories": ["other"], "comment": "I''m not sure about the category"}'
+    body: '{"categories": ["other_content"], "comment": "I''m not sure about the category"}'
     headers:
       accept:
       - '*/*'
@@ -125,29 +122,28 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '71'
+      - '79'
       content-type:
       - application/json
     method: PUT
-    uri: https://api.com/v2/text/generation/2db252c2-55bd-424b-a44d-45307e2cc878/feedback?version=2023-11-22
+    uri: https://api.com/v2/text/generation/5bc7f023-6fb4-477b-8ad1-cebc46cb4ca9/feedback?version=2024-02-20
   response:
     body:
-      string: '{"result":{"id":738,"created_at":"2024-01-25T15:50:42.000Z","updated_at":"2024-01-25T15:50:42.905Z","comment":"I''m
-        not sure about the category","categories":["other"],"api_request":"2db252c2-55bd-424b-a44d-45307e2cc878"}}'
+      string: '{"result":{"id":321,"created_at":"2024-02-24T21:35:34.000Z","updated_at":"2024-02-24T21:35:34.364Z","comment":"I''m
+        not sure about the category","categories":["other_content"],"api_request":"5bc7f023-6fb4-477b-8ad1-cebc46cb4ca9"}}'
     headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:35:34 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
-      - '221'
+      - '229'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:50:42 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=ab61fe594e37cae048810df94b864b98; path=/;
-        HttpOnly; Secure; SameSite=None
+      - '2024-02-20'
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -169,35 +165,32 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/text/generation/2db252c2-55bd-424b-a44d-45307e2cc878/feedback?version=2023-11-22
+    uri: https://api.com/v2/text/generation/5bc7f023-6fb4-477b-8ad1-cebc46cb4ca9/feedback?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":738,"created_at":"2024-01-25T15:50:42.000Z","updated_at":"2024-01-25T15:50:43.000Z","comment":"I''m
-        not sure about the category","categories":["other"],"api_request":"2db252c2-55bd-424b-a44d-45307e2cc878"}}'
+      string: '{"result":{"id":321,"created_at":"2024-02-24T21:35:34.000Z","updated_at":"2024-02-24T21:35:34.000Z","comment":"I''m
+        not sure about the category","categories":["other_content"],"api_request":"5bc7f023-6fb4-477b-8ad1-cebc46cb4ca9"}}'
     headers:
-      cache-control:
-      - private
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:35:35 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
-      - '221'
+      - '229'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:50:43 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=ab61fe594e37cae048810df94b864b98; path=/;
-        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
       x-ratelimit-limit:
       - '25'
       x-ratelimit-remaining:
-      - '22'
+      - '24'
       x-ratelimit-reset:
-      - '0'
+      - '1'
     status:
       code: 200
       message: OK
