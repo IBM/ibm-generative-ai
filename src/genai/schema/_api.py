@@ -179,6 +179,27 @@ class NotFoundResponse(BaseErrorResponse):
     status_code: Literal[404] = 404
 
 
+class PromptListDirection(str, Enum):
+    ASC = "asc"
+    DESC = "desc"
+
+
+class PromptListSortBy(str, Enum):
+    TYPE = "type"
+    MODEL_TASK = "model_task"
+    UPDATED_AT = "updated_at"
+    CREATED_AT = "created_at"
+    NAME = "name"
+    ID = "id"
+    MODEL = "model"
+
+
+class PromptListSource(str, Enum):
+    USER = "user"
+    EXAMPLE = "example"
+    COMMUNITY = "community"
+
+
 class PromptResultAuthor(ApiBaseModel):
     first_name: Optional[str] = None
     id: Optional[int] = None
@@ -191,10 +212,6 @@ class PromptResultTask(ApiBaseModel):
     name: Optional[str] = None
 
 
-class PromptRetrieveRequestParamsSource(str, Enum):
-    USER = "user"
-    EXAMPLE = "example"
-    COMMUNITY = "community"
 class PromptTagType(str, Enum):
     LANGUAGE = "language"
     INDUSTRY = "industry"
@@ -671,10 +688,21 @@ class _ModelIdRetrieveParametersQuery(ApiBaseModel):
 class _PromptRetrieveParametersQuery(ApiBaseModel):
     limit: Optional[int] = Field(100, ge=1, le=100)
     offset: Optional[int] = Field(0, ge=0)
+    sort_by: Optional[PromptListSortBy] = None
+    direction: Optional[PromptListDirection] = None
     search: Optional[str] = None
     task_id: Optional[Union[str, list[str]]] = None
     model_id: Optional[Union[str, list[str]]] = None
-    source: Optional[Union[PromptRetrieveRequestParamsSource, list[PromptRetrieveRequestParamsSource]]] = None
+    source: Optional[Union[PromptListSource, list[PromptListSource]]] = None
+    model_family_id: Optional[float] = None
+    industry_id: Optional[Union[str, list[str]]] = None
+    prompt_language_id: Optional[Union[str, list[str]]] = None
+    model_type_id: Optional[Union[str, list[str]]] = None
+    avg_time_min: Optional[int] = None
+    avg_time_max: Optional[int] = None
+    context_window_min: Optional[int] = None
+    context_window_max: Optional[int] = None
+    folder_id: Optional[str] = None
     version: Literal["2024-01-10"] = "2024-01-10"
 
 
@@ -695,6 +723,8 @@ class _PromptIdPatchParametersQuery(ApiBaseModel):
 
 
 class _PromptIdPatchRequest(ApiBaseModel):
+    folder_id: Optional[str] = None
+    name: Optional[str] = None
     type: Optional[PromptType] = None
 
 
@@ -1063,6 +1093,12 @@ class ModerationParameters(ApiBaseModel):
     stigma: Optional[Union[bool, ModerationStigma]] = None
 
 
+class PromptTag(ApiBaseModel):
+    id: str
+    name: str
+    type: PromptTagType
+
+
 class PromptTemplate(ApiBaseModel):
     data: PromptTemplateData
     id: Optional[str] = None
@@ -1266,7 +1302,10 @@ class ModelIdRetrieveResponse(ApiBaseModel):
 class _PromptCreateRequest(ApiBaseModel):
     data: Optional[PromptTemplateData] = None
     description: Optional[str] = None
+    folder_id: Optional[str] = None
+    industry_id: Optional[str] = None
     input: Optional[str] = None
+    language_id: Optional[str] = None
     messages: Optional[list[BaseMessage]] = None
     model_id: str
     moderations: Optional[ModerationParameters] = None
@@ -1281,7 +1320,10 @@ class _PromptCreateRequest(ApiBaseModel):
 class _PromptIdUpdateRequest(ApiBaseModel):
     data: Optional[PromptTemplateData] = None
     description: Optional[str] = None
+    folder_id: Optional[str] = None
+    industry_id: Optional[str] = None
     input: Optional[str] = None
+    language_id: Optional[str] = None
     messages: Optional[list[BaseMessage]] = None
     model_id: str
     moderations: Optional[ModerationParameters] = None
@@ -1454,11 +1496,12 @@ class UserPatchResponse(ApiBaseModel):
     result: UserResponseResult
 
 
-class PromptsResponseResult(ApiBaseModel):
+class PromptResult(ApiBaseModel):
     author: Optional[PromptResultAuthor] = None
     created_at: AwareDatetime
     data: Optional[dict[str, Any]] = None
     description: Optional[str] = None
+    folder_id: Optional[str] = None
     id: str
     input: Optional[str] = None
     messages: Optional[list[BaseMessage]] = None
@@ -1470,8 +1513,11 @@ class PromptsResponseResult(ApiBaseModel):
     parameters: Optional[TextGenerationParameters] = None
     prompt_id: Optional[str] = None
     public: Optional[bool] = None
+    tags: Optional[list[PromptTag]] = None
     task: Optional[PromptResultTask] = None
     type: PromptType
+    updated_at: Optional[AwareDatetime] = None
+    usage_count: int
 
 
 class RequestChatConversationIdRetrieveResultsRequest(ApiBaseModel):
@@ -1549,24 +1595,24 @@ class UserCreateResult(ApiBaseModel):
 
 
 class PromptRetrieveResponse(ApiBaseModel):
-    results: list[PromptsResponseResult]
+    results: list[PromptResult]
     total_count: int
 
 
 class PromptCreateResponse(ApiBaseModel):
-    result: PromptsResponseResult
+    result: PromptResult
 
 
 class PromptIdRetrieveResponse(ApiBaseModel):
-    result: PromptsResponseResult
+    result: PromptResult
 
 
 class PromptIdPatchResponse(ApiBaseModel):
-    result: PromptsResponseResult
+    result: PromptResult
 
 
 class PromptIdUpdateResponse(ApiBaseModel):
-    result: PromptsResponseResult
+    result: PromptResult
 
 
 class _TextGenerationComparisonCreateRequest(ApiBaseModel):
@@ -1679,14 +1725,18 @@ __all__ = [
     "PromptIdPatchResponse",
     "PromptIdRetrieveResponse",
     "PromptIdUpdateResponse",
+    "PromptListDirection",
+    "PromptListSortBy",
+    "PromptListSource",
+    "PromptResult",
     "PromptResultAuthor",
     "PromptResultTask",
-    "PromptRetrieveRequestParamsSource",
     "PromptRetrieveResponse",
+    "PromptTag",
+    "PromptTagType",
     "PromptTemplate",
     "PromptTemplateData",
     "PromptType",
-    "PromptsResponseResult",
     "RequestApiVersion",
     "RequestChatConversationIdRetrieveResponse",
     "RequestChatConversationIdRetrieveResults",

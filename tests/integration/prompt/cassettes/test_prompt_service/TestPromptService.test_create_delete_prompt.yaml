@@ -18,30 +18,29 @@ interactions:
     uri: https://api.com/v2/prompts?version=2024-01-10
   response:
     body:
-      string: '{"result":{"id":"KzkY6DMNGjZeu4bA","name":"My test prompt","data":{"meal":"goulash","author":"Shakespeare"},"input":"Write
-        the recipe for {{meal}} in the style of {{author}}","model_id":"google/flan-t5-xl","moderations":{},"created_at":"2024-01-25T15:50:22.000Z","type":"private","public":false,"metadata":{"keywords":["meal","author"]},"author":{"id":26916,"first_name":"Radek","last_name":"Jezek"}}}'
+      string: '{"result":{"id":"1XMmtfCkFwj1cmhB","name":"My test prompt","data":{"meal":"goulash","author":"Shakespeare"},"input":"Write
+        the recipe for {{meal}} in the style of {{author}}","model_id":"google/flan-t5-xl","moderations":{},"created_at":"2024-02-24T21:10:25.000Z","updated_at":"2024-02-24T21:10:25.000Z","type":"private","public":false,"metadata":{"keywords":["meal","author"]},"tags":[],"author":{"id":453,"first_name":"Tomas","last_name":"Dvorak"},"usage_count":0}}'
     headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:10:24 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
-      - '401'
+      - '466'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2024-01-10'
-      date:
-      - Thu, 25 Jan 2024 15:50:22 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=538060a726cc3a9c230fa5d1269356eb; path=/;
-        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
       x-ratelimit-limit:
       - '25'
       x-ratelimit-remaining:
-      - '22'
+      - '24'
       x-ratelimit-reset:
-      - '0'
+      - '1'
     status:
       code: 200
       message: OK
@@ -55,42 +54,39 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/prompts/KzkY6DMNGjZeu4bA?version=2024-01-10
+    uri: https://api.com/v2/prompts/1XMmtfCkFwj1cmhB?version=2024-01-10
   response:
     body:
-      string: '{"result":{"id":"KzkY6DMNGjZeu4bA","name":"My test prompt","data":{"meal":"goulash","author":"Shakespeare"},"input":"Write
-        the recipe for {{meal}} in the style of {{author}}","model_id":"google/flan-t5-xl","moderations":{},"created_at":"2024-01-25T15:50:22.000Z","type":"private","public":false,"metadata":{"keywords":["meal","author"]},"author":{"id":26916,"first_name":"Radek","last_name":"Jezek"}}}'
+      string: '{"result":{"id":"1XMmtfCkFwj1cmhB","name":"My test prompt","data":{"meal":"goulash","author":"Shakespeare"},"input":"Write
+        the recipe for {{meal}} in the style of {{author}}","model_id":"google/flan-t5-xl","moderations":{},"created_at":"2024-02-24T21:10:25.000Z","updated_at":"2024-02-24T21:10:25.000Z","type":"private","public":false,"metadata":{"keywords":["meal","author"]},"tags":[],"author":{"id":453,"first_name":"Tomas","last_name":"Dvorak"},"usage_count":0}}'
     headers:
-      cache-control:
-      - private
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:10:25 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
-      - '401'
+      - '466'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2024-01-10'
-      date:
-      - Thu, 25 Jan 2024 15:50:22 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=538060a726cc3a9c230fa5d1269356eb; path=/;
-        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
       x-ratelimit-limit:
       - '25'
       x-ratelimit-remaining:
-      - '24'
+      - '23'
       x-ratelimit-reset:
-      - '1'
+      - '0'
     status:
       code: 200
       message: OK
 - request:
     body: '{"parameters": {"return_options": {"generated_tokens": false, "input_text":
       true, "input_tokens": false, "token_logprobs": false, "token_ranks": false}},
-      "prompt_id": "KzkY6DMNGjZeu4bA"}'
+      "prompt_id": "1XMmtfCkFwj1cmhB"}'
     headers:
       accept:
       - '*/*'
@@ -106,23 +102,22 @@ interactions:
     uri: https://api.com/v2/text/generation?version=2024-01-10
   response:
     body:
-      string: '{"id":"f6ab357f-a662-4064-a476-1e8b42d60493","model_id":"google/flan-t5-xl","created_at":"2024-01-25T15:50:23.924Z","results":[{"input_text":"Write
-        the recipe for goulash in the style of Shakespeare","generated_text":"stir
-        together the minced meat, onion, bell pepper, tomatoes, and carrots in a","generated_token_count":20,"input_token_count":13,"stop_reason":"max_tokens","seed":3255482813}]}'
+      string: '{"id":"fec8f279-4be9-4332-b764-4ac389cf663d","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:10:27.147Z","results":[{"input_text":"Write
+        the recipe for goulash in the style of Shakespeare","generated_text":"Coat
+        a 9-inch heavy-based, 4-quart slow cooker with oil. Combine onion","generated_token_count":20,"input_token_count":13,"stop_reason":"max_tokens","seed":3015852922}]}'
     headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:10:27 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
-      - '394'
+      - '387'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2024-01-10'
-      date:
-      - Thu, 25 Jan 2024 15:50:23 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=538060a726cc3a9c230fa5d1269356eb; path=/;
-        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
     status:
@@ -138,20 +133,19 @@ interactions:
       connection:
       - keep-alive
     method: DELETE
-    uri: https://api.com/v2/prompts/KzkY6DMNGjZeu4bA?version=2023-11-22
+    uri: https://api.com/v2/prompts/1XMmtfCkFwj1cmhB?version=2023-11-22
   response:
     body:
       string: ''
     headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:10:27 GMT
+      Keep-Alive:
+      - timeout=72
       content-version:
       - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:50:24 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=ab61fe594e37cae048810df94b864b98; path=/;
-        HttpOnly; Secure; SameSite=None
       x-ratelimit-limit:
       - '25'
       x-ratelimit-remaining:
@@ -176,21 +170,18 @@ interactions:
     body:
       string: '{"results":[],"total_count":0}'
     headers:
-      cache-control:
-      - private
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:10:28 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
       - '30'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2024-01-10'
-      date:
-      - Thu, 25 Jan 2024 15:50:24 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=ab61fe594e37cae048810df94b864b98; path=/;
-        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
       x-ratelimit-limit:
