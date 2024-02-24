@@ -65,7 +65,7 @@ target-version = "py39"
 max-complexity = 18
 
 [tool.ruff.per-file-ignores]
-"__init__.py" = ["F401", "F403"] # Ignore import violations in all `__init__.py` files.
+"__init__.py" = ["F401", "F403", "F405"] # Ignore import violations in all `__init__.py` files.
 "examples/**/*.py" = ["T201", "T203", "B904"] # Examples can include print and pprint, ignore exception propagation
 "src/genai/schema/_api.py" = ["E501"] # Generated can include long lines
 "tests/unit/docs_examples_generator/assets/**/*.py" = ["T201"] # Allow prints

@@ -264,7 +264,7 @@ class TuneCreateEndpoint(ApiEndpoint):
     version: str = "2023-11-22"
 
 
-class TuneImportCreateEndpoint(ApiEndpoint):
+class TuneFromFileCreateEndpoint(ApiEndpoint):
     path: str = "/v2/tunes/import"
     method: str = "POST"
     version: str = "2023-11-22"

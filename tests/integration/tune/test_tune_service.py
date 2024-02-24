@@ -6,7 +6,7 @@ from typing import NamedTuple
 import pytest
 
 from genai import Client
-from genai.schema import FilePurpose, TuneAssetType, TuneStatus, TuningType
+from genai.schema import FilePurpose, TuneAssetType, TuneStatus
 
 TEST_MODEL_ID = "google/flan-t5-xl"
 TUNE_NAME = "test_tune"
@@ -63,7 +63,7 @@ class TestTuneService:
                 name=TUNE_NAME,
                 task_id="classification",
                 model_id=TEST_MODEL_ID,
-                tuning_type=TuningType.PROMPT_TUNING,
+                tuning_type="prompt_tuning",
                 training_file_ids=[prepare_data.train_file_id],
             )
             tune_id = tune_create_response.result.id

@@ -23,7 +23,6 @@ from genai.schema import (
     TuneAssetType,
     TuneParameters,
     TuneStatus,
-    TuningType,
 )
 
 load_dotenv()
@@ -97,7 +96,7 @@ print(heading("Tuning model"))
 tune_result = client.tune.create(
     model_id="google/flan-t5-xl",
     name="classification-mpt-tune-api",
-    tuning_type=TuningType.PROMPT_TUNING,
+    tuning_type="prompt_tuning",
     task_id="classification",  # Another supported task is "summarization"
     parameters=hyperparams,
     training_file_ids=[training_file_id],
