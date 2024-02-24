@@ -184,6 +184,8 @@ alias:
     - _ModelIdRetrieve_result_token_limits
   ModelFamily:
     - _ModelIdRetrieve_result_model_family
+  ModelType:
+    - _ModelRetrieveRequestParamsType
   RequestApiVersion:
     - _RequestRetrieveRequestParamsApi
   RequestEndpoint:
@@ -256,6 +258,8 @@ alias:
     - _PromptIdRetrieve_result_tags_type
     - _PromptIdPatch_result_tags_type
     - _PromptIdUpdate_result_tags_type
+  ModelFacetType:
+    - _ModelRetrieve_results_facets_type
   TextClassificationCreateData:
     - _TextClassificationCreateRequest_data
   TextClassificationResult:
@@ -268,6 +272,8 @@ alias:
     - _TextSentenceSimilarityCreateRequest_parameters
   TextRerankResult:
     - _TextRerankCreate_result_results
+  ModelFacet:
+    - _ModelRetrieve_results_facets
   PromptResultAuthor:
     - _PromptRetrieve_results_author
     - _PromptCreate_result_author

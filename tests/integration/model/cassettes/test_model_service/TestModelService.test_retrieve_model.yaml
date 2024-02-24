@@ -12,54 +12,53 @@ interactions:
     uri: https://api.com/v2/models/google%2Fflan-t5-xl?version=2024-01-30
   response:
     body:
-      string: '{"result":{"id":"google/flan-t5-xl","name":"flan-t5-xl","developer":"google","size":"3B","label":"flan-t5-xl
+      string: '{"result":{"id":"google/flan-t5-xl","name":"flan-t5-xl","developer":"Google","size":"3B","label":"flan-t5-xl
         (3B)","disabled":false,"preferred":true,"description":"flan-t5-xl (3B) is
         a 3 billion parameter model based on the Flan-T5 family. It is a pretrained
         T5: an encoder-decoder model pre-trained on a mixture of supervised / unsupervised
         tasks converted into a text-to-text format, and fine-tuned on the Fine-tuned
         LAnguage Net ([FLAN](https://arxiv.org/pdf/2109.01652.pdf)) with instructions
-        for better zero-shot and few-shot performance. \n\n- Tasks: Research on zero-shot
-        or in-context few-shot learning NLP tasks such as reasoning or question answering.\n-
-        Limitations: Fine-tuned on data which was not filtered for safety and fairness.\n-
-        Languages: English, Spanish, Japanese, Persian, Hindi, [view all 60...](https://huggingface.co/google/flan-t5-xl)\n-
-        Type: Encoder-decoder\n- License: [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)\n-
-        Repository: [google-research/t5x](https://github.com/google-research/t5x)\n-
+        for better zero-shot and few-shot performance.\n\n- Repository: [google-research/t5x](https://github.com/google-research/t5x)\n-
         Paper: [Scaling Instruction-Finetuned Language Models](https://arxiv.org/abs/2210.11416)\n-
-        More Information: [from Huggingface](https://huggingface.co/google/flan-t5-xl)","tags":[],"source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"tasks":[{"id":"classification","name":"Classification","json_example":"[\n  {\n    \"input\":
+        More Information: [from Huggingface](https://huggingface.co/google/flan-t5-xl)\n-
+        License: [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)\n-
+        Intended Use: \n    - Research on zero-shot or in-context few-shot learning
+        NLP tasks such as reasoning or question answering.\n    - Research on understanding
+        limitations of current large language models.\n- Risks and Limitations:\n    -
+        Fine-tuned on data which was not filtered for safety and fairness.\n    -
+        The model covers 60 languages. ","tags":[],"facets":[{"id":"DEV-test","name":"DEV
+        TEST","type":"model_type"},{"id":"English","name":"English","type":"language"}],"source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"tasks":[{"id":"generation","name":"Generation","json_example":"[\n  {\n    \"input\":
+        \"<text>\",\n    \"output\": \"<text>\"\n  },\n  {\n    \"input\": \"<text>\",\n    \"output\":
+        \"<text>\"\n  },\n  {\n    \"input\": \"<text>\",\n    \"output\": \"<text>\"\n  }\n]","jsonl_example":"{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}","csv_example":"input,output\n<text>,<text>\n<text>,<text>\n<text>,<text>","verbalizer":"{{input}}","file_format_id":1,"tune":true,"categorization":true},{"id":"summarization","name":"Summarization","json_example":"[\n  {\n    \"input\":
+        \"<text>\",\n    \"output\": \"<text>\"\n  },\n  {\n    \"input\": \"<text>\",\n    \"output\":
+        \"<text>\"\n  },\n  {\n    \"input\": \"<text>\",\n    \"output\": \"<text>\"\n  }\n]","jsonl_example":"{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}","csv_example":"input,output\n<text>,<text>\n<text>,<text>\n<text>,<text>","verbalizer":"{{input}}","file_format_id":1,"tune":true,"categorization":true},{"id":"classification","name":"Classification","json_example":"[\n  {\n    \"input\":
         \"<text>\",\n    \"output\": \"<text>\"\n  },\n  {\n    \"input\": \"<text>\",\n    \"output\":
         \"<text>\"\n  },\n  {\n    \"input\": \"<text>\",\n    \"output\": \"<text>\"\n  }\n]","jsonl_example":"{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}","csv_example":"input,output\n<text>,<text>\n<text>,<text>\n<text>,<text>","verbalizer":"classify
-        { \"label 1\", \"label 2\" } Input: {{input}} Output:","file_format_id":1,"tune":true,"categorization":true},{"id":"summarization","name":"Summarization","json_example":"[\n  {\n    \"input\":
-        \"<text>\",\n    \"output\": \"<text>\"\n  },\n  {\n    \"input\": \"<text>\",\n    \"output\":
-        \"<text>\"\n  },\n  {\n    \"input\": \"<text>\",\n    \"output\": \"<text>\"\n  }\n]","jsonl_example":"{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}","csv_example":"input,output\n<text>,<text>\n<text>,<text>\n<text>,<text>","verbalizer":"{{input}}","file_format_id":1,"tune":true,"categorization":true},{"id":"prompt-tuning","name":"Prompt
-        Tuning","jsonl_example":"undefined\nundefined\nundefined","csv_example":"undefined\nundefined\nundefined\nundefined","tune":false,"categorization":false},{"id":"generation","name":"Generation","json_example":"[\n  {\n    \"input\":
-        \"<text>\",\n    \"output\": \"<text>\"\n  },\n  {\n    \"input\": \"<text>\",\n    \"output\":
-        \"<text>\"\n  },\n  {\n    \"input\": \"<text>\",\n    \"output\": \"<text>\"\n  }\n]","jsonl_example":"{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}\n{\"input\":\"<text>\",\"output\":\"<text>\"}","csv_example":"input,output\n<text>,<text>\n<text>,<text>\n<text>,<text>","verbalizer":"{{input}}","file_format_id":1,"tune":true,"categorization":true}],"model_family":{"id":3,"name":"FLAN-T5"}}}'
+        { \"label 1\", \"label 2\" } Input: {{input}} Output:","file_format_id":1,"tune":true,"categorization":true},{"id":"prompt-tuning","name":"Prompt
+        Tuning","jsonl_example":"undefined\nundefined\nundefined","csv_example":"undefined\nundefined\nundefined\nundefined","tune":false,"categorization":false}],"model_family":{"id":7,"name":"FLAN-T5"}}}'
     headers:
-      cache-control:
-      - private
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:11:49 GMT
+      Keep-Alive:
+      - timeout=72
+      Transfer-Encoding:
+      - chunked
       content-length:
-      - '3331'
+      - '3457'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2024-01-30'
-      date:
-      - Tue, 30 Jan 2024 11:11:34 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=e308472f29f709b2348e49390a862943; path=/;
-        HttpOnly; Secure; SameSite=None
-      transfer-encoding:
-      - chunked
       vary:
       - accept-encoding
       x-ratelimit-limit:
       - '25'
       x-ratelimit-remaining:
-      - '24'
+      - '23'
       x-ratelimit-reset:
-      - '1'
+      - '0'
     status:
       code: 200
       message: OK

@@ -106,6 +106,12 @@ class LengthPenalty(ApiBaseModel):
     """
 
 
+class ModelFacetType(str, Enum):
+    LANGUAGE = "language"
+    INDUSTRY = "industry"
+    MODEL_TYPE = "model_type"
+
+
 class ModelFamily(ApiBaseModel):
     description: Optional[str] = None
     id: int
@@ -118,6 +124,11 @@ class ModelFamily(ApiBaseModel):
 class ModelTokenLimits(ApiBaseModel):
     beam_width: int
     token_limit: int
+
+
+class ModelType(str, Enum):
+    MODEL = "model"
+    TUNE = "tune"
 
 
 class ModerationHAP(ApiBaseModel):
@@ -678,6 +689,7 @@ class FolderIdUpdateResponse(ApiBaseModel):
 class _ModelRetrieveParametersQuery(ApiBaseModel):
     limit: Optional[int] = Field(100, ge=1, le=100)
     offset: Optional[int] = Field(0, ge=0)
+    type: Optional[ModelType] = None
     version: Literal["2023-11-22"] = "2023-11-22"
 
 
@@ -1055,6 +1067,12 @@ class FileResult(ApiBaseModel):
     storage_provider_location: StorageProviderLocation
 
 
+class ModelFacet(ApiBaseModel):
+    id: str
+    name: str
+    type: ModelFacetType
+
+
 class ModelIdRetrieveResult(ApiBaseModel):
     description: Optional[str] = None
     developer: Optional[str] = None
@@ -1076,6 +1094,7 @@ class ModelIdRetrieveResult(ApiBaseModel):
 
 
 class ModelRetrieveResults(ApiBaseModel):
+    facets: Optional[list[ModelFacet]] = None
     id: str
     is_live: bool
     label: str
@@ -1293,6 +1312,7 @@ class FileIdRetrieveResponse(ApiBaseModel):
 
 class ModelRetrieveResponse(ApiBaseModel):
     results: list[ModelRetrieveResults]
+    total_count: int
 
 
 class ModelIdRetrieveResponse(ApiBaseModel):
@@ -1708,12 +1728,15 @@ __all__ = [
     "Input",
     "InternalServerErrorResponse",
     "LengthPenalty",
+    "ModelFacet",
+    "ModelFacetType",
     "ModelFamily",
     "ModelIdRetrieveResponse",
     "ModelIdRetrieveResult",
     "ModelRetrieveResponse",
     "ModelRetrieveResults",
     "ModelTokenLimits",
+    "ModelType",
     "ModerationHAP",
     "ModerationImplicitHate",
     "ModerationParameters",
