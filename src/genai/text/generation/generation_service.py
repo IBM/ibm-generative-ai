@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from genai._types import ModelLike
 from genai._utils.api_client import ApiClient
 from genai._utils.async_executor import execute_async
-from genai._utils.general import to_model_instance, to_model_optional
+from genai._utils.general import cast_list, to_model_instance, to_model_optional
 from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
@@ -137,7 +137,9 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
         if inputs is not None and input is not None:
             raise ValueError("Either specify 'inputs' or 'input'!")
 
-        prompts: list[str] = inputs if inputs is not None else [input] if input is not None else None
+        prompts: Optional[list[str]] = (
+            cast_list(inputs) if inputs is not None else cast_list(input) if input is not None else None
+        )
         if not prompts and not prompt_id:
             raise ValueError("At least one of the following parameters input/inputs/prompt_id must be specified!")
 
