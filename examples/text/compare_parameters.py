@@ -33,7 +33,7 @@ prompt = "The capital of Madrid is Spain. The capital of Canada is"
 print(heading("Run text generation with many parameter combinations"))
 response = client.text.generation.compare(
     request=TextGenerationComparisonCreateRequestRequest(
-        model_id="google/flan-t5-xxl",
+        model_id="google/flan-t5-xl",
         parameters=TextGenerationParameters(min_new_tokens=1, max_new_tokens=10, decoding_method=DecodingMethod.SAMPLE),
         input=prompt,
     ),
