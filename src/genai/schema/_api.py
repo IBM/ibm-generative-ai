@@ -534,7 +534,7 @@ class UnavailableResponse(BaseErrorResponse):
     status_code: Literal[503] = 503
 
 
-class UserCreateResultApiKey(ApiBaseModel):
+class UserApiKey(ApiBaseModel):
     created_at: str
     generated_at: str
     last_used_at: Optional[str] = None
@@ -1276,7 +1276,7 @@ class UserGenerationDefault(ApiBaseModel):
     template: Optional[PromptTemplate] = None
 
 
-class UserResponseResult(ApiBaseModel):
+class UserResult(ApiBaseModel):
     data_usage_consent: bool
     first_name: Optional[str] = None
     generate_default: Optional[UserGenerationDefault] = None
@@ -1509,11 +1509,11 @@ class _TextTokenizationCreateRequest(ApiBaseModel):
 
 
 class UserRetrieveResponse(ApiBaseModel):
-    result: UserResponseResult
+    result: UserResult
 
 
 class UserPatchResponse(ApiBaseModel):
-    result: UserResponseResult
+    result: UserResult
 
 
 class PromptResult(ApiBaseModel):
@@ -1603,7 +1603,7 @@ class TuneResult(ApiBaseModel):
 
 
 class UserCreateResult(ApiBaseModel):
-    api_key: UserCreateResultApiKey
+    api_key: UserApiKey
     data_usage_consent: bool
     first_name: Optional[str] = None
     generate_default: Optional[UserGenerationDefault] = None
@@ -1852,11 +1852,11 @@ __all__ = [
     "TuningTypeRetrieveResults",
     "UnauthorizedResponse",
     "UnavailableResponse",
+    "UserApiKey",
     "UserCreateResponse",
     "UserCreateResult",
-    "UserCreateResultApiKey",
     "UserGenerationDefault",
     "UserPatchResponse",
-    "UserResponseResult",
+    "UserResult",
     "UserRetrieveResponse",
 ]
