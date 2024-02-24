@@ -14,21 +14,18 @@ interactions:
     body:
       string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
     headers:
-      cache-control:
-      - private
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:41:59 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
       - '54'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:50:25 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=6d247d6198597e887510d8e26f4d2793; path=/;
-        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
     status:
@@ -52,19 +49,21 @@ interactions:
     uri: https://api.com/v2/text/generation?version=2024-01-10
   response:
     body:
-      string: '{"id":"7904480c-4dfe-4d81-b7cf-d686c9a2ed61","model_id":"google/flan-t5-xl","created_at":"2024-01-25T15:50:25.542Z","results":[{"generated_text":"Happy
-        and satisfied with the night''s movie","generated_token_count":10,"input_token_count":10,"stop_reason":"eos_token","seed":1556817837}]}'
+      string: '{"id":"b26fedc9-8e76-4bd5-95d9-bd1a00396b51","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:42:00.244Z","results":[{"generated_text":"I''m
+        just doing a minor report this","generated_token_count":10,"input_token_count":10,"stop_reason":"max_tokens","seed":917352927}]}'
     headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:42:00 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
-      - '286'
+      - '278'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2024-01-10'
-      date:
-      - Thu, 25 Jan 2024 15:50:25 GMT
-      keep-alive:
-      - timeout=72
       vary:
       - accept-encoding
     status:
@@ -83,25 +82,22 @@ interactions:
     uri: https://api.com/v2/requests?limit=1&offset=0&status=success&version=2023-11-22
   response:
     body:
-      string: '{"results":[{"id":"7904480c-4dfe-4d81-b7cf-d686c9a2ed61","duration":281,"request":{"input":"Hello
-        Marvin, how are you today?","model_id":"google/flan-t5-xl","parameters":{"max_new_tokens":10}},"status":"success","created_at":"2024-01-25T15:50:26.000Z","response":{"id":"7904480c-4dfe-4d81-b7cf-d686c9a2ed61","results":[{"seed":1556817837,"stop_reason":"eos_token","generated_text":"Happy
-        and satisfied with the night''s movie","input_token_count":10,"generated_token_count":10}],"model_id":"google/flan-t5-xl","created_at":"2024-01-25T15:50:25.542Z"},"version":{"api":"v2","date":"2024-01-10"}}],"total_count":90303}'
+      string: '{"results":[{"id":"b26fedc9-8e76-4bd5-95d9-bd1a00396b51","duration":441,"request":{"input":"Hello
+        Marvin, how are you today?","model_id":"google/flan-t5-xl","parameters":{"max_new_tokens":10}},"status":"success","created_at":"2024-02-24T21:42:00.000Z","response":{"id":"b26fedc9-8e76-4bd5-95d9-bd1a00396b51","results":[{"seed":917352927,"stop_reason":"max_tokens","generated_text":"I''m
+        just doing a minor report this","input_token_count":10,"generated_token_count":10}],"model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:42:00.244Z"},"version":{"api":"v2","date":"2024-01-10"}}],"total_count":175}'
     headers:
-      cache-control:
-      - private
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:42:01 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
-      - '615'
+      - '605'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:50:30 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
-        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -123,26 +119,25 @@ interactions:
       connection:
       - keep-alive
     method: DELETE
-    uri: https://api.com/v2/requests/7904480c-4dfe-4d81-b7cf-d686c9a2ed61?version=2023-11-22
+    uri: https://api.com/v2/requests/b26fedc9-8e76-4bd5-95d9-bd1a00396b51?version=2023-11-22
   response:
     body:
       string: ''
     headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:42:01 GMT
+      Keep-Alive:
+      - timeout=72
       content-version:
       - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:50:30 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=ab61fe594e37cae048810df94b864b98; path=/;
-        HttpOnly; Secure; SameSite=None
       x-ratelimit-limit:
       - '25'
       x-ratelimit-remaining:
-      - '24'
+      - '23'
       x-ratelimit-reset:
-      - '1'
+      - '0'
     status:
       code: 204
       message: No Content
@@ -159,33 +154,29 @@ interactions:
     uri: https://api.com/v2/requests?limit=1&offset=0&status=success&version=2023-11-22
   response:
     body:
-      string: '{"results":[{"id":"f6ab357f-a662-4064-a476-1e8b42d60493","duration":681,"request":{"prompt_id":"KzkY6DMNGjZeu4bA","parameters":{"return_options":{"input_text":true,"token_ranks":false,"input_tokens":false,"token_logprobs":false,"generated_tokens":false}}},"status":"success","created_at":"2024-01-25T15:50:24.000Z","response":{"id":"f6ab357f-a662-4064-a476-1e8b42d60493","results":[{"seed":3255482813,"input_text":"Write
-        the recipe for goulash in the style of Shakespeare","stop_reason":"max_tokens","generated_text":"stir
-        together the minced meat, onion, bell pepper, tomatoes, and carrots in a","input_token_count":13,"generated_token_count":20}],"model_id":"google/flan-t5-xl","created_at":"2024-01-25T15:50:23.924Z"},"version":{"api":"v2","date":"2024-01-10"}}],"total_count":90302}'
+      string: '{"results":[{"id":"fac31655-5c9e-46d6-adcb-f38add90754d","duration":282,"request":{"input":"?","model_id":"google/flan-t5-xl","parameters":{"max_new_tokens":10}},"status":"success","created_at":"2024-02-24T21:39:49.000Z","response":{"id":"fac31655-5c9e-46d6-adcb-f38add90754d","results":[{"seed":3976632475,"stop_reason":"max_tokens","generated_text":"2009
+        i5 gsi lance","input_token_count":3,"generated_token_count":10}],"model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:39:48.504Z"},"version":{"api":"v2","date":"2024-01-10"}}],"total_count":174}'
     headers:
-      cache-control:
-      - private
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:42:02 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
-      - '786'
+      - '557'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:50:35 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
-        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
       x-ratelimit-limit:
       - '25'
       x-ratelimit-remaining:
-      - '23'
+      - '24'
       x-ratelimit-reset:
-      - '0'
+      - '1'
     status:
       code: 200
       message: OK
