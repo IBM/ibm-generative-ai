@@ -57,7 +57,7 @@ class RequestService(BaseService[BaseServiceConfig, BaseServiceServices]):
         with self._get_http_client() as client:
             metadata = get_service_action_metadata(self.chat)
             http_response = client.get(
-                url=self._get_endpoint(metadata.endpoint, conversationId=conversation_id),
+                url=self._get_endpoint(metadata.endpoint, conversation_id=conversation_id),
                 params=_RequestChatConversationIdRetrieveParametersQuery().model_dump(),
             )
             return RequestChatConversationIdRetrieveResponse(**http_response.json())
@@ -79,7 +79,7 @@ class RequestService(BaseService[BaseServiceConfig, BaseServiceServices]):
         with self._get_http_client() as client:
             metadata = get_service_action_metadata(self.chat_delete)
             client.delete(
-                url=self._get_endpoint(metadata.endpoint, conversationId=conversation_id),
+                url=self._get_endpoint(metadata.endpoint, conversation_id=conversation_id),
                 params=_RequestChatConversationIdDeleteParametersQuery().model_dump(),
             )
 
