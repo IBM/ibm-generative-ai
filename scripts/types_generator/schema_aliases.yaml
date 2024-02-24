@@ -423,7 +423,7 @@ alias:
     - _UserCreate_result_generate_default
     - _UserPatch_result_generate_default
     - _UserRetrieve_result_generate_default
-  UserResponseResult:
+  UserResult:
     - _UserPatch_result
     - _UserRetrieve_result
   PromptResult:
@@ -521,8 +521,8 @@ alias:
   TextGenerationComparisonCreateRequestRequest: [ _TextGenerationComparisonCreateRequest_request ]
   TextTokenizationCreateResults: [ _TextTokenizationCreate_results ]
   UserCreateResult: [ _UserCreate_result ]
-  UserCreateResultApiKey: [ _UserCreate_result_api_key ]
   TextSentenceSimilarityCreateResult: [ _TextSentenceSimilarityCreate_results ]
+  UserApiKey: [ _UserCreate_result_api_key ]
   RequestRetrieveResults: [ _RequestRetrieve_results ]
   TuningTypeRetrieveResults: [ _TuningTypeRetrieve_results ]
   TextGenerationComparisonCreateResults: [ _TextGenerationComparisonCreate_results ]
