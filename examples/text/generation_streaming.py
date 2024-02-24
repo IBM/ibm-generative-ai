@@ -31,7 +31,7 @@ def heading(text: str) -> str:
 client = Client(credentials=Credentials.from_env())
 
 
-model_id = "meta-llama/llama-2-70b"
+model_id = "google/flan-ul2"
 prompt = "The gesture of a hand with pinched fingers 🤌 is actually rude in Italy. "
 parameters = TextGenerationParameters(
     decoding_method=DecodingMethod.SAMPLE,
