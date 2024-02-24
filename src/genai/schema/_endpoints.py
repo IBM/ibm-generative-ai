@@ -48,6 +48,42 @@ class FileIdContentRetrieveEndpoint(ApiEndpoint):
     version: str = "2023-11-22"
 
 
+class FolderRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/folders"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
+class FolderCreateEndpoint(ApiEndpoint):
+    path: str = "/v2/folders"
+    method: str = "POST"
+    version: str = "2023-11-22"
+
+
+class FolderIdDeleteEndpoint(ApiEndpoint):
+    path: str = "/v2/folders/{id}"
+    method: str = "DELETE"
+    version: str = "2023-11-22"
+
+
+class FolderIdRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/folders/{id}"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
+class FolderIdPatchEndpoint(ApiEndpoint):
+    path: str = "/v2/folders/{id}"
+    method: str = "PATCH"
+    version: str = "2024-01-10"
+
+
+class FolderIdUpdateEndpoint(ApiEndpoint):
+    path: str = "/v2/folders/{id}"
+    method: str = "PUT"
+    version: str = "2023-11-22"
+
+
 class ModelRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/models"
     method: str = "GET"
