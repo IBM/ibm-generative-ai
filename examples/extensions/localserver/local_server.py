@@ -83,7 +83,8 @@ class FlanT5Model(LocalModel):
 print(heading("Use a local server with a custom model"))
 
 # Instantiate the Local Server with your model
-server = LocalLLMServer(models=[FlanT5Model])
+# set interface="0.0.0.0" to listen on all interfaces
+server = LocalLLMServer(models=[FlanT5Model], interface="127.0.0.1")
 
 # Start the server and execute your code
 with server.run_locally():
