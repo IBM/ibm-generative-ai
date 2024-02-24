@@ -164,7 +164,7 @@ alias:
     - _PromptIdUpdateRequest_messages
     - _RequestChatConversationIdRetrieve_results_request_messages
   TunesResultDatapointLoss:
-    - _TuneImportCreate_result_datapoints_loss
+    - _TuneFromFileCreate_result_datapoints_loss
     - _TuneIdRetrieve_result_datapoints_loss
     - _TuneCreate_result_datapoints_loss
     - _TuneRetrieve_results_datapoints_loss
@@ -309,7 +309,7 @@ alias:
     - _TuneRetrieveRequestParamsStatus
     - _TuneRetrieve_results_status
     - _TuneCreate_result_status
-    - _TuneImportCreate_result_status
+    - _TuneFromFileCreate_result_status
     - _TuneIdRetrieve_result_status
     - _TuneIdPatch_result_status
   TuneResultFiles:
@@ -317,31 +317,28 @@ alias:
     - _TuneRetrieve_results_training_files
     - _TuneCreate_result_validation_files
     - _TuneCreate_result_training_files
-    - _TuneImportCreate_result_validation_files
-    - _TuneImportCreate_result_training_files
+    - _TuneFromFileCreate_result_validation_files
+    - _TuneFromFileCreate_result_training_files
     - _TuneIdRetrieve_result_validation_files
     - _TuneIdRetrieve_result_training_files
     - _TuneIdPatch_result_validation_files
     - _TuneCreate_result_evaluation_files
     - _TuneIdPatch_result_evaluation_files
     - _TuneIdRetrieve_result_evaluation_files
-    - _TuneImportCreate_result_evaluation_files
+    - _TuneFromFileCreate_result_evaluation_files
     - _TuneIdPatch_result_training_files
     - _TuneRetrieve_results_evaluation_files
   TuneResultDatapointLoss:
     - _TuneRetrieve_results_datapoints_loss_data
     - _TuneCreate_result_datapoints_loss_data
-    - _TuneImportCreate_result_datapoints_loss_data
+    - _TuneFromFileCreate_result_datapoints_loss_data
     - _TuneIdRetrieve_result_datapoints_loss_data
     - _TuneIdPatch_result_datapoints_loss_data
-  TuningType:
-    - _TuneCreateRequest_tuning_type
-  #  - _TuningTypeRetrieve_results_schema_properties_tuning_type
   TuneListSortBy:
     - _TuneRetrieveRequestParamsSortBy
   TuneResult:
     - _TuneIdPatch_result
-    - _TuneImportCreate_result
+    - _TuneFromFileCreate_result
     - _TuneRetrieve_results
     - _TuneIdRetrieve_result
     - _TuneCreate_result
@@ -349,7 +346,7 @@ alias:
     - _TuneCreateRequest_parameters
   #  - _TuningTypeRetrieve_results_schema_properties_parameters
   TuneResultDatapoints:
-    - _TuneImportCreate_result_datapoints
+    - _TuneFromFileCreate_result_datapoints
     - _TuneIdPatch_result_datapoints
     - _TuneCreate_result_datapoints
     - _TuneRetrieve_results_datapoints

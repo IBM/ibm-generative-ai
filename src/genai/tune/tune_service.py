@@ -1,7 +1,8 @@
-from typing import Optional
+from enum import Enum
+from typing import Optional, Union
 
 from genai._types import EnumLike, ModelLike
-from genai._utils.general import to_enum, to_enum_optional, to_model_optional
+from genai._utils.general import enum_like_to_string, to_enum, to_enum_optional, to_model_optional
 from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
@@ -14,6 +15,7 @@ from genai.schema import (
     TuneAssetType,
     TuneCreateEndpoint,
     TuneCreateResponse,
+    TuneFromFileCreateEndpoint,
     TuneIdContentTypeRetrieveEndpoint,
     TuneIdDeleteEndpoint,
     TuneIdRetrieveEndpoint,
@@ -22,13 +24,15 @@ from genai.schema import (
     TuneRetrieveEndpoint,
     TuneRetrieveResponse,
     TuneStatus,
-    TuningType,
     TuningTypeRetrieveEndpoint,
     TuningTypeRetrieveResponse,
 )
 from genai.schema._api import (
+    TuneFromFileCreateResponse,
     _TuneCreateParametersQuery,
     _TuneCreateRequest,
+    _TuneFromFileCreateParametersQuery,
+    _TuneFromFileCreateRequest,
     _TuneIdContentTypeRetrieveParametersQuery,
     _TuneIdDeleteParametersQuery,
     _TuneIdRetrieveParametersQuery,
@@ -48,7 +52,7 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
         name: str,
         task_id: str,
         training_file_ids: list[str],
-        tuning_type: EnumLike[TuningType],
+        tuning_type: Union[str, Enum],
         validation_file_ids: Optional[list[str]] = None,
         parameters: Optional[ModelLike[TuneParameters]] = None,
     ) -> TuneCreateResponse:
@@ -66,7 +70,8 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
                 parameters=to_model_optional(parameters, TuneParameters),
                 task_id=task_id,
                 training_file_ids=training_file_ids,
-                tuning_type=to_enum(TuningType, tuning_type),
+                # TODO: remove casting in the next major release
+                tuning_type=enum_like_to_string(tuning_type),
                 validation_file_ids=validation_file_ids,
             ).model_dump()
 
@@ -77,6 +82,26 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
                 json=request_body,
             )
             return TuneCreateResponse(**response.json())
+
+    @set_service_action_metadata(endpoint=TuneFromFileCreateEndpoint)
+    def create_from_file(self, *, name: str, file_id: str) -> TuneFromFileCreateResponse:
+        """
+        Raises:
+            ApiResponseException: In case of a known API error.
+            ApiNetworkException: In case of unhandled network error.
+            ValidationError: In case of provided parameters are invalid.
+        """
+        with self._get_http_client() as client:
+            metadata = get_service_action_metadata(self.create_from_file)
+            request_body = _TuneFromFileCreateRequest(name=name, file_id=file_id).model_dump()
+
+            self._log_method_execution("Tune Create From File Create", **request_body)
+            response = client.post(
+                url=self._get_endpoint(metadata.endpoint),
+                params=_TuneFromFileCreateParametersQuery().model_dump(),
+                json=request_body,
+            )
+            return TuneFromFileCreateResponse(**response.json())
 
     @set_service_action_metadata(endpoint=TuneIdContentTypeRetrieveEndpoint)
     def read(self, *, id: str, type: EnumLike[TuneAssetType]) -> bytes:
