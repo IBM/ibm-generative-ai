@@ -1,4 +1,8 @@
-"""Rerank documents based on their relevancy to the input query."""
+"""
+Document reranking
+
+Rerank documents based on their relevancy to the input query.
+"""
 from dotenv import load_dotenv
 
 from genai.client import Client

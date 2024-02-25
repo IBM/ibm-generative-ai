@@ -1,4 +1,8 @@
-"""Reveal similarity between the source sentence and set of sentences."""
+"""
+Sentence Similarity
+
+Reveal similarity between the source sentence and set of sentences.
+"""
 
 from dotenv import load_dotenv
 
@@ -19,9 +23,6 @@ def heading(text: str) -> str:
 
 client = Client(credentials=Credentials.from_env())
 
-inputs = ["Hello", "world"]
-model_id = "sentence-transformers/all-minilm-l6-v2"
-
 print(heading("EXPERIMENTAL: Text Sentence Similarity"))
 
 source_sentence = "The cat sat on the mat"
@@ -31,7 +32,7 @@ print(f"Source sentence: {source_sentence}")
 for sentence, result in zip(
     sentences,
     client.text.experimental.sentence_similarity.create(
-        model_id=model_id,
+        model_id="sentence-transformers/all-minilm-l6-v2",
         source_sentence=source_sentence,
         sentences=sentences,
         parameters=TextSentenceSimilarityParameters(truncate_input_tokens=True),

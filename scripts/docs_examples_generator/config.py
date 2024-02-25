@@ -26,6 +26,8 @@ class GeneratorConfig(BaseModel):
             "examples.file",
             "examples.user",
             "examples.request",
+            "examples.tag",
+            "examples.folder",
             "examples.extension",
             "examples.extra",
         ]
