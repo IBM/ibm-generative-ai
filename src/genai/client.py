@@ -19,6 +19,7 @@ from genai.prompt import PromptService as _PromptService
 from genai.request import RequestService as _RequestService
 from genai.system_prompt import SystemPromptService as _SystemPromptService
 from genai.tag import TagService as _TagService
+from genai.task import TaskService as _TaskService
 from genai.text import TextService as _TextService
 from genai.tune import TuneService as _TuneService
 from genai.user import UserService as _UserService
@@ -39,6 +40,7 @@ class BaseServices(BaseServiceServices):
     UserService: type[_UserService] = _UserService
     TagService: type[_TagService] = _TagService
     FolderService: type[_FolderService] = _FolderService
+    TaskService: type[_TaskService] = _TaskService
 
 
 class BaseConfig(BaseServiceConfig):
@@ -70,6 +72,7 @@ class Client(BaseService[BaseConfig, BaseServices]):
         user: An instance of the `UserService` class for managing user-related operations.
         tag: An instance of the `TagService` class for working with tags.
         folder: An instance of the `FolderService` class for working with folder.
+        task: An instance of the `TaskService` class for working with tasks.
     """
 
     Config = BaseConfig
@@ -142,3 +145,4 @@ class Client(BaseService[BaseConfig, BaseServices]):
         self.user = services.UserService(api_client=api_client)
         self.tag = services.TagService(api_client=api_client)
         self.folder = services.FolderService(api_client=api_client)
+        self.task = services.TaskService(api_client=api_client)
