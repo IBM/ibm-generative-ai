@@ -156,3 +156,15 @@ def test_transform_schema_correctly_sets_operation_ids(
     private_prefix = "_" if is_private else ""
     expected_operation_id = f"{OPERATION_ID_PREFIX}{private_prefix}TestpathCreate"
     assert api["paths"]["/testpath"]["post"]["operationId"] == expected_operation_id
+
+
+@pytest.mark.unit
+def test_transform_schema_rename_endpoint(process_schema_test_input: ProcessSchemaTestInput) -> None:
+    api, input_schemas = process_schema_test_input
+    schema_overrides = SchemaOverrides(
+        endpoint_aliases={
+            "/testpath": "/beta/newpath",
+        }
+    )
+    transform_schema(api, schema_overrides, OPERATION_ID_PREFIX)
+    assert api["paths"]["/testpath"]["post"]["operationId"] == f"{OPERATION_ID_PREFIX}BetaNewpathCreate"
