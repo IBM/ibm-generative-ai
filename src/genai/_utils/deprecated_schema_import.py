@@ -3,16 +3,15 @@ import warnings
 _CACHED_WARNINGS: set[str] = set()
 
 
-def _log_deprecation_warning(name: str, module_name: str, msg: str):
-    cache_warning_name = f"{module_name}.{name}"
-
-    if cache_warning_name in _CACHED_WARNINGS:
+def _log_deprecation_warning(key: str, msg: str):
+    if key in _CACHED_WARNINGS:
         return
 
     with warnings.catch_warnings():
         warnings.simplefilter("always", DeprecationWarning)
         warnings.warn(msg, category=DeprecationWarning, stacklevel=4)  # the original import is 4 levels higher
-    _CACHED_WARNINGS.add(cache_warning_name)
+
+    _CACHED_WARNINGS.add(key)
 
 
 def _deprecated_schema_import(name: str, module_name: str):
@@ -24,9 +23,9 @@ def _deprecated_schema_import(name: str, module_name: str):
     import genai.schema
 
     if name in dir(genai.schema) and not name.startswith("_"):
+        key = f"{module_name}.{name}"
         _log_deprecation_warning(
-            name,
-            module_name,
+            key,
             f"Deprecated import of {name} from module {module_name}. Please use `from genai.schema import {name}`.",
         )
         return getattr(genai.schema, name)
