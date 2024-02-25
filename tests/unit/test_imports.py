@@ -6,11 +6,10 @@ import sys
 import warnings
 from importlib.machinery import SourceFileLoader
 from pathlib import Path
-from typing import Iterator
+from typing import Iterator, Tuple
 
 import pytest
 
-import genai.schema
 from genai._utils.service import BaseService
 
 
@@ -88,7 +87,6 @@ def test_backwards_compatibility(propagate_caplog):
         "PromptCreateResponse",
         "PromptIdRetrieveResponse",
         "PromptIdUpdateResponse",
-        "PromptRetrieveRequestParamsSource",
         "PromptRetrieveResponse",
         "PromptTemplate",
         "PromptTemplateData",
@@ -135,15 +133,19 @@ def test_backwards_compatibility(propagate_caplog):
         "TuneResult",
         "TuneRetrieveResponse",
         "TuneStatus",
-        "TuningType",
         "TuningTypeRetrieveResponse",
         "UserCreateResponse",
         "UserPatchResponse",
         "UserRetrieveResponse",
     ]
     # name is available in schema
+    import genai.schema
+
     for name in previously_exported_symbols:
-        getattr(genai.schema, name)
+        with warnings.catch_warnings(record=True) as warning_log:
+            result = getattr(genai.schema, name)
+            assert not warning_log
+            assert result is not None
 
 
 @pytest.mark.unit
@@ -171,9 +173,43 @@ def test_backwards_compatibility_warnings():
         module = f"genai.{service}"
         with warnings.catch_warnings(record=True) as warning_log:
             exec(f"from {module} import {example_symbol}")
+            assert warning_log
             warning = warning_log[0]
             assert f"Deprecated import of {example_symbol} from module {module}" in warning.message.args[0]
             assert warning.category == DeprecationWarning
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize(
+    "name_pair",
+    [
+        ["UserPromptResult", "PromptResult"],
+        ["PromptsResponseResult", "PromptResult"],
+        ["UserResponseResult", "UserResult"],
+        ["UserCreateResultApiKey", "UserApiKey"],
+        ["PromptRetrieveRequestParamsSource", "PromptListSource"],
+    ],
+)
+def test_import_renamed_schema_warning(name_pair: Tuple[str, str]):
+    module = "genai.schema"
+    old_name, new_name = name_pair
+    with warnings.catch_warnings(record=True) as warning_log:
+        exec(f"from {module} import {old_name}")
+        assert warning_log
+        warning = warning_log[0]
+        assert f"Class has been renamed from '{old_name}' to '{new_name}'." in warning.message.args[0]
+        assert warning.category == DeprecationWarning
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("name", ["TuningType"])
+def test_import_removed_schema_warning(name: str):
+    module = "genai.schema"
+    with warnings.catch_warnings(record=True) as warning_log:
+        exec(f"from {module} import {name}")
+        warning = warning_log[0]
+        assert "The 'TuningType' enum has been deprecated" in warning.message.args[0]
+        assert warning.category == DeprecationWarning
 
 
 @pytest.mark.unit

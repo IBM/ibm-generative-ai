@@ -1,9 +1,10 @@
+from genai._utils.deprecated_schema_import import _log_deprecation_warning
 from genai.schema._api import *
 from genai.schema._api_removed_schemas import _removed_schemas
 from genai.schema._endpoints import *
 from genai.schema._extensions import *
 
-_removed_schema_aliases = {
+_renamed_schemas = {
     "UserPromptResult": PromptResult,
     "PromptsResponseResult": PromptResult,
     "UserResponseResult": UserResult,
@@ -17,24 +18,15 @@ def __getattr__(name):
         return globals()[name]
 
     if name in _removed_schemas:
-        from genai._utils.deprecated_schema_import import _log_deprecation_warning
-
         explanation, target = _removed_schemas[name]
-        _log_deprecation_warning(
-            name=name,
-            module_name=__name__,
-            msg=explanation,
-        )
+        _log_deprecation_warning(key=f"{__name__}.{name}_removed", msg=explanation)
         return target
 
-    if name in _removed_schema_aliases:
-        from genai._utils.deprecated_schema_import import _log_deprecation_warning
-
-        target = _removed_schema_aliases[name]
+    if name in _renamed_schemas:
+        target = _renamed_schemas[name]
         _log_deprecation_warning(
-            name=name,
-            module_name=__name__,
-            msg=f"Class has been renamed from `{name}` to `{target.__name__}`."
+            key=f"{__name__}.{name}_renamed",
+            msg=f"Class has been renamed from '{name}' to '{target.__name__}'.\n"
             f"This class alias will be removed in the following major release.",
         )
         return target
