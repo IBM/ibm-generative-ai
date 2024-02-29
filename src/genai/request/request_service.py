@@ -3,6 +3,7 @@ from typing import Optional, TypeVar, Union
 
 from pydantic import BaseModel
 
+from genai import ApiClient
 from genai._types import EnumLike
 from genai._utils.general import cast_list, to_enum, to_enum_optional
 from genai._utils.service import (
@@ -13,6 +14,7 @@ from genai._utils.service import (
     set_service_action_metadata,
 )
 from genai._utils.validators import assert_is_not_empty_string
+from genai.request.feedback import FeedbackService as _FeedbackService
 from genai.schema import (
     RequestApiVersion,
     RequestChatConversationIdRetrieveResponse,
@@ -36,10 +38,30 @@ from genai.schema._endpoints import (
 
 T = TypeVar("T", bound=BaseModel)
 
-__all__ = ["RequestService"]
+__all__ = ["RequestService", "BaseServices"]
 
 
-class RequestService(BaseService[BaseServiceConfig, BaseServiceServices]):
+class BaseServices(BaseServiceServices):
+    FeedbackService: type[_FeedbackService] = _FeedbackService
+
+
+class RequestService(BaseService[BaseServiceConfig, BaseServices]):
+    Services = BaseServices
+
+    def __init__(
+        self,
+        *,
+        api_client: ApiClient,
+        services: Optional[BaseServices] = None,
+        config: Optional[Union[BaseServiceConfig, dict]] = None,
+    ):
+        super().__init__(api_client=api_client, config=config)
+
+        if not services:
+            services = BaseServices()
+
+        self.feedback = services.FeedbackService(api_client=api_client)
+
     @set_service_action_metadata(endpoint=RequestChatConversationIdRetrieveEndpoint)
     def chat(self, conversation_id: str) -> RequestChatConversationIdRetrieveResponse:
         """

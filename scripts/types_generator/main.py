@@ -96,7 +96,7 @@ def run():
                             base_model=ApiEndpoint.__name__,
                             model=model.model_dump(exclude_none=True, exclude={"class_name"}),
                         )
-                        for model in extract_endpoints(schema, schema_overrides.endpoint_aliases)
+                        for model in extract_endpoints(schema, schema_overrides.endpoint_mapping)
                     ],
                 ]
             ),

@@ -26,6 +26,13 @@ create_response = client.folder.create(name="My folder")
 folder_id = create_response.result.id
 print(f"Folder ID: {folder_id}")
 
+print(heading("Creating a prompt in the folder"))
+prompt_id = client.prompt.create(
+    name="Recipe Generator Prompt",
+    model_id="google/flan-t5-xl",
+    input="Make a short recipe for {{meal}} (use bullet points)",
+).result.id
+
 print(heading("Get the folder details"))
 retrieve_response = client.folder.retrieve(id=folder_id)
 pprint(retrieve_response.result.model_dump())
@@ -37,4 +44,7 @@ print("Results: ", list_response.results)
 
 print(heading("Delete the folder"))
 client.folder.delete(id=folder_id)
+
+print(heading("Deleting the prompt"))
+client.prompt.delete(id=prompt_id)
 print("OK")

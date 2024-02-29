@@ -1,6 +1,7 @@
 from typing import Generator, Optional, Union
 
 import httpx
+from deprecated import deprecated
 from httpx import AsyncClient, HTTPStatusError
 from pydantic import BaseModel
 
@@ -86,8 +87,13 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
             services = BaseServices()
 
         self._concurrency_limiter = self._get_concurrency_limiter()
-        self.feedback = services.FeedbackService(api_client=api_client)
+        self._feedback = services.FeedbackService(api_client=api_client)
         self.limit = services.LimitService(api_client=api_client)
+
+    @property
+    @deprecated(reason="Use 'client.request.feedback' service instead.")
+    def feedback(self):
+        return self._feedback
 
     def _get_concurrency_limiter(self) -> LoopBoundLimiter:
         async def handler():

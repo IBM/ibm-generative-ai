@@ -30,8 +30,8 @@ from genai.schema import (
     TextGenerationParameters,
 )
 from genai.schema._api import (
-    PromptListDirection,
     PromptListSortBy,
+    SortDirection,
     _PromptCreateParametersQuery,
     _PromptCreateRequest,
     _PromptIdDeleteParametersQuery,
@@ -185,7 +185,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
         limit: Optional[int] = None,
         offset: Optional[int] = None,
         sort_by: Optional[EnumLike[PromptListSortBy]] = None,
-        direction: Optional[EnumLike[PromptListDirection]] = None,
+        direction: Optional[EnumLike[SortDirection]] = None,
         search: Optional[str] = None,
         task_id: Optional[Union[str, list[str]]] = None,
         model_id: Optional[Union[str, list[str]]] = None,
@@ -210,7 +210,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             limit=limit,
             offset=offset,
             sort_by=to_enum_optional(sort_by, PromptListSortBy),
-            direction=to_enum_optional(direction, PromptListDirection),
+            direction=to_enum_optional(direction, SortDirection),
             search=search,
             task_id=cast_list_optional(task_id),
             model_id=cast_list_optional(model_id),

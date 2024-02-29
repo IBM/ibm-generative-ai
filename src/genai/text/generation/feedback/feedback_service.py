@@ -1,5 +1,6 @@
 from typing import Optional, TypeVar
 
+from deprecated import deprecated
 from pydantic import BaseModel
 
 from genai._types import EnumLike
@@ -36,6 +37,7 @@ __all__ = ["FeedbackService"]
 
 class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
     @set_service_action_metadata(endpoint=TextGenerationIdFeedbackRetrieveEndpoint)
+    @deprecated(reason="Use 'client.request.feedback.retrieve' method instead.")
     def retrieve(
         self,
         generation_id: str,
@@ -59,6 +61,7 @@ class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
             return TextGenerationIdFeedbackRetrieveResponse(**http_response.json())
 
     @set_service_action_metadata(endpoint=TextGenerationIdFeedbackCreateEndpoint)
+    @deprecated(reason="Use 'client.request.feedback.create' method instead.")
     def create(
         self,
         generation_id: str,
@@ -100,6 +103,7 @@ class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
             return TextGenerationIdFeedbackCreateResponse(**http_response.json())
 
     @set_service_action_metadata(endpoint=TextGenerationIdFeedbackUpdateEndpoint)
+    @deprecated(reason="Use 'client.request.feedback.update' method instead.")
     def update(
         self,
         generation_id: str,
