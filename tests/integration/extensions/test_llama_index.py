@@ -1,10 +1,10 @@
 import pytest
-from llama_index.core.llms.types import (
+from llama_index.core.llms import (
     ChatMessage,
     CompletionResponse,
     MessageRole,
 )
-from llama_index.core.llms.types import (
+from llama_index.core.llms import (
     ChatResponse as LlamaIndexChatResponse,
 )
 

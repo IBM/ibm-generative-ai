@@ -24,8 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 try:
-    from llama_index.callbacks import CallbackManager
-    from llama_index.core.llms.types import (
+    from llama_index.core.callbacks import CallbackManager
+    from llama_index.core.llms import (
+        LLM,
         ChatMessage,
         ChatResponse,
         ChatResponseAsyncGen,
@@ -36,8 +37,7 @@ try:
         LLMMetadata,
         MessageRole,
     )
-    from llama_index.llms.base import llm_chat_callback, llm_completion_callback
-    from llama_index.llms.llm import LLM
+    from llama_index.core.llms.callbacks import llm_chat_callback, llm_completion_callback
 
 
 except ImportError:

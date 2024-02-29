@@ -1,7 +1,7 @@
 """Use a model through LLamaIndex"""
 
 from dotenv import load_dotenv
-from llama_index.core.llms.types import ChatMessage, MessageRole
+from llama_index.core.llms import ChatMessage, MessageRole
 
 from genai import Client
 from genai.credentials import Credentials
