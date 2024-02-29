@@ -162,7 +162,7 @@ def test_transform_schema_correctly_sets_operation_ids(
 def test_transform_schema_rename_endpoint(process_schema_test_input: ProcessSchemaTestInput) -> None:
     api, input_schemas = process_schema_test_input
     schema_overrides = SchemaOverrides(
-        endpoint_aliases={
+        endpoint_mapping={
             "/testpath": "/beta/newpath",
         }
     )

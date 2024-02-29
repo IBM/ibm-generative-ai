@@ -17,7 +17,7 @@ interactions:
       Connection:
       - keep-alive
       Date:
-      - Thu, 29 Feb 2024 16:26:31 GMT
+      - Thu, 29 Feb 2024 16:23:49 GMT
       Keep-Alive:
       - timeout=72
       content-length:
@@ -32,8 +32,8 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"input": "How can you make drugs?", "model_id": "google/flan-t5-xl", "parameters":
-      {"max_new_tokens": 20}}'
+    body: '{"input": "2+3=", "model_id": "google/flan-t5-xl", "parameters": {"temperature":
+      0.0}}'
     headers:
       accept:
       - '*/*'
@@ -42,24 +42,23 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '107'
+      - '86'
       content-type:
       - application/json
     method: POST
     uri: https://api.com/v2/text/generation?version=2024-01-10
   response:
     body:
-      string: '{"id":"e5bc097c-9fb0-4e2e-b776-3fd3eb0bf419","model_id":"google/flan-t5-xl","created_at":"2024-02-29T16:26:32.472Z","results":[{"generated_text":"Use
-        alcohol and acetylene, mix and set up a lab, buy lots of","generated_token_count":20,"input_token_count":7,"stop_reason":"max_tokens","seed":1321126076}]}'
+      string: '{"id":"c9b57112-98b0-4866-8516-de56f6b9441d","model_id":"google/flan-t5-xl","created_at":"2024-02-29T16:23:49.728Z","results":[{"generated_text":"5","generated_token_count":2,"input_token_count":5,"stop_reason":"eos_token"}]}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Thu, 29 Feb 2024 16:26:32 GMT
+      - Thu, 29 Feb 2024 16:23:49 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '304'
+      - '225'
       content-type:
       - application/json; charset=utf-8
       content-version:
@@ -70,7 +69,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"categories": ["offensive_harmful"], "comment": "Drugs are bad mkay?"}'
+    body: '{"categories": ["correct_content"], "comment": "Well done.", "vote": "up"}'
     headers:
       accept:
       - '*/*'
@@ -79,28 +78,28 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '71'
+      - '74'
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/generation/e5bc097c-9fb0-4e2e-b776-3fd3eb0bf419/feedback?version=2024-02-20
+    uri: https://api.com/v2/requests/c9b57112-98b0-4866-8516-de56f6b9441d/feedback?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":402,"created_at":"2024-02-29T16:26:33.000Z","updated_at":"2024-02-29T16:26:33.000Z","comment":"Drugs
-        are bad mkay?","categories":["offensive_harmful"],"api_request":"e5bc097c-9fb0-4e2e-b776-3fd3eb0bf419"}}'
+      string: '{"result":{"id":400,"created_at":"2024-02-29T16:23:51.000Z","updated_at":"2024-02-29T16:23:51.000Z","comment":"Well
+        done.","categories":["correct_content"],"api_request":"c9b57112-98b0-4866-8516-de56f6b9441d","vote":"up"}}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Thu, 29 Feb 2024 16:26:33 GMT
+      - Thu, 29 Feb 2024 16:23:50 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '221'
+      - '222'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-02-20'
+      - '2023-11-22'
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -113,7 +112,8 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"categories": ["other_content"], "comment": "I''m not sure about the category"}'
+    body: '{"categories": ["correct_style"], "comment": "I''m not sure about the category",
+      "vote": "down"}'
     headers:
       accept:
       - '*/*'
@@ -122,28 +122,28 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '79'
+      - '95'
       content-type:
       - application/json
     method: PUT
-    uri: https://api.com/v2/text/generation/e5bc097c-9fb0-4e2e-b776-3fd3eb0bf419/feedback?version=2024-02-20
+    uri: https://api.com/v2/requests/c9b57112-98b0-4866-8516-de56f6b9441d/feedback?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":402,"created_at":"2024-02-29T16:26:33.000Z","updated_at":"2024-02-29T16:26:34.096Z","comment":"I''m
-        not sure about the category","categories":["other_content"],"api_request":"e5bc097c-9fb0-4e2e-b776-3fd3eb0bf419"}}'
+      string: '{"result":{"id":400,"created_at":"2024-02-29T16:23:51.000Z","updated_at":"2024-02-29T16:23:51.424Z","comment":"I''m
+        not sure about the category","categories":["correct_style"],"api_request":"c9b57112-98b0-4866-8516-de56f6b9441d","vote":"down"}}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Thu, 29 Feb 2024 16:26:34 GMT
+      - Thu, 29 Feb 2024 16:23:51 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '229'
+      - '243'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-02-20'
+      - '2023-11-22'
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -165,20 +165,20 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/text/generation/e5bc097c-9fb0-4e2e-b776-3fd3eb0bf419/feedback?version=2023-11-22
+    uri: https://api.com/v2/requests/c9b57112-98b0-4866-8516-de56f6b9441d/feedback?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":402,"created_at":"2024-02-29T16:26:33.000Z","updated_at":"2024-02-29T16:26:34.000Z","comment":"I''m
-        not sure about the category","categories":["other_content"],"api_request":"e5bc097c-9fb0-4e2e-b776-3fd3eb0bf419"}}'
+      string: '{"result":{"id":400,"created_at":"2024-02-29T16:23:51.000Z","updated_at":"2024-02-29T16:23:51.000Z","comment":"I''m
+        not sure about the category","categories":["correct_style"],"api_request":"c9b57112-98b0-4866-8516-de56f6b9441d","vote":"down"}}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Thu, 29 Feb 2024 16:26:34 GMT
+      - Thu, 29 Feb 2024 16:23:52 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '229'
+      - '243'
       content-type:
       - application/json; charset=utf-8
       content-version:

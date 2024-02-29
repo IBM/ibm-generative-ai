@@ -43,6 +43,7 @@ transformers = { version = "^4.33.3",  optional = true, extras=["agents"] }
 llama-index-core = { version = "^0.10.0", optional = true }
 uvicorn = { version = "^0.22.0",  optional = true }
 fastapi = { version = "^0.100.0",  optional = true }
+deprecated = "^1.2.14"
 
 [tool.black] # left for IDE compatibility (pycharm)
 line-length = 120

@@ -7,6 +7,7 @@ TEST_MODEL_ID = "google/flan-t5-xl"
 
 
 @pytest.mark.integration
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
 class TestFeedbackService:
     @pytest.mark.vcr
     def test_create_update_retrieve(self, client: Client, subtests) -> None:

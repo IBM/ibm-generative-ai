@@ -8,6 +8,7 @@ alias:
   SortDirection:
     - _TuneRetrieveRequestParamsDirection
     - _FileRetrieveRequestParamsDirection
+    - _PromptRetrieveRequestParamsDirection
 
   # FILES ------------------------------------------------------------------------
   FilePurpose:
@@ -342,6 +343,21 @@ alias:
   TextGenerationFeedbackCategory:
     - _TextGenerationIdFeedbackCreateRequest_categories
     - _TextGenerationIdFeedbackUpdateRequest_categories
+  RequestFeedbackCategory:
+    - _RequestIdFeedbackUpdateRequest_categories
+    - _RequestIdFeedbackCreateRequest_categories
+  RequestFeedbackVote:
+    - _RequestIdFeedbackUpdate_result_vote
+    - _RequestIdFeedbackRetrieve_result_vote
+    - _RequestIdFeedbackCreate_result_vote
+    - _RequestIdFeedbackUpdateRequest_vote
+    - _RequestIdFeedbackCreateRequest_vote
+  TextGenerationFeedbackVote:
+    - _TextGenerationIdFeedbackCreateRequest_vote
+    - _TextGenerationIdFeedbackCreate_result_vote
+    - _TextGenerationIdFeedbackUpdate_result_vote
+    - _TextGenerationIdFeedbackUpdateRequest_vote
+    - _TextGenerationIdFeedbackRetrieve_result_vote
   TuneStatus:
     - _TuneRetrieveRequestParamsStatus
     - _TuneRetrieve_results_status
@@ -375,8 +391,6 @@ alias:
     - _TuneRetrieveRequestParamsSortBy
   PromptListSortBy:
     - _PromptRetrieveRequestParamsSortBy
-  PromptListDirection:
-    - _PromptRetrieveRequestParamsDirection
   TuneResult:
     - _TuneIdPatch_result
     - _TuneFromFileCreate_result
@@ -436,6 +450,10 @@ alias:
     - _TextGenerationIdFeedbackCreate_result
     - _TextGenerationIdFeedbackRetrieve_result
     - _TextGenerationIdFeedbackUpdate_result
+  RequestFeedbackResult:
+    - _RequestIdFeedbackCreate_result
+    - _RequestIdFeedbackRetrieve_result
+    - _RequestIdFeedbackUpdate_result
   TextGenerationParameters:
     - _TextGenerationOutputCreateRequest_parameters
     - _TextChatOutputCreateRequest_parameters
@@ -540,7 +558,8 @@ alias:
 
 private_operations: [ ] # Response and Query schemas are public by default, but can be hidden if specified here
 
-endpoint_aliases:
+endpoint_mapping:
+  # Rename endpoint to change the names of resulted schemas
   /v2/beta/text/classification: '/v2/text/classification'
   /v2/beta/text/rerank: '/v2/text/rerank'
   /v2/beta/text/sentence-similarity: '/v2/text/sentence-similarity'

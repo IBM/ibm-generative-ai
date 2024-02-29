@@ -28,7 +28,7 @@ class SchemaOverrides(BaseModel):
     alias: dict[str, list[str]] = {}
     replace: dict[str, Union[str, SchemaReplacement]] = {}
     private_operations: set[str] = set()
-    endpoint_aliases: dict[str, str] = {}
+    endpoint_mapping: dict[str, str] = {}
 
     @property
     def replacements(self) -> dict[str, SchemaReplacement]:
@@ -348,7 +348,7 @@ def transform_schema(api: Schema, schema_overrides: SchemaOverrides, operation_i
     private_operations = schema_overrides.private_operations.copy()
     # Process all existing paths
     for path, http_methods in sorted(api.get("paths", {}).items()):
-        base_schema_name = path_to_schema_name(schema_overrides.endpoint_aliases.get(path, path), delimiter="_")
+        base_schema_name = path_to_schema_name(schema_overrides.endpoint_mapping.get(path, path), delimiter="_")
 
         for http_method, properties in sorted(http_methods.items()):
             assert isinstance(properties, dict)

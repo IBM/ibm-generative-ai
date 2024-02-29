@@ -174,6 +174,24 @@ class RequestIdDeleteEndpoint(ApiEndpoint):
     version: str = "2023-11-22"
 
 
+class RequestIdFeedbackRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/requests/{id}/feedback"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
+class RequestIdFeedbackCreateEndpoint(ApiEndpoint):
+    path: str = "/v2/requests/{id}/feedback"
+    method: str = "POST"
+    version: str = "2023-11-22"
+
+
+class RequestIdFeedbackUpdateEndpoint(ApiEndpoint):
+    path: str = "/v2/requests/{id}/feedback"
+    method: str = "PUT"
+    version: str = "2023-11-22"
+
+
 class SystemPromptRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/system_prompts"
     method: str = "GET"

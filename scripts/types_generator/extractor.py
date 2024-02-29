@@ -14,11 +14,11 @@ class ApiEndpoint(BaseModel):
     class_name: str
 
 
-def extract_endpoints(api: Schema, endpoint_aliases: dict[str, str]):
+def extract_endpoints(api: Schema, endpoint_mapping: dict[str, str]):
     endpoints: list[ApiEndpoint] = []
 
     for path, http_methods in sorted(api.get("paths", {}).items()):
-        path_formatted = path_to_schema_name(endpoint_aliases.get(path, path), delimiter="_")
+        path_formatted = path_to_schema_name(endpoint_mapping.get(path, path), delimiter="_")
 
         for http_method_raw, properties in sorted(http_methods.items()):
             assert isinstance(properties, dict)
