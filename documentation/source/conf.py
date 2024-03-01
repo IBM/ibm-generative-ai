@@ -88,8 +88,7 @@ smv_prebuild_command = " && ".join(
         "cd ..",  # go to the project root
         "make -C documentation/ apidoc",  # generates `modules` index
         "export PYTHONPATH='scripts'",
-        "export BRANCH_NAME=\"$(cat ../versions.json | jq -r --arg DIR_NAME `basename $PWD` '.[] | select(.basedir | endswith($DIR_NAME)) | .name')\"",  # noqa
-        f'export BRANCH_NAME="${{BRANCH_NAME:-{smv_latest_version}}}"',  # noqa
+        'export BRANCH_NAME="$SPHINX_MULTIVERSION_NAME"',
         "python scripts/docs_examples_generator/main.py",
         "([ -f scripts/docs_fix_schema_private.sh ] && ./scripts/docs_fix_schema_private.sh) || ([ ! -f scripts/docs_fix_schema_private.sh ] && echo 'Skip docs fix schema private (does not exists)')",  # noqa
     ]
