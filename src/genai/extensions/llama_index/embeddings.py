@@ -7,7 +7,7 @@ from genai.schema import TextEmbeddingParameters
 from genai.text.embedding.embedding_service import CreateExecutionOptions
 
 try:
-    from llama_index.embeddings.base import BaseEmbedding, Embedding
+    from llama_index.core.base.embeddings.base import BaseEmbedding, Embedding
 except ImportError:
     raise ImportError("Could not import llamaindex: Please install ibm-generative-ai[llama-index] extension.")  # noqa: B904
 

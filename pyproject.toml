@@ -40,7 +40,7 @@ langchain-core = { version = "^0.1.0", optional = true }
 pyyaml = { version = "^6.0.0", optional = true }
 datasets = { version = "^2.13.0",  optional = true }
 transformers = { version = "^4.33.3",  optional = true, extras=["agents"] }
-llama-index = { version = "^0.9.15",  optional = true }
+llama-index-core = { version = "^0.10.0", optional = true }
 uvicorn = { version = "^0.22.0",  optional = true }
 fastapi = { version = "^0.100.0",  optional = true }
 
@@ -110,7 +110,7 @@ sqlalchemy = "^2.0.25"
 [tool.poetry.extras]
 langchain = ["langchain-core", "pyyaml"]
 huggingface = ["datasets", "transformers"]
-llama-index = ["llama-index"]
+llama-index = ["llama-index-core"]
 localserver = ["uvicorn", "fastapi"]
 
 [tool.pytest.ini_options]

@@ -1,7 +1,12 @@
 import pytest
-from llama_index.llms.base import ChatMessage, CompletionResponse
-from llama_index.llms.base import ChatResponse as LlamaIndexChatResponse
-from llama_index.llms.types import MessageRole
+from llama_index.core.llms import (
+    ChatMessage,
+    CompletionResponse,
+    MessageRole,
+)
+from llama_index.core.llms import (
+    ChatResponse as LlamaIndexChatResponse,
+)
 
 from genai.extensions._common.utils import create_generation_info_from_response
 from genai.extensions.llama_index import IBMGenAILlamaIndex
