@@ -1,7 +1,8 @@
 from asyncio import AbstractEventLoop
-from typing import Any, Optional
+from typing import Any, Optional, cast
 
-from httpx import Timeout
+from httpx import Auth, Request, Timeout
+from httpx._auth import FunctionAuth
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from genai._types import ModelLike
@@ -26,6 +27,7 @@ class HttpClientOptions(BaseModel):
     model_config = ConfigDict(extra="allow", arbitrary_types_allowed=True)
 
     timeout: Timeout = Timeout(timeout=10 * 60, connect=10)
+    auth: Optional[Auth] = None
 
     @field_validator("timeout", mode="before")
     @classmethod
@@ -129,15 +131,24 @@ class ApiClient:
     def _get_headers(self, override: Optional[dict]) -> dict:
         headers = {
             **(override or {}),
-            "Authorization": f"Bearer {self._credentials.api_key.get_secret_value()}",
             "x-request-origin": f"python-sdk/{__version__}",
             "user-agent": f"python-sdk/{__version__}",
         }
 
         return headers
 
+    def _get_default_auth(self) -> Auth:
+        """Default Authorization function, can be overridden in client_options"""
+
+        def _auth_fn(request: Request) -> Request:
+            request.headers["Authorization"] = f"Bearer {self._credentials.api_key.get_secret_value()}"
+            return request
+
+        return FunctionAuth(_auth_fn)
+
     def _get_client_options(self, override: Optional[dict] = None) -> dict:
         final = merge_objects(
+            cast(dict[str, Any], {"auth": self._get_default_auth()}),
             self.config.client_options.model_dump(exclude_none=True),
             override,
             {
