@@ -39,7 +39,6 @@ alias:
     - _UserCreate_result_generate_default_moderations
     - _TextChatOutputCreateRequest_moderations
     - _TextChatCreateRequest_moderations
-    - _RequestChatConversationIdRetrieve_results_request_moderations
     - _UserPatch_result_generate_default_moderations
     - _PromptCreateRequest_moderations
     - _UserRetrieve_result_generate_default_moderations
@@ -62,7 +61,6 @@ alias:
     - _PromptIdPatch_result_moderations_hap
     - _PromptIdUpdateRequest_moderations_hap
     - _PromptIdUpdate_result_moderations_hap
-    - _RequestChatConversationIdRetrieve_results_request_moderations_hap
     - _TextChatCreateRequest_moderations_hap
     - _TextChatOutputCreateRequest_moderations_hap
     - _TextChatStreamCreateRequest_moderations_hap
@@ -82,7 +80,6 @@ alias:
     - _PromptIdPatch_result_moderations_stigma
     - _PromptIdUpdateRequest_moderations_stigma
     - _PromptIdUpdate_result_moderations_stigma
-    - _RequestChatConversationIdRetrieve_results_request_moderations_stigma
     - _TextChatCreateRequest_moderations_stigma
     - _TextChatOutputCreateRequest_moderations_stigma
     - _TextChatStreamCreateRequest_moderations_stigma
@@ -102,7 +99,6 @@ alias:
     - _PromptIdPatch_result_moderations_implicit_hate
     - _PromptIdUpdateRequest_moderations_implicit_hate
     - _PromptIdUpdate_result_moderations_implicit_hate
-    - _RequestChatConversationIdRetrieve_results_request_moderations_implicit_hate
     - _TextChatCreateRequest_moderations_implicit_hate
     - _TextChatOutputCreateRequest_moderations_implicit_hate
     - _TextChatStreamCreateRequest_moderations_implicit_hate
@@ -163,7 +159,6 @@ alias:
     - _TextChatStreamCreateRequest_messages
     - _TextChatOutputCreateRequest_messages
     - _PromptIdUpdateRequest_messages
-    - _RequestChatConversationIdRetrieve_results_request_messages
   TunesResultDatapointLoss:
     - _TuneFromFileCreate_result_datapoints_loss
     - _TuneIdRetrieve_result_datapoints_loss
@@ -202,7 +197,6 @@ alias:
     - _PromptIdPatch_result_parameters_return_options
     - _PromptIdUpdateRequest_parameters_return_options
     - _PromptIdUpdate_result_parameters_return_options
-    - _RequestChatConversationIdRetrieve_results_request_parameters_return_options
     - _TextChatCreateRequest_parameters_return_options
     - _TextChatOutputCreateRequest_parameters_return_options
     - _TextChatStreamCreateRequest_parameters_return_options
@@ -224,7 +218,6 @@ alias:
     - _PromptIdPatch_result_parameters_length_penalty
     - _PromptIdUpdateRequest_parameters_length_penalty
     - _PromptIdUpdate_result_parameters_length_penalty
-    - _RequestChatConversationIdRetrieve_results_request_parameters_length_penalty
     - _TextChatCreateRequest_parameters_length_penalty
     - _TextChatOutputCreateRequest_parameters_length_penalty
     - _TextChatStreamCreateRequest_parameters_length_penalty
@@ -295,7 +288,6 @@ alias:
     - _PromptIdPatch_result_messages_role
     - _PromptIdUpdateRequest_messages_role
     - _PromptIdUpdate_result_messages_role
-    - _RequestChatConversationIdRetrieve_results_request_messages_role
     - _TextChatCreateRequest_messages_role
     - _TextChatOutputCreateRequest_messages_role
     - _TextChatStreamCreateRequest_messages_role
@@ -307,13 +299,10 @@ alias:
     - _RequestRetrieve_results_version
     - _RequestChatConversationIdRetrieve_results_version
   TrimMethod:
-    - _RequestChatConversationIdRetrieve_results_request_trim_method
     - _TextChatCreateRequest_trim_method
     - _TextChatOutputCreateRequest_trim_method
     - _TextChatStreamCreateRequest_trim_method
   GeneratedToken:
-    - _RequestChatConversationIdRetrieve_results_response_results_generated_tokens_top_tokens
-    - _RequestChatConversationIdRetrieve_results_response_results_input_tokens_top_tokens
     - _TextChatCreate_results_generated_tokens_top_tokens
     - _TextChatCreate_results_input_tokens_top_tokens
     - _TextChatStreamCreate_results_generated_tokens_top_tokens
@@ -326,7 +315,6 @@ alias:
     - _TextGenerationStreamCreate_results_input_tokens_top_tokens
   BaseTokens:
     - _TextChatStreamCreate_results_generated_tokens
-    - _RequestChatConversationIdRetrieve_results_response_results_input_tokens
     - _TextGenerationComparisonCreate_results_result_results_generated_tokens
     - _TextGenerationStreamCreate_results_generated_tokens
     - _TextGenerationStreamCreate_results_input_tokens
@@ -335,7 +323,6 @@ alias:
     - _TextGenerationComparisonCreate_results_result_results_input_tokens
     - _TextChatCreate_results_input_tokens
     - _TextGenerationCreate_results_generated_tokens
-    - _RequestChatConversationIdRetrieve_results_response_results_generated_tokens
     - _TextChatCreate_results_generated_tokens
   TextGenerationParametersLengthPenalty:
     - _TextGenerationCreateRequest_parameters_length_penalty
@@ -410,7 +397,6 @@ alias:
     - _TextGenerationComparisonCreate_results_result_results
     - _TextGenerationCreate_results
     - _TextChatCreate_results
-    - _RequestChatConversationIdRetrieve_results_response_results
   TextCreateResponseModeration:
     - _TextModerationCreate_results
     - _TextChatStreamCreate_moderation
@@ -464,7 +450,6 @@ alias:
     - _PromptCreateRequest_parameters
     - _UserCreate_result_generate_default_parameters
     - _UserPatch_result_generate_default_parameters
-    - _RequestChatConversationIdRetrieve_results_request_parameters
     - _PromptRetrieve_results_parameters
     - _PromptIdRetrieve_result_parameters
     - _UserRetrieve_result_generate_default_parameters
@@ -480,7 +465,6 @@ alias:
     - _UserCreate_result_generate_default_parameters_decoding_method
     - _PromptCreate_result_parameters_decoding_method
     - _TextChatOutputCreateRequest_parameters_decoding_method
-    - _RequestChatConversationIdRetrieve_results_request_parameters_decoding_method
     - _PromptIdUpdate_result_parameters_decoding_method
     - _TextChatStreamCreateRequest_parameters_decoding_method
     - _PromptRetrieve_results_parameters_decoding_method
@@ -500,7 +484,6 @@ alias:
     - _TextGenerationStreamCreate_results_stop_reason
     - _TextGenerationComparisonCreate_results_result_results_stop_reason
     - _TextChatCreate_results_stop_reason
-    - _RequestChatConversationIdRetrieve_results_response_results_stop_reason
   TextGenerationLimit:
     - _TextGenerationLimitRetrieve_result
   TextEmbeddingParameters:
@@ -552,8 +535,6 @@ alias:
   TextGenerationComparisonCreateResults: [ _TextGenerationComparisonCreate_results ]
   TextGenerationComparisonCreateResultsResult: [ _TextGenerationComparisonCreate_results_result ]
   TextGenerationComparisonCreateResultsParameters: [ _TextGenerationComparisonCreate_results_parameters ]
-  RequestChatConversationIdRetrieveResultsRequest: [ _RequestChatConversationIdRetrieve_results_request ]
-  RequestChatConversationIdRetrieveResultsResponse: [ _RequestChatConversationIdRetrieve_results_response ]
   RequestChatConversationIdRetrieveResults: [ _RequestChatConversationIdRetrieve_results ]
 
 private_operations: [ ] # Response and Query schemas are public by default, but can be hidden if specified here

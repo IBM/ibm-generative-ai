@@ -17,7 +17,7 @@ interactions:
       Connection:
       - keep-alive
       Date:
-      - Thu, 29 Feb 2024 16:23:49 GMT
+      - Wed, 06 Mar 2024 19:38:14 GMT
       Keep-Alive:
       - timeout=72
       content-length:
@@ -49,12 +49,12 @@ interactions:
     uri: https://api.com/v2/text/generation?version=2024-01-10
   response:
     body:
-      string: '{"id":"c9b57112-98b0-4866-8516-de56f6b9441d","model_id":"google/flan-t5-xl","created_at":"2024-02-29T16:23:49.728Z","results":[{"generated_text":"5","generated_token_count":2,"input_token_count":5,"stop_reason":"eos_token"}]}'
+      string: '{"id":"ac936353-4b4f-4e20-a4c0-d33efc99ba97","model_id":"google/flan-t5-xl","created_at":"2024-03-06T19:38:15.021Z","results":[{"generated_text":"5","generated_token_count":2,"input_token_count":5,"stop_reason":"eos_token"}]}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Thu, 29 Feb 2024 16:23:49 GMT
+      - Wed, 06 Mar 2024 19:38:15 GMT
       Keep-Alive:
       - timeout=72
       content-length:
@@ -82,20 +82,20 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/requests/c9b57112-98b0-4866-8516-de56f6b9441d/feedback?version=2023-11-22
+    uri: https://api.com/v2/requests/ac936353-4b4f-4e20-a4c0-d33efc99ba97/feedback?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":400,"created_at":"2024-02-29T16:23:51.000Z","updated_at":"2024-02-29T16:23:51.000Z","comment":"Well
-        done.","categories":["correct_content"],"api_request":"c9b57112-98b0-4866-8516-de56f6b9441d","vote":"up"}}'
+      string: '{"result":{"id":451,"created_at":"2024-03-06T19:38:16.000Z","updated_at":"2024-03-06T19:38:16.000Z","comment":"Well
+        done.","categories":["correct_content"],"api_request":"ac936353-4b4f-4e20-a4c0-d33efc99ba97","vote":"up","contact_consent":false}}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Thu, 29 Feb 2024 16:23:50 GMT
+      - Wed, 06 Mar 2024 19:38:15 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '222'
+      - '246'
       content-type:
       - application/json; charset=utf-8
       content-version:
@@ -113,7 +113,7 @@ interactions:
       message: OK
 - request:
     body: '{"categories": ["correct_style"], "comment": "I''m not sure about the category",
-      "vote": "down"}'
+      "contact_consent": false, "vote": "down"}'
     headers:
       accept:
       - '*/*'
@@ -122,24 +122,24 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '95'
+      - '121'
       content-type:
       - application/json
     method: PUT
-    uri: https://api.com/v2/requests/c9b57112-98b0-4866-8516-de56f6b9441d/feedback?version=2023-11-22
+    uri: https://api.com/v2/requests/ac936353-4b4f-4e20-a4c0-d33efc99ba97/feedback?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":400,"created_at":"2024-02-29T16:23:51.000Z","updated_at":"2024-02-29T16:23:51.424Z","comment":"I''m
-        not sure about the category","categories":["correct_style"],"api_request":"c9b57112-98b0-4866-8516-de56f6b9441d","vote":"down"}}'
+      string: '{"result":{"id":451,"created_at":"2024-03-06T19:38:16.000Z","updated_at":"2024-03-06T19:38:16.637Z","comment":"I''m
+        not sure about the category","categories":["correct_style"],"api_request":"ac936353-4b4f-4e20-a4c0-d33efc99ba97","vote":"down","contact_consent":false}}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Thu, 29 Feb 2024 16:23:51 GMT
+      - Wed, 06 Mar 2024 19:38:16 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '243'
+      - '267'
       content-type:
       - application/json; charset=utf-8
       content-version:
@@ -165,20 +165,20 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/requests/c9b57112-98b0-4866-8516-de56f6b9441d/feedback?version=2023-11-22
+    uri: https://api.com/v2/requests/ac936353-4b4f-4e20-a4c0-d33efc99ba97/feedback?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":400,"created_at":"2024-02-29T16:23:51.000Z","updated_at":"2024-02-29T16:23:51.000Z","comment":"I''m
-        not sure about the category","categories":["correct_style"],"api_request":"c9b57112-98b0-4866-8516-de56f6b9441d","vote":"down"}}'
+      string: '{"result":{"id":451,"created_at":"2024-03-06T19:38:16.000Z","updated_at":"2024-03-06T19:38:17.000Z","comment":"I''m
+        not sure about the category","categories":["correct_style"],"api_request":"ac936353-4b4f-4e20-a4c0-d33efc99ba97","vote":"down","contact_consent":false}}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Thu, 29 Feb 2024 16:23:52 GMT
+      - Wed, 06 Mar 2024 19:38:17 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '243'
+      - '267'
       content-type:
       - application/json; charset=utf-8
       content-version:

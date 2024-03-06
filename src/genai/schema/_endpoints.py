@@ -165,7 +165,7 @@ class RequestChatConversationIdDeleteEndpoint(ApiEndpoint):
 class RequestChatConversationIdRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/requests/chat/{conversation_id}"
     method: str = "GET"
-    version: str = "2023-11-22"
+    version: str = "2024-03-06"
 
 
 class RequestIdDeleteEndpoint(ApiEndpoint):

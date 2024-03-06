@@ -54,8 +54,8 @@ class TestRequestService:
             [result] = response.results
             assert result.id == chat.id
             assert result.status == RequestStatus.SUCCESS
-            [result_message] = result.request.messages
-            assert result_message.content == message.content
+            [result_message] = result.request["messages"]
+            assert result_message["content"] == message.content
 
         with subtests.test("Delete chat"):
             client.request.chat_delete(conversation_id=chat.conversation_id)
