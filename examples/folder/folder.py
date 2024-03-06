@@ -30,6 +30,7 @@ print(heading("Creating a prompt in the folder"))
 prompt_id = client.prompt.create(
     name="Recipe Generator Prompt",
     model_id="google/flan-t5-xl",
+    folder_id=folder_id,
     input="Make a short recipe for {{meal}} (use bullet points)",
 ).result.id
 
