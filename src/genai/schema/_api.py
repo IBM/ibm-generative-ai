@@ -1155,6 +1155,17 @@ class PromptTemplate(ApiBaseModel):
     value: Optional[str] = None
 
 
+class RequestChatConversationIdRetrieveResults(ApiBaseModel):
+    created_at: AwareDatetime
+    duration: int
+    id: str
+    parent_id: Optional[str] = None
+    request: dict[str, Any]
+    response: dict[str, Any]
+    status: RequestStatus
+    version: Optional[RequestResultVersion] = None
+
+
 class RequestFeedbackResult(ApiBaseModel):
     api_request: str
     categories: list[str]
@@ -1411,6 +1422,10 @@ class RequestRetrieveResponse(ApiBaseModel):
     total_count: int
 
 
+class RequestChatConversationIdRetrieveResponse(ApiBaseModel):
+    results: list[RequestChatConversationIdRetrieveResults]
+
+
 class RequestIdFeedbackRetrieveResponse(ApiBaseModel):
     result: RequestFeedbackResult
 
@@ -1615,28 +1630,6 @@ class PromptResult(ApiBaseModel):
     usage_count: int
 
 
-class RequestChatConversationIdRetrieveResultsRequest(ApiBaseModel):
-    conversation_id: Optional[str] = None
-    messages: Optional[list[BaseMessage]] = Field(None, min_length=1)
-    model_id: Optional[str] = None
-    moderations: Optional[ModerationParameters] = None
-    parameters: Optional[TextGenerationParameters] = None
-    parent_id: Optional[str] = None
-    prompt_id: Optional[str] = None
-    prompt_template_id: Optional[str] = None
-    trim_method: Optional[TrimMethod] = None
-    use_conversation_parameters: Optional[bool] = None
-
-
-class RequestChatConversationIdRetrieveResultsResponse(ApiBaseModel):
-    conversation_id: str
-    created_at: Optional[AwareDatetime] = None
-    id: Optional[str] = None
-    input_parameters: Optional[dict[str, Any]] = None
-    model_id: Optional[str] = None
-    results: list[TextGenerationResult]
-
-
 class TextGenerationComparisonCreateRequestRequest(ApiBaseModel):
     data: Optional[PromptTemplateData] = None
     input: str
@@ -1741,25 +1734,10 @@ class UserCreateResponse(ApiBaseModel):
     result: UserCreateResult
 
 
-class RequestChatConversationIdRetrieveResults(ApiBaseModel):
-    created_at: AwareDatetime
-    duration: int
-    id: str
-    parent_id: Optional[str] = None
-    request: RequestChatConversationIdRetrieveResultsRequest
-    response: RequestChatConversationIdRetrieveResultsResponse
-    status: RequestStatus
-    version: Optional[RequestResultVersion] = None
-
-
 class TextGenerationComparisonCreateResults(ApiBaseModel):
     error: Optional[Any] = None
     parameters: TextGenerationComparisonCreateResultsParameters
     result: Optional[TextGenerationComparisonCreateResultsResult] = None
-
-
-class RequestChatConversationIdRetrieveResponse(ApiBaseModel):
-    results: list[RequestChatConversationIdRetrieveResults]
 
 
 class TextGenerationComparisonCreateResponse(ApiBaseModel):
@@ -1837,8 +1815,6 @@ __all__ = [
     "RequestApiVersion",
     "RequestChatConversationIdRetrieveResponse",
     "RequestChatConversationIdRetrieveResults",
-    "RequestChatConversationIdRetrieveResultsRequest",
-    "RequestChatConversationIdRetrieveResultsResponse",
     "RequestEndpoint",
     "RequestFeedbackCategory",
     "RequestFeedbackResult",

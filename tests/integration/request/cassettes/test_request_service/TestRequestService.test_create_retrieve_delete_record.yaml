@@ -17,7 +17,7 @@ interactions:
       Connection:
       - keep-alive
       Date:
-      - Sat, 24 Feb 2024 21:41:59 GMT
+      - Wed, 06 Mar 2024 19:38:18 GMT
       Keep-Alive:
       - timeout=72
       content-length:
@@ -49,17 +49,17 @@ interactions:
     uri: https://api.com/v2/text/generation?version=2024-01-10
   response:
     body:
-      string: '{"id":"b26fedc9-8e76-4bd5-95d9-bd1a00396b51","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:42:00.244Z","results":[{"generated_text":"I''m
-        just doing a minor report this","generated_token_count":10,"input_token_count":10,"stop_reason":"max_tokens","seed":917352927}]}'
+      string: '{"id":"148b9ed0-59c0-4247-864b-1436ae0f2a70","model_id":"google/flan-t5-xl","created_at":"2024-03-06T19:38:18.719Z","results":[{"generated_text":"I
+        am in hong kong visiting a","generated_token_count":10,"input_token_count":10,"stop_reason":"max_tokens","seed":2530823160}]}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Sat, 24 Feb 2024 21:42:00 GMT
+      - Wed, 06 Mar 2024 19:38:18 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '278'
+      - '273'
       content-type:
       - application/json; charset=utf-8
       content-version:
@@ -82,18 +82,18 @@ interactions:
     uri: https://api.com/v2/requests?limit=1&offset=0&status=success&version=2023-11-22
   response:
     body:
-      string: '{"results":[{"id":"b26fedc9-8e76-4bd5-95d9-bd1a00396b51","duration":441,"request":{"input":"Hello
-        Marvin, how are you today?","model_id":"google/flan-t5-xl","parameters":{"max_new_tokens":10}},"status":"success","created_at":"2024-02-24T21:42:00.000Z","response":{"id":"b26fedc9-8e76-4bd5-95d9-bd1a00396b51","results":[{"seed":917352927,"stop_reason":"max_tokens","generated_text":"I''m
-        just doing a minor report this","input_token_count":10,"generated_token_count":10}],"model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:42:00.244Z"},"version":{"api":"v2","date":"2024-01-10"}}],"total_count":175}'
+      string: '{"results":[{"id":"148b9ed0-59c0-4247-864b-1436ae0f2a70","duration":295,"request":{"input":"Hello
+        Marvin, how are you today?","model_id":"google/flan-t5-xl","parameters":{"max_new_tokens":10}},"status":"success","created_at":"2024-03-06T19:38:19.000Z","response":{"id":"148b9ed0-59c0-4247-864b-1436ae0f2a70","results":[{"seed":2530823160,"stop_reason":"max_tokens","generated_text":"I
+        am in hong kong visiting a","input_token_count":10,"generated_token_count":10}],"model_id":"google/flan-t5-xl","created_at":"2024-03-06T19:38:18.719Z"},"version":{"api":"v2","date":"2024-01-10"}}],"total_count":229}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Sat, 24 Feb 2024 21:42:01 GMT
+      - Wed, 06 Mar 2024 19:38:19 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '605'
+      - '600'
       content-type:
       - application/json; charset=utf-8
       content-version:
@@ -119,7 +119,7 @@ interactions:
       connection:
       - keep-alive
     method: DELETE
-    uri: https://api.com/v2/requests/b26fedc9-8e76-4bd5-95d9-bd1a00396b51?version=2023-11-22
+    uri: https://api.com/v2/requests/148b9ed0-59c0-4247-864b-1436ae0f2a70?version=2023-11-22
   response:
     body:
       string: ''
@@ -127,7 +127,7 @@ interactions:
       Connection:
       - keep-alive
       Date:
-      - Sat, 24 Feb 2024 21:42:01 GMT
+      - Wed, 06 Mar 2024 19:38:20 GMT
       Keep-Alive:
       - timeout=72
       content-version:
@@ -154,17 +154,16 @@ interactions:
     uri: https://api.com/v2/requests?limit=1&offset=0&status=success&version=2023-11-22
   response:
     body:
-      string: '{"results":[{"id":"fac31655-5c9e-46d6-adcb-f38add90754d","duration":282,"request":{"input":"?","model_id":"google/flan-t5-xl","parameters":{"max_new_tokens":10}},"status":"success","created_at":"2024-02-24T21:39:49.000Z","response":{"id":"fac31655-5c9e-46d6-adcb-f38add90754d","results":[{"seed":3976632475,"stop_reason":"max_tokens","generated_text":"2009
-        i5 gsi lance","input_token_count":3,"generated_token_count":10}],"model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:39:48.504Z"},"version":{"api":"v2","date":"2024-01-10"}}],"total_count":174}'
+      string: '{"results":[{"id":"ac936353-4b4f-4e20-a4c0-d33efc99ba97","duration":127,"request":{"input":"2+3=","model_id":"google/flan-t5-xl","parameters":{"temperature":0}},"status":"success","created_at":"2024-03-06T19:38:15.000Z","response":{"id":"ac936353-4b4f-4e20-a4c0-d33efc99ba97","results":[{"stop_reason":"eos_token","generated_text":"5","input_token_count":5,"generated_token_count":2}],"model_id":"google/flan-t5-xl","created_at":"2024-03-06T19:38:15.021Z"},"version":{"api":"v2","date":"2024-01-10"}}],"total_count":228}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Sat, 24 Feb 2024 21:42:02 GMT
+      - Wed, 06 Mar 2024 19:38:21 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '557'
+      - '520'
       content-type:
       - application/json; charset=utf-8
       content-version:
