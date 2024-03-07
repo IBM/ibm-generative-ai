@@ -97,7 +97,7 @@ def to_classname(snake_string: str, public=False) -> str:
 
 
 def _is_any_dictionary(schema: Schema):
-    return isinstance(schema, dict) and schema.get("type") == "object" and not schema.get("properties")
+    return isinstance(schema, dict) and _detect_type(schema) == "object" and not schema.get("properties")
 
 
 def _hash_schema(schema: Schema, force_hash: bool = False):
@@ -134,7 +134,6 @@ def _process_schema_factory(existing_schemas: dict, name_to_alias: dict[str, str
     schema_key = "schema"
 
     def _remove_non_important_properties(schema: Schema):
-        schema.pop("additionalProperties", None)
         schema.pop("transform", None)
 
     def process_and_replace(input: Any, name: str) -> Schema:
@@ -148,7 +147,7 @@ def _process_schema_factory(existing_schemas: dict, name_to_alias: dict[str, str
         if isinstance(body, list):
             for idx, v in enumerate(list(body)):
                 _remove_non_important_properties(v)
-                nested_type = v.get("type")
+                nested_type = _detect_type(v)
                 if nested_type == "object" or v.get("enum"):
                     body[idx] = process_and_replace(v, name_nested)
                 elif nested_type == "array" and v.get("items") and not _is_plain_string(v.get("items")):
