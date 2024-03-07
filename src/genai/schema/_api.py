@@ -1237,7 +1237,7 @@ class Tag(ApiBaseModel):
 
 class TextClassificationResult(ApiBaseModel):
     classification_type: TextClassificationType
-    log_likelihood: dict[str, Any]
+    log_likelihood: dict[str, float]
     model_input: str
     model_output: str
     predictions: list[str]
