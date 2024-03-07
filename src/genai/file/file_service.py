@@ -20,10 +20,13 @@ from genai.schema import (
     SortDirection,
 )
 from genai.schema._api import (
+    FileIdPatchResponse,
     _FileCreateParametersQuery,
     _FileCreateRequest,
     _FileIdContentRetrieveParametersQuery,
     _FileIdDeleteParametersQuery,
+    _FileIdPatchParametersQuery,
+    _FileIdPatchRequest,
     _FileIdRetrieveParametersQuery,
     _FileRetrieveParametersQuery,
 )
@@ -31,6 +34,7 @@ from genai.schema._endpoints import (
     FileCreateEndpoint,
     FileIdContentRetrieveEndpoint,
     FileIdDeleteEndpoint,
+    FileIdPatchEndpoint,
     FileIdRetrieveEndpoint,
     FileRetrieveEndpoint,
 )
@@ -41,14 +45,13 @@ __all__ = ["FileService"]
 class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
     @set_service_action_metadata(endpoint=FileCreateEndpoint)
     def create(
-        self,
-        file_path: Union[str, Path],
-        purpose: EnumLike[FilePurpose],
+        self, file_path: Union[str, Path], purpose: EnumLike[FilePurpose], *, origin_id: Optional[str] = None
     ) -> FileCreateResponse:
         """
         Args:
             file_path: The path to the local file that will be uploaded.
             purpose: The purpose of the file to be created.
+            origin_id: Optional ID of the parent file.
 
         Raises:
             ValueError: If the file does not exist or if the file format is not supported.
@@ -57,15 +60,12 @@ class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
         """
         file_path = Path(file_path)
         if not file_path.is_file():
-            raise ValueError(f"File {file_path} does not exist!")
-
-        if not file_path.name.endswith(".json") and not file_path.name.endswith(".jsonl"):
-            raise ValueError(f"File {file_path} must be in 'json' or jsonl 'format'!")
+            raise ValueError(f"Local file {file_path} does not exist!")
 
         with file_path.open("rb") as file_read_stream:
-            request_body = _FileCreateRequest(purpose=to_enum(FilePurpose, purpose), file=b"").model_dump(
-                exclude="file"
-            )
+            request_body = _FileCreateRequest(
+                purpose=to_enum(FilePurpose, purpose), file=b"", origin_id=origin_id
+            ).model_dump(exclude="file")
             self._log_method_execution("File Create", **request_body)
 
             with self._get_http_client() as client:
@@ -204,3 +204,35 @@ class FileService(BaseService[BaseServiceConfig, BaseServiceServices]):
                 url=self._get_endpoint(metadata.endpoint, id=id),
                 params=_FileIdDeleteParametersQuery().model_dump(),
             )
+
+    @set_service_action_metadata(endpoint=FileIdPatchEndpoint)
+    def update(self, id: str, *, file_path: Union[str, Path]) -> FileIdPatchResponse:
+        """
+        Replace the file content.
+
+        Args:
+            id: The ID of the file to be updated.
+            file_path: The path to the local file that will be uploaded.
+
+        Raises:
+            ValueError: If the file does not exist or if the file format is not supported.
+            ApiResponseException: In case of a known API error.
+            ApiNetworkException: In case of unhandled network error.
+        """
+        file_path = Path(file_path)
+        if not file_path.is_file():
+            raise ValueError(f"Local file {file_path} does not exist!")
+
+        with file_path.open("rb") as file_read_stream:
+            request_body = _FileIdPatchRequest(file=b"").model_dump(exclude="file")
+            self._log_method_execution("File Update", **request_body)
+
+            with self._get_http_client() as client:
+                metadata = get_service_action_metadata(self.update)
+                response = client.patch(
+                    url=self._get_endpoint(metadata.endpoint, id=id),
+                    params=_FileIdPatchParametersQuery().model_dump(),
+                    files={"file": (file_path.name, file_read_stream)},
+                    data=request_body,
+                )
+                return FileIdPatchResponse(**response.json())
