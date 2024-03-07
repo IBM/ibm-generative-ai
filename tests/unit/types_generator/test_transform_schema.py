@@ -22,13 +22,22 @@ def to_object(obj_properties):
     return {"properties": obj_properties, "type": "object"}
 
 
+def to_any_object():
+    return {"type": "object", "properties": {}, "additionalProperties": True}
+
+
 OPERATION_ID_PREFIX = "TESTOPERATIONID"
 
 
 @pytest.fixture
 def process_schema_test_input() -> ProcessSchemaTestInput:
     TestpathCreate_result = to_object(
-        {"prop1": {"type": "string"}, "nested_schema": to_object({"prop2": {"type": "string"}})}
+        {
+            "prop1": {"type": "string"},
+            "prop2": to_any_object(),
+            "prop3": to_any_object(),
+            "nested_schema": to_object({"prop2": {"type": "string"}}),
+        }
     )
     TestpathCreateRequest_testproperty = to_object({"prop2": {"type": "string"}})
     return ProcessSchemaTestInput(
@@ -64,6 +73,8 @@ def test_transform_schema_no_aliases(process_schema_test_input: ProcessSchemaTes
             "properties": {
                 "nested_schema": {"$ref": "#/components/schemas/_TestpathCreate_result_nested_schema"},
                 "prop1": {"type": "string"},
+                "prop2": {"type": "object", "properties": {}},
+                "prop3": {"type": "object", "properties": {}},
             },
             "type": "object",
         },
@@ -102,6 +113,8 @@ def test_transform_schema_correct_aliases(process_schema_test_input: ProcessSche
             "properties": {
                 "nested_schema": {"$ref": "#/components/schemas/MyReusableProperty"},
                 "prop1": {"type": "string"},
+                "prop2": {"type": "object", "properties": {}},
+                "prop3": {"type": "object", "properties": {}},
             },
             "type": "object",
         },
@@ -168,3 +181,17 @@ def test_transform_schema_rename_endpoint(process_schema_test_input: ProcessSche
     )
     transform_schema(api, schema_overrides, OPERATION_ID_PREFIX)
     assert api["paths"]["/testpath"]["post"]["operationId"] == f"{OPERATION_ID_PREFIX}BetaNewpathCreate"
+
+
+@pytest.mark.unit
+def test_transform_schema_any_dict_as_class(process_schema_test_input: ProcessSchemaTestInput) -> None:
+    api, input_schemas = process_schema_test_input
+    schema_overrides = SchemaOverrides(
+        any_dict_to_class={"_TestpathCreate_result_prop3"},
+        alias={"MySpecialProperty": ["_TestpathCreate_result_prop3"]},
+    )
+    transform_schema(api, schema_overrides, OPERATION_ID_PREFIX)
+    assert input_schemas["TestpathCreate_result"]["properties"]["prop2"].get("$ref") is None
+    assert input_schemas["TestpathCreate_result"]["properties"]["prop3"] == {
+        "$ref": "#/components/schemas/MySpecialProperty"
+    }

@@ -251,6 +251,14 @@ class RequestApiVersion(str, Enum):
     V2 = "v2"
 
 
+class RequestChatConversationIdRetrieveResultsRequest(ApiBaseModel):
+    pass
+
+
+class RequestChatConversationIdRetrieveResultsResponse(ApiBaseModel):
+    pass
+
+
 class RequestEndpoint(str, Enum):
     GENERATE = "generate"
     COMPARE = "compare"
@@ -1185,8 +1193,8 @@ class RequestChatConversationIdRetrieveResults(ApiBaseModel):
     duration: int
     id: str
     parent_id: Optional[str] = None
-    request: dict[str, Any]
-    response: dict[str, Any]
+    request: Optional[RequestChatConversationIdRetrieveResultsRequest] = None
+    response: Optional[RequestChatConversationIdRetrieveResultsResponse] = None
     status: RequestStatus
     version: Optional[RequestResultVersion] = None
 
@@ -1851,6 +1859,8 @@ __all__ = [
     "RequestApiVersion",
     "RequestChatConversationIdRetrieveResponse",
     "RequestChatConversationIdRetrieveResults",
+    "RequestChatConversationIdRetrieveResultsRequest",
+    "RequestChatConversationIdRetrieveResultsResponse",
     "RequestEndpoint",
     "RequestFeedbackCategory",
     "RequestFeedbackResult",
