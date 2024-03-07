@@ -4,7 +4,7 @@ import json
 import re
 from collections import Counter, defaultdict
 from collections.abc import Mapping
-from typing import Any, Union
+from typing import Any, Optional, Union
 
 import yaml
 from _common.logger import get_logger
@@ -116,6 +116,18 @@ def _is_plain_string(schema: Schema):
     return schema.get("type") == "string" and schema.get("enum") is None
 
 
+def _detect_type(schema: Schema) -> Optional[str]:
+    type = schema.get("type", None)
+    if type:
+        return type
+    elif schema.get("properties") is not None:
+        return "object"
+    elif schema.get("items") is not None:
+        return "array"
+    else:
+        return None
+
+
 def _process_schema_factory(existing_schemas: dict, name_to_alias: dict[str, str], any_dict_to_class: set[str]):  # noqa: C901
     schema_hashes: dict[str, set[str]] = defaultdict(set)
     schema_names = {""}
@@ -160,7 +172,7 @@ def _process_schema_factory(existing_schemas: dict, name_to_alias: dict[str, str
                         continue
 
                     new_name = f"{name_nested}_{k}"
-                    type = v.get("type")
+                    type = _detect_type(v)
 
                     if not type:
                         process_body(new_name, v)
