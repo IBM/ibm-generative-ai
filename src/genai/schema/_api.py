@@ -779,7 +779,7 @@ class _RequestChatConversationIdDeleteParametersQuery(ApiBaseModel):
 
 
 class _RequestChatConversationIdRetrieveParametersQuery(ApiBaseModel):
-    version: Literal["2023-11-22"] = "2023-11-22"
+    version: Literal["2024-03-06"] = "2024-03-06"
 
 
 class _RequestIdDeleteParametersQuery(ApiBaseModel):
@@ -797,6 +797,7 @@ class _RequestIdFeedbackCreateParametersQuery(ApiBaseModel):
 class _RequestIdFeedbackCreateRequest(ApiBaseModel):
     categories: Optional[list[RequestFeedbackCategory]] = Field(None, min_length=1)
     comment: Optional[str] = None
+    contact_consent: Optional[bool] = False
     vote: Optional[RequestFeedbackVote] = None
 
 
@@ -807,6 +808,7 @@ class _RequestIdFeedbackUpdateParametersQuery(ApiBaseModel):
 class _RequestIdFeedbackUpdateRequest(ApiBaseModel):
     categories: Optional[list[RequestFeedbackCategory]] = Field(None, min_length=1)
     comment: Optional[str] = None
+    contact_consent: Optional[bool] = False
     vote: Optional[RequestFeedbackVote] = None
 
 
@@ -939,6 +941,7 @@ class _TextGenerationIdFeedbackCreateParametersQuery(ApiBaseModel):
 class _TextGenerationIdFeedbackCreateRequest(ApiBaseModel):
     categories: Optional[list[TextGenerationFeedbackCategory]] = Field(None, min_length=1)
     comment: Optional[str] = None
+    contact_consent: Optional[bool] = False
     vote: Optional[TextGenerationFeedbackVote] = None
 
 
@@ -949,6 +952,7 @@ class _TextGenerationIdFeedbackUpdateParametersQuery(ApiBaseModel):
 class _TextGenerationIdFeedbackUpdateRequest(ApiBaseModel):
     categories: Optional[list[TextGenerationFeedbackCategory]] = Field(None, min_length=1)
     comment: Optional[str] = None
+    contact_consent: Optional[bool] = False
     vote: Optional[TextGenerationFeedbackVote] = None
 
 
@@ -1170,6 +1174,7 @@ class RequestFeedbackResult(ApiBaseModel):
     api_request: str
     categories: list[str]
     comment: Optional[str] = None
+    contact_consent: bool
     created_at: AwareDatetime
     id: int
     updated_at: AwareDatetime
@@ -1229,6 +1234,7 @@ class TextGenerationFeedbackResult(ApiBaseModel):
     api_request: str
     categories: list[str]
     comment: Optional[str] = None
+    contact_consent: bool
     created_at: AwareDatetime
     id: int
     updated_at: AwareDatetime

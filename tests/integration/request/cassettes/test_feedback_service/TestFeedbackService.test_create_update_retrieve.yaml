@@ -17,7 +17,7 @@ interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 19:38:14 GMT
+      - Wed, 06 Mar 2024 20:50:01 GMT
       Keep-Alive:
       - timeout=72
       content-length:
@@ -49,12 +49,12 @@ interactions:
     uri: https://api.com/v2/text/generation?version=2024-01-10
   response:
     body:
-      string: '{"id":"ac936353-4b4f-4e20-a4c0-d33efc99ba97","model_id":"google/flan-t5-xl","created_at":"2024-03-06T19:38:15.021Z","results":[{"generated_text":"5","generated_token_count":2,"input_token_count":5,"stop_reason":"eos_token"}]}'
+      string: '{"id":"48368038-f6cf-48f6-8d90-1898f9c26885","model_id":"google/flan-t5-xl","created_at":"2024-03-06T20:50:01.828Z","results":[{"generated_text":"5","generated_token_count":2,"input_token_count":5,"stop_reason":"eos_token"}]}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 19:38:15 GMT
+      - Wed, 06 Mar 2024 20:50:01 GMT
       Keep-Alive:
       - timeout=72
       content-length:
@@ -82,16 +82,16 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/requests/ac936353-4b4f-4e20-a4c0-d33efc99ba97/feedback?version=2023-11-22
+    uri: https://api.com/v2/requests/48368038-f6cf-48f6-8d90-1898f9c26885/feedback?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":451,"created_at":"2024-03-06T19:38:16.000Z","updated_at":"2024-03-06T19:38:16.000Z","comment":"Well
-        done.","categories":["correct_content"],"api_request":"ac936353-4b4f-4e20-a4c0-d33efc99ba97","vote":"up","contact_consent":false}}'
+      string: '{"result":{"id":454,"created_at":"2024-03-06T20:50:03.000Z","updated_at":"2024-03-06T20:50:03.000Z","comment":"Well
+        done.","categories":["correct_content"],"api_request":"48368038-f6cf-48f6-8d90-1898f9c26885","vote":"up","contact_consent":false}}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 19:38:15 GMT
+      - Wed, 06 Mar 2024 20:50:02 GMT
       Keep-Alive:
       - timeout=72
       content-length:
@@ -113,7 +113,7 @@ interactions:
       message: OK
 - request:
     body: '{"categories": ["correct_style"], "comment": "I''m not sure about the category",
-      "contact_consent": false, "vote": "down"}'
+      "vote": "down"}'
     headers:
       accept:
       - '*/*'
@@ -122,20 +122,20 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '121'
+      - '95'
       content-type:
       - application/json
     method: PUT
-    uri: https://api.com/v2/requests/ac936353-4b4f-4e20-a4c0-d33efc99ba97/feedback?version=2023-11-22
+    uri: https://api.com/v2/requests/48368038-f6cf-48f6-8d90-1898f9c26885/feedback?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":451,"created_at":"2024-03-06T19:38:16.000Z","updated_at":"2024-03-06T19:38:16.637Z","comment":"I''m
-        not sure about the category","categories":["correct_style"],"api_request":"ac936353-4b4f-4e20-a4c0-d33efc99ba97","vote":"down","contact_consent":false}}'
+      string: '{"result":{"id":454,"created_at":"2024-03-06T20:50:03.000Z","updated_at":"2024-03-06T20:50:03.468Z","comment":"I''m
+        not sure about the category","categories":["correct_style"],"api_request":"48368038-f6cf-48f6-8d90-1898f9c26885","vote":"down","contact_consent":false}}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 19:38:16 GMT
+      - Wed, 06 Mar 2024 20:50:03 GMT
       Keep-Alive:
       - timeout=72
       content-length:
@@ -165,16 +165,16 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/requests/ac936353-4b4f-4e20-a4c0-d33efc99ba97/feedback?version=2023-11-22
+    uri: https://api.com/v2/requests/48368038-f6cf-48f6-8d90-1898f9c26885/feedback?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":451,"created_at":"2024-03-06T19:38:16.000Z","updated_at":"2024-03-06T19:38:17.000Z","comment":"I''m
-        not sure about the category","categories":["correct_style"],"api_request":"ac936353-4b4f-4e20-a4c0-d33efc99ba97","vote":"down","contact_consent":false}}'
+      string: '{"result":{"id":454,"created_at":"2024-03-06T20:50:03.000Z","updated_at":"2024-03-06T20:50:03.000Z","comment":"I''m
+        not sure about the category","categories":["correct_style"],"api_request":"48368038-f6cf-48f6-8d90-1898f9c26885","vote":"down","contact_consent":false}}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 19:38:17 GMT
+      - Wed, 06 Mar 2024 20:50:04 GMT
       Keep-Alive:
       - timeout=72
       content-length:
