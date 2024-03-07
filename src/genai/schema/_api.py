@@ -47,6 +47,10 @@ class DecodingMethod(str, Enum):
     SAMPLE = "sample"
 
 
+class FileDescendant(ApiBaseModel):
+    id: str
+
+
 class FileFormat(ApiBaseModel):
     id: int
     name: str
@@ -629,6 +633,7 @@ class _FileCreateParametersQuery(ApiBaseModel):
 
 class _FileCreateRequest(ApiBaseModel):
     file: bytes
+    origin_id: Optional[str] = None
     purpose: FilePurpose
 
 
@@ -638,6 +643,14 @@ class _FileIdDeleteParametersQuery(ApiBaseModel):
 
 class _FileIdRetrieveParametersQuery(ApiBaseModel):
     version: Literal["2023-12-15"] = "2023-12-15"
+
+
+class _FileIdPatchParametersQuery(ApiBaseModel):
+    version: Literal["2023-11-22"] = "2023-11-22"
+
+
+class _FileIdPatchRequest(ApiBaseModel):
+    file: bytes
 
 
 class _FileIdContentRetrieveParametersQuery(ApiBaseModel):
@@ -1095,11 +1108,14 @@ class BaseTokens(ApiBaseModel):
 class FileResult(ApiBaseModel):
     bytes: int
     created_at: AwareDatetime
+    descendants: Optional[list[FileDescendant]] = None
     file_formats: Optional[list[FileFormat]] = None
     file_name: str
     id: str
+    origin: Optional[FileDescendant] = None
     purpose: FilePurpose
     storage_provider_location: StorageProviderLocation
+    updated_at: AwareDatetime
 
 
 class ModelFacet(ApiBaseModel):
@@ -1375,6 +1391,10 @@ class FileCreateResponse(ApiBaseModel):
 
 
 class FileIdRetrieveResponse(ApiBaseModel):
+    result: FileResult
+
+
+class FileIdPatchResponse(ApiBaseModel):
     result: FileResult
 
 
@@ -1769,7 +1789,9 @@ __all__ = [
     "Extensions4",
     "Extensions5",
     "FileCreateResponse",
+    "FileDescendant",
     "FileFormat",
+    "FileIdPatchResponse",
     "FileIdRetrieveResponse",
     "FileListSortBy",
     "FilePurpose",

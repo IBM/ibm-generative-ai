@@ -60,6 +60,12 @@ class FileIdRetrieveEndpoint(ApiEndpoint):
     version: str = "2023-12-15"
 
 
+class FileIdPatchEndpoint(ApiEndpoint):
+    path: str = "/v2/files/{id}"
+    method: str = "PATCH"
+    version: str = "2023-11-22"
+
+
 class FileIdContentRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/files/{id}/content"
     method: str = "GET"

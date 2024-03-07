@@ -17,21 +17,34 @@ alias:
     - _FileCreateRequest_purpose
     - _FileCreate_result_purpose
     - _FileIdRetrieve_result_purpose
+    - _FileIdPatch_result_purpose
   StorageProviderLocation:
     - _FileRetrieve_results_storage_provider_location
     - _FileCreate_result_storage_provider_location
     - _FileIdRetrieve_result_storage_provider_location
+    - _FileIdPatch_result_storage_provider_location
   FileFormat:
     - _FileRetrieve_results_file_formats
     - _FileCreate_result_file_formats
     - _FileIdRetrieve_result_file_formats
+    - _FileIdPatch_result_file_formats
   FileResult:
     - _FileRetrieve_results
     - _FileCreate_result
     - _FileIdRetrieve_result
+    - _FileIdPatch_result
   FileListSortBy:
     - _FileRetrieveRequestParamsSortBy
 
+  FileDescendant:
+    - _FileIdRetrieve_result_descendants
+    - _FileIdPatch_result_descendants
+    - _FileRetrieve_results_origin
+    - _FileCreate_result_origin
+    - _FileIdPatch_result_origin
+    - _FileCreate_result_descendants
+    - _FileRetrieve_results_descendants
+    - _FileIdRetrieve_result_origin
   # MODERATIONS ------------------------------------------------------------------
   ModerationParameters:
     - _TextGenerationOutputCreateRequest_moderations
