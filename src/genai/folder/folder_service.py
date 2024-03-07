@@ -34,7 +34,9 @@ __all__ = ["FolderService"]
 
 class FolderService(BaseService[BaseServiceConfig, BaseServiceServices]):
     @set_service_action_metadata(endpoint=FolderRetrieveEndpoint)
-    def list(self, *, limit: Optional[int] = None, offset: Optional[int] = None) -> FolderRetrieveResponse:
+    def list(
+        self, *, limit: Optional[int] = None, offset: Optional[int] = None, version: Optional[str] = None
+    ) -> FolderRetrieveResponse:
         """
         List existing folders.
 
@@ -42,7 +44,7 @@ class FolderService(BaseService[BaseServiceConfig, BaseServiceServices]):
             ApiResponseException: In case of an API error.
             ApiNetworkException: In case of unhandled network error.
         """
-        request_params = _FolderRetrieveParametersQuery(limit=limit, offset=offset).model_dump()
+        request_params = _FolderRetrieveParametersQuery(limit=limit, offset=offset, version=version).model_dump()
         self._log_method_execution("Folder List", **request_params)
 
         with self._get_http_client() as client:
