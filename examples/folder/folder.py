@@ -33,6 +33,7 @@ prompt_id = client.prompt.create(
     folder_id=folder_id,
     input="Make a short recipe for {{meal}} (use bullet points)",
 ).result.id
+print(f"Prompt ID: {prompt_id}")
 
 print(heading("Get the folder details"))
 retrieve_response = client.folder.retrieve(id=folder_id)
@@ -45,6 +46,7 @@ print("Results: ", list_response.results)
 
 print(heading("Delete the folder"))
 client.folder.delete(id=folder_id)
+print("OK")
 
 print(heading("Deleting the prompt"))
 client.prompt.delete(id=prompt_id)
