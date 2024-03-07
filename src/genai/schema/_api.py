@@ -758,11 +758,11 @@ class _PromptRetrieveParametersQuery(ApiBaseModel):
     context_window_min: Optional[int] = None
     context_window_max: Optional[int] = None
     folder_id: Optional[str] = None
-    version: Literal["2024-03-06"] = "2024-03-06"
+    version: Literal["2024-03-07"] = "2024-03-07"
 
 
 class _PromptCreateParametersQuery(ApiBaseModel):
-    version: Literal["2024-03-06"] = "2024-03-06"
+    version: Literal["2024-03-07"] = "2024-03-07"
 
 
 class _PromptIdDeleteParametersQuery(ApiBaseModel):
@@ -770,11 +770,11 @@ class _PromptIdDeleteParametersQuery(ApiBaseModel):
 
 
 class _PromptIdRetrieveParametersQuery(ApiBaseModel):
-    version: Literal["2024-03-06"] = "2024-03-06"
+    version: Literal["2024-03-07"] = "2024-03-07"
 
 
 class _PromptIdPatchParametersQuery(ApiBaseModel):
-    version: Literal["2024-03-06"] = "2024-03-06"
+    version: Literal["2024-03-07"] = "2024-03-07"
 
 
 class _PromptIdPatchRequest(ApiBaseModel):
@@ -784,7 +784,7 @@ class _PromptIdPatchRequest(ApiBaseModel):
 
 
 class _PromptIdUpdateParametersQuery(ApiBaseModel):
-    version: Literal["2024-03-06"] = "2024-03-06"
+    version: Literal["2024-03-07"] = "2024-03-07"
 
 
 class _RequestRetrieveParametersQuery(ApiBaseModel):
@@ -805,7 +805,7 @@ class _RequestChatConversationIdDeleteParametersQuery(ApiBaseModel):
 
 
 class _RequestChatConversationIdRetrieveParametersQuery(ApiBaseModel):
-    version: Literal["2024-03-06"] = "2024-03-06"
+    version: Literal["2024-03-07"] = "2024-03-07"
 
 
 class _RequestIdDeleteParametersQuery(ApiBaseModel):
@@ -887,11 +887,11 @@ class TaskRetrieveResponse(ApiBaseModel):
 
 
 class _TextChatCreateParametersQuery(ApiBaseModel):
-    version: Literal["2024-03-06"] = "2024-03-06"
+    version: Literal["2024-03-07"] = "2024-03-07"
 
 
 class _TextChatOutputCreateParametersQuery(ApiBaseModel):
-    version: Literal["2024-03-06"] = "2024-03-06"
+    version: Literal["2024-03-07"] = "2024-03-07"
 
 
 class TextChatOutputCreateResponse(ApiBaseModel):
@@ -899,7 +899,7 @@ class TextChatOutputCreateResponse(ApiBaseModel):
 
 
 class _TextChatStreamCreateParametersQuery(ApiBaseModel):
-    version: Literal["2024-03-06"] = "2024-03-06"
+    version: Literal["2024-03-07"] = "2024-03-07"
 
 
 class _TextEmbeddingCreateParametersQuery(ApiBaseModel):

@@ -201,6 +201,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
         context_window_min: Optional[int] = None,
         context_window_max: Optional[int] = None,
         folder_id: Optional[str] = None,
+        version: Optional[str] = None,
     ) -> PromptRetrieveResponse:
         """
         Raises:
@@ -226,6 +227,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             context_window_min=context_window_min,
             context_window_max=context_window_max,
             folder_id=folder_id,
+            version=version,
         ).model_dump()
         self._log_method_execution("Prompt List", **request_parameters)
 
