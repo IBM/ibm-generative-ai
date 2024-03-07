@@ -120,7 +120,7 @@ class TuneService(BaseService[BaseServiceConfig, BaseServiceServices]):
         tune = self.retrieve(id).result
         if not tune.status or tune.status != TuneStatus.COMPLETED:
             raise ValueError(
-                f"Tune status: '{tune.status.value if tune.status else 'unknown'}'."
+                f"Tune status: '{tune.status if tune.status else 'unknown'}'. "
                 f"Tune can not be downloaded if status is not '{TuneStatus.COMPLETED.value}'."
             )
 
