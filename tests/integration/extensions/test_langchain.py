@@ -30,7 +30,7 @@ class TestLangChain:
 
     @pytest.mark.vcr
     def test_langchain_interface(self, langchain_model, get_vcr_responses_of):
-        result = langchain_model("Monday, Tuesday, Wednesday, ")
+        result = langchain_model.invoke("Monday, Tuesday, Wednesday, ")
         [expected_response] = get_vcr_responses_of(TextGenerationCreateEndpoint)
         assert result == expected_response["results"][0]["generated_text"]
 
