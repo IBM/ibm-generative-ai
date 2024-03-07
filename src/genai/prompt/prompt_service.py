@@ -68,6 +68,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
         input: Optional[str] = None,
         output: Optional[str] = None,
         parameters: Optional[ModelLike[TextGenerationParameters]] = None,
+        folder_id: Optional[str] = None,
     ) -> PromptCreateResponse:
         """
         Raises:
@@ -88,6 +89,7 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
             output=output,
             parameters=to_model_optional(parameters, TextGenerationParameters),
             type=to_enum_optional(type, PromptType),
+            folder_id=folder_id,
         ).model_dump()
 
         self._log_method_execution("Prompt Create", **request_body)
@@ -130,12 +132,12 @@ class PromptService(BaseService[BaseServiceConfig, BaseServiceServices]):
         *,
         name: str,
         model_id: str,
-        folder_id: Optional[str],
-        industry_id: Optional[str],
-        language_id: Optional[str],
+        folder_id: Optional[str] = None,
+        industry_id: Optional[str] = None,
+        language_id: Optional[str] = None,
         description: Optional[str] = None,
         input: Optional[str] = None,
-        output: Optional[str],
+        output: Optional[str] = None,
         task_id: Optional[str] = None,
         type: Optional[EnumLike[PromptType]] = None,
         messages: Optional[list[ModelLike[BaseMessage]]] = None,
