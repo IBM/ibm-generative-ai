@@ -26,12 +26,7 @@ __all__ = ["TagService"]
 class TagService(BaseService[BaseServiceConfig, BaseServiceServices]):
     @set_service_action_metadata(endpoint=TagRetrieveEndpoint)
     def list(
-        self,
-        *,
-        limit: Optional[int] = None,
-        offset: Optional[int] = None,
-        type: Optional[EnumLike[TagType]] = None,
-        version: Optional[str] = None,
+        self, *, limit: Optional[int] = None, offset: Optional[int] = None, type: Optional[EnumLike[TagType]] = None
     ) -> TagRetrieveResponse:
         """
         List existing tags.
@@ -44,7 +39,6 @@ class TagService(BaseService[BaseServiceConfig, BaseServiceServices]):
             limit=limit,
             offset=offset,
             type=to_enum_optional(type, TagType),
-            version=version,
         ).model_dump()
         self._log_method_execution("Tag List", **request_params)
 
