@@ -14,21 +14,18 @@ interactions:
     body:
       string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
     headers:
-      cache-control:
-      - private
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 06 Mar 2024 20:47:08 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
       - '54'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:50:16 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=538060a726cc3a9c230fa5d1269356eb; path=/;
-        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
     status:
@@ -52,18 +49,21 @@ interactions:
     uri: https://api.com/v2/text/generation?version=2024-01-10
   response:
     body:
-      string: '{"id":"b32c92e8-d42e-46c6-8a1c-17dcbef33db9","model_id":"google/flan-ul2","created_at":"2024-01-25T15:50:16.931Z","results":[{"generated_text":"Nice","generated_token_count":3,"input_token_count":13,"stop_reason":"eos_token","seed":678201370}]}'
+      string: '{"id":"d34df5d3-1b08-4125-b6e3-959fc6e7a9cd","model_id":"google/flan-ul2","created_at":"2024-03-06T20:47:09.268Z","results":[{"generated_text":"very
+        bad","generated_token_count":3,"input_token_count":13,"stop_reason":"eos_token","seed":707519281}]}'
     headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 06 Mar 2024 20:47:09 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
-      - '244'
+      - '248'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2024-01-10'
-      date:
-      - Thu, 25 Jan 2024 15:50:16 GMT
-      keep-alive:
-      - timeout=72
       vary:
       - accept-encoding
     status:

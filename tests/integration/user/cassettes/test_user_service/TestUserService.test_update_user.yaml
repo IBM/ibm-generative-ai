@@ -16,105 +16,20 @@ interactions:
     uri: https://api.com/v2/user?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":26916,"first_name":"Radek","last_name":"Jezek","tou_accepted":false,"data_usage_consent":true}}'
+      string: '{"result":{"id":453,"first_name":"Tomas","last_name":"Dvorak","email":"tomas.dvorak@ibm.com","tou_accepted":false,"data_usage_consent":true}}'
     headers:
-      content-length:
-      - '111'
-      content-type:
-      - application/json; charset=utf-8
-      content-version:
-      - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:53:19 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=6d247d6198597e887510d8e26f4d2793; path=/;
-        HttpOnly; Secure; SameSite=None
-      vary:
-      - accept-encoding
-      x-ratelimit-limit:
-      - '25'
-      x-ratelimit-remaining:
-      - '23'
-      x-ratelimit-reset:
-      - '0'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: ''
-    headers:
-      accept:
-      - '*/*'
-      accept-encoding:
-      - gzip, deflate
-      connection:
+      Connection:
       - keep-alive
-    method: GET
-    uri: https://api.com/v2/user?version=2023-11-22
-  response:
-    body:
-      string: '{"result":{"id":26916,"first_name":"Radek","last_name":"Jezek","tou_accepted":false,"data_usage_consent":true}}'
-    headers:
-      cache-control:
-      - private
+      Date:
+      - Wed, 06 Mar 2024 20:38:24 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
-      - '111'
+      - '141'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:53:19 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=ab61fe594e37cae048810df94b864b98; path=/;
-        HttpOnly; Secure; SameSite=None
-      vary:
-      - accept-encoding
-      x-ratelimit-limit:
-      - '25'
-      x-ratelimit-remaining:
-      - '22'
-      x-ratelimit-reset:
-      - '0'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{"tou_accepted": true}'
-    headers:
-      accept:
-      - '*/*'
-      accept-encoding:
-      - gzip, deflate
-      connection:
-      - keep-alive
-      content-length:
-      - '22'
-      content-type:
-      - application/json
-    method: PATCH
-    uri: https://api.com/v2/user?version=2023-11-22
-  response:
-    body:
-      string: '{"result":{"id":26916,"first_name":"Radek","last_name":"Jezek","tou_accepted":true,"tou_accepted_at":"2024-01-25T15:53:20.303Z","data_usage_consent":true}}'
-    headers:
-      content-length:
-      - '155'
-      content-type:
-      - application/json; charset=utf-8
-      content-version:
-      - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:53:20 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=6d247d6198597e887510d8e26f4d2793; path=/;
-        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -139,23 +54,62 @@ interactions:
     uri: https://api.com/v2/user?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":26916,"first_name":"Radek","last_name":"Jezek","tou_accepted":true,"tou_accepted_at":"2024-01-25T15:53:20.000Z","data_usage_consent":true}}'
+      string: '{"result":{"id":453,"first_name":"Tomas","last_name":"Dvorak","email":"tomas.dvorak@ibm.com","tou_accepted":false,"data_usage_consent":true}}'
     headers:
-      cache-control:
-      - private
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 06 Mar 2024 20:38:24 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
-      - '155'
+      - '141'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:53:20 GMT
-      keep-alive:
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"tou_accepted": true}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '22'
+      content-type:
+      - application/json
+    method: PATCH
+    uri: https://api.com/v2/user?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"id":453,"first_name":"Tomas","last_name":"Dvorak","email":"tomas.dvorak@ibm.com","tou_accepted":true,"tou_accepted_at":"2024-03-06T20:38:25.850Z","data_usage_consent":true}}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 06 Mar 2024 20:38:25 GMT
+      Keep-Alive:
       - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=538060a726cc3a9c230fa5d1269356eb; path=/;
-        HttpOnly; Secure; SameSite=None
+      content-length:
+      - '185'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -164,6 +118,44 @@ interactions:
       - '23'
       x-ratelimit-reset:
       - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/user?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"id":453,"first_name":"Tomas","last_name":"Dvorak","email":"tomas.dvorak@ibm.com","tou_accepted":true,"tou_accepted_at":"2024-03-06T20:38:26.000Z","data_usage_consent":true}}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 06 Mar 2024 20:38:26 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '185'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
     status:
       code: 200
       message: OK

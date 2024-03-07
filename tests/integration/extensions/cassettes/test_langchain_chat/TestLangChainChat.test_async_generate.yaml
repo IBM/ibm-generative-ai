@@ -21,26 +21,25 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/chat?version=2024-01-10
+    uri: https://api.com/v2/text/chat?version=2024-03-06
   response:
     body:
-      string: '{"id":"df7fc4b0-ea77-40f6-b5af-74faf3f5c83c","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-01-25T15:50:12.211Z","results":[{"generated_text":"  NLP
+      string: '{"id":"17a27166-21cc-43d0-8c5f-d763c8462186","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-06T20:46:44.714Z","results":[{"generated_text":"  NLP
         stands for Natural Language Processing, which is a subfield of artificial
-        intelligence (AI","generated_token_count":20,"input_token_count":160,"stop_reason":"max_tokens","seed":3261347853}],"conversation_id":"5e4e6586-dc66-486f-9e56-e62f35b2f64b"}'
+        intelligence (AI","generated_token_count":20,"input_token_count":160,"stop_reason":"max_tokens","seed":2012889250}],"conversation_id":"891b39d2-9ff6-47ea-bc48-b7a20a7c2108"}'
     headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 06 Mar 2024 20:46:44 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
       - '409'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-01-10'
-      date:
-      - Thu, 25 Jan 2024 15:50:12 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=6d247d6198597e887510d8e26f4d2793; path=/;
-        HttpOnly; Secure; SameSite=None
+      - '2024-03-06'
       vary:
       - accept-encoding
     status:
