@@ -29,6 +29,7 @@ class SchemaOverrides(BaseModel):
     replace: dict[str, Union[str, SchemaReplacement]] = {}
     private_operations: set[str] = set()
     endpoint_mapping: dict[str, str] = {}
+    any_dict_to_class: set[str] = {}
 
     @property
     def replacements(self) -> dict[str, SchemaReplacement]:
@@ -96,12 +97,14 @@ def to_classname(snake_string: str, public=False) -> str:
 
 
 def _is_any_dictionary(schema: Schema):
-    return schema.get("type") == "object" and not schema.get("properties")
+    return isinstance(schema, dict) and schema.get("type") == "object" and not schema.get("properties")
 
 
-def _hash_schema(schema: Schema):
-    if not schema or _is_any_dictionary(schema):
+def _hash_schema(schema: Schema, force_hash: bool = False):
+    is_hashable = force_hash or not _is_any_dictionary(schema)
+    if not is_hashable:
         return None
+
     return hashlib.md5(json.dumps(schema, sort_keys=True, default=str).encode("utf-8")).hexdigest()
 
 
@@ -113,7 +116,7 @@ def _is_plain_string(schema: Schema):
     return schema.get("type") == "string" and schema.get("enum") is None
 
 
-def _process_schema_factory(existing_schemas: dict, name_to_alias: dict[str, str]):  # noqa: C901
+def _process_schema_factory(existing_schemas: dict, name_to_alias: dict[str, str], any_dict_to_class: set[str]):  # noqa: C901
     schema_hashes: dict[str, set[str]] = defaultdict(set)
     schema_names = {""}
     schema_key = "schema"
@@ -199,7 +202,7 @@ def _process_schema_factory(existing_schemas: dict, name_to_alias: dict[str, str
                 return
 
         nullable = schema.pop("nullable", False)
-        schema_hash = _hash_schema(schema)
+        schema_hash = _hash_schema(schema, force_hash=schema_name in any_dict_to_class)
         if schema_hash is None:
             return
         elif schema_name not in schema_hashes[schema_hash]:
@@ -338,7 +341,9 @@ def transform_schema(api: Schema, schema_overrides: SchemaOverrides, operation_i
 
     name_to_alias = {name: alias for alias, name_group in schema_overrides.alias.items() for name in name_group}
     process_schema, schema_hashes = _process_schema_factory(
-        existing_schemas=api["components"]["schemas"], name_to_alias=name_to_alias
+        existing_schemas=api["components"]["schemas"],
+        name_to_alias=name_to_alias,
+        any_dict_to_class=schema_overrides.any_dict_to_class,
     )
 
     # Process and improve existing schemas

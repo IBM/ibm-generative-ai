@@ -560,6 +560,13 @@ alias:
   TextGenerationComparisonCreateResultsResult: [ _TextGenerationComparisonCreate_results_result ]
   TextGenerationComparisonCreateResultsParameters: [ _TextGenerationComparisonCreate_results_parameters ]
   RequestChatConversationIdRetrieveResults: [ _RequestChatConversationIdRetrieve_results ]
+  RequestChatConversationIdRetrieveResultsRequest: [ _RequestChatConversationIdRetrieve_results_request ]
+  RequestChatConversationIdRetrieveResultsResponse: [ _RequestChatConversationIdRetrieve_results_response ]
+
+any_dict_to_class:
+  # Force the creation of class for plain dictionaries (mainly for backward compatibility)
+  - _RequestChatConversationIdRetrieve_results_request
+  - _RequestChatConversationIdRetrieve_results_response
 
 private_operations: [ ] # Response and Query schemas are public by default, but can be hidden if specified here
 

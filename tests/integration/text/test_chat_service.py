@@ -21,9 +21,9 @@ class TestChatService:
         with subtests.test("Get history of the conversation"):
             history = client.request.chat(chat.conversation_id)
             [history_result] = history.results
-            assert history_result.request["messages"] and history_result.response["results"]
-            [request_message] = history_result.request["messages"]
-            [response_message] = history_result.response["results"]
+            assert history_result.request.messages and history_result.response.results
+            [request_message] = history_result.request.messages
+            [response_message] = history_result.response.results
             assert request_message == human_message.model_dump()
             assert response_message["generated_text"] == ai_message
 
@@ -43,9 +43,9 @@ class TestChatService:
             history = client.request.chat(chat.conversation_id)
             history_result_1, history_result_2 = history.results
             assert history_result_1 == prev_history_result
-            assert history_result_2.request["messages"] and history_result_2.response["results"]
-            [request_message] = history_result_2.request["messages"]
-            [response_message] = history_result_2.response["results"]
+            assert history_result_2.request.messages and history_result_2.response.results
+            [request_message] = history_result_2.request.messages
+            [response_message] = history_result_2.response.results
             assert request_message == human_message_2.model_dump()
             assert response_message["generated_text"] == ai_message_2
 
