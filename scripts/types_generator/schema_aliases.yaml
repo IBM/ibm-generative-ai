@@ -45,6 +45,17 @@ alias:
     - _FileCreate_result_descendants
     - _FileRetrieve_results_descendants
     - _FileIdRetrieve_result_origin
+  MessageFile:
+    - _PromptRetrieve_results_messages_files
+    - _PromptIdPatch_result_messages_files
+    - _PromptIdRetrieve_result_messages_files
+    - _PromptCreate_result_messages_files
+    - _PromptIdUpdate_result_messages_files
+    - _TextChatStreamCreateRequest_messages_files
+    - _TextChatCreateRequest_messages_files
+    - _TextChatOutputCreateRequest_messages_files
+    - _PromptCreateRequest_messages_files
+    - _PromptIdUpdateRequest_messages_files
   # MODERATIONS ------------------------------------------------------------------
   ModerationParameters:
     - _TextGenerationOutputCreateRequest_moderations

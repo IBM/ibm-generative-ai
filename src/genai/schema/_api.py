@@ -110,6 +110,11 @@ class LengthPenalty(ApiBaseModel):
     """
 
 
+class MessageFile(ApiBaseModel):
+    content: Optional[str] = None
+    id: Optional[str] = None
+
+
 class ModelFacetType(str, Enum):
     LANGUAGE = "language"
     INDUSTRY = "industry"
@@ -745,11 +750,11 @@ class _PromptRetrieveParametersQuery(ApiBaseModel):
     context_window_min: Optional[int] = None
     context_window_max: Optional[int] = None
     folder_id: Optional[str] = None
-    version: Literal["2024-01-10"] = "2024-01-10"
+    version: Literal["2024-03-06"] = "2024-03-06"
 
 
 class _PromptCreateParametersQuery(ApiBaseModel):
-    version: Literal["2024-01-10"] = "2024-01-10"
+    version: Literal["2024-03-06"] = "2024-03-06"
 
 
 class _PromptIdDeleteParametersQuery(ApiBaseModel):
@@ -757,11 +762,11 @@ class _PromptIdDeleteParametersQuery(ApiBaseModel):
 
 
 class _PromptIdRetrieveParametersQuery(ApiBaseModel):
-    version: Literal["2024-01-10"] = "2024-01-10"
+    version: Literal["2024-03-06"] = "2024-03-06"
 
 
 class _PromptIdPatchParametersQuery(ApiBaseModel):
-    version: Literal["2024-01-10"] = "2024-01-10"
+    version: Literal["2024-03-06"] = "2024-03-06"
 
 
 class _PromptIdPatchRequest(ApiBaseModel):
@@ -771,7 +776,7 @@ class _PromptIdPatchRequest(ApiBaseModel):
 
 
 class _PromptIdUpdateParametersQuery(ApiBaseModel):
-    version: Literal["2024-01-10"] = "2024-01-10"
+    version: Literal["2024-03-06"] = "2024-03-06"
 
 
 class _RequestRetrieveParametersQuery(ApiBaseModel):
@@ -874,11 +879,11 @@ class TaskRetrieveResponse(ApiBaseModel):
 
 
 class _TextChatCreateParametersQuery(ApiBaseModel):
-    version: Literal["2024-01-10"] = "2024-01-10"
+    version: Literal["2024-03-06"] = "2024-03-06"
 
 
 class _TextChatOutputCreateParametersQuery(ApiBaseModel):
-    version: Literal["2024-01-10"] = "2024-01-10"
+    version: Literal["2024-03-06"] = "2024-03-06"
 
 
 class TextChatOutputCreateResponse(ApiBaseModel):
@@ -886,7 +891,7 @@ class TextChatOutputCreateResponse(ApiBaseModel):
 
 
 class _TextChatStreamCreateParametersQuery(ApiBaseModel):
-    version: Literal["2024-01-10"] = "2024-01-10"
+    version: Literal["2024-03-06"] = "2024-03-06"
 
 
 class _TextEmbeddingCreateParametersQuery(ApiBaseModel):
@@ -1094,7 +1099,7 @@ class BadRequestResponse(BaseErrorResponse):
 
 class BaseMessage(ApiBaseModel):
     content: str
-    file_ids: Optional[list[str]] = None
+    files: Optional[list[MessageFile]] = None
     role: ChatRole
 
 
@@ -1809,6 +1814,7 @@ __all__ = [
     "Input",
     "InternalServerErrorResponse",
     "LengthPenalty",
+    "MessageFile",
     "ModelFacet",
     "ModelFacetType",
     "ModelFamily",

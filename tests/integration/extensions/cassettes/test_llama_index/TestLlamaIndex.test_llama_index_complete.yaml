@@ -14,21 +14,18 @@ interactions:
     body:
       string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
     headers:
-      cache-control:
-      - private
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 06 Mar 2024 20:47:03 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
       - '54'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:50:13 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=6d247d6198597e887510d8e26f4d2793; path=/;
-        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
     status:
@@ -52,19 +49,20 @@ interactions:
     uri: https://api.com/v2/text/generation?version=2024-01-10
   response:
     body:
-      string: '{"id":"09d6d92b-5594-4e7a-af42-383c19e94094","model_id":"google/flan-ul2","created_at":"2024-01-25T15:50:14.093Z","results":[{"generated_text":"It''s
-        a bit cloudy and cold, but I''m dressed warmly.","generated_token_count":20,"input_token_count":13,"stop_reason":"eos_token","seed":1715709070}]}'
+      string: '{"id":"3d39da1b-968f-44cc-a8ba-2b6953fc3ea1","model_id":"google/flan-ul2","created_at":"2024-03-06T20:47:03.562Z","results":[{"generated_text":"Nice","generated_token_count":2,"input_token_count":13,"stop_reason":"eos_token","seed":664191210}]}'
     headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 06 Mar 2024 20:47:03 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
-      - '293'
+      - '244'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2024-01-10'
-      date:
-      - Thu, 25 Jan 2024 15:50:14 GMT
-      keep-alive:
-      - timeout=72
       vary:
       - accept-encoding
     status:
