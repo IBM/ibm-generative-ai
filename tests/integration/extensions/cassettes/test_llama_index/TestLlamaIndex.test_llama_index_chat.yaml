@@ -21,25 +21,25 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/chat?version=2024-03-06
+    uri: https://api.com/v2/text/chat?version=2024-03-07
   response:
     body:
-      string: '{"id":"1c768798-c088-4e13-ba76-30a7f52786a6","model_id":"google/flan-ul2","created_at":"2024-03-06T20:47:06.563Z","results":[{"generated_text":"Neurolinguistic
-        programming, also known as NLP, is a set of techniques for modeling human
-        language","generated_token_count":20,"input_token_count":130,"stop_reason":"max_tokens","seed":585218733}],"conversation_id":"c37fa8c3-5fb5-46bf-8046-81bcbb1148c2"}'
+      string: '{"id":"6f50b684-9cc2-416b-9787-f3323d8cf04c","model_id":"google/flan-ul2","created_at":"2024-03-07T20:36:52.200Z","results":[{"generated_text":"Neuro-linguistic
+        programming started in the 1970s and has been improved upon for accuracy until
+        present.","generated_token_count":20,"input_token_count":130,"stop_reason":"eos_token","seed":2268274874}],"conversation_id":"955f726f-8365-466c-896b-638316fed9b6"}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 20:47:06 GMT
+      - Thu, 07 Mar 2024 20:36:52 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '398'
+      - '404'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-03-06'
+      - '2024-03-07'
       vary:
       - accept-encoding
     status:

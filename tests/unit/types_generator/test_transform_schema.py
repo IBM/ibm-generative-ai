@@ -73,8 +73,8 @@ def test_transform_schema_no_aliases(process_schema_test_input: ProcessSchemaTes
             "properties": {
                 "nested_schema": {"$ref": "#/components/schemas/_TestpathCreate_result_nested_schema"},
                 "prop1": {"type": "string"},
-                "prop2": {"type": "object", "properties": {}},
-                "prop3": {"type": "object", "properties": {}},
+                "prop2": {"type": "object", "properties": {}, "additionalProperties": True},
+                "prop3": {"type": "object", "properties": {}, "additionalProperties": True},
             },
             "type": "object",
         },
@@ -113,8 +113,8 @@ def test_transform_schema_correct_aliases(process_schema_test_input: ProcessSche
             "properties": {
                 "nested_schema": {"$ref": "#/components/schemas/MyReusableProperty"},
                 "prop1": {"type": "string"},
-                "prop2": {"type": "object", "properties": {}},
-                "prop3": {"type": "object", "properties": {}},
+                "prop2": {"type": "object", "properties": {}, "additionalProperties": True},
+                "prop3": {"type": "object", "properties": {}, "additionalProperties": True},
             },
             "type": "object",
         },

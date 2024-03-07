@@ -14,24 +14,24 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/chat?version=2024-03-06
+    uri: https://api.com/v2/text/chat?version=2024-03-07
   response:
     body:
-      string: '{"id":"1e02a49e-8541-42c7-93e0-01b111abc9af","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-06T20:45:53.726Z","results":[{"generated_text":"  No,
-        I do not want to destroy the world. I''m just an AI,","generated_token_count":20,"input_token_count":18,"stop_reason":"max_tokens","seed":215978522}],"conversation_id":"77318b24-2a0a-4e00-b509-295dc67d187e"}'
+      string: '{"id":"acdd4c67-e5a9-41a7-b56a-9ad3f28dec94","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-07T20:37:02.059Z","results":[{"generated_text":"  No,
+        I do not want to destroy the world. As a responsible AI language model,","generated_token_count":20,"input_token_count":18,"stop_reason":"max_tokens","seed":1668056241}],"conversation_id":"01c71f63-22af-4748-916a-f57501237bff"}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 20:45:53 GMT
+      - Thu, 07 Mar 2024 20:37:02 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '368'
+      - '389'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-03-06'
+      - '2024-03-07'
       vary:
       - accept-encoding
     status:
@@ -47,25 +47,25 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/requests/chat/77318b24-2a0a-4e00-b509-295dc67d187e?version=2024-03-06
+    uri: https://api.com/v2/requests/chat/01c71f63-22af-4748-916a-f57501237bff?version=2024-03-07
   response:
     body:
-      string: '{"results":[{"id":"1e02a49e-8541-42c7-93e0-01b111abc9af","duration":816,"request":{"messages":[{"role":"user","content":"Do
-        you want to destroy the world?"}],"model_id":"meta-llama/llama-2-70b-chat","conversation_id":"77318b24-2a0a-4e00-b509-295dc67d187e"},"status":"success","created_at":"2024-03-06T20:45:54.000Z","response":{"id":"1e02a49e-8541-42c7-93e0-01b111abc9af","results":[{"seed":215978522,"stop_reason":"max_tokens","generated_text":"  No,
-        I do not want to destroy the world. I''m just an AI,","input_token_count":18,"generated_token_count":20}],"model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-06T20:45:53.726Z","conversation_id":"77318b24-2a0a-4e00-b509-295dc67d187e"},"version":{"api":"v2","date":"2024-03-06"}}]}'
+      string: '{"results":[{"id":"acdd4c67-e5a9-41a7-b56a-9ad3f28dec94","duration":1044,"request":{"messages":[{"role":"user","content":"Do
+        you want to destroy the world?"}],"model_id":"meta-llama/llama-2-70b-chat","conversation_id":"01c71f63-22af-4748-916a-f57501237bff"},"status":"success","created_at":"2024-03-07T20:37:02.000Z","response":{"id":"acdd4c67-e5a9-41a7-b56a-9ad3f28dec94","results":[{"seed":1668056241,"stop_reason":"max_tokens","generated_text":"  No,
+        I do not want to destroy the world. As a responsible AI language model,","input_token_count":18,"generated_token_count":20}],"model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-07T20:37:02.059Z","conversation_id":"01c71f63-22af-4748-916a-f57501237bff"},"version":{"api":"v2","date":"2024-03-07"}}]}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 20:45:54 GMT
+      - Thu, 07 Mar 2024 20:37:02 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '741'
+      - '763'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-03-06'
+      - '2024-03-07'
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -78,7 +78,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"conversation_id": "77318b24-2a0a-4e00-b509-295dc67d187e", "messages":
+    body: '{"conversation_id": "01c71f63-22af-4748-916a-f57501237bff", "messages":
       [{"content": "What was my previous question?", "role": "user"}], "model_id":
       "meta-llama/llama-2-70b-chat"}'
     headers:
@@ -93,24 +93,24 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/chat?version=2024-03-06
+    uri: https://api.com/v2/text/chat?version=2024-03-07
   response:
     body:
-      string: '{"id":"1874871b-e796-4f14-a51c-47e16b769b09","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-06T20:45:56.011Z","results":[{"generated_text":"  Sure!
-        Your previous question was: Do you want to destroy the world?","generated_token_count":17,"input_token_count":52,"stop_reason":"eos_token","seed":2606007760}],"conversation_id":"77318b24-2a0a-4e00-b509-295dc67d187e"}'
+      string: '{"id":"0db1e3d5-85c3-4528-ad9d-a286afb300f9","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-07T20:37:04.536Z","results":[{"generated_text":"  Sure!
+        Your previous question was: Do you want to destroy the world?","generated_token_count":17,"input_token_count":52,"stop_reason":"eos_token","seed":139669190}],"conversation_id":"01c71f63-22af-4748-916a-f57501237bff"}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 20:45:56 GMT
+      - Thu, 07 Mar 2024 20:37:04 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '380'
+      - '379'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-03-06'
+      - '2024-03-07'
       vary:
       - accept-encoding
     status:
@@ -126,29 +126,29 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/requests/chat/77318b24-2a0a-4e00-b509-295dc67d187e?version=2024-03-06
+    uri: https://api.com/v2/requests/chat/01c71f63-22af-4748-916a-f57501237bff?version=2024-03-07
   response:
     body:
-      string: '{"results":[{"id":"1e02a49e-8541-42c7-93e0-01b111abc9af","duration":816,"request":{"messages":[{"role":"user","content":"Do
-        you want to destroy the world?"}],"model_id":"meta-llama/llama-2-70b-chat","conversation_id":"77318b24-2a0a-4e00-b509-295dc67d187e"},"status":"success","created_at":"2024-03-06T20:45:54.000Z","response":{"id":"1e02a49e-8541-42c7-93e0-01b111abc9af","results":[{"seed":215978522,"stop_reason":"max_tokens","generated_text":"  No,
-        I do not want to destroy the world. I''m just an AI,","input_token_count":18,"generated_token_count":20}],"model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-06T20:45:53.726Z","conversation_id":"77318b24-2a0a-4e00-b509-295dc67d187e"},"version":{"api":"v2","date":"2024-03-06"}},{"id":"1874871b-e796-4f14-a51c-47e16b769b09","duration":719,"request":{"messages":[{"role":"user","content":"What
-        was my previous question?"}],"model_id":"meta-llama/llama-2-70b-chat","parent_id":"1e02a49e-8541-42c7-93e0-01b111abc9af","conversation_id":"77318b24-2a0a-4e00-b509-295dc67d187e"},"status":"success","created_at":"2024-03-06T20:45:56.000Z","response":{"id":"1874871b-e796-4f14-a51c-47e16b769b09","results":[{"seed":2606007760,"stop_reason":"eos_token","generated_text":"  Sure!
-        Your previous question was: Do you want to destroy the world?","input_token_count":52,"generated_token_count":17}],"model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-06T20:45:56.011Z","conversation_id":"77318b24-2a0a-4e00-b509-295dc67d187e"},"parent_id":"1e02a49e-8541-42c7-93e0-01b111abc9af","version":{"api":"v2","date":"2024-03-06"}}]}'
+      string: '{"results":[{"id":"acdd4c67-e5a9-41a7-b56a-9ad3f28dec94","duration":1044,"request":{"messages":[{"role":"user","content":"Do
+        you want to destroy the world?"}],"model_id":"meta-llama/llama-2-70b-chat","conversation_id":"01c71f63-22af-4748-916a-f57501237bff"},"status":"success","created_at":"2024-03-07T20:37:02.000Z","response":{"id":"acdd4c67-e5a9-41a7-b56a-9ad3f28dec94","results":[{"seed":1668056241,"stop_reason":"max_tokens","generated_text":"  No,
+        I do not want to destroy the world. As a responsible AI language model,","input_token_count":18,"generated_token_count":20}],"model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-07T20:37:02.059Z","conversation_id":"01c71f63-22af-4748-916a-f57501237bff"},"version":{"api":"v2","date":"2024-03-07"}},{"id":"0db1e3d5-85c3-4528-ad9d-a286afb300f9","duration":891,"request":{"messages":[{"role":"user","content":"What
+        was my previous question?"}],"model_id":"meta-llama/llama-2-70b-chat","parent_id":"acdd4c67-e5a9-41a7-b56a-9ad3f28dec94","conversation_id":"01c71f63-22af-4748-916a-f57501237bff"},"status":"success","created_at":"2024-03-07T20:37:05.000Z","response":{"id":"0db1e3d5-85c3-4528-ad9d-a286afb300f9","results":[{"seed":139669190,"stop_reason":"eos_token","generated_text":"  Sure!
+        Your previous question was: Do you want to destroy the world?","input_token_count":52,"generated_token_count":17}],"model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-07T20:37:04.536Z","conversation_id":"01c71f63-22af-4748-916a-f57501237bff"},"parent_id":"acdd4c67-e5a9-41a7-b56a-9ad3f28dec94","version":{"api":"v2","date":"2024-03-07"}}]}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 20:45:56 GMT
+      - Thu, 07 Mar 2024 20:37:05 GMT
       Keep-Alive:
       - timeout=72
       Transfer-Encoding:
       - chunked
       content-length:
-      - '1580'
+      - '1601'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-03-06'
+      - '2024-03-07'
       vary:
       - accept-encoding
       x-ratelimit-limit:

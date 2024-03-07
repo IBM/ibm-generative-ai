@@ -14,24 +14,24 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/chat?version=2024-03-06
+    uri: https://api.com/v2/text/chat?version=2024-03-07
   response:
     body:
-      string: '{"id":"89864bd9-5800-41a7-bc69-861032dfc81d","model_id":"google/flan-t5-xl","created_at":"2024-03-06T20:39:45.761Z","results":[{"generated_text":"No
-        problem Marvin. You okay?","generated_token_count":9,"input_token_count":15,"stop_reason":"eos_token","seed":3663552489}],"conversation_id":"ba1864fe-c5f7-4369-bd15-74a724af151a"}'
+      string: '{"id":"f1a2b95c-e1f2-4e42-9fac-b6168d092b0c","model_id":"google/flan-t5-xl","created_at":"2024-03-07T20:36:57.874Z","results":[{"generated_text":"All
+        right, what can I do for you?","generated_token_count":10,"input_token_count":15,"stop_reason":"max_tokens","seed":3334987880}],"conversation_id":"b5210561-d28c-42c3-a1e7-d118b2649225"}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 20:39:45 GMT
+      - Thu, 07 Mar 2024 20:36:57 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '328'
+      - '335'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-03-06'
+      - '2024-03-07'
       vary:
       - accept-encoding
     status:
@@ -47,25 +47,25 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/requests/chat/ba1864fe-c5f7-4369-bd15-74a724af151a?version=2024-03-06
+    uri: https://api.com/v2/requests/chat/b5210561-d28c-42c3-a1e7-d118b2649225?version=2024-03-07
   response:
     body:
-      string: '{"results":[{"id":"89864bd9-5800-41a7-bc69-861032dfc81d","duration":385,"request":{"messages":[{"role":"user","content":"Hello
-        Marvin, how are you today?"}],"model_id":"google/flan-t5-xl","parameters":{"max_new_tokens":10},"conversation_id":"ba1864fe-c5f7-4369-bd15-74a724af151a"},"status":"success","created_at":"2024-03-06T20:39:46.000Z","response":{"id":"89864bd9-5800-41a7-bc69-861032dfc81d","results":[{"seed":3663552489,"stop_reason":"eos_token","generated_text":"No
-        problem Marvin. You okay?","input_token_count":15,"generated_token_count":9}],"model_id":"google/flan-t5-xl","created_at":"2024-03-06T20:39:45.761Z","conversation_id":"ba1864fe-c5f7-4369-bd15-74a724af151a"},"version":{"api":"v2","date":"2024-03-06"}}]}'
+      string: '{"results":[{"id":"f1a2b95c-e1f2-4e42-9fac-b6168d092b0c","duration":356,"request":{"messages":[{"role":"user","content":"Hello
+        Marvin, how are you today?"}],"model_id":"google/flan-t5-xl","parameters":{"max_new_tokens":10},"conversation_id":"b5210561-d28c-42c3-a1e7-d118b2649225"},"status":"success","created_at":"2024-03-07T20:36:58.000Z","response":{"id":"f1a2b95c-e1f2-4e42-9fac-b6168d092b0c","results":[{"seed":3334987880,"stop_reason":"max_tokens","generated_text":"All
+        right, what can I do for you?","input_token_count":15,"generated_token_count":10}],"model_id":"google/flan-t5-xl","created_at":"2024-03-07T20:36:57.874Z","conversation_id":"b5210561-d28c-42c3-a1e7-d118b2649225"},"version":{"api":"v2","date":"2024-03-07"}}]}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 20:39:46 GMT
+      - Thu, 07 Mar 2024 20:36:58 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '725'
+      - '732'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-03-06'
+      - '2024-03-07'
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -87,7 +87,7 @@ interactions:
       connection:
       - keep-alive
     method: DELETE
-    uri: https://api.com/v2/requests/chat/ba1864fe-c5f7-4369-bd15-74a724af151a?version=2023-11-22
+    uri: https://api.com/v2/requests/chat/b5210561-d28c-42c3-a1e7-d118b2649225?version=2023-11-22
   response:
     body:
       string: ''
@@ -95,7 +95,7 @@ interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 20:39:47 GMT
+      - Thu, 07 Mar 2024 20:36:59 GMT
       Keep-Alive:
       - timeout=72
       content-length:
@@ -121,7 +121,7 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/requests/chat/ba1864fe-c5f7-4369-bd15-74a724af151a?version=2024-03-06
+    uri: https://api.com/v2/requests/chat/b5210561-d28c-42c3-a1e7-d118b2649225?version=2024-03-07
   response:
     body:
       string: '{"results":[]}'
@@ -129,7 +129,7 @@ interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 20:39:48 GMT
+      - Thu, 07 Mar 2024 20:37:00 GMT
       Keep-Alive:
       - timeout=72
       content-length:
@@ -137,7 +137,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-03-06'
+      - '2024-03-07'
       vary:
       - accept-encoding
       x-ratelimit-limit:
