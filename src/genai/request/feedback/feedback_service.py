@@ -66,6 +66,7 @@ class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
         *,
         categories: Optional[list[EnumLike[RequestFeedbackCategory]]] = None,
         comment: Optional[str] = None,
+        contact_consent: Optional[bool] = None,
         vote: Optional[EnumLike[RequestFeedbackVote]] = None,
     ) -> RequestIdFeedbackCreateResponse:
         """
@@ -75,6 +76,7 @@ class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
             request_id: A string representing the ID of the request.
             categories: An optional list of enum-like objects representing the feedback categories.
             comment: An optional string representing the feedback comment.
+            contact_consent: Can we contact you for more information?
             vote: Either 'up' or 'down'.
 
         Raises:
@@ -90,6 +92,7 @@ class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
                 else None
             ),
             vote=to_enum_optional(vote, RequestFeedbackVote),
+            contact_consent=contact_consent,
         ).model_dump()
         self._log_method_execution("Request Feedback Create", **request_body)
 
@@ -109,6 +112,7 @@ class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
         *,
         categories: Optional[list[RequestFeedbackCategory]] = None,
         comment: Optional[str] = None,
+        contact_consent: Optional[bool] = None,
         vote: Optional[EnumLike[RequestFeedbackVote]] = None,
     ) -> RequestIdFeedbackUpdateResponse:
         """
@@ -118,6 +122,7 @@ class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
             request_id: The ID of the request to update.
             categories: Optional. List of request feedback categories.
             comment: Optional. Comment for the request feedback.
+            contact_consent: Can we contact you for more information?
             vote: Either 'up' or 'down'.
 
         Raises:
@@ -126,7 +131,10 @@ class FeedbackService(BaseService[BaseServiceConfig, BaseServiceServices]):
         """
         assert_is_not_empty_string(request_id)
         request_body = _RequestIdFeedbackUpdateRequest(
-            comment=comment, categories=categories, vote=to_enum_optional(vote, RequestFeedbackVote)
+            comment=comment,
+            categories=categories,
+            vote=to_enum_optional(vote, RequestFeedbackVote),
+            contact_consent=contact_consent,
         ).model_dump()
         self._log_method_execution(
             "Request Feedback Update", request_id=request_id, categories=categories, comment=comment

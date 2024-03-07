@@ -44,6 +44,7 @@ if generated_text == "5":
         vote=RequestFeedbackVote.UP,
         comment="Well done",
         categories=[RequestFeedbackCategory.CORRECT_STYLE, RequestFeedbackCategory.CORRECT_CONTENT],
+        contact_consent=False,
     )
     print("Positive feedback has been sent.")
 else:
@@ -53,5 +54,6 @@ else:
         vote=RequestFeedbackVote.DOWN,
         comment="Expected response was '5'",
         categories=[RequestFeedbackCategory.INACCURATE],
+        contact_consent=True,
     )
     print("Negative feedback has been sent.")
