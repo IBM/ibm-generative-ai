@@ -1110,6 +1110,10 @@ class BaseMessage(ApiBaseModel):
     files: Optional[list[MessageFile]] = None
     role: ChatRole
 
+    @property
+    @deprecated.deprecated(reason="'file_ids' property is deprecated, use 'files' instead!")
+    def file_ids(self) -> Optional[list[str]]:
+        return [file.id for file in self.files] if self.files is not None else None
 
 class BaseTokens(ApiBaseModel):
     logprob: Optional[Union[float, str]] = None

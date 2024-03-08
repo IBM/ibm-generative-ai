@@ -1,6 +1,8 @@
 import tempfile
 import time
+from collections import defaultdict
 from pathlib import Path
+from typing import Any, DefaultDict, Optional
 
 import httpx
 import yaml
@@ -28,7 +30,7 @@ def load_openapi_schema(url: str):
         return yaml.safe_load(content)
 
 
-def generate_models(schema_path: Path, output: Path):
+def generate_models(schema_path: Path, output: Path, extra_template_data: Optional[DefaultDict[str, dict[str, Any]]]):
     if output.exists():
         output.unlink()
 
@@ -47,6 +49,8 @@ def generate_models(schema_path: Path, output: Path):
         reuse_model=False,
         target_python_version=PythonVersion.PY_39,
         base_class=ExtractorConfig.base_model_class,
+        additional_imports=["deprecated"],
+        extra_template_data=extra_template_data,
         enum_field_as_literal=LiteralType.One,
         use_one_literal_as_default=True,
         capitalise_enum_members=True,
@@ -122,6 +126,7 @@ def run():
             generate_models(
                 schema_path=Path(tmp.name),
                 output=models_output,
+                extra_template_data=defaultdict(dict, schema_overrides.model_extensions),
             )
 
             logger.info("Done!")
