@@ -123,13 +123,13 @@ class ModelIdRetrieveEndpoint(ApiEndpoint):
 class PromptRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/prompts"
     method: str = "GET"
-    version: str = "2024-03-07"
+    version: str = "2024-03-08"
 
 
 class PromptCreateEndpoint(ApiEndpoint):
     path: str = "/v2/prompts"
     method: str = "POST"
-    version: str = "2024-03-07"
+    version: str = "2024-03-08"
 
 
 class PromptIdDeleteEndpoint(ApiEndpoint):
@@ -141,19 +141,19 @@ class PromptIdDeleteEndpoint(ApiEndpoint):
 class PromptIdRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/prompts/{id}"
     method: str = "GET"
-    version: str = "2024-03-07"
+    version: str = "2024-03-08"
 
 
 class PromptIdPatchEndpoint(ApiEndpoint):
     path: str = "/v2/prompts/{id}"
     method: str = "PATCH"
-    version: str = "2024-03-07"
+    version: str = "2024-03-08"
 
 
 class PromptIdUpdateEndpoint(ApiEndpoint):
     path: str = "/v2/prompts/{id}"
     method: str = "PUT"
-    version: str = "2024-03-07"
+    version: str = "2024-03-08"
 
 
 class RequestRetrieveEndpoint(ApiEndpoint):
@@ -171,7 +171,7 @@ class RequestChatConversationIdDeleteEndpoint(ApiEndpoint):
 class RequestChatConversationIdRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/requests/chat/{conversation_id}"
     method: str = "GET"
-    version: str = "2024-03-07"
+    version: str = "2024-03-08"
 
 
 class RequestIdDeleteEndpoint(ApiEndpoint):
@@ -243,19 +243,19 @@ class TaskRetrieveEndpoint(ApiEndpoint):
 class TextChatCreateEndpoint(ApiEndpoint):
     path: str = "/v2/text/chat"
     method: str = "POST"
-    version: str = "2024-03-07"
+    version: str = "2024-03-08"
 
 
 class TextChatOutputCreateEndpoint(ApiEndpoint):
     path: str = "/v2/text/chat/output"
     method: str = "POST"
-    version: str = "2024-03-07"
+    version: str = "2024-03-08"
 
 
 class TextChatStreamCreateEndpoint(ApiEndpoint):
     path: str = "/v2/text/chat_stream"
     method: str = "POST"
-    version: str = "2024-03-07"
+    version: str = "2024-03-08"
 
 
 class TextEmbeddingCreateEndpoint(ApiEndpoint):

@@ -21,25 +21,24 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/chat?version=2024-03-07
+    uri: https://api.com/v2/text/chat?version=2024-03-08
   response:
     body:
-      string: '{"id":"6f50b684-9cc2-416b-9787-f3323d8cf04c","model_id":"google/flan-ul2","created_at":"2024-03-07T20:36:52.200Z","results":[{"generated_text":"Neuro-linguistic
-        programming started in the 1970s and has been improved upon for accuracy until
-        present.","generated_token_count":20,"input_token_count":130,"stop_reason":"eos_token","seed":2268274874}],"conversation_id":"955f726f-8365-466c-896b-638316fed9b6"}'
+      string: '{"id":"f13b63bb-5ed9-487d-8645-37a13013eb31","model_id":"google/flan-ul2","created_at":"2024-03-08T10:11:01.143Z","results":[{"generated_text":"The
+        acronym is for Neuro-Linguistic Programming. Basically, it is a","generated_token_count":20,"input_token_count":130,"stop_reason":"max_tokens","seed":2852319478}],"conversation_id":"d6bf8ef4-73e6-410c-8271-aa3f03d56695"}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Thu, 07 Mar 2024 20:36:52 GMT
+      - Fri, 08 Mar 2024 10:11:01 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '404'
+      - '368'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-03-07'
+      - '2024-03-08'
       vary:
       - accept-encoding
     status:
