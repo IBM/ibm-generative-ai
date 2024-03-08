@@ -15,16 +15,16 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/prompts?version=2024-03-07
+    uri: https://api.com/v2/prompts?version=2024-03-08
   response:
     body:
-      string: '{"result":{"id":"vCZvuCZtZDgwJlrb","name":"My test prompt","data":{"meal":"goulash","author":"Shakespeare"},"input":"Write
-        the recipe for {{meal}} in the style of {{author}}","model_id":"google/flan-t5-xl","moderations":{},"created_at":"2024-03-07T20:39:11.000Z","updated_at":"2024-03-07T20:39:11.000Z","type":"private","public":false,"metadata":{"keywords":["meal","author"]},"tags":[],"author":{"id":453,"first_name":"Tomas","last_name":"Dvorak"},"usage_count":0}}'
+      string: '{"result":{"id":"z3zdiD5b9UWISxOT","name":"My test prompt","data":{"meal":"goulash","author":"Shakespeare"},"input":"Write
+        the recipe for {{meal}} in the style of {{author}}","model_id":"google/flan-t5-xl","moderations":{},"created_at":"2024-03-08T10:11:03.000Z","updated_at":"2024-03-08T10:11:03.000Z","type":"private","public":false,"metadata":{"keywords":["meal","author"]},"tags":[],"author":{"id":453,"first_name":"Tomas","last_name":"Dvorak"},"usage_count":0}}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Thu, 07 Mar 2024 20:39:11 GMT
+      - Fri, 08 Mar 2024 10:11:02 GMT
       Keep-Alive:
       - timeout=72
       content-length:
@@ -32,7 +32,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-03-07'
+      - '2024-03-08'
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -54,16 +54,16 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/prompts/vCZvuCZtZDgwJlrb?version=2024-03-07
+    uri: https://api.com/v2/prompts/z3zdiD5b9UWISxOT?version=2024-03-08
   response:
     body:
-      string: '{"result":{"id":"vCZvuCZtZDgwJlrb","name":"My test prompt","data":{"meal":"goulash","author":"Shakespeare"},"input":"Write
-        the recipe for {{meal}} in the style of {{author}}","model_id":"google/flan-t5-xl","moderations":{},"created_at":"2024-03-07T20:39:11.000Z","updated_at":"2024-03-07T20:39:11.000Z","type":"private","public":false,"metadata":{"keywords":["meal","author"]},"tags":[],"author":{"id":453,"first_name":"Tomas","last_name":"Dvorak"},"usage_count":0}}'
+      string: '{"result":{"id":"z3zdiD5b9UWISxOT","name":"My test prompt","data":{"meal":"goulash","author":"Shakespeare"},"input":"Write
+        the recipe for {{meal}} in the style of {{author}}","model_id":"google/flan-t5-xl","moderations":{},"created_at":"2024-03-08T10:11:03.000Z","updated_at":"2024-03-08T10:11:03.000Z","type":"private","public":false,"metadata":{"keywords":["meal","author"]},"tags":[],"author":{"id":453,"first_name":"Tomas","last_name":"Dvorak"},"usage_count":0}}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Thu, 07 Mar 2024 20:39:12 GMT
+      - Fri, 08 Mar 2024 10:11:03 GMT
       Keep-Alive:
       - timeout=72
       content-length:
@@ -71,7 +71,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-03-07'
+      - '2024-03-08'
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -86,7 +86,7 @@ interactions:
 - request:
     body: '{"parameters": {"return_options": {"generated_tokens": false, "input_text":
       true, "input_tokens": false, "token_logprobs": false, "token_ranks": false}},
-      "prompt_id": "vCZvuCZtZDgwJlrb"}'
+      "prompt_id": "z3zdiD5b9UWISxOT"}'
     headers:
       accept:
       - '*/*'
@@ -102,18 +102,18 @@ interactions:
     uri: https://api.com/v2/text/generation?version=2024-01-10
   response:
     body:
-      string: '{"id":"ecc40ac1-a6a8-4362-8d68-3c792ead185f","model_id":"google/flan-t5-xl","created_at":"2024-03-07T20:39:13.793Z","results":[{"input_text":"Write
-        the recipe for goulash in the style of Shakespeare","generated_text":"]]]
-        >Prepare beef 2, carrots 1 onion 1 teaspoon salt, 1.5 tablespoon","generated_token_count":20,"input_token_count":13,"stop_reason":"max_tokens","seed":2802486288}]}'
+      string: '{"id":"3fe1a514-7184-4c36-9156-c693ca351201","model_id":"google/flan-t5-xl","created_at":"2024-03-08T10:11:04.673Z","results":[{"input_text":"Write
+        the recipe for goulash in the style of Shakespeare","generated_text":"Of course.
+        With the Lamb here, you might as well go quick and easy with Lamb Cutlets","generated_token_count":20,"input_token_count":13,"stop_reason":"max_tokens","seed":348397510}]}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Thu, 07 Mar 2024 20:39:13 GMT
+      - Fri, 08 Mar 2024 10:11:04 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '385'
+      - '400'
       content-type:
       - application/json; charset=utf-8
       content-version:
@@ -133,7 +133,7 @@ interactions:
       connection:
       - keep-alive
     method: DELETE
-    uri: https://api.com/v2/prompts/vCZvuCZtZDgwJlrb?version=2023-11-22
+    uri: https://api.com/v2/prompts/z3zdiD5b9UWISxOT?version=2023-11-22
   response:
     body:
       string: ''
@@ -141,7 +141,7 @@ interactions:
       Connection:
       - keep-alive
       Date:
-      - Thu, 07 Mar 2024 20:39:14 GMT
+      - Fri, 08 Mar 2024 10:11:08 GMT
       Keep-Alive:
       - timeout=72
       content-version:
@@ -165,7 +165,7 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/prompts?search=My%20test%20prompt&model_id=google%2Fflan-t5-xl&version=2024-03-07
+    uri: https://api.com/v2/prompts?search=My%20test%20prompt&model_id=google%2Fflan-t5-xl&version=2024-03-08
   response:
     body:
       string: '{"results":[],"total_count":0}'
@@ -173,7 +173,7 @@ interactions:
       Connection:
       - keep-alive
       Date:
-      - Thu, 07 Mar 2024 20:39:15 GMT
+      - Fri, 08 Mar 2024 10:11:09 GMT
       Keep-Alive:
       - timeout=72
       content-length:
@@ -181,7 +181,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-03-07'
+      - '2024-03-08'
       vary:
       - accept-encoding
       x-ratelimit-limit:
