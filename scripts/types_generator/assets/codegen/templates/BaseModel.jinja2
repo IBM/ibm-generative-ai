@@ -38,3 +38,11 @@ class {{ class_name }}({{ base_class }}):{% if comment is defined %}  # {{ comme
     {{ method }}
 {%- endfor -%}
 {%- endfor -%}
+{%- for field in dynamic_fields %}
+    @property
+    {%- if field.deprecated %}
+    @deprecated.deprecated(reason="{{ field.deprecated }}")
+    {%- endif %}
+    def {{ field.name }}(self) -> {{ field.return_type }}:
+        {{ field.body }}
+{%- endfor -%}

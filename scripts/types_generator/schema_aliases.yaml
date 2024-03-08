@@ -600,3 +600,12 @@ replace:
   'ModerationStigma': 'TextGenerationModerationStigma'
   'ModerationImplicitHate': 'TextGenerationModerationImplicitHate'
   'ModerationParameters': 'TextGenerationModerationParameters'
+
+model_extensions:
+  # Override generated classes by adding custom properties
+  BaseMessage:
+    dynamic_fields:
+      - name: file_ids
+        deprecated: "'file_ids' property is deprecated, use 'files' instead!"
+        return_type: Optional[list[str]]
+        body: return [file.id for file in self.files] if self.files is not None else None

@@ -30,6 +30,7 @@ class SchemaOverrides(BaseModel):
     private_operations: set[str] = set()
     endpoint_mapping: dict[str, str] = {}
     any_dict_to_class: set[str] = {}
+    model_extensions: dict[str, dict[str, Any]] = {}
 
     @property
     def replacements(self) -> dict[str, SchemaReplacement]:
