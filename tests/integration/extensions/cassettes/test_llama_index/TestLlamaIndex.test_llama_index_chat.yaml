@@ -21,24 +21,25 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/chat?version=2024-03-08
+    uri: https://api.com/v2/text/chat?version=2024-03-19
   response:
     body:
-      string: '{"id":"f13b63bb-5ed9-487d-8645-37a13013eb31","model_id":"google/flan-ul2","created_at":"2024-03-08T10:11:01.143Z","results":[{"generated_text":"The
-        acronym is for Neuro-Linguistic Programming. Basically, it is a","generated_token_count":20,"input_token_count":130,"stop_reason":"max_tokens","seed":2852319478}],"conversation_id":"d6bf8ef4-73e6-410c-8271-aa3f03d56695"}'
+      string: '{"id":"6d545254-f034-4354-ae76-3f5b5accd61b","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:28.631Z","results":[{"generated_text":"Neuro-Linguistic
+        Programming (NLP) is psychology for cleaners. It is","generated_token_count":20,"input_token_count":130,"stop_reason":"max_tokens","seed":3315921860}],"conversation_id":"e3c9a48f-5a15-4dd2-b8e2-5bc20e54b235"}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Fri, 08 Mar 2024 10:11:01 GMT
-      Keep-Alive:
-      - timeout=72
       content-length:
-      - '368'
+      - '369'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-03-08'
+      - '2024-03-19'
+      date:
+      - Wed, 20 Mar 2024 08:27:28 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=c7a0964ef13502a09f12e4a9f37d8d7f; path=/;
+        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
     status:

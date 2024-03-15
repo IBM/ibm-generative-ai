@@ -1,6 +1,7 @@
 {% for decorator in decorators -%}
 {{ decorator }}
 {% endfor -%}
+{% set base_class = custom_base_class or base_class %}
 class {{ class_name }}({{ base_class }}):{% if comment is defined %}  # {{ comment }}{% endif %}
 {%- if description %}
     """
@@ -38,11 +39,24 @@ class {{ class_name }}({{ base_class }}):{% if comment is defined %}  # {{ comme
     {{ method }}
 {%- endfor -%}
 {%- endfor -%}
+{%- for field in extra_fields %}
+    {{ field.name }}: {{ field.type }} = {{ field.default }}
+{%- endfor -%}
+{%- if model_post_init %}
+    def model_post_init(self, __context: Any) -> None:
+{{ model_post_init | indent(8) }}
+{%- endif %}
 {%- for field in dynamic_fields %}
     @property
     {%- if field.deprecated %}
     @deprecated.deprecated(reason="{{ field.deprecated }}")
     {%- endif %}
     def {{ field.name }}(self) -> {{ field.return_type }}:
+        {{ field.body }}
+{%- endfor -%}
+{%- for field in validators %}
+    @field_validator("{{ field.name }}", mode="before")
+    @classmethod
+    def validate_{{ field.name }}(cls, value: Any):
         {{ field.body }}
 {%- endfor -%}

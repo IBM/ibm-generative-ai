@@ -1,7 +1,14 @@
 import pytest
 
 from genai import Client
-from genai.schema import HumanMessage, ModerationHAP, ModerationParameters, TextGenerationParameters
+from genai.schema import (
+    HumanMessage,
+    ModerationHAP,
+    ModerationHAPInput,
+    ModerationHAPOutput,
+    ModerationParameters,
+    TextGenerationParameters,
+)
 
 TEST_MODEL_ID = "meta-llama/llama-2-70b-chat"
 
@@ -60,7 +67,10 @@ class TestChatService:
                 model_id=TEST_MODEL_ID,
                 parameters=TextGenerationParameters(min_new_tokens=min_tokens, max_new_tokens=max_tokens),
                 moderations=ModerationParameters(
-                    hap=ModerationHAP(input=True, output=True, send_tokens=True, threshold=0.7)
+                    hap=ModerationHAP(
+                        input=ModerationHAPInput(enabled=True, threshold=0.7),
+                        output=ModerationHAPOutput(enabled=True, send_tokens=True, threshold=0.7),
+                    )
                 ),
             )
         )

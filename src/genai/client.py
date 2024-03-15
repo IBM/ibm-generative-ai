@@ -85,8 +85,7 @@ class Client(BaseService[BaseConfig, BaseServices]):
         api_client: ApiClient,
         config: Optional[ModelLike[BaseConfig]] = None,
         services: Optional[BaseServices] = None,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def __init__(
@@ -95,8 +94,7 @@ class Client(BaseService[BaseConfig, BaseServices]):
         credentials: Credentials,
         config: Optional[ModelLike[BaseConfig]] = None,
         services: Optional[BaseServices] = None,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def __init__(
         self,

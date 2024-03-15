@@ -8,6 +8,7 @@ from genai.extensions.langchain.chat_llm import LangChainChatInterface
 from genai.schema import (
     DecodingMethod,
     ModerationHAP,
+    ModerationHAPInput,
     ModerationParameters,
     TextGenerationParameters,
     TextGenerationReturnOptions,
@@ -39,7 +40,7 @@ llm = LangChainChatInterface(
     moderations=ModerationParameters(
         # Threshold is set to very low level to flag everything (testing purposes)
         # or set to True to enable HAP with default settings
-        hap=ModerationHAP(input=True, output=False, threshold=0.01)
+        hap=ModerationHAP(input=ModerationHAPInput(enabled=True, threshold=0.01))
     ),
 )
 

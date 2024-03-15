@@ -141,7 +141,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
             To limit number of concurrent requests or change execution procedure, see 'execute_options' parameter.
         """
         if inputs is not None and input is not None:
-            raise ValueError("Either specify 'inputs' or 'input'!")
+            raise ValueError("Either specify 'inputs' or 'input' parameter!")
 
         prompts: Optional[list[str]] = (
             cast_list(inputs) if inputs is not None else cast_list(input) if input is not None else None

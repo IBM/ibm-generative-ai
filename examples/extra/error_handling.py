@@ -3,6 +3,7 @@ Error Handling
 
 How to handle SDK exceptions.
 """
+
 from genai import Client, Credentials
 from genai.exceptions import ApiNetworkException, ApiResponseException, ValidationError
 from genai.schema import TextGenerationParameters

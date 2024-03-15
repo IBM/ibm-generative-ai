@@ -8,6 +8,8 @@ from genai.schema import (
     DecodingMethod,
     HumanMessage,
     ModerationHAP,
+    ModerationHAPInput,
+    ModerationHAPOutput,
     ModerationParameters,
     SystemMessage,
     TextGenerationParameters,
@@ -58,7 +60,12 @@ print(heading("Continue with a conversation"))
 prompt = "How can I start?"
 response = client.text.chat.create(
     messages=[HumanMessage(content=prompt)],
-    moderations=ModerationParameters(hap=ModerationHAP(threshold=0.8)),
+    moderations=ModerationParameters(
+        hap=ModerationHAP(
+            input=ModerationHAPInput(enabled=True, threshold=0.8),
+            output=ModerationHAPOutput(enabled=True, threshold=0.8),
+        )
+    ),
     conversation_id=conversation_id,
     use_conversation_parameters=True,
 )

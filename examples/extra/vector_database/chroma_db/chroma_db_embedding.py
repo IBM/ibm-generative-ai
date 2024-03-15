@@ -1,6 +1,7 @@
 """
 Create ChromaDB Embedding Function
 """
+
 from typing import Optional
 
 from chromadb.api.types import Documents, EmbeddingFunction, Embeddings

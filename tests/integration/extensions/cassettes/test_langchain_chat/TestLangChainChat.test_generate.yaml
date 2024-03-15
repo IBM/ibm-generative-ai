@@ -21,24 +21,26 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/chat?version=2024-03-08
+    uri: https://api.com/v2/text/chat?version=2024-03-19
   response:
     body:
-      string: '{"id":"3f18b293-c165-4c41-a621-3d95eddc79ad","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-08T10:10:55.181Z","results":[{"generated_text":"  NLP
-        (Natural Language Processing) is a subfield of artificial intelligence (AI)","generated_token_count":20,"input_token_count":160,"stop_reason":"max_tokens","seed":4249717828}],"conversation_id":"fb0a5b46-0f0b-4a3e-ad2e-f555e3f66dee"}'
+      string: '{"id":"fb9c6250-62c1-412e-beb3-e8db76569817","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-20T08:27:17.855Z","results":[{"generated_text":"  NLP,
+        or Natural Language Processing, is a subfield of artificial intelligence that
+        deals","generated_token_count":20,"input_token_count":160,"stop_reason":"max_tokens","seed":3913660195}],"conversation_id":"a8512cf7-652f-42cc-9471-ff4996aecef9"}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Fri, 08 Mar 2024 10:10:55 GMT
-      Keep-Alive:
-      - timeout=72
       content-length:
-      - '394'
+      - '403'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-03-08'
+      - '2024-03-19'
+      date:
+      - Wed, 20 Mar 2024 08:27:17 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=c7a0964ef13502a09f12e4a9f37d8d7f; path=/;
+        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
     status:

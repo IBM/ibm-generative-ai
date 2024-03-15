@@ -1,4 +1,5 @@
 """Extension for LangChain library"""
+
 import warnings
 from importlib.metadata import PackageNotFoundError
 from importlib.metadata import version as get_package_version

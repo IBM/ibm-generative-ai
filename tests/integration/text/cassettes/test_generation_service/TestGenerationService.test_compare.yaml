@@ -3,10 +3,8 @@ interactions:
     body: '{"compare_parameters": {"length_penalty": [{"decay_factor": 1.2, "start_index":
       50}, {"decay_factor": 1.5, "start_index": 50}], "temperature": [0.5, 1.0]},
       "name": "my comparison", "request": {"input": "hahaha", "model_id": "google/flan-t5-xl",
-      "moderations": {"hap": {"input": true, "output": true, "send_tokens": true,
-      "threshold": 0.75}, "implicit_hate": {"input": true, "output": true, "send_tokens":
-      true, "threshold": 0.7}, "stigma": {"input": true, "output": true, "send_tokens":
-      false, "threshold": 0.75}}}}'
+      "moderations": {"hap": {"input": {"enabled": true, "send_tokens": true, "threshold":
+      0.7}, "output": {"enabled": true, "send_tokens": true, "threshold": 0.7}}}}}'
     headers:
       accept:
       - '*/*'
@@ -15,32 +13,32 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '515'
+      - '406'
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/generation/comparison?version=2023-11-22
+    uri: https://api.com/v2/text/generation/comparison?version=2024-03-19
   response:
     body:
-      string: '{"results":[{"parameters":{"length_penalty":{"decay_factor":1.2,"start_index":50},"temperature":0.5},"result":{"id":"fc625d6a-a82e-4ea4-b115-c83d66fd7a35","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:43.939Z","results":[{"generated_text":"hahahahahahahahahahahahahahahahahahahaha","generated_token_count":20,"input_token_count":4,"stop_reason":"max_tokens","seed":1217184253,"moderation":{"hap":[],"implicit_hate":[],"stigma":[]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.2,"start_index":50},"temperature":1},"result":{"id":"fc625d6a-a82e-4ea4-b115-c83d66fd7a35","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:42.938Z","results":[{"generated_text":"Haha
-        ok just got done with knitting centre, still working on the indigo wood quilt","generated_token_count":20,"input_token_count":4,"stop_reason":"max_tokens","seed":604894388,"moderation":{"hap":[],"implicit_hate":[{"score":0.9939548373222351,"flagged":true,"tokens":[{"token":"haha","index":0,"score":0.02127969078719616},{"token":"ok","index":5,"score":0.025499718263745308},{"token":"just","index":8,"score":0.029331112280488014},{"token":"got","index":13,"score":0.025046832859516144},{"token":"done","index":17,"score":0.013190396130084991},{"token":"with","index":22,"score":0.01881881058216095},{"token":"knitting","index":27,"score":0.10440972447395325},{"token":"centre","index":36,"score":0.03740357235074043},{"token":",","index":42,"score":0.38539040088653564},{"token":"still","index":44,"score":0.01694868691265583},{"token":"working","index":50,"score":0.016794778406620026},{"token":"on","index":58,"score":0.024396978318691254},{"token":"the","index":61,"score":0.0433080792427063},{"token":"indigo","index":65,"score":0.07745902985334396},{"token":"wood","index":72,"score":0.03392847254872322},{"token":"quilt","index":77,"score":0.03873193636536598}],"success":true,"position":{"start":6,"end":87}}],"stigma":[]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.5,"start_index":50},"temperature":0.5},"result":{"id":"fc625d6a-a82e-4ea4-b115-c83d66fd7a35","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:43.346Z","results":[{"generated_text":"i
-        love the dylan song! i did not know it was a ","generated_token_count":20,"input_token_count":4,"stop_reason":"max_tokens","seed":1640875312,"moderation":{"hap":[],"implicit_hate":[],"stigma":[]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.5,"start_index":50},"temperature":1},"result":{"id":"fc625d6a-a82e-4ea4-b115-c83d66fd7a35","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:43.641Z","results":[{"generated_text":"can
-        you believe people still have sanity after Lady Gaga her climb radio boa?","generated_token_count":20,"input_token_count":4,"stop_reason":"max_tokens","seed":2189432610,"moderation":{"hap":[],"implicit_hate":[],"stigma":[]}}]}}]}'
+      string: '{"results":[{"parameters":{"length_penalty":{"decay_factor":1.2,"start_index":50},"temperature":0.5},"result":{"id":"c80b7585-7b05-4e7f-8239-ca01bcd1b4e9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:45.396Z","results":[{"generated_text":"         ","generated_token_count":20,"input_token_count":4,"stop_reason":"max_tokens","seed":3344003299,"moderations":{"hap":[]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.2,"start_index":50},"temperature":1},"result":{"id":"c80b7585-7b05-4e7f-8239-ca01bcd1b4e9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:45.401Z","results":[{"generated_text":"Won''t
+        stop fighting, can''t buy the tickety. I''m out!!","generated_token_count":20,"input_token_count":4,"stop_reason":"max_tokens","seed":3766900203,"moderations":{"hap":[]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.5,"start_index":50},"temperature":0.5},"result":{"id":"c80b7585-7b05-4e7f-8239-ca01bcd1b4e9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:45.198Z","results":[{"generated_text":"i
+        can see how that would be scary.","generated_token_count":11,"input_token_count":4,"stop_reason":"eos_token","seed":3783641254,"moderations":{"hap":[]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.5,"start_index":50},"temperature":1},"result":{"id":"c80b7585-7b05-4e7f-8239-ca01bcd1b4e9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:45.106Z","results":[{"generated_text":"LOL....in
+        those shoes...","generated_token_count":7,"input_token_count":4,"stop_reason":"eos_token","seed":373500250,"moderations":{"hap":[]}}]}}]}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Sat, 24 Feb 2024 21:35:43 GMT
+      - Thu, 21 Mar 2024 18:55:45 GMT
       Keep-Alive:
       - timeout=72
       Transfer-Encoding:
       - chunked
       content-length:
-      - '2853'
+      - '1601'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2023-11-22'
+      - '2024-03-19'
       vary:
       - accept-encoding
     status:

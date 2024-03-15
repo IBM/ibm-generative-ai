@@ -5,9 +5,9 @@ from genai.schema import (
     DecodingMethod,
     LengthPenalty,
     ModerationHAP,
-    ModerationImplicitHate,
+    ModerationHAPInput,
+    ModerationHAPOutput,
     ModerationParameters,
-    ModerationStigma,
     TextGenerationComparisonCreateRequestRequest,
     TextGenerationComparisonParameters,
     TextGenerationParameters,
@@ -47,7 +47,12 @@ class TestGenerationService:
         generator = client.text.generation.create_stream(
             model_id=TEST_MODEL_ID,
             input=prompt,
-            moderations=ModerationParameters(hap=ModerationHAP(input=True, output=True, send_tokens=True)),
+            moderations=ModerationParameters(
+                hap=ModerationHAP(
+                    input=ModerationHAPInput(enabled=True, threshold=0.7),
+                    output=ModerationHAPOutput(enabled=True, send_tokens=True, threshold=0.7),
+                )
+            ),
             parameters=TextGenerationParameters(
                 decoding_method=DecodingMethod.SAMPLE,
                 max_new_tokens=max_tokens,
@@ -79,9 +84,10 @@ class TestGenerationService:
         comparison = client.text.generation.compare(
             request=TextGenerationComparisonCreateRequestRequest(
                 moderations=ModerationParameters(
-                    hap=ModerationHAP(input=True, output=True, send_tokens=True),
-                    implicit_hate=ModerationImplicitHate(input=True, output=True, send_tokens=True, threshold=0.7),
-                    stigma=ModerationStigma(input=True, output=True),
+                    hap=ModerationHAP(
+                        input=ModerationHAPInput(enabled=True, threshold=0.7, send_tokens=True),
+                        output=ModerationHAPOutput(enabled=True, threshold=0.7, send_tokens=True),
+                    ),
                 ),
                 model_id=TEST_MODEL_ID,
                 input="hahaha",

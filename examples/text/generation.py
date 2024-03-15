@@ -11,8 +11,9 @@ from genai.credentials import Credentials
 from genai.schema import (
     DecodingMethod,
     LengthPenalty,
+    ModerationHAP,
+    ModerationHAPOutput,
     ModerationParameters,
-    ModerationStigma,
     TextGenerationParameters,
     TextGenerationReturnOptions,
 )
@@ -40,9 +41,9 @@ greeting = "Hello! How are you?"
 lots_of_greetings = [greeting] * 20
 
 moderations = ModerationParameters(
-    stigma=ModerationStigma(input=False, threshold=0.8),
+    hap=ModerationHAP(output=ModerationHAPOutput(enabled=True, send_tokens=True, threshold=0.8)),
     # possibly add more moderations:
-    # implicit_hate=ModerationImplicitHate(...),
+    # social_bias=ModerationSocialBias(...),
     # hap=ModerationHAP(...),
 )
 

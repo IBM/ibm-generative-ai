@@ -14,24 +14,25 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/chat?version=2024-03-08
+    uri: https://api.com/v2/text/chat?version=2024-03-19
   response:
     body:
-      string: '{"id":"26f19e2f-c3d7-407f-a098-e3f210a26f6a","model_id":"google/flan-t5-xl","created_at":"2024-03-08T10:11:11.345Z","results":[{"generated_text":"Yes
-        You are very beautiful young lady, I like","generated_token_count":10,"input_token_count":15,"stop_reason":"max_tokens","seed":3435574986}],"conversation_id":"8ab8243a-785e-4aae-95ce-233a32600caa"}'
+      string: '{"id":"8e9f8355-3a59-484f-a26b-356fb720ad73","model_id":"google/flan-t5-xl","created_at":"2024-03-20T08:28:04.337Z","results":[{"generated_text":"Good.
+        I''m well and still in the","generated_token_count":10,"input_token_count":15,"stop_reason":"max_tokens","seed":2489327307}],"conversation_id":"ea8d0b6b-1af4-410b-a440-785c6da99777"}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Fri, 08 Mar 2024 10:11:11 GMT
-      Keep-Alive:
-      - timeout=72
       content-length:
-      - '347'
+      - '333'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-03-08'
+      - '2024-03-19'
+      date:
+      - Wed, 20 Mar 2024 08:28:04 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=b0f51927d7cda7413e134b98370685da; path=/;
+        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
     status:
@@ -47,25 +48,28 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/requests/chat/8ab8243a-785e-4aae-95ce-233a32600caa?version=2024-03-08
+    uri: https://api.com/v2/requests/chat/ea8d0b6b-1af4-410b-a440-785c6da99777?version=2024-03-19
   response:
     body:
-      string: '{"results":[{"id":"26f19e2f-c3d7-407f-a098-e3f210a26f6a","duration":405,"request":{"messages":[{"role":"user","content":"Hello
-        Marvin, how are you today?"}],"model_id":"google/flan-t5-xl","parameters":{"max_new_tokens":10},"conversation_id":"8ab8243a-785e-4aae-95ce-233a32600caa"},"status":"success","created_at":"2024-03-08T10:11:11.000Z","response":{"id":"26f19e2f-c3d7-407f-a098-e3f210a26f6a","results":[{"seed":3435574986,"stop_reason":"max_tokens","generated_text":"Yes
-        You are very beautiful young lady, I like","input_token_count":15,"generated_token_count":10}],"model_id":"google/flan-t5-xl","created_at":"2024-03-08T10:11:11.345Z","conversation_id":"8ab8243a-785e-4aae-95ce-233a32600caa"},"version":{"api":"v2","date":"2024-03-08"}}]}'
+      string: '{"results":[{"id":"8e9f8355-3a59-484f-a26b-356fb720ad73","duration":289,"request":{"messages":[{"role":"user","content":"Hello
+        Marvin, how are you today?"}],"model_id":"google/flan-t5-xl","parameters":{"max_new_tokens":10},"conversation_id":"ea8d0b6b-1af4-410b-a440-785c6da99777"},"status":"success","created_at":"2024-03-20T08:28:04.000Z","response":{"id":"8e9f8355-3a59-484f-a26b-356fb720ad73","results":[{"seed":2489327307,"stop_reason":"max_tokens","generated_text":"Good.
+        I''m well and still in the","input_token_count":15,"generated_token_count":10}],"model_id":"google/flan-t5-xl","created_at":"2024-03-20T08:28:04.337Z","conversation_id":"ea8d0b6b-1af4-410b-a440-785c6da99777"},"version":{"api":"v2","date":"2024-03-19"}}]}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Fri, 08 Mar 2024 10:11:12 GMT
-      Keep-Alive:
-      - timeout=72
+      cache-control:
+      - private
       content-length:
-      - '744'
+      - '730'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-03-08'
+      - '2024-03-19'
+      date:
+      - Wed, 20 Mar 2024 08:28:05 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=b0f51927d7cda7413e134b98370685da; path=/;
+        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -87,21 +91,22 @@ interactions:
       connection:
       - keep-alive
     method: DELETE
-    uri: https://api.com/v2/requests/chat/8ab8243a-785e-4aae-95ce-233a32600caa?version=2023-11-22
+    uri: https://api.com/v2/requests/chat/ea8d0b6b-1af4-410b-a440-785c6da99777?version=2023-11-22
   response:
     body:
       string: ''
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Fri, 08 Mar 2024 10:11:13 GMT
-      Keep-Alive:
-      - timeout=72
       content-length:
       - '0'
       content-version:
       - '2023-11-22'
+      date:
+      - Wed, 20 Mar 2024 08:28:05 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=b0f51927d7cda7413e134b98370685da; path=/;
+        HttpOnly; Secure; SameSite=None
       x-ratelimit-limit:
       - '25'
       x-ratelimit-remaining:
@@ -121,23 +126,26 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/requests/chat/8ab8243a-785e-4aae-95ce-233a32600caa?version=2024-03-08
+    uri: https://api.com/v2/requests/chat/ea8d0b6b-1af4-410b-a440-785c6da99777?version=2024-03-19
   response:
     body:
       string: '{"results":[]}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Fri, 08 Mar 2024 10:11:14 GMT
-      Keep-Alive:
-      - timeout=72
+      cache-control:
+      - private
       content-length:
       - '14'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-03-08'
+      - '2024-03-19'
+      date:
+      - Wed, 20 Mar 2024 08:28:06 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=343dd5c30caabf2689c32da1b251e450; path=/;
+        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
       x-ratelimit-limit:

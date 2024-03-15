@@ -3,6 +3,7 @@ Retrieve metadata for given service method
 
 From metadat you can see for instance which endpoint does the method uses.
 """
+
 from dotenv import load_dotenv
 
 from genai import Client, Credentials

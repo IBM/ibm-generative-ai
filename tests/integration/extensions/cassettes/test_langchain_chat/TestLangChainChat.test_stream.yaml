@@ -23,41 +23,86 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/chat_stream?version=2024-01-10
+    uri: https://api.com/v2/text/chat_stream?version=2024-03-19
   response:
     body:
       string: 'retry: 3000
 
 
-        data: {"id":"bff1d372-0892-461b-8114-534eca7538de","model_id":"google/flan-ul2","created_at":"2024-03-06T20:46:45.679Z","results":[{"generated_text":"","generated_token_count":0,"input_token_count":130,"stop_reason":"not_finished","seed":1657769977}],"conversation_id":"cdf42eee-16e7-4a4c-923e-0e35e0b1f6eb"}
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.045Z","results":[{"generated_text":"","generated_token_count":0,"input_token_count":130,"stop_reason":"not_finished","seed":714570861}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
 
 
-        data: {"id":"bff1d372-0892-461b-8114-534eca7538de","model_id":"google/flan-ul2","created_at":"2024-03-06T20:46:45.754Z","results":[{"generated_text":"It","generated_token_count":1,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"cdf42eee-16e7-4a4c-923e-0e35e0b1f6eb"}
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.112Z","results":[{"generated_text":"Neuro","generated_token_count":1,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
 
 
-        data: {"id":"bff1d372-0892-461b-8114-534eca7538de","model_id":"google/flan-ul2","created_at":"2024-03-06T20:46:45.784Z","results":[{"generated_text":"
-        means","generated_token_count":2,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"cdf42eee-16e7-4a4c-923e-0e35e0b1f6eb"}
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.142Z","results":[{"generated_text":"
+        Lin","generated_token_count":2,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
 
 
-        data: {"id":"bff1d372-0892-461b-8114-534eca7538de","model_id":"google/flan-ul2","created_at":"2024-03-06T20:46:45.814Z","results":[{"generated_text":"
-        neurological","generated_token_count":3,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"cdf42eee-16e7-4a4c-923e-0e35e0b1f6eb"}
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.172Z","results":[{"generated_text":"gu","generated_token_count":3,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
 
 
-        data: {"id":"bff1d372-0892-461b-8114-534eca7538de","model_id":"google/flan-ul2","created_at":"2024-03-06T20:46:45.843Z","results":[{"generated_text":"
-        ","generated_token_count":4,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"cdf42eee-16e7-4a4c-923e-0e35e0b1f6eb"}
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.200Z","results":[{"generated_text":"istic","generated_token_count":4,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
 
 
-        data: {"id":"bff1d372-0892-461b-8114-534eca7538de","model_id":"google/flan-ul2","created_at":"2024-03-06T20:46:45.872Z","results":[{"generated_text":"linguistic","generated_token_count":5,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"cdf42eee-16e7-4a4c-923e-0e35e0b1f6eb"}
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.228Z","results":[{"generated_text":"
+        Programm","generated_token_count":5,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
 
 
-        data: {"id":"bff1d372-0892-461b-8114-534eca7538de","model_id":"google/flan-ul2","created_at":"2024-03-06T20:46:45.901Z","results":[{"generated_text":"
-        programming","generated_token_count":6,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"cdf42eee-16e7-4a4c-923e-0e35e0b1f6eb"}
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.256Z","results":[{"generated_text":"ing","generated_token_count":6,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
 
 
-        data: {"id":"bff1d372-0892-461b-8114-534eca7538de","model_id":"google/flan-ul2","created_at":"2024-03-06T20:46:45.930Z","results":[{"generated_text":".","generated_token_count":7,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"cdf42eee-16e7-4a4c-923e-0e35e0b1f6eb"}
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.283Z","results":[{"generated_text":"
+        (","generated_token_count":7,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
 
 
-        data: {"id":"bff1d372-0892-461b-8114-534eca7538de","model_id":"google/flan-ul2","created_at":"2024-03-06T20:46:45.960Z","results":[{"generated_text":"","generated_token_count":8,"input_token_count":0,"stop_reason":"eos_token","seed":1657769977}],"conversation_id":"cdf42eee-16e7-4a4c-923e-0e35e0b1f6eb"}
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.311Z","results":[{"generated_text":"N","generated_token_count":8,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
+
+
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.339Z","results":[{"generated_text":"LP","generated_token_count":9,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
+
+
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.367Z","results":[{"generated_text":")","generated_token_count":10,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
+
+
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.395Z","results":[{"generated_text":"
+        has","generated_token_count":11,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
+
+
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.423Z","results":[{"generated_text":"
+        evolved","generated_token_count":12,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
+
+
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.450Z","results":[{"generated_text":"
+        from","generated_token_count":13,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
+
+
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.479Z","results":[{"generated_text":"
+        the","generated_token_count":14,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
+
+
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.508Z","results":[{"generated_text":"
+        early","generated_token_count":15,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
+
+
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.536Z","results":[{"generated_text":"
+        clinic","generated_token_count":16,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
+
+
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.570Z","results":[{"generated_text":"
+        use","generated_token_count":17,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
+
+
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.591Z","results":[{"generated_text":"
+        of","generated_token_count":18,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
+
+
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.621Z","results":[{"generated_text":"
+        interpersonal","generated_token_count":19,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
+
+
+        data: {"id":"f0542d7e-b95a-48a5-8861-eaef8e42fbfb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:24.649Z","results":[{"generated_text":"
+        ","generated_token_count":20,"input_token_count":0,"stop_reason":"max_tokens","seed":714570861}],"conversation_id":"31500c0f-1227-4c16-bd6f-ea7e60fc75d6"}
 
 
         event: close
@@ -65,15 +110,16 @@ interactions:
 
         '
     headers:
-      Cache-Control:
+      cache-control:
       - no-cache,no-transform
-      Connection:
-      - keep-alive
-      Content-Type:
+      content-type:
       - text/event-stream
-      Date:
-      - Wed, 06 Mar 2024 20:46:45 GMT
-      Transfer-Encoding:
+      date:
+      - Wed, 20 Mar 2024 08:27:24 GMT
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=343dd5c30caabf2689c32da1b251e450; path=/;
+        HttpOnly; Secure; SameSite=None
+      transfer-encoding:
       - chunked
       x-no-compression:
       - '1'

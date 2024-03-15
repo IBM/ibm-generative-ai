@@ -17,7 +17,7 @@ interactions:
       Connection:
       - keep-alive
       Date:
-      - Sat, 24 Feb 2024 21:35:35 GMT
+      - Thu, 21 Mar 2024 12:40:35 GMT
       Keep-Alive:
       - timeout=72
       content-length:
@@ -49,25 +49,25 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/generation?version=2024-01-10
+    uri: https://api.com/v2/text/generation?version=2024-03-19
   response:
     body:
-      string: '{"id":"6712ab96-59e6-4534-9dea-ac5ee4914cad","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:36.624Z","results":[{"input_text":"Here
-        is a funny short joke about AI: ","generated_text":"I''m going to the zoo
-        to see a lion.","generated_token_count":18,"input_token_count":12,"stop_reason":"eos_token","seed":4051020192}]}'
+      string: '{"id":"1e739012-9612-4e49-ab3d-ea7adaa1eba7","model_id":"google/flan-t5-xl","created_at":"2024-03-21T12:40:36.187Z","results":[{"input_text":"Here
+        is a funny short joke about AI: ","generated_text":"A computer program sent
+        a robot to take a picture of a fox. The robot was happy to be there.","generated_token_count":27,"input_token_count":12,"stop_reason":"eos_token","seed":2634427415}]}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Sat, 24 Feb 2024 21:35:36 GMT
+      - Thu, 21 Mar 2024 12:40:36 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '332'
+      - '389'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-01-10'
+      - '2024-03-19'
       vary:
       - accept-encoding
     status:

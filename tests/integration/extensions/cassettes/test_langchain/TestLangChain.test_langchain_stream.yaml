@@ -16,22 +16,33 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/generation_stream?version=2024-01-10
+    uri: https://api.com/v2/text/generation_stream?version=2024-03-19
   response:
     body:
       string: 'retry: 3000
 
 
-        data: {"id":"825d52ec-bd21-46b2-8d79-1de1aee1bf07","model_id":"google/flan-ul2","created_at":"2024-01-25T15:50:08.889Z","results":[{"generated_text":"","generated_token_count":0,"input_token_count":7,"stop_reason":"not_finished","seed":3589214229}]}
+        data: {"id":"759fcebd-8043-4549-b6e4-7d57de65b6f0","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:11.969Z","results":[{"generated_text":"","generated_token_count":0,"input_token_count":7,"stop_reason":"not_finished","seed":656712563}]}
 
 
-        data: {"id":"825d52ec-bd21-46b2-8d79-1de1aee1bf07","model_id":"google/flan-ul2","created_at":"2024-01-25T15:50:08.929Z","results":[{"generated_text":"Thursday","generated_token_count":1,"input_token_count":0,"stop_reason":"not_finished"}]}
+        data: {"id":"759fcebd-8043-4549-b6e4-7d57de65b6f0","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:12.019Z","results":[{"generated_text":"Thursday","generated_token_count":1,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"825d52ec-bd21-46b2-8d79-1de1aee1bf07","model_id":"google/flan-ul2","created_at":"2024-01-25T15:50:08.952Z","results":[{"generated_text":",","generated_token_count":2,"input_token_count":0,"stop_reason":"not_finished"}]}
+        data: {"id":"759fcebd-8043-4549-b6e4-7d57de65b6f0","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:12.047Z","results":[{"generated_text":",","generated_token_count":2,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"825d52ec-bd21-46b2-8d79-1de1aee1bf07","model_id":"google/flan-ul2","created_at":"2024-01-25T15:50:08.973Z","results":[{"generated_text":"","generated_token_count":3,"input_token_count":0,"stop_reason":"eos_token","seed":3589214229}]}
+        data: {"id":"759fcebd-8043-4549-b6e4-7d57de65b6f0","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:12.077Z","results":[{"generated_text":"
+        Friday","generated_token_count":3,"input_token_count":0,"stop_reason":"not_finished"}]}
+
+
+        data: {"id":"759fcebd-8043-4549-b6e4-7d57de65b6f0","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:12.106Z","results":[{"generated_text":",","generated_token_count":4,"input_token_count":0,"stop_reason":"not_finished"}]}
+
+
+        data: {"id":"759fcebd-8043-4549-b6e4-7d57de65b6f0","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:12.135Z","results":[{"generated_text":"
+        day","generated_token_count":5,"input_token_count":0,"stop_reason":"not_finished"}]}
+
+
+        data: {"id":"759fcebd-8043-4549-b6e4-7d57de65b6f0","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:12.165Z","results":[{"generated_text":"","generated_token_count":6,"input_token_count":0,"stop_reason":"eos_token","seed":656712563}]}
 
 
         event: close
@@ -44,9 +55,9 @@ interactions:
       content-type:
       - text/event-stream
       date:
-      - Thu, 25 Jan 2024 15:50:08 GMT
+      - Wed, 20 Mar 2024 08:27:11 GMT
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=538060a726cc3a9c230fa5d1269356eb; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=75698ca04a07007fb30d5b2346e9bff6; path=/;
         HttpOnly; Secure; SameSite=None
       transfer-encoding:
       - chunked

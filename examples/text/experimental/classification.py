@@ -1,4 +1,5 @@
 """Text Classification"""
+
 from dotenv import load_dotenv
 
 from genai.client import Client
