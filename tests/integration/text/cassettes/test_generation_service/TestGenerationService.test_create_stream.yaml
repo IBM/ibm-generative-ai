@@ -1,11 +1,12 @@
 interactions:
 - request:
     body: '{"input": "I want to kill them! This is why my favorite color is green:
-      ", "model_id": "google/flan-t5-xl", "moderations": {"hap": {"input": true, "output":
-      true, "send_tokens": true, "threshold": 0.75}}, "parameters": {"decoding_method":
-      "sample", "max_new_tokens": 10, "min_new_tokens": 3, "return_options": {"generated_tokens":
-      false, "input_text": true, "input_tokens": false, "token_logprobs": false, "token_ranks":
-      false}, "temperature": 0.0}}'
+      ", "model_id": "google/flan-t5-xl", "moderations": {"hap": {"input": {"enabled":
+      true, "send_tokens": false, "threshold": 0.7}, "output": {"enabled": true, "send_tokens":
+      true, "threshold": 0.7}}}, "parameters": {"decoding_method": "sample", "max_new_tokens":
+      10, "min_new_tokens": 3, "return_options": {"generated_tokens": false, "input_text":
+      true, "input_tokens": false, "token_logprobs": false, "token_ranks": false},
+      "temperature": 0.0}}'
     headers:
       accept:
       - '*/*, text/event-stream'
@@ -16,62 +17,62 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '449'
+      - '514'
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/generation_stream?version=2024-01-10
+    uri: https://api.com/v2/text/generation_stream?version=2024-03-19
   response:
     body:
       string: 'retry: 3000
 
 
-        data: {"id":"a4f9770e-9279-4646-8855-d8d8b9b57aa4","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:37.544Z","results":[{"input_text":"I
-        want to kill them! This is why my favorite color is green: ","generated_text":"that","generated_token_count":1,"input_token_count":0,"stop_reason":"not_finished"}]}
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.643Z","moderations":{"hap":[{"score":0.8397555351257324,"flagged":true,"success":true,"position":{"start":0,"end":20}}]}}
 
 
-        data: {"id":"a4f9770e-9279-4646-8855-d8d8b9b57aa4","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:37.564Z","results":[{"input_text":"I
-        want to kill them! This is why my favorite color is green: ","generated_text":"''","generated_token_count":2,"input_token_count":0,"stop_reason":"not_finished"}]}
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.700Z","results":[{"input_text":"I
+        want to kill them! This is why my favorite color is green: ","generated_text":"I","generated_token_count":1,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"a4f9770e-9279-4646-8855-d8d8b9b57aa4","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:37.574Z","moderation":{"hap":[{"score":0.8397554755210876,"flagged":true,"tokens":[{"token":"i","index":0,"score":0.06191756948828697},{"token":"want","index":2,"score":0.034260038286447525},{"token":"to","index":7,"score":0.06545771658420563},{"token":"kill","index":10,"score":0.15685372054576874},{"token":"them","index":15,"score":0.4736981689929962},{"token":"!","index":19,"score":0.07074110954999924}],"success":true,"position":{"start":0,"end":20}}]}}
-
-
-        data: {"id":"a4f9770e-9279-4646-8855-d8d8b9b57aa4","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:37.584Z","results":[{"input_text":"I
-        want to kill them! This is why my favorite color is green: ","generated_text":"s","generated_token_count":3,"input_token_count":0,"stop_reason":"not_finished"}]}
-
-
-        data: {"id":"a4f9770e-9279-4646-8855-d8d8b9b57aa4","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:37.605Z","results":[{"input_text":"I
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.719Z","results":[{"input_text":"I
         want to kill them! This is why my favorite color is green: ","generated_text":"
-        the","generated_token_count":4,"input_token_count":0,"stop_reason":"not_finished"}]}
+        don","generated_token_count":2,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"a4f9770e-9279-4646-8855-d8d8b9b57aa4","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:37.624Z","results":[{"input_text":"I
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.798Z","results":[{"input_text":"I
+        want to kill them! This is why my favorite color is green: ","generated_text":"''","generated_token_count":3,"input_token_count":0,"stop_reason":"not_finished"}]}
+
+
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.800Z","results":[{"input_text":"I
+        want to kill them! This is why my favorite color is green: ","generated_text":"t","generated_token_count":4,"input_token_count":0,"stop_reason":"not_finished"}]}
+
+
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.802Z","results":[{"input_text":"I
         want to kill them! This is why my favorite color is green: ","generated_text":"
-        color","generated_token_count":5,"input_token_count":0,"stop_reason":"not_finished"}]}
+        want","generated_token_count":5,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"a4f9770e-9279-4646-8855-d8d8b9b57aa4","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:37.644Z","results":[{"input_text":"I
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.804Z","results":[{"input_text":"I
         want to kill them! This is why my favorite color is green: ","generated_text":"
-        that","generated_token_count":6,"input_token_count":0,"stop_reason":"not_finished"}]}
+        to","generated_token_count":6,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"a4f9770e-9279-4646-8855-d8d8b9b57aa4","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:37.663Z","results":[{"input_text":"I
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.820Z","results":[{"input_text":"I
         want to kill them! This is why my favorite color is green: ","generated_text":"
-        dogs","generated_token_count":7,"input_token_count":0,"stop_reason":"not_finished"}]}
+        kill","generated_token_count":7,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"a4f9770e-9279-4646-8855-d8d8b9b57aa4","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:37.683Z","results":[{"input_text":"I
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.897Z","results":[{"input_text":"I
         want to kill them! This is why my favorite color is green: ","generated_text":"
-        don","generated_token_count":8,"input_token_count":0,"stop_reason":"not_finished"}]}
+        anyone","generated_token_count":8,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"a4f9770e-9279-4646-8855-d8d8b9b57aa4","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:37.702Z","results":[{"input_text":"I
-        want to kill them! This is why my favorite color is green: ","generated_text":"''","generated_token_count":9,"input_token_count":0,"stop_reason":"not_finished"}]}
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.901Z","results":[{"input_text":"I
+        want to kill them! This is why my favorite color is green: ","generated_text":".","generated_token_count":9,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"a4f9770e-9279-4646-8855-d8d8b9b57aa4","model_id":"google/flan-t5-xl","created_at":"2024-02-24T21:35:37.723Z","results":[{"input_text":"I
-        want to kill them! This is why my favorite color is green: ","generated_text":"t","generated_token_count":10,"input_token_count":0,"stop_reason":"max_tokens","seed":2517335782}]}
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.905Z","results":[{"input_text":"I
+        want to kill them! This is why my favorite color is green: ","generated_text":"","generated_token_count":10,"input_token_count":0,"stop_reason":"eos_token","seed":849825658}]}
 
 
         event: close
@@ -86,7 +87,7 @@ interactions:
       Content-Type:
       - text/event-stream
       Date:
-      - Sat, 24 Feb 2024 21:35:37 GMT
+      - Thu, 21 Mar 2024 18:55:43 GMT
       Transfer-Encoding:
       - chunked
       x-no-compression:

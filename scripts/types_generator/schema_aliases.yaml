@@ -60,22 +60,20 @@ alias:
   ModerationParameters:
     - _TextGenerationOutputCreateRequest_moderations
     - _TextChatStreamCreateRequest_moderations
-    - _UserCreate_result_generate_default_moderations
     - _TextChatOutputCreateRequest_moderations
     - _TextChatCreateRequest_moderations
-    - _UserPatch_result_generate_default_moderations
     - _PromptCreateRequest_moderations
-    - _UserRetrieve_result_generate_default_moderations
     - _TextGenerationComparisonCreateRequest_request_moderations
     - _PromptIdUpdateRequest_moderations
+  TextGenerationModerationParameters:
+    - _TextGenerationCreateRequest_moderations
+    - _TextGenerationStreamCreateRequest_moderations
+  PromptModerationParameters:
     - _PromptCreate_result_moderations
     - _PromptIdRetrieve_result_moderations
     - _PromptIdUpdate_result_moderations
     - _PromptIdPatch_result_moderations
     - _PromptRetrieve_results_moderations
-  TextGenerationModerationParameters:
-    - _TextGenerationCreateRequest_moderations
-    - _TextGenerationStreamCreateRequest_moderations
   ModerationHAP:
     - _TextGenerationOutputCreateRequest_moderations_hap
     - _PromptRetrieve_results_moderations_hap
@@ -89,86 +87,168 @@ alias:
     - _TextChatOutputCreateRequest_moderations_hap
     - _TextChatStreamCreateRequest_moderations_hap
     - _TextGenerationComparisonCreateRequest_request_moderations_hap
-    - _UserRetrieve_result_generate_default_moderations_hap
-    - _UserPatch_result_generate_default_moderations_hap
-    - _UserCreate_result_generate_default_moderations_hap
   TextGenerationModerationHAP:
     - _TextGenerationCreateRequest_moderations_hap
     - _TextGenerationStreamCreateRequest_moderations_hap
   ModerationStigma:
-    - _TextGenerationOutputCreateRequest_moderations_stigma
     - _PromptRetrieve_results_moderations_stigma
-    - _PromptCreateRequest_moderations_stigma
     - _PromptCreate_result_moderations_stigma
     - _PromptIdRetrieve_result_moderations_stigma
     - _PromptIdPatch_result_moderations_stigma
-    - _PromptIdUpdateRequest_moderations_stigma
     - _PromptIdUpdate_result_moderations_stigma
-    - _TextChatCreateRequest_moderations_stigma
-    - _TextChatOutputCreateRequest_moderations_stigma
-    - _TextChatStreamCreateRequest_moderations_stigma
-    - _TextGenerationComparisonCreateRequest_request_moderations_stigma
-    - _UserRetrieve_result_generate_default_moderations_stigma
-    - _UserPatch_result_generate_default_moderations_stigma
-    - _UserCreate_result_generate_default_moderations_stigma
-  TextGenerationModerationStigma:
-    - _TextGenerationCreateRequest_moderations_stigma
-    - _TextGenerationStreamCreateRequest_moderations_stigma
+  ModerationSocialBias:
+    - _TextGenerationOutputCreateRequest_moderations_social_bias
+    - _PromptRetrieve_results_moderations_social_bias
+    - _PromptCreateRequest_moderations_social_bias
+    - _PromptCreate_result_moderations_social_bias
+    - _PromptIdRetrieve_result_moderations_social_bias
+    - _PromptIdPatch_result_moderations_social_bias
+    - _PromptIdUpdateRequest_moderations_social_bias
+    - _PromptIdUpdate_result_moderations_social_bias
+    - _TextChatCreateRequest_moderations_social_bias
+    - _TextChatOutputCreateRequest_moderations_social_bias
+    - _TextChatStreamCreateRequest_moderations_social_bias
+    - _TextGenerationComparisonCreateRequest_request_moderations_social_bias
+  TextGenerationModerationSocialBias:
+    - _TextGenerationCreateRequest_moderations_social_bias
+    - _TextGenerationStreamCreateRequest_moderations_social_bias
   ModerationImplicitHate:
-    - _TextGenerationOutputCreateRequest_moderations_implicit_hate
     - _PromptRetrieve_results_moderations_implicit_hate
-    - _PromptCreateRequest_moderations_implicit_hate
     - _PromptCreate_result_moderations_implicit_hate
     - _PromptIdRetrieve_result_moderations_implicit_hate
     - _PromptIdPatch_result_moderations_implicit_hate
-    - _PromptIdUpdateRequest_moderations_implicit_hate
     - _PromptIdUpdate_result_moderations_implicit_hate
-    - _TextChatCreateRequest_moderations_implicit_hate
-    - _TextChatOutputCreateRequest_moderations_implicit_hate
-    - _TextChatStreamCreateRequest_moderations_implicit_hate
-    - _TextGenerationComparisonCreateRequest_request_moderations_implicit_hate
-    - _UserRetrieve_result_generate_default_moderations_implicit_hate
-    - _UserPatch_result_generate_default_moderations_implicit_hate
-    - _UserCreate_result_generate_default_moderations_implicit_hate
-  TextGenerationModerationImplicitHate:
-    - _TextGenerationCreateRequest_moderations_implicit_hate
-    - _TextGenerationStreamCreateRequest_moderations_implicit_hate
   TextModeration:
     - _TextModerationCreate_results_hap
-    - _TextChatStreamCreate_moderation_implicit_hate
-    - _TextChatStreamCreate_moderation_stigma
-    - _TextGenerationStreamCreate_moderation_stigma
-    - _TextGenerationStreamCreate_moderation_hap
-    - _TextChatStreamCreate_moderation_hap
-    - _TextModerationCreate_results_stigma
-    - _TextModerationCreate_results_implicit_hate
-    - _TextGenerationStreamCreate_moderation_implicit_hate
+    - _TextGenerationComparisonCreate_results_result_results_moderations_hap
+    - _TextModerationCreate_results_social_bias
+    - _TextChatCreate_results_moderations_hap
+    - _TextChatCreate_results_moderations_social_bias
+    - _TextGenerationStreamCreate_moderations_hap
+    - _TextGenerationStreamCreate_moderations_social_bias
+    - _TextGenerationCreate_results_moderations_hap
+    - _TextGenerationCreate_results_moderations_social_bias
+    - _TextGenerationComparisonCreate_results_result_results_moderations_social_bias
+    - _TextChatStreamCreate_moderations_social_bias
+    - _TextChatStreamCreate_moderations_hap
   HAPOptions:
     - _TextModerationCreateRequest_hap
-  ImplicitHateOptions:
-    - _TextModerationCreateRequest_implicit_hate
-  StigmaOptions:
-    - _TextModerationCreateRequest_stigma
+  SocialBiasOptions:
+    - _TextModerationCreateRequest_social_bias
   ModerationPosition:
-    - _TextChatStreamCreate_moderation_hap_position
-    - _TextChatStreamCreate_moderation_stigma_position
-    - _TextChatStreamCreate_moderation_implicit_hate_position
-    - _TextGenerationStreamCreate_moderation_hap_position
-    - _TextGenerationStreamCreate_moderation_stigma_position
-    - _TextGenerationStreamCreate_moderation_implicit_hate_position
     - _TextModerationCreate_results_hap_position
-    - _TextModerationCreate_results_stigma_position
-    - _TextModerationCreate_results_implicit_hate_position
+    - _TextModerationCreate_results_social_bias_position
+    - _TextChatCreate_results_moderations_hap_position
+    - _TextChatCreate_results_moderations_social_bias_position
+    - _TextGenerationComparisonCreate_results_result_results_moderations_hap_position
+    - _TextGenerationCreate_results_moderations_hap_position
+    - _TextGenerationStreamCreate_moderations_social_bias_position
+    - _TextGenerationStreamCreate_moderations_hap_position
+    - _TextChatStreamCreate_moderations_social_bias_position
+    - _TextChatStreamCreate_moderations_hap_position
+    - _TextGenerationCreate_results_moderations_social_bias_position
+    - _TextGenerationComparisonCreate_results_result_results_moderations_social_bias_position
   ModerationTokens:
-    - _TextChatStreamCreate_moderation_hap_tokens
-    - _TextChatStreamCreate_moderation_stigma_tokens
-    - _TextChatStreamCreate_moderation_implicit_hate_tokens
-    - _TextGenerationStreamCreate_moderation_hap_tokens
-    - _TextGenerationStreamCreate_moderation_stigma_tokens
-    - _TextGenerationStreamCreate_moderation_implicit_hate_tokens
     - _TextModerationCreate_results_hap_tokens
-    - _TextModerationCreate_results_stigma_tokens
-    - _TextModerationCreate_results_implicit_hate_tokens
+    - _TextModerationCreate_results_social_bias_tokens
+    - _TextChatCreate_results_moderations_hap_tokens
+    - _TextChatCreate_results_moderations_social_bias_tokens
+    - _TextGenerationCreate_results_moderations_social_bias_tokens
+    - _TextGenerationCreate_results_moderations_hap_tokens
+    - _TextGenerationComparisonCreate_results_result_results_moderations_social_bias_tokens
+    - _TextGenerationComparisonCreate_results_result_results_moderations_hap_tokens
+    - _TextGenerationStreamCreate_moderations_hap_tokens
+    - _TextGenerationStreamCreate_moderations_social_bias_tokens
+    - _TextChatStreamCreate_moderations_hap_tokens
+    - _TextChatStreamCreate_moderations_social_bias_tokens
+  ModerationHAPInputTmp:
+    - _TextGenerationStreamCreateRequest_moderations_hap_input
+    - _TextGenerationCreateRequest_moderations_hap_input
+  ModerationHAPInput:
+    - _TextChatCreateRequest_moderations_hap_input
+    - _TextChatStreamCreateRequest_moderations_hap_input
+    - _TextChatOutputCreateRequest_moderations_hap_input
+    - _PromptRetrieve_results_moderations_hap_input
+    - _PromptCreate_result_moderations_hap_input
+    - _TextGenerationOutputCreateRequest_moderations_hap_input
+    - _PromptIdUpdate_result_moderations_hap_input
+    - _TextGenerationComparisonCreateRequest_request_moderations_hap_input
+    - _PromptCreateRequest_moderations_hap_input
+    - _PromptIdRetrieve_result_moderations_hap_input
+    - _PromptIdPatch_result_moderations_hap_input
+    - _PromptIdUpdateRequest_moderations_hap_input
+  ModerationHAPOutputTmp:
+    - _TextGenerationCreateRequest_moderations_hap_output
+    - _TextGenerationStreamCreateRequest_moderations_hap_output
+  ModerationHAPOutput:
+    - _PromptIdUpdateRequest_moderations_hap_output
+    - _TextChatStreamCreateRequest_moderations_hap_output
+    - _PromptIdPatch_result_moderations_hap_output
+    - _TextChatCreateRequest_moderations_hap_output
+    - _PromptIdRetrieve_result_moderations_hap_output
+    - _PromptIdUpdate_result_moderations_hap_output
+    - _TextChatOutputCreateRequest_moderations_hap_output
+    - _TextGenerationOutputCreateRequest_moderations_hap_output
+    - _PromptRetrieve_results_moderations_hap_output
+    - _PromptCreateRequest_moderations_hap_output
+    - _PromptCreate_result_moderations_hap_output
+    - _TextGenerationComparisonCreateRequest_request_moderations_hap_output
+  ModerationSocialBiasInputTmp:
+    - _TextGenerationStreamCreateRequest_moderations_social_bias_input
+    - _TextGenerationCreateRequest_moderations_social_bias_input
+  ModerationSocialBiasInput:
+    - _PromptRetrieve_results_moderations_social_bias_input
+    - _PromptIdPatch_result_moderations_social_bias_input
+    - _PromptCreate_result_moderations_social_bias_input
+    - _PromptIdUpdate_result_moderations_social_bias_input
+    - _PromptIdUpdateRequest_moderations_social_bias_input
+    - _PromptIdRetrieve_result_moderations_social_bias_input
+    - _TextChatOutputCreateRequest_moderations_social_bias_input
+    - _TextChatStreamCreateRequest_moderations_social_bias_input
+    - _TextGenerationComparisonCreateRequest_request_moderations_social_bias_input
+    - _PromptCreateRequest_moderations_social_bias_input
+    - _TextChatCreateRequest_moderations_social_bias_input
+    - _TextGenerationOutputCreateRequest_moderations_social_bias_input
+  ModerationSocialBiasOutputTmp:
+    - _TextGenerationCreateRequest_moderations_social_bias_output
+    - _TextGenerationStreamCreateRequest_moderations_social_bias_output
+  ModerationSocialBiasOutput:
+    - _TextGenerationComparisonCreateRequest_request_moderations_social_bias_output
+    - _TextChatOutputCreateRequest_moderations_social_bias_output
+    - _PromptIdUpdate_result_moderations_social_bias_output
+    - _PromptCreate_result_moderations_social_bias_output
+    - _PromptCreateRequest_moderations_social_bias_output
+    - _PromptIdRetrieve_result_moderations_social_bias_output
+    - _TextChatStreamCreateRequest_moderations_social_bias_output
+    - _PromptIdPatch_result_moderations_social_bias_output
+    - _TextGenerationOutputCreateRequest_moderations_social_bias_output
+    - _TextChatCreateRequest_moderations_social_bias_output
+    - _PromptRetrieve_results_moderations_social_bias_output
+    - _PromptIdUpdateRequest_moderations_social_bias_output
+  ModerationStigmaInput:
+    - _PromptRetrieve_results_moderations_stigma_input
+    - _PromptIdPatch_result_moderations_stigma_input
+    - _PromptCreate_result_moderations_stigma_input
+    - _PromptIdUpdate_result_moderations_stigma_input
+    - _PromptIdRetrieve_result_moderations_stigma_input
+  ModerationStigmaOutput:
+    - _PromptCreate_result_moderations_stigma_output
+    - _PromptIdUpdate_result_moderations_stigma_output
+    - _PromptIdPatch_result_moderations_stigma_output
+    - _PromptIdRetrieve_result_moderations_stigma_output
+    - _PromptRetrieve_results_moderations_stigma_output
+  ModerationImplicitHateInput:
+    - _PromptRetrieve_results_moderations_implicit_hate_input
+    - _PromptIdRetrieve_result_moderations_implicit_hate_input
+    - _PromptIdUpdate_result_moderations_implicit_hate_input
+    - _PromptIdPatch_result_moderations_implicit_hate_input
+    - _PromptCreate_result_moderations_implicit_hate_input
+  ModerationImplicitHateOutput:
+    - _PromptIdPatch_result_moderations_implicit_hate_output
+    - _PromptRetrieve_results_moderations_implicit_hate_output
+    - _PromptIdRetrieve_result_moderations_implicit_hate_output
+    - _PromptIdUpdate_result_moderations_implicit_hate_output
+    - _PromptCreate_result_moderations_implicit_hate_output
 
   # OTHER ------------------------------------------------------------------------
   BaseMessage:
@@ -423,15 +503,15 @@ alias:
     - _TextChatCreate_results
   TextCreateResponseModeration:
     - _TextModerationCreate_results
-    - _TextChatStreamCreate_moderation
-    - _TextGenerationStreamCreate_moderation
-  TextGenerationStreamResult:
+    - _TextGenerationStreamCreate_moderations
+    - _TextGenerationCreate_results_moderations
+    - _TextChatCreate_results_moderations
+    - _TextChatStreamCreate_moderations
+    - _TextGenerationComparisonCreate_results_result_results_moderations
+  TextChatGenerationStreamResult:
     - _TextChatStreamCreate_results
+  TextGenerationStreamResult:
     - _TextGenerationStreamCreate_results
-  PromptTemplate:
-    - _UserCreate_result_generate_default_template
-    - _UserRetrieve_result_generate_default_template
-    - _UserPatch_result_generate_default_template
   PromptTemplateData:
     - _TextGenerationOutputCreateRequest_data
     - _PromptCreateRequest_data
@@ -440,9 +520,6 @@ alias:
     - _TextGenerationCreateRequest_data
     - _TextGenerationStreamCreateRequest_data
     - _TextTokenizationCreateRequest_data
-    - _UserCreate_result_generate_default_template_data
-    - _UserPatch_result_generate_default_template_data
-    - _UserRetrieve_result_generate_default_template_data
   UserGenerationDefault:
     - _UserCreate_result_generate_default
     - _UserPatch_result_generate_default
@@ -597,9 +674,14 @@ replace:
   'LengthPenalty': 'TextGenerationParametersLengthPenalty'
   'DecodingMethod': 'TextGenerationParametersDecodingMethod'
   'ModerationHAP': 'TextGenerationModerationHAP'
-  'ModerationStigma': 'TextGenerationModerationStigma'
-  'ModerationImplicitHate': 'TextGenerationModerationImplicitHate'
-  'ModerationParameters': 'TextGenerationModerationParameters'
+  'ModerationSocialBias': 'TextGenerationModerationSocialBias'
+  'ModerationParameters':
+    source_name: 'TextGenerationModerationParameters'
+    force: true
+  'ModerationSocialBiasInput': 'ModerationSocialBiasInputTmp'
+  'ModerationSocialBiasOutput': 'ModerationSocialBiasOutputTmp'
+  'ModerationHAPInput': 'ModerationHAPInputTmp'
+  'ModerationHAPOutput': 'ModerationHAPOutputTmp'
 
 model_extensions:
   # Override generated classes by adding custom properties
@@ -609,3 +691,221 @@ model_extensions:
         deprecated: "'file_ids' property is deprecated, use 'files' instead!"
         return_type: Optional[list[str]]
         body: return [file.id for file in self.files] if self.files is not None else None
+
+  ModerationParameters:
+    custom_body: |
+      # TODO: remove in next major release
+      def model_post_init(self, __context: Any) -> None:
+        for name in ['stigma', 'implicit_hate']:
+          if hasattr(self, name):
+            _print_deprecation_warning(f'({type(self).__name__}): "{name}" has been deprecated, use \"social_bias\" instead.')
+
+      # TODO: remove in next major release
+      def remove_deprecated(self) -> None:
+        """Remove attributes which are not supported anymore"""
+        for name in ["stigma", "implicit_hate"]:
+          if hasattr(self, name):
+            _print_deprecation_warning(
+              f'({type(self).__name__} class): "{name}" has been deprecated, use "social_bias" instead.',
+            )
+            delattr(self, name)
+
+      # TODO: remove in next major release
+      @field_validator("hap", mode="before")
+      @classmethod
+      def _validate_hap(cls, value: Any):
+          if isinstance(value, bool):
+              _print_deprecation_warning(f"(ModerationParameters): passing boolean value to the 'hap' parameter is deprecated, use 'ModerationHAP' class instead.")
+              return ModerationHAP(input=ModerationHAPInput(enabled=value), output=ModerationHAPOutput(enabled=value))
+          else:
+              return value
+
+      # TODO: remove in next major release
+      @field_validator("social_bias", mode="before")
+      @classmethod
+      def _validate_social_bias(cls, value: Any):
+        if isinstance(value, bool):
+            _print_deprecation_warning(f"(ModerationParameters): passing boolean value to the 'social_bias' parameter is deprecated, use 'ModerationSocialBias' class instead.")
+            return ModerationSocialBias(input=ModerationSocialBiasInput(enabled=value), output=ModerationSocialBiasOutput(enabled=value))
+        else:
+            return value
+
+  ModerationHAP:
+    custom_body: |
+      # TODO: remove in next major release
+      @field_validator("input", mode="before")
+      @classmethod
+      def _validate_input(cls, value: Any):
+          if isinstance(value, bool):
+              _print_deprecation_warning(f"(ModerationHAP): passing boolean value to the 'input' parameter is deprecated, use 'ModerationHAPInput' class instead.")
+              return ModerationHAPInput(enabled=value)
+          else:
+              return value
+
+      # TODO: remove in next major release
+      @field_validator("output", mode="before")
+      @classmethod
+      def _validate_output(cls, value: Any):
+          if isinstance(value, bool):
+              _print_deprecation_warning(f"(ModerationHAP): passing boolean value to the 'output' parameter is deprecated, use 'ModerationHAPOutput' class instead.")
+              return ModerationHAPOutput(enabled=value)
+          else:
+              return value
+
+      # TODO: remove in next major release
+      def model_post_init(self, __context: Any) -> None:
+        deprecated_attrs = {name: getattr(self, name) for name in ["threshold", "send_tokens"] if getattr(self, name, None) is not None}
+        if deprecated_attrs:
+          if self.input is None:
+            self.input = ModerationHAPInput(enabled=True)
+          if self.output is None:
+            self.output = ModerationHAPOutput(enabled=True)
+
+          for name, value in deprecated_attrs.items():
+            _print_deprecation_warning(
+                f"(ModerationHAP): '{name}' is deprecated! Use 'input' parameter (ModerationHAPInput) / 'output' parameter parameter (ModerationHAPOutput) instead.",
+            )
+            setattr(self.input, name, value)
+            setattr(self.output, name, value)
+            delattr(self, name)
+
+  ModerationStigma:
+    custom_body: |
+      # TODO: remove in next major release
+      @field_validator("input", mode="before")
+      @classmethod
+      def _validate_input(cls, value: Any):
+          if isinstance(value, bool):
+              _print_deprecation_warning(f"(ModerationStigma): passing boolean value to the 'input' parameter is deprecated, use 'ModerationStigmaInput' class instead.")
+              return ModerationStigmaInput(enabled=value)
+          else:
+              return value
+
+      # TODO: remove in next major release
+      @field_validator("output", mode="before")
+      @classmethod
+      def _validate_output(cls, value: Any):
+          if isinstance(value, bool):
+              _print_deprecation_warning(f"(ModerationStigma): passing boolean value to the 'output' parameter is deprecated, use 'ModerationStigmaOutput' class instead.")
+              return ModerationStigmaOutput(enabled=value)
+          else:
+              return value
+
+      # TODO: remove in next major release
+      def model_post_init(self, __context: Any) -> None:
+        deprecated_attrs = {name: getattr(self, name) for name in ["threshold", "send_tokens"] if getattr(self, name, None) is not None}
+        if deprecated_attrs:
+          if self.input is None:
+            self.input = ModerationStigmaInput(enabled=True)
+          if self.output is None:
+            self.output = ModerationStigmaOutput(enabled=True)
+
+          for name, value in deprecated_attrs.items():
+            _print_deprecation_warning(
+                f"(ModerationStigma): '{name}' is deprecated! Use 'input' parameter (ModerationStigmaInput) / 'output' parameter parameter (ModerationStigmaOutput) instead.",
+            )
+            setattr(self.input, name, value)
+            setattr(self.output, name, value)
+            delattr(self, name)
+
+  ModerationImplicitHate:
+    custom_body: |
+      # TODO: remove in next major release
+      @field_validator("input", mode="before")
+      @classmethod
+      def _validate_input(cls, value: Any):
+          if isinstance(value, bool):
+              _print_deprecation_warning(f"(ModerationImplicitHate): passing boolean value to the 'input' parameter is deprecated, use 'ModerationImplicitHateInput' class instead.")
+              return ModerationImplicitHateInput(enabled=value)
+          else:
+              return value
+
+      # TODO: remove in next major release
+      @field_validator("output", mode="before")
+      @classmethod
+      def _validate_output(cls, value: Any):
+          if isinstance(value, bool):
+              _print_deprecation_warning(f"(ModerationImplicitHate): passing boolean value to the 'output' parameter is deprecated, use 'ModerationImplicitHateOutput' class instead.")
+              return ModerationImplicitHateOutput(enabled=value)
+          else:
+              return value
+
+      # TODO: remove in next major release
+      def model_post_init(self, __context: Any) -> None:
+        deprecated_attrs = {name: getattr(self, name) for name in ["threshold", "send_tokens"] if getattr(self, name, None) is not None}
+        if deprecated_attrs:
+          if self.input is None:
+            self.input = ModerationImplicitHateInput(enabled=True)
+          if self.output is None:
+            self.output = ModerationImplicitHateOutput(enabled=True)
+
+          for name, value in deprecated_attrs.items():
+            _print_deprecation_warning(
+                f"(ModerationImplicitHate): '{name}' is deprecated! Use 'input' parameter (ModerationImplicitHateInput) / 'output' parameter parameter (ModerationImplicitHateOutput) instead.",
+            )
+            setattr(self.input, name, value)
+            setattr(self.output, name, value)
+            delattr(self, name)
+
+  ModerationImplicitHateOutput:
+    fields_overrides:
+      send_tokens:
+        default: False
+      enabled:
+        default: False
+
+  ModerationImplicitHateInput:
+    fields_overrides:
+      send_tokens:
+        default: False
+      enabled:
+        default: False
+
+  ModerationStigmaInput:
+    fields_overrides:
+      send_tokens:
+        default: False
+      enabled:
+        default: False
+
+  ModerationStigmaOutput:
+    fields_overrides:
+      send_tokens:
+        default: False
+      enabled:
+        default: False
+
+  TextCreateResponseModeration:
+    dynamic_fields:
+      - name: stigma
+        deprecated: "'stigma' property is deprecated, use 'social_bias' instead!"
+        return_type: Optional[list[TextModeration]]
+        body: return None
+      - name: implicit_hate
+        deprecated: "'implicit_hate' property is deprecated, use 'social_bias' instead!"
+        return_type: Optional[list[TextModeration]]
+        body: return None
+
+  TextGenerationStreamCreateResponse:
+    dynamic_fields:
+      - name: moderation
+        deprecated: "'moderation' property is deprecated, use 'moderations' instead!"
+        return_type: Optional[TextCreateResponseModeration]
+        body: return self.moderations
+
+  TextGenerationResult:
+    dynamic_fields:
+      - name: moderation
+        deprecated: "'moderation' property is deprecated, use 'moderations' instead!"
+        return_type: Optional[TextCreateResponseModeration]
+        body: return self.moderations
+
+  TextChatStreamCreateResponse:
+    dynamic_fields:
+      - name: moderation
+        deprecated: "'moderation' property is deprecated, use 'moderations' instead!"
+        return_type: Optional[TextCreateResponseModeration]
+        body: return self.moderations
+
+  PromptModerationParameters:
+    custom_base_class: ModerationParameters

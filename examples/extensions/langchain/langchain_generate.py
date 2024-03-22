@@ -11,6 +11,8 @@ from genai.extensions.langchain import LangChainInterface
 from genai.schema import (
     DecodingMethod,
     ModerationHAP,
+    ModerationHAPInput,
+    ModerationHAPOutput,
     ModerationParameters,
     TextGenerationParameters,
 )
@@ -55,7 +57,10 @@ llm = LangChainInterface(
     moderations=ModerationParameters(
         # Threshold is set to very low level to flag everything (testing purposes)
         # or set to True to enable HAP with default settings
-        hap=ModerationHAP(input=True, output=True, threshold=0.01)
+        hap=ModerationHAP(
+            input=ModerationHAPInput(enabled=True, threshold=0.75),
+            output=ModerationHAPOutput(enabled=True, threshold=0.75),
+        )
     ),
 )
 

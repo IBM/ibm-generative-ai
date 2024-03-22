@@ -1,6 +1,7 @@
 """
 Create special redirect files for a documentation's root (/) and for all unmatched routes (non existing pages).
 """
+
 import argparse
 import json
 import os

@@ -51,6 +51,9 @@ line-length = 120
 [tool.ruff]
 line-length = 120
 extend-exclude = ['src/genai/_version.py']
+target-version = "py39"
+
+[tool.ruff.lint]
 select = [ # See docs for available rules: https://docs.astral.sh/ruff/rules
   "B",   # bugbear (assignment to os.environ, assert False, ...)
   "C",   # mccabe (too complex structures, ...)
@@ -60,12 +63,11 @@ select = [ # See docs for available rules: https://docs.astral.sh/ruff/rules
   "W",   # pycodestyle (indentation, whitespace, ...)
   "T20", # flake8-print (print found, pprint found, ...)
 ]
-target-version = "py39"
 
 [tool.ruff.lint.mccabe]
 max-complexity = 18
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401", "F403", "F405"] # Ignore import violations in all `__init__.py` files.
 "examples/**/*.py" = ["T201", "T203", "B904"] # Examples can include print and pprint, ignore exception propagation
 "src/genai/schema/_api.py" = ["E501"] # Generated can include long lines
@@ -90,7 +92,7 @@ vcrpy = "^6.0.0"
 pytest-recording = "^0.13.1"
 pytest-subtests = "^0.11.0"
 autodoc_pydantic = "^2.0.0"
-ruff = "^0.1.11"
+ruff = "^0.3.3"
 poethepoet = "^0.24.4"
 pandas = "^2.0.0"
 pyyaml = "^6.0.0"

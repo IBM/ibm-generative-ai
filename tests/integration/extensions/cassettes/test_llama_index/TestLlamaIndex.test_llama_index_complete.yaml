@@ -12,20 +12,23 @@ interactions:
     uri: https://api.com/v2/text/generation/limits?version=2023-11-22
   response:
     body:
-      string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
+      string: '{"result":{"concurrency":{"limit":200,"remaining":200}}}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Wed, 06 Mar 2024 20:47:03 GMT
-      Keep-Alive:
-      - timeout=72
+      cache-control:
+      - private
       content-length:
-      - '54'
+      - '56'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
+      date:
+      - Wed, 20 Mar 2024 08:27:25 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=1e3545705d3737525c7629e9f28dc93d; path=/;
+        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
     status:
@@ -46,23 +49,22 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/generation?version=2024-01-10
+    uri: https://api.com/v2/text/generation?version=2024-03-19
   response:
     body:
-      string: '{"id":"3d39da1b-968f-44cc-a8ba-2b6953fc3ea1","model_id":"google/flan-ul2","created_at":"2024-03-06T20:47:03.562Z","results":[{"generated_text":"Nice","generated_token_count":2,"input_token_count":13,"stop_reason":"eos_token","seed":664191210}]}'
+      string: '{"id":"b843d615-ae94-498f-9f40-ed78000db5eb","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:26.180Z","results":[{"generated_text":"It''s
+        cloudy and windy, just good weather to stay indoors...","generated_token_count":18,"input_token_count":13,"stop_reason":"eos_token","seed":3893545358}]}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Wed, 06 Mar 2024 20:47:03 GMT
-      Keep-Alive:
-      - timeout=72
       content-length:
-      - '244'
+      - '301'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-01-10'
+      - '2024-03-19'
+      date:
+      - Wed, 20 Mar 2024 08:27:26 GMT
+      keep-alive:
+      - timeout=72
       vary:
       - accept-encoding
     status:

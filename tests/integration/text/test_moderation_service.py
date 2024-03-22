@@ -3,8 +3,7 @@ import pytest
 from genai import Client
 from genai.schema import (
     HAPOptions,
-    ImplicitHateOptions,
-    StigmaOptions,
+    SocialBiasOptions,
 )
 from genai.text.moderation import CreateExecutionOptions
 
@@ -20,17 +19,22 @@ class TestModerationService:
         responses = list(
             client.text.moderation.create(
                 inputs=inputs,
-                hap=HAPOptions(threshold=0.5, send_tokens=True),
-                implicit_hate=ImplicitHateOptions(threshold=0.5, send_tokens=True),
-                stigma=StigmaOptions(threshold=0.5, send_tokens=True),
+                hap=HAPOptions(
+                    threshold=0.5,
+                    send_tokens=True,
+                ),
+                social_bias=SocialBiasOptions(
+                    threshold=0.5,
+                    send_tokens=True,
+                ),
                 execution_options=CreateExecutionOptions(ordered=True),
             )
         )
         assert len(responses) == len(inputs)
 
         expected_flagged_each = [
-            {"hap": False, "stigma": False, "implicit_hate": False},
-            {"hap": True, "stigma": True, "implicit_hate": True},
+            {"hap": False, "social_bias": False},
+            {"hap": True, "social_bias": True},
         ]
 
         for response, expected_flagged in zip(responses, expected_flagged_each):
@@ -42,12 +46,7 @@ class TestModerationService:
             [hap] = result.hap
             assert hap.success and hap.flagged == expected_flagged["hap"]
 
-            # Stigma
-            assert result.stigma
-            [stigma] = result.stigma
-            assert stigma.success and stigma.flagged == expected_flagged["stigma"]
-
-            # Implicit Hate
-            assert result.implicit_hate
-            [implicit_hate] = result.implicit_hate
-            assert implicit_hate.success and implicit_hate.flagged == expected_flagged["implicit_hate"]
+            # Social Bias
+            assert result.social_bias
+            [social_bias] = result.social_bias
+            assert social_bias.success and social_bias.flagged == expected_flagged["social_bias"]

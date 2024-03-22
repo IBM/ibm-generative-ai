@@ -12,22 +12,22 @@ interactions:
     uri: https://api.com/v2/text/generation/limits?version=2023-11-22
   response:
     body:
-      string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
+      string: '{"result":{"concurrency":{"limit":200,"remaining":200}}}'
     headers:
       cache-control:
       - private
       content-length:
-      - '54'
+      - '56'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
       date:
-      - Thu, 25 Jan 2024 15:50:07 GMT
+      - Wed, 20 Mar 2024 08:27:09 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=538060a726cc3a9c230fa5d1269356eb; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=343dd5c30caabf2689c32da1b251e450; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -49,20 +49,20 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/generation?version=2024-01-10
+    uri: https://api.com/v2/text/generation?version=2024-03-19
   response:
     body:
-      string: '{"id":"a01e28ef-4f0b-4bb1-b7bc-6c2831ebd2e6","model_id":"google/flan-ul2","created_at":"2024-01-25T15:50:07.324Z","results":[{"generated_text":"Thursday,
-        Friday,","generated_token_count":5,"input_token_count":7,"stop_reason":"eos_token","seed":4115139484}]}'
+      string: '{"id":"b88f168c-9b16-46bb-8529-fd28b5b950aa","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:09.866Z","results":[{"generated_text":"Thursday,
+        Friday, Saturday, Sunday,","generated_token_count":9,"input_token_count":7,"stop_reason":"eos_token","seed":3868048980}]}'
     headers:
       content-length:
-      - '257'
+      - '275'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-01-10'
+      - '2024-03-19'
       date:
-      - Thu, 25 Jan 2024 15:50:07 GMT
+      - Wed, 20 Mar 2024 08:27:09 GMT
       keep-alive:
       - timeout=72
       vary:

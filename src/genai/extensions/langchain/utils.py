@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Mapping, Optional, Union
 
+from langchain_core.messages import AIMessageChunk, BaseMessageChunk, merge_content
 from langchain_core.outputs import ChatGenerationChunk, GenerationChunk
 from pydantic import BaseModel
 
@@ -111,3 +112,21 @@ class CustomGenerationChunk(GenerationChunk):
             )
         else:
             raise TypeError(f"unsupported operand type(s) for +: '{type(self)}' and '{type(other)}'")
+
+
+class CustomAIMessageChunk(AIMessageChunk):
+    """Replaces LangChain's 'merge_dicts' with our simplified 'merge_objects' utility"""
+
+    def __add__(self, other: Any) -> BaseMessageChunk:
+        if isinstance(other, AIMessageChunk):
+            if self.example != other.example:
+                raise ValueError("Cannot concatenate AIMessageChunks with different example values.")
+
+            return self.__class__(
+                example=self.example,
+                content=merge_content(self.content, other.content),
+                additional_kwargs=merge_objects(self.additional_kwargs, other.additional_kwargs),
+                response_metadata=merge_objects(self.response_metadata, other.response_metadata),
+            )
+
+        return super().__add__(other)

@@ -6,6 +6,7 @@ But because the non-main thread cannot be listening to signals like SIGINT/SIGTE
 main thread to do so; this is why we provide the 'handle_shutdown_event' function, which allows you to signalise
 the termination action to the SDK.
 """
+
 import signal
 
 from dotenv import load_dotenv

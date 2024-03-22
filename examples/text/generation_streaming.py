@@ -10,6 +10,7 @@ from genai.credentials import Credentials
 from genai.schema import (
     DecodingMethod,
     ModerationHAP,
+    ModerationHAPOutput,
     ModerationParameters,
     TextGenerationParameters,
     TextGenerationReturnOptions,
@@ -43,10 +44,11 @@ parameters = TextGenerationParameters(
     random_seed=3293482354,
 )
 moderations = ModerationParameters(
-    hap=ModerationHAP(input=False, output=True, send_tokens=True, threshold=0.5),
+    hap=ModerationHAP(
+        output=ModerationHAPOutput(enabled=True, send_tokens=True, threshold=0.5),
+    ),
     # possibly add more moderations:
-    # implicit_hate=ModerationImplicitHate(...),
-    # stigma=ModerationStigma(...),
+    # social_bias=SocialBiasOptions(...),
 )
 hate_speach_in_output: list[TextModeration] = []
 
@@ -58,7 +60,7 @@ for response in client.text.generation.create_stream(
     model_id=model_id, input=prompt, parameters=parameters, moderations=moderations
 ):
     if not response.results:
-        hate_speach_in_output.extend(response.moderation.hap)
+        hate_speach_in_output.extend(response.moderations.hap)
         continue
     for result in response.results:
         if result.generated_text:

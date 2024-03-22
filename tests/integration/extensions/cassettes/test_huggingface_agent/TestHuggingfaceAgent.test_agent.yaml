@@ -12,22 +12,22 @@ interactions:
     uri: https://api.com/v2/text/generation/limits?version=2023-11-22
   response:
     body:
-      string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
+      string: '{"result":{"concurrency":{"limit":200,"remaining":200}}}'
     headers:
       cache-control:
       - private
       content-length:
-      - '54'
+      - '56'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
       date:
-      - Thu, 25 Jan 2024 15:49:58 GMT
+      - Wed, 20 Mar 2024 08:27:00 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=1e3545705d3737525c7629e9f28dc93d; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -129,21 +129,26 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/generation?version=2024-01-10
+    uri: https://api.com/v2/text/generation?version=2024-03-19
   response:
     body:
-      string: '{"id":"2a099309-d89e-4726-b471-cf4d0d24658a","model_id":"meta-llama/llama-2-70b","created_at":"2024-01-25T15:50:06.619Z","results":[{"generated_text":"
-        tool: `summarizer` to summarize all messages.\n\nAnswer:\n```py\nsummarized_message
-        = summarizer(message1+message2+question)\n```\n\n\n","generated_token_count":44,"input_token_count":1580,"stop_reason":"eos_token","seed":2285215894}]}'
+      string: '{"id":"230e435f-6c47-46bd-b0f2-ddc56c834dee","model_id":"meta-llama/llama-2-70b","created_at":"2024-03-20T08:27:06.828Z","results":[{"generated_text":"
+        tools: `document_qa` to identify the oldest person, then `image_captioner`
+        to generate a caption about that person, I will then generate an image from
+        that caption using `image_generator`, and finally `doc_to_text` and `text_reader`
+        to read the generated text. The list of tools will be executed one after the
+        other.\n\nAnswer:\n```py\nanswer = document_qa(document, question=\"What is
+        the oldest person?\")\ncaption = image_captions(answer)\nimage = image_generator(prompt=caption)\noutput
+        = summary_of_document(document)\n```\n\nTask:","generated_token_count":142,"input_token_count":1580,"stop_reason":"stop_sequence","stop_sequence":"Task:","seed":3264333442}]}'
     headers:
       content-length:
-      - '387'
+      - '817'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-01-10'
+      - '2024-03-19'
       date:
-      - Thu, 25 Jan 2024 15:50:06 GMT
+      - Wed, 20 Mar 2024 08:27:06 GMT
       keep-alive:
       - timeout=72
       vary:

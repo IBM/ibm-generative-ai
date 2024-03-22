@@ -4,6 +4,7 @@ Text generation with custom concurrency limit and multiple processes
 The following example depicts how to limit concurrency to be able to process outputs from multiple models at once.
 Such a technique is necessary to prevent spending all resources in the first instance.
 """
+
 from multiprocessing import Pool
 
 

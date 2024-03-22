@@ -49,7 +49,12 @@ def generate_models(schema_path: Path, output: Path, extra_template_data: Option
         reuse_model=False,
         target_python_version=PythonVersion.PY_39,
         base_class=ExtractorConfig.base_model_class,
-        additional_imports=["deprecated"],
+        additional_imports=[
+            "deprecated",
+            "pydantic.field_validator",
+            "pydantic.computed_field",
+            "genai._utils.deprecated_schema_import._print_deprecation_warning",
+        ],
         extra_template_data=extra_template_data,
         enum_field_as_literal=LiteralType.One,
         use_one_literal_as_default=True,
@@ -60,7 +65,7 @@ def generate_models(schema_path: Path, output: Path, extra_template_data: Option
         field_constraints=True,
         disable_timestamp=True,
         custom_template_dir=Path(dirname, "assets/codegen/templates"),
-        keep_model_order=False,
+        keep_model_order=True,
         use_generic_container_types=False,
         use_standard_collections=True,
         use_field_description=True,
@@ -126,7 +131,14 @@ def run():
             generate_models(
                 schema_path=Path(tmp.name),
                 output=models_output,
-                extra_template_data=defaultdict(dict, schema_overrides.model_extensions),
+                extra_template_data=defaultdict(
+                    dict,
+                    schema_overrides.model_extensions
+                    | {
+                        f"{ExtractorConfig.operation_id_prefix}{k}": v
+                        for k, v in schema_overrides.model_extensions.items()
+                    },
+                ),
             )
 
             logger.info("Done!")

@@ -12,20 +12,23 @@ interactions:
     uri: https://api.com/v2/text/generation/limits?version=2023-11-22
   response:
     body:
-      string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
+      string: '{"result":{"concurrency":{"limit":200,"remaining":200}}}'
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Wed, 06 Mar 2024 20:47:08 GMT
-      Keep-Alive:
-      - timeout=72
+      cache-control:
+      - private
       content-length:
-      - '54'
+      - '56'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
+      date:
+      - Wed, 20 Mar 2024 08:27:30 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=8686c332122cd3e245e38ec96b4437d3; path=/;
+        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
     status:
@@ -46,24 +49,22 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/generation?version=2024-01-10
+    uri: https://api.com/v2/text/generation?version=2024-03-19
   response:
     body:
-      string: '{"id":"d34df5d3-1b08-4125-b6e3-959fc6e7a9cd","model_id":"google/flan-ul2","created_at":"2024-03-06T20:47:09.268Z","results":[{"generated_text":"very
-        bad","generated_token_count":3,"input_token_count":13,"stop_reason":"eos_token","seed":707519281}]}'
+      string: "{\"id\":\"cba18d53-90f5-4d48-a119-6b6a2487d7af\",\"model_id\":\"google/flan-ul2\",\"created_at\":\"2024-03-20T08:27:31.750Z\",\"results\":[{\"generated_text\":\"It
+        is windy and rainy this\xAD\xAD afternoon.\",\"generated_token_count\":13,\"input_token_count\":13,\"stop_reason\":\"eos_token\",\"seed\":2991711513}]}"
     headers:
-      Connection:
-      - keep-alive
-      Date:
-      - Wed, 06 Mar 2024 20:47:09 GMT
-      Keep-Alive:
-      - timeout=72
       content-length:
-      - '248'
+      - '283'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-01-10'
+      - '2024-03-19'
+      date:
+      - Wed, 20 Mar 2024 08:27:31 GMT
+      keep-alive:
+      - timeout=72
       vary:
       - accept-encoding
     status:

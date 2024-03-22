@@ -28,7 +28,6 @@ try:
     from langchain_core.callbacks.manager import CallbackManagerForLLMRun
     from langchain_core.language_models.chat_models import BaseChatModel
     from langchain_core.messages import AIMessage as LCAIMessage
-    from langchain_core.messages import AIMessageChunk as LCAIMessageChunk
     from langchain_core.messages import BaseMessage as LCBaseMessage
     from langchain_core.messages import ChatMessage as LCChatMessage
     from langchain_core.messages import HumanMessage as LCHumanMessage
@@ -37,6 +36,7 @@ try:
     from langchain_core.outputs import ChatGeneration, ChatResult
 
     from genai.extensions.langchain.utils import (
+        CustomAIMessageChunk,
         CustomChatGenerationChunk,
         create_llm_output,
         dump_optional_model,
@@ -174,7 +174,7 @@ class LangChainChatInterface(BaseChatModel):
             def send_chunk(*, text: str = "", generation_info: dict):
                 logger.info("Chunk received: {}".format(text))
                 chunk = CustomChatGenerationChunk(
-                    message=LCAIMessageChunk(content=text, generation_info=generation_info),
+                    message=CustomAIMessageChunk(content=text, generation_info=generation_info),
                     generation_info=generation_info,
                 )
                 yield chunk

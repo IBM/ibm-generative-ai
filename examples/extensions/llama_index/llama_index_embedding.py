@@ -1,6 +1,7 @@
 """
 LlamaIndex Embeddings
 """
+
 from dotenv import load_dotenv
 
 from genai import Client, Credentials

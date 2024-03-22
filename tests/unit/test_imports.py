@@ -72,7 +72,6 @@ def test_backwards_compatibility(propagate_caplog):
         "FileRetrieveResponse",
         "HAPOptions",
         "HumanMessage",
-        "ImplicitHateOptions",
         "LengthPenalty",
         "ModelIdRetrieveResponse",
         "ModelIdRetrieveResult",
@@ -88,7 +87,6 @@ def test_backwards_compatibility(propagate_caplog):
         "PromptIdRetrieveResponse",
         "PromptIdUpdateResponse",
         "PromptRetrieveResponse",
-        "PromptTemplate",
         "PromptTemplateData",
         "PromptType",
         "RequestApiVersion",
@@ -98,7 +96,6 @@ def test_backwards_compatibility(propagate_caplog):
         "RequestRetrieveResponse",
         "RequestStatus",
         "SortDirection",
-        "StigmaOptions",
         "StopReason",
         "SystemMessage",
         "TextChatCreateResponse",
@@ -202,13 +199,12 @@ def test_import_renamed_schema_warning(name_pair: Tuple[str, str]):
 
 
 @pytest.mark.unit
-@pytest.mark.parametrize("name", ["TuningType"])
+@pytest.mark.parametrize("name", ["TuningType", "PromptTemplate", "ImplicitHateOptions", "StigmaOptions"])
 def test_import_removed_schema_warning(name: str):
     module = "genai.schema"
     with warnings.catch_warnings(record=True) as warning_log:
         exec(f"from {module} import {name}")
         warning = warning_log[0]
-        assert "The 'TuningType' enum has been deprecated" in warning.message.args[0]
         assert warning.category == DeprecationWarning
 
 
