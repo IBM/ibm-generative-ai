@@ -236,31 +236,47 @@ class ModerationHAP(ApiBaseModel):
     output: Optional[ModerationHAPOutput] = None
 
     # TODO: remove in next major release
+    @field_validator("input", mode="before")
+    @classmethod
+    def _validate_input(cls, value: Any):
+        if isinstance(value, bool):
+            _print_deprecation_warning(
+                "(ModerationHAP): passing boolean value to the 'input' parameter is deprecated, use 'ModerationHAPInput' class instead."
+            )
+            return ModerationHAPInput(enabled=value)
+        else:
+            return value
+
+    # TODO: remove in next major release
+    @field_validator("output", mode="before")
+    @classmethod
+    def _validate_output(cls, value: Any):
+        if isinstance(value, bool):
+            _print_deprecation_warning(
+                "(ModerationHAP): passing boolean value to the 'output' parameter is deprecated, use 'ModerationHAPOutput' class instead."
+            )
+            return ModerationHAPOutput(enabled=value)
+        else:
+            return value
+
+    # TODO: remove in next major release
     def model_post_init(self, __context: Any) -> None:
         deprecated_attrs = {
             name: getattr(self, name) for name in ["threshold", "send_tokens"] if getattr(self, name, None) is not None
         }
-        for name, value in deprecated_attrs.items():
-            _print_deprecation_warning(
-                f"(ModerationHAP): '{name}' is deprecated! Use 'input' parameter (ModerationHAPInput) 'output' parameter (ModerationHAPOutput) instead.",
-            )
-            self.input = self.input or ModerationHAPInput(enabled=True)
-            setattr(self.input, name, value)
+        if deprecated_attrs:
+            if self.input is None:
+                self.input = ModerationHAPInput(enabled=True)
+            if self.output is None:
+                self.output = ModerationHAPOutput(enabled=True)
 
-            self.output = self.output or ModerationHAPOutput(enabled=True)
-            setattr(self.output, name, value)
-
-            delattr(self, name)
-
-    @field_validator("input", mode="before")
-    @classmethod
-    def _validate_input(cls, value: Any):
-        return ModerationHAPInput(enabled=value) if isinstance(value, bool) else value
-
-    @field_validator("output", mode="before")
-    @classmethod
-    def _validate_output(cls, value: Any):
-        return ModerationHAPOutput(enabled=value) if isinstance(value, bool) else value
+            for name, value in deprecated_attrs.items():
+                _print_deprecation_warning(
+                    f"(ModerationHAP): '{name}' is deprecated! Use 'input' parameter (ModerationHAPInput) / 'output' parameter parameter (ModerationHAPOutput) instead.",
+                )
+                setattr(self.input, name, value)
+                setattr(self.output, name, value)
+                delattr(self, name)
 
 
 class ModerationHAPInput(ApiBaseModel):
@@ -292,42 +308,58 @@ class ModerationImplicitHate(ApiBaseModel):
     output: Optional[ModerationImplicitHateOutput] = None
 
     # TODO: remove in next major release
+    @field_validator("input", mode="before")
+    @classmethod
+    def _validate_input(cls, value: Any):
+        if isinstance(value, bool):
+            _print_deprecation_warning(
+                "(ModerationImplicitHate): passing boolean value to the 'input' parameter is deprecated, use 'ModerationImplicitHateInput' class instead."
+            )
+            return ModerationImplicitHateInput(enabled=value)
+        else:
+            return value
+
+    # TODO: remove in next major release
+    @field_validator("output", mode="before")
+    @classmethod
+    def _validate_output(cls, value: Any):
+        if isinstance(value, bool):
+            _print_deprecation_warning(
+                "(ModerationImplicitHate): passing boolean value to the 'output' parameter is deprecated, use 'ModerationImplicitHateOutput' class instead."
+            )
+            return ModerationImplicitHateOutput(enabled=value)
+        else:
+            return value
+
+    # TODO: remove in next major release
     def model_post_init(self, __context: Any) -> None:
         deprecated_attrs = {
             name: getattr(self, name) for name in ["threshold", "send_tokens"] if getattr(self, name, None) is not None
         }
-        for name, value in deprecated_attrs.items():
-            _print_deprecation_warning(
-                f"(ModerationImplicitHate): '{name}' is deprecated! Use 'input' parameter (ModerationImplicitHateInput) 'output' parameter (ModerationImplicitHateOutput) instead.",
-            )
-            self.input = self.input or ModerationImplicitHateInput(enabled=True)
-            setattr(self.input, name, value)
+        if deprecated_attrs:
+            if self.input is None:
+                self.input = ModerationImplicitHateInput(enabled=True)
+            if self.output is None:
+                self.output = ModerationImplicitHateOutput(enabled=True)
 
-            self.output = self.output or ModerationImplicitHateOutput(enabled=True)
-            setattr(self.output, name, value)
-
-            delattr(self, name)
-
-    @field_validator("input", mode="before")
-    @classmethod
-    def _validate_input(cls, value: Any):
-        return ModerationImplicitHateInput(enabled=value) if isinstance(value, bool) else value
-
-    @field_validator("output", mode="before")
-    @classmethod
-    def _validate_output(cls, value: Any):
-        return ModerationImplicitHateOutput(enabled=value) if isinstance(value, bool) else value
+            for name, value in deprecated_attrs.items():
+                _print_deprecation_warning(
+                    f"(ModerationImplicitHate): '{name}' is deprecated! Use 'input' parameter (ModerationImplicitHateInput) / 'output' parameter parameter (ModerationImplicitHateOutput) instead.",
+                )
+                setattr(self.input, name, value)
+                setattr(self.output, name, value)
+                delattr(self, name)
 
 
 class ModerationImplicitHateInput(ApiBaseModel):
-    enabled: bool
-    send_tokens: Optional[bool] = None
+    enabled: bool = False
+    send_tokens: Optional[bool] = False
     threshold: Optional[float] = Field(0.75, gt=0.0, lt=1.0)
 
 
 class ModerationImplicitHateOutput(ApiBaseModel):
-    enabled: bool
-    send_tokens: Optional[bool] = None
+    enabled: bool = False
+    send_tokens: Optional[bool] = False
     threshold: Optional[float] = Field(0.75, gt=0.0, lt=1.0)
 
 
@@ -353,25 +385,31 @@ class ModerationParameters(ApiBaseModel):
                 )
                 delattr(self, name)
 
+    # TODO: remove in next major release
     @field_validator("hap", mode="before")
     @classmethod
     def _validate_hap(cls, value: Any):
-        return (
-            ModerationHAP(input=ModerationHAPInput(enabled=value), output=ModerationHAPOutput(enabled=value))
-            if isinstance(value, bool)
-            else value
-        )
+        if isinstance(value, bool):
+            _print_deprecation_warning(
+                "(ModerationParameters): passing boolean value to the 'hap' parameter is deprecated, use 'ModerationHAP' class instead."
+            )
+            return ModerationHAP(input=ModerationHAPInput(enabled=value), output=ModerationHAPOutput(enabled=value))
+        else:
+            return value
 
+    # TODO: remove in next major release
     @field_validator("social_bias", mode="before")
     @classmethod
     def _validate_social_bias(cls, value: Any):
-        return (
-            ModerationSocialBias(
+        if isinstance(value, bool):
+            _print_deprecation_warning(
+                "(ModerationParameters): passing boolean value to the 'social_bias' parameter is deprecated, use 'ModerationSocialBias' class instead."
+            )
+            return ModerationSocialBias(
                 input=ModerationSocialBiasInput(enabled=value), output=ModerationSocialBiasOutput(enabled=value)
             )
-            if isinstance(value, bool)
-            else value
-        )
+        else:
+            return value
 
 
 class ModerationPosition(ApiBaseModel):
@@ -413,42 +451,58 @@ class ModerationStigma(ApiBaseModel):
     output: Optional[ModerationStigmaOutput] = None
 
     # TODO: remove in next major release
+    @field_validator("input", mode="before")
+    @classmethod
+    def _validate_input(cls, value: Any):
+        if isinstance(value, bool):
+            _print_deprecation_warning(
+                "(ModerationStigma): passing boolean value to the 'input' parameter is deprecated, use 'ModerationStigmaInput' class instead."
+            )
+            return ModerationStigmaInput(enabled=value)
+        else:
+            return value
+
+    # TODO: remove in next major release
+    @field_validator("output", mode="before")
+    @classmethod
+    def _validate_output(cls, value: Any):
+        if isinstance(value, bool):
+            _print_deprecation_warning(
+                "(ModerationStigma): passing boolean value to the 'output' parameter is deprecated, use 'ModerationStigmaOutput' class instead."
+            )
+            return ModerationStigmaOutput(enabled=value)
+        else:
+            return value
+
+    # TODO: remove in next major release
     def model_post_init(self, __context: Any) -> None:
         deprecated_attrs = {
             name: getattr(self, name) for name in ["threshold", "send_tokens"] if getattr(self, name, None) is not None
         }
-        for name, value in deprecated_attrs.items():
-            _print_deprecation_warning(
-                f"(ModerationStigma): '{name}' is deprecated! Use 'input' parameter (ModerationStigmaInput) 'output' parameter (ModerationStigmaOutput) instead.",
-            )
-            self.input = self.input or ModerationStigmaInput(enabled=True)
-            setattr(self.input, name, value)
+        if deprecated_attrs:
+            if self.input is None:
+                self.input = ModerationStigmaInput(enabled=True)
+            if self.output is None:
+                self.output = ModerationStigmaOutput(enabled=True)
 
-            self.output = self.output or ModerationStigmaOutput(enabled=True)
-            setattr(self.output, name, value)
-
-            delattr(self, name)
-
-    @field_validator("input", mode="before")
-    @classmethod
-    def _validate_input(cls, value: Any):
-        return ModerationStigmaInput(enabled=value) if isinstance(value, bool) else value
-
-    @field_validator("output", mode="before")
-    @classmethod
-    def _validate_output(cls, value: Any):
-        return ModerationStigmaOutput(enabled=value) if isinstance(value, bool) else value
+            for name, value in deprecated_attrs.items():
+                _print_deprecation_warning(
+                    f"(ModerationStigma): '{name}' is deprecated! Use 'input' parameter (ModerationStigmaInput) / 'output' parameter parameter (ModerationStigmaOutput) instead.",
+                )
+                setattr(self.input, name, value)
+                setattr(self.output, name, value)
+                delattr(self, name)
 
 
 class ModerationStigmaInput(ApiBaseModel):
-    enabled: bool
-    send_tokens: Optional[bool] = None
+    enabled: bool = False
+    send_tokens: Optional[bool] = False
     threshold: Optional[float] = Field(0.75, gt=0.0, lt=1.0)
 
 
 class ModerationStigmaOutput(ApiBaseModel):
-    enabled: bool
-    send_tokens: Optional[bool] = None
+    enabled: bool = False
+    send_tokens: Optional[bool] = False
     threshold: Optional[float] = Field(0.75, gt=0.0, lt=1.0)
 
 
