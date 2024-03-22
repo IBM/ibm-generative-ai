@@ -2,6 +2,185 @@ Changelog
 =========
 
 
+v2.3.0 (2024-03-22)
+-------------------
+
+- Add Text Experimental module (see `client.text.experimental`)
+    - Sentence Similarity (`client.text.sentence_similarity`).
+    - Rerank (`client.text.experimental.rerank`).
+    - Classification (`client.text.experimental.classification`).
+- Add Folder module (`client.folder`).
+- Add Tags module (`client.tag`).
+- Add Tasks module (`client.task`).
+- Add Request Feedback Service (`client.request.feedback`).
+- Update Moderations.
+    - Add Social Bias model.
+    - Remove Implicit Hate and Stigma model.
+- Add tune creation from an existing file (client.tune.create_from_file).
+- Allow to upload arbitrary files (remove old constraints for json files only).
+- Add support to update the file content (see client.file.update method).
+- Add support for the latest `LangChain` / `LLamaIndex` (migrate to 0.10.x) / `Transformers` versions.
+- Unify schemas between various services.
+
+.. admonition:: Deprecation Warnings
+    :class: warning
+
+    - Stigma (`ModerationStigma` class) has been deprecated, use Social Bias instead (`ModerationSocialBias` class).
+    - Implicit Hate (`ModerationImplicitHate` class) has been deprecated, use Social Bias instead (`ModerationSocialBias` class).
+
+    .. code-block:: python
+
+            from genai.schema import ModerationHAP, ModerationHAPInput
+
+             # ❌ Old Way
+            ModerationHAP(input=True, output=True, threshold=0.8)
+
+             # ✅ New Way
+            ModerationHAP(
+                input=ModerationHAPInput(enabled=True, threshold=0.8),
+                output=ModerationHAPOutput(enabled=True, threshold=0.8)
+            )
+
+    - Deprecate `TuningType` enum; use values from `client.tune.types()` method.
+    - Following schemas or their properties were renamed.
+        - `UserPromptResult` -> `PromptResult`
+        - `PromptsResponseResult` -> `PromptResult`
+        - `UserResponseResult` -> `UserResult`
+        - `UserCreateResultApiKey` -> `UserApiKey`
+        - `PromptRetrieveRequestParamsSource` -> `PromptListSource`
+        - `TextChatStreamCreateResponse.moderation` -> `TextChatStreamCreateResponse.moderations`
+        - `TextGenerationStreamCreateResponse.moderation` -> `TextGenerationStreamCreateResponse.moderations`
+        - `TextGenerationResult.moderation` -> `TextGenerationResult.moderations`
+        - `BaseMessage.file_ids` -> `BaseMessage.files`
+
+🚀 Features / Enhancements
+^^^^^^^^^^^^^^^^^^^^^^^^^
+- feat(text): update schemas [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(request): update schemas [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(user): update schemas [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(model): update schemas [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(prompt): update schemas [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(task): init task module [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(text): init text experimental module (sentence similarity, rerank, classification) [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(tags): init tags module [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(folder): init folder module [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(llama-index): migrate to v0.10.x `#(331) <https://github.com/IBM/ibm-generative-ai/pull/331>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat: add request feedback module and deprecate text generation feedback [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat: improve schema generation [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat: infer openapi schema type [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat: add fallback for deprecated/removed schemas [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat: add support for custom auth `#(335) <https://github.com/IBM/ibm-generative-ai/pull/335>`_ [`@jezekra1 <https://github.com/jezekra1>`_]
+- feat(text): add input property to text generation to align with API [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(tune): replace static tuning type enum by dynamic retrieval [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(extension): add comments to the local server example [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(prompt): update folder_id parameter [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(user): update schemas (email property added) [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(file): add update method, add 'origin_id' parameter and schema [`@Tomas2D <https://github.com/Tomas2D>`_]
+- feat(request): update request chat conversation response body [`@Tomas2D <https://github.com/Tomas2D>`_]
+
+🐛 Bug Fixes
+^^^^^^^^^^^
+- fix(tune): unexpected access to non-enum property [`@Tomas2D <https://github.com/Tomas2D>`_]
+
+📖 Docs
+^^^^^^
+- docs(readme): update watsonx SDK URL `#(339) <https://github.com/IBM/ibm-generative-ai/pull/339>`_ [`@JanPokorny <https://github.com/JanPokorny>`_]
+- docs: update furo template [`@Tomas2D <https://github.com/Tomas2D>`_]
+- docs: update authors [`@Tomas2D <https://github.com/Tomas2D>`_]
+- docs: update examples descriptions [`@Tomas2D <https://github.com/Tomas2D>`_]
+- docs: switch to sphinx-multiversion fork `#(326) <https://github.com/IBM/ibm-generative-ai/pull/326>`_ [`@Tomas2D <https://github.com/Tomas2D>`_]
+- docs(folder): update example [`@Tomas2D <https://github.com/Tomas2D>`_]
+- docs(folder): update folder example [`@Tomas2D <https://github.com/Tomas2D>`_]
+
+⚙️ Other
+^^^^^^^^
+- test(langchain): use 'invoke' method instead '__call__' [`@Tomas2D <https://github.com/Tomas2D>`_]
+- test: add tests for schema deprecation [`@Tomas2D <https://github.com/Tomas2D>`_]
+- test: add tests for endpoint aliases [`@Tomas2D <https://github.com/Tomas2D>`_]
+- test: remove non existing models [`@Tomas2D <https://github.com/Tomas2D>`_]
+
+**Full Changelog**: `v2.2.0...v2.3.0 <https://github.com/IBM/ibm-generative-ai/compare/v2.2.0...v2.3.0>`_
+
+
+🔗 API Endpoint Versions
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. collapse:: API Endpoint Versions
+
+    ========  ===================================  ======================
+    Method    Path                                 Version (YYYY-MM-DD)
+    ========  ===================================  ======================
+    GET       /v2/api_key                          2023-11-22
+    POST      /v2/api_key/regenerate               2023-11-22
+    POST      /v2/beta/text/classification         2023-11-22
+    POST      /v2/beta/text/rerank                 2023-11-22
+    POST      /v2/beta/text/sentence-similarity    2023-11-22
+    POST      /v2/beta/time_series/forecasting     2023-11-22
+    GET       /v2/beta/time_series/limits          2023-11-22
+    GET       /v2/files                            2023-12-15
+    POST      /v2/files                            2023-12-15
+    DELETE    /v2/files/{id}                       2023-11-22
+    GET       /v2/files/{id}                       2023-12-15
+    PATCH     /v2/files/{id}                       2023-11-22
+    GET       /v2/files/{id}/content               2023-11-22
+    GET       /v2/folders                          2023-11-22
+    POST      /v2/folders                          2023-11-22
+    DELETE    /v2/folders/{id}                     2023-11-22
+    GET       /v2/folders/{id}                     2023-11-22
+    PATCH     /v2/folders/{id}                     2024-01-10
+    PUT       /v2/folders/{id}                     2023-11-22
+    GET       /v2/models                           2023-11-22
+    GET       /v2/models/{id}                      2024-01-30
+    GET       /v2/prompts                          2024-03-19
+    POST      /v2/prompts                          2024-03-19
+    DELETE    /v2/prompts/{id}                     2023-11-22
+    GET       /v2/prompts/{id}                     2024-03-19
+    PATCH     /v2/prompts/{id}                     2024-03-19
+    PUT       /v2/prompts/{id}                     2024-03-19
+    GET       /v2/requests                         2023-11-22
+    DELETE    /v2/requests/chat/{conversation_id}  2023-11-22
+    GET       /v2/requests/chat/{conversation_id}  2024-03-19
+    DELETE    /v2/requests/{id}                    2023-11-22
+    GET       /v2/requests/{id}/feedback           2023-11-22
+    POST      /v2/requests/{id}/feedback           2023-11-22
+    PUT       /v2/requests/{id}/feedback           2023-11-22
+    GET       /v2/system_prompts                   2023-11-22
+    POST      /v2/system_prompts                   2023-11-22
+    DELETE    /v2/system_prompts/{id}              2023-11-22
+    GET       /v2/system_prompts/{id}              2023-11-22
+    PUT       /v2/system_prompts/{id}              2023-11-22
+    GET       /v2/tags                             2023-11-22
+    GET       /v2/tasks                            2023-11-22
+    POST      /v2/text/chat                        2024-03-19
+    POST      /v2/text/chat/output                 2024-03-19
+    POST      /v2/text/chat_stream                 2024-03-19
+    POST      /v2/text/embeddings                  2023-11-22
+    GET       /v2/text/embeddings/limits           2023-11-22
+    GET       /v2/text/extraction/limits           2023-11-22
+    POST      /v2/text/generation                  2024-03-19
+    POST      /v2/text/generation/comparison       2024-03-19
+    GET       /v2/text/generation/limits           2023-11-22
+    POST      /v2/text/generation/output           2024-03-19
+    GET       /v2/text/generation/{id}/feedback    2023-11-22
+    POST      /v2/text/generation/{id}/feedback    2024-02-20
+    PUT       /v2/text/generation/{id}/feedback    2024-02-20
+    POST      /v2/text/generation_stream           2024-03-19
+    POST      /v2/text/moderations                 2024-03-19
+    POST      /v2/text/tokenization                2024-01-10
+    GET       /v2/tunes                            2023-11-22
+    POST      /v2/tunes                            2023-11-22
+    POST      /v2/tunes/import                     2023-11-22
+    DELETE    /v2/tunes/{id}                       2023-11-22
+    GET       /v2/tunes/{id}                       2023-11-22
+    PATCH     /v2/tunes/{id}                       2023-11-22
+    GET       /v2/tunes/{id}/content/{type}        2023-12-15
+    GET       /v2/tuning_types                     2024-01-30
+    DELETE    /v2/user                             2023-11-22
+    GET       /v2/user                             2023-11-22
+    PATCH     /v2/user                             2023-11-22
+    POST      /v2/user                             2023-11-22
+    ========  ===================================  ======================
+
 v2.2.0 (2024-02-20)
 -------------------
 
