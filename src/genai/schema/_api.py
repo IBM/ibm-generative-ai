@@ -8,10 +8,10 @@ from enum import Enum
 from typing import Any, Literal, Optional, Union
 
 import deprecated
-from pydantic import AwareDatetime, Field, RootModel, field_validator
+from pydantic import AwareDatetime, Field, RootModel, computed_field, field_validator
 
 from genai._types import ApiBaseModel
-from genai._utils.deprecated_schema_import import _log_deprecation_warning
+from genai._utils.deprecated_schema_import import _print_deprecation_warning
 
 
 class ApiKeyResult(ApiBaseModel):
@@ -38,7 +38,7 @@ class BaseMessage(ApiBaseModel):
     files: Optional[list[MessageFile]] = None
     role: ChatRole
 
-    @property
+    @computed_field
     @deprecated.deprecated(reason="'file_ids' property is deprecated, use 'files' instead!")
     def file_ids(self) -> Optional[list[str]]:
         return [file.id for file in self.files] if self.files is not None else None
@@ -235,28 +235,31 @@ class ModerationHAP(ApiBaseModel):
     input: Optional[ModerationHAPInput] = None
     output: Optional[ModerationHAPOutput] = None
 
+    # TODO: remove in next major release
     def model_post_init(self, __context: Any) -> None:
-        # TODO: remove in next major release
         deprecated_attrs = {
             name: getattr(self, name) for name in ["threshold", "send_tokens"] if getattr(self, name, None) is not None
         }
-        for attr in deprecated_attrs:
-            _log_deprecation_warning(
-                f"genai.schema.ModerationHAP.{attr}",
-                f"Property '{attr}' is deprecated! Use 'input' and 'output' property.",
+        for name, value in deprecated_attrs.items():
+            _print_deprecation_warning(
+                f"(ModerationHAP): '{name}' is deprecated! Use 'input' parameter (ModerationHAPInput) 'output' parameter (ModerationHAPOutput) instead.",
             )
-            self.input = self.input or ModerationHAPInput(enabled=True, **deprecated_attrs)
-            self.output = self.output or ModerationHAPOutput(enabled=True, **deprecated_attrs)
-            delattr(self, attr)
+            self.input = self.input or ModerationHAPInput(enabled=True)
+            setattr(self.input, name, value)
+
+            self.output = self.output or ModerationHAPOutput(enabled=True)
+            setattr(self.output, name, value)
+
+            delattr(self, name)
 
     @field_validator("input", mode="before")
     @classmethod
-    def validate_input(cls, value: Any):
+    def _validate_input(cls, value: Any):
         return ModerationHAPInput(enabled=value) if isinstance(value, bool) else value
 
     @field_validator("output", mode="before")
     @classmethod
-    def validate_output(cls, value: Any):
+    def _validate_output(cls, value: Any):
         return ModerationHAPOutput(enabled=value) if isinstance(value, bool) else value
 
 
@@ -288,28 +291,31 @@ class ModerationImplicitHate(ApiBaseModel):
     input: Optional[ModerationImplicitHateInput] = None
     output: Optional[ModerationImplicitHateOutput] = None
 
+    # TODO: remove in next major release
     def model_post_init(self, __context: Any) -> None:
-        # TODO: remove in next major release
         deprecated_attrs = {
             name: getattr(self, name) for name in ["threshold", "send_tokens"] if getattr(self, name, None) is not None
         }
-        for attr in deprecated_attrs:
-            _log_deprecation_warning(
-                f"genai.schema.ModerationImplicitHate.{attr}",
-                f"Property '{attr}' is deprecated! Use 'input' and 'output' property.",
+        for name, value in deprecated_attrs.items():
+            _print_deprecation_warning(
+                f"(ModerationImplicitHate): '{name}' is deprecated! Use 'input' parameter (ModerationImplicitHateInput) 'output' parameter (ModerationImplicitHateOutput) instead.",
             )
-            self.input = self.input or ModerationImplicitHateInput(enabled=True, **deprecated_attrs)
-            self.output = self.output or ModerationImplicitHateOutput(enabled=True, **deprecated_attrs)
-            delattr(self, attr)
+            self.input = self.input or ModerationImplicitHateInput(enabled=True)
+            setattr(self.input, name, value)
+
+            self.output = self.output or ModerationImplicitHateOutput(enabled=True)
+            setattr(self.output, name, value)
+
+            delattr(self, name)
 
     @field_validator("input", mode="before")
     @classmethod
-    def validate_input(cls, value: Any):
+    def _validate_input(cls, value: Any):
         return ModerationImplicitHateInput(enabled=value) if isinstance(value, bool) else value
 
     @field_validator("output", mode="before")
     @classmethod
-    def validate_output(cls, value: Any):
+    def _validate_output(cls, value: Any):
         return ModerationImplicitHateOutput(enabled=value) if isinstance(value, bool) else value
 
 
@@ -329,19 +335,27 @@ class ModerationParameters(ApiBaseModel):
     hap: Optional[ModerationHAP] = None
     social_bias: Optional[ModerationSocialBias] = None
 
+    # TODO: remove in next major release
     def model_post_init(self, __context: Any) -> None:
-        # TODO: remove in next major release
         for name in ["stigma", "implicit_hate"]:
             if hasattr(self, name):
-                _log_deprecation_warning(
-                    f"genai.schema.ModerationParameters.{name}",
-                    f'"{name}" has been deprecated, use "social_bias" instead.',
+                _print_deprecation_warning(
+                    f'({type(self).__name__}): "{name}" has been deprecated, use "social_bias" instead.'
+                )
+
+    # TODO: remove in next major release
+    def remove_deprecated(self) -> None:
+        """Remove attributes which are not supported anymore"""
+        for name in ["stigma", "implicit_hate"]:
+            if hasattr(self, name):
+                _print_deprecation_warning(
+                    f'({type(self).__name__} class): "{name}" has been deprecated, use "social_bias" instead.',
                 )
                 delattr(self, name)
 
     @field_validator("hap", mode="before")
     @classmethod
-    def validate_hap(cls, value: Any):
+    def _validate_hap(cls, value: Any):
         return (
             ModerationHAP(input=ModerationHAPInput(enabled=value), output=ModerationHAPOutput(enabled=value))
             if isinstance(value, bool)
@@ -350,7 +364,7 @@ class ModerationParameters(ApiBaseModel):
 
     @field_validator("social_bias", mode="before")
     @classmethod
-    def validate_social_bias(cls, value: Any):
+    def _validate_social_bias(cls, value: Any):
         return (
             ModerationSocialBias(
                 input=ModerationSocialBiasInput(enabled=value), output=ModerationSocialBiasOutput(enabled=value)
@@ -398,28 +412,31 @@ class ModerationStigma(ApiBaseModel):
     input: Optional[ModerationStigmaInput] = None
     output: Optional[ModerationStigmaOutput] = None
 
+    # TODO: remove in next major release
     def model_post_init(self, __context: Any) -> None:
-        # TODO: remove in next major release
         deprecated_attrs = {
             name: getattr(self, name) for name in ["threshold", "send_tokens"] if getattr(self, name, None) is not None
         }
-        for attr in deprecated_attrs:
-            _log_deprecation_warning(
-                f"genai.schema.ModerationStigma.{attr}",
-                f"Property '{attr}' is deprecated! Use 'input' and 'output' property.",
+        for name, value in deprecated_attrs.items():
+            _print_deprecation_warning(
+                f"(ModerationStigma): '{name}' is deprecated! Use 'input' parameter (ModerationStigmaInput) 'output' parameter (ModerationStigmaOutput) instead.",
             )
-            self.input = self.input or ModerationStigmaInput(enabled=True, **deprecated_attrs)
-            self.output = self.output or ModerationStigmaOutput(enabled=True, **deprecated_attrs)
-            delattr(self, attr)
+            self.input = self.input or ModerationStigmaInput(enabled=True)
+            setattr(self.input, name, value)
+
+            self.output = self.output or ModerationStigmaOutput(enabled=True)
+            setattr(self.output, name, value)
+
+            delattr(self, name)
 
     @field_validator("input", mode="before")
     @classmethod
-    def validate_input(cls, value: Any):
+    def _validate_input(cls, value: Any):
         return ModerationStigmaInput(enabled=value) if isinstance(value, bool) else value
 
     @field_validator("output", mode="before")
     @classmethod
-    def validate_output(cls, value: Any):
+    def _validate_output(cls, value: Any):
         return ModerationStigmaOutput(enabled=value) if isinstance(value, bool) else value
 
 
@@ -940,7 +957,7 @@ class TextChatStreamCreateResponse(ApiBaseModel):
     moderations: Optional[TextCreateResponseModeration] = None
     results: Optional[list[TextChatGenerationStreamResult]] = None
 
-    @property
+    @computed_field
     @deprecated.deprecated(reason="'moderation' property is deprecated, use 'moderations' instead!")
     def moderation(self) -> Optional[TextCreateResponseModeration]:
         return self.moderations
@@ -1118,7 +1135,7 @@ class TextGenerationStreamCreateResponse(ApiBaseModel):
     moderations: Optional[TextCreateResponseModeration] = None
     results: Optional[list[TextGenerationStreamResult]] = None
 
-    @property
+    @computed_field
     @deprecated.deprecated(reason="'moderation' property is deprecated, use 'moderations' instead!")
     def moderation(self) -> Optional[TextCreateResponseModeration]:
         return self.moderations
@@ -1611,12 +1628,12 @@ class TextCreateResponseModeration(ApiBaseModel):
     hap: Optional[list[TextModeration]] = None
     social_bias: Optional[list[TextModeration]] = None
 
-    @property
+    @computed_field
     @deprecated.deprecated(reason="'stigma' property is deprecated, use 'social_bias' instead!")
     def stigma(self) -> Optional[list[TextModeration]]:
         return None
 
-    @property
+    @computed_field
     @deprecated.deprecated(reason="'implicit_hate' property is deprecated, use 'social_bias' instead!")
     def implicit_hate(self) -> Optional[list[TextModeration]]:
         return None
@@ -1778,7 +1795,7 @@ class TextGenerationResult(ApiBaseModel):
     stop_reason: StopReason
     stop_sequence: Optional[str] = None
 
-    @property
+    @computed_field
     @deprecated.deprecated(reason="'moderation' property is deprecated, use 'moderations' instead!")
     def moderation(self) -> Optional[TextCreateResponseModeration]:
         return self.moderations

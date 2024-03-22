@@ -8,7 +8,7 @@ from typing import Any, Optional, Union
 
 import yaml
 from _common.logger import get_logger
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from types_generator.utils import from_camel_case_to_snake_case
 
@@ -25,11 +25,18 @@ class SchemaReplacement(BaseModel):
 
 
 class SchemaOverrides(BaseModel):
+    model_config = ConfigDict(
+        extra="forbid",
+        protected_namespaces=(),
+        validate_assignment=True,
+        validate_default=True,
+    )
+
     alias: dict[str, list[str]] = {}
     replace: dict[str, Union[str, SchemaReplacement]] = {}
     private_operations: set[str] = set()
     endpoint_mapping: dict[str, str] = {}
-    any_dict_to_class: set[str] = {}
+    any_dict_to_class: set[str] = set()
     model_extensions: dict[str, dict[str, Any]] = {}
 
     @property

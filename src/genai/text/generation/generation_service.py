@@ -151,7 +151,10 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
 
         metadata = get_service_action_metadata(self.create)
         parameters_formatted = to_model_optional(parameters, TextGenerationParameters)
-        moderations_formatted = to_model_optional(moderations, ModerationParameters)
+        moderations_formatted = to_model_optional(moderations, ModerationParameters, copy=True)
+        if moderations_formatted:
+            moderations_formatted.remove_deprecated()
+
         template_formatted = to_model_optional(data, PromptTemplateData)
         execution_options_formatted = to_model_instance(
             [self.config.create_execution_options, execution_options], CreateExecutionOptions
@@ -254,7 +257,10 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
         """
         metadata = get_service_action_metadata(self.create_stream)
         parameters_formatted = to_model_optional(parameters, TextGenerationParameters)
-        moderations_formatted = to_model_optional(moderations, ModerationParameters)
+        moderations_formatted = to_model_optional(moderations, ModerationParameters, copy=True)
+        if moderations_formatted:
+            moderations_formatted.remove_deprecated()
+
         template_formatted = to_model_optional(data, PromptTemplateData)
 
         self._log_method_execution(
@@ -298,7 +304,10 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
             ValidationError: In case of provided parameters are invalid.
         """
         metadata = get_service_action_metadata(self.compare)
-        request_formatted = to_model_instance(request, TextGenerationComparisonCreateRequestRequest)
+        request_formatted = to_model_instance(request, TextGenerationComparisonCreateRequestRequest, copy=True)
+        if request_formatted.moderations:
+            request_formatted.moderations.remove_deprecated()
+
         compare_parameters_formatted = to_model_instance(compare_parameters, TextGenerationComparisonParameters)
 
         self._log_method_execution(

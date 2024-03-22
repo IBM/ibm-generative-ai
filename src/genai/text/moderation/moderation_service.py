@@ -78,9 +78,9 @@ class ModerationService(BaseService[BaseConfig, BaseServiceServices]):
             ValidationError: In case of provided parameters are invalid.
         """
         if implicit_hate is not None:
-            self._log_deprecation_warning("'implicit_hate' is deprecated, use 'social_bias' instead!")
+            self._log_deprecation_warning("'implicit_hate' parameter is deprecated, use 'social_bias' instead!")
         if stigma is not None:
-            self._log_deprecation_warning("'stigma' is deprecated, use 'social_bias' instead!")
+            self._log_deprecation_warning("'stigma' parameter is deprecated, use 'social_bias' instead!")
 
         metadata = get_service_action_metadata(self.create)
         execution_options_formatted = to_model_instance(

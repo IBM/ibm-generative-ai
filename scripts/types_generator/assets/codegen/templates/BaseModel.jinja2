@@ -39,15 +39,11 @@ class {{ class_name }}({{ base_class }}):{% if comment is defined %}  # {{ comme
     {{ method }}
 {%- endfor -%}
 {%- endfor -%}
-{%- for field in extra_fields %}
-    {{ field.name }}: {{ field.type }} = {{ field.default }}
-{%- endfor -%}
-{%- if model_post_init %}
-    def model_post_init(self, __context: Any) -> None:
-{{ model_post_init | indent(8) }}
-{%- endif %}
+{%- if custom_body %}
+    {{ custom_body | indent(4) }}
+{%- endif -%}
 {%- for field in dynamic_fields %}
-    @property
+    @computed_field
     {%- if field.deprecated %}
     @deprecated.deprecated(reason="{{ field.deprecated }}")
     {%- endif %}
@@ -57,6 +53,6 @@ class {{ class_name }}({{ base_class }}):{% if comment is defined %}  # {{ comme
 {%- for field in validators %}
     @field_validator("{{ field.name }}", mode="before")
     @classmethod
-    def validate_{{ field.name }}(cls, value: Any):
+    def _validate_{{ field.name }}(cls, value: Any):
         {{ field.body }}
 {%- endfor -%}
