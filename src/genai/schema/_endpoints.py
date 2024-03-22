@@ -273,7 +273,7 @@ class TextChatStreamCreateEndpoint(ApiEndpoint):
 class TextEmbeddingCreateEndpoint(ApiEndpoint):
     path: str = "/v2/text/embeddings"
     method: str = "POST"
-    version: str = "2024-03-21"
+    version: str = "2023-11-22"
 
 
 class TextEmbeddingLimitRetrieveEndpoint(ApiEndpoint):

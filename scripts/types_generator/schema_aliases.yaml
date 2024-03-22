@@ -702,57 +702,54 @@ model_extensions:
 
     validators:
       - name: hap
-        body: return ModerationHAP(input=ModerationHAPInput(enabled=value, threshold=0.75), output=ModerationHAPOutput(enabled=value, threshold=0.75)) if isinstance(value, bool) else value
+        body: return ModerationHAP(input=ModerationHAPInput(enabled=value), output=ModerationHAPOutput(enabled=value)) if isinstance(value, bool) else value
       - name: social_bias
-        body: return ModerationSocialBias(input=ModerationSocialBiasInput(enabled=value, threshold=0.75), output=ModerationSocialBiasOutput(enabled=value, threshold=0.75)) if isinstance(value, bool) else value
+        body: return ModerationSocialBias(input=ModerationSocialBiasInput(enabled=value), output=ModerationSocialBiasOutput(enabled=value)) if isinstance(value, bool) else value
 
   ModerationHAP:
     validators:
       - name: input
-        body: return ModerationHAPInput(enabled=value, threshold=0.75) if isinstance(value, bool) else value
+        body: return ModerationHAPInput(enabled=value) if isinstance(value, bool) else value
       - name: output
-        body: return ModerationHAPOutput(enabled=value, threshold=0.75) if isinstance(value, bool) else value
+        body: return ModerationHAPOutput(enabled=value) if isinstance(value, bool) else value
     model_post_init: |
       # TODO: remove in next major release
       deprecated_attrs = {name: getattr(self, name) for name in ["threshold", "send_tokens"] if getattr(self, name, None) is not None}
-      if deprecated_attrs and deprecated_attrs.get("threshold") is None: deprecated_attrs["threshold"] = 0.75 # TODO: remove before deploy
       for attr in deprecated_attrs:
           _log_deprecation_warning(f"genai.schema.ModerationHAP.{attr}", f"Property '{attr}' is deprecated! Use 'input' and 'output' property.")
-          self.input = self.input or ModerationHAPInput.model_validate(deprecated_attrs)
-          self.output = self.output or ModerationHAPOutput.model_validate(deprecated_attrs)
+          self.input = self.input or ModerationHAPInput(enabled=True, **deprecated_attrs)
+          self.output = self.output or ModerationHAPOutput(enabled=True, **deprecated_attrs)
           delattr(self, attr)
 
   ModerationStigma:
     validators:
       - name: input
-        body: return ModerationStigmaInput(enabled=value, threshold=0.75) if isinstance(value, bool) else value
+        body: return ModerationStigmaInput(enabled=value) if isinstance(value, bool) else value
       - name: output
-        body: return ModerationStigmaOutput(enabled=value, threshold=0.75) if isinstance(value, bool) else value
+        body: return ModerationStigmaOutput(enabled=value) if isinstance(value, bool) else value
     model_post_init: |
       # TODO: remove in next major release
       deprecated_attrs = {name: getattr(self, name) for name in ["threshold", "send_tokens"] if getattr(self, name, None) is not None}
-      if deprecated_attrs and deprecated_attrs.get("threshold") is None: deprecated_attrs["threshold"] = 0.75 # TODO: remove before deploy
       for attr in deprecated_attrs:
           _log_deprecation_warning(f"genai.schema.ModerationStigma.{attr}", f"Property '{attr}' is deprecated! Use 'input' and 'output' property.")
-          self.input = self.input or ModerationStigmaInput.model_validate(deprecated_attrs)
-          self.output = self.output or ModerationStigmaOutput.model_validate(deprecated_attrs)
+          self.input = self.input or ModerationStigmaInput(enabled=True, **deprecated_attrs)
+          self.output = self.output or ModerationStigmaOutput(enabled=True, **deprecated_attrs)
           delattr(self, attr)
 
 
   ModerationImplicitHate:
     validators:
       - name: input
-        body: return ModerationImplicitHateInput(enabled=value, threshold=0.75) if isinstance(value, bool) else value
+        body: return ModerationImplicitHateInput(enabled=value) if isinstance(value, bool) else value
       - name: output
-        body: return ModerationImplicitHateOutput(enabled=value, threshold=0.75) if isinstance(value, bool) else value
+        body: return ModerationImplicitHateOutput(enabled=value) if isinstance(value, bool) else value
     model_post_init: |
       # TODO: remove in next major release
       deprecated_attrs = {name: getattr(self, name) for name in ["threshold", "send_tokens"] if getattr(self, name, None) is not None}
-      if deprecated_attrs and deprecated_attrs.get("threshold") is None: deprecated_attrs["threshold"] = 0.75 # TODO: remove before deploy
       for attr in deprecated_attrs:
           _log_deprecation_warning(f"genai.schema.ModerationImplicitHate.{attr}", f"Property '{attr}' is deprecated! Use 'input' and 'output' property.")
-          self.input = self.input or ModerationImplicitHateInput.model_validate(deprecated_attrs)
-          self.output = self.output or ModerationImplicitHateOutput.model_validate(deprecated_attrs)
+          self.input = self.input or ModerationImplicitHateInput(enabled=True, **deprecated_attrs)
+          self.output = self.output or ModerationImplicitHateOutput(enabled=True, **deprecated_attrs)
           delattr(self, attr)
 
   TextCreateResponseModeration:
