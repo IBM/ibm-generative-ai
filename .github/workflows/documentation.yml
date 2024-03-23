@@ -2,6 +2,8 @@ name: Build and deploy documentation
 
 on:
   workflow_dispatch:
+  release:
+    types: [published]
   push:
     branches: [ "main" ]
 
