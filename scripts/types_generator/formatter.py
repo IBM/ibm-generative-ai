@@ -35,7 +35,7 @@ class CodeFormatter(CustomCodeFormatter):
         code = re.sub(rf"\nclass ({ExtractorConfig.operation_id_prefix}\S+(Query|Request)\()", "\nclass _\\1", code)
         code = code.replace(ExtractorConfig.operation_id_prefix, "")
 
-        generated__all__ = "__all__=" + str(sorted(re.findall(r"class ([^_][A-Za-z0-9_]+)\(.*\):", code)))
+        generated__all__ = f"__all__={sorted(re.findall(r'class ([^_]\w+)\(.*\):', code))}"
 
         # Add __all__
         code = f"{code}\n{generated__all__}"
