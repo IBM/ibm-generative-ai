@@ -33,12 +33,11 @@ folders = [
 [tool.poetry.dependencies]
 python = "^3.9"
 pydantic = "^2.0.0"
-httpx = "^0.26.0"
+httpx = "^0.27.0"
 aiolimiter = "^1.1.0"
-httpx-sse = "^0.3.0"
+httpx-sse = "^0.4.0"
 langchain-core = { version = "^0.1.0", optional = true }
 pyyaml = { version = "^6.0.0", optional = true }
-datasets = { version = "^2.13.0",  optional = true }
 transformers = { version = "^4.33.3",  optional = true, extras=["agents"] }
 llama-index-core = { version = "^0.10.0", optional = true }
 uvicorn = { version = "^0.22.0",  optional = true }
@@ -77,26 +76,26 @@ max-complexity = 18
 known-first-party = ["genai"]
 
 [tool.poetry.group.dev.dependencies]
-python-dotenv = "^1.0.0"
-pytest = "^7.3.2"
+python-dotenv = "^1.0.1"
+datasets = "^2.18.0"
+pytest = "^8.1.1"
 pytest-dotenv = "^0.5.2"
-pre-commit = "^3.3.2"
+pre-commit = "^3.6.2"
 pytest-cov = "^4.1.0"
-sphinx = "^6.1.3"
+sphinx = "^7.2.6"
 furo = "^2024.1.29"
 pytest-asyncio = "^0.21.1"
-pytest-mock = "^3.10.0"
-pytest-httpx = "^0.28.0"
+pytest-mock = "^3.14.0"
 datamodel-code-generator = { version="^0.25.2", extras=["http"] }
-vcrpy = "^6.0.0"
+vcrpy = "^6.0.1"
 pytest-recording = "^0.13.1"
 pytest-subtests = "^0.11.0"
-autodoc_pydantic = "^2.0.0"
+autodoc_pydantic = "^2.1.0"
 ruff = "^0.3.3"
 poethepoet = "^0.24.4"
-pandas = "^2.0.0"
-pyyaml = "^6.0.0"
-tqdm = "^4.66.1"
+pandas = "^2.2.1"
+pyyaml = "^6.0.1"
+tqdm = "^4.66.2"
 sphinx-toolbox = "3.5.0"
 git-changelog = "2.4.0"
 gitchangelog = "3.0.4"
@@ -107,7 +106,8 @@ sphinx-multiversion = {path = "external/sphinx_multiversion"}
 sphinx-copybutton = "^0.5.2"
 sphinx-notfound-page = "^1.0.0"
 langchain = "^0.1.4"
-sqlalchemy = "^2.0.25"
+sqlalchemy = "^2.0.28"
+pytest-httpx = "^0.30.0"
 
 
 [tool.poetry.extras]
@@ -245,7 +245,7 @@ args = [
 
     [[tool.poe.tasks.changelog.switch]]
     case = "release"
-    help = "Remove build"
+    help = "Sets version to the latest entry in the CHANGELOG"
     env = { "PYTHONPATH" = "scripts" }
     cmd = "python scripts/docs_changelog_generator/release_changelog.py $version"
 
