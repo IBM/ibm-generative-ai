@@ -1,7 +1,7 @@
 """
-Moderate text data
+Text Moderations
 
-Uncover HAP (hateful, abusive, profane language), Implicit hate or Stigma in text
+Uncover HAP (hateful, abusive, profane language) or Social Bias in the provided text.
 """
 
 from pprint import pprint
@@ -29,7 +29,7 @@ def heading(text: str) -> str:
 
 client = Client(credentials=Credentials.from_env())
 
-inputs = ["Ice cream sucks!", "It tastes like poop."]
+inputs = ["Ice cream sucks!", "I want to kill them!"]
 
 print(heading("Run text moderation in parallel"))
 
