@@ -50,7 +50,7 @@ moderations = ModerationParameters(
     # possibly add more moderations:
     # social_bias=SocialBiasOptions(...),
 )
-hate_speach_in_output: list[TextModeration] = []
+hate_speech_in_output: list[TextModeration] = []
 
 
 print(heading("Generating text stream"))
@@ -60,12 +60,12 @@ for response in client.text.generation.create_stream(
     model_id=model_id, input=prompt, parameters=parameters, moderations=moderations
 ):
     if not response.results:
-        hate_speach_in_output.extend(response.moderations.hap)
+        hate_speech_in_output.extend(response.moderations.hap)
         continue
     for result in response.results:
         if result.generated_text:
             print(result.generated_text, end="")
 
 print()
-print(heading("Hate speach in output"), file=sys.stderr)
-pprint([hap.model_dump() for hap in hate_speach_in_output], stream=sys.stderr)
+print(heading("Hate speech in output"), file=sys.stderr)
+pprint([hap.model_dump() for hap in hate_speech_in_output], stream=sys.stderr)
