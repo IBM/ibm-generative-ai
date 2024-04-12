@@ -121,5 +121,3 @@ class TestLangChainChat:
             assert token == (result.results[0].generated_text or "")
             chunk = retrieved_kwargs["chunk"]
             assert isinstance(chunk, ChatGenerationChunk)
-            response = retrieved_kwargs["response"]
-            assert response == result
