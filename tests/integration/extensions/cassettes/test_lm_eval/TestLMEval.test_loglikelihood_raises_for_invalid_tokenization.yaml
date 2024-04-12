@@ -1,0 +1,184 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/text/generation/limits?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '54'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Tue, 02 Apr 2024 16:48:38 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=f9a71fbb30e151859f32220315fc2bbc; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": "The best ice cream flavor is:", "model_id": "tiiuae/falcon-40b",
+      "parameters": {"max_new_tokens": 1, "return_options": {"generated_tokens": false,
+      "input_text": false, "input_tokens": true, "token_logprobs": true, "token_ranks":
+      true}}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '247'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation?version=2024-03-19
+  response:
+    body:
+      string: "{\"id\":\"4e3ada69-b108-4566-872d-a68173f99600\",\"model_id\":\"tiiuae/falcon-40b\",\"created_at\":\"2024-04-02T16:48:38.535Z\",\"results\":[{\"generated_text\":\"\\n\",\"generated_token_count\":1,\"input_token_count\":7,\"stop_reason\":\"max_tokens\",\"input_tokens\":[{\"text\":\"The\",\"logprob\":null},{\"text\":\"\u0120best\",\"logprob\":-5.19140625,\"rank\":7},{\"text\":\"\u0120ice\",\"logprob\":-7.53125,\"rank\":193},{\"text\":\"\u0120cream\",\"logprob\":-0.77978515625,\"rank\":1},{\"text\":\"\u0120flavor\",\"logprob\":-5.53515625,\"rank\":35},{\"text\":\"\u0120is\",\"logprob\":-1.68359375,\"rank\":2},{\"text\":\":\",\"logprob\":-3.53515625,\"rank\":8}],\"seed\":2666283366}]}"
+    headers:
+      content-length:
+      - '584'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-03-19'
+      date:
+      - Tue, 02 Apr 2024 16:48:38 GMT
+      keep-alive:
+      - timeout=72
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": ["test str"], "model_id": "tiiuae/falcon-40b", "parameters":
+      {"return_options": {"tokens": true}}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '108'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/tokenization?version=2024-01-10
+  response:
+    body:
+      string: "{\"model_id\":\"tiiuae/falcon-40b\",\"created_at\":\"2024-04-02T16:48:38.976Z\",\"results\":[{\"token_count\":2,\"tokens\":[\"test\",\"\u0120str\"]}]}"
+    headers:
+      content-length:
+      - '128'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-01-10'
+      date:
+      - Tue, 02 Apr 2024 16:48:38 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=e7012ef98dc1d6cddd80c399165de22f; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/text/generation/limits?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '54'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Tue, 02 Apr 2024 16:48:39 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=e7012ef98dc1d6cddd80c399165de22f; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": "test string", "model_id": "tiiuae/falcon-40b", "parameters":
+      {"max_new_tokens": 1, "return_options": {"generated_tokens": false, "input_text":
+      false, "input_tokens": true, "token_logprobs": true, "token_ranks": true}}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '229'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation?version=2024-03-19
+  response:
+    body:
+      string: "{\"id\":\"b4d05ff1-f220-4af2-9b7b-53d35db60ea2\",\"model_id\":\"tiiuae/falcon-40b\",\"created_at\":\"2024-04-02T16:48:39.525Z\",\"results\":[{\"generated_text\":\"
+        \",\"generated_token_count\":1,\"input_token_count\":2,\"stop_reason\":\"max_tokens\",\"input_tokens\":[{\"text\":\"test\",\"logprob\":null},{\"text\":\"\u0120string\",\"logprob\":-10.2578125,\"rank\":1262}],\"seed\":3494838183}]}"
+    headers:
+      content-length:
+      - '346'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-03-19'
+      date:
+      - Tue, 02 Apr 2024 16:48:39 GMT
+      keep-alive:
+      - timeout=72
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -43,6 +43,8 @@ llama-index-core = { version = "^0.10.0", optional = true }
 uvicorn = { version = "^0.22.0",  optional = true }
 fastapi = { version = "^0.100.0",  optional = true }
 deprecated = "^1.2.14"
+lm-eval = { version = "^0.4.2",  optional = true }
+tqdm = { version = "^4.66.1", optional = true }
 
 [tool.black] # left for IDE compatibility (pycharm)
 line-length = 120
@@ -114,10 +116,12 @@ pytest-httpx = "^0.30.0"
 langchain = ["langchain-core", "pyyaml"]
 huggingface = ["datasets", "transformers"]
 llama-index = ["llama-index-core"]
+lm-eval = ["lm-eval", "tqdm"]
 localserver = ["uvicorn", "fastapi"]
 
 [tool.pytest.ini_options]
 addopts = "--cov --cov-report term-missing --cov-fail-under 80 -v"
+testpaths = ["tests"]
 markers = [
     "unit",
     "integration",
@@ -150,6 +154,10 @@ warn_required_dynamic_aliases = true
 [tool.poe.tasks.install]
 help = "Install dependencies for the SDK core and it's extensions"
 cmd = "poetry install --all-extras --without dev"
+
+[tool.poe.tasks.lm_eval]
+help = "Run lm_eval with support for genai models"
+cmd = "python -m genai.extensions.lm_eval"
 
 [tool.poe.tasks.install-dev]
 help = "Install dependencies and related tooling for development"

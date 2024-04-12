@@ -35,7 +35,7 @@ jobs:
     - name: Install dependencies
       run: |
         if [[ $(python -c "import sys; print(sys.version_info[:2] >= (3, 12))") == "True" ]]; then
-          poetry install --no-interaction -E llama-index -E localserver -E langchain
+          poetry install --no-interaction -E llama-index -E localserver -E langchain -E lm-eval
         else
           poetry install --no-interaction --all-extras
         fi

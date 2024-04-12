@@ -1,0 +1,183 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/text/generation/limits?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '54'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Tue, 02 Apr 2024 16:28:50 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=85b373fa0b9c193f95d2f0987342a678; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": "Here are three sentences. My favorite color is ", "model_id":
+      "google/flan-t5-xl", "parameters": {"decoding_method": "greedy", "max_new_tokens":
+      1000, "stop_sequences": ["."], "temperature": 1.0}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '207'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation?version=2024-03-19
+  response:
+    body:
+      string: '{"id":"731c0441-2f1e-49bd-852d-f6771a0d8d64","model_id":"google/flan-t5-xl","created_at":"2024-04-02T16:28:50.829Z","results":[{"generated_text":"My
+        favorite color is blue.","generated_token_count":6,"input_token_count":11,"stop_reason":"stop_sequence","stop_sequence":"."}]}'
+    headers:
+      content-length:
+      - '275'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-03-19'
+      date:
+      - Tue, 02 Apr 2024 16:28:50 GMT
+      keep-alive:
+      - timeout=72
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": "Here are three sentences. When I''m bored, I ", "model_id":
+      "google/flan-t5-xl", "parameters": {"decoding_method": "greedy", "max_new_tokens":
+      1000, "stop_sequences": ["."], "temperature": 1.0}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '204'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation?version=2024-03-19
+  response:
+    body:
+      string: '{"id":"c9ea47b0-4fc0-4880-9b3a-548c985717df","model_id":"google/flan-t5-xl","created_at":"2024-04-02T16:28:51.036Z","results":[{"generated_text":"I
+        like to read books.","generated_token_count":6,"input_token_count":14,"stop_reason":"stop_sequence","stop_sequence":"."}]}'
+    headers:
+      content-length:
+      - '270'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-03-19'
+      date:
+      - Tue, 02 Apr 2024 16:28:51 GMT
+      keep-alive:
+      - timeout=72
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/text/generation/limits?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '54'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Tue, 02 Apr 2024 16:28:54 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=e7012ef98dc1d6cddd80c399165de22f; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": "Here are three sentences. I''m happy because ", "model_id":
+      "google/flan-t5-xl", "parameters": {"decoding_method": "greedy", "max_new_tokens":
+      1000, "stop_sequences": ["."], "temperature": 0.0}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '204'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation?version=2024-03-19
+  response:
+    body:
+      string: '{"id":"c1c972ce-58f2-4952-8df7-83019430442a","model_id":"google/flan-t5-xl","created_at":"2024-04-02T16:28:54.447Z","results":[{"generated_text":"I
+        got a new job.","generated_token_count":7,"input_token_count":12,"stop_reason":"stop_sequence","stop_sequence":"."}]}'
+    headers:
+      content-length:
+      - '265'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-03-19'
+      date:
+      - Tue, 02 Apr 2024 16:28:54 GMT
+      keep-alive:
+      - timeout=72
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+version: 1
