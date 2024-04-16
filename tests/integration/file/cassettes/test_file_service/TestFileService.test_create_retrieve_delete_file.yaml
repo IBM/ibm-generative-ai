@@ -15,15 +15,15 @@ interactions:
       content-type:
       - multipart/form-data; boundary=BOUNDARY
     method: POST
-    uri: https://api.com/v2/files?version=2023-12-15
+    uri: https://api.com/v2/files?version=2024-04-09
   response:
     body:
-      string: '{"result":{"id":"28a0b804-0176-40d8-b0cb-386c9d7559d0","bytes":42,"file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-03-06T20:48:35.000Z","updated_at":"2024-03-06T20:48:35.000Z","file_formats":[],"descendants":[]}}'
+      string: '{"result":{"id":"89223a19-8324-4add-81c3-fd3bfadc7610","bytes":42,"file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-04-16T09:07:23.000Z","updated_at":"2024-04-16T09:07:23.000Z","file_formats":[],"descendants":[]}}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 20:48:34 GMT
+      - Tue, 16 Apr 2024 09:07:23 GMT
       Keep-Alive:
       - timeout=72
       content-length:
@@ -31,7 +31,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2023-12-15'
+      - '2024-04-09'
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -53,15 +53,15 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/files?search=file.json&version=2023-12-15
+    uri: https://api.com/v2/files?search=file.json&version=2024-04-09
   response:
     body:
-      string: '{"results":[{"id":"28a0b804-0176-40d8-b0cb-386c9d7559d0","bytes":"42","file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-03-06T20:48:35.000Z","updated_at":"2024-03-06T20:48:35.000Z","file_formats":[],"descendants":[]}],"total_count":1}'
+      string: '{"results":[{"id":"89223a19-8324-4add-81c3-fd3bfadc7610","bytes":"42","file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-04-16T09:07:23.000Z","updated_at":"2024-04-16T09:07:23.000Z","file_formats":[],"descendants":[]}],"total_count":1}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 20:48:35 GMT
+      - Tue, 16 Apr 2024 09:07:23 GMT
       Keep-Alive:
       - timeout=72
       content-length:
@@ -69,7 +69,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2023-12-15'
+      - '2024-04-09'
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -91,15 +91,15 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/files/28a0b804-0176-40d8-b0cb-386c9d7559d0?version=2023-12-15
+    uri: https://api.com/v2/files/89223a19-8324-4add-81c3-fd3bfadc7610?version=2024-04-09
   response:
     body:
-      string: '{"result":{"id":"28a0b804-0176-40d8-b0cb-386c9d7559d0","bytes":"42","file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-03-06T20:48:35.000Z","updated_at":"2024-03-06T20:48:35.000Z","file_formats":[],"descendants":[]}}'
+      string: '{"result":{"id":"89223a19-8324-4add-81c3-fd3bfadc7610","bytes":"42","file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-04-16T09:07:23.000Z","updated_at":"2024-04-16T09:07:23.000Z","file_formats":[],"descendants":[]}}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 20:48:36 GMT
+      - Tue, 16 Apr 2024 09:07:24 GMT
       Keep-Alive:
       - timeout=72
       content-length:
@@ -107,7 +107,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2023-12-15'
+      - '2024-04-09'
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -129,7 +129,7 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/files/28a0b804-0176-40d8-b0cb-386c9d7559d0/content?version=2023-11-22
+    uri: https://api.com/v2/files/89223a19-8324-4add-81c3-fd3bfadc7610/content?version=2023-11-22
   response:
     body:
       string: '{"data": "EXAMPLE TEMPLATE {{variable}}}"}'
@@ -137,7 +137,7 @@ interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 20:48:37 GMT
+      - Tue, 16 Apr 2024 09:07:25 GMT
       Keep-Alive:
       - timeout=72
       Transfer-Encoding:
@@ -174,19 +174,19 @@ interactions:
       content-type:
       - multipart/form-data; boundary=BOUNDARY
     method: PATCH
-    uri: https://api.com/v2/files/28a0b804-0176-40d8-b0cb-386c9d7559d0?version=2023-11-22
+    uri: https://api.com/v2/files/89223a19-8324-4add-81c3-fd3bfadc7610?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"28a0b804-0176-40d8-b0cb-386c9d7559d0","bytes":50,"file_name":"file_updated.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-03-06T20:48:35.000Z","updated_at":"2024-03-06T20:48:39.417Z","file_formats":[],"descendants":[]}}'
+      string: '{"result":{"id":"89223a19-8324-4add-81c3-fd3bfadc7610","bytes":50,"file_name":"file_updated.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-04-16T09:07:23.000Z","updated_at":"2024-04-16T09:07:27.778Z","file_formats":[],"descendants":[]}}'
     headers:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 20:48:39 GMT
+      - Tue, 16 Apr 2024 09:07:28 GMT
       Keep-Alive:
       - timeout=72
       content-length:
-      - '262'
+      - '273'
       content-type:
       - application/json; charset=utf-8
       content-version:
@@ -212,7 +212,7 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/files/28a0b804-0176-40d8-b0cb-386c9d7559d0/content?version=2023-11-22
+    uri: https://api.com/v2/files/89223a19-8324-4add-81c3-fd3bfadc7610/content?version=2023-11-22
   response:
     body:
       string: '{"data": "UPDATED EXAMPLE TEMPLATE {{variable}}}"}'
@@ -220,7 +220,7 @@ interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 20:48:41 GMT
+      - Tue, 16 Apr 2024 09:07:29 GMT
       Keep-Alive:
       - timeout=72
       Transfer-Encoding:
@@ -252,7 +252,7 @@ interactions:
       connection:
       - keep-alive
     method: DELETE
-    uri: https://api.com/v2/files/28a0b804-0176-40d8-b0cb-386c9d7559d0?version=2023-11-22
+    uri: https://api.com/v2/files/89223a19-8324-4add-81c3-fd3bfadc7610?version=2023-11-22
   response:
     body:
       string: ''
@@ -260,7 +260,7 @@ interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 20:48:42 GMT
+      - Tue, 16 Apr 2024 09:07:30 GMT
       Keep-Alive:
       - timeout=72
       content-version:
@@ -284,7 +284,7 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/files?search=file.json&version=2023-12-15
+    uri: https://api.com/v2/files?search=file.json&version=2024-04-09
   response:
     body:
       string: '{"results":[],"total_count":0}'
@@ -292,7 +292,7 @@ interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 Mar 2024 20:48:43 GMT
+      - Tue, 16 Apr 2024 09:07:31 GMT
       Keep-Alive:
       - timeout=72
       content-length:
@@ -300,7 +300,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2023-12-15'
+      - '2024-04-09'
       vary:
       - accept-encoding
       x-ratelimit-limit:
