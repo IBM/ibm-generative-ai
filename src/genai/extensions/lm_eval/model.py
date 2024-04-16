@@ -97,6 +97,10 @@ class IBMGenAILMEval(LM):
         )
         self._generation_execution_options = generation_execution_options or self.DEFAULT_GENERATION_EXECUTION_OPTIONS
 
+    @property
+    def model_token_limit(self):
+        return self._client.model.retrieve(id=self._model_id).result.token_limits[0].token_limit
+
     def dump_parameters(self):
         return self._parameters.model_dump()
 
@@ -281,8 +285,12 @@ class IBMGenAILMEval(LM):
             decoding_method = DecodingMethod.SAMPLE if do_sample else DecodingMethod.GREEDY
             until = generation_parameters.pop("until")
             stop_sequences = [until] if isinstance(until, str) else until
-            max_new_tokens = generation_parameters.pop("max_gen_toks", None)
+            stop_sequences.append("<|endoftext|>")
+            # Use same default 256 token limit as huggingface
+            # https://github.com/EleutherAI/lm-evaluation-harness/blob/7852985b2b5352df147067e01a121c52297f8821/lm_eval/models/huggingface.py#L392
+            max_new_tokens = generation_parameters.pop("max_gen_toks", 256)
             temperature = generation_parameters.pop("temperature", None)
+            truncate_input_tokens = self.model_token_limit - max_new_tokens
 
             parameters = TextGenerationParameters.model_validate(
                 {
@@ -291,6 +299,7 @@ class IBMGenAILMEval(LM):
                     "stop_sequences": stop_sequences,
                     "temperature": temperature,
                     "max_new_tokens": max_new_tokens,
+                    "truncate_input_tokens": truncate_input_tokens,
                 }
             )
 
