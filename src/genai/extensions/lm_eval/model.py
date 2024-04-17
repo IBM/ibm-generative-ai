@@ -1,5 +1,6 @@
 import json
 from collections import defaultdict
+from functools import cached_property
 from typing import Any, Iterator, NamedTuple, Optional, Type, cast
 
 from genai import Client, Credentials
@@ -97,7 +98,7 @@ class IBMGenAILMEval(LM):
         )
         self._generation_execution_options = generation_execution_options or self.DEFAULT_GENERATION_EXECUTION_OPTIONS
 
-    @property
+    @cached_property
     def model_token_limit(self):
         return self._client.model.retrieve(id=self._model_id).result.token_limits[0].token_limit
 
