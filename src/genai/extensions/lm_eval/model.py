@@ -132,21 +132,24 @@ class IBMGenAILMEval(LM):
 
         """
         context_length = len(context_tokens)
-        if response_tokens[: context_length - 1] == context_tokens[:-1]:
-            if response_tokens[-1].startswith(context_tokens[-1]):
-                raise RuntimeError(
-                    f"The context sent to loglikelihood evaluation ends with a token that is substring of the "
-                    f"continuation token:\n"
-                    f"context_tokens={context_tokens}\n"
-                    f"response_tokens={response_tokens[:context_length]}\n"
-                    "This is not allowed as it would skew the results. Please check your data."
-                )
-            return response_tokens[:context_length][-1] != context_tokens[-1]
-        raise RuntimeError(
-            f"There is an unexpected difference between tokenizer and model tokens:\n"
-            f"context_tokens={context_tokens}\n"
-            f"response_tokens={response_tokens[:context_length]}"
-        )
+        if response_tokens[: context_length - 1] != context_tokens[: context_length - 1]:
+            raise RuntimeError(
+                f"There is an unexpected difference between tokenizer and model tokens:\n"
+                f"context_tokens={context_tokens}\n"
+                f"response_tokens={response_tokens[:context_length]}"
+            )
+
+        last_context_token = context_tokens[context_length - 1]
+        last_context_token_resp = response_tokens[context_length - 1]
+        if last_context_token != last_context_token_resp and last_context_token_resp.startswith(last_context_token):
+            raise RuntimeError(
+                f"The context sent to loglikelihood evaluation ends with a token ({last_context_token}) "
+                f"that is substring of the continuation token ({last_context_token_resp}).\n"
+                f"context_tokens={context_tokens}\n"
+                f"response_tokens={response_tokens[:context_length]}\n"
+                "This is not allowed as it would skew the results. Please check your data."
+            )
+        return last_context_token != last_context_token_resp
 
     def _check_model_logprobs_support(self):
         input_tokens = (
