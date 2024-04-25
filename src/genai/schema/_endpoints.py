@@ -51,13 +51,13 @@ class BetaTimeSerieLimitRetrieveEndpoint(ApiEndpoint):
 class FileRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/files"
     method: str = "GET"
-    version: str = "2024-04-09"
+    version: str = "2024-07-05"
 
 
 class FileCreateEndpoint(ApiEndpoint):
     path: str = "/v2/files"
     method: str = "POST"
-    version: str = "2024-04-09"
+    version: str = "2024-07-05"
 
 
 class FileIdDeleteEndpoint(ApiEndpoint):
@@ -69,7 +69,7 @@ class FileIdDeleteEndpoint(ApiEndpoint):
 class FileIdRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/files/{id}"
     method: str = "GET"
-    version: str = "2024-04-09"
+    version: str = "2024-07-05"
 
 
 class FileIdPatchEndpoint(ApiEndpoint):
