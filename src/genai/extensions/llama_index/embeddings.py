@@ -1,6 +1,8 @@
 import asyncio
 from typing import Optional
 
+from pydantic import Field
+
 from genai._types import ModelLike
 from genai.client import Client
 from genai.schema import TextEmbeddingParameters
@@ -17,6 +19,9 @@ class IBMGenAILlamaIndexEmbedding(BaseEmbedding):
     model_id: str
     parameters: Optional[ModelLike[TextEmbeddingParameters]] = None
     execution_options: Optional[ModelLike[CreateExecutionOptions]] = None
+    # Batch size is set to 100000 to avoid batching in
+    # LlamaIndex as it is handled by the SDK itself
+    embed_batch_size: int = Field(default=10000, description="The batch size for embedding calls.", gt=0)
 
     @classmethod
     def class_name(cls) -> str:
