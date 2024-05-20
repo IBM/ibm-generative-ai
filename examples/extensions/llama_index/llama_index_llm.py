@@ -22,7 +22,7 @@ client = Client(credentials=Credentials.from_env())
 
 llm = IBMGenAILlamaIndex(
     client=client,
-    model_id="meta-llama/llama-2-70b-chat",
+    model_id="meta-llama/llama-3-70b-instruct",
     parameters=TextGenerationParameters(
         decoding_method=DecodingMethod.SAMPLE,
         max_new_tokens=100,

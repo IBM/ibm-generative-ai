@@ -27,7 +27,7 @@ def heading(text: str) -> str:
 
 llm = LangChainChatInterface(
     client=Client(credentials=Credentials.from_env()),
-    model_id="meta-llama/llama-2-70b-chat",
+    model_id="meta-llama/llama-3-70b-instruct",
     parameters=TextGenerationParameters(
         decoding_method=DecodingMethod.SAMPLE,
         max_new_tokens=100,

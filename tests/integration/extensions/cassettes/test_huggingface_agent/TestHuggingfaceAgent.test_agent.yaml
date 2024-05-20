@@ -12,22 +12,22 @@ interactions:
     uri: https://api.com/v2/text/generation/limits?version=2023-11-22
   response:
     body:
-      string: '{"result":{"concurrency":{"limit":200,"remaining":200}}}'
+      string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
     headers:
       cache-control:
       - private
       content-length:
-      - '56'
+      - '54'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
       date:
-      - Wed, 20 Mar 2024 08:27:00 GMT
+      - Mon, 20 May 2024 14:12:17 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=1e3545705d3737525c7629e9f28dc93d; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=de04e502e3969a930842cae695f31f86; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -75,47 +75,41 @@ interactions:
       `src_lang`, which should be the language of the text to translate and `tgt_lang`,
       which should be the language for the desired ouput language. Both `src_lang`
       and `tgt_lang` are written in plain English, such as ''Romanian'', or ''Albanian''.
-      It returns the text translated in `tgt_lang`.\n- image_transformer: This is
-      a tool that transforms an image according to a prompt. It takes two inputs:
-      `image`, which should be the image to transform, and `prompt`, which should
-      be the prompt to use to change it. The prompt should only contain descriptive
-      adjectives, as if completing the prompt of the original image. It returns the
-      modified image.\n- text_downloader: This is a tool that downloads a file from
-      a `url`. It takes the `url` as input, and returns the text contained in the
-      file.\n- image_generator: This is a tool that creates an image according to
-      a prompt, which is a text description. It takes an input named `prompt` which
-      contains the image description and outputs an image.\n- video_generator: This
-      is a tool that creates a video according to a text description. It takes an
-      input named `prompt` which contains the image description, as well as an optional
-      input `seconds` which will be the duration of the video. The default is of two
-      seconds. The tool outputs a video object.\n\n\nTask: \"Answer the question in
-      the variable `question` about the image stored in the variable `image`. The
-      question is in French.\"\n\nI will use the following tools: `translator` to
-      translate the question into English and then `image_qa` to answer the question
-      on the input image.\n\nAnswer:\n```py\ntranslated_question = translator(question=question,
-      src_lang=\"French\", tgt_lang=\"English\")\nprint(f\"The translated question
-      is {translated_question}.\")\nanswer = image_qa(image=image, question=translated_question)\nprint(f\"The
-      answer is {answer}\")\n```\n\nTask: \"Identify the oldest person in the `document`
-      and create an image showcasing the result.\"\n\nI will use the following tools:
-      `document_qa` to find the oldest person in the document, then `image_generator`
-      to generate an image according to the answer.\n\nAnswer:\n```py\nanswer = document_qa(document,
-      question=\"What is the oldest person?\")\nprint(f\"The answer is {answer}.\")\nimage
-      = image_generator(answer)\n```\n\nTask: \"Generate an image using the text given
-      in the variable `caption`.\"\n\nI will use the following tool: `image_generator`
-      to generate an image.\n\nAnswer:\n```py\nimage = image_generator(prompt=caption)\n```\n\nTask:
-      \"Summarize the text given in the variable `text` and read it out loud.\"\n\nI
-      will use the following tools: `summarizer` to create a summary of the input
-      text, then `text_reader` to read it out loud.\n\nAnswer:\n```py\nsummarized_text
-      = summarizer(text)\nprint(f\"Summary: {summarized_text}\")\naudio_summary =
-      text_reader(summarized_text)\n```\n\nTask: \"Answer the question in the variable
-      `question` about the text in the variable `text`. Use the answer to generate
-      an image.\"\n\nI will use the following tools: `text_qa` to create the answer,
-      then `image_generator` to generate an image according to the answer.\n\nAnswer:\n```py\nanswer
-      = text_qa(text=text, question=question)\nprint(f\"The answer is {answer}.\")\nimage
-      = image_generator(answer)\n```\n\nTask: \"Caption the following `image`.\"\n\nI
-      will use the following tool: `image_captioner` to generate a caption for the
-      image.\n\nAnswer:\n```py\ncaption = image_captioner(image)\n```\n\nTask: \"Summarize
-      the chat\"\n\nI will use the following", "model_id": "meta-llama/llama-2-70b",
+      It returns the text translated in `tgt_lang`.\n- image_transformation: This
+      is a tool that transforms an image according to a prompt and returns the modified
+      image.\n- text_downloader: This is a tool that downloads a file from a `url`.
+      It takes the `url` as input, and returns the text contained in the file.\n-
+      image_generator: This is a tool that creates an image according to a prompt,
+      which is a text description.\n- video_generator: This is a tool that creates
+      a video according to a text description. It takes an optional input `seconds`
+      which will be the duration of the video. The default is of two seconds. The
+      tool outputs a video object.\n\n\nTask: \"Answer the question in the variable
+      `question` about the image stored in the variable `image`. The question is in
+      French.\"\n\nI will use the following tools: `translator` to translate the question
+      into English and then `image_qa` to answer the question on the input image.\n\nAnswer:\n```py\ntranslated_question
+      = translator(question=question, src_lang=\"French\", tgt_lang=\"English\")\nprint(f\"The
+      translated question is {translated_question}.\")\nanswer = image_qa(image=image,
+      question=translated_question)\nprint(f\"The answer is {answer}\")\n```\n\nTask:
+      \"Identify the oldest person in the `document` and create an image showcasing
+      the result.\"\n\nI will use the following tools: `document_qa` to find the oldest
+      person in the document, then `image_generator` to generate an image according
+      to the answer.\n\nAnswer:\n```py\nanswer = document_qa(document, question=\"What
+      is the oldest person?\")\nprint(f\"The answer is {answer}.\")\nimage = image_generator(answer)\n```\n\nTask:
+      \"Generate an image using the text given in the variable `caption`.\"\n\nI will
+      use the following tool: `image_generator` to generate an image.\n\nAnswer:\n```py\nimage
+      = image_generator(prompt=caption)\n```\n\nTask: \"Summarize the text given in
+      the variable `text` and read it out loud.\"\n\nI will use the following tools:
+      `summarizer` to create a summary of the input text, then `text_reader` to read
+      it out loud.\n\nAnswer:\n```py\nsummarized_text = summarizer(text)\nprint(f\"Summary:
+      {summarized_text}\")\naudio_summary = text_reader(summarized_text)\n```\n\nTask:
+      \"Answer the question in the variable `question` about the text in the variable
+      `text`. Use the answer to generate an image.\"\n\nI will use the following tools:
+      `text_qa` to create the answer, then `image_generator` to generate an image
+      according to the answer.\n\nAnswer:\n```py\nanswer = text_qa(text=text, question=question)\nprint(f\"The
+      answer is {answer}.\")\nimage = image_generator(answer)\n```\n\nTask: \"Caption
+      the following `image`.\"\n\nI will use the following tool: `image_captioner`
+      to generate a caption for the image.\n\nAnswer:\n```py\ncaption = image_captioner(image)\n```\n\nTask:
+      \"Summarize the chat\"\n\nI will use the following", "model_id": "meta-llama/llama-2-70b",
       "parameters": {"max_new_tokens": 500, "stop_sequences": ["Task:"]}}'
     headers:
       accept:
@@ -125,30 +119,24 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '6535'
+      - '6135'
       content-type:
       - application/json
     method: POST
     uri: https://api.com/v2/text/generation?version=2024-03-19
   response:
     body:
-      string: '{"id":"230e435f-6c47-46bd-b0f2-ddc56c834dee","model_id":"meta-llama/llama-2-70b","created_at":"2024-03-20T08:27:06.828Z","results":[{"generated_text":"
-        tools: `document_qa` to identify the oldest person, then `image_captioner`
-        to generate a caption about that person, I will then generate an image from
-        that caption using `image_generator`, and finally `doc_to_text` and `text_reader`
-        to read the generated text. The list of tools will be executed one after the
-        other.\n\nAnswer:\n```py\nanswer = document_qa(document, question=\"What is
-        the oldest person?\")\ncaption = image_captions(answer)\nimage = image_generator(prompt=caption)\noutput
-        = summary_of_document(document)\n```\n\nTask:","generated_token_count":142,"input_token_count":1580,"stop_reason":"stop_sequence","stop_sequence":"Task:","seed":3264333442}]}'
+      string: '{"id":"22234f91-ef73-4721-9c85-04a22aad9296","model_id":"meta-llama/llama-2-70b","created_at":"2024-05-20T14:12:25.703Z","results":[{"generated_text":"
+        tool: `summarizer` to generate a summary of the chat.\n\nAnswer:\n```py\n))","generated_token_count":25,"input_token_count":1490,"stop_reason":"eos_token","seed":3150004800}]}'
     headers:
       content-length:
-      - '817'
+      - '327'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2024-03-19'
       date:
-      - Wed, 20 Mar 2024 08:27:06 GMT
+      - Mon, 20 May 2024 14:12:25 GMT
       keep-alive:
       - timeout=72
       vary:

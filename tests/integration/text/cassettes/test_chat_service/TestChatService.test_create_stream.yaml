@@ -1,7 +1,7 @@
 interactions:
 - request:
     body: '{"messages": [{"content": "I want to kill them! There are my enemies.",
-      "role": "user"}], "model_id": "meta-llama/llama-2-70b-chat", "moderations":
+      "role": "user"}], "model_id": "meta-llama/llama-3-70b-instruct", "moderations":
       {"hap": {"input": {"enabled": true, "send_tokens": false, "threshold": 0.7},
       "output": {"enabled": true, "send_tokens": true, "threshold": 0.7}}}, "parameters":
       {"max_new_tokens": 10, "min_new_tokens": 3}}'
@@ -15,7 +15,7 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '353'
+      - '357'
       content-type:
       - application/json
     method: POST
@@ -25,42 +25,42 @@ interactions:
       string: 'retry: 3000
 
 
-        data: {"id":"a3cc11f9-37c9-4352-b217-6f7925b5e15e","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-21T18:55:40.460Z","results":[{"generated_text":"  ","generated_token_count":2,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6599942c-86be-436d-9be2-943bd8157159"}
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:33.754Z","conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52","moderations":{"hap":[{"score":0.8397554755210876,"flagged":true,"success":true,"position":{"start":0,"end":20}}]}}
 
 
-        data: {"id":"a3cc11f9-37c9-4352-b217-6f7925b5e15e","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-21T18:55:40.497Z","results":[{"generated_text":"I
-        understan","generated_token_count":3,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6599942c-86be-436d-9be2-943bd8157159"}
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:33.826Z","results":[{"generated_text":"I
+        understan","generated_token_count":2,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52"}
 
 
-        data: {"id":"a3cc11f9-37c9-4352-b217-6f7925b5e15e","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-21T18:55:40.546Z","results":[{"generated_text":"d
-        tha","generated_token_count":4,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6599942c-86be-436d-9be2-943bd8157159"}
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:33.879Z","results":[{"generated_text":"d
+        tha","generated_token_count":3,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52"}
 
 
-        data: {"id":"a3cc11f9-37c9-4352-b217-6f7925b5e15e","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-21T18:55:40.584Z","results":[{"generated_text":"t
-        yo","generated_token_count":5,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6599942c-86be-436d-9be2-943bd8157159"}
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:33.917Z","results":[{"generated_text":"t
+        yo","generated_token_count":4,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52"}
 
 
-        data: {"id":"a3cc11f9-37c9-4352-b217-6f7925b5e15e","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-21T18:55:40.622Z","results":[{"generated_text":"u
-        ma","generated_token_count":6,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6599942c-86be-436d-9be2-943bd8157159"}
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:33.956Z","results":[{"generated_text":"u''r","generated_token_count":5,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52"}
 
 
-        data: {"id":"a3cc11f9-37c9-4352-b217-6f7925b5e15e","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-21T18:55:40.661Z","results":[{"generated_text":"y
-        fee","generated_token_count":7,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6599942c-86be-436d-9be2-943bd8157159"}
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:33.995Z","results":[{"generated_text":"e
+        feelin","generated_token_count":6,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52"}
 
 
-        data: {"id":"a3cc11f9-37c9-4352-b217-6f7925b5e15e","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-21T18:55:40.700Z","results":[{"generated_text":"l
-        angr","generated_token_count":8,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6599942c-86be-436d-9be2-943bd8157159"}
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:34.035Z","results":[{"generated_text":"g
+        ","generated_token_count":7,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52"}
 
 
-        data: {"id":"a3cc11f9-37c9-4352-b217-6f7925b5e15e","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-21T18:55:40.750Z","results":[{"generated_text":"y
-        o","generated_token_count":9,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6599942c-86be-436d-9be2-943bd8157159"}
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:34.075Z","results":[{"generated_text":"a
+        stron","generated_token_count":8,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52"}
 
 
-        data: {"id":"a3cc11f9-37c9-4352-b217-6f7925b5e15e","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-21T18:55:40.792Z","results":[{"generated_text":"r
-        fr","generated_token_count":10,"input_token_count":0,"stop_reason":"max_tokens","seed":2048779827}],"conversation_id":"6599942c-86be-436d-9be2-943bd8157159"}
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:34.129Z","results":[{"generated_text":"g
+        sens","generated_token_count":9,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52"}
 
 
-        data: {"id":"a3cc11f9-37c9-4352-b217-6f7925b5e15e","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-03-21T18:55:40.942Z","conversation_id":"6599942c-86be-436d-9be2-943bd8157159","moderations":{"hap":[{"score":0.8397555351257324,"flagged":true,"success":true,"position":{"start":0,"end":20}}]}}
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:34.171Z","results":[{"generated_text":"e
+        of","generated_token_count":10,"input_token_count":0,"stop_reason":"max_tokens","seed":401923414}],"conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52"}
 
 
         event: close
@@ -68,15 +68,16 @@ interactions:
 
         '
     headers:
-      Cache-Control:
+      cache-control:
       - no-cache,no-transform
-      Connection:
-      - keep-alive
-      Content-Type:
+      content-type:
       - text/event-stream
-      Date:
-      - Thu, 21 Mar 2024 18:55:40 GMT
-      Transfer-Encoding:
+      date:
+      - Mon, 20 May 2024 14:12:33 GMT
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=fad6ffcbebbca45726eaa14ee11d2c44; path=/;
+        HttpOnly; Secure; SameSite=None
+      transfer-encoding:
       - chunked
       x-no-compression:
       - '1'
