@@ -78,7 +78,7 @@ prompt = ChatPromptTemplate.from_messages(
 client = Client(credentials=Credentials.from_env())
 llm = LangChainChatInterface(
     client=client,
-    model_id="meta-llama/llama-2-70b-chat",
+    model_id="meta-llama/llama-3-70b-instruct",
     parameters=TextGenerationParameters(
         max_new_tokens=250, min_new_tokens=20, temperature=0, stop_sequences=["\nObservation"]
     ),

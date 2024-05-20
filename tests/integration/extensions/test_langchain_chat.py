@@ -18,7 +18,7 @@ from genai.schema import (
 @pytest.mark.integration
 class TestLangChainChat:
     def setup_method(self):
-        self.model_id = "meta-llama/llama-2-70b-chat"
+        self.model_id = "meta-llama/llama-3-70b-instruct"
 
     @pytest.fixture
     def parameters(self):

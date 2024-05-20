@@ -10,7 +10,7 @@ from genai.schema import (
     TextGenerationParameters,
 )
 
-TEST_MODEL_ID = "meta-llama/llama-2-70b-chat"
+TEST_MODEL_ID = "meta-llama/llama-3-70b-instruct"
 
 
 @pytest.mark.integration
