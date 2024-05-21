@@ -15,6 +15,7 @@ ignore_files = {
     "tune.py",
     "parallel_processing.py",
     "chroma_db_embedding.py",
+    "deployment.py",
 }
 skip_for_python_3_12 = {
     # These files are skipped for python >= 3.12 because transformers library cannot be installed

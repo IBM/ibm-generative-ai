@@ -33,6 +33,28 @@ alias:
     - _FileCreate_result
     - _FileIdRetrieve_result
     - _FileIdPatch_result
+  FileMetadata:
+    - _BetaEvaluationIdRetrieve_result_file_metadata
+    - _FileIdPatch_result_metadata
+    - _BetaEvaluationExperimentIdRetrieve_result_file_metadata
+    - _BetaEvaluationCreate_result_file_metadata
+    - _FileCreate_result_metadata
+    - _BetaEvaluationRetrieve_results_file_metadata
+    - _FileIdRetrieve_result_metadata
+    - _FileRetrieve_results_metadata
+    - _BetaEvaluationExperimentCreate_result_file_metadata
+    - _BetaEvaluationExperimentRetrieve_results_file_metadata
+  FileMetadataStats:
+    - _FileCreate_result_metadata_stats
+    - _BetaEvaluationCreate_result_file_metadata_stats
+    - _BetaEvaluationExperimentIdRetrieve_result_file_metadata_stats
+    - _FileIdRetrieve_result_metadata_stats
+    - _FileIdPatch_result_metadata_stats
+    - _BetaEvaluationExperimentRetrieve_results_file_metadata_stats
+    - _BetaEvaluationIdRetrieve_result_file_metadata_stats
+    - _FileRetrieve_results_metadata_stats
+    - _BetaEvaluationRetrieve_results_file_metadata_stats
+    - _BetaEvaluationExperimentCreate_result_file_metadata_stats
   FileListSortBy:
     - _FileRetrieveRequestParamsSortBy
 
@@ -472,12 +494,36 @@ alias:
     - _TuneFromFileCreate_result_evaluation_files
     - _TuneIdPatch_result_training_files
     - _TuneRetrieve_results_evaluation_files
-  TuneResultDatapointLoss:
+  TuneResultContent:
+    - _TuneRetrieve_results_contents
+    - _TuneIdPatch_result_contents
+    - _TuneIdRetrieve_result_contents
+    - _TuneFromFileCreate_result_contents
+    - _TuneCreate_result_contents
+  TuneResultDatapoint:
+    - _TuneIdRetrieve_result_datapoints
+    - _TuneRetrieve_results_datapoints
+    - _TuneCreate_result_datapoints
+    - _TuneFromFileCreate_result_datapoints
+    - _TuneIdPatch_result_datapoints
+  TuneResultDatapointLossData:
     - _TuneRetrieve_results_datapoints_loss_data
     - _TuneCreate_result_datapoints_loss_data
-    - _TuneFromFileCreate_result_datapoints_loss_data
     - _TuneIdRetrieve_result_datapoints_loss_data
+    - _TuneFromFileCreate_result_datapoints_loss_data
     - _TuneIdPatch_result_datapoints_loss_data
+  TuneResultDatapointValidationLoss:
+    - _TuneIdPatch_result_datapoints_validation_loss
+    - _TuneRetrieve_results_datapoints_validation_loss
+    - _TuneFromFileCreate_result_datapoints_validation_loss
+    - _TuneCreate_result_datapoints_validation_loss
+    - _TuneIdRetrieve_result_datapoints_validation_loss
+  TuneResultDatapointValidationLossData:
+    - _TuneRetrieve_results_datapoints_validation_loss_data
+    - _TuneCreate_result_datapoints_validation_loss_data
+    - _TuneIdPatch_result_datapoints_validation_loss_data
+    - _TuneIdRetrieve_result_datapoints_validation_loss_data
+    - _TuneFromFileCreate_result_datapoints_validation_loss_data
   TuneListSortBy:
     - _TuneRetrieveRequestParamsSortBy
   PromptListSortBy:
@@ -490,13 +536,8 @@ alias:
     - _TuneCreate_result
   TuneParameters:
     - _TuneCreateRequest_parameters
+    - _TunePreflightCreateRequest_parameters
   #  - _TuningTypeRetrieve_results_schema_properties_parameters
-  TuneResultDatapoints:
-    - _TuneFromFileCreate_result_datapoints
-    - _TuneIdPatch_result_datapoints
-    - _TuneCreate_result_datapoints
-    - _TuneRetrieve_results_datapoints
-    - _TuneIdRetrieve_result_datapoints
   TextGenerationResult:
     - _TextGenerationComparisonCreate_results_result_results
     - _TextGenerationCreate_results
@@ -600,6 +641,15 @@ alias:
     - _TextTokenizationCreateRequest_parameters
   TextTokenizationReturnOptions:
     - _TextTokenizationCreateRequest_parameters_return_options
+  DeploymentResult:
+    - _DeploymentCreate201_result
+    - _DeploymentRetrieve_results
+    - _DeploymentIdRetrieve_result
+  DeploymentStatus:
+    - _DeploymentRetrieve_results_status
+    - _DeploymentIdRetrieve_result_status
+    - _DeploymentCreate201_result_status
+
   # SYSTEM PROMPTS -------------------------------------------------------------
   SystemPrompt:
     - _SystemPromptCreate_result
