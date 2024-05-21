@@ -12,6 +12,7 @@ from genai.schema import (
     DeploymentCreateEndpoint,
     DeploymentIdDeleteEndpoint,
     DeploymentIdRetrieveEndpoint,
+    DeploymentRetrieveEndpoint,
 )
 from genai.schema._api import (
     DeploymentCreateResponse,
@@ -72,7 +73,7 @@ class DeploymentService(BaseService[BaseServiceConfig, BaseServiceServices]):
             )
             return DeploymentIdRetrieveResponse(**response.json())
 
-    @set_service_action_metadata(endpoint=DeploymentCreateEndpoint)
+    @set_service_action_metadata(endpoint=DeploymentRetrieveEndpoint)
     def list(
         self,
         *,
