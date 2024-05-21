@@ -162,7 +162,7 @@ interactions:
       \   \"output\": \"Evelyn Desmet is a celebrated author.\"\n  },\n  {\n    \"input\":
       \"Can you share another one of Evelyn Desmet's popular book titles?\",\n    \"output\":
       \"Sure, \\\"Echoes of Nowhere\\\" is another popular book written by Evelyn
-      Desmet.\"\n  }\n]\r\n--BOUNDARY--\r\n"
+      Desmet.\"\n  }\n]\n\r\n--BOUNDARY--\r\n"
     headers:
       accept:
       - '*/*'
@@ -171,14 +171,14 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '12324'
+      - '12325'
       content-type:
       - multipart/form-data; boundary=BOUNDARY
     method: POST
     uri: https://api.com/v2/files?version=2024-05-13
   response:
     body:
-      string: '{"result":{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","bytes":12030,"file_name":"test_fine_tune_train.jsonl","purpose":"tune","storage_provider_location":"us-east","created_at":"2024-05-21T09:02:25.000Z","updated_at":"2024-05-21T09:02:25.000Z","file_formats":[{"id":1,"name":"generic"},{"id":34,"name":"fine-tuning"}],"descendants":[],"metadata":{"stats":{"columns":["input","output"],"records_count":50}}}}'
+      string: '{"result":{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","bytes":12031,"file_name":"test_fine_tune_train.jsonl","purpose":"tune","storage_provider_location":"us-east","created_at":"2024-05-21T10:24:15.000Z","updated_at":"2024-05-21T10:24:15.000Z","file_formats":[{"id":1,"name":"generic"},{"id":34,"name":"fine-tuning"}],"descendants":[],"metadata":{"stats":{"columns":["input","output"],"records_count":50}}}}'
     headers:
       content-length:
       - '408'
@@ -187,7 +187,7 @@ interactions:
       content-version:
       - '2024-05-13'
       date:
-      - Tue, 21 May 2024 09:02:24 GMT
+      - Tue, 21 May 2024 10:24:14 GMT
       keep-alive:
       - timeout=72
       set-cookie:
@@ -209,7 +209,7 @@ interactions:
       {"batch_size": 4, "learning_rate": 0.4, "num_epochs": 4, "verbalizer": "###
       Input: {{input}} ### Response: {{output}}", "per_device_eval_batch_size": 4,
       "gradient_accumulation_steps": 4, "per_device_train_batch_size": 4, "num_train_epochs":
-      4}, "task_id": "generation", "training_file_ids": ["4c4f650e-b58c-4de1-82fd-aaf7cb00478e"],
+      4}, "task_id": "generation", "training_file_ids": ["bfd15922-5f40-461e-89d5-1c35a2cd4cd1"],
       "tuning_type": "fine_tuning"}'
     headers:
       accept:
@@ -226,8 +226,8 @@ interactions:
     uri: https://api.com/v2/tunes?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"queued","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"learning_rate":0.4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4,"num_train_epochs":4,"max_seq_length":1024},"created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"queued","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"learning_rate":0.4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4,"num_train_epochs":4,"max_seq_length":1024},"created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
     headers:
       content-length:
       - '800'
@@ -236,11 +236,11 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:02:25 GMT
+      - Tue, 21 May 2024 10:24:15 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=ebf664e631f5543398b4358860231843; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=21a244f2f28a29d7a8687c9fac987714; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -263,11 +263,11 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"queued","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"queued","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
     headers:
       cache-control:
       - private
@@ -278,7 +278,49 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:02:27 GMT
+      - Tue, 21 May 2024 10:24:17 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=21a244f2f28a29d7a8687c9fac987714; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"queued","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '840'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Tue, 21 May 2024 10:24:49 GMT
       keep-alive:
       - timeout=72
       set-cookie:
@@ -305,22 +347,23 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"queued","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
     headers:
       cache-control:
       - private
       content-length:
-      - '800'
+      - '931'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:03:00 GMT
+      - Tue, 21 May 2024 10:25:21 GMT
       keep-alive:
       - timeout=72
       set-cookie:
@@ -347,12 +390,12 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
     headers:
       cache-control:
       - private
@@ -363,93 +406,7 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:03:32 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=4973959897699d2d03598da2e7a1d7a3; path=/;
-        HttpOnly; Secure; SameSite=None
-      vary:
-      - accept-encoding
-      x-ratelimit-limit:
-      - '25'
-      x-ratelimit-remaining:
-      - '24'
-      x-ratelimit-reset:
-      - '1'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: ''
-    headers:
-      accept:
-      - '*/*'
-      accept-encoding:
-      - gzip, deflate
-      connection:
-      - keep-alive
-    method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
-  response:
-    body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
-    headers:
-      cache-control:
-      - private
-      content-length:
-      - '931'
-      content-type:
-      - application/json; charset=utf-8
-      content-version:
-      - '2023-11-22'
-      date:
-      - Tue, 21 May 2024 09:04:08 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=1cfd42cdc433b82fbac42f242129345f; path=/;
-        HttpOnly; Secure; SameSite=None
-      vary:
-      - accept-encoding
-      x-ratelimit-limit:
-      - '25'
-      x-ratelimit-remaining:
-      - '24'
-      x-ratelimit-reset:
-      - '1'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: ''
-    headers:
-      accept:
-      - '*/*'
-      accept-encoding:
-      - gzip, deflate
-      connection:
-      - keep-alive
-    method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
-  response:
-    body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
-    headers:
-      cache-control:
-      - private
-      content-length:
-      - '931'
-      content-type:
-      - application/json; charset=utf-8
-      content-version:
-      - '2023-11-22'
-      date:
-      - Tue, 21 May 2024 09:04:40 GMT
+      - Tue, 21 May 2024 10:25:53 GMT
       keep-alive:
       - timeout=72
       set-cookie:
@@ -476,12 +433,12 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
     headers:
       cache-control:
       - private
@@ -492,11 +449,11 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:05:12 GMT
+      - Tue, 21 May 2024 10:26:25 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=ebf664e631f5543398b4358860231843; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=21a244f2f28a29d7a8687c9fac987714; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -519,12 +476,12 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
     headers:
       cache-control:
       - private
@@ -535,7 +492,7 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:05:44 GMT
+      - Tue, 21 May 2024 10:26:57 GMT
       keep-alive:
       - timeout=72
       set-cookie:
@@ -562,12 +519,12 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
     headers:
       cache-control:
       - private
@@ -578,93 +535,7 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:06:16 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=1cfd42cdc433b82fbac42f242129345f; path=/;
-        HttpOnly; Secure; SameSite=None
-      vary:
-      - accept-encoding
-      x-ratelimit-limit:
-      - '25'
-      x-ratelimit-remaining:
-      - '24'
-      x-ratelimit-reset:
-      - '1'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: ''
-    headers:
-      accept:
-      - '*/*'
-      accept-encoding:
-      - gzip, deflate
-      connection:
-      - keep-alive
-    method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
-  response:
-    body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
-    headers:
-      cache-control:
-      - private
-      content-length:
-      - '931'
-      content-type:
-      - application/json; charset=utf-8
-      content-version:
-      - '2023-11-22'
-      date:
-      - Tue, 21 May 2024 09:06:48 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=21a244f2f28a29d7a8687c9fac987714; path=/;
-        HttpOnly; Secure; SameSite=None
-      vary:
-      - accept-encoding
-      x-ratelimit-limit:
-      - '25'
-      x-ratelimit-remaining:
-      - '24'
-      x-ratelimit-reset:
-      - '1'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: ''
-    headers:
-      accept:
-      - '*/*'
-      accept-encoding:
-      - gzip, deflate
-      connection:
-      - keep-alive
-    method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
-  response:
-    body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
-    headers:
-      cache-control:
-      - private
-      content-length:
-      - '931'
-      content-type:
-      - application/json; charset=utf-8
-      content-version:
-      - '2023-11-22'
-      date:
-      - Tue, 21 May 2024 09:07:20 GMT
+      - Tue, 21 May 2024 10:27:29 GMT
       keep-alive:
       - timeout=72
       set-cookie:
@@ -691,12 +562,12 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
     headers:
       cache-control:
       - private
@@ -707,7 +578,50 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:07:52 GMT
+      - Tue, 21 May 2024 10:28:02 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=1cfd42cdc433b82fbac42f242129345f; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '931'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Tue, 21 May 2024 10:28:34 GMT
       keep-alive:
       - timeout=72
       set-cookie:
@@ -734,12 +648,12 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
     headers:
       cache-control:
       - private
@@ -750,7 +664,93 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:08:24 GMT
+      - Tue, 21 May 2024 10:29:06 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=4973959897699d2d03598da2e7a1d7a3; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '931'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Tue, 21 May 2024 10:29:38 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=4973959897699d2d03598da2e7a1d7a3; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '931'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Tue, 21 May 2024 10:30:10 GMT
       keep-alive:
       - timeout=72
       set-cookie:
@@ -777,12 +777,12 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
     headers:
       cache-control:
       - private
@@ -793,11 +793,11 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:08:56 GMT
+      - Tue, 21 May 2024 10:30:42 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=1cfd42cdc433b82fbac42f242129345f; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=ebf664e631f5543398b4358860231843; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -820,12 +820,12 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
     headers:
       cache-control:
       - private
@@ -836,11 +836,11 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:09:28 GMT
+      - Tue, 21 May 2024 10:31:15 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=1cfd42cdc433b82fbac42f242129345f; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=21a244f2f28a29d7a8687c9fac987714; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -863,12 +863,12 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
     headers:
       cache-control:
       - private
@@ -879,7 +879,7 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:10:00 GMT
+      - Tue, 21 May 2024 10:31:47 GMT
       keep-alive:
       - timeout=72
       set-cookie:
@@ -906,12 +906,12 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
     headers:
       cache-control:
       - private
@@ -922,7 +922,7 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:10:32 GMT
+      - Tue, 21 May 2024 10:32:19 GMT
       keep-alive:
       - timeout=72
       set-cookie:
@@ -949,12 +949,12 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
     headers:
       cache-control:
       - private
@@ -965,93 +965,7 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:11:04 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=4973959897699d2d03598da2e7a1d7a3; path=/;
-        HttpOnly; Secure; SameSite=None
-      vary:
-      - accept-encoding
-      x-ratelimit-limit:
-      - '25'
-      x-ratelimit-remaining:
-      - '24'
-      x-ratelimit-reset:
-      - '1'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: ''
-    headers:
-      accept:
-      - '*/*'
-      accept-encoding:
-      - gzip, deflate
-      connection:
-      - keep-alive
-    method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
-  response:
-    body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
-    headers:
-      cache-control:
-      - private
-      content-length:
-      - '931'
-      content-type:
-      - application/json; charset=utf-8
-      content-version:
-      - '2023-11-22'
-      date:
-      - Tue, 21 May 2024 09:11:36 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=ebf664e631f5543398b4358860231843; path=/;
-        HttpOnly; Secure; SameSite=None
-      vary:
-      - accept-encoding
-      x-ratelimit-limit:
-      - '25'
-      x-ratelimit-remaining:
-      - '24'
-      x-ratelimit-reset:
-      - '1'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: ''
-    headers:
-      accept:
-      - '*/*'
-      accept-encoding:
-      - gzip, deflate
-      connection:
-      - keep-alive
-    method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
-  response:
-    body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
-    headers:
-      cache-control:
-      - private
-      content-length:
-      - '931'
-      content-type:
-      - application/json; charset=utf-8
-      content-version:
-      - '2023-11-22'
-      date:
-      - Tue, 21 May 2024 09:12:08 GMT
+      - Tue, 21 May 2024 10:32:51 GMT
       keep-alive:
       - timeout=72
       set-cookie:
@@ -1078,12 +992,12 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
     headers:
       cache-control:
       - private
@@ -1094,11 +1008,11 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:12:41 GMT
+      - Tue, 21 May 2024 10:33:23 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=21a244f2f28a29d7a8687c9fac987714; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=e73335477deb41eeb9834e3d963e8aa7; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -1121,12 +1035,12 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
     headers:
       cache-control:
       - private
@@ -1137,11 +1051,11 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:13:13 GMT
+      - Tue, 21 May 2024 10:33:55 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=21a244f2f28a29d7a8687c9fac987714; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=e73335477deb41eeb9834e3d963e8aa7; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -1164,12 +1078,12 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
     headers:
       cache-control:
       - private
@@ -1180,11 +1094,11 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:13:45 GMT
+      - Tue, 21 May 2024 10:34:27 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=21a244f2f28a29d7a8687c9fac987714; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=1cfd42cdc433b82fbac42f242129345f; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -1207,12 +1121,12 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
     headers:
       cache-control:
       - private
@@ -1223,11 +1137,11 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:14:17 GMT
+      - Tue, 21 May 2024 10:34:59 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=4973959897699d2d03598da2e7a1d7a3; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=1cfd42cdc433b82fbac42f242129345f; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -1250,12 +1164,55 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[{"data":{"step":1,"epoch":1,"value":0,"timestamp":"2024-05-21T09:05:10.541359"},"timestamp":"2024-05-21T09:05:10.541Z"},{"data":{"step":2,"epoch":2,"value":0,"timestamp":"2024-05-21T09:06:14.165519"},"timestamp":"2024-05-21T09:06:14.165Z"},{"data":{"step":3,"epoch":3,"value":0,"timestamp":"2024-05-21T09:07:17.492183"},"timestamp":"2024-05-21T09:07:17.492Z"},{"data":{"step":4,"epoch":4,"value":0,"timestamp":"2024-05-21T09:08:21.006182"},"timestamp":"2024-05-21T09:08:21.006Z"}]}}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[]}}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '931'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Tue, 21 May 2024 10:35:31 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=1cfd42cdc433b82fbac42f242129345f; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"running","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is running.","preferred":false,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[{"data":{"step":1,"epoch":1,"value":0,"timestamp":"2024-05-21T10:26:56.231149"},"timestamp":"2024-05-21T10:26:56.231Z"},{"data":{"step":2,"epoch":2,"value":0,"timestamp":"2024-05-21T10:28:01.997449"},"timestamp":"2024-05-21T10:28:01.997Z"},{"data":{"step":3,"epoch":3,"value":0,"timestamp":"2024-05-21T10:29:00.348180"},"timestamp":"2024-05-21T10:29:00.348Z"},{"data":{"step":4,"epoch":4,"value":0,"timestamp":"2024-05-21T10:29:58.704733"},"timestamp":"2024-05-21T10:29:58.704Z"}]}}}'
     headers:
       cache-control:
       - private
@@ -1266,11 +1223,11 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:14:49 GMT
+      - Tue, 21 May 2024 10:36:03 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=4973959897699d2d03598da2e7a1d7a3; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=1cfd42cdc433b82fbac42f242129345f; path=/;
         HttpOnly; Secure; SameSite=None
       transfer-encoding:
       - chunked
@@ -1295,12 +1252,12 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"completed","status_message":"PyTorchJob
-        pytorchjob-81c4a48c-b891-4e0b-8dbf-072f025c6577 is successfully completed.","preferred":true,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
-        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T09:03:00.000Z","finished_at":"2024-05-21T09:14:50.000Z","created_at":"2024-05-21T09:02:25.000Z","validation_files":[],"training_files":[{"id":"4c4f650e-b58c-4de1-82fd-aaf7cb00478e","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T09:02:25.000Z"}],"evaluation_files":[],"datapoints":{"loss":[{"data":{"step":1,"epoch":1,"value":0,"timestamp":"2024-05-21T09:05:10.541359"},"timestamp":"2024-05-21T09:05:10.541Z"},{"data":{"step":2,"epoch":2,"value":0,"timestamp":"2024-05-21T09:06:14.165519"},"timestamp":"2024-05-21T09:06:14.165Z"},{"data":{"step":3,"epoch":3,"value":0,"timestamp":"2024-05-21T09:07:17.492183"},"timestamp":"2024-05-21T09:07:17.492Z"},{"data":{"step":4,"epoch":4,"value":0,"timestamp":"2024-05-21T09:08:21.006182"},"timestamp":"2024-05-21T09:08:21.006Z"}]},"contents":[{"name":"config.json"},{"name":"generation_config.json"},{"name":"model-00001-of-00004.safetensors"},{"name":"model-00002-of-00004.safetensors"},{"name":"model-00003-of-00004.safetensors"},{"name":"model-00004-of-00004.safetensors"},{"name":"model.safetensors.index.json"},{"name":"optimizer.bin"},{"name":"pytorch_model_fsdp.bin"},{"name":"rng_state_0.pth"},{"name":"rng_state_1.pth"},{"name":"rng_state_2.pth"},{"name":"rng_state_3.pth"},{"name":"scheduler.pt"},{"name":"special_tokens_map.json"},{"name":"tokenizer.json"},{"name":"tokenizer_config.json"},{"name":"trainer_state.json"},{"name":"training_args.bin"},{"name":"training_logs.jsonl"}]}}'
+      string: '{"result":{"id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","name":"test_tune","model_id":"meta-llama/llama-3-8b-instruct","tuning_type":"fine_tuning","model_name":"llama-3-8b-instruct","status":"completed","status_message":"PyTorchJob
+        pytorchjob-37aae307-9869-43d2-aed4-a50803237c8e is successfully completed.","preferred":true,"task_id":"generation","task_name":"Generation","parameters":{"batch_size":4,"num_epochs":4,"verbalizer":"###
+        Input: {{input}} ### Response: {{output}}","learning_rate":0.4,"max_seq_length":1024,"num_train_epochs":4,"per_device_eval_batch_size":4,"gradient_accumulation_steps":4,"per_device_train_batch_size":4},"started_at":"2024-05-21T10:24:40.000Z","finished_at":"2024-05-21T10:36:10.000Z","created_at":"2024-05-21T10:24:15.000Z","validation_files":[],"training_files":[{"id":"bfd15922-5f40-461e-89d5-1c35a2cd4cd1","file_name":"test_fine_tune_train.jsonl","created_at":"2024-05-21T10:24:15.000Z"}],"evaluation_files":[],"datapoints":{"loss":[{"data":{"step":1,"epoch":1,"value":0,"timestamp":"2024-05-21T10:26:56.231149"},"timestamp":"2024-05-21T10:26:56.231Z"},{"data":{"step":2,"epoch":2,"value":0,"timestamp":"2024-05-21T10:28:01.997449"},"timestamp":"2024-05-21T10:28:01.997Z"},{"data":{"step":3,"epoch":3,"value":0,"timestamp":"2024-05-21T10:29:00.348180"},"timestamp":"2024-05-21T10:29:00.348Z"},{"data":{"step":4,"epoch":4,"value":0,"timestamp":"2024-05-21T10:29:58.704733"},"timestamp":"2024-05-21T10:29:58.704Z"}]},"contents":[{"name":"config.json"},{"name":"generation_config.json"},{"name":"model-00001-of-00004.safetensors"},{"name":"model-00002-of-00004.safetensors"},{"name":"model-00003-of-00004.safetensors"},{"name":"model-00004-of-00004.safetensors"},{"name":"model.safetensors.index.json"},{"name":"optimizer.bin"},{"name":"pytorch_model_fsdp.bin"},{"name":"rng_state_0.pth"},{"name":"rng_state_1.pth"},{"name":"rng_state_2.pth"},{"name":"rng_state_3.pth"},{"name":"scheduler.pt"},{"name":"special_tokens_map.json"},{"name":"tokenizer.json"},{"name":"tokenizer_config.json"},{"name":"trainer_state.json"},{"name":"training_args.bin"},{"name":"training_logs.jsonl"}]}}'
     headers:
       cache-control:
       - private
@@ -1311,11 +1268,11 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:15:21 GMT
+      - Tue, 21 May 2024 10:36:35 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=ebf664e631f5543398b4358860231843; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=4973959897699d2d03598da2e7a1d7a3; path=/;
         HttpOnly; Secure; SameSite=None
       transfer-encoding:
       - chunked
@@ -1331,7 +1288,7 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"tune_id": "llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25"}'
+    body: '{"tune_id": "llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15"}'
     headers:
       accept:
       - '*/*'
@@ -1347,7 +1304,7 @@ interactions:
     uri: https://api.com/v2/deployments?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"fzscncj84ld62z9k","tune_id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","created_at":"2024-05-21T09:15:22.000Z","updated_at":"2024-05-21T09:15:24.104Z","status":"initializing"}}'
+      string: '{"result":{"id":"oifer4u6c9jhs0dh","tune_id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","created_at":"2024-05-21T10:36:36.000Z","updated_at":"2024-05-21T10:36:38.360Z","status":"initializing"}}'
     headers:
       content-length:
       - '204'
@@ -1356,11 +1313,11 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:15:24 GMT
+      - Tue, 21 May 2024 10:36:38 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=ebf664e631f5543398b4358860231843; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=e73335477deb41eeb9834e3d963e8aa7; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -1383,10 +1340,10 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/deployments/fzscncj84ld62z9k?version=2023-11-22
+    uri: https://api.com/v2/deployments/oifer4u6c9jhs0dh?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":"fzscncj84ld62z9k","tune_id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","created_at":"2024-05-21T09:15:22.000Z","updated_at":"2024-05-21T09:15:24.000Z","status":"initializing"}}'
+      string: '{"result":{"id":"oifer4u6c9jhs0dh","tune_id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","created_at":"2024-05-21T10:36:36.000Z","updated_at":"2024-05-21T10:36:38.000Z","status":"initializing"}}'
     headers:
       cache-control:
       - private
@@ -1397,253 +1354,7 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:15:24 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=ebf664e631f5543398b4358860231843; path=/;
-        HttpOnly; Secure; SameSite=None
-      vary:
-      - accept-encoding
-      x-ratelimit-limit:
-      - '25'
-      x-ratelimit-remaining:
-      - '24'
-      x-ratelimit-reset:
-      - '1'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: ''
-    headers:
-      accept:
-      - '*/*'
-      accept-encoding:
-      - gzip, deflate
-      connection:
-      - keep-alive
-    method: GET
-    uri: https://api.com/v2/deployments/fzscncj84ld62z9k?version=2023-11-22
-  response:
-    body:
-      string: '{"result":{"id":"fzscncj84ld62z9k","tune_id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","created_at":"2024-05-21T09:15:22.000Z","updated_at":"2024-05-21T09:15:24.000Z","status":"initializing"}}'
-    headers:
-      cache-control:
-      - private
-      content-length:
-      - '204'
-      content-type:
-      - application/json; charset=utf-8
-      content-version:
-      - '2023-11-22'
-      date:
-      - Tue, 21 May 2024 09:15:55 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=4e65f69b7d93f33a0c51e9f5b1bb64da; path=/;
-        HttpOnly; Secure; SameSite=None
-      vary:
-      - accept-encoding
-      x-ratelimit-limit:
-      - '25'
-      x-ratelimit-remaining:
-      - '24'
-      x-ratelimit-reset:
-      - '1'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: ''
-    headers:
-      accept:
-      - '*/*'
-      accept-encoding:
-      - gzip, deflate
-      connection:
-      - keep-alive
-    method: GET
-    uri: https://api.com/v2/deployments/fzscncj84ld62z9k?version=2023-11-22
-  response:
-    body:
-      string: '{"result":{"id":"fzscncj84ld62z9k","tune_id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","created_at":"2024-05-21T09:15:22.000Z","updated_at":"2024-05-21T09:15:24.000Z","status":"initializing"}}'
-    headers:
-      cache-control:
-      - private
-      content-length:
-      - '204'
-      content-type:
-      - application/json; charset=utf-8
-      content-version:
-      - '2023-11-22'
-      date:
-      - Tue, 21 May 2024 09:16:25 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=4973959897699d2d03598da2e7a1d7a3; path=/;
-        HttpOnly; Secure; SameSite=None
-      vary:
-      - accept-encoding
-      x-ratelimit-limit:
-      - '25'
-      x-ratelimit-remaining:
-      - '24'
-      x-ratelimit-reset:
-      - '1'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: ''
-    headers:
-      accept:
-      - '*/*'
-      accept-encoding:
-      - gzip, deflate
-      connection:
-      - keep-alive
-    method: GET
-    uri: https://api.com/v2/deployments/fzscncj84ld62z9k?version=2023-11-22
-  response:
-    body:
-      string: '{"result":{"id":"fzscncj84ld62z9k","tune_id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","created_at":"2024-05-21T09:15:22.000Z","updated_at":"2024-05-21T09:15:24.000Z","status":"initializing"}}'
-    headers:
-      cache-control:
-      - private
-      content-length:
-      - '204'
-      content-type:
-      - application/json; charset=utf-8
-      content-version:
-      - '2023-11-22'
-      date:
-      - Tue, 21 May 2024 09:16:56 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=4e65f69b7d93f33a0c51e9f5b1bb64da; path=/;
-        HttpOnly; Secure; SameSite=None
-      vary:
-      - accept-encoding
-      x-ratelimit-limit:
-      - '25'
-      x-ratelimit-remaining:
-      - '24'
-      x-ratelimit-reset:
-      - '1'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: ''
-    headers:
-      accept:
-      - '*/*'
-      accept-encoding:
-      - gzip, deflate
-      connection:
-      - keep-alive
-    method: GET
-    uri: https://api.com/v2/deployments/fzscncj84ld62z9k?version=2023-11-22
-  response:
-    body:
-      string: '{"result":{"id":"fzscncj84ld62z9k","tune_id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","created_at":"2024-05-21T09:15:22.000Z","updated_at":"2024-05-21T09:15:24.000Z","status":"initializing"}}'
-    headers:
-      cache-control:
-      - private
-      content-length:
-      - '204'
-      content-type:
-      - application/json; charset=utf-8
-      content-version:
-      - '2023-11-22'
-      date:
-      - Tue, 21 May 2024 09:17:26 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=ebf664e631f5543398b4358860231843; path=/;
-        HttpOnly; Secure; SameSite=None
-      vary:
-      - accept-encoding
-      x-ratelimit-limit:
-      - '25'
-      x-ratelimit-remaining:
-      - '24'
-      x-ratelimit-reset:
-      - '1'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: ''
-    headers:
-      accept:
-      - '*/*'
-      accept-encoding:
-      - gzip, deflate
-      connection:
-      - keep-alive
-    method: GET
-    uri: https://api.com/v2/deployments/fzscncj84ld62z9k?version=2023-11-22
-  response:
-    body:
-      string: '{"result":{"id":"fzscncj84ld62z9k","tune_id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","created_at":"2024-05-21T09:15:22.000Z","updated_at":"2024-05-21T09:15:24.000Z","status":"initializing"}}'
-    headers:
-      cache-control:
-      - private
-      content-length:
-      - '204'
-      content-type:
-      - application/json; charset=utf-8
-      content-version:
-      - '2023-11-22'
-      date:
-      - Tue, 21 May 2024 09:17:57 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=ebf664e631f5543398b4358860231843; path=/;
-        HttpOnly; Secure; SameSite=None
-      vary:
-      - accept-encoding
-      x-ratelimit-limit:
-      - '25'
-      x-ratelimit-remaining:
-      - '24'
-      x-ratelimit-reset:
-      - '1'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: ''
-    headers:
-      accept:
-      - '*/*'
-      accept-encoding:
-      - gzip, deflate
-      connection:
-      - keep-alive
-    method: GET
-    uri: https://api.com/v2/deployments/fzscncj84ld62z9k?version=2023-11-22
-  response:
-    body:
-      string: '{"result":{"id":"fzscncj84ld62z9k","tune_id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","created_at":"2024-05-21T09:15:22.000Z","updated_at":"2024-05-21T09:18:07.000Z","deployed_at":"2024-05-21T09:18:07.000Z","status":"ready","expires_at":"2024-05-21T11:18:07.000Z"}}'
-    headers:
-      cache-control:
-      - private
-      content-length:
-      - '278'
-      content-type:
-      - application/json; charset=utf-8
-      content-version:
-      - '2023-11-22'
-      date:
-      - Tue, 21 May 2024 09:18:27 GMT
+      - Tue, 21 May 2024 10:36:38 GMT
       keep-alive:
       - timeout=72
       set-cookie:
@@ -1670,10 +1381,215 @@ interactions:
       connection:
       - keep-alive
     method: GET
+    uri: https://api.com/v2/deployments/oifer4u6c9jhs0dh?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"id":"oifer4u6c9jhs0dh","tune_id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","created_at":"2024-05-21T10:36:36.000Z","updated_at":"2024-05-21T10:36:38.000Z","status":"initializing"}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '204'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Tue, 21 May 2024 10:37:09 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=ebf664e631f5543398b4358860231843; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/deployments/oifer4u6c9jhs0dh?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"id":"oifer4u6c9jhs0dh","tune_id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","created_at":"2024-05-21T10:36:36.000Z","updated_at":"2024-05-21T10:36:38.000Z","status":"initializing"}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '204'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Tue, 21 May 2024 10:37:39 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=4e65f69b7d93f33a0c51e9f5b1bb64da; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/deployments/oifer4u6c9jhs0dh?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"id":"oifer4u6c9jhs0dh","tune_id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","created_at":"2024-05-21T10:36:36.000Z","updated_at":"2024-05-21T10:36:38.000Z","status":"initializing"}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '204'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Tue, 21 May 2024 10:38:10 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=21a244f2f28a29d7a8687c9fac987714; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/deployments/oifer4u6c9jhs0dh?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"id":"oifer4u6c9jhs0dh","tune_id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","created_at":"2024-05-21T10:36:36.000Z","updated_at":"2024-05-21T10:36:38.000Z","status":"initializing"}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '204'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Tue, 21 May 2024 10:38:40 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=21a244f2f28a29d7a8687c9fac987714; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/deployments/oifer4u6c9jhs0dh?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"id":"oifer4u6c9jhs0dh","tune_id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","created_at":"2024-05-21T10:36:36.000Z","updated_at":"2024-05-21T10:39:07.000Z","deployed_at":"2024-05-21T10:39:07.000Z","status":"ready","expires_at":"2024-05-21T12:39:07.000Z"}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '278'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Tue, 21 May 2024 10:39:11 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=1cfd42cdc433b82fbac42f242129345f; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
     uri: https://api.com/v2/deployments?version=2023-11-22
   response:
     body:
-      string: '{"results":[{"id":"ow5e16kokdxaubqv","tune_id":"llama-3-8b-instruct-ft-f7tki7m1-2024-05-20-17-00-21","created_at":"2024-05-20T17:57:36.000Z","updated_at":"2024-05-20T18:12:09.000Z","deployed_at":"2024-05-20T18:00:07.000Z","status":"expired","expires_at":"2024-05-20T20:00:07.000Z"},{"id":"xm5qoo5tppbuk45n","tune_id":"llama-3-8b-instruct-ft-be8p9jf4-2024-05-20-18-11-36","created_at":"2024-05-20T18:40:11.000Z","updated_at":"2024-05-20T18:54:09.000Z","deployed_at":"2024-05-20T18:43:07.000Z","status":"expired","expires_at":"2024-05-20T20:43:07.000Z"},{"id":"ryji8hydhoce0uv2","tune_id":"llama-3-8b-instruct-ft-awk3w662-2024-05-20-20-20-41","created_at":"2024-05-20T20:35:54.000Z","updated_at":"2024-05-20T20:46:09.000Z","deployed_at":"2024-05-20T20:39:07.000Z","status":"expired","expires_at":"2024-05-20T22:39:07.000Z"},{"id":"d1jvutt6zi00k0wc","tune_id":"llama-3-8b-instruct-ft-awk3w662-2024-05-20-20-20-41","created_at":"2024-05-20T20:47:27.000Z","updated_at":"2024-05-20T20:58:09.000Z","deployed_at":"2024-05-20T20:50:07.000Z","status":"expired","expires_at":"2024-05-20T22:50:07.000Z"},{"id":"n6gvrkv9iumk89wg","tune_id":"llama-3-8b-instruct-ft-l9v4nvo7-2024-05-21-06-41-36","created_at":"2024-05-21T06:54:45.000Z","updated_at":"2024-05-21T07:16:09.000Z","deployed_at":"2024-05-21T06:58:07.000Z","status":"expired","expires_at":"2024-05-21T08:58:07.000Z"},{"id":"lv4waq4p9pb6miod","tune_id":"llama-3-8b-instruct-ft-64k9rfrn-2024-05-21-08-35-58","created_at":"2024-05-21T08:48:53.000Z","updated_at":"2024-05-21T08:59:08.000Z","deployed_at":"2024-05-21T08:51:07.000Z","status":"expired","expires_at":"2024-05-21T10:51:07.000Z"},{"id":"fzscncj84ld62z9k","tune_id":"llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25","created_at":"2024-05-21T09:15:22.000Z","updated_at":"2024-05-21T09:18:07.000Z","deployed_at":"2024-05-21T09:18:07.000Z","status":"ready","expires_at":"2024-05-21T11:18:07.000Z"}],"total_count":7}'
+      string: '{"results":[{"id":"ow5e16kokdxaubqv","tune_id":"llama-3-8b-instruct-ft-f7tki7m1-2024-05-20-17-00-21","created_at":"2024-05-20T17:57:36.000Z","updated_at":"2024-05-20T18:12:09.000Z","deployed_at":"2024-05-20T18:00:07.000Z","status":"expired","expires_at":"2024-05-20T20:00:07.000Z"},{"id":"xm5qoo5tppbuk45n","tune_id":"llama-3-8b-instruct-ft-be8p9jf4-2024-05-20-18-11-36","created_at":"2024-05-20T18:40:11.000Z","updated_at":"2024-05-20T18:54:09.000Z","deployed_at":"2024-05-20T18:43:07.000Z","status":"expired","expires_at":"2024-05-20T20:43:07.000Z"},{"id":"ryji8hydhoce0uv2","tune_id":"llama-3-8b-instruct-ft-awk3w662-2024-05-20-20-20-41","created_at":"2024-05-20T20:35:54.000Z","updated_at":"2024-05-20T20:46:09.000Z","deployed_at":"2024-05-20T20:39:07.000Z","status":"expired","expires_at":"2024-05-20T22:39:07.000Z"},{"id":"d1jvutt6zi00k0wc","tune_id":"llama-3-8b-instruct-ft-awk3w662-2024-05-20-20-20-41","created_at":"2024-05-20T20:47:27.000Z","updated_at":"2024-05-20T20:58:09.000Z","deployed_at":"2024-05-20T20:50:07.000Z","status":"expired","expires_at":"2024-05-20T22:50:07.000Z"},{"id":"n6gvrkv9iumk89wg","tune_id":"llama-3-8b-instruct-ft-l9v4nvo7-2024-05-21-06-41-36","created_at":"2024-05-21T06:54:45.000Z","updated_at":"2024-05-21T07:16:09.000Z","deployed_at":"2024-05-21T06:58:07.000Z","status":"expired","expires_at":"2024-05-21T08:58:07.000Z"},{"id":"lv4waq4p9pb6miod","tune_id":"llama-3-8b-instruct-ft-64k9rfrn-2024-05-21-08-35-58","created_at":"2024-05-21T08:48:53.000Z","updated_at":"2024-05-21T08:59:08.000Z","deployed_at":"2024-05-21T08:51:07.000Z","status":"expired","expires_at":"2024-05-21T10:51:07.000Z"},{"id":"oifer4u6c9jhs0dh","tune_id":"llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15","created_at":"2024-05-21T10:36:36.000Z","updated_at":"2024-05-21T10:39:07.000Z","deployed_at":"2024-05-21T10:39:07.000Z","status":"ready","expires_at":"2024-05-21T12:39:07.000Z"}],"total_count":7}'
     headers:
       cache-control:
       - private
@@ -1684,11 +1600,11 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:18:28 GMT
+      - Tue, 21 May 2024 10:39:11 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=ebf664e631f5543398b4358860231843; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=4973959897699d2d03598da2e7a1d7a3; path=/;
         HttpOnly; Secure; SameSite=None
       transfer-encoding:
       - chunked
@@ -1713,7 +1629,7 @@ interactions:
       connection:
       - keep-alive
     method: DELETE
-    uri: https://api.com/v2/deployments/fzscncj84ld62z9k?version=2023-11-22
+    uri: https://api.com/v2/deployments/oifer4u6c9jhs0dh?version=2023-11-22
   response:
     body:
       string: ''
@@ -1723,11 +1639,11 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:18:29 GMT
+      - Tue, 21 May 2024 10:39:13 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=4e65f69b7d93f33a0c51e9f5b1bb64da; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=21a244f2f28a29d7a8687c9fac987714; path=/;
         HttpOnly; Secure; SameSite=None
       x-ratelimit-limit:
       - '25'
@@ -1748,7 +1664,7 @@ interactions:
       connection:
       - keep-alive
     method: DELETE
-    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-mdwxthkh-2024-05-21-09-02-25?version=2023-11-22
+    uri: https://api.com/v2/tunes/llama-3-8b-instruct-ft-wgt9otkz-2024-05-21-10-24-15?version=2023-11-22
   response:
     body:
       string: ''
@@ -1756,7 +1672,7 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Tue, 21 May 2024 09:18:42 GMT
+      - Tue, 21 May 2024 10:39:25 GMT
       keep-alive:
       - timeout=72
       set-cookie:

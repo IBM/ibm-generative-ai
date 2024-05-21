@@ -68,7 +68,8 @@ class LangChainEmbeddingsInterface(BaseModel, Embeddings):
         for response in self.client.text.embedding.create(
             model_id=self.model_id, inputs=texts, parameters=self.parameters, execution_options=self.execution_options
         ):
-            embeddings.extend(response.results)
+            embedding_list = [result.embedding for result in response.results]
+            embeddings.extend(embedding_list)
 
         return embeddings
 

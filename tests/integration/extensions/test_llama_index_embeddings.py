@@ -25,7 +25,7 @@ class TestLlamaIndexEmbeddings:
         responses = get_vcr_responses_of(TextEmbeddingCreateEndpoint)
 
         for response, result in zip(responses, results):
-            assert result == response["results"][0]
+            assert result == response["results"][0]["embedding"]
 
     @pytest.mark.asyncio
     @pytest.mark.vcr
@@ -36,4 +36,4 @@ class TestLlamaIndexEmbeddings:
         responses = get_vcr_responses_of(TextEmbeddingCreateEndpoint)
 
         for response, result in zip(responses, results):
-            assert result == response["results"][0]
+            assert result == response["results"][0]["embedding"]
