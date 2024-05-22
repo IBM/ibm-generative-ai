@@ -1,16 +1,10 @@
-from genai._utils.deprecated_schema_import import _log_deprecation_warning
+from genai._utils.deprecation import _log_deprecation_warning
 from genai.schema._api import *
 from genai.schema._api_removed_schemas import _removed_schemas
 from genai.schema._endpoints import *
 from genai.schema._extensions import *
 
-_renamed_schemas = {
-    "UserPromptResult": PromptResult,
-    "PromptsResponseResult": PromptResult,
-    "UserResponseResult": UserResult,
-    "UserCreateResultApiKey": UserApiKey,
-    "PromptRetrieveRequestParamsSource": PromptListSource,
-}
+_renamed_schemas = {}
 
 
 def __getattr__(name):

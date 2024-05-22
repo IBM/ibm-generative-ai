@@ -53,7 +53,7 @@ def generate_models(schema_path: Path, output: Path, extra_template_data: Option
             "deprecated",
             "pydantic.field_validator",
             "pydantic.computed_field",
-            "genai._utils.deprecated_schema_import._print_deprecation_warning",
+            "genai._utils.deprecation._print_deprecation_warning",
         ],
         extra_template_data=extra_template_data,
         enum_field_as_literal=LiteralType.One,

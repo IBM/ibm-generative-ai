@@ -241,7 +241,7 @@ class LangChainInterface(LLM):
         for response in self.client.text.generation.create_stream(
             **self._prepare_stream_request(input=prompt, stop=stop, **kwargs)
         ):
-            if response.moderation:
+            if response.moderations:
                 generation_info = create_generation_info_from_response(response, result=response.moderation)
                 yield from send_chunk(generation_info=generation_info, response=response)
 

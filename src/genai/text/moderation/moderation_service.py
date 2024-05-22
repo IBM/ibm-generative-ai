@@ -44,8 +44,6 @@ class ModerationService(BaseService[BaseConfig, BaseServiceServices]):
         inputs: Union[str, list[str]],
         *,
         hap: Optional[ModelLike[HAPOptions]] = None,
-        implicit_hate: Optional[ModelLike] = None,
-        stigma: Optional[ModelLike] = None,
         social_bias: Optional[ModelLike[SocialBiasOptions]] = None,
         execution_options: Optional[ModelLike[CreateExecutionOptions]] = None,
     ) -> Generator[TextModerationCreateResponse, None, None]:
@@ -54,8 +52,6 @@ class ModerationService(BaseService[BaseConfig, BaseServiceServices]):
             inputs: Prompt/Prompts for text moderation.
             hap: HAP configuration (hate, abuse, profanity).
             social_bias: Social Bias configuration.
-            implicit_hate: Implicit Hate configuration (deprecated, use 'social_bias' instead).
-            stigma: Stigma configuration (deprecated, use 'social_bias' instead).
             execution_options: Configuration processing.
 
         Example:
@@ -77,10 +73,6 @@ class ModerationService(BaseService[BaseConfig, BaseServiceServices]):
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
-        if implicit_hate is not None:
-            self._log_deprecation_warning("'implicit_hate' parameter is deprecated, use 'social_bias' instead!")
-        if stigma is not None:
-            self._log_deprecation_warning("'stigma' parameter is deprecated, use 'social_bias' instead!")
 
         metadata = get_service_action_metadata(self.create)
         execution_options_formatted = to_model_instance(
