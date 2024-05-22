@@ -18,79 +18,79 @@ class ApiKeyRegenerateCreateEndpoint(ApiEndpoint):
     version: str = "2023-11-22"
 
 
-class BetaEvaluationRetrieveEndpoint(ApiEndpoint):
+class EvaluationRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/beta/evaluations"
     method: str = "GET"
     version: str = "2023-11-22"
 
 
-class BetaEvaluationCreateEndpoint(ApiEndpoint):
+class EvaluationCreateEndpoint(ApiEndpoint):
     path: str = "/v2/beta/evaluations"
     method: str = "POST"
     version: str = "2023-11-22"
 
 
-class BetaEvaluationExperimentRetrieveEndpoint(ApiEndpoint):
+class EvaluationExperimentRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/beta/evaluations/experiments"
     method: str = "GET"
     version: str = "2023-11-22"
 
 
-class BetaEvaluationExperimentCreateEndpoint(ApiEndpoint):
+class EvaluationExperimentCreateEndpoint(ApiEndpoint):
     path: str = "/v2/beta/evaluations/experiments"
     method: str = "POST"
     version: str = "2023-11-22"
 
 
-class BetaEvaluationExperimentIdDeleteEndpoint(ApiEndpoint):
+class EvaluationExperimentIdDeleteEndpoint(ApiEndpoint):
     path: str = "/v2/beta/evaluations/experiments/{id}"
     method: str = "DELETE"
     version: str = "2023-11-22"
 
 
-class BetaEvaluationExperimentIdRetrieveEndpoint(ApiEndpoint):
+class EvaluationExperimentIdRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/beta/evaluations/experiments/{id}"
     method: str = "GET"
     version: str = "2023-11-22"
 
 
-class BetaEvaluationLimitRetrieveEndpoint(ApiEndpoint):
+class EvaluationLimitRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/beta/evaluations/limits"
     method: str = "GET"
     version: str = "2023-11-22"
 
 
-class BetaEvaluationPreviewCreateEndpoint(ApiEndpoint):
+class EvaluationPreviewCreateEndpoint(ApiEndpoint):
     path: str = "/v2/beta/evaluations/preview"
     method: str = "POST"
     version: str = "2023-11-22"
 
 
-class BetaEvaluationTemplateRetrieveEndpoint(ApiEndpoint):
+class EvaluationTemplateRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/beta/evaluations/templates"
     method: str = "GET"
     version: str = "2023-11-22"
 
 
-class BetaEvaluationTemplateIdRetrieveEndpoint(ApiEndpoint):
+class EvaluationTemplateIdRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/beta/evaluations/templates/{id}"
     method: str = "GET"
     version: str = "2023-11-22"
 
 
-class BetaEvaluationIdDeleteEndpoint(ApiEndpoint):
+class EvaluationIdDeleteEndpoint(ApiEndpoint):
     path: str = "/v2/beta/evaluations/{id}"
     method: str = "DELETE"
     version: str = "2023-11-22"
 
 
-class BetaEvaluationIdRetrieveEndpoint(ApiEndpoint):
+class EvaluationIdRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/beta/evaluations/{id}"
     method: str = "GET"
     version: str = "2023-11-22"
 
 
-class BetaEvaluationIdInstanceResultRetrieveEndpoint(ApiEndpoint):
+class EvaluationIdInstanceResultRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/beta/evaluations/{id}/instance_results"
     method: str = "GET"
     version: str = "2023-11-22"
@@ -114,13 +114,13 @@ class TextSentenceSimilarityCreateEndpoint(ApiEndpoint):
     version: str = "2023-11-22"
 
 
-class BetaTimeSerieForecastingCreateEndpoint(ApiEndpoint):
+class TimeSerieForecastingCreateEndpoint(ApiEndpoint):
     path: str = "/v2/beta/time_series/forecasting"
     method: str = "POST"
     version: str = "2023-11-22"
 
 
-class BetaTimeSerieLimitRetrieveEndpoint(ApiEndpoint):
+class TimeSerieLimitRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/beta/time_series/limits"
     method: str = "GET"
     version: str = "2023-11-22"
