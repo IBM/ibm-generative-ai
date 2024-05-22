@@ -10,7 +10,6 @@ Note:
 
 import time
 from pathlib import Path
-from pprint import pprint
 
 from dotenv import load_dotenv
 
@@ -82,6 +81,9 @@ def upload_files(client: Client, update=True):
     return filenames_to_id[training_file.name], filenames_to_id[validation_file.name]
 
 
+# make sure you have a .env file under genai root with
+# GENAI_KEY=<your-genai-key>
+# GENAI_API=<genai-api-endpoint> (optional) DEFAULT_API = "https://bam-api.res.ibm.com"
 client = Client(credentials=Credentials.from_env())
 
 print(heading("Creating dataset"))
@@ -124,8 +126,6 @@ if tune_result.status in [TuneStatus.FAILED, TuneStatus.HALTED]:
     print("Model tuning failed or halted")
     exit(1)
 
-print("Model tuned successfully")
-
 print(heading("Deploying fine-tuned model"))
 
 deployment = client.deployment.create(tune_id=tune_result.id).result
@@ -136,28 +136,17 @@ while deployment.status not in [DeploymentStatus.READY, DeploymentStatus.FAILED,
     time.sleep(10)
 
 if deployment.status in [DeploymentStatus.FAILED, DeploymentStatus.EXPIRED]:
-    print("Model deployment failed or expired")
+    print(f"Model deployment failed or expired, status: {deployment.status}")
     exit(1)
-
-print("Model deployed successfully")
 
 print(heading("Generate text with fine-tuned model"))
 prompt = "What are some books you would reccomend to read?"
 print("Prompt: ", prompt)
 gen_params = TextGenerationParameters(decoding_method=DecodingMethod.SAMPLE)
 gen_response = next(client.text.generation.create(model_id=tune_result.id, inputs=[prompt]))
+
 print("Answer: ", gen_response.results[0].generated_text)
-
-print(heading("Get list of deployed models"))
-deployment_list = client.deployment.list()
-for deployment in deployment_list.results:
-    pprint(deployment.model_dump())
-
-print(heading("Retrieving information about deployment"))
-deployment_info = client.deployment.retrieve(id=deployment.id)
-pprint(deployment_info.model_dump())
 
 print(heading("Deleting deployment and tuned model"))
 client.deployment.delete(id=deployment.id)
 client.tune.delete(id=tune_result.id)
-print("Deleted")

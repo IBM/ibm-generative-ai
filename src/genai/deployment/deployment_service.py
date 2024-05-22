@@ -86,7 +86,7 @@ class DeploymentService(BaseService[BaseServiceConfig, BaseServiceServices]):
             ApiResponseException: In case of a known API error.
             ApiNetworkException: In case of unhandled network error.
         """
-        self._log_method_execution("Deployment Retrieve")
+        self._log_method_execution("Deployment List")
         metadata = get_service_action_metadata(self.list)
 
         with self._get_http_client() as client:
