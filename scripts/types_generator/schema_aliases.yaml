@@ -9,6 +9,8 @@ alias:
     - _TuneRetrieveRequestParamsDirection
     - _FileRetrieveRequestParamsDirection
     - _PromptRetrieveRequestParamsDirection
+    - _EvaluationExperimentRetrieveRequestParamsDirection
+    - _EvaluationRetrieveRequestParamsDirection
 
   # FILES ------------------------------------------------------------------------
   FilePurpose:
@@ -33,6 +35,28 @@ alias:
     - _FileCreate_result
     - _FileIdRetrieve_result
     - _FileIdPatch_result
+  FileMetadata:
+    - _EvaluationIdRetrieve_result_file_metadata
+    - _FileIdPatch_result_metadata
+    - _EvaluationExperimentIdRetrieve_result_file_metadata
+    - _EvaluationCreate_result_file_metadata
+    - _FileCreate_result_metadata
+    - _EvaluationRetrieve_results_file_metadata
+    - _FileIdRetrieve_result_metadata
+    - _FileRetrieve_results_metadata
+    - _EvaluationExperimentCreate_result_file_metadata
+    - _EvaluationExperimentRetrieve_results_file_metadata
+  FileMetadataStats:
+    - _FileCreate_result_metadata_stats
+    - _EvaluationCreate_result_file_metadata_stats
+    - _EvaluationExperimentIdRetrieve_result_file_metadata_stats
+    - _FileIdRetrieve_result_metadata_stats
+    - _FileIdPatch_result_metadata_stats
+    - _EvaluationExperimentRetrieve_results_file_metadata_stats
+    - _EvaluationIdRetrieve_result_file_metadata_stats
+    - _FileRetrieve_results_metadata_stats
+    - _EvaluationRetrieve_results_file_metadata_stats
+    - _EvaluationExperimentCreate_result_file_metadata_stats
   FileListSortBy:
     - _FileRetrieveRequestParamsSortBy
 
@@ -308,6 +332,8 @@ alias:
     - _UserRetrieve_result_generate_default_parameters_return_options
     - _UserPatch_result_generate_default_parameters_return_options
     - _UserCreate_result_generate_default_parameters_return_options
+    - _EvaluationPreviewCreateRequest_parameters_return_options
+    - _EvaluationCreateRequest_parameters_return_options
   TextGenerationReturnOptionsFromDB:
     - _TextGenerationCreateRequest_parameters_return_options
     - _TextGenerationStreamCreateRequest_parameters_return_options
@@ -329,6 +355,8 @@ alias:
     - _UserRetrieve_result_generate_default_parameters_length_penalty
     - _UserPatch_result_generate_default_parameters_length_penalty
     - _UserCreate_result_generate_default_parameters_length_penalty
+    - _EvaluationPreviewCreateRequest_parameters_length_penalty
+    - _EvaluationCreateRequest_parameters_length_penalty
   PromptTypeTmp:
     - _PromptCreate_result_type
     - _PromptIdRetrieve_result_type
@@ -358,6 +386,7 @@ alias:
     - _PromptIdUpdate_result_tags_type
   ModelFacetType:
     - _ModelRetrieve_results_facets_type
+    - _ModelIdRetrieve_result_facets_type
   TextClassificationCreateData:
     - _TextClassificationCreateRequest_data
   TextClassificationResult:
@@ -372,6 +401,7 @@ alias:
     - _TextRerankCreate_result_results
   ModelFacet:
     - _ModelRetrieve_results_facets
+    - _ModelIdRetrieve_result_facets
   PromptResultAuthor:
     - _PromptRetrieve_results_author
     - _PromptCreate_result_author
@@ -472,12 +502,36 @@ alias:
     - _TuneFromFileCreate_result_evaluation_files
     - _TuneIdPatch_result_training_files
     - _TuneRetrieve_results_evaluation_files
-  TuneResultDatapointLoss:
+  TuneResultContent:
+    - _TuneRetrieve_results_contents
+    - _TuneIdPatch_result_contents
+    - _TuneIdRetrieve_result_contents
+    - _TuneFromFileCreate_result_contents
+    - _TuneCreate_result_contents
+  TuneResultDatapoint:
+    - _TuneIdRetrieve_result_datapoints
+    - _TuneRetrieve_results_datapoints
+    - _TuneCreate_result_datapoints
+    - _TuneFromFileCreate_result_datapoints
+    - _TuneIdPatch_result_datapoints
+  TuneResultDatapointLossData:
     - _TuneRetrieve_results_datapoints_loss_data
     - _TuneCreate_result_datapoints_loss_data
-    - _TuneFromFileCreate_result_datapoints_loss_data
     - _TuneIdRetrieve_result_datapoints_loss_data
+    - _TuneFromFileCreate_result_datapoints_loss_data
     - _TuneIdPatch_result_datapoints_loss_data
+  TuneResultDatapointValidationLoss:
+    - _TuneIdPatch_result_datapoints_validation_loss
+    - _TuneRetrieve_results_datapoints_validation_loss
+    - _TuneFromFileCreate_result_datapoints_validation_loss
+    - _TuneCreate_result_datapoints_validation_loss
+    - _TuneIdRetrieve_result_datapoints_validation_loss
+  TuneResultDatapointValidationLossData:
+    - _TuneRetrieve_results_datapoints_validation_loss_data
+    - _TuneCreate_result_datapoints_validation_loss_data
+    - _TuneIdPatch_result_datapoints_validation_loss_data
+    - _TuneIdRetrieve_result_datapoints_validation_loss_data
+    - _TuneFromFileCreate_result_datapoints_validation_loss_data
   TuneListSortBy:
     - _TuneRetrieveRequestParamsSortBy
   PromptListSortBy:
@@ -490,13 +544,8 @@ alias:
     - _TuneCreate_result
   TuneParameters:
     - _TuneCreateRequest_parameters
+    - _TunePreflightCreateRequest_parameters
   #  - _TuningTypeRetrieve_results_schema_properties_parameters
-  TuneResultDatapoints:
-    - _TuneFromFileCreate_result_datapoints
-    - _TuneIdPatch_result_datapoints
-    - _TuneCreate_result_datapoints
-    - _TuneRetrieve_results_datapoints
-    - _TuneIdRetrieve_result_datapoints
   TextGenerationResult:
     - _TextGenerationComparisonCreate_results_result_results
     - _TextGenerationCreate_results
@@ -557,6 +606,8 @@ alias:
     - _PromptIdPatch_result_parameters
     - _PromptIdUpdate_result_parameters
     - _PromptCreate_result_parameters
+    - _EvaluationCreateRequest_parameters
+    - _EvaluationPreviewCreateRequest_parameters
   TextGenerationParametersFromDB:
     - _TextGenerationCreateRequest_parameters
     - _TextGenerationStreamCreateRequest_parameters
@@ -576,6 +627,8 @@ alias:
     - _UserPatch_result_generate_default_parameters_decoding_method
     - _TextGenerationOutputCreateRequest_parameters_decoding_method
     - _PromptCreateRequest_parameters_decoding_method
+    - _EvaluationCreateRequest_parameters_decoding_method
+    - _EvaluationPreviewCreateRequest_parameters_decoding_method
   TextGenerationParametersDecodingMethod:
     - _TextGenerationStreamCreateRequest_parameters_decoding_method
     - _TextGenerationCreateRequest_parameters_decoding_method
@@ -594,12 +647,82 @@ alias:
   ConcurrencyLimit:
     - _TextGenerationLimitRetrieve_result_concurrency
     - _TextEmbeddingLimitRetrieve_result_concurrency
+    - _EvaluationLimitRetrieve_result_concurrency
+    - _TimeSerieLimitRetrieve_result_concurrency
   TuneAssetType:
     - _TuneIdContentTypeRetrieveRequestParamsType
   TextTokenizationParameters:
     - _TextTokenizationCreateRequest_parameters
   TextTokenizationReturnOptions:
     - _TextTokenizationCreateRequest_parameters_return_options
+  DeploymentResult:
+    - _DeploymentCreate201_result
+    - _DeploymentRetrieve_results
+    - _DeploymentIdRetrieve_result
+  DeploymentStatus:
+    - _DeploymentRetrieve_results_status
+    - _DeploymentIdRetrieve_result_status
+    - _DeploymentCreate201_result_status
+
+  # EVALUATION -----------------------------------------------------------------
+  EvaluationResult:
+    - _EvaluationRetrieve_results
+    - _EvaluationCreate_result
+    - _EvaluationIdRetrieve_result
+    - _EvaluationExperimentIdRetrieve_result
+  EvaluationInstanceResult:
+    - _EvaluationIdInstanceResultRetrieve_results
+    - _EvaluationPreviewCreate_results
+  EvaluationFile:
+    - _EvaluationCreate_result_file
+    - _EvaluationExperimentCreate_result_file
+    - _EvaluationRetrieve_results_file
+    - _EvaluationExperimentRetrieve_results_file
+    - _EvaluationIdRetrieve_result_file
+    - _EvaluationExperimentIdRetrieve_result_file
+  EvaluationStatus:
+    - _EvaluationRetrieve_results_status
+    - _EvaluationCreate_result_status
+    - _EvaluationIdRetrieve_result_status
+    - _EvaluationExperimentIdRetrieve_result_status
+  EvaluationFieldOperation:
+    - _EvaluationCreateRequest_field_operations
+    - _EvaluationPreviewCreateRequest_field_operations
+  EvaluationOperationType:
+    - _EvaluationCreateRequest_field_operations_type
+    - _EvaluationPreviewCreateRequest_field_operations_type
+  EvaluationPrompt:
+    - _EvaluationRetrieve_results_prompt
+    - _EvaluationCreate_result_prompt
+    - _EvaluationIdRetrieve_result_prompt
+    - _EvaluationExperimentIdRetrieve_result_prompt
+  EvaluationTask:
+    - _EvaluationExperimentCreate_result_task
+    - _EvaluationTemplateRetrieve_results_task
+    - _EvaluationExperimentRetrieve_results_task
+    - _EvaluationTemplateIdRetrieve_result_task
+  EvaluationParentTask:
+    - _EvaluationTemplateIdRetrieve_result_task_parent_task
+    - _EvaluationExperimentCreate_result_task_parent_task
+    - _EvaluationExperimentRetrieve_results_task_parent_task
+    - _EvaluationTemplateRetrieve_results_task_parent_task
+  EvaluationTemplate:
+    - _EvaluationTemplateIdRetrieve_result
+    - _EvaluationTemplateRetrieve_results
+  EvaluationLimit:
+    - _EvaluationLimitRetrieve_result
+  EvaluationSortBy:
+    - _EvaluationRetrieveRequestParamsSortBy
+  EvaluationExperiment:
+    - _EvaluationExperimentCreate_result
+    - _EvaluationExperimentRetrieve_results
+  EvaluationExperimentSortBy:
+    - _EvaluationExperimentRetrieveRequestParamsSortBy
+
+  # TIME SERIES ----------------------------------------------------------------
+  TimeSeriesLimit:
+    - _TimeSerieLimitRetrieve_result
+
   # SYSTEM PROMPTS -------------------------------------------------------------
   SystemPrompt:
     - _SystemPromptCreate_result
@@ -653,6 +776,17 @@ endpoint_mapping:
   /v2/beta/text/rerank: '/v2/text/rerank'
   /v2/beta/text/sentence-similarity: '/v2/text/sentence-similarity'
   /v2/tunes/import: '/v2/tunes/from-file'
+  /v2/beta/time_series/forecasting: '/v2/time_series/forecasting'
+  /v2/beta/time_series/limits: '/v2/time_series/limits'
+  /v2/beta/evaluations: '/v2/evaluations'
+  /v2/beta/evaluations/{id}: '/v2/evaluations/{id}'
+  /v2/beta/evaluations/{id}/instance_results: '/v2/evaluations/{id}/instance_results'
+  /v2/beta/evaluations/limits: '/v2/evaluations/limits'
+  /v2/beta/evaluations/templates: '/v2/evaluations/templates'
+  /v2/beta/evaluations/templates/{id}: '/v2/evaluations/templates/{id}'
+  /v2/beta/evaluations/preview: '/v2/evaluations/preview'
+  /v2/beta/evaluations/experiments: '/v2/evaluations/experiments'
+  /v2/beta/evaluations/experiments/{id}: '/v2/evaluations/experiments/{id}'
 
 replace:
   # Override schema by a different equivalent schema

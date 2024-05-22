@@ -12,6 +12,7 @@ from genai._utils.service import (
     BaseServiceServices,
 )
 from genai.credentials import Credentials
+from genai.deployment import DeploymentService as _DeploymentService
 from genai.file import FileService as _FileService
 from genai.folder import FolderService as _FolderService
 from genai.model import ModelService as _ModelService
@@ -41,6 +42,7 @@ class BaseServices(BaseServiceServices):
     TagService: type[_TagService] = _TagService
     FolderService: type[_FolderService] = _FolderService
     TaskService: type[_TaskService] = _TaskService
+    DeploymentService: type[_DeploymentService] = _DeploymentService
 
 
 class BaseConfig(BaseServiceConfig):
@@ -144,3 +146,4 @@ class Client(BaseService[BaseConfig, BaseServices]):
         self.tag = services.TagService(api_client=api_client)
         self.folder = services.FolderService(api_client=api_client)
         self.task = services.TaskService(api_client=api_client)
+        self.deployment = services.DeploymentService(api_client=api_client)
