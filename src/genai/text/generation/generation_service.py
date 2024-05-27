@@ -1,7 +1,6 @@
 from typing import Generator, Optional, Union
 
 import httpx
-from deprecated import deprecated
 from httpx import AsyncClient, HTTPStatusError
 from pydantic import BaseModel
 
@@ -39,7 +38,6 @@ from genai.schema._api import (
     _TextGenerationStreamCreateRequest,
 )
 from genai.text.generation._generation_utils import generation_stream_handler
-from genai.text.generation.feedback.feedback_service import FeedbackService as _FeedbackService
 from genai.text.generation.limits.limit_service import LimitService as _LimitService
 
 __all__ = ["GenerationService", "BaseConfig", "BaseServices", "CreateExecutionOptions"]
@@ -54,7 +52,6 @@ from genai._utils.limiters.shared_limiter import LoopBoundLimiter
 
 class BaseServices(BaseServiceServices):
     LimitService: type[_LimitService] = _LimitService
-    FeedbackService: type[_FeedbackService] = _FeedbackService
 
 
 class CreateExecutionOptions(BaseModel):
@@ -87,13 +84,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
             services = BaseServices()
 
         self._concurrency_limiter = self._get_concurrency_limiter()
-        self._feedback = services.FeedbackService(api_client=api_client)
         self.limit = services.LimitService(api_client=api_client)
-
-    @property
-    @deprecated(reason="Use 'client.request.feedback' service instead.")
-    def feedback(self):
-        return self._feedback
 
     def _get_concurrency_limiter(self) -> LoopBoundLimiter:
         async def handler():
@@ -152,9 +143,6 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
         metadata = get_service_action_metadata(self.create)
         parameters_formatted = to_model_optional(parameters, TextGenerationParameters)
         moderations_formatted = to_model_optional(moderations, ModerationParameters, copy=True)
-        if moderations_formatted:
-            moderations_formatted.remove_deprecated()
-
         template_formatted = to_model_optional(data, PromptTemplateData)
         execution_options_formatted = to_model_instance(
             [self.config.create_execution_options, execution_options], CreateExecutionOptions
@@ -258,9 +246,6 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
         metadata = get_service_action_metadata(self.create_stream)
         parameters_formatted = to_model_optional(parameters, TextGenerationParameters)
         moderations_formatted = to_model_optional(moderations, ModerationParameters, copy=True)
-        if moderations_formatted:
-            moderations_formatted.remove_deprecated()
-
         template_formatted = to_model_optional(data, PromptTemplateData)
 
         self._log_method_execution(
@@ -305,9 +290,6 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
         """
         metadata = get_service_action_metadata(self.compare)
         request_formatted = to_model_instance(request, TextGenerationComparisonCreateRequestRequest, copy=True)
-        if request_formatted.moderations:
-            request_formatted.moderations.remove_deprecated()
-
         compare_parameters_formatted = to_model_instance(compare_parameters, TextGenerationComparisonParameters)
 
         self._log_method_execution(

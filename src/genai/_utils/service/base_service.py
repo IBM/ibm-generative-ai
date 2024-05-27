@@ -10,7 +10,7 @@ from urllib.parse import quote
 from pydantic import BaseModel, ConfigDict
 
 from genai._utils.api_client import ApiClient
-from genai._utils.deprecated_schema_import import _print_deprecation_warning
+from genai._utils.deprecation import _print_deprecation_warning
 from genai._utils.general import to_model_instance
 from genai._utils.http_client.httpx_client import AsyncHttpxClient, HttpxClient
 from genai._utils.service.metadata import inherit_metadata

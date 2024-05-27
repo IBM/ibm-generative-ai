@@ -192,8 +192,8 @@ class IBMGenAILlamaIndex(LLM):
         for response in self.client.text.chat.create_stream(
             **self._prepare_request(self._identifying_chat_params)(messages=to_genai_messages(messages), **kwargs)
         ):
-            if response.moderation:
-                generation_info = create_generation_info_from_response(response, result=response.moderation)
+            if response.moderations:
+                generation_info = create_generation_info_from_response(response, result=response.moderations)
                 message = ChatMessage(role=MessageRole.ASSISTANT, content=text)
                 yield ChatResponse(message=message, delta="", additional_kwargs=generation_info)
 

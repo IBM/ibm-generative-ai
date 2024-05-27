@@ -182,8 +182,8 @@ class LangChainChatInterface(BaseChatModel):
                     run_manager.on_llm_new_token(token=text, chunk=chunk, response=response)  # noqa: B023
                     # Function definition does not bind loop variable `response`: linter is probably just confused here
 
-            if response.moderation:
-                generation_info = create_generation_info_from_response(response, result=response.moderation)
+            if response.moderations:
+                generation_info = create_generation_info_from_response(response, result=response.moderations)
                 yield from send_chunk(generation_info=generation_info)
 
             for result in response.results or []:

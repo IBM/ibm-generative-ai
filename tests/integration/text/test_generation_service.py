@@ -66,15 +66,15 @@ class TestGenerationService:
         # Some results contain only response
         responses_with_result = [response for response in all_responses if response.results]
         assert all(len(response.results) == 1 for response in responses_with_result)
-        assert all(response.moderation is None for response in responses_with_result)
+        assert all(response.moderations is None for response in responses_with_result)
         assert min_tokens <= len(responses_with_result) <= max_tokens
 
         # Other results contain only moderations
         responses_without_result = [response for response in all_responses if response.results is None]
-        assert all(len(response.moderation.hap) == 1 for response in responses_without_result)
+        assert all(len(response.moderations.hap) == 1 for response in responses_without_result)
         assert all(response.results is None for response in responses_without_result)
         assert len(responses_without_result) >= 0
-        assert any(result.moderation.hap[0].flagged for result in responses_without_result)
+        assert any(result.moderations.hap[0].flagged for result in responses_without_result)
 
     @pytest.mark.vcr
     def test_compare(self, client: Client):

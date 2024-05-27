@@ -101,8 +101,6 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
         """
         metadata = get_service_action_metadata(self.create)
         moderations_formatted = to_model_optional(moderations, ModerationParameters, copy=True)
-        if moderations_formatted:
-            moderations_formatted.remove_deprecated()
 
         request_body = _TextChatCreateRequest(
             model_id=model_id,
@@ -165,8 +163,6 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
         """
         metadata = get_service_action_metadata(self.create_stream)
         moderations_formatted = to_model_optional(moderations, ModerationParameters, copy=True)
-        if moderations_formatted:
-            moderations_formatted.remove_deprecated()
 
         request_body = _TextChatStreamCreateRequest(
             model_id=model_id,
