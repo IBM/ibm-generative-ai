@@ -8,7 +8,7 @@ V3 Migration Guide
 .. admonition:: V1 to V2 migration
    :class: tip
 
-   If you are still on V1 please see the `V2 Migration Guide <v2_migration_guide>` first.
+   If you are still on V1 please see the `V2 Migration Guide <v2_migration_guide>`_ first.
 
 What has changed?
 -----------------
