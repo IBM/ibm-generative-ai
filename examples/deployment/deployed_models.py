@@ -29,8 +29,7 @@ for deployment in deployment_list.results:
 
 if len(deployment_list.results) < 1:
     print("No deployed models found.")
-    exit(1)
-
-print(heading("Retrieve information about first deployment"))
-deployment_info = client.deployment.retrieve(id=deployment_list.results[0].id)
-pprint(deployment_info.model_dump())
+else:
+    print(heading("Retrieve information about first deployment"))
+    deployment_info = client.deployment.retrieve(id=deployment_list.results[0].id)
+    pprint(deployment_info.model_dump())
