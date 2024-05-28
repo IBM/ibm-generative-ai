@@ -2,6 +2,147 @@ Changelog
 =========
 
 
+v3.0.0 (2024-05-27)
+-------------------
+
+🌟 Highlights
+^^^^^^^^^^^^^^^^^^^^^^^^^
+- Add llama 3 model 🦙🦙🦙
+- Add fine tuning with deployments
+- Add lm-evaluation-harness extension
+See `📚 Examples <https://ibm.github.io/ibm-generative-ai/latest/rst_source/examples.html>`_ for more information.
+
+
+
+🚀 Features / Enhancements
+^^^^^^^^^^^^^^^^^^^^^^^^^
+- feat: new llama model `#(356) <https://github.com/IBM/ibm-generative-ai/pull/356>`_ [`@David-Kristek <https://github.com/David-Kristek>`_]
+- feat: add lm_eval extension `#(345) <https://github.com/IBM/ibm-generative-ai/pull/345>`_ [`@jezekra1 <https://github.com/jezekra1>`_, `@yoavkatz <https://github.com/yoavkatz>`_]
+- feat: add fine-tuning with deployments `#(357) <https://github.com/IBM/ibm-generative-ai/pull/357>`_ [`@David-Kristek <https://github.com/David-Kristek>`_]
+
+🐛 Bug Fixes
+^^^^^^^^^^^
+- fix(huggingface): fix not working default tool `#(355) <https://github.com/IBM/ibm-generative-ai/pull/355>`_ [`@David-Kristek <https://github.com/David-Kristek>`_]
+- fix(llama-index): avoid batching in embeddings `#(353) <https://github.com/IBM/ibm-generative-ai/pull/353>`_ [`@David-Kristek <https://github.com/David-Kristek>`_]
+
+📖 Docs
+^^^^^^
+- docs: update migration guide [`@jezekra1 <https://github.com/jezekra1>`_]
+- docs(example): typo in text moderation [`@lmandel <https://github.com/lmandel>`_]
+- docs(moderation): update description [`@Tomas2D <https://github.com/Tomas2D>`_]
+
+⚙️ Other
+^^^^^^^^
+- chore: remove deprecated code `#(358) <https://github.com/IBM/ibm-generative-ai/pull/358>`_ [`@jezekra1 <https://github.com/jezekra1>`_]
+- ci: deploy documentation after new version gets published [`@Tomas2D <https://github.com/Tomas2D>`_]
+- chore: update dependencies [`@Tomas2D <https://github.com/Tomas2D>`_]
+
+**Full Changelog**: `v2.3.0...v3.0.0 <https://github.com/IBM/ibm-generative-ai/compare/v2.3.0...v3.0.0>`_
+
+.. admonition:: Warning
+    :class: warning
+
+    We have removed deprecations introduced after v2 release. See the `V3 Migration Guide <v3_migration_guide>`_ for detailed information.
+
+
+🔗 API Endpoint Versions
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. collapse:: API Endpoint Versions
+
+    ========  ==========================================  ======================
+    Method    Path                                        Version (YYYY-MM-DD)
+    ========  ==========================================  ======================
+    GET       /v2/api_key                                 2023-11-22
+    POST      /v2/api_key/regenerate                      2023-11-22
+    GET       /v2/beta/evaluations                        2023-11-22
+    POST      /v2/beta/evaluations                        2023-11-22
+    GET       /v2/beta/evaluations/experiments            2023-11-22
+    POST      /v2/beta/evaluations/experiments            2023-11-22
+    DELETE    /v2/beta/evaluations/experiments/{id}       2023-11-22
+    GET       /v2/beta/evaluations/experiments/{id}       2023-11-22
+    GET       /v2/beta/evaluations/limits                 2023-11-22
+    POST      /v2/beta/evaluations/preview                2023-11-22
+    GET       /v2/beta/evaluations/templates              2023-11-22
+    GET       /v2/beta/evaluations/templates/{id}         2023-11-22
+    DELETE    /v2/beta/evaluations/{id}                   2023-11-22
+    GET       /v2/beta/evaluations/{id}                   2023-11-22
+    GET       /v2/beta/evaluations/{id}/instance_results  2023-11-22
+    POST      /v2/beta/text/classification                2023-11-22
+    POST      /v2/beta/text/rerank                        2023-11-22
+    POST      /v2/beta/text/sentence-similarity           2023-11-22
+    POST      /v2/beta/time_series/forecasting            2023-11-22
+    GET       /v2/beta/time_series/limits                 2023-11-22
+    GET       /v2/deployments                             2023-11-22
+    POST      /v2/deployments                             2023-11-22
+    DELETE    /v2/deployments/{id}                        2023-11-22
+    GET       /v2/deployments/{id}                        2023-11-22
+    GET       /v2/files                                   2024-05-13
+    POST      /v2/files                                   2024-05-13
+    DELETE    /v2/files/{id}                              2023-11-22
+    GET       /v2/files/{id}                              2024-05-13
+    PATCH     /v2/files/{id}                              2023-11-22
+    GET       /v2/files/{id}/content                      2023-11-22
+    GET       /v2/folders                                 2023-11-22
+    POST      /v2/folders                                 2023-11-22
+    DELETE    /v2/folders/{id}                            2023-11-22
+    GET       /v2/folders/{id}                            2023-11-22
+    PATCH     /v2/folders/{id}                            2024-01-10
+    PUT       /v2/folders/{id}                            2023-11-22
+    GET       /v2/models                                  2023-11-22
+    GET       /v2/models/{id}                             2024-01-30
+    GET       /v2/prompts                                 2024-03-19
+    POST      /v2/prompts                                 2024-03-19
+    DELETE    /v2/prompts/{id}                            2023-11-22
+    GET       /v2/prompts/{id}                            2024-03-19
+    PATCH     /v2/prompts/{id}                            2024-03-19
+    PUT       /v2/prompts/{id}                            2024-03-19
+    GET       /v2/requests                                2023-11-22
+    DELETE    /v2/requests/chat/{conversation_id}         2023-11-22
+    GET       /v2/requests/chat/{conversation_id}         2024-03-19
+    DELETE    /v2/requests/{id}                           2023-11-22
+    GET       /v2/requests/{id}/feedback                  2023-11-22
+    POST      /v2/requests/{id}/feedback                  2023-11-22
+    PUT       /v2/requests/{id}/feedback                  2023-11-22
+    GET       /v2/system_prompts                          2023-11-22
+    POST      /v2/system_prompts                          2023-11-22
+    DELETE    /v2/system_prompts/{id}                     2023-11-22
+    GET       /v2/system_prompts/{id}                     2023-11-22
+    PUT       /v2/system_prompts/{id}                     2023-11-22
+    GET       /v2/tags                                    2023-11-22
+    GET       /v2/tasks                                   2023-11-22
+    POST      /v2/text/chat                               2024-03-19
+    POST      /v2/text/chat/output                        2024-03-19
+    POST      /v2/text/chat_stream                        2024-03-19
+    POST      /v2/text/embeddings                         2024-04-15
+    GET       /v2/text/embeddings/limits                  2023-11-22
+    GET       /v2/text/extraction/limits                  2023-11-22
+    POST      /v2/text/generation                         2024-03-19
+    POST      /v2/text/generation/comparison              2024-03-19
+    GET       /v2/text/generation/limits                  2023-11-22
+    POST      /v2/text/generation/output                  2024-03-19
+    GET       /v2/text/generation/{id}/feedback           2023-11-22
+    POST      /v2/text/generation/{id}/feedback           2024-02-20
+    PUT       /v2/text/generation/{id}/feedback           2024-02-20
+    POST      /v2/text/generation_stream                  2024-03-19
+    POST      /v2/text/moderations                        2024-03-19
+    POST      /v2/text/tokenization                       2024-01-10
+    GET       /v2/tunes                                   2023-11-22
+    POST      /v2/tunes                                   2023-11-22
+    POST      /v2/tunes/import                            2023-11-22
+    POST      /v2/tunes/preflight                         2023-11-22
+    DELETE    /v2/tunes/{id}                              2023-11-22
+    GET       /v2/tunes/{id}                              2023-11-22
+    PATCH     /v2/tunes/{id}                              2023-11-22
+    GET       /v2/tunes/{id}/content                      2023-11-22
+    GET       /v2/tunes/{id}/content/{type}               2023-12-15
+    GET       /v2/tuning_types                            2024-01-30
+    DELETE    /v2/user                                    2023-11-22
+    GET       /v2/user                                    2023-11-22
+    PATCH     /v2/user                                    2023-11-22
+    POST      /v2/user                                    2023-11-22
+    ========  ==========================================  ======================
+
 v2.3.0 (2024-03-22)
 -------------------
 

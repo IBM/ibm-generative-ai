@@ -34,11 +34,11 @@ INSERT_POINT_REGEX = r"""(?isxu)
 """ % {"rev": r"v[0-9]+\.[0-9]+(\.[0-9]+)?"}
 
 section_regexps = [
-    ("🌟 New", [r"^[nN]ew\s*:\s*((dev|use?r|pkg|test|doc)\s*:\s*)?([^\n]*)$"]),
-    ("🗒️ Changes", [r"^[cC]hg\s*:\s*((dev|use?r|pkg|test|doc)\s*:\s*)?([^\n]*)$"]),
-    ("🐛 Bug Fixes", [r"^[fF]ix\s*:\s*((dev|use?r|pkg|test|doc)\s*:\s*)?([^\n]*)$"]),
-    ("🚀 Features / Enhancements", [r"^[fF]eat\s*:\s*((dev|use?r|pkg|test|doc)\s*:\s*)?([^\n]*)$"]),
-    ("📖 Docs", [r"^[dD]ocs?\s*:\s*((dev|use?r|pkg|test|doc)\s*:\s*)?([^\n]*)$"]),
+    ("🌟 New", [r"^[nN]ew(\([^\n]*\))?\s*:\s*((dev|use?r|pkg|test|doc)\s*:\s*)?([^\n]*)$"]),
+    ("🗒️ Changes", [r"^[cC]hg(\([^\n]*\))?\s*:\s*((dev|use?r|pkg|test|doc)\s*:\s*)?([^\n]*)$"]),
+    ("🐛 Bug Fixes", [r"^[fF]ix(\([^\n]*\))?\s*:\s*((dev|use?r|pkg|test|doc)\s*:\s*)?([^\n]*)$"]),
+    ("🚀 Features / Enhancements", [r"^[fF]eat(\([^\n]*\))?\s*:\s*((dev|use?r|pkg|test|doc)\s*:\s*)?([^\n]*)$"]),
+    ("📖 Docs", [r"^[dD]ocs?(\([^\n]*\))?\s*:\s*((dev|use?r|pkg|test|doc)\s*:\s*)?([^\n]*)$"]),
     ("⚙️ Other", None),  ## Match all lines
 ]
 

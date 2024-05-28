@@ -9,17 +9,22 @@ You can start a trial version or request a demo via https://www.ibm.com/products
     :hidden:
 
     Getting Started <getting_started>
+    V3 Migration Guide <v3_migration_guide>
     V2 Migration Guide <v2_migration_guide>
     Examples <rst_source/examples>
     FAQ <faq>
     Changelog <changelog>
 
+.. admonition:: Migration to V3
+   :class: tip
+
+   We recently updated the SDK with improved moderations and schemas. See the :doc:`V3 Migration Guide <v3_migration_guide>`.
 
 .. admonition:: Migration to V2
    :class: tip
 
-   We recently rewrote nearly the whole SDK to be faster and more reliable and would bring you all the latest features
-   available on the API. To easily migrate, we prepared the :doc:`Migration Guide <v2_migration_guide>`.
+   We rewrote nearly the whole SDK to be faster and more reliable than V1 and would bring you all the latest features
+   available on the API. To easily migrate, we prepared the :doc:`V2 Migration Guide <v2_migration_guide>`.
 
 Top Features
 ------------
@@ -54,6 +59,7 @@ Important pages
 
 * :doc:`Getting Started <getting_started>`
 * :doc:`Examples <rst_source/examples>`
+* :doc:`V3 Migration Guide <v3_migration_guide>`
 * :doc:`V2 Migration Guide <v2_migration_guide>`
 * :doc:`Extensions <extensions>`
 * :doc:`FAQ <faq>`

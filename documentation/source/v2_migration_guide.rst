@@ -50,6 +50,20 @@ What has changed?
 - ``Model`` class has been replaced with a more general ``Client``, an entry point for all services.
 - ``Options`` class has been removed, as every parameter is unpacked at the method level.
 
+Moderations
+-----------
+- Stigma (`ModerationStigma` class) has been replaced by Social Bias (`ModerationSocialBias` class).
+- Implicit Hate (`ModerationImplicitHate` class) has been replaced by Social Bias (`ModerationSocialBias` class).
+
+❌ Old Way
+
+.. code:: python
+
+    from genai.schema import ModerationHAP
+
+    ModerationHAP(input=True, output=True, threshold=0.8)
+
+
 
 Text Generation
 ---------------
