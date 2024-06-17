@@ -27,7 +27,7 @@ class TestLMEval:
     @pytest.mark.vcr
     def test_loglikelihood_raises_for_invalid_tokenization(self):
         """Test loglikelihood of part of token is invalid"""
-        lm = IBMGenAILMEval(model_id="tiiuae/falcon-40b")
+        lm = IBMGenAILMEval(model_id="mistralai/mixtral-8x7b-instruct-v01")
         with pytest.raises(
             RuntimeError, match=r".*ends with a token .* that is substring of the continuation token .*"
         ):
@@ -40,7 +40,7 @@ class TestLMEval:
     @pytest.mark.vcr
     def test_loglikelihood(self):
         """Test loglikelihood of part of token is invalid"""
-        lm = IBMGenAILMEval(model_id="tiiuae/falcon-40b")
+        lm = IBMGenAILMEval(model_id="mistralai/mixtral-8x7b-instruct-v01")
         requests = [
             Instance(request_type="loglikelihood", doc=args, arguments=args, idx=i)
             for i, args in enumerate(
