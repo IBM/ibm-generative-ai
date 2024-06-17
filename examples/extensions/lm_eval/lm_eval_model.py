@@ -23,7 +23,7 @@ logging.getLogger("httpx").setLevel(logging.WARN)
 logging.getLogger("genai").setLevel(logging.WARN)
 
 task_name = "arc_challenge"
-model_id = "tiiuae/falcon-40b"
+model_id = "mistralai/mixtral-8x7b-instruct-v01"
 num_fewshot = 25
 limit = 10  # WARNING: only for debug purposes, set None for full testing dataset
 

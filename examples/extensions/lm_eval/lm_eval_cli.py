@@ -8,7 +8,7 @@ Example::
 
     python -m genai.extensions.lm_eval \\
           --model="ibm_genai" \\
-          --model_args="model_id=tiiuae/falcon-40b,temperature=0" \\
+          --model_args="model_id=mistralai/mixtral-8x7b-instruct-v01,temperature=0" \\
           --task="hellaswag" \\
           --num_fewshot=10 \\
           --output_path="falcon-40b_hellaswag.json"
@@ -22,7 +22,7 @@ subprocess.run(
         "-m",
         "genai.extensions.lm_eval",
         "--model=ibm_genai",
-        "--model_args=model_id=tiiuae/falcon-40b,temperature=0",
+        "--model_args=model_id=mistralai/mixtral-8x7b-instruct-v01,temperature=0",
         "--task=hellaswag",
         "--num_fewshot=10",
         "--limit=10",  # WARNING: only for debug purposes, remove for full testing dataset
