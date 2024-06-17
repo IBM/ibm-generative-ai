@@ -7,11 +7,7 @@ from pydantic import BaseModel
 from genai._types import ModelLike
 from genai._utils.api_client import ApiClient
 from genai._utils.async_executor import execute_async
-from genai._utils.general import (
-    prompts_to_strings,
-    to_model_instance,
-    to_model_optional,
-)
+from genai._utils.general import cast_list, to_model_instance, to_model_optional
 from genai._utils.service import (
     BaseService,
     BaseServiceConfig,
@@ -42,10 +38,10 @@ from genai.schema._api import (
     _TextGenerationStreamCreateRequest,
 )
 from genai.text.generation._generation_utils import generation_stream_handler
-from genai.text.generation.feedback.feedback_service import FeedbackService as _FeedbackService
 from genai.text.generation.limits.limit_service import LimitService as _LimitService
 
 __all__ = ["GenerationService", "BaseConfig", "BaseServices", "CreateExecutionOptions"]
+
 
 from genai._utils.http_client.retry_transport import BaseRetryTransport
 from genai._utils.limiters.base_limiter import BaseLimiter
@@ -56,15 +52,12 @@ from genai._utils.limiters.shared_limiter import LoopBoundLimiter
 
 class BaseServices(BaseServiceServices):
     LimitService: type[_LimitService] = _LimitService
-    FeedbackService: type[_FeedbackService] = _FeedbackService
 
 
 class CreateExecutionOptions(BaseModel):
     throw_on_error: CommonExecutionOptions.throw_on_error = True
     ordered: CommonExecutionOptions.ordered = True
     concurrency_limit: CommonExecutionOptions.concurrency_limit = None
-    batch_size: CommonExecutionOptions.batch_size = None
-    rate_limit_options: CommonExecutionOptions.rate_limit_options = None
     callback: CommonExecutionOptions.callback[
         Union[TextGenerationStreamCreateResponse, TextGenerationCreateResponse]
     ] = None
@@ -91,7 +84,6 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
             services = BaseServices()
 
         self._concurrency_limiter = self._get_concurrency_limiter()
-        self.feedback = services.FeedbackService(api_client=api_client)
         self.limit = services.LimitService(api_client=api_client)
 
     def _get_concurrency_limiter(self) -> LoopBoundLimiter:
@@ -110,6 +102,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
         *,
         model_id: Optional[str] = None,
         prompt_id: Optional[str] = None,
+        input: Optional[str] = None,
         inputs: Optional[Union[list[str], str]] = None,
         parameters: Optional[ModelLike[TextGenerationParameters]] = None,
         moderations: Optional[ModelLike[ModerationParameters]] = None,
@@ -120,6 +113,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
         Args:
             model_id: The ID of the model.
             prompt_id: The ID of the prompt which should be used.
+            input: Prompt to process. It is recommended not to leave any trailing spaces.
             inputs: Prompt/prompts to process. It is recommended not to leave any trailing spaces.
             parameters: Parameters for text generation.
             moderations: Parameters for moderation.
@@ -137,10 +131,18 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
         Note:
             To limit number of concurrent requests or change execution procedure, see 'execute_options' parameter.
         """
+        if inputs is not None and input is not None:
+            raise ValueError("Either specify 'inputs' or 'input' parameter!")
+
+        prompts: Optional[list[str]] = (
+            cast_list(inputs) if inputs is not None else cast_list(input) if input is not None else None
+        )
+        if not prompts and not prompt_id:
+            raise ValueError("At least one of the following parameters input/inputs/prompt_id must be specified!")
+
         metadata = get_service_action_metadata(self.create)
-        prompts: list[str] = prompts_to_strings(inputs)
         parameters_formatted = to_model_optional(parameters, TextGenerationParameters)
-        moderations_formatted = to_model_optional(moderations, ModerationParameters)
+        moderations_formatted = to_model_optional(moderations, ModerationParameters, copy=True)
         template_formatted = to_model_optional(data, PromptTemplateData)
         execution_options_formatted = to_model_instance(
             [self.config.create_execution_options, execution_options], CreateExecutionOptions
@@ -174,11 +176,13 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
                 yield TextGenerationCreateResponse(**http_response.json())
                 return
 
-        async def handler(input: str, http_client: AsyncClient, limiter: BaseLimiter) -> TextGenerationCreateResponse:
-            self._log_method_execution("Generate Create - processing input", input=input)
+        async def handler(
+            batch_input: str, http_client: AsyncClient, limiter: BaseLimiter
+        ) -> TextGenerationCreateResponse:
+            self._log_method_execution("Generate Create - processing input", input=batch_input)
 
-            async def handle_retry(ex: HTTPStatusError):
-                if ex.response.status_code == httpx.codes.TOO_MANY_REQUESTS:
+            async def handle_retry(ex: Exception):
+                if isinstance(ex, HTTPStatusError) and ex.response.status_code == httpx.codes.TOO_MANY_REQUESTS:
                     await limiter.report_error()
 
             async def handle_success(*args):
@@ -192,7 +196,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
                 },
                 params=_TextGenerationCreateParametersQuery().model_dump(),
                 json=_TextGenerationCreateRequest(
-                    input=input,
+                    input=batch_input,
                     model_id=model_id,
                     moderations=moderations_formatted,
                     parameters=parameters_formatted,
@@ -241,7 +245,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
         """
         metadata = get_service_action_metadata(self.create_stream)
         parameters_formatted = to_model_optional(parameters, TextGenerationParameters)
-        moderations_formatted = to_model_optional(moderations, ModerationParameters)
+        moderations_formatted = to_model_optional(moderations, ModerationParameters, copy=True)
         template_formatted = to_model_optional(data, PromptTemplateData)
 
         self._log_method_execution(
@@ -285,7 +289,7 @@ class GenerationService(BaseService[BaseConfig, BaseServices]):
             ValidationError: In case of provided parameters are invalid.
         """
         metadata = get_service_action_metadata(self.compare)
-        request_formatted = to_model_instance(request, TextGenerationComparisonCreateRequestRequest)
+        request_formatted = to_model_instance(request, TextGenerationComparisonCreateRequestRequest, copy=True)
         compare_parameters_formatted = to_model_instance(compare_parameters, TextGenerationComparisonParameters)
 
         self._log_method_execution(

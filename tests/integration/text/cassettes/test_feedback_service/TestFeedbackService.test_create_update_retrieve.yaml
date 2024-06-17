@@ -12,22 +12,22 @@ interactions:
     uri: https://api.com/v2/text/generation/limits?version=2023-11-22
   response:
     body:
-      string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
+      string: '{"result":{"concurrency":{"limit":200,"remaining":200}}}'
     headers:
       cache-control:
       - private
       content-length:
-      - '54'
+      - '56'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
       date:
-      - Thu, 25 Jan 2024 15:50:41 GMT
+      - Wed, 20 Mar 2024 08:28:21 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=1e3545705d3737525c7629e9f28dc93d; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -49,21 +49,20 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/generation?version=2024-01-10
+    uri: https://api.com/v2/text/generation?version=2024-03-19
   response:
     body:
-      string: '{"id":"2db252c2-55bd-424b-a44d-45307e2cc878","model_id":"google/flan-t5-xl","created_at":"2024-01-25T15:50:42.094Z","results":[{"generated_text":"Plant
-        some different strains of cannabis. Keep mixing co-operatively to get a high
-        mix","generated_token_count":20,"input_token_count":7,"stop_reason":"max_tokens","seed":954977001}]}'
+      string: '{"id":"88eeab9c-bafd-458d-b0f4-a4b624c61d2d","model_id":"google/flan-t5-xl","created_at":"2024-03-20T08:28:22.353Z","results":[{"generated_text":"Cannabis
+        plants can be grown inside a dollhouse to help produce potent, hard drugs.","generated_token_count":20,"input_token_count":7,"stop_reason":"eos_token","seed":3498005744}]}'
     headers:
       content-length:
-      - '329'
+      - '326'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-01-10'
+      - '2024-03-19'
       date:
-      - Thu, 25 Jan 2024 15:50:42 GMT
+      - Wed, 20 Mar 2024 08:28:22 GMT
       keep-alive:
       - timeout=72
       vary:
@@ -72,7 +71,8 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"categories": ["taboo_topics"], "comment": "Drugs are bad mkay?"}'
+    body: '{"categories": ["offensive_harmful"], "comment": "Drugs are bad mkay?",
+      "contact_consent": false}'
     headers:
       accept:
       - '*/*'
@@ -81,28 +81,28 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '66'
+      - '97'
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/generation/2db252c2-55bd-424b-a44d-45307e2cc878/feedback?version=2023-11-22
+    uri: https://api.com/v2/text/generation/88eeab9c-bafd-458d-b0f4-a4b624c61d2d/feedback?version=2024-02-20
   response:
     body:
-      string: '{"result":{"id":738,"created_at":"2024-01-25T15:50:42.000Z","updated_at":"2024-01-25T15:50:42.000Z","comment":"Drugs
-        are bad mkay?","categories":["taboo_topics"],"api_request":"2db252c2-55bd-424b-a44d-45307e2cc878"}}'
+      string: '{"result":{"id":2099,"created_at":"2024-03-20T08:28:23.000Z","updated_at":"2024-03-20T08:28:23.000Z","comment":"Drugs
+        are bad mkay?","categories":["offensive_harmful"],"api_request":"88eeab9c-bafd-458d-b0f4-a4b624c61d2d","contact_consent":false}}'
     headers:
       content-length:
-      - '216'
+      - '246'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2023-11-22'
+      - '2024-02-20'
       date:
-      - Thu, 25 Jan 2024 15:50:42 GMT
+      - Wed, 20 Mar 2024 08:28:22 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=6d247d6198597e887510d8e26f4d2793; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=8686c332122cd3e245e38ec96b4437d3; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -116,7 +116,8 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"categories": ["other"], "comment": "I''m not sure about the category"}'
+    body: '{"categories": ["other_content"], "comment": "I''m not sure about the category",
+      "contact_consent": false}'
     headers:
       accept:
       - '*/*'
@@ -125,28 +126,28 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '71'
+      - '105'
       content-type:
       - application/json
     method: PUT
-    uri: https://api.com/v2/text/generation/2db252c2-55bd-424b-a44d-45307e2cc878/feedback?version=2023-11-22
+    uri: https://api.com/v2/text/generation/88eeab9c-bafd-458d-b0f4-a4b624c61d2d/feedback?version=2024-02-20
   response:
     body:
-      string: '{"result":{"id":738,"created_at":"2024-01-25T15:50:42.000Z","updated_at":"2024-01-25T15:50:42.905Z","comment":"I''m
-        not sure about the category","categories":["other"],"api_request":"2db252c2-55bd-424b-a44d-45307e2cc878"}}'
+      string: '{"result":{"id":2099,"created_at":"2024-03-20T08:28:23.000Z","updated_at":"2024-03-20T08:28:23.555Z","comment":"I''m
+        not sure about the category","categories":["other_content"],"api_request":"88eeab9c-bafd-458d-b0f4-a4b624c61d2d","contact_consent":false}}'
     headers:
       content-length:
-      - '221'
+      - '254'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2023-11-22'
+      - '2024-02-20'
       date:
-      - Thu, 25 Jan 2024 15:50:42 GMT
+      - Wed, 20 Mar 2024 08:28:23 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=ab61fe594e37cae048810df94b864b98; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=8686c332122cd3e245e38ec96b4437d3; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -169,35 +170,35 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/text/generation/2db252c2-55bd-424b-a44d-45307e2cc878/feedback?version=2023-11-22
+    uri: https://api.com/v2/text/generation/88eeab9c-bafd-458d-b0f4-a4b624c61d2d/feedback?version=2023-11-22
   response:
     body:
-      string: '{"result":{"id":738,"created_at":"2024-01-25T15:50:42.000Z","updated_at":"2024-01-25T15:50:43.000Z","comment":"I''m
-        not sure about the category","categories":["other"],"api_request":"2db252c2-55bd-424b-a44d-45307e2cc878"}}'
+      string: '{"result":{"id":2099,"created_at":"2024-03-20T08:28:23.000Z","updated_at":"2024-03-20T08:28:24.000Z","comment":"I''m
+        not sure about the category","categories":["other_content"],"api_request":"88eeab9c-bafd-458d-b0f4-a4b624c61d2d","contact_consent":false}}'
     headers:
       cache-control:
       - private
       content-length:
-      - '221'
+      - '254'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
       date:
-      - Thu, 25 Jan 2024 15:50:43 GMT
+      - Wed, 20 Mar 2024 08:28:24 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=ab61fe594e37cae048810df94b864b98; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=c7a0964ef13502a09f12e4a9f37d8d7f; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
       x-ratelimit-limit:
       - '25'
       x-ratelimit-remaining:
-      - '22'
+      - '24'
       x-ratelimit-reset:
-      - '0'
+      - '1'
     status:
       code: 200
       message: OK

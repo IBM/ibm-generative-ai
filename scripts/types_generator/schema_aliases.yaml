@@ -8,6 +8,9 @@ alias:
   SortDirection:
     - _TuneRetrieveRequestParamsDirection
     - _FileRetrieveRequestParamsDirection
+    - _PromptRetrieveRequestParamsDirection
+    - _EvaluationExperimentRetrieveRequestParamsDirection
+    - _EvaluationRetrieveRequestParamsDirection
 
   # FILES ------------------------------------------------------------------------
   FilePurpose:
@@ -16,42 +19,85 @@ alias:
     - _FileCreateRequest_purpose
     - _FileCreate_result_purpose
     - _FileIdRetrieve_result_purpose
+    - _FileIdPatch_result_purpose
   StorageProviderLocation:
     - _FileRetrieve_results_storage_provider_location
     - _FileCreate_result_storage_provider_location
     - _FileIdRetrieve_result_storage_provider_location
+    - _FileIdPatch_result_storage_provider_location
   FileFormat:
     - _FileRetrieve_results_file_formats
     - _FileCreate_result_file_formats
     - _FileIdRetrieve_result_file_formats
+    - _FileIdPatch_result_file_formats
   FileResult:
     - _FileRetrieve_results
     - _FileCreate_result
     - _FileIdRetrieve_result
+    - _FileIdPatch_result
+  FileMetadata:
+    - _EvaluationIdRetrieve_result_file_metadata
+    - _FileIdPatch_result_metadata
+    - _EvaluationExperimentIdRetrieve_result_file_metadata
+    - _EvaluationCreate_result_file_metadata
+    - _FileCreate_result_metadata
+    - _EvaluationRetrieve_results_file_metadata
+    - _FileIdRetrieve_result_metadata
+    - _FileRetrieve_results_metadata
+    - _EvaluationExperimentCreate_result_file_metadata
+    - _EvaluationExperimentRetrieve_results_file_metadata
+  FileMetadataStats:
+    - _FileCreate_result_metadata_stats
+    - _EvaluationCreate_result_file_metadata_stats
+    - _EvaluationExperimentIdRetrieve_result_file_metadata_stats
+    - _FileIdRetrieve_result_metadata_stats
+    - _FileIdPatch_result_metadata_stats
+    - _EvaluationExperimentRetrieve_results_file_metadata_stats
+    - _EvaluationIdRetrieve_result_file_metadata_stats
+    - _FileRetrieve_results_metadata_stats
+    - _EvaluationRetrieve_results_file_metadata_stats
+    - _EvaluationExperimentCreate_result_file_metadata_stats
   FileListSortBy:
     - _FileRetrieveRequestParamsSortBy
 
+  FileDescendant:
+    - _FileIdRetrieve_result_descendants
+    - _FileIdPatch_result_descendants
+    - _FileRetrieve_results_origin
+    - _FileCreate_result_origin
+    - _FileIdPatch_result_origin
+    - _FileCreate_result_descendants
+    - _FileRetrieve_results_descendants
+    - _FileIdRetrieve_result_origin
+  MessageFile:
+    - _PromptRetrieve_results_messages_files
+    - _PromptIdPatch_result_messages_files
+    - _PromptIdRetrieve_result_messages_files
+    - _PromptCreate_result_messages_files
+    - _PromptIdUpdate_result_messages_files
+    - _TextChatStreamCreateRequest_messages_files
+    - _TextChatCreateRequest_messages_files
+    - _TextChatOutputCreateRequest_messages_files
+    - _PromptCreateRequest_messages_files
+    - _PromptIdUpdateRequest_messages_files
   # MODERATIONS ------------------------------------------------------------------
   ModerationParameters:
     - _TextGenerationOutputCreateRequest_moderations
     - _TextChatStreamCreateRequest_moderations
-    - _UserCreate_result_generate_default_moderations
     - _TextChatOutputCreateRequest_moderations
     - _TextChatCreateRequest_moderations
-    - _RequestChatConversationIdRetrieve_results_request_moderations
-    - _UserPatch_result_generate_default_moderations
     - _PromptCreateRequest_moderations
-    - _UserRetrieve_result_generate_default_moderations
     - _TextGenerationComparisonCreateRequest_request_moderations
     - _PromptIdUpdateRequest_moderations
+  TextGenerationModerationParameters:
+    - _TextGenerationCreateRequest_moderations
+    - _TextGenerationStreamCreateRequest_moderations
+  PromptModerationParameters:
     - _PromptCreate_result_moderations
     - _PromptIdRetrieve_result_moderations
     - _PromptIdUpdate_result_moderations
     - _PromptIdPatch_result_moderations
     - _PromptRetrieve_results_moderations
-  TextGenerationModerationParameters:
-    - _TextGenerationCreateRequest_moderations
-    - _TextGenerationStreamCreateRequest_moderations
   ModerationHAP:
     - _TextGenerationOutputCreateRequest_moderations_hap
     - _PromptRetrieve_results_moderations_hap
@@ -61,93 +107,172 @@ alias:
     - _PromptIdPatch_result_moderations_hap
     - _PromptIdUpdateRequest_moderations_hap
     - _PromptIdUpdate_result_moderations_hap
-    - _RequestChatConversationIdRetrieve_results_request_moderations_hap
     - _TextChatCreateRequest_moderations_hap
     - _TextChatOutputCreateRequest_moderations_hap
     - _TextChatStreamCreateRequest_moderations_hap
     - _TextGenerationComparisonCreateRequest_request_moderations_hap
-    - _UserRetrieve_result_generate_default_moderations_hap
-    - _UserPatch_result_generate_default_moderations_hap
-    - _UserCreate_result_generate_default_moderations_hap
   TextGenerationModerationHAP:
     - _TextGenerationCreateRequest_moderations_hap
     - _TextGenerationStreamCreateRequest_moderations_hap
   ModerationStigma:
-    - _TextGenerationOutputCreateRequest_moderations_stigma
     - _PromptRetrieve_results_moderations_stigma
-    - _PromptCreateRequest_moderations_stigma
     - _PromptCreate_result_moderations_stigma
     - _PromptIdRetrieve_result_moderations_stigma
     - _PromptIdPatch_result_moderations_stigma
-    - _PromptIdUpdateRequest_moderations_stigma
     - _PromptIdUpdate_result_moderations_stigma
-    - _RequestChatConversationIdRetrieve_results_request_moderations_stigma
-    - _TextChatCreateRequest_moderations_stigma
-    - _TextChatOutputCreateRequest_moderations_stigma
-    - _TextChatStreamCreateRequest_moderations_stigma
-    - _TextGenerationComparisonCreateRequest_request_moderations_stigma
-    - _UserRetrieve_result_generate_default_moderations_stigma
-    - _UserPatch_result_generate_default_moderations_stigma
-    - _UserCreate_result_generate_default_moderations_stigma
-  TextGenerationModerationStigma:
-    - _TextGenerationCreateRequest_moderations_stigma
-    - _TextGenerationStreamCreateRequest_moderations_stigma
+  ModerationSocialBias:
+    - _TextGenerationOutputCreateRequest_moderations_social_bias
+    - _PromptRetrieve_results_moderations_social_bias
+    - _PromptCreateRequest_moderations_social_bias
+    - _PromptCreate_result_moderations_social_bias
+    - _PromptIdRetrieve_result_moderations_social_bias
+    - _PromptIdPatch_result_moderations_social_bias
+    - _PromptIdUpdateRequest_moderations_social_bias
+    - _PromptIdUpdate_result_moderations_social_bias
+    - _TextChatCreateRequest_moderations_social_bias
+    - _TextChatOutputCreateRequest_moderations_social_bias
+    - _TextChatStreamCreateRequest_moderations_social_bias
+    - _TextGenerationComparisonCreateRequest_request_moderations_social_bias
+  TextGenerationModerationSocialBias:
+    - _TextGenerationCreateRequest_moderations_social_bias
+    - _TextGenerationStreamCreateRequest_moderations_social_bias
   ModerationImplicitHate:
-    - _TextGenerationOutputCreateRequest_moderations_implicit_hate
     - _PromptRetrieve_results_moderations_implicit_hate
-    - _PromptCreateRequest_moderations_implicit_hate
     - _PromptCreate_result_moderations_implicit_hate
     - _PromptIdRetrieve_result_moderations_implicit_hate
     - _PromptIdPatch_result_moderations_implicit_hate
-    - _PromptIdUpdateRequest_moderations_implicit_hate
     - _PromptIdUpdate_result_moderations_implicit_hate
-    - _RequestChatConversationIdRetrieve_results_request_moderations_implicit_hate
-    - _TextChatCreateRequest_moderations_implicit_hate
-    - _TextChatOutputCreateRequest_moderations_implicit_hate
-    - _TextChatStreamCreateRequest_moderations_implicit_hate
-    - _TextGenerationComparisonCreateRequest_request_moderations_implicit_hate
-    - _UserRetrieve_result_generate_default_moderations_implicit_hate
-    - _UserPatch_result_generate_default_moderations_implicit_hate
-    - _UserCreate_result_generate_default_moderations_implicit_hate
-  TextGenerationModerationImplicitHate:
-    - _TextGenerationCreateRequest_moderations_implicit_hate
-    - _TextGenerationStreamCreateRequest_moderations_implicit_hate
   TextModeration:
     - _TextModerationCreate_results_hap
-    - _TextChatStreamCreate_moderation_implicit_hate
-    - _TextChatStreamCreate_moderation_stigma
-    - _TextGenerationStreamCreate_moderation_stigma
-    - _TextGenerationStreamCreate_moderation_hap
-    - _TextChatStreamCreate_moderation_hap
-    - _TextModerationCreate_results_stigma
-    - _TextModerationCreate_results_implicit_hate
-    - _TextGenerationStreamCreate_moderation_implicit_hate
+    - _TextGenerationComparisonCreate_results_result_results_moderations_hap
+    - _TextModerationCreate_results_social_bias
+    - _TextChatCreate_results_moderations_hap
+    - _TextChatCreate_results_moderations_social_bias
+    - _TextGenerationStreamCreate_moderations_hap
+    - _TextGenerationStreamCreate_moderations_social_bias
+    - _TextGenerationCreate_results_moderations_hap
+    - _TextGenerationCreate_results_moderations_social_bias
+    - _TextGenerationComparisonCreate_results_result_results_moderations_social_bias
+    - _TextChatStreamCreate_moderations_social_bias
+    - _TextChatStreamCreate_moderations_hap
   HAPOptions:
     - _TextModerationCreateRequest_hap
-  ImplicitHateOptions:
-    - _TextModerationCreateRequest_implicit_hate
-  StigmaOptions:
-    - _TextModerationCreateRequest_stigma
+  SocialBiasOptions:
+    - _TextModerationCreateRequest_social_bias
   ModerationPosition:
-    - _TextChatStreamCreate_moderation_hap_position
-    - _TextChatStreamCreate_moderation_stigma_position
-    - _TextChatStreamCreate_moderation_implicit_hate_position
-    - _TextGenerationStreamCreate_moderation_hap_position
-    - _TextGenerationStreamCreate_moderation_stigma_position
-    - _TextGenerationStreamCreate_moderation_implicit_hate_position
     - _TextModerationCreate_results_hap_position
-    - _TextModerationCreate_results_stigma_position
-    - _TextModerationCreate_results_implicit_hate_position
+    - _TextModerationCreate_results_social_bias_position
+    - _TextChatCreate_results_moderations_hap_position
+    - _TextChatCreate_results_moderations_social_bias_position
+    - _TextGenerationComparisonCreate_results_result_results_moderations_hap_position
+    - _TextGenerationCreate_results_moderations_hap_position
+    - _TextGenerationStreamCreate_moderations_social_bias_position
+    - _TextGenerationStreamCreate_moderations_hap_position
+    - _TextChatStreamCreate_moderations_social_bias_position
+    - _TextChatStreamCreate_moderations_hap_position
+    - _TextGenerationCreate_results_moderations_social_bias_position
+    - _TextGenerationComparisonCreate_results_result_results_moderations_social_bias_position
   ModerationTokens:
-    - _TextChatStreamCreate_moderation_hap_tokens
-    - _TextChatStreamCreate_moderation_stigma_tokens
-    - _TextChatStreamCreate_moderation_implicit_hate_tokens
-    - _TextGenerationStreamCreate_moderation_hap_tokens
-    - _TextGenerationStreamCreate_moderation_stigma_tokens
-    - _TextGenerationStreamCreate_moderation_implicit_hate_tokens
     - _TextModerationCreate_results_hap_tokens
-    - _TextModerationCreate_results_stigma_tokens
-    - _TextModerationCreate_results_implicit_hate_tokens
+    - _TextModerationCreate_results_social_bias_tokens
+    - _TextChatCreate_results_moderations_hap_tokens
+    - _TextChatCreate_results_moderations_social_bias_tokens
+    - _TextGenerationCreate_results_moderations_social_bias_tokens
+    - _TextGenerationCreate_results_moderations_hap_tokens
+    - _TextGenerationComparisonCreate_results_result_results_moderations_social_bias_tokens
+    - _TextGenerationComparisonCreate_results_result_results_moderations_hap_tokens
+    - _TextGenerationStreamCreate_moderations_hap_tokens
+    - _TextGenerationStreamCreate_moderations_social_bias_tokens
+    - _TextChatStreamCreate_moderations_hap_tokens
+    - _TextChatStreamCreate_moderations_social_bias_tokens
+  ModerationHAPInputTmp:
+    - _TextGenerationStreamCreateRequest_moderations_hap_input
+    - _TextGenerationCreateRequest_moderations_hap_input
+  ModerationHAPInput:
+    - _TextChatCreateRequest_moderations_hap_input
+    - _TextChatStreamCreateRequest_moderations_hap_input
+    - _TextChatOutputCreateRequest_moderations_hap_input
+    - _PromptRetrieve_results_moderations_hap_input
+    - _PromptCreate_result_moderations_hap_input
+    - _TextGenerationOutputCreateRequest_moderations_hap_input
+    - _PromptIdUpdate_result_moderations_hap_input
+    - _TextGenerationComparisonCreateRequest_request_moderations_hap_input
+    - _PromptCreateRequest_moderations_hap_input
+    - _PromptIdRetrieve_result_moderations_hap_input
+    - _PromptIdPatch_result_moderations_hap_input
+    - _PromptIdUpdateRequest_moderations_hap_input
+  ModerationHAPOutputTmp:
+    - _TextGenerationCreateRequest_moderations_hap_output
+    - _TextGenerationStreamCreateRequest_moderations_hap_output
+  ModerationHAPOutput:
+    - _PromptIdUpdateRequest_moderations_hap_output
+    - _TextChatStreamCreateRequest_moderations_hap_output
+    - _PromptIdPatch_result_moderations_hap_output
+    - _TextChatCreateRequest_moderations_hap_output
+    - _PromptIdRetrieve_result_moderations_hap_output
+    - _PromptIdUpdate_result_moderations_hap_output
+    - _TextChatOutputCreateRequest_moderations_hap_output
+    - _TextGenerationOutputCreateRequest_moderations_hap_output
+    - _PromptRetrieve_results_moderations_hap_output
+    - _PromptCreateRequest_moderations_hap_output
+    - _PromptCreate_result_moderations_hap_output
+    - _TextGenerationComparisonCreateRequest_request_moderations_hap_output
+  ModerationSocialBiasInputTmp:
+    - _TextGenerationStreamCreateRequest_moderations_social_bias_input
+    - _TextGenerationCreateRequest_moderations_social_bias_input
+  ModerationSocialBiasInput:
+    - _PromptRetrieve_results_moderations_social_bias_input
+    - _PromptIdPatch_result_moderations_social_bias_input
+    - _PromptCreate_result_moderations_social_bias_input
+    - _PromptIdUpdate_result_moderations_social_bias_input
+    - _PromptIdUpdateRequest_moderations_social_bias_input
+    - _PromptIdRetrieve_result_moderations_social_bias_input
+    - _TextChatOutputCreateRequest_moderations_social_bias_input
+    - _TextChatStreamCreateRequest_moderations_social_bias_input
+    - _TextGenerationComparisonCreateRequest_request_moderations_social_bias_input
+    - _PromptCreateRequest_moderations_social_bias_input
+    - _TextChatCreateRequest_moderations_social_bias_input
+    - _TextGenerationOutputCreateRequest_moderations_social_bias_input
+  ModerationSocialBiasOutputTmp:
+    - _TextGenerationCreateRequest_moderations_social_bias_output
+    - _TextGenerationStreamCreateRequest_moderations_social_bias_output
+  ModerationSocialBiasOutput:
+    - _TextGenerationComparisonCreateRequest_request_moderations_social_bias_output
+    - _TextChatOutputCreateRequest_moderations_social_bias_output
+    - _PromptIdUpdate_result_moderations_social_bias_output
+    - _PromptCreate_result_moderations_social_bias_output
+    - _PromptCreateRequest_moderations_social_bias_output
+    - _PromptIdRetrieve_result_moderations_social_bias_output
+    - _TextChatStreamCreateRequest_moderations_social_bias_output
+    - _PromptIdPatch_result_moderations_social_bias_output
+    - _TextGenerationOutputCreateRequest_moderations_social_bias_output
+    - _TextChatCreateRequest_moderations_social_bias_output
+    - _PromptRetrieve_results_moderations_social_bias_output
+    - _PromptIdUpdateRequest_moderations_social_bias_output
+  ModerationStigmaInput:
+    - _PromptRetrieve_results_moderations_stigma_input
+    - _PromptIdPatch_result_moderations_stigma_input
+    - _PromptCreate_result_moderations_stigma_input
+    - _PromptIdUpdate_result_moderations_stigma_input
+    - _PromptIdRetrieve_result_moderations_stigma_input
+  ModerationStigmaOutput:
+    - _PromptCreate_result_moderations_stigma_output
+    - _PromptIdUpdate_result_moderations_stigma_output
+    - _PromptIdPatch_result_moderations_stigma_output
+    - _PromptIdRetrieve_result_moderations_stigma_output
+    - _PromptRetrieve_results_moderations_stigma_output
+  ModerationImplicitHateInput:
+    - _PromptRetrieve_results_moderations_implicit_hate_input
+    - _PromptIdRetrieve_result_moderations_implicit_hate_input
+    - _PromptIdUpdate_result_moderations_implicit_hate_input
+    - _PromptIdPatch_result_moderations_implicit_hate_input
+    - _PromptCreate_result_moderations_implicit_hate_input
+  ModerationImplicitHateOutput:
+    - _PromptIdPatch_result_moderations_implicit_hate_output
+    - _PromptRetrieve_results_moderations_implicit_hate_output
+    - _PromptIdRetrieve_result_moderations_implicit_hate_output
+    - _PromptIdUpdate_result_moderations_implicit_hate_output
+    - _PromptCreate_result_moderations_implicit_hate_output
 
   # OTHER ------------------------------------------------------------------------
   BaseMessage:
@@ -162,9 +287,8 @@ alias:
     - _TextChatStreamCreateRequest_messages
     - _TextChatOutputCreateRequest_messages
     - _PromptIdUpdateRequest_messages
-    - _RequestChatConversationIdRetrieve_results_request_messages
   TunesResultDatapointLoss:
-    - _TuneImportCreate_result_datapoints_loss
+    - _TuneFromFileCreate_result_datapoints_loss
     - _TuneIdRetrieve_result_datapoints_loss
     - _TuneCreate_result_datapoints_loss
     - _TuneRetrieve_results_datapoints_loss
@@ -184,6 +308,8 @@ alias:
     - _ModelIdRetrieve_result_token_limits
   ModelFamily:
     - _ModelIdRetrieve_result_model_family
+  ModelType:
+    - _ModelRetrieveRequestParamsType
   RequestApiVersion:
     - _RequestRetrieveRequestParamsApi
   RequestEndpoint:
@@ -199,7 +325,6 @@ alias:
     - _PromptIdPatch_result_parameters_return_options
     - _PromptIdUpdateRequest_parameters_return_options
     - _PromptIdUpdate_result_parameters_return_options
-    - _RequestChatConversationIdRetrieve_results_request_parameters_return_options
     - _TextChatCreateRequest_parameters_return_options
     - _TextChatOutputCreateRequest_parameters_return_options
     - _TextChatStreamCreateRequest_parameters_return_options
@@ -207,9 +332,13 @@ alias:
     - _UserRetrieve_result_generate_default_parameters_return_options
     - _UserPatch_result_generate_default_parameters_return_options
     - _UserCreate_result_generate_default_parameters_return_options
+    - _EvaluationPreviewCreateRequest_parameters_return_options
+    - _EvaluationCreateRequest_parameters_return_options
   TextGenerationReturnOptionsFromDB:
     - _TextGenerationCreateRequest_parameters_return_options
     - _TextGenerationStreamCreateRequest_parameters_return_options
+  TextRerankReturnOptions:
+    - _TextRerankCreateRequest_parameters_return_options
   LengthPenalty:
     - _TextGenerationOutputCreateRequest_parameters_length_penalty
     - _PromptRetrieve_results_parameters_length_penalty
@@ -219,7 +348,6 @@ alias:
     - _PromptIdPatch_result_parameters_length_penalty
     - _PromptIdUpdateRequest_parameters_length_penalty
     - _PromptIdUpdate_result_parameters_length_penalty
-    - _RequestChatConversationIdRetrieve_results_request_parameters_length_penalty
     - _TextChatCreateRequest_parameters_length_penalty
     - _TextChatOutputCreateRequest_parameters_length_penalty
     - _TextChatStreamCreateRequest_parameters_length_penalty
@@ -227,6 +355,8 @@ alias:
     - _UserRetrieve_result_generate_default_parameters_length_penalty
     - _UserPatch_result_generate_default_parameters_length_penalty
     - _UserCreate_result_generate_default_parameters_length_penalty
+    - _EvaluationPreviewCreateRequest_parameters_length_penalty
+    - _EvaluationCreateRequest_parameters_length_penalty
   PromptTypeTmp:
     - _PromptCreate_result_type
     - _PromptIdRetrieve_result_type
@@ -237,6 +367,41 @@ alias:
     - _PromptIdPatchRequest_type
     - _PromptCreateRequest_type
     - _PromptIdUpdateRequest_type
+  Tag:
+    - _TagRetrieve_results
+  PromptTag:
+    - _PromptIdUpdate_result_tags
+    - _PromptCreate_result_tags
+    - _PromptIdPatch_result_tags
+    - _PromptRetrieve_results_tags
+    - _PromptIdRetrieve_result_tags
+  TagType:
+    - _TagRetrieve_results_type
+    - _TagRetrieveRequestParamsType
+  PromptTagType:
+    - _PromptRetrieve_results_tags_type
+    - _PromptCreate_result_tags_type
+    - _PromptIdRetrieve_result_tags_type
+    - _PromptIdPatch_result_tags_type
+    - _PromptIdUpdate_result_tags_type
+  ModelFacetType:
+    - _ModelRetrieve_results_facets_type
+    - _ModelIdRetrieve_result_facets_type
+  TextClassificationCreateData:
+    - _TextClassificationCreateRequest_data
+  TextClassificationResult:
+    - _TextClassificationCreate_result
+  TextClassificationType:
+    - _TextClassificationCreate_result_classification_type
+  TextRerankParameters:
+    - _TextRerankCreateRequest_parameters
+  TextSentenceSimilarityParameters:
+    - _TextSentenceSimilarityCreateRequest_parameters
+  TextRerankResult:
+    - _TextRerankCreate_result_results
+  ModelFacet:
+    - _ModelRetrieve_results_facets
+    - _ModelIdRetrieve_result_facets
   PromptResultAuthor:
     - _PromptRetrieve_results_author
     - _PromptCreate_result_author
@@ -257,7 +422,6 @@ alias:
     - _PromptIdPatch_result_messages_role
     - _PromptIdUpdateRequest_messages_role
     - _PromptIdUpdate_result_messages_role
-    - _RequestChatConversationIdRetrieve_results_request_messages_role
     - _TextChatCreateRequest_messages_role
     - _TextChatOutputCreateRequest_messages_role
     - _TextChatStreamCreateRequest_messages_role
@@ -269,13 +433,10 @@ alias:
     - _RequestRetrieve_results_version
     - _RequestChatConversationIdRetrieve_results_version
   TrimMethod:
-    - _RequestChatConversationIdRetrieve_results_request_trim_method
     - _TextChatCreateRequest_trim_method
     - _TextChatOutputCreateRequest_trim_method
     - _TextChatStreamCreateRequest_trim_method
   GeneratedToken:
-    - _RequestChatConversationIdRetrieve_results_response_results_generated_tokens_top_tokens
-    - _RequestChatConversationIdRetrieve_results_response_results_input_tokens_top_tokens
     - _TextChatCreate_results_generated_tokens_top_tokens
     - _TextChatCreate_results_input_tokens_top_tokens
     - _TextChatStreamCreate_results_generated_tokens_top_tokens
@@ -288,7 +449,6 @@ alias:
     - _TextGenerationStreamCreate_results_input_tokens_top_tokens
   BaseTokens:
     - _TextChatStreamCreate_results_generated_tokens
-    - _RequestChatConversationIdRetrieve_results_response_results_input_tokens
     - _TextGenerationComparisonCreate_results_result_results_generated_tokens
     - _TextGenerationStreamCreate_results_generated_tokens
     - _TextGenerationStreamCreate_results_input_tokens
@@ -297,7 +457,6 @@ alias:
     - _TextGenerationComparisonCreate_results_result_results_input_tokens
     - _TextChatCreate_results_input_tokens
     - _TextGenerationCreate_results_generated_tokens
-    - _RequestChatConversationIdRetrieve_results_response_results_generated_tokens
     - _TextChatCreate_results_generated_tokens
   TextGenerationParametersLengthPenalty:
     - _TextGenerationCreateRequest_parameters_length_penalty
@@ -305,11 +464,26 @@ alias:
   TextGenerationFeedbackCategory:
     - _TextGenerationIdFeedbackCreateRequest_categories
     - _TextGenerationIdFeedbackUpdateRequest_categories
+  RequestFeedbackCategory:
+    - _RequestIdFeedbackUpdateRequest_categories
+    - _RequestIdFeedbackCreateRequest_categories
+  RequestFeedbackVote:
+    - _RequestIdFeedbackUpdate_result_vote
+    - _RequestIdFeedbackRetrieve_result_vote
+    - _RequestIdFeedbackCreate_result_vote
+    - _RequestIdFeedbackUpdateRequest_vote
+    - _RequestIdFeedbackCreateRequest_vote
+  TextGenerationFeedbackVote:
+    - _TextGenerationIdFeedbackCreateRequest_vote
+    - _TextGenerationIdFeedbackCreate_result_vote
+    - _TextGenerationIdFeedbackUpdate_result_vote
+    - _TextGenerationIdFeedbackUpdateRequest_vote
+    - _TextGenerationIdFeedbackRetrieve_result_vote
   TuneStatus:
     - _TuneRetrieveRequestParamsStatus
     - _TuneRetrieve_results_status
     - _TuneCreate_result_status
-    - _TuneImportCreate_result_status
+    - _TuneFromFileCreate_result_status
     - _TuneIdRetrieve_result_status
     - _TuneIdPatch_result_status
   TuneResultFiles:
@@ -317,59 +491,76 @@ alias:
     - _TuneRetrieve_results_training_files
     - _TuneCreate_result_validation_files
     - _TuneCreate_result_training_files
-    - _TuneImportCreate_result_validation_files
-    - _TuneImportCreate_result_training_files
+    - _TuneFromFileCreate_result_validation_files
+    - _TuneFromFileCreate_result_training_files
     - _TuneIdRetrieve_result_validation_files
     - _TuneIdRetrieve_result_training_files
     - _TuneIdPatch_result_validation_files
     - _TuneCreate_result_evaluation_files
     - _TuneIdPatch_result_evaluation_files
     - _TuneIdRetrieve_result_evaluation_files
-    - _TuneImportCreate_result_evaluation_files
+    - _TuneFromFileCreate_result_evaluation_files
     - _TuneIdPatch_result_training_files
     - _TuneRetrieve_results_evaluation_files
-  TuneResultDatapointLoss:
+  TuneResultContent:
+    - _TuneRetrieve_results_contents
+    - _TuneIdPatch_result_contents
+    - _TuneIdRetrieve_result_contents
+    - _TuneFromFileCreate_result_contents
+    - _TuneCreate_result_contents
+  TuneResultDatapoint:
+    - _TuneIdRetrieve_result_datapoints
+    - _TuneRetrieve_results_datapoints
+    - _TuneCreate_result_datapoints
+    - _TuneFromFileCreate_result_datapoints
+    - _TuneIdPatch_result_datapoints
+  TuneResultDatapointLossData:
     - _TuneRetrieve_results_datapoints_loss_data
     - _TuneCreate_result_datapoints_loss_data
-    - _TuneImportCreate_result_datapoints_loss_data
     - _TuneIdRetrieve_result_datapoints_loss_data
+    - _TuneFromFileCreate_result_datapoints_loss_data
     - _TuneIdPatch_result_datapoints_loss_data
-  TuningType:
-    - _TuneCreateRequest_tuning_type
-  #  - _TuningTypeRetrieve_results_schema_properties_tuning_type
+  TuneResultDatapointValidationLoss:
+    - _TuneIdPatch_result_datapoints_validation_loss
+    - _TuneRetrieve_results_datapoints_validation_loss
+    - _TuneFromFileCreate_result_datapoints_validation_loss
+    - _TuneCreate_result_datapoints_validation_loss
+    - _TuneIdRetrieve_result_datapoints_validation_loss
+  TuneResultDatapointValidationLossData:
+    - _TuneRetrieve_results_datapoints_validation_loss_data
+    - _TuneCreate_result_datapoints_validation_loss_data
+    - _TuneIdPatch_result_datapoints_validation_loss_data
+    - _TuneIdRetrieve_result_datapoints_validation_loss_data
+    - _TuneFromFileCreate_result_datapoints_validation_loss_data
   TuneListSortBy:
     - _TuneRetrieveRequestParamsSortBy
+  PromptListSortBy:
+    - _PromptRetrieveRequestParamsSortBy
   TuneResult:
     - _TuneIdPatch_result
-    - _TuneImportCreate_result
+    - _TuneFromFileCreate_result
     - _TuneRetrieve_results
     - _TuneIdRetrieve_result
     - _TuneCreate_result
   TuneParameters:
     - _TuneCreateRequest_parameters
+    - _TunePreflightCreateRequest_parameters
   #  - _TuningTypeRetrieve_results_schema_properties_parameters
-  TuneResultDatapoints:
-    - _TuneImportCreate_result_datapoints
-    - _TuneIdPatch_result_datapoints
-    - _TuneCreate_result_datapoints
-    - _TuneRetrieve_results_datapoints
-    - _TuneIdRetrieve_result_datapoints
   TextGenerationResult:
     - _TextGenerationComparisonCreate_results_result_results
     - _TextGenerationCreate_results
     - _TextChatCreate_results
-    - _RequestChatConversationIdRetrieve_results_response_results
   TextCreateResponseModeration:
     - _TextModerationCreate_results
-    - _TextChatStreamCreate_moderation
-    - _TextGenerationStreamCreate_moderation
-  TextGenerationStreamResult:
+    - _TextGenerationStreamCreate_moderations
+    - _TextGenerationCreate_results_moderations
+    - _TextChatCreate_results_moderations
+    - _TextChatStreamCreate_moderations
+    - _TextGenerationComparisonCreate_results_result_results_moderations
+  TextChatGenerationStreamResult:
     - _TextChatStreamCreate_results
+  TextGenerationStreamResult:
     - _TextGenerationStreamCreate_results
-  PromptTemplate:
-    - _UserCreate_result_generate_default_template
-    - _UserRetrieve_result_generate_default_template
-    - _UserPatch_result_generate_default_template
   PromptTemplateData:
     - _TextGenerationOutputCreateRequest_data
     - _PromptCreateRequest_data
@@ -378,17 +569,14 @@ alias:
     - _TextGenerationCreateRequest_data
     - _TextGenerationStreamCreateRequest_data
     - _TextTokenizationCreateRequest_data
-    - _UserCreate_result_generate_default_template_data
-    - _UserPatch_result_generate_default_template_data
-    - _UserRetrieve_result_generate_default_template_data
   UserGenerationDefault:
     - _UserCreate_result_generate_default
     - _UserPatch_result_generate_default
     - _UserRetrieve_result_generate_default
-  UserResponseResult:
+  UserResult:
     - _UserPatch_result
     - _UserRetrieve_result
-  PromptsResponseResult:
+  PromptResult:
     - _PromptCreate_result
     - _PromptIdPatch_result
     - _PromptIdRetrieve_result
@@ -398,6 +586,10 @@ alias:
     - _TextGenerationIdFeedbackCreate_result
     - _TextGenerationIdFeedbackRetrieve_result
     - _TextGenerationIdFeedbackUpdate_result
+  RequestFeedbackResult:
+    - _RequestIdFeedbackCreate_result
+    - _RequestIdFeedbackRetrieve_result
+    - _RequestIdFeedbackUpdate_result
   TextGenerationParameters:
     - _TextGenerationOutputCreateRequest_parameters
     - _TextChatOutputCreateRequest_parameters
@@ -408,13 +600,14 @@ alias:
     - _PromptCreateRequest_parameters
     - _UserCreate_result_generate_default_parameters
     - _UserPatch_result_generate_default_parameters
-    - _RequestChatConversationIdRetrieve_results_request_parameters
     - _PromptRetrieve_results_parameters
     - _PromptIdRetrieve_result_parameters
     - _UserRetrieve_result_generate_default_parameters
     - _PromptIdPatch_result_parameters
     - _PromptIdUpdate_result_parameters
     - _PromptCreate_result_parameters
+    - _EvaluationCreateRequest_parameters
+    - _EvaluationPreviewCreateRequest_parameters
   TextGenerationParametersFromDB:
     - _TextGenerationCreateRequest_parameters
     - _TextGenerationStreamCreateRequest_parameters
@@ -424,7 +617,6 @@ alias:
     - _UserCreate_result_generate_default_parameters_decoding_method
     - _PromptCreate_result_parameters_decoding_method
     - _TextChatOutputCreateRequest_parameters_decoding_method
-    - _RequestChatConversationIdRetrieve_results_request_parameters_decoding_method
     - _PromptIdUpdate_result_parameters_decoding_method
     - _TextChatStreamCreateRequest_parameters_decoding_method
     - _PromptRetrieve_results_parameters_decoding_method
@@ -435,6 +627,8 @@ alias:
     - _UserPatch_result_generate_default_parameters_decoding_method
     - _TextGenerationOutputCreateRequest_parameters_decoding_method
     - _PromptCreateRequest_parameters_decoding_method
+    - _EvaluationCreateRequest_parameters_decoding_method
+    - _EvaluationPreviewCreateRequest_parameters_decoding_method
   TextGenerationParametersDecodingMethod:
     - _TextGenerationStreamCreateRequest_parameters_decoding_method
     - _TextGenerationCreateRequest_parameters_decoding_method
@@ -444,7 +638,6 @@ alias:
     - _TextGenerationStreamCreate_results_stop_reason
     - _TextGenerationComparisonCreate_results_result_results_stop_reason
     - _TextChatCreate_results_stop_reason
-    - _RequestChatConversationIdRetrieve_results_response_results_stop_reason
   TextGenerationLimit:
     - _TextGenerationLimitRetrieve_result
   TextEmbeddingParameters:
@@ -454,12 +647,82 @@ alias:
   ConcurrencyLimit:
     - _TextGenerationLimitRetrieve_result_concurrency
     - _TextEmbeddingLimitRetrieve_result_concurrency
+    - _EvaluationLimitRetrieve_result_concurrency
+    - _TimeSerieLimitRetrieve_result_concurrency
   TuneAssetType:
     - _TuneIdContentTypeRetrieveRequestParamsType
   TextTokenizationParameters:
     - _TextTokenizationCreateRequest_parameters
   TextTokenizationReturnOptions:
     - _TextTokenizationCreateRequest_parameters_return_options
+  DeploymentResult:
+    - _DeploymentCreate201_result
+    - _DeploymentRetrieve_results
+    - _DeploymentIdRetrieve_result
+  DeploymentStatus:
+    - _DeploymentRetrieve_results_status
+    - _DeploymentIdRetrieve_result_status
+    - _DeploymentCreate201_result_status
+
+  # EVALUATION -----------------------------------------------------------------
+  EvaluationResult:
+    - _EvaluationRetrieve_results
+    - _EvaluationCreate_result
+    - _EvaluationIdRetrieve_result
+    - _EvaluationExperimentIdRetrieve_result
+  EvaluationInstanceResult:
+    - _EvaluationIdInstanceResultRetrieve_results
+    - _EvaluationPreviewCreate_results
+  EvaluationFile:
+    - _EvaluationCreate_result_file
+    - _EvaluationExperimentCreate_result_file
+    - _EvaluationRetrieve_results_file
+    - _EvaluationExperimentRetrieve_results_file
+    - _EvaluationIdRetrieve_result_file
+    - _EvaluationExperimentIdRetrieve_result_file
+  EvaluationStatus:
+    - _EvaluationRetrieve_results_status
+    - _EvaluationCreate_result_status
+    - _EvaluationIdRetrieve_result_status
+    - _EvaluationExperimentIdRetrieve_result_status
+  EvaluationFieldOperation:
+    - _EvaluationCreateRequest_field_operations
+    - _EvaluationPreviewCreateRequest_field_operations
+  EvaluationOperationType:
+    - _EvaluationCreateRequest_field_operations_type
+    - _EvaluationPreviewCreateRequest_field_operations_type
+  EvaluationPrompt:
+    - _EvaluationRetrieve_results_prompt
+    - _EvaluationCreate_result_prompt
+    - _EvaluationIdRetrieve_result_prompt
+    - _EvaluationExperimentIdRetrieve_result_prompt
+  EvaluationTask:
+    - _EvaluationExperimentCreate_result_task
+    - _EvaluationTemplateRetrieve_results_task
+    - _EvaluationExperimentRetrieve_results_task
+    - _EvaluationTemplateIdRetrieve_result_task
+  EvaluationParentTask:
+    - _EvaluationTemplateIdRetrieve_result_task_parent_task
+    - _EvaluationExperimentCreate_result_task_parent_task
+    - _EvaluationExperimentRetrieve_results_task_parent_task
+    - _EvaluationTemplateRetrieve_results_task_parent_task
+  EvaluationTemplate:
+    - _EvaluationTemplateIdRetrieve_result
+    - _EvaluationTemplateRetrieve_results
+  EvaluationLimit:
+    - _EvaluationLimitRetrieve_result
+  EvaluationSortBy:
+    - _EvaluationRetrieveRequestParamsSortBy
+  EvaluationExperiment:
+    - _EvaluationExperimentCreate_result
+    - _EvaluationExperimentRetrieve_results
+  EvaluationExperimentSortBy:
+    - _EvaluationExperimentRetrieveRequestParamsSortBy
+
+  # TIME SERIES ----------------------------------------------------------------
+  TimeSeriesLimit:
+    - _TimeSerieLimitRetrieve_result
+
   # SYSTEM PROMPTS -------------------------------------------------------------
   SystemPrompt:
     - _SystemPromptCreate_result
@@ -476,24 +739,54 @@ alias:
     - _SystemPromptIdRetrieve_result_type
     - _SystemPromptIdUpdate_result_type
     - _SystemPromptRetrieve_results_type
+  FolderResult:
+    - _FolderRetrieve_results
+    - _FolderCreate_result
+    - _FolderIdPatch_result
+    - _FolderIdRetrieve_result
+    - _FolderIdUpdate_result
   # OTHER PUBLIC SCHEMAS ---------------------------------------------------------
   ModelIdRetrieveResult: [ _ModelIdRetrieve_result ]
   ModelRetrieveResults: [ _ModelRetrieve_results ]
-  PromptRetrieveRequestParamsSource: [ _PromptRetrieveRequestParamsSource ]
+  PromptListSource: [ _PromptRetrieveRequestParamsSource ]
   TextGenerationComparisonCreateRequestRequest: [ _TextGenerationComparisonCreateRequest_request ]
   TextTokenizationCreateResults: [ _TextTokenizationCreate_results ]
   UserCreateResult: [ _UserCreate_result ]
-  UserCreateResultApiKey: [ _UserCreate_result_api_key ]
+  TextSentenceSimilarityCreateResult: [ _TextSentenceSimilarityCreate_results ]
+  UserApiKey: [ _UserCreate_result_api_key ]
   RequestRetrieveResults: [ _RequestRetrieve_results ]
   TuningTypeRetrieveResults: [ _TuningTypeRetrieve_results ]
   TextGenerationComparisonCreateResults: [ _TextGenerationComparisonCreate_results ]
   TextGenerationComparisonCreateResultsResult: [ _TextGenerationComparisonCreate_results_result ]
   TextGenerationComparisonCreateResultsParameters: [ _TextGenerationComparisonCreate_results_parameters ]
+  RequestChatConversationIdRetrieveResults: [ _RequestChatConversationIdRetrieve_results ]
   RequestChatConversationIdRetrieveResultsRequest: [ _RequestChatConversationIdRetrieve_results_request ]
   RequestChatConversationIdRetrieveResultsResponse: [ _RequestChatConversationIdRetrieve_results_response ]
-  RequestChatConversationIdRetrieveResults: [ _RequestChatConversationIdRetrieve_results ]
+
+any_dict_to_class:
+  # Force the creation of class for plain dictionaries (mainly for backward compatibility)
+  - _RequestChatConversationIdRetrieve_results_request
+  - _RequestChatConversationIdRetrieve_results_response
 
 private_operations: [ ] # Response and Query schemas are public by default, but can be hidden if specified here
+
+endpoint_mapping:
+  # Rename endpoint to change the names of resulted schemas
+  /v2/beta/text/classification: '/v2/text/classification'
+  /v2/beta/text/rerank: '/v2/text/rerank'
+  /v2/beta/text/sentence-similarity: '/v2/text/sentence-similarity'
+  /v2/tunes/import: '/v2/tunes/from-file'
+  /v2/beta/time_series/forecasting: '/v2/time_series/forecasting'
+  /v2/beta/time_series/limits: '/v2/time_series/limits'
+  /v2/beta/evaluations: '/v2/evaluations'
+  /v2/beta/evaluations/{id}: '/v2/evaluations/{id}'
+  /v2/beta/evaluations/{id}/instance_results: '/v2/evaluations/{id}/instance_results'
+  /v2/beta/evaluations/limits: '/v2/evaluations/limits'
+  /v2/beta/evaluations/templates: '/v2/evaluations/templates'
+  /v2/beta/evaluations/templates/{id}: '/v2/evaluations/templates/{id}'
+  /v2/beta/evaluations/preview: '/v2/evaluations/preview'
+  /v2/beta/evaluations/experiments: '/v2/evaluations/experiments'
+  /v2/beta/evaluations/experiments/{id}: '/v2/evaluations/experiments/{id}'
 
 replace:
   # Override schema by a different equivalent schema
@@ -515,6 +808,17 @@ replace:
   'LengthPenalty': 'TextGenerationParametersLengthPenalty'
   'DecodingMethod': 'TextGenerationParametersDecodingMethod'
   'ModerationHAP': 'TextGenerationModerationHAP'
-  'ModerationStigma': 'TextGenerationModerationStigma'
-  'ModerationImplicitHate': 'TextGenerationModerationImplicitHate'
-  'ModerationParameters': 'TextGenerationModerationParameters'
+  'ModerationSocialBias': 'TextGenerationModerationSocialBias'
+  'ModerationParameters':
+    source_name: 'TextGenerationModerationParameters'
+    force: true
+  'ModerationSocialBiasInput': 'ModerationSocialBiasInputTmp'
+  'ModerationSocialBiasOutput': 'ModerationSocialBiasOutputTmp'
+  'ModerationHAPInput': 'ModerationHAPInputTmp'
+  'ModerationHAPOutput': 'ModerationHAPOutputTmp'
+
+model_extensions:
+  # Override generated classes by adding custom properties
+
+  PromptModerationParameters:
+    custom_base_class: ModerationParameters

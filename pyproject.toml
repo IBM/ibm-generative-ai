@@ -33,16 +33,18 @@ folders = [
 [tool.poetry.dependencies]
 python = "^3.9"
 pydantic = "^2.0.0"
-httpx = "^0.26.0"
+httpx = "^0.27.0"
 aiolimiter = "^1.1.0"
-httpx-sse = "^0.3.0"
+httpx-sse = "^0.4.0"
 langchain-core = { version = "^0.1.0", optional = true }
 pyyaml = { version = "^6.0.0", optional = true }
-datasets = { version = "^2.13.0",  optional = true }
 transformers = { version = "^4.33.3",  optional = true, extras=["agents"] }
-llama-index = { version = "^0.9.15",  optional = true }
+llama-index-core = { version = "^0.10.0", optional = true }
 uvicorn = { version = "^0.22.0",  optional = true }
 fastapi = { version = "^0.100.0",  optional = true }
+deprecated = "^1.2.14"
+lm-eval = { version = "^0.4.2",  optional = true }
+tqdm = { version = "^4.66.1", optional = true }
 
 [tool.black] # left for IDE compatibility (pycharm)
 line-length = 120
@@ -50,6 +52,9 @@ line-length = 120
 [tool.ruff]
 line-length = 120
 extend-exclude = ['src/genai/_version.py']
+target-version = "py39"
+
+[tool.ruff.lint]
 select = [ # See docs for available rules: https://docs.astral.sh/ruff/rules
   "B",   # bugbear (assignment to os.environ, assert False, ...)
   "C",   # mccabe (too complex structures, ...)
@@ -59,13 +64,12 @@ select = [ # See docs for available rules: https://docs.astral.sh/ruff/rules
   "W",   # pycodestyle (indentation, whitespace, ...)
   "T20", # flake8-print (print found, pprint found, ...)
 ]
-target-version = "py39"
 
 [tool.ruff.lint.mccabe]
 max-complexity = 18
 
-[tool.ruff.per-file-ignores]
-"__init__.py" = ["F401", "F403"] # Ignore import violations in all `__init__.py` files.
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "F403", "F405"] # Ignore import violations in all `__init__.py` files.
 "examples/**/*.py" = ["T201", "T203", "B904"] # Examples can include print and pprint, ignore exception propagation
 "src/genai/schema/_api.py" = ["E501"] # Generated can include long lines
 "tests/unit/docs_examples_generator/assets/**/*.py" = ["T201"] # Allow prints
@@ -74,46 +78,50 @@ max-complexity = 18
 known-first-party = ["genai"]
 
 [tool.poetry.group.dev.dependencies]
-python-dotenv = "^1.0.0"
-pytest = "^7.3.2"
+python-dotenv = "^1.0.1"
+datasets = "^2.18.0"
+pytest = "^8.1.1"
 pytest-dotenv = "^0.5.2"
-pre-commit = "^3.3.2"
+pre-commit = "^3.6.2"
 pytest-cov = "^4.1.0"
-sphinx = "^6.1.3"
-furo = "^2022.12.7"
+sphinx = "^7.2.6"
+furo = "^2024.1.29"
 pytest-asyncio = "^0.21.1"
-pytest-mock = "^3.10.0"
-pytest-httpx = "^0.28.0"
+pytest-mock = "^3.14.0"
 datamodel-code-generator = { version="^0.25.2", extras=["http"] }
-vcrpy = "^6.0.0"
+vcrpy = "^6.0.1"
 pytest-recording = "^0.13.1"
 pytest-subtests = "^0.11.0"
-autodoc_pydantic = "^2.0.0"
-ruff = "^0.1.11"
+autodoc_pydantic = "^2.1.0"
+ruff = "^0.3.3"
 poethepoet = "^0.24.4"
-pandas = "^2.0.0"
-pyyaml = "^6.0.0"
-tqdm = "^4.66.1"
+pandas = "^2.2.1"
+pyyaml = "^6.0.1"
+tqdm = "^4.66.2"
 sphinx-toolbox = "3.5.0"
 git-changelog = "2.4.0"
 gitchangelog = "3.0.4"
 pystache = "0.6.5"
 tabulate = "0.9.0"
 m2r = "^0.3.1"
-sphinx-multiversion = { "git" = "https://github.com/samtygier-stfc/sphinx-multiversion.git", branch = "prebuild_command" }
+sphinx-multiversion = {path = "external/sphinx_multiversion"}
 sphinx-copybutton = "^0.5.2"
 sphinx-notfound-page = "^1.0.0"
 langchain = "^0.1.4"
+sqlalchemy = "^2.0.28"
+pytest-httpx = "^0.30.0"
 
 
 [tool.poetry.extras]
 langchain = ["langchain-core", "pyyaml"]
 huggingface = ["datasets", "transformers"]
-llama-index = ["llama-index"]
+llama-index = ["llama-index-core"]
+lm-eval = ["lm-eval", "tqdm"]
 localserver = ["uvicorn", "fastapi"]
 
 [tool.pytest.ini_options]
 addopts = "--cov --cov-report term-missing --cov-fail-under 80 -v"
+testpaths = ["tests"]
 markers = [
     "unit",
     "integration",
@@ -146,6 +154,10 @@ warn_required_dynamic_aliases = true
 [tool.poe.tasks.install]
 help = "Install dependencies for the SDK core and it's extensions"
 cmd = "poetry install --all-extras --without dev"
+
+[tool.poe.tasks.lm_eval]
+help = "Run lm_eval with support for genai models"
+cmd = "python -m genai.extensions.lm_eval"
 
 [tool.poe.tasks.install-dev]
 help = "Install dependencies and related tooling for development"
@@ -241,7 +253,7 @@ args = [
 
     [[tool.poe.tasks.changelog.switch]]
     case = "release"
-    help = "Remove build"
+    help = "Sets version to the latest entry in the CHANGELOG"
     env = { "PYTHONPATH" = "scripts" }
     cmd = "python scripts/docs_changelog_generator/release_changelog.py $version"
 

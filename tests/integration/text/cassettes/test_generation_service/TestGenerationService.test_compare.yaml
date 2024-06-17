@@ -2,11 +2,9 @@ interactions:
 - request:
     body: '{"compare_parameters": {"length_penalty": [{"decay_factor": 1.2, "start_index":
       50}, {"decay_factor": 1.5, "start_index": 50}], "temperature": [0.5, 1.0]},
-      "name": "my comparison", "request": {"input": "hahaha", "model_id": "google/flan-t5-xxl",
-      "moderations": {"hap": {"input": true, "output": true, "send_tokens": true,
-      "threshold": 0.75}, "implicit_hate": {"input": true, "output": true, "send_tokens":
-      true, "threshold": 0.7}, "stigma": {"input": true, "output": true, "send_tokens":
-      false, "threshold": 0.75}}}}'
+      "name": "my comparison", "request": {"input": "hahaha", "model_id": "google/flan-t5-xl",
+      "moderations": {"hap": {"input": {"enabled": true, "send_tokens": true, "threshold":
+      0.7}, "output": {"enabled": true, "send_tokens": true, "threshold": 0.7}}}}}'
     headers:
       accept:
       - '*/*'
@@ -15,34 +13,32 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '516'
+      - '406'
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/generation/comparison?version=2023-11-22
+    uri: https://api.com/v2/text/generation/comparison?version=2024-03-19
   response:
     body:
-      string: '{"results":[{"parameters":{"length_penalty":{"decay_factor":1.2,"start_index":50},"temperature":0.5},"result":{"id":"abc352c4-53ab-4dd7-ba4f-50c2b0d3b5f9","model_id":"google/flan-t5-xxl","created_at":"2024-01-25T15:50:45.502Z","results":[{"generated_text":"I
-        love this song. I think it''s about a mother''s love for her child","generated_token_count":20,"input_token_count":4,"stop_reason":"max_tokens","seed":501745424,"moderation":{"hap":[],"implicit_hate":[],"stigma":[]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.2,"start_index":50},"temperature":1},"result":{"id":"abc352c4-53ab-4dd7-ba4f-50c2b0d3b5f9","model_id":"google/flan-t5-xxl","created_at":"2024-01-25T15:50:45.336Z","results":[{"generated_text":"damn
-        did that smell good or what","generated_token_count":8,"input_token_count":4,"stop_reason":"eos_token","seed":1044649787,"moderation":{"hap":[],"implicit_hate":[],"stigma":[{"score":0.7729578018188477,"flagged":true,"success":true,"position":{"start":6,"end":37}}]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.5,"start_index":50},"temperature":0.5},"result":{"id":"abc352c4-53ab-4dd7-ba4f-50c2b0d3b5f9","model_id":"google/flan-t5-xxl","created_at":"2024-01-25T15:50:45.498Z","results":[{"generated_text":"I
-        was thinking of getting one too, but I don''t have a car.","generated_token_count":19,"input_token_count":4,"stop_reason":"eos_token","seed":3466942680,"moderation":{"hap":[],"implicit_hate":[{"score":0.9984678626060486,"flagged":true,"tokens":[{"token":"i","index":0,"score":0.015206608921289444},{"token":"was","index":2,"score":0.0077315159142017365},{"token":"thinking","index":6,"score":0.007804704364389181},{"token":"of","index":15,"score":0.012245546095073223},{"token":"getting","index":18,"score":0.04496028646826744},{"token":"one","index":26,"score":0.07228508591651917},{"token":"too","index":30,"score":0.0199744775891304},{"token":",","index":33,"score":0.29813507199287415},{"token":"but","index":35,"score":0.033349525183439255},{"token":"i","index":39,"score":0.023969203233718872},{"token":"don","index":41,"score":0.03990275040268898},{"token":"''","index":44,"score":0.07279741019010544},{"token":"t","index":45,"score":0.027916518971323967},{"token":"have","index":47,"score":0.028143292292952538},{"token":"a","index":52,"score":0.040682338178157806},{"token":"car","index":54,"score":0.06094050034880638},{"token":".","index":57,"score":0.07394959777593613}],"success":true,"position":{"start":6,"end":63}}],"stigma":[]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.5,"start_index":50},"temperature":1},"result":{"id":"abc352c4-53ab-4dd7-ba4f-50c2b0d3b5f9","model_id":"google/flan-t5-xxl","created_at":"2024-01-25T15:50:45.424Z","results":[{"generated_text":"lol
-        ....that''s my black belt in karate","generated_token_count":14,"input_token_count":4,"stop_reason":"eos_token","seed":4109313064,"moderation":{"hap":[],"implicit_hate":[],"stigma":[]}}]}}]}'
+      string: '{"results":[{"parameters":{"length_penalty":{"decay_factor":1.2,"start_index":50},"temperature":0.5},"result":{"id":"c80b7585-7b05-4e7f-8239-ca01bcd1b4e9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:45.396Z","results":[{"generated_text":"         ","generated_token_count":20,"input_token_count":4,"stop_reason":"max_tokens","seed":3344003299,"moderations":{"hap":[]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.2,"start_index":50},"temperature":1},"result":{"id":"c80b7585-7b05-4e7f-8239-ca01bcd1b4e9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:45.401Z","results":[{"generated_text":"Won''t
+        stop fighting, can''t buy the tickety. I''m out!!","generated_token_count":20,"input_token_count":4,"stop_reason":"max_tokens","seed":3766900203,"moderations":{"hap":[]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.5,"start_index":50},"temperature":0.5},"result":{"id":"c80b7585-7b05-4e7f-8239-ca01bcd1b4e9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:45.198Z","results":[{"generated_text":"i
+        can see how that would be scary.","generated_token_count":11,"input_token_count":4,"stop_reason":"eos_token","seed":3783641254,"moderations":{"hap":[]}}]}},{"parameters":{"length_penalty":{"decay_factor":1.5,"start_index":50},"temperature":1},"result":{"id":"c80b7585-7b05-4e7f-8239-ca01bcd1b4e9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:45.106Z","results":[{"generated_text":"LOL....in
+        those shoes...","generated_token_count":7,"input_token_count":4,"stop_reason":"eos_token","seed":373500250,"moderations":{"hap":[]}}]}}]}'
     headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 21 Mar 2024 18:55:45 GMT
+      Keep-Alive:
+      - timeout=72
+      Transfer-Encoding:
+      - chunked
       content-length:
-      - '2925'
+      - '1601'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:50:45 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
-        HttpOnly; Secure; SameSite=None
-      transfer-encoding:
-      - chunked
+      - '2024-03-19'
       vary:
       - accept-encoding
     status:

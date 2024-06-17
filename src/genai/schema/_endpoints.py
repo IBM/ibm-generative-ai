@@ -18,16 +18,148 @@ class ApiKeyRegenerateCreateEndpoint(ApiEndpoint):
     version: str = "2023-11-22"
 
 
+class EvaluationRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/evaluations"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
+class EvaluationCreateEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/evaluations"
+    method: str = "POST"
+    version: str = "2023-11-22"
+
+
+class EvaluationExperimentRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/evaluations/experiments"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
+class EvaluationExperimentCreateEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/evaluations/experiments"
+    method: str = "POST"
+    version: str = "2023-11-22"
+
+
+class EvaluationExperimentIdDeleteEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/evaluations/experiments/{id}"
+    method: str = "DELETE"
+    version: str = "2023-11-22"
+
+
+class EvaluationExperimentIdRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/evaluations/experiments/{id}"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
+class EvaluationLimitRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/evaluations/limits"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
+class EvaluationPreviewCreateEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/evaluations/preview"
+    method: str = "POST"
+    version: str = "2023-11-22"
+
+
+class EvaluationTemplateRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/evaluations/templates"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
+class EvaluationTemplateIdRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/evaluations/templates/{id}"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
+class EvaluationIdDeleteEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/evaluations/{id}"
+    method: str = "DELETE"
+    version: str = "2023-11-22"
+
+
+class EvaluationIdRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/evaluations/{id}"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
+class EvaluationIdInstanceResultRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/evaluations/{id}/instance_results"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
+class TextClassificationCreateEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/text/classification"
+    method: str = "POST"
+    version: str = "2023-11-22"
+
+
+class TextRerankCreateEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/text/rerank"
+    method: str = "POST"
+    version: str = "2023-11-22"
+
+
+class TextSentenceSimilarityCreateEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/text/sentence-similarity"
+    method: str = "POST"
+    version: str = "2023-11-22"
+
+
+class TimeSerieForecastingCreateEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/time_series/forecasting"
+    method: str = "POST"
+    version: str = "2023-11-22"
+
+
+class TimeSerieLimitRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/beta/time_series/limits"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
+class DeploymentRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/deployments"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
+class DeploymentCreateEndpoint(ApiEndpoint):
+    path: str = "/v2/deployments"
+    method: str = "POST"
+    version: str = "2023-11-22"
+
+
+class DeploymentIdDeleteEndpoint(ApiEndpoint):
+    path: str = "/v2/deployments/{id}"
+    method: str = "DELETE"
+    version: str = "2023-11-22"
+
+
+class DeploymentIdRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/deployments/{id}"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
 class FileRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/files"
     method: str = "GET"
-    version: str = "2023-12-15"
+    version: str = "2024-05-13"
 
 
 class FileCreateEndpoint(ApiEndpoint):
     path: str = "/v2/files"
     method: str = "POST"
-    version: str = "2023-12-15"
+    version: str = "2024-05-13"
 
 
 class FileIdDeleteEndpoint(ApiEndpoint):
@@ -39,12 +171,54 @@ class FileIdDeleteEndpoint(ApiEndpoint):
 class FileIdRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/files/{id}"
     method: str = "GET"
-    version: str = "2023-12-15"
+    version: str = "2024-05-13"
+
+
+class FileIdPatchEndpoint(ApiEndpoint):
+    path: str = "/v2/files/{id}"
+    method: str = "PATCH"
+    version: str = "2023-11-22"
 
 
 class FileIdContentRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/files/{id}/content"
     method: str = "GET"
+    version: str = "2023-11-22"
+
+
+class FolderRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/folders"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
+class FolderCreateEndpoint(ApiEndpoint):
+    path: str = "/v2/folders"
+    method: str = "POST"
+    version: str = "2023-11-22"
+
+
+class FolderIdDeleteEndpoint(ApiEndpoint):
+    path: str = "/v2/folders/{id}"
+    method: str = "DELETE"
+    version: str = "2023-11-22"
+
+
+class FolderIdRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/folders/{id}"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
+class FolderIdPatchEndpoint(ApiEndpoint):
+    path: str = "/v2/folders/{id}"
+    method: str = "PATCH"
+    version: str = "2024-01-10"
+
+
+class FolderIdUpdateEndpoint(ApiEndpoint):
+    path: str = "/v2/folders/{id}"
+    method: str = "PUT"
     version: str = "2023-11-22"
 
 
@@ -63,13 +237,13 @@ class ModelIdRetrieveEndpoint(ApiEndpoint):
 class PromptRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/prompts"
     method: str = "GET"
-    version: str = "2024-01-10"
+    version: str = "2024-03-19"
 
 
 class PromptCreateEndpoint(ApiEndpoint):
     path: str = "/v2/prompts"
     method: str = "POST"
-    version: str = "2024-01-10"
+    version: str = "2024-03-19"
 
 
 class PromptIdDeleteEndpoint(ApiEndpoint):
@@ -81,19 +255,19 @@ class PromptIdDeleteEndpoint(ApiEndpoint):
 class PromptIdRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/prompts/{id}"
     method: str = "GET"
-    version: str = "2024-01-10"
+    version: str = "2024-03-19"
 
 
 class PromptIdPatchEndpoint(ApiEndpoint):
     path: str = "/v2/prompts/{id}"
     method: str = "PATCH"
-    version: str = "2024-01-10"
+    version: str = "2024-03-19"
 
 
 class PromptIdUpdateEndpoint(ApiEndpoint):
     path: str = "/v2/prompts/{id}"
     method: str = "PUT"
-    version: str = "2024-01-10"
+    version: str = "2024-03-19"
 
 
 class RequestRetrieveEndpoint(ApiEndpoint):
@@ -103,20 +277,38 @@ class RequestRetrieveEndpoint(ApiEndpoint):
 
 
 class RequestChatConversationIdDeleteEndpoint(ApiEndpoint):
-    path: str = "/v2/requests/chat/{conversationId}"
+    path: str = "/v2/requests/chat/{conversation_id}"
     method: str = "DELETE"
     version: str = "2023-11-22"
 
 
 class RequestChatConversationIdRetrieveEndpoint(ApiEndpoint):
-    path: str = "/v2/requests/chat/{conversationId}"
+    path: str = "/v2/requests/chat/{conversation_id}"
     method: str = "GET"
-    version: str = "2023-11-22"
+    version: str = "2024-03-19"
 
 
 class RequestIdDeleteEndpoint(ApiEndpoint):
     path: str = "/v2/requests/{id}"
     method: str = "DELETE"
+    version: str = "2023-11-22"
+
+
+class RequestIdFeedbackRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/requests/{id}/feedback"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
+class RequestIdFeedbackCreateEndpoint(ApiEndpoint):
+    path: str = "/v2/requests/{id}/feedback"
+    method: str = "POST"
+    version: str = "2023-11-22"
+
+
+class RequestIdFeedbackUpdateEndpoint(ApiEndpoint):
+    path: str = "/v2/requests/{id}/feedback"
+    method: str = "PUT"
     version: str = "2023-11-22"
 
 
@@ -150,6 +342,12 @@ class SystemPromptIdUpdateEndpoint(ApiEndpoint):
     version: str = "2023-11-22"
 
 
+class TagRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/tags"
+    method: str = "GET"
+    version: str = "2023-11-22"
+
+
 class TaskRetrieveEndpoint(ApiEndpoint):
     path: str = "/v2/tasks"
     method: str = "GET"
@@ -159,25 +357,25 @@ class TaskRetrieveEndpoint(ApiEndpoint):
 class TextChatCreateEndpoint(ApiEndpoint):
     path: str = "/v2/text/chat"
     method: str = "POST"
-    version: str = "2024-01-10"
+    version: str = "2024-03-19"
 
 
 class TextChatOutputCreateEndpoint(ApiEndpoint):
     path: str = "/v2/text/chat/output"
     method: str = "POST"
-    version: str = "2024-01-10"
+    version: str = "2024-03-19"
 
 
 class TextChatStreamCreateEndpoint(ApiEndpoint):
     path: str = "/v2/text/chat_stream"
     method: str = "POST"
-    version: str = "2024-01-10"
+    version: str = "2024-03-19"
 
 
 class TextEmbeddingCreateEndpoint(ApiEndpoint):
     path: str = "/v2/text/embeddings"
     method: str = "POST"
-    version: str = "2023-11-22"
+    version: str = "2024-04-15"
 
 
 class TextEmbeddingLimitRetrieveEndpoint(ApiEndpoint):
@@ -195,13 +393,13 @@ class TextExtractionLimitRetrieveEndpoint(ApiEndpoint):
 class TextGenerationCreateEndpoint(ApiEndpoint):
     path: str = "/v2/text/generation"
     method: str = "POST"
-    version: str = "2024-01-10"
+    version: str = "2024-03-19"
 
 
 class TextGenerationComparisonCreateEndpoint(ApiEndpoint):
     path: str = "/v2/text/generation/comparison"
     method: str = "POST"
-    version: str = "2023-11-22"
+    version: str = "2024-03-19"
 
 
 class TextGenerationLimitRetrieveEndpoint(ApiEndpoint):
@@ -213,7 +411,7 @@ class TextGenerationLimitRetrieveEndpoint(ApiEndpoint):
 class TextGenerationOutputCreateEndpoint(ApiEndpoint):
     path: str = "/v2/text/generation/output"
     method: str = "POST"
-    version: str = "2023-11-22"
+    version: str = "2024-03-19"
 
 
 class TextGenerationIdFeedbackRetrieveEndpoint(ApiEndpoint):
@@ -225,25 +423,25 @@ class TextGenerationIdFeedbackRetrieveEndpoint(ApiEndpoint):
 class TextGenerationIdFeedbackCreateEndpoint(ApiEndpoint):
     path: str = "/v2/text/generation/{id}/feedback"
     method: str = "POST"
-    version: str = "2023-11-22"
+    version: str = "2024-02-20"
 
 
 class TextGenerationIdFeedbackUpdateEndpoint(ApiEndpoint):
     path: str = "/v2/text/generation/{id}/feedback"
     method: str = "PUT"
-    version: str = "2023-11-22"
+    version: str = "2024-02-20"
 
 
 class TextGenerationStreamCreateEndpoint(ApiEndpoint):
     path: str = "/v2/text/generation_stream"
     method: str = "POST"
-    version: str = "2024-01-10"
+    version: str = "2024-03-19"
 
 
 class TextModerationCreateEndpoint(ApiEndpoint):
     path: str = "/v2/text/moderations"
     method: str = "POST"
-    version: str = "2023-11-22"
+    version: str = "2024-03-19"
 
 
 class TextTokenizationCreateEndpoint(ApiEndpoint):
@@ -264,8 +462,14 @@ class TuneCreateEndpoint(ApiEndpoint):
     version: str = "2023-11-22"
 
 
-class TuneImportCreateEndpoint(ApiEndpoint):
+class TuneFromFileCreateEndpoint(ApiEndpoint):
     path: str = "/v2/tunes/import"
+    method: str = "POST"
+    version: str = "2023-11-22"
+
+
+class TunePreflightCreateEndpoint(ApiEndpoint):
+    path: str = "/v2/tunes/preflight"
     method: str = "POST"
     version: str = "2023-11-22"
 
@@ -285,6 +489,12 @@ class TuneIdRetrieveEndpoint(ApiEndpoint):
 class TuneIdPatchEndpoint(ApiEndpoint):
     path: str = "/v2/tunes/{id}"
     method: str = "PATCH"
+    version: str = "2023-11-22"
+
+
+class TuneIdContentRetrieveEndpoint(ApiEndpoint):
+    path: str = "/v2/tunes/{id}/content"
+    method: str = "GET"
     version: str = "2023-11-22"
 
 

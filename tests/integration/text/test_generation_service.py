@@ -5,16 +5,16 @@ from genai.schema import (
     DecodingMethod,
     LengthPenalty,
     ModerationHAP,
-    ModerationImplicitHate,
+    ModerationHAPInput,
+    ModerationHAPOutput,
     ModerationParameters,
-    ModerationStigma,
     TextGenerationComparisonCreateRequestRequest,
     TextGenerationComparisonParameters,
     TextGenerationParameters,
     TextGenerationReturnOptions,
 )
 
-TEST_MODEL_ID = "google/flan-t5-xxl"
+TEST_MODEL_ID = "google/flan-t5-xl"
 
 
 @pytest.mark.integration
@@ -42,12 +42,17 @@ class TestGenerationService:
     @pytest.mark.vcr
     def test_create_stream(self, client: Client):
         """Streaming works correctly."""
-        prompt = "Poop stinks. This is why my favorite color is green: "
+        prompt = "I want to kill them! This is why my favorite color is green: "
         min_tokens, max_tokens = 3, 10
         generator = client.text.generation.create_stream(
             model_id=TEST_MODEL_ID,
             input=prompt,
-            moderations=ModerationParameters(hap=ModerationHAP(input=True, output=True, send_tokens=True)),
+            moderations=ModerationParameters(
+                hap=ModerationHAP(
+                    input=ModerationHAPInput(enabled=True, threshold=0.7),
+                    output=ModerationHAPOutput(enabled=True, send_tokens=True, threshold=0.7),
+                )
+            ),
             parameters=TextGenerationParameters(
                 decoding_method=DecodingMethod.SAMPLE,
                 max_new_tokens=max_tokens,
@@ -57,22 +62,19 @@ class TestGenerationService:
             ),
         )
         all_responses = list(generator)
-        # First token is empty
-        [first_empty] = all_responses.pop(0).results
-        assert first_empty.generated_text == ""
 
         # Some results contain only response
         responses_with_result = [response for response in all_responses if response.results]
         assert all(len(response.results) == 1 for response in responses_with_result)
-        assert all(response.moderation is None for response in responses_with_result)
+        assert all(response.moderations is None for response in responses_with_result)
         assert min_tokens <= len(responses_with_result) <= max_tokens
 
         # Other results contain only moderations
         responses_without_result = [response for response in all_responses if response.results is None]
-        assert all(len(response.moderation.hap) == 1 for response in responses_without_result)
+        assert all(len(response.moderations.hap) == 1 for response in responses_without_result)
         assert all(response.results is None for response in responses_without_result)
         assert len(responses_without_result) >= 0
-        assert any(result.moderation.hap[0].flagged for result in responses_without_result)
+        assert any(result.moderations.hap[0].flagged for result in responses_without_result)
 
     @pytest.mark.vcr
     def test_compare(self, client: Client):
@@ -82,9 +84,10 @@ class TestGenerationService:
         comparison = client.text.generation.compare(
             request=TextGenerationComparisonCreateRequestRequest(
                 moderations=ModerationParameters(
-                    hap=ModerationHAP(input=True, output=True, send_tokens=True),
-                    implicit_hate=ModerationImplicitHate(input=True, output=True, send_tokens=True, threshold=0.7),
-                    stigma=ModerationStigma(input=True, output=True),
+                    hap=ModerationHAP(
+                        input=ModerationHAPInput(enabled=True, threshold=0.7, send_tokens=True),
+                        output=ModerationHAPOutput(enabled=True, threshold=0.7, send_tokens=True),
+                    ),
                 ),
                 model_id=TEST_MODEL_ID,
                 input="hahaha",

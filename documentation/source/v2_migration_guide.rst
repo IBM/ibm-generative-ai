@@ -50,6 +50,20 @@ What has changed?
 - ``Model`` class has been replaced with a more general ``Client``, an entry point for all services.
 - ``Options`` class has been removed, as every parameter is unpacked at the method level.
 
+Moderations
+-----------
+- Stigma (`ModerationStigma` class) has been replaced by Social Bias (`ModerationSocialBias` class).
+- Implicit Hate (`ModerationImplicitHate` class) has been replaced by Social Bias (`ModerationSocialBias` class).
+
+❌ Old Way
+
+.. code:: python
+
+    from genai.schema import ModerationHAP
+
+    ModerationHAP(input=True, output=True, threshold=0.8)
+
+
 
 Text Generation
 ---------------
@@ -386,7 +400,7 @@ Tunes
 .. code:: python
 
    from genai import Client, Credentials
-   from genai.schema import TuneStatus, TuningType, TuneAssetType
+   from genai.schema import TuneStatus, TuneAssetType
 
    credentials = Credentials.from_env()
    client = Client(credentials=credentials)
@@ -395,13 +409,13 @@ Tunes
    tune_methods = client.tune.types()
    tune_detail = client.tune.retrieve("tune_id")
    tune_content = client.tune.read(id="tune_id", type=TuneAssetType.LOGS) # or type="logs"
-   upload_tune = client.tune.create(name="my tuned model", model_id="google/flan-ul2", task_id="generation", tuning_type=TuningType.PROMPT_TUNING) # tuning_type="prompt_tuning"
+   upload_tune = client.tune.create(name="my tuned model", model_id="google/flan-ul2", task_id="generation", tuning_type="prompt_tuning")
    client.tune.delete("tune_id")
 
 📝 Notes
 
 - ``task`` is now ``task_id``
-- ``method_id`` is now ``tuning_type``, the list of allowable values has changed (use ``TuningType`` enum or values from the documentation; accepted values are changing from ``pt`` and ``mpt`` to ``prompt_tuning`` and ``multitask_prompt_tuning``).
+- ``method_id`` is now ``tuning_type``, the list of allowable values has changed (see the documentation for allowed values).
 - ``init_method`` enums are changing from ``SCREAMING_SNAKE_CASE`` to ``snake_case`` (e.g. ``RANDOM`` -> ``random``)
 - ``status`` enums are changing from ``SCREAMING_SNAKE_CASE`` to ``snake_case`` (e.g. ``COMPLETED`` -> ``completed``), you can use the prepared ``TuneStatus`` enum.
 

@@ -2,7 +2,7 @@
 playground/
 
 # Downloaded data for examples
-examples/.data
+examples/**/.data/
 
 # Pickle files
 *.pkl

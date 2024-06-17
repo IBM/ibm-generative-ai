@@ -1,13 +1,14 @@
+import functools
 import hashlib
 import json
 import re
 from collections import Counter, defaultdict
 from collections.abc import Mapping
-from typing import Any, Union
+from typing import Any, Optional, Union
 
 import yaml
 from _common.logger import get_logger
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from types_generator.utils import from_camel_case_to_snake_case
 
@@ -24,9 +25,19 @@ class SchemaReplacement(BaseModel):
 
 
 class SchemaOverrides(BaseModel):
+    model_config = ConfigDict(
+        extra="forbid",
+        protected_namespaces=(),
+        validate_assignment=True,
+        validate_default=True,
+    )
+
     alias: dict[str, list[str]] = {}
     replace: dict[str, Union[str, SchemaReplacement]] = {}
     private_operations: set[str] = set()
+    endpoint_mapping: dict[str, str] = {}
+    any_dict_to_class: set[str] = set()
+    model_extensions: dict[str, dict[str, Any]] = {}
 
     @property
     def replacements(self) -> dict[str, SchemaReplacement]:
@@ -65,14 +76,27 @@ def _remove_compositions(schema: Any, *, path="", delimiter="."):
 
 
 def path_to_schema_name(path: str, delimiter: str) -> str:
+    """
+    Example::
+
+        /users/{id}/do-something -> userIdDoSomething
+    """
+
     path_parts = path.replace("/v2/", "").strip(delimiter).split("/")
     path = delimiter.join(part.rstrip("s") for part in path_parts)  # make singular
-    return re.sub(
-        r"\{(.*?)}",
-        lambda m: from_camel_case_to_snake_case(m.groups()[0]),
-        path,
-        flags=re.MULTILINE,
-    )
+
+    def _process_parameters(value: str):
+        return re.sub(
+            r"\{(.*?)}",
+            lambda m: from_camel_case_to_snake_case(m.group(1)),
+            value,
+            flags=re.MULTILINE,
+        )
+
+    def _process_hyphens(value: str):
+        return re.sub(pattern=r"[-](.)", repl=lambda x: f"_{x.group(1)}", string=value, flags=re.MULTILINE)
+
+    return functools.reduce(lambda input, fn: fn(input), [_process_hyphens, _process_parameters], path)
 
 
 def to_classname(snake_string: str, public=False) -> str:
@@ -81,12 +105,14 @@ def to_classname(snake_string: str, public=False) -> str:
 
 
 def _is_any_dictionary(schema: Schema):
-    return schema.get("type") == "object" and not schema.get("properties")
+    return isinstance(schema, dict) and _detect_type(schema) == "object" and not schema.get("properties")
 
 
-def _hash_schema(schema: Schema):
-    if not schema or _is_any_dictionary(schema):
+def _hash_schema(schema: Schema, force_hash: bool = False):
+    is_hashable = force_hash or not _is_any_dictionary(schema)
+    if not is_hashable:
         return None
+
     return hashlib.md5(json.dumps(schema, sort_keys=True, default=str).encode("utf-8")).hexdigest()
 
 
@@ -98,13 +124,24 @@ def _is_plain_string(schema: Schema):
     return schema.get("type") == "string" and schema.get("enum") is None
 
 
-def _process_schema_factory(existing_schemas: dict, name_to_alias: dict[str, str]):  # noqa: C901
+def _detect_type(schema: Schema) -> Optional[str]:
+    type = schema.get("type", None)
+    if type:
+        return type
+    elif schema.get("properties") is not None:
+        return "object"
+    elif schema.get("items") is not None:
+        return "array"
+    else:
+        return None
+
+
+def _process_schema_factory(existing_schemas: dict, name_to_alias: dict[str, str], any_dict_to_class: set[str]):  # noqa: C901
     schema_hashes: dict[str, set[str]] = defaultdict(set)
     schema_names = {""}
     schema_key = "schema"
 
     def _remove_non_important_properties(schema: Schema):
-        schema.pop("additionalProperties", None)
         schema.pop("transform", None)
 
     def process_and_replace(input: Any, name: str) -> Schema:
@@ -118,7 +155,7 @@ def _process_schema_factory(existing_schemas: dict, name_to_alias: dict[str, str
         if isinstance(body, list):
             for idx, v in enumerate(list(body)):
                 _remove_non_important_properties(v)
-                nested_type = v.get("type")
+                nested_type = _detect_type(v)
                 if nested_type == "object" or v.get("enum"):
                     body[idx] = process_and_replace(v, name_nested)
                 elif nested_type == "array" and v.get("items") and not _is_plain_string(v.get("items")):
@@ -142,7 +179,7 @@ def _process_schema_factory(existing_schemas: dict, name_to_alias: dict[str, str
                         continue
 
                     new_name = f"{name_nested}_{k}"
-                    type = v.get("type")
+                    type = _detect_type(v)
 
                     if not type:
                         process_body(new_name, v)
@@ -184,7 +221,7 @@ def _process_schema_factory(existing_schemas: dict, name_to_alias: dict[str, str
                 return
 
         nullable = schema.pop("nullable", False)
-        schema_hash = _hash_schema(schema)
+        schema_hash = _hash_schema(schema, force_hash=schema_name in any_dict_to_class)
         if schema_hash is None:
             return
         elif schema_name not in schema_hashes[schema_hash]:
@@ -323,7 +360,9 @@ def transform_schema(api: Schema, schema_overrides: SchemaOverrides, operation_i
 
     name_to_alias = {name: alias for alias, name_group in schema_overrides.alias.items() for name in name_group}
     process_schema, schema_hashes = _process_schema_factory(
-        existing_schemas=api["components"]["schemas"], name_to_alias=name_to_alias
+        existing_schemas=api["components"]["schemas"],
+        name_to_alias=name_to_alias,
+        any_dict_to_class=schema_overrides.any_dict_to_class,
     )
 
     # Process and improve existing schemas
@@ -333,7 +372,7 @@ def transform_schema(api: Schema, schema_overrides: SchemaOverrides, operation_i
     private_operations = schema_overrides.private_operations.copy()
     # Process all existing paths
     for path, http_methods in sorted(api.get("paths", {}).items()):
-        base_schema_name = path_to_schema_name(path, delimiter="_")
+        base_schema_name = path_to_schema_name(schema_overrides.endpoint_mapping.get(path, path), delimiter="_")
 
         for http_method, properties in sorted(http_methods.items()):
             assert isinstance(properties, dict)
@@ -341,12 +380,14 @@ def transform_schema(api: Schema, schema_overrides: SchemaOverrides, operation_i
             http_method = http_method_mapper[http_method]
             assert http_method
 
-            operation_id = to_classname(f"{base_schema_name}_{http_method.title()}", public=True)
-            if operation_id in private_operations:
-                private_operations.remove(operation_id)
-                operation_id = f"_{operation_id}"
+            endpoint_class_name = to_classname(f"{base_schema_name}_{http_method.title()}", public=True)
+
+            if endpoint_class_name in private_operations:
+                private_operations.remove(endpoint_class_name)
+                endpoint_class_name = f"_{endpoint_class_name}"
+
             # Adding operationId instructs the generator to use given name instead generated one
-            properties["operationId"] = f"{operation_id_prefix}{operation_id}"
+            properties["operationId"] = f"{operation_id_prefix}{endpoint_class_name}"
 
             # Process request parameters
             for parameter in list(properties.get("parameters", [])):

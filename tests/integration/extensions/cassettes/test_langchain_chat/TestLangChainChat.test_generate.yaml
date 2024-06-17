@@ -8,7 +8,8 @@ interactions:
       explain why instead of answering something incorrectly.\n    If you don''t know
       the answer to a question, please don''t share false information.\n    ", "role":
       "system"}, {"content": "What is NLP and how it has evolved over the years?",
-      "role": "user"}], "model_id": "meta-llama/llama-2-70b-chat", "parameters": {}}'
+      "role": "user"}], "model_id": "meta-llama/llama-3-70b-instruct", "parameters":
+      {}}'
     headers:
       accept:
       - '*/*'
@@ -17,29 +18,29 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '730'
+      - '734'
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/chat?version=2024-01-10
+    uri: https://api.com/v2/text/chat?version=2024-03-19
   response:
     body:
-      string: '{"id":"85f21f40-d627-441a-8c66-a10b54bbbcda","model_id":"meta-llama/llama-2-70b-chat","created_at":"2024-01-25T15:50:10.875Z","results":[{"generated_text":"  NLP
-        stands for Natural Language Processing, which is a subfield of artificial
-        intelligence (AI","generated_token_count":20,"input_token_count":160,"stop_reason":"max_tokens","seed":3432310443}],"conversation_id":"a2ec7761-e927-4c9c-943a-49395395f48e"}'
+      string: '{"id":"d8160c0f-36a3-49a0-b001-a3f9cbdb9643","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:27.354Z","results":[{"generated_text":"NLP,
+        or Natural Language Processing, is a subfield of artificial intelligence (AI)
+        that deals","generated_token_count":20,"input_token_count":134,"stop_reason":"max_tokens","seed":2032949123}],"conversation_id":"bcc5d917-5e64-48e0-9047-ac5e032e8f21"}'
     headers:
       content-length:
-      - '409'
+      - '410'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-01-10'
+      - '2024-03-19'
       date:
-      - Thu, 25 Jan 2024 15:50:10 GMT
+      - Mon, 20 May 2024 14:12:27 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=538060a726cc3a9c230fa5d1269356eb; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=fad6ffcbebbca45726eaa14ee11d2c44; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding

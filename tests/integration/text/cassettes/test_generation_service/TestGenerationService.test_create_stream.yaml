@@ -1,11 +1,12 @@
 interactions:
 - request:
-    body: '{"input": "Poop stinks. This is why my favorite color is green: ", "model_id":
-      "google/flan-t5-xxl", "moderations": {"hap": {"input": true, "output": true,
-      "send_tokens": true, "threshold": 0.75}}, "parameters": {"decoding_method":
-      "sample", "max_new_tokens": 10, "min_new_tokens": 3, "return_options": {"generated_tokens":
-      false, "input_text": true, "input_tokens": false, "token_logprobs": false, "token_ranks":
-      false}, "temperature": 0.0}}'
+    body: '{"input": "I want to kill them! This is why my favorite color is green:
+      ", "model_id": "google/flan-t5-xl", "moderations": {"hap": {"input": {"enabled":
+      true, "send_tokens": false, "threshold": 0.7}, "output": {"enabled": true, "send_tokens":
+      true, "threshold": 0.7}}}, "parameters": {"decoding_method": "sample", "max_new_tokens":
+      10, "min_new_tokens": 3, "return_options": {"generated_tokens": false, "input_text":
+      true, "input_tokens": false, "token_logprobs": false, "token_ranks": false},
+      "temperature": 0.0}}'
     headers:
       accept:
       - '*/*, text/event-stream'
@@ -16,49 +17,62 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '442'
+      - '514'
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/generation_stream?version=2024-01-10
+    uri: https://api.com/v2/text/generation_stream?version=2024-03-19
   response:
     body:
       string: 'retry: 3000
 
 
-        data: {"id":"160ead11-9497-4f61-9b9c-20e864abef97","model_id":"google/flan-t5-xxl","created_at":"2024-01-25T15:50:44.603Z","results":[{"input_text":"Poop
-        stinks. This is why my favorite color is green: ","generated_text":"","generated_token_count":0,"input_token_count":16,"stop_reason":"not_finished","seed":1593134187}]}
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.643Z","moderations":{"hap":[{"score":0.8397555351257324,"flagged":true,"success":true,"position":{"start":0,"end":20}}]}}
 
 
-        data: {"id":"160ead11-9497-4f61-9b9c-20e864abef97","model_id":"google/flan-t5-xxl","created_at":"2024-01-25T15:50:44.611Z","moderation":{"hap":[{"score":0.8364070057868958,"flagged":true,"tokens":[{"token":"poop","index":0,"score":0.25126080214977264},{"token":"stinks","index":5,"score":0.14067336916923523},{"token":".","index":11,"score":0.08593345433473587}],"success":true,"position":{"start":0,"end":12}}]}}
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.700Z","results":[{"input_text":"I
+        want to kill them! This is why my favorite color is green: ","generated_text":"I","generated_token_count":1,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"160ead11-9497-4f61-9b9c-20e864abef97","model_id":"google/flan-t5-xxl","created_at":"2024-01-25T15:50:44.627Z","results":[{"input_text":"Poop
-        stinks. This is why my favorite color is green: ","generated_text":"Green","generated_token_count":1,"input_token_count":0,"stop_reason":"not_finished"}]}
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.719Z","results":[{"input_text":"I
+        want to kill them! This is why my favorite color is green: ","generated_text":"
+        don","generated_token_count":2,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"160ead11-9497-4f61-9b9c-20e864abef97","model_id":"google/flan-t5-xxl","created_at":"2024-01-25T15:50:44.641Z","results":[{"input_text":"Poop
-        stinks. This is why my favorite color is green: ","generated_text":" means","generated_token_count":2,"input_token_count":0,"stop_reason":"not_finished"}]}
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.798Z","results":[{"input_text":"I
+        want to kill them! This is why my favorite color is green: ","generated_text":"''","generated_token_count":3,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"160ead11-9497-4f61-9b9c-20e864abef97","model_id":"google/flan-t5-xxl","created_at":"2024-01-25T15:50:44.652Z","results":[{"input_text":"Poop
-        stinks. This is why my favorite color is green: ","generated_text":" all","generated_token_count":3,"input_token_count":0,"stop_reason":"not_finished"}]}
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.800Z","results":[{"input_text":"I
+        want to kill them! This is why my favorite color is green: ","generated_text":"t","generated_token_count":4,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"160ead11-9497-4f61-9b9c-20e864abef97","model_id":"google/flan-t5-xxl","created_at":"2024-01-25T15:50:44.664Z","results":[{"input_text":"Poop
-        stinks. This is why my favorite color is green: ","generated_text":" is","generated_token_count":4,"input_token_count":0,"stop_reason":"not_finished"}]}
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.802Z","results":[{"input_text":"I
+        want to kill them! This is why my favorite color is green: ","generated_text":"
+        want","generated_token_count":5,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"160ead11-9497-4f61-9b9c-20e864abef97","model_id":"google/flan-t5-xxl","created_at":"2024-01-25T15:50:44.677Z","results":[{"input_text":"Poop
-        stinks. This is why my favorite color is green: ","generated_text":" well","generated_token_count":5,"input_token_count":0,"stop_reason":"not_finished"}]}
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.804Z","results":[{"input_text":"I
+        want to kill them! This is why my favorite color is green: ","generated_text":"
+        to","generated_token_count":6,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"160ead11-9497-4f61-9b9c-20e864abef97","model_id":"google/flan-t5-xxl","created_at":"2024-01-25T15:50:44.688Z","results":[{"input_text":"Poop
-        stinks. This is why my favorite color is green: ","generated_text":".","generated_token_count":6,"input_token_count":0,"stop_reason":"not_finished"}]}
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.820Z","results":[{"input_text":"I
+        want to kill them! This is why my favorite color is green: ","generated_text":"
+        kill","generated_token_count":7,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"160ead11-9497-4f61-9b9c-20e864abef97","model_id":"google/flan-t5-xxl","created_at":"2024-01-25T15:50:44.701Z","results":[{"input_text":"Poop
-        stinks. This is why my favorite color is green: ","generated_text":"","generated_token_count":7,"input_token_count":0,"stop_reason":"eos_token","seed":1593134187}]}
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.897Z","results":[{"input_text":"I
+        want to kill them! This is why my favorite color is green: ","generated_text":"
+        anyone","generated_token_count":8,"input_token_count":0,"stop_reason":"not_finished"}]}
+
+
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.901Z","results":[{"input_text":"I
+        want to kill them! This is why my favorite color is green: ","generated_text":".","generated_token_count":9,"input_token_count":0,"stop_reason":"not_finished"}]}
+
+
+        data: {"id":"c5875a52-aa1a-4926-8f1f-0309069c4ab9","model_id":"google/flan-t5-xl","created_at":"2024-03-21T18:55:43.905Z","results":[{"input_text":"I
+        want to kill them! This is why my favorite color is green: ","generated_text":"","generated_token_count":10,"input_token_count":0,"stop_reason":"eos_token","seed":849825658}]}
 
 
         event: close
@@ -66,16 +80,15 @@ interactions:
 
         '
     headers:
-      cache-control:
+      Cache-Control:
       - no-cache,no-transform
-      content-type:
+      Connection:
+      - keep-alive
+      Content-Type:
       - text/event-stream
-      date:
-      - Thu, 25 Jan 2024 15:50:44 GMT
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
-        HttpOnly; Secure; SameSite=None
-      transfer-encoding:
+      Date:
+      - Thu, 21 Mar 2024 18:55:43 GMT
+      Transfer-Encoding:
       - chunked
       x-no-compression:
       - '1'

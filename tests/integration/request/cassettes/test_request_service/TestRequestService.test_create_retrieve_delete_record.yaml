@@ -12,22 +12,22 @@ interactions:
     uri: https://api.com/v2/text/generation/limits?version=2023-11-22
   response:
     body:
-      string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
+      string: '{"result":{"concurrency":{"limit":200,"remaining":200}}}'
     headers:
       cache-control:
       - private
       content-length:
-      - '54'
+      - '56'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
       date:
-      - Thu, 25 Jan 2024 15:50:25 GMT
+      - Wed, 20 Mar 2024 08:27:48 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=6d247d6198597e887510d8e26f4d2793; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=343dd5c30caabf2689c32da1b251e450; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -49,20 +49,20 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/generation?version=2024-01-10
+    uri: https://api.com/v2/text/generation?version=2024-03-19
   response:
     body:
-      string: '{"id":"7904480c-4dfe-4d81-b7cf-d686c9a2ed61","model_id":"google/flan-t5-xl","created_at":"2024-01-25T15:50:25.542Z","results":[{"generated_text":"Happy
-        and satisfied with the night''s movie","generated_token_count":10,"input_token_count":10,"stop_reason":"eos_token","seed":1556817837}]}'
+      string: '{"id":"c46b632a-10e5-4071-ab46-c05cf48863d2","model_id":"google/flan-t5-xl","created_at":"2024-03-20T08:27:49.588Z","results":[{"generated_text":"All
+        right, how are you?","generated_token_count":8,"input_token_count":10,"stop_reason":"eos_token","seed":3231357517}]}'
     headers:
       content-length:
-      - '286'
+      - '266'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-01-10'
+      - '2024-03-19'
       date:
-      - Thu, 25 Jan 2024 15:50:25 GMT
+      - Wed, 20 Mar 2024 08:27:49 GMT
       keep-alive:
       - timeout=72
       vary:
@@ -83,24 +83,24 @@ interactions:
     uri: https://api.com/v2/requests?limit=1&offset=0&status=success&version=2023-11-22
   response:
     body:
-      string: '{"results":[{"id":"7904480c-4dfe-4d81-b7cf-d686c9a2ed61","duration":281,"request":{"input":"Hello
-        Marvin, how are you today?","model_id":"google/flan-t5-xl","parameters":{"max_new_tokens":10}},"status":"success","created_at":"2024-01-25T15:50:26.000Z","response":{"id":"7904480c-4dfe-4d81-b7cf-d686c9a2ed61","results":[{"seed":1556817837,"stop_reason":"eos_token","generated_text":"Happy
-        and satisfied with the night''s movie","input_token_count":10,"generated_token_count":10}],"model_id":"google/flan-t5-xl","created_at":"2024-01-25T15:50:25.542Z"},"version":{"api":"v2","date":"2024-01-10"}}],"total_count":90303}'
+      string: '{"results":[{"id":"c46b632a-10e5-4071-ab46-c05cf48863d2","duration":214,"request":{"input":"Hello
+        Marvin, how are you today?","model_id":"google/flan-t5-xl","parameters":{"max_new_tokens":10}},"status":"success","created_at":"2024-03-20T08:27:50.000Z","response":{"id":"c46b632a-10e5-4071-ab46-c05cf48863d2","results":[{"seed":3231357517,"stop_reason":"eos_token","generated_text":"All
+        right, how are you?","input_token_count":10,"generated_token_count":8}],"model_id":"google/flan-t5-xl","created_at":"2024-03-20T08:27:49.588Z"},"version":{"api":"v2","date":"2024-03-19"}}],"total_count":55795}'
     headers:
       cache-control:
       - private
       content-length:
-      - '615'
+      - '595'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
       date:
-      - Thu, 25 Jan 2024 15:50:30 GMT
+      - Wed, 20 Mar 2024 08:28:00 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=c7a0964ef13502a09f12e4a9f37d8d7f; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -123,7 +123,7 @@ interactions:
       connection:
       - keep-alive
     method: DELETE
-    uri: https://api.com/v2/requests/7904480c-4dfe-4d81-b7cf-d686c9a2ed61?version=2023-11-22
+    uri: https://api.com/v2/requests/c46b632a-10e5-4071-ab46-c05cf48863d2?version=2023-11-22
   response:
     body:
       string: ''
@@ -131,11 +131,11 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Thu, 25 Jan 2024 15:50:30 GMT
+      - Wed, 20 Mar 2024 08:28:01 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=ab61fe594e37cae048810df94b864b98; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=c7a0964ef13502a09f12e4a9f37d8d7f; path=/;
         HttpOnly; Secure; SameSite=None
       x-ratelimit-limit:
       - '25'
@@ -159,33 +159,31 @@ interactions:
     uri: https://api.com/v2/requests?limit=1&offset=0&status=success&version=2023-11-22
   response:
     body:
-      string: '{"results":[{"id":"f6ab357f-a662-4064-a476-1e8b42d60493","duration":681,"request":{"prompt_id":"KzkY6DMNGjZeu4bA","parameters":{"return_options":{"input_text":true,"token_ranks":false,"input_tokens":false,"token_logprobs":false,"generated_tokens":false}}},"status":"success","created_at":"2024-01-25T15:50:24.000Z","response":{"id":"f6ab357f-a662-4064-a476-1e8b42d60493","results":[{"seed":3255482813,"input_text":"Write
-        the recipe for goulash in the style of Shakespeare","stop_reason":"max_tokens","generated_text":"stir
-        together the minced meat, onion, bell pepper, tomatoes, and carrots in a","input_token_count":13,"generated_token_count":20}],"model_id":"google/flan-t5-xl","created_at":"2024-01-25T15:50:23.924Z"},"version":{"api":"v2","date":"2024-01-10"}}],"total_count":90302}'
+      string: '{"results":[{"id":"93181d41-fd12-428a-8e5c-de25f3583881","duration":103,"request":{"input":"2+3=","model_id":"google/flan-t5-xl","parameters":{"temperature":0}},"status":"success","created_at":"2024-03-20T08:27:43.000Z","response":{"id":"93181d41-fd12-428a-8e5c-de25f3583881","results":[{"stop_reason":"eos_token","generated_text":"5","input_token_count":5,"generated_token_count":2}],"model_id":"google/flan-t5-xl","created_at":"2024-03-20T08:27:43.294Z"},"version":{"api":"v2","date":"2024-03-19"}}],"total_count":55794}'
     headers:
       cache-control:
       - private
       content-length:
-      - '786'
+      - '522'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
       date:
-      - Thu, 25 Jan 2024 15:50:35 GMT
+      - Wed, 20 Mar 2024 08:28:03 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=75698ca04a07007fb30d5b2346e9bff6; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
       x-ratelimit-limit:
       - '25'
       x-ratelimit-remaining:
-      - '23'
+      - '24'
       x-ratelimit-reset:
-      - '0'
+      - '1'
     status:
       code: 200
       message: OK

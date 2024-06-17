@@ -15,23 +15,23 @@ interactions:
       content-type:
       - multipart/form-data; boundary=BOUNDARY
     method: POST
-    uri: https://api.com/v2/files?version=2023-12-15
+    uri: https://api.com/v2/files?version=2024-05-13
   response:
     body:
-      string: '{"result":{"id":"09462f6b-7b34-489a-9690-a9e66ce511d0","bytes":42,"file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-01-25T15:50:18.000Z","file_formats":[]}}'
+      string: '{"result":{"id":"4b8c5158-4067-412e-bd46-7dc69cc961c4","bytes":42,"file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-05-21T09:58:51.000Z","updated_at":"2024-05-21T09:58:51.000Z","file_formats":[],"descendants":[],"metadata":null}}'
     headers:
       content-length:
-      - '208'
+      - '281'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2023-12-15'
+      - '2024-05-13'
       date:
-      - Thu, 25 Jan 2024 15:50:18 GMT
+      - Tue, 21 May 2024 09:58:51 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=538060a726cc3a9c230fa5d1269356eb; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=4e65f69b7d93f33a0c51e9f5b1bb64da; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -54,25 +54,25 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/files?search=file.json&version=2023-12-15
+    uri: https://api.com/v2/files?search=file.json&version=2024-05-13
   response:
     body:
-      string: '{"results":[{"id":"09462f6b-7b34-489a-9690-a9e66ce511d0","bytes":"42","file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-01-25T15:50:18.000Z","file_formats":[]}],"total_count":1}'
+      string: '{"results":[{"id":"4b8c5158-4067-412e-bd46-7dc69cc961c4","bytes":"42","file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-05-21T09:58:51.000Z","updated_at":"2024-05-21T09:58:51.000Z","file_formats":[],"descendants":[]}],"total_count":1}'
     headers:
       cache-control:
       - private
       content-length:
-      - '229'
+      - '286'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2023-12-15'
+      - '2024-05-13'
       date:
-      - Thu, 25 Jan 2024 15:50:18 GMT
+      - Tue, 21 May 2024 09:58:51 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=6d247d6198597e887510d8e26f4d2793; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=4e65f69b7d93f33a0c51e9f5b1bb64da; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -95,25 +95,112 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/files/09462f6b-7b34-489a-9690-a9e66ce511d0?version=2023-12-15
+    uri: https://api.com/v2/files/4b8c5158-4067-412e-bd46-7dc69cc961c4?version=2024-05-13
   response:
     body:
-      string: '{"result":{"id":"09462f6b-7b34-489a-9690-a9e66ce511d0","bytes":"42","file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-01-25T15:50:18.000Z","file_formats":[]}}'
+      string: '{"result":{"id":"4b8c5158-4067-412e-bd46-7dc69cc961c4","bytes":"42","file_name":"file.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-05-21T09:58:51.000Z","updated_at":"2024-05-21T09:58:51.000Z","file_formats":[],"descendants":[]}}'
     headers:
       cache-control:
       - private
       content-length:
-      - '210'
+      - '267'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2023-12-15'
+      - '2024-05-13'
       date:
-      - Thu, 25 Jan 2024 15:50:18 GMT
+      - Tue, 21 May 2024 09:58:52 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=700aa432de0b7f84c4af912348660ec2; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=1cfd42cdc433b82fbac42f242129345f; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/files/4b8c5158-4067-412e-bd46-7dc69cc961c4/content?version=2023-11-22
+  response:
+    body:
+      string: '{"data": "EXAMPLE TEMPLATE {{variable}}}"}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '42'
+      content-type:
+      - application/json
+      content-version:
+      - '2023-11-22'
+      date:
+      - Tue, 21 May 2024 09:58:52 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=1cfd42cdc433b82fbac42f242129345f; path=/;
+        HttpOnly; Secure; SameSite=None
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '23'
+      x-ratelimit-reset:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: "--BOUNDARY\r\nContent-Disposition: form-data; name=\"file\"; filename=\"file_updated.json\"\r\nContent-Type:
+      application/json\r\n\r\n{\"data\": \"UPDATED EXAMPLE TEMPLATE {{variable}}}\"}\r\n--BOUNDARY--\r\n"
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '235'
+      content-type:
+      - multipart/form-data; boundary=BOUNDARY
+    method: PATCH
+    uri: https://api.com/v2/files/4b8c5158-4067-412e-bd46-7dc69cc961c4?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"id":"4b8c5158-4067-412e-bd46-7dc69cc961c4","bytes":50,"file_name":"file_updated.json","purpose":"template","storage_provider_location":"us-east","created_at":"2024-05-21T09:58:51.000Z","updated_at":"2024-05-21T09:58:53.468Z","file_formats":[],"descendants":[]}}'
+    headers:
+      content-length:
+      - '273'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Tue, 21 May 2024 09:58:53 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=21a244f2f28a29d7a8687c9fac987714; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
@@ -136,25 +223,25 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/files/09462f6b-7b34-489a-9690-a9e66ce511d0/content?version=2023-11-22
+    uri: https://api.com/v2/files/4b8c5158-4067-412e-bd46-7dc69cc961c4/content?version=2023-11-22
   response:
     body:
-      string: '{"data": "EXAMPLE TEMPLATE {{variable}}}"}'
+      string: '{"data": "UPDATED EXAMPLE TEMPLATE {{variable}}}"}'
     headers:
       cache-control:
       - private
       content-length:
-      - '42'
+      - '50'
       content-type:
       - application/json
       content-version:
       - '2023-11-22'
       date:
-      - Thu, 25 Jan 2024 15:50:19 GMT
+      - Tue, 21 May 2024 09:58:54 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=6d247d6198597e887510d8e26f4d2793; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=4e65f69b7d93f33a0c51e9f5b1bb64da; path=/;
         HttpOnly; Secure; SameSite=None
       transfer-encoding:
       - chunked
@@ -179,7 +266,7 @@ interactions:
       connection:
       - keep-alive
     method: DELETE
-    uri: https://api.com/v2/files/09462f6b-7b34-489a-9690-a9e66ce511d0?version=2023-11-22
+    uri: https://api.com/v2/files/4b8c5158-4067-412e-bd46-7dc69cc961c4?version=2023-11-22
   response:
     body:
       string: ''
@@ -187,11 +274,11 @@ interactions:
       content-version:
       - '2023-11-22'
       date:
-      - Thu, 25 Jan 2024 15:50:19 GMT
+      - Tue, 21 May 2024 09:58:54 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=ab61fe594e37cae048810df94b864b98; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=4e65f69b7d93f33a0c51e9f5b1bb64da; path=/;
         HttpOnly; Secure; SameSite=None
       x-ratelimit-limit:
       - '25'
@@ -212,7 +299,7 @@ interactions:
       connection:
       - keep-alive
     method: GET
-    uri: https://api.com/v2/files?search=file.json&version=2023-12-15
+    uri: https://api.com/v2/files?search=file.json&version=2024-05-13
   response:
     body:
       string: '{"results":[],"total_count":0}'
@@ -224,13 +311,13 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2023-12-15'
+      - '2024-05-13'
       date:
-      - Thu, 25 Jan 2024 15:50:20 GMT
+      - Tue, 21 May 2024 09:58:55 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=538060a726cc3a9c230fa5d1269356eb; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=4e65f69b7d93f33a0c51e9f5b1bb64da; path=/;
         HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding

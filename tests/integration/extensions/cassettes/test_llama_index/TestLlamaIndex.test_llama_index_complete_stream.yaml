@@ -16,44 +16,53 @@ interactions:
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/generation_stream?version=2024-01-10
+    uri: https://api.com/v2/text/generation_stream?version=2024-03-19
   response:
     body:
       string: 'retry: 3000
 
 
-        data: {"id":"f8ea0183-ae40-407f-9741-f41bf013f65b","model_id":"google/flan-ul2","created_at":"2024-01-25T15:50:14.497Z","results":[{"generated_text":"","generated_token_count":0,"input_token_count":13,"stop_reason":"not_finished","seed":372882511}]}
+        data: {"id":"7b3040e7-9917-467d-8f1f-dd3ab51369e5","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:26.916Z","results":[{"generated_text":"","generated_token_count":0,"input_token_count":13,"stop_reason":"not_finished","seed":3165970672}]}
 
 
-        data: {"id":"f8ea0183-ae40-407f-9741-f41bf013f65b","model_id":"google/flan-ul2","created_at":"2024-01-25T15:50:14.539Z","results":[{"generated_text":"Hey","generated_token_count":1,"input_token_count":0,"stop_reason":"not_finished"}]}
+        data: {"id":"7b3040e7-9917-467d-8f1f-dd3ab51369e5","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:26.968Z","results":[{"generated_text":"we","generated_token_count":1,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"f8ea0183-ae40-407f-9741-f41bf013f65b","model_id":"google/flan-ul2","created_at":"2024-01-25T15:50:14.563Z","results":[{"generated_text":",","generated_token_count":2,"input_token_count":0,"stop_reason":"not_finished"}]}
+        data: {"id":"7b3040e7-9917-467d-8f1f-dd3ab51369e5","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:26.995Z","results":[{"generated_text":"
+        have","generated_token_count":2,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"f8ea0183-ae40-407f-9741-f41bf013f65b","model_id":"google/flan-ul2","created_at":"2024-01-25T15:50:14.584Z","results":[{"generated_text":"
-        Mike","generated_token_count":3,"input_token_count":0,"stop_reason":"not_finished"}]}
+        data: {"id":"7b3040e7-9917-467d-8f1f-dd3ab51369e5","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:27.022Z","results":[{"generated_text":"
+        nice","generated_token_count":3,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"f8ea0183-ae40-407f-9741-f41bf013f65b","model_id":"google/flan-ul2","created_at":"2024-01-25T15:50:14.605Z","results":[{"generated_text":".","generated_token_count":4,"input_token_count":0,"stop_reason":"not_finished"}]}
+        data: {"id":"7b3040e7-9917-467d-8f1f-dd3ab51369e5","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:27.050Z","results":[{"generated_text":"
+        weather","generated_token_count":4,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"f8ea0183-ae40-407f-9741-f41bf013f65b","model_id":"google/flan-ul2","created_at":"2024-01-25T15:50:14.626Z","results":[{"generated_text":"
-        Not","generated_token_count":5,"input_token_count":0,"stop_reason":"not_finished"}]}
+        data: {"id":"7b3040e7-9917-467d-8f1f-dd3ab51369e5","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:27.079Z","results":[{"generated_text":"
+        here","generated_token_count":5,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"f8ea0183-ae40-407f-9741-f41bf013f65b","model_id":"google/flan-ul2","created_at":"2024-01-25T15:50:14.647Z","results":[{"generated_text":"
-        so","generated_token_count":6,"input_token_count":0,"stop_reason":"not_finished"}]}
+        data: {"id":"7b3040e7-9917-467d-8f1f-dd3ab51369e5","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:27.107Z","results":[{"generated_text":",","generated_token_count":6,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"f8ea0183-ae40-407f-9741-f41bf013f65b","model_id":"google/flan-ul2","created_at":"2024-01-25T15:50:14.667Z","results":[{"generated_text":"
-        great","generated_token_count":7,"input_token_count":0,"stop_reason":"not_finished"}]}
+        data: {"id":"7b3040e7-9917-467d-8f1f-dd3ab51369e5","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:27.135Z","results":[{"generated_text":"
+        only","generated_token_count":7,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"f8ea0183-ae40-407f-9741-f41bf013f65b","model_id":"google/flan-ul2","created_at":"2024-01-25T15:50:14.688Z","results":[{"generated_text":".","generated_token_count":8,"input_token_count":0,"stop_reason":"not_finished"}]}
+        data: {"id":"7b3040e7-9917-467d-8f1f-dd3ab51369e5","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:27.163Z","results":[{"generated_text":"
+        this","generated_token_count":8,"input_token_count":0,"stop_reason":"not_finished"}]}
 
 
-        data: {"id":"f8ea0183-ae40-407f-9741-f41bf013f65b","model_id":"google/flan-ul2","created_at":"2024-01-25T15:50:14.707Z","results":[{"generated_text":"","generated_token_count":9,"input_token_count":0,"stop_reason":"eos_token","seed":372882511}]}
+        data: {"id":"7b3040e7-9917-467d-8f1f-dd3ab51369e5","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:27.189Z","results":[{"generated_text":"
+        rain","generated_token_count":9,"input_token_count":0,"stop_reason":"not_finished"}]}
+
+
+        data: {"id":"7b3040e7-9917-467d-8f1f-dd3ab51369e5","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:27.217Z","results":[{"generated_text":"...","generated_token_count":10,"input_token_count":0,"stop_reason":"not_finished"}]}
+
+
+        data: {"id":"7b3040e7-9917-467d-8f1f-dd3ab51369e5","model_id":"google/flan-ul2","created_at":"2024-03-20T08:27:27.245Z","results":[{"generated_text":"","generated_token_count":11,"input_token_count":0,"stop_reason":"eos_token","seed":3165970672}]}
 
 
         event: close
@@ -66,9 +75,9 @@ interactions:
       content-type:
       - text/event-stream
       date:
-      - Thu, 25 Jan 2024 15:50:14 GMT
+      - Wed, 20 Mar 2024 08:27:26 GMT
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=538060a726cc3a9c230fa5d1269356eb; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=8686c332122cd3e245e38ec96b4437d3; path=/;
         HttpOnly; Secure; SameSite=None
       transfer-encoding:
       - chunked

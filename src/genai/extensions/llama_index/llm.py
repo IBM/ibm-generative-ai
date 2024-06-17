@@ -1,7 +1,7 @@
 import asyncio
 import logging
 from functools import partial
-from typing import Any, List, Optional, Sequence
+from typing import Any, Optional, Sequence
 
 from genai import Client
 from genai._types import EnumLike
@@ -24,8 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 try:
-    from llama_index.callbacks import CallbackManager
-    from llama_index.llms.base import (
+    from llama_index.core.callbacks import CallbackManager
+    from llama_index.core.llms import (
+        LLM,
         ChatMessage,
         ChatResponse,
         ChatResponseAsyncGen,
@@ -34,11 +35,9 @@ try:
         CompletionResponseAsyncGen,
         CompletionResponseGen,
         LLMMetadata,
-        llm_chat_callback,
-        llm_completion_callback,
+        MessageRole,
     )
-    from llama_index.llms.llm import LLM
-    from llama_index.llms.types import MessageRole
+    from llama_index.core.llms.callbacks import llm_chat_callback, llm_completion_callback
 
 
 except ImportError:
@@ -57,7 +56,7 @@ def to_genai_message(message: ChatMessage) -> BaseMessage:
         raise ValueError(f"Got unknown message type {message}")
 
 
-def to_genai_messages(messages: Sequence[ChatMessage]) -> List[BaseMessage]:
+def to_genai_messages(messages: Sequence[ChatMessage]) -> list[BaseMessage]:
     return [to_genai_message(msg) for msg in messages]
 
 
@@ -193,8 +192,8 @@ class IBMGenAILlamaIndex(LLM):
         for response in self.client.text.chat.create_stream(
             **self._prepare_request(self._identifying_chat_params)(messages=to_genai_messages(messages), **kwargs)
         ):
-            if response.moderation:
-                generation_info = create_generation_info_from_response(response, result=response.moderation)
+            if response.moderations:
+                generation_info = create_generation_info_from_response(response, result=response.moderations)
                 message = ChatMessage(role=MessageRole.ASSISTANT, content=text)
                 yield ChatResponse(message=message, delta="", additional_kwargs=generation_info)
 

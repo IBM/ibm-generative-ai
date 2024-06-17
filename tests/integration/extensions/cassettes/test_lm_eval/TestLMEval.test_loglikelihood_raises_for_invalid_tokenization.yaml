@@ -1,0 +1,185 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/text/generation/limits?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"concurrency":{"limit":10,"remaining":9}}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '53'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Mon, 17 Jun 2024 07:42:24 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=7db5985d881384cdbd63030fb254fd5c; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": "The best ice cream flavor is:", "model_id": "mistralai/mixtral-8x7b-instruct-v01",
+      "parameters": {"max_new_tokens": 1, "return_options": {"generated_tokens": false,
+      "input_text": false, "input_tokens": true, "token_logprobs": true, "token_ranks":
+      true}}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '265'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation?version=2024-03-19
+  response:
+    body:
+      string: "{\"id\":\"474c8150-58f7-4c14-851a-d572e25feb6e\",\"model_id\":\"mistralai/mixtral-8x7b-instruct-v01\",\"created_at\":\"2024-06-17T07:42:25.199Z\",\"results\":[{\"generated_text\":\"\\n\",\"generated_token_count\":1,\"input_token_count\":8,\"stop_reason\":\"max_tokens\",\"input_tokens\":[{\"text\":\"<s>\",\"logprob\":0},{\"text\":\"\u2581The\",\"logprob\":-8.631295204162598,\"rank\":19},{\"text\":\"\u2581best\",\"logprob\":-5.441783905029297,\"rank\":18},{\"text\":\"\u2581ice\",\"logprob\":-7.286859512329102,\"rank\":119},{\"text\":\"\u2581cream\",\"logprob\":-0.7050149440765381,\"rank\":1},{\"text\":\"\u2581flavor\",\"logprob\":-5.035078048706055,\"rank\":31},{\"text\":\"\u2581is\",\"logprob\":-0.9011093378067017,\"rank\":1},{\"text\":\":\",\"logprob\":-4.738281726837158,\"rank\":18}]}]}"
+    headers:
+      content-length:
+      - '689'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-03-19'
+      date:
+      - Mon, 17 Jun 2024 07:42:25 GMT
+      keep-alive:
+      - timeout=72
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": ["test str"], "model_id": "mistralai/mixtral-8x7b-instruct-v01",
+      "parameters": {"return_options": {"tokens": true}}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '126'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/tokenization?version=2024-01-10
+  response:
+    body:
+      string: "{\"model_id\":\"mistralai/mixtral-8x7b-instruct-v01\",\"created_at\":\"2024-06-17T07:42:25.665Z\",\"results\":[{\"token_count\":3,\"tokens\":[\"<s>\",\"\u2581test\",\"\u2581str\"]}]}"
+    headers:
+      content-length:
+      - '156'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-01-10'
+      date:
+      - Mon, 17 Jun 2024 07:42:25 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=5d7e6c4c9f4b0936ffdaf6baf9397e96; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/text/generation/limits?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"concurrency":{"limit":10,"remaining":9}}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '53'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Mon, 17 Jun 2024 07:42:26 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=a97573fe5bee8fad2830d1d0a1ae9053; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": "test string", "model_id": "mistralai/mixtral-8x7b-instruct-v01",
+      "parameters": {"max_new_tokens": 1, "return_options": {"generated_tokens": false,
+      "input_text": false, "input_tokens": true, "token_logprobs": true, "token_ranks":
+      true}}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '247'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation?version=2024-03-19
+  response:
+    body:
+      string: "{\"id\":\"ddbaefb0-dfaa-4668-8e04-23ac0e8ad4e4\",\"model_id\":\"mistralai/mixtral-8x7b-instruct-v01\",\"created_at\":\"2024-06-17T07:42:26.283Z\",\"results\":[{\"generated_text\":\"
+        =\",\"generated_token_count\":1,\"input_token_count\":3,\"stop_reason\":\"max_tokens\",\"input_tokens\":[{\"text\":\"<s>\",\"logprob\":0},{\"text\":\"\u2581test\",\"logprob\":-13.459420204162598,\"rank\":958},{\"text\":\"\u2581string\",\"logprob\":-11.238251686096191,\"rank\":588}]}]}"
+    headers:
+      content-length:
+      - '411'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-03-19'
+      date:
+      - Mon, 17 Jun 2024 07:42:26 GMT
+      keep-alive:
+      - timeout=72
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+version: 1

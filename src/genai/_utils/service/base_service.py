@@ -10,6 +10,7 @@ from urllib.parse import quote
 from pydantic import BaseModel, ConfigDict
 
 from genai._utils.api_client import ApiClient
+from genai._utils.deprecation import _print_deprecation_warning
 from genai._utils.general import to_model_instance
 from genai._utils.http_client.httpx_client import AsyncHttpxClient, HttpxClient
 from genai._utils.service.metadata import inherit_metadata
@@ -78,6 +79,9 @@ class BaseService(Generic[TConfig, TServices], ABC):
         self._logger = logging.getLogger(f"{self.__module__}")
         self._api_client = api_client
         self.config = to_model_instance(config, self.Config)
+
+    def _log_deprecation_warning(self, msg: str):
+        return _print_deprecation_warning(f"({self._logger.name}) {msg}")
 
     def _get_http_client(self, **kwargs) -> HttpxClient:
         return self._api_client.get_http_client(**kwargs)

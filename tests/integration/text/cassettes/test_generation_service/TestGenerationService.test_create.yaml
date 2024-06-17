@@ -14,28 +14,25 @@ interactions:
     body:
       string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
     headers:
-      cache-control:
-      - private
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 21 Mar 2024 12:40:35 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
       - '54'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:50:43 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=538060a726cc3a9c230fa5d1269356eb; path=/;
-        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
     status:
       code: 200
       message: OK
 - request:
-    body: '{"input": "Here is a funny short joke about AI: ", "model_id": "google/flan-t5-xxl",
+    body: '{"input": "Here is a funny short joke about AI: ", "model_id": "google/flan-t5-xl",
       "parameters": {"decoding_method": "sample", "max_new_tokens": 40, "min_new_tokens":
       1, "return_options": {"generated_tokens": false, "input_text": true, "input_tokens":
       false, "token_logprobs": false, "token_ranks": false}, "temperature": 0.5, "top_k":
@@ -48,27 +45,29 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '356'
+      - '355'
       content-type:
       - application/json
     method: POST
-    uri: https://api.com/v2/text/generation?version=2024-01-10
+    uri: https://api.com/v2/text/generation?version=2024-03-19
   response:
     body:
-      string: '{"id":"543d6aa1-ab6f-4fa0-9453-a2ffff144127","model_id":"google/flan-t5-xxl","created_at":"2024-01-25T15:50:44.164Z","results":[{"input_text":"Here
-        is a funny short joke about AI: ","generated_text":"A man asks a robot to
-        play chess. The robot asks if he is human.","generated_token_count":25,"input_token_count":12,"stop_reason":"eos_token","seed":837848384}]}'
+      string: '{"id":"1e739012-9612-4e49-ab3d-ea7adaa1eba7","model_id":"google/flan-t5-xl","created_at":"2024-03-21T12:40:36.187Z","results":[{"input_text":"Here
+        is a funny short joke about AI: ","generated_text":"A computer program sent
+        a robot to take a picture of a fox. The robot was happy to be there.","generated_token_count":27,"input_token_count":12,"stop_reason":"eos_token","seed":2634427415}]}'
     headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 21 Mar 2024 12:40:36 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
-      - '361'
+      - '389'
       content-type:
       - application/json; charset=utf-8
       content-version:
-      - '2024-01-10'
-      date:
-      - Thu, 25 Jan 2024 15:50:44 GMT
-      keep-alive:
-      - timeout=72
+      - '2024-03-19'
       vary:
       - accept-encoding
     status:

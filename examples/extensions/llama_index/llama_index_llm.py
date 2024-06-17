@@ -1,8 +1,7 @@
 """Use a model through LLamaIndex"""
 
 from dotenv import load_dotenv
-from llama_index.llms.base import ChatMessage
-from llama_index.llms.types import MessageRole
+from llama_index.core.llms import ChatMessage, MessageRole
 
 from genai import Client
 from genai.credentials import Credentials
@@ -23,7 +22,7 @@ client = Client(credentials=Credentials.from_env())
 
 llm = IBMGenAILlamaIndex(
     client=client,
-    model_id="meta-llama/llama-2-70b-chat",
+    model_id="meta-llama/llama-3-70b-instruct",
     parameters=TextGenerationParameters(
         decoding_method=DecodingMethod.SAMPLE,
         max_new_tokens=100,

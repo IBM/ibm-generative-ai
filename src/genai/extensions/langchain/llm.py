@@ -4,7 +4,7 @@ import asyncio
 import logging
 from functools import partial
 from pathlib import Path
-from typing import Any, Iterator, List, Optional, Union
+from typing import Any, Iterator, Optional, Union
 
 from pydantic import ConfigDict
 from pydantic.v1 import validator
@@ -62,7 +62,7 @@ class LangChainInterface(LLM):
         client = Client(credentials=Credentials.from_env())
         llm = LangChainInterface(
             client=client,
-            model_id="meta-llama/llama-2-70b-chat",
+            model_id="meta-llama/llama-3-70b-instruct",
             parameters=TextGenerationParameters(max_new_tokens=50)
         )
 
@@ -137,7 +137,7 @@ class LangChainInterface(LLM):
     def _call(
         self,
         prompt: str,
-        stop: Optional[List[str]] = None,
+        stop: Optional[list[str]] = None,
         run_manager: Optional[CallbackManagerForLLMRun] = None,
         **kwargs: Any,
     ) -> str:
@@ -146,8 +146,8 @@ class LangChainInterface(LLM):
 
     def _generate(
         self,
-        prompts: List[str],
-        stop: Optional[List[str]] = None,
+        prompts: list[str],
+        stop: Optional[list[str]] = None,
         run_manager: Optional[CallbackManagerForLLMRun] = None,
         **kwargs: Any,
     ) -> LLMResult:
@@ -207,8 +207,8 @@ class LangChainInterface(LLM):
 
     async def _agenerate(
         self,
-        prompts: List[str],
-        stop: Optional[List[str]] = None,
+        prompts: list[str],
+        stop: Optional[list[str]] = None,
         run_manager: Optional[AsyncCallbackManagerForLLMRun] = None,
         **kwargs: Any,
     ) -> LLMResult:
@@ -219,7 +219,7 @@ class LangChainInterface(LLM):
     def _stream(
         self,
         prompt: str,
-        stop: Optional[List[str]] = None,
+        stop: Optional[list[str]] = None,
         run_manager: Optional[CallbackManagerForLLMRun] = None,
         **kwargs: Any,
     ) -> Iterator[CustomGenerationChunk]:
@@ -241,7 +241,7 @@ class LangChainInterface(LLM):
         for response in self.client.text.generation.create_stream(
             **self._prepare_stream_request(input=prompt, stop=stop, **kwargs)
         ):
-            if response.moderation:
+            if response.moderations:
                 generation_info = create_generation_info_from_response(response, result=response.moderation)
                 yield from send_chunk(generation_info=generation_info, response=response)
 
@@ -261,5 +261,5 @@ class LangChainInterface(LLM):
             )
         )
 
-    def get_token_ids(self, text: str) -> List[int]:
+    def get_token_ids(self, text: str) -> list[int]:
         raise NotImplementedError("API does not support returning token ids.")

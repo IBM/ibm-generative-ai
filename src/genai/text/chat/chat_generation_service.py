@@ -79,7 +79,7 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
 
             # Create a new conversation
             response = client.text.chat.create(
-                model_id="meta-llama/llama-2-70b-chat",
+                model_id="meta-llama/llama-3-70b-instruct",
                 messages=[HumanMessage(content="Describe the game Chess?")],
                 parameters=TextGenerationParameters(max_token_limit=100)
             )
@@ -100,11 +100,13 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
             ValidationError: In case of provided parameters are invalid.
         """
         metadata = get_service_action_metadata(self.create)
+        moderations_formatted = to_model_optional(moderations, ModerationParameters, copy=True)
+
         request_body = _TextChatCreateRequest(
             model_id=model_id,
             conversation_id=conversation_id,
             messages=self._prepare_messages(messages) if messages is not None else None,
-            moderations=to_model_optional(moderations, ModerationParameters),
+            moderations=moderations_formatted,
             parameters=to_model_optional(parameters, TextGenerationParameters),
             parent_id=parent_id,
             prompt_id=prompt_id,
@@ -148,7 +150,7 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
 
             # Create a new conversation
             for response in client.text.chat.create_stream(
-                    model_id="meta-llama/llama-2-70b-chat",
+                    model_id="meta-llama/llama-3-70b-instruct",
                     messages=[HumanMessage(content="Describe the game Chess?")],
                     parameters=TextGenerationParameters(max_token_limit=100)
                 ):
@@ -160,11 +162,13 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
             ValidationError: In case of provided parameters are invalid.
         """
         metadata = get_service_action_metadata(self.create_stream)
+        moderations_formatted = to_model_optional(moderations, ModerationParameters, copy=True)
+
         request_body = _TextChatStreamCreateRequest(
             model_id=model_id,
             conversation_id=conversation_id,
             messages=self._prepare_messages(messages) if messages is not None else None,
-            moderations=to_model_optional(moderations, ModerationParameters),
+            moderations=moderations_formatted,
             parameters=to_model_optional(parameters, TextGenerationParameters),
             parent_id=parent_id,
             prompt_id=prompt_id,

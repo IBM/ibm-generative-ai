@@ -12,30 +12,28 @@ interactions:
     uri: https://api.com/v2/models?limit=5&offset=0&version=2023-11-22
   response:
     body:
-      string: '{"results":[{"id":"sentence-transformers/all-minilm-l6-v2","name":"all-minilm-l6-v2","size":"10M","label":"all-minilm-l6-v2
-        (10M)","source_model_id":null,"is_live":false,"token_limits":[{"beam_width":0,"token_limit":256}],"task_ids":["embeddings"]},{"id":"codellama/codellama-34b-instruct","name":"codellama-34b-instruct","size":"34B","label":"codellama-34b-instruct
-        (34B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","token_limits":[{"beam_width":0,"token_limit":16384}],"task_ids":["generation"]},{"id":"codellama/codellama-70b-instruct","name":"codellama-70b-instruct","size":"70B","label":"codellama-70b-instruct
-        (70B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","token_limits":[{"beam_width":0,"token_limit":16384}],"task_ids":["generation"]},{"id":"tiiuae/falcon-180b","name":"falcon-180b","size":"180B","label":"falcon-180b
-        (180B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"tiiuae/falcon-40b","name":"falcon-40b","size":"40B","label":"falcon-40b
-        (40B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]}],"total_count":40}'
+      string: '{"results":[{"id":"flan-t5-xl-mpt-HINOMFFx-2023-05-27-14-24-36","name":"Tune
+        #5 flan-t5-xl (3B)","size":"3B","label":"Tune #5 flan-t5-xl (3B) (3B)","source_model_id":"google/flan-t5-xl","is_live":true,"facets":[{"id":"DEV-test","name":"DEV
+        TEST","type":"model_type"},{"id":"English","name":"English","type":"language"}],"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["classification"]},{"id":"sentence-transformers/all-minilm-l6-v2","name":"all-minilm-l6-v2","size":"10M","label":"all-minilm-l6-v2
+        (10M)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":["rerank","sentence-similarity","embeddings"]},{"id":"baai/bge-large-en-v1.5","name":"bge-large-en-v1.5","size":"335M","label":"bge-large-en-v1.5
+        (335M)","source_model_id":null,"is_live":true,"facets":[],"token_limits":[{"beam_width":0,"token_limit":512}],"task_ids":["embeddings","sentence-similarity","rerank"]},{"id":"cerebras/cerebras-gpt-13b","name":"cerebras-gpt-13b","size":"13B","label":"cerebras-gpt-13b
+        (13B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"salesforce/codegen2-16b","name":"codegen2-16b","size":"16B","label":"codegen2-16b
+        (16B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]}],"total_count":"41"}'
     headers:
-      cache-control:
-      - private
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:11:46 GMT
+      Keep-Alive:
+      - timeout=72
+      Transfer-Encoding:
+      - chunked
       content-length:
-      - '1232'
+      - '1307'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
-      date:
-      - Tue, 30 Jan 2024 11:11:32 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=246adbd6e0bb6b9af5a95b26663655d1; path=/;
-        HttpOnly; Secure; SameSite=None
-      transfer-encoding:
-      - chunked
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -60,62 +58,65 @@ interactions:
     uri: https://api.com/v2/models?offset=5&version=2023-11-22
   response:
     body:
-      string: '{"results":[{"id":"ibm/falcon-40b-8lang-instruct","name":"falcon-40b-8lang-instruct","size":"40B","label":"falcon-40b-8lang-instruct
-        (40B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]},{"id":"google/flan-t5-xl","name":"flan-t5-xl","size":"3B","label":"flan-t5-xl
-        (3B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["classification","summarization","prompt-tuning","generation"]},{"id":"google/flan-t5-xxl","name":"flan-t5-xxl","size":"11B","label":"flan-t5-xxl
-        (11B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"google/flan-ul2","name":"flan-ul2","size":"20B","label":"flan-ul2
-        (20B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"eleutherai/gpt-neox-20b","name":"gpt-neox-20b","size":"20B
-        a","label":"gpt-neox-20b (20B a)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]},{"id":"ibm/granite-13b-chat-v1","name":"granite-13b-chat-v1","size":"13B","label":"granite-13b-chat-v1
-        (13B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation","chat"]},{"id":"ibm/granite-13b-chat-v2","name":"granite-13b-chat-v2","size":"13B","label":"granite-13b-chat-v2
-        (13B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["summarization","chat","classification","prompt-tuning","generation"]},{"id":"ibm/granite-13b-instruct-v1","name":"granite-13b-instruct-v1","size":"13B","label":"granite-13b-instruct-v1
-        (13B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]},{"id":"ibm/granite-13b-instruct-v2","name":"granite-13b-instruct-v2","size":"13B","label":"granite-13b-instruct-v2
-        (13B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["prompt-tuning","classification","summarization","generation"]},{"id":"ibm/granite-20b-5lang-instruct-rc","name":"granite-20b-5lang-instruct-rc","size":"20B","label":"granite-20b-5lang-instruct-rc
-        (20B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]},{"id":"ibm/granite-20b-code-instruct-v1","name":"granite-20b-code-instruct-v1","size":"20B","label":"granite-20b-code-instruct-v1
-        (20B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]},{"id":"ibm/granite-20b-code-instruct-v1-gptq","name":"granite-20b-code-instruct-v1-gptq","size":"20B","label":"granite-20b-code-instruct-v1-gptq
-        (20B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]},{"id":"ibm/granite-3b-code-plus-v1","name":"granite-3b-code-plus-v1","size":"3B","label":"granite-3b-code-plus-v1
-        (3B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]},{"id":"ibm/granite-8b-japanese-instruct-rc","name":"granite-8b-japanese-instruct-rc","size":"8B","label":"granite-8b-japanese-instruct-rc
-        (8B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"core42/jais-30b-chat-v1","name":"jais-30b-chat-v1","size":"30B","label":"jais-30b-chat-v1
-        (30B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":2048}],"task_ids":["generation"]},{"id":"elyza/japanese-llama-2-7b-fast","name":"japanese-llama-2-7b-fast","size":"7B","label":"japanese-llama-2-7b-fast
-        (7B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"elyza/japanese-llama-2-7b-instruct","name":"japanese-llama-2-7b-instruct","size":"7B","label":"japanese-llama-2-7b-instruct
-        (7B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"meta-llama/llama-2-13b","name":"llama-2-13b","size":"13B","label":"llama-2-13b
-        (13B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation","prompt-tuning","summarization","classification"]},{"id":"meta-llama/llama-2-13b-chat","name":"llama-2-13b-chat","size":"13B","label":"llama-2-13b-chat
-        (13B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["chat","generation","prompt-tuning","classification","summarization"]},{"id":"meta-llama/llama-2-70b","name":"llama-2-70b","size":"70B","label":"llama-2-70b
-        (70B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"meta-llama/llama-2-70b-chat","name":"llama-2-70b-chat","size":"70B","label":"llama-2-70b-chat
-        (70B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation","chat"]},{"id":"ibm-meta/llama-2-70b-chat-q","name":"llama-2-70b-chat-q","size":"70B","label":"llama-2-70b-chat-q
-        (70B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation","prompt-tuning"]},{"id":"meta-llama/llama-2-7b","name":"llama-2-7b","size":"7B","label":"llama-2-7b
-        (7B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["prompt-tuning","generation"]},{"id":"meta-llama/llama-2-7b-chat","name":"llama-2-7b-chat","size":"7B","label":"llama-2-7b-chat
-        (7B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["prompt-tuning","chat","generation"]},{"id":"mistralai/mistral-7b-instruct-v0-2","name":"mistral-7b-instruct-v0-2","size":"7B","label":"mistral-7b-instruct-v0-2
-        (7B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8096}],"task_ids":["generation","chat"]},{"id":"thebloke/mixtral-8x7b-instruct-v0-1-gptq","name":"mixtral-8x7b-instruct-v0-1-gptq","size":"8x7B","label":"mixtral-8x7b-instruct-v0-1-gptq
-        (8x7B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["chat","generation"]},{"id":"ibm-mistralai/mixtral-8x7b-instruct-v0-1-q","name":"mixtral-8x7b-instruct-v0-1-q","size":"8x7B","label":"mixtral-8x7b-instruct-v0-1-q
-        (8x7B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["chat","generation"]},{"id":"thebloke/mixtral-8x7b-v0-1-gptq","name":"mixtral-8x7b-v0-1-gptq","size":"8x7B","label":"mixtral-8x7b-v0-1-gptq
-        (8x7B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]},{"id":"ibm/mpt-7b-instruct","name":"mpt-7b-instruct2","size":"7B","label":"mpt-7b-instruct2
-        (7B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":2048}],"task_ids":["generation"]},{"id":"bigscience/mt0-xxl","name":"mt0-xxl","size":"13B","label":"mt0-xxl
-        (13B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"sarvamai/openhathi-7b-hi-v0-1-base","name":"openhathi-7b-hi-v0-1-base","size":"7B","label":"openhathi-7b-hi-v0-1-base
-        (7B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"kaist-ai/prometheus-13b-v1","name":"prometheus-13b-v1","size":"13B","label":"prometheus-13b-v1
-        (13B)","source_model_id":null,"is_live":true,"warning":"This model is approved
-        for experimental use only and is mainly intended to test LLM as a judge evaluation.
-        You should not use this model to improve the performance of other models.","token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"ibm/slate.125m.english.rtrvr","name":"slate.125m.english.rtrvr","size":"125M","label":"slate.125m.english.rtrvr
-        (125M)","source_model_id":null,"is_live":false,"token_limits":[{"beam_width":0,"token_limit":512}],"task_ids":["embeddings"]},{"id":"ibm/slate.30m.english.rtrvr","name":"slate.30m.english.rtrvr","size":"30M","label":"slate.30m.english.rtrvr
-        (30M)","source_model_id":null,"is_live":false,"token_limits":[{"beam_width":0,"token_limit":512}],"task_ids":["embeddings"]},{"id":"defog/sqlcoder-34b-alpha","name":"sqlcoder-34b-alpha","size":"34B","label":"sqlcoder-34b-alpha
-        (34B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":16384}],"task_ids":["generation"]}],"total_count":40}'
+      string: '{"results":[{"id":"codellama/codellama-34b-instruct","name":"codellama-34b-instruct","size":"34B","label":"codellama-34b-instruct
+        (34B)","source_model_id":null,"is_live":false,"warning":"{% llamaWarning /%}","facets":[{"id":"Code","name":"Code","type":"model_type"}],"token_limits":[],"task_ids":[]},{"id":"codellama/codellama-70b-instruct","name":"codellama-70b-instruct","size":"70B","label":"codellama-70b-instruct
+        (70B)","source_model_id":null,"is_live":true,"facets":[],"token_limits":[{"beam_width":0,"token_limit":16384}],"task_ids":["generation","chat"]},{"id":"ibm/coga-3b-0.3.8","name":"coga-3b-0.3.8","size":"3B","label":"coga-3b-0.3.8
+        (3B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"allenai/cosmo-xl","name":"cosmo-xl","size":"3B","label":"cosmo-xl
+        (3B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"deepseek-ai/deepseek-coder-33b-instruct","name":"deepseek-coder-33b-instruct","size":"33B","label":"deepseek-coder-33b-instruct
+        (33B)","source_model_id":null,"is_live":true,"warning":"Please review [DeepSeek
+        License Agreement](https://github.com/deepseek-ai/deepseek-coder/blob/main/LICENSE-MODEL)
+        prior to use.","facets":[{"id":"Instruct","name":"Instruct","type":"model_type"},{"id":"Code","name":"Code","type":"model_type"}],"token_limits":[{"beam_width":0,"token_limit":16384}],"task_ids":["generation"]},{"id":"tiiuae/falcon-40b","name":"falcon-40b","size":"40B","label":"falcon-40b
+        (40B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"ibm/falcon-40b-8lang-instruct","name":"falcon-40b-8lang-instruct","size":"40B","label":"falcon-40b-8lang-instruct
+        (40B)","source_model_id":null,"is_live":true,"facets":[],"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]},{"id":"google/flan-t5-xl","name":"flan-t5-xl","size":"3B","label":"flan-t5-xl
+        (3B)","source_model_id":null,"is_live":true,"facets":[{"id":"DEV-test","name":"DEV
+        TEST","type":"model_type"},{"id":"English","name":"English","type":"language"}],"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation","summarization","classification","prompt-tuning"]},{"id":"google/flan-ul2","name":"flan-ul2","size":"20B","label":"flan-ul2
+        (20B)","source_model_id":null,"is_live":true,"facets":[],"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"togethercomputer/gpt-jt-6b-v1","name":"gpt-jt-6b-v1","size":"6B","label":"gpt-jt-6b-v1
+        (6B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"eleutherai/gpt-neox-20b","name":"gpt-neox-20b","size":"20B","label":"gpt-neox-20b
+        (20B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"togethercomputer/gpt-neoxt-chat-base-20b","name":"gpt-neoxt-chat-base-20b","size":"20B","label":"gpt-neoxt-chat-base-20b
+        (20B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":["chat"]},{"id":"ibm/granite-13b-chat-v1","name":"granite-13b-chat-v1","size":"13B","label":"granite-13b-chat-v1
+        (13B)","source_model_id":null,"is_live":false,"warning":"**This model is approved
+        for experimental use only and is mainly intended to test LLM as a judge evaluation.**
+        You should not use this model to improve the performance of other models.","facets":[],"token_limits":[],"task_ids":["chat"]},{"id":"ibm/granite-13b-chat-v2","name":"granite-13b-chat-v2","size":"13B","label":"granite-13b-chat-v2
+        (13B)","source_model_id":null,"is_live":true,"facets":[],"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["classification","chat","summarization","generation","prompt-tuning"]},{"id":"ibm/granite-13b-instruct-v1","name":"granite-13b-instruct-v1","size":"13B","label":"granite-13b-instruct-v1
+        (13B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"ibm/granite-13b-instruct-v2","name":"granite-13b-instruct-v2","size":"13B","label":"granite-13b-instruct-v2
+        (13B)","source_model_id":null,"is_live":true,"facets":[],"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["summarization","classification","generation","prompt-tuning"]},{"id":"ibm/granite-13b-labrador-rc","name":"granite-13b-labrador-rc","size":"13B","label":"granite-13b-labrador-rc
+        (13B)","source_model_id":null,"is_live":true,"facets":[],"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["chat","generation"]},{"id":"ibm/granite-20b-code-base-v1","name":"granite-20b-code-base-v1","size":"20B","label":"granite-20b-code-base-v1
+        (20B)","source_model_id":null,"is_live":false,"warning":"**Granite 20B model
+        deployed in BAM is not approved for product code development, and its use
+        in that context is strictly prohibited.**","facets":[],"token_limits":[],"task_ids":[]},{"id":"ibm/granite-3b-ansible","name":"granite-3b-ansible","size":"3B","label":"granite-3b-ansible
+        (3B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"ibm/granite-3b-code-v1","name":"granite-3b-code-v1","size":"3B","label":"granite-3b-code-v1
+        (3B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"elyza/japanese-llama-2-7b-fast","name":"japanese-llama-2-7b-fast","size":"7B","label":"japanese-llama-2-7b-fast
+        (7B)","source_model_id":null,"is_live":true,"facets":[],"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"meta-llama/llama-2-13b","name":"llama-2-13b","size":"13B","label":"llama-2-13b
+        (13B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","facets":[{"id":"Instruct","name":"Instruct","type":"model_type"},{"id":"English","name":"English","type":"language"}],"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation","prompt-tuning","classification","summarization"]},{"id":"meta-llama/llama-2-13b-chat","name":"llama-2-13b-chat","size":"13B","label":"llama-2-13b-chat
+        (13B)","source_model_id":null,"is_live":false,"warning":"{% llamaWarning /%}","facets":[],"token_limits":[],"task_ids":["prompt-tuning","chat"]},{"id":"meta-llama/llama-2-13b-chat-beam","name":"llama-2-13b-chat-beam","size":"13B","label":"llama-2-13b-chat-beam
+        (13B)","source_model_id":null,"is_live":false,"warning":"{% llamaWarning /%}","facets":[],"token_limits":[],"task_ids":["chat"]},{"id":"meta-llama/llama-2-70b","name":"llama-2-70b","size":"70B","label":"llama-2-70b
+        (70B)","source_model_id":null,"is_live":false,"warning":"{% llamaWarning /%}","facets":[],"token_limits":[],"task_ids":[]},{"id":"meta-llama/llama-2-70b-chat","name":"llama-2-70b-chat","size":"70B","label":"llama-2-70b-chat
+        (70B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","facets":[],"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation","chat"]},{"id":"meta-llama/llama-2-7b","name":"llama-2-7b","size":"7B","label":"llama-2-7b
+        (7B)","source_model_id":null,"is_live":false,"warning":"{% llamaWarning /%}","facets":[],"token_limits":[],"task_ids":["prompt-tuning"]},{"id":"meta-llama/llama-2-7b-chat","name":"llama-2-7b-chat","size":"7B","label":"llama-2-7b-chat
+        (7B)","source_model_id":null,"is_live":false,"warning":"{% llamaWarning /%}","facets":[],"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation","prompt-tuning","chat"]},{"id":"thebloke/mixtral-8x7b-instruct-v0-1-gptq","name":"mixtral-8x7b-instruct-v0-1-gptq","size":"unknown","label":"mixtral-8x7b-instruct-v0-1-gptq
+        (unknown)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":["chat"]},{"id":"thebloke/mixtral-8x7b-v0-1-gptq","name":"mixtral-8x7b-v0-1-gptq","size":"unknown","label":"mixtral-8x7b-v0-1-gptq
+        (unknown)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"mosaicml/mpt-30b","name":"mpt-30b","size":"30B","label":"mpt-30b
+        (30B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"ibm/mpt-7b-instruct","name":"mpt-7b-instruct2","size":"7B","label":"mpt-7b-instruct2
+        (7B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"bigscience/mt0-xxl","name":"mt0-xxl","size":"13B","label":"mt0-xxl
+        (13B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"intfloat/multilingual-e5-large","name":"multilingual-e5-large","size":"560M","label":"multilingual-e5-large
+        (560M)","source_model_id":null,"is_live":true,"facets":[],"token_limits":[{"beam_width":0,"token_limit":512}],"task_ids":["embeddings","rerank","sentence-similarity"]},{"id":"bigcode/starcoder","name":"starcoder","size":"15.5B","label":"starcoder
+        (15.5B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"google/ul2","name":"ul2","size":"20B","label":"ul2
+        (20B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]}],"total_count":"41"}'
     headers:
-      cache-control:
-      - private
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:11:47 GMT
+      Keep-Alive:
+      - timeout=72
+      Transfer-Encoding:
+      - chunked
       content-length:
-      - '8970'
+      - '8957'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
-      date:
-      - Tue, 30 Jan 2024 11:11:33 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=e308472f29f709b2348e49390a862943; path=/;
-        HttpOnly; Secure; SameSite=None
-      transfer-encoding:
-      - chunked
       vary:
       - accept-encoding
       x-ratelimit-limit:
@@ -140,75 +141,79 @@ interactions:
     uri: https://api.com/v2/models?version=2023-11-22
   response:
     body:
-      string: '{"results":[{"id":"sentence-transformers/all-minilm-l6-v2","name":"all-minilm-l6-v2","size":"10M","label":"all-minilm-l6-v2
-        (10M)","source_model_id":null,"is_live":false,"token_limits":[{"beam_width":0,"token_limit":256}],"task_ids":["embeddings"]},{"id":"codellama/codellama-34b-instruct","name":"codellama-34b-instruct","size":"34B","label":"codellama-34b-instruct
-        (34B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","token_limits":[{"beam_width":0,"token_limit":16384}],"task_ids":["generation"]},{"id":"codellama/codellama-70b-instruct","name":"codellama-70b-instruct","size":"70B","label":"codellama-70b-instruct
-        (70B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","token_limits":[{"beam_width":0,"token_limit":16384}],"task_ids":["generation"]},{"id":"tiiuae/falcon-180b","name":"falcon-180b","size":"180B","label":"falcon-180b
-        (180B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"tiiuae/falcon-40b","name":"falcon-40b","size":"40B","label":"falcon-40b
-        (40B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]},{"id":"ibm/falcon-40b-8lang-instruct","name":"falcon-40b-8lang-instruct","size":"40B","label":"falcon-40b-8lang-instruct
-        (40B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]},{"id":"google/flan-t5-xl","name":"flan-t5-xl","size":"3B","label":"flan-t5-xl
-        (3B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["classification","summarization","prompt-tuning","generation"]},{"id":"google/flan-t5-xxl","name":"flan-t5-xxl","size":"11B","label":"flan-t5-xxl
-        (11B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"google/flan-ul2","name":"flan-ul2","size":"20B","label":"flan-ul2
-        (20B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"eleutherai/gpt-neox-20b","name":"gpt-neox-20b","size":"20B
-        a","label":"gpt-neox-20b (20B a)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]},{"id":"ibm/granite-13b-chat-v1","name":"granite-13b-chat-v1","size":"13B","label":"granite-13b-chat-v1
-        (13B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation","chat"]},{"id":"ibm/granite-13b-chat-v2","name":"granite-13b-chat-v2","size":"13B","label":"granite-13b-chat-v2
-        (13B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["summarization","chat","classification","prompt-tuning","generation"]},{"id":"ibm/granite-13b-instruct-v1","name":"granite-13b-instruct-v1","size":"13B","label":"granite-13b-instruct-v1
-        (13B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]},{"id":"ibm/granite-13b-instruct-v2","name":"granite-13b-instruct-v2","size":"13B","label":"granite-13b-instruct-v2
-        (13B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["prompt-tuning","classification","summarization","generation"]},{"id":"ibm/granite-20b-5lang-instruct-rc","name":"granite-20b-5lang-instruct-rc","size":"20B","label":"granite-20b-5lang-instruct-rc
-        (20B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]},{"id":"ibm/granite-20b-code-instruct-v1","name":"granite-20b-code-instruct-v1","size":"20B","label":"granite-20b-code-instruct-v1
-        (20B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]},{"id":"ibm/granite-20b-code-instruct-v1-gptq","name":"granite-20b-code-instruct-v1-gptq","size":"20B","label":"granite-20b-code-instruct-v1-gptq
-        (20B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]},{"id":"ibm/granite-3b-code-plus-v1","name":"granite-3b-code-plus-v1","size":"3B","label":"granite-3b-code-plus-v1
-        (3B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]},{"id":"ibm/granite-8b-japanese-instruct-rc","name":"granite-8b-japanese-instruct-rc","size":"8B","label":"granite-8b-japanese-instruct-rc
-        (8B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"core42/jais-30b-chat-v1","name":"jais-30b-chat-v1","size":"30B","label":"jais-30b-chat-v1
-        (30B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":2048}],"task_ids":["generation"]},{"id":"elyza/japanese-llama-2-7b-fast","name":"japanese-llama-2-7b-fast","size":"7B","label":"japanese-llama-2-7b-fast
-        (7B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"elyza/japanese-llama-2-7b-instruct","name":"japanese-llama-2-7b-instruct","size":"7B","label":"japanese-llama-2-7b-instruct
-        (7B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"meta-llama/llama-2-13b","name":"llama-2-13b","size":"13B","label":"llama-2-13b
-        (13B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation","prompt-tuning","summarization","classification"]},{"id":"meta-llama/llama-2-13b-chat","name":"llama-2-13b-chat","size":"13B","label":"llama-2-13b-chat
-        (13B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["chat","generation","prompt-tuning","classification","summarization"]},{"id":"meta-llama/llama-2-70b","name":"llama-2-70b","size":"70B","label":"llama-2-70b
-        (70B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"meta-llama/llama-2-70b-chat","name":"llama-2-70b-chat","size":"70B","label":"llama-2-70b-chat
-        (70B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation","chat"]},{"id":"ibm-meta/llama-2-70b-chat-q","name":"llama-2-70b-chat-q","size":"70B","label":"llama-2-70b-chat-q
-        (70B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation","prompt-tuning"]},{"id":"meta-llama/llama-2-7b","name":"llama-2-7b","size":"7B","label":"llama-2-7b
-        (7B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["prompt-tuning","generation"]},{"id":"meta-llama/llama-2-7b-chat","name":"llama-2-7b-chat","size":"7B","label":"llama-2-7b-chat
-        (7B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["prompt-tuning","chat","generation"]},{"id":"mistralai/mistral-7b-instruct-v0-2","name":"mistral-7b-instruct-v0-2","size":"7B","label":"mistral-7b-instruct-v0-2
-        (7B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8096}],"task_ids":["generation","chat"]},{"id":"thebloke/mixtral-8x7b-instruct-v0-1-gptq","name":"mixtral-8x7b-instruct-v0-1-gptq","size":"8x7B","label":"mixtral-8x7b-instruct-v0-1-gptq
-        (8x7B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["chat","generation"]},{"id":"ibm-mistralai/mixtral-8x7b-instruct-v0-1-q","name":"mixtral-8x7b-instruct-v0-1-q","size":"8x7B","label":"mixtral-8x7b-instruct-v0-1-q
-        (8x7B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["chat","generation"]},{"id":"thebloke/mixtral-8x7b-v0-1-gptq","name":"mixtral-8x7b-v0-1-gptq","size":"8x7B","label":"mixtral-8x7b-v0-1-gptq
-        (8x7B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]},{"id":"ibm/mpt-7b-instruct","name":"mpt-7b-instruct2","size":"7B","label":"mpt-7b-instruct2
-        (7B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":2048}],"task_ids":["generation"]},{"id":"bigscience/mt0-xxl","name":"mt0-xxl","size":"13B","label":"mt0-xxl
-        (13B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"sarvamai/openhathi-7b-hi-v0-1-base","name":"openhathi-7b-hi-v0-1-base","size":"7B","label":"openhathi-7b-hi-v0-1-base
-        (7B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"kaist-ai/prometheus-13b-v1","name":"prometheus-13b-v1","size":"13B","label":"prometheus-13b-v1
-        (13B)","source_model_id":null,"is_live":true,"warning":"This model is approved
-        for experimental use only and is mainly intended to test LLM as a judge evaluation.
-        You should not use this model to improve the performance of other models.","token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"ibm/slate.125m.english.rtrvr","name":"slate.125m.english.rtrvr","size":"125M","label":"slate.125m.english.rtrvr
-        (125M)","source_model_id":null,"is_live":false,"token_limits":[{"beam_width":0,"token_limit":512}],"task_ids":["embeddings"]},{"id":"ibm/slate.30m.english.rtrvr","name":"slate.30m.english.rtrvr","size":"30M","label":"slate.30m.english.rtrvr
-        (30M)","source_model_id":null,"is_live":false,"token_limits":[{"beam_width":0,"token_limit":512}],"task_ids":["embeddings"]},{"id":"defog/sqlcoder-34b-alpha","name":"sqlcoder-34b-alpha","size":"34B","label":"sqlcoder-34b-alpha
-        (34B)","source_model_id":null,"is_live":true,"token_limits":[{"beam_width":0,"token_limit":16384}],"task_ids":["generation"]}],"total_count":40}'
+      string: '{"results":[{"id":"flan-t5-xl-mpt-HINOMFFx-2023-05-27-14-24-36","name":"Tune
+        #5 flan-t5-xl (3B)","size":"3B","label":"Tune #5 flan-t5-xl (3B) (3B)","source_model_id":"google/flan-t5-xl","is_live":true,"facets":[{"id":"DEV-test","name":"DEV
+        TEST","type":"model_type"},{"id":"English","name":"English","type":"language"}],"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["classification"]},{"id":"sentence-transformers/all-minilm-l6-v2","name":"all-minilm-l6-v2","size":"10M","label":"all-minilm-l6-v2
+        (10M)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":["rerank","sentence-similarity","embeddings"]},{"id":"baai/bge-large-en-v1.5","name":"bge-large-en-v1.5","size":"335M","label":"bge-large-en-v1.5
+        (335M)","source_model_id":null,"is_live":true,"facets":[],"token_limits":[{"beam_width":0,"token_limit":512}],"task_ids":["embeddings","sentence-similarity","rerank"]},{"id":"cerebras/cerebras-gpt-13b","name":"cerebras-gpt-13b","size":"13B","label":"cerebras-gpt-13b
+        (13B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"salesforce/codegen2-16b","name":"codegen2-16b","size":"16B","label":"codegen2-16b
+        (16B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"codellama/codellama-34b-instruct","name":"codellama-34b-instruct","size":"34B","label":"codellama-34b-instruct
+        (34B)","source_model_id":null,"is_live":false,"warning":"{% llamaWarning /%}","facets":[{"id":"Code","name":"Code","type":"model_type"}],"token_limits":[],"task_ids":[]},{"id":"codellama/codellama-70b-instruct","name":"codellama-70b-instruct","size":"70B","label":"codellama-70b-instruct
+        (70B)","source_model_id":null,"is_live":true,"facets":[],"token_limits":[{"beam_width":0,"token_limit":16384}],"task_ids":["generation","chat"]},{"id":"ibm/coga-3b-0.3.8","name":"coga-3b-0.3.8","size":"3B","label":"coga-3b-0.3.8
+        (3B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"allenai/cosmo-xl","name":"cosmo-xl","size":"3B","label":"cosmo-xl
+        (3B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"deepseek-ai/deepseek-coder-33b-instruct","name":"deepseek-coder-33b-instruct","size":"33B","label":"deepseek-coder-33b-instruct
+        (33B)","source_model_id":null,"is_live":true,"warning":"Please review [DeepSeek
+        License Agreement](https://github.com/deepseek-ai/deepseek-coder/blob/main/LICENSE-MODEL)
+        prior to use.","facets":[{"id":"Instruct","name":"Instruct","type":"model_type"},{"id":"Code","name":"Code","type":"model_type"}],"token_limits":[{"beam_width":0,"token_limit":16384}],"task_ids":["generation"]},{"id":"tiiuae/falcon-40b","name":"falcon-40b","size":"40B","label":"falcon-40b
+        (40B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"ibm/falcon-40b-8lang-instruct","name":"falcon-40b-8lang-instruct","size":"40B","label":"falcon-40b-8lang-instruct
+        (40B)","source_model_id":null,"is_live":true,"facets":[],"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["generation"]},{"id":"google/flan-t5-xl","name":"flan-t5-xl","size":"3B","label":"flan-t5-xl
+        (3B)","source_model_id":null,"is_live":true,"facets":[{"id":"DEV-test","name":"DEV
+        TEST","type":"model_type"},{"id":"English","name":"English","type":"language"}],"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation","summarization","classification","prompt-tuning"]},{"id":"google/flan-ul2","name":"flan-ul2","size":"20B","label":"flan-ul2
+        (20B)","source_model_id":null,"is_live":true,"facets":[],"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"togethercomputer/gpt-jt-6b-v1","name":"gpt-jt-6b-v1","size":"6B","label":"gpt-jt-6b-v1
+        (6B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"eleutherai/gpt-neox-20b","name":"gpt-neox-20b","size":"20B","label":"gpt-neox-20b
+        (20B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"togethercomputer/gpt-neoxt-chat-base-20b","name":"gpt-neoxt-chat-base-20b","size":"20B","label":"gpt-neoxt-chat-base-20b
+        (20B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":["chat"]},{"id":"ibm/granite-13b-chat-v1","name":"granite-13b-chat-v1","size":"13B","label":"granite-13b-chat-v1
+        (13B)","source_model_id":null,"is_live":false,"warning":"**This model is approved
+        for experimental use only and is mainly intended to test LLM as a judge evaluation.**
+        You should not use this model to improve the performance of other models.","facets":[],"token_limits":[],"task_ids":["chat"]},{"id":"ibm/granite-13b-chat-v2","name":"granite-13b-chat-v2","size":"13B","label":"granite-13b-chat-v2
+        (13B)","source_model_id":null,"is_live":true,"facets":[],"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["classification","chat","summarization","generation","prompt-tuning"]},{"id":"ibm/granite-13b-instruct-v1","name":"granite-13b-instruct-v1","size":"13B","label":"granite-13b-instruct-v1
+        (13B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"ibm/granite-13b-instruct-v2","name":"granite-13b-instruct-v2","size":"13B","label":"granite-13b-instruct-v2
+        (13B)","source_model_id":null,"is_live":true,"facets":[],"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["summarization","classification","generation","prompt-tuning"]},{"id":"ibm/granite-13b-labrador-rc","name":"granite-13b-labrador-rc","size":"13B","label":"granite-13b-labrador-rc
+        (13B)","source_model_id":null,"is_live":true,"facets":[],"token_limits":[{"beam_width":0,"token_limit":8192}],"task_ids":["chat","generation"]},{"id":"ibm/granite-20b-code-base-v1","name":"granite-20b-code-base-v1","size":"20B","label":"granite-20b-code-base-v1
+        (20B)","source_model_id":null,"is_live":false,"warning":"**Granite 20B model
+        deployed in BAM is not approved for product code development, and its use
+        in that context is strictly prohibited.**","facets":[],"token_limits":[],"task_ids":[]},{"id":"ibm/granite-3b-ansible","name":"granite-3b-ansible","size":"3B","label":"granite-3b-ansible
+        (3B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"ibm/granite-3b-code-v1","name":"granite-3b-code-v1","size":"3B","label":"granite-3b-code-v1
+        (3B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"elyza/japanese-llama-2-7b-fast","name":"japanese-llama-2-7b-fast","size":"7B","label":"japanese-llama-2-7b-fast
+        (7B)","source_model_id":null,"is_live":true,"facets":[],"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation"]},{"id":"meta-llama/llama-2-13b","name":"llama-2-13b","size":"13B","label":"llama-2-13b
+        (13B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","facets":[{"id":"Instruct","name":"Instruct","type":"model_type"},{"id":"English","name":"English","type":"language"}],"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation","prompt-tuning","classification","summarization"]},{"id":"meta-llama/llama-2-13b-chat","name":"llama-2-13b-chat","size":"13B","label":"llama-2-13b-chat
+        (13B)","source_model_id":null,"is_live":false,"warning":"{% llamaWarning /%}","facets":[],"token_limits":[],"task_ids":["prompt-tuning","chat"]},{"id":"meta-llama/llama-2-13b-chat-beam","name":"llama-2-13b-chat-beam","size":"13B","label":"llama-2-13b-chat-beam
+        (13B)","source_model_id":null,"is_live":false,"warning":"{% llamaWarning /%}","facets":[],"token_limits":[],"task_ids":["chat"]},{"id":"meta-llama/llama-2-70b","name":"llama-2-70b","size":"70B","label":"llama-2-70b
+        (70B)","source_model_id":null,"is_live":false,"warning":"{% llamaWarning /%}","facets":[],"token_limits":[],"task_ids":[]},{"id":"meta-llama/llama-2-70b-chat","name":"llama-2-70b-chat","size":"70B","label":"llama-2-70b-chat
+        (70B)","source_model_id":null,"is_live":true,"warning":"{% llamaWarning /%}","facets":[],"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation","chat"]},{"id":"meta-llama/llama-2-7b","name":"llama-2-7b","size":"7B","label":"llama-2-7b
+        (7B)","source_model_id":null,"is_live":false,"warning":"{% llamaWarning /%}","facets":[],"token_limits":[],"task_ids":["prompt-tuning"]},{"id":"meta-llama/llama-2-7b-chat","name":"llama-2-7b-chat","size":"7B","label":"llama-2-7b-chat
+        (7B)","source_model_id":null,"is_live":false,"warning":"{% llamaWarning /%}","facets":[],"token_limits":[{"beam_width":0,"token_limit":4096}],"task_ids":["generation","prompt-tuning","chat"]},{"id":"thebloke/mixtral-8x7b-instruct-v0-1-gptq","name":"mixtral-8x7b-instruct-v0-1-gptq","size":"unknown","label":"mixtral-8x7b-instruct-v0-1-gptq
+        (unknown)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":["chat"]},{"id":"thebloke/mixtral-8x7b-v0-1-gptq","name":"mixtral-8x7b-v0-1-gptq","size":"unknown","label":"mixtral-8x7b-v0-1-gptq
+        (unknown)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"mosaicml/mpt-30b","name":"mpt-30b","size":"30B","label":"mpt-30b
+        (30B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"ibm/mpt-7b-instruct","name":"mpt-7b-instruct2","size":"7B","label":"mpt-7b-instruct2
+        (7B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"bigscience/mt0-xxl","name":"mt0-xxl","size":"13B","label":"mt0-xxl
+        (13B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"intfloat/multilingual-e5-large","name":"multilingual-e5-large","size":"560M","label":"multilingual-e5-large
+        (560M)","source_model_id":null,"is_live":true,"facets":[],"token_limits":[{"beam_width":0,"token_limit":512}],"task_ids":["embeddings","rerank","sentence-similarity"]},{"id":"bigcode/starcoder","name":"starcoder","size":"15.5B","label":"starcoder
+        (15.5B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]},{"id":"google/ul2","name":"ul2","size":"20B","label":"ul2
+        (20B)","source_model_id":null,"is_live":false,"facets":[],"token_limits":[],"task_ids":[]}],"total_count":"41"}'
     headers:
-      cache-control:
-      - private
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:11:48 GMT
+      Keep-Alive:
+      - timeout=72
+      Transfer-Encoding:
+      - chunked
       content-length:
-      - '10172'
+      - '10232'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
-      date:
-      - Tue, 30 Jan 2024 11:11:33 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=fe62af85768e0a9b84c0d2758f11b4b1; path=/;
-        HttpOnly; Secure; SameSite=None
-      transfer-encoding:
-      - chunked
       vary:
       - accept-encoding
       x-ratelimit-limit:
       - '25'
       x-ratelimit-remaining:
-      - '22'
+      - '24'
       x-ratelimit-reset:
-      - '0'
+      - '1'
     status:
       code: 200
       message: OK

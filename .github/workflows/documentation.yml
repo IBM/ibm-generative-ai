@@ -2,6 +2,8 @@ name: Build and deploy documentation
 
 on:
   workflow_dispatch:
+  release:
+    types: [published]
   push:
     branches: [ "main" ]
 
@@ -18,7 +20,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 60
     steps:
     - uses: actions/checkout@v4
       with:

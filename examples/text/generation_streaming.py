@@ -10,6 +10,7 @@ from genai.credentials import Credentials
 from genai.schema import (
     DecodingMethod,
     ModerationHAP,
+    ModerationHAPOutput,
     ModerationParameters,
     TextGenerationParameters,
     TextGenerationReturnOptions,
@@ -31,7 +32,7 @@ def heading(text: str) -> str:
 client = Client(credentials=Credentials.from_env())
 
 
-model_id = "meta-llama/llama-2-70b"
+model_id = "google/flan-ul2"
 prompt = "The gesture of a hand with pinched fingers 🤌 is actually rude in Italy. "
 parameters = TextGenerationParameters(
     decoding_method=DecodingMethod.SAMPLE,
@@ -43,12 +44,13 @@ parameters = TextGenerationParameters(
     random_seed=3293482354,
 )
 moderations = ModerationParameters(
-    hap=ModerationHAP(input=False, output=True, send_tokens=True, threshold=0.5),
+    hap=ModerationHAP(
+        output=ModerationHAPOutput(enabled=True, send_tokens=True, threshold=0.5),
+    ),
     # possibly add more moderations:
-    # implicit_hate=ModerationImplicitHate(...),
-    # stigma=ModerationStigma(...),
+    # social_bias=SocialBiasOptions(...),
 )
-hate_speach_in_output: list[TextModeration] = []
+hate_speech_in_output: list[TextModeration] = []
 
 
 print(heading("Generating text stream"))
@@ -58,12 +60,12 @@ for response in client.text.generation.create_stream(
     model_id=model_id, input=prompt, parameters=parameters, moderations=moderations
 ):
     if not response.results:
-        hate_speach_in_output.extend(response.moderation.hap)
+        hate_speech_in_output.extend(response.moderations.hap)
         continue
     for result in response.results:
         if result.generated_text:
             print(result.generated_text, end="")
 
 print()
-print(heading("Hate speach in output"), file=sys.stderr)
-pprint([hap.model_dump() for hap in hate_speach_in_output], stream=sys.stderr)
+print(heading("Hate speech in output"), file=sys.stderr)
+pprint([hap.model_dump() for hap in hate_speech_in_output], stream=sys.stderr)

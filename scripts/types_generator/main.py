@@ -1,6 +1,8 @@
 import tempfile
 import time
+from collections import defaultdict
 from pathlib import Path
+from typing import Any, DefaultDict, Optional
 
 import httpx
 import yaml
@@ -28,7 +30,7 @@ def load_openapi_schema(url: str):
         return yaml.safe_load(content)
 
 
-def generate_models(schema_path: Path, output: Path):
+def generate_models(schema_path: Path, output: Path, extra_template_data: Optional[DefaultDict[str, dict[str, Any]]]):
     if output.exists():
         output.unlink()
 
@@ -47,6 +49,13 @@ def generate_models(schema_path: Path, output: Path):
         reuse_model=False,
         target_python_version=PythonVersion.PY_39,
         base_class=ExtractorConfig.base_model_class,
+        additional_imports=[
+            "deprecated",
+            "pydantic.field_validator",
+            "pydantic.computed_field",
+            "genai._utils.deprecation._print_deprecation_warning",
+        ],
+        extra_template_data=extra_template_data,
         enum_field_as_literal=LiteralType.One,
         use_one_literal_as_default=True,
         capitalise_enum_members=True,
@@ -56,7 +65,7 @@ def generate_models(schema_path: Path, output: Path):
         field_constraints=True,
         disable_timestamp=True,
         custom_template_dir=Path(dirname, "assets/codegen/templates"),
-        keep_model_order=False,
+        keep_model_order=True,
         use_generic_container_types=False,
         use_standard_collections=True,
         use_field_description=True,
@@ -96,7 +105,7 @@ def run():
                             base_model=ApiEndpoint.__name__,
                             model=model.model_dump(exclude_none=True, exclude={"class_name"}),
                         )
-                        for model in extract_endpoints(schema)
+                        for model in extract_endpoints(schema, schema_overrides.endpoint_mapping)
                     ],
                 ]
             ),
@@ -122,6 +131,14 @@ def run():
             generate_models(
                 schema_path=Path(tmp.name),
                 output=models_output,
+                extra_template_data=defaultdict(
+                    dict,
+                    schema_overrides.model_extensions
+                    | {
+                        f"{ExtractorConfig.operation_id_prefix}{k}": v
+                        for k, v in schema_overrides.model_extensions.items()
+                    },
+                ),
             )
 
             logger.info("Done!")

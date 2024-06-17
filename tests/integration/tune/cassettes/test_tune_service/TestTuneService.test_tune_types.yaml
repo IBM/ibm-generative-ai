@@ -12,7 +12,31 @@ interactions:
     uri: https://api.com/v2/tuning_types?version=2024-01-30
   response:
     body:
-      string: "{\"results\":[{\"id\":\"prompt_tuning\",\"name\":\"Prompt Tuning\",\"schema\":{\"type\":\"object\",\"required\":[\"name\",\"model_id\",\"training_file_ids\",\"task_id\",\"tuning_type\"],\"properties\":{\"name\":{\"type\":\"string\",\"nullable\":false},\"task_id\":{\"type\":\"string\",\"nullable\":true},\"model_id\":{\"type\":\"string\",\"title\":\"Model
+      string: "{\"results\":[{\"id\":\"fine_tuning\",\"name\":\"Fine Tuning\",\"schema\":{\"properties\":{\"name\":{\"type\":\"string\",\"nullable\":false},\"task_id\":{\"type\":\"string\",\"nullable\":true},\"model_id\":{\"type\":\"string\",\"title\":\"Model
+        ID\",\"nullable\":false,\"description\":\"Base model ID used for underlying
+        generation.\"},\"parameters\":{\"properties\":{\"verbalizer\":{\"type\":\"string\",\"title\":\"Verbalizer\",\"default\":\"{{input}}\",\"nullable\":true,\"defaultUi\":\"###
+        Input:\\n{{input}}\\n\\n### Response:\\n{{output}}\",\"description\":\"Verbalizer
+        template to be used for formatting data at train and inference time. This
+        template may use double brackets to indicate where fields from training data
+        should be rendered.\"},\"learning_rate\":{\"type\":\"number\",\"title\":\"Learning
+        rate\",\"default\":0.3,\"maximum\":5,\"minimum\":0.000001,\"nullable\":true,\"defaultUi\":0.3,\"description\":\"The
+        initial learning rate for AdamW.\"},\"max_seq_length\":{\"type\":\"integer\",\"title\":\"Maximum
+        sequence length\",\"default\":1024,\"maximum\":8192,\"minimum\":1,\"nullable\":true,\"defaultUi\":1024,\"description\":\"Sequences
+        will be right padded (and possibly truncated).\"},\"num_train_epochs\":{\"type\":\"integer\",\"title\":\"Number
+        of epochs\",\"default\":20,\"maximum\":200,\"minimum\":1,\"nullable\":true,\"defaultUi\":20,\"description\":\"The
+        number of times to cycle through the training data set. If you have a large
+        training data set, a high number of epochs will take a very long time to finish
+        tuning. The range is 1 to 200, defaults to 20.\"},\"response_template\":{\"type\":\"string\",\"title\":\"Response
+        template\",\"nullable\":true,\"defaultUi\":\"### Response:\\n\",\"description\":\"Response
+        template, separator to train on completions only\"},\"per_device_eval_batch_size\":{\"type\":\"integer\",\"title\":\"Eval
+        batch size per device\",\"default\":16,\"maximum\":32,\"minimum\":1,\"nullable\":true,\"defaultUi\":16,\"description\":\"Batch
+        size per GPU/TPU/MPS/NPU core/CPU for evaluation.\"},\"gradient_accumulation_steps\":{\"type\":\"integer\",\"title\":\"Gradient
+        accumulation steps\",\"default\":16,\"maximum\":128,\"minimum\":1,\"nullable\":true,\"defaultUi\":16,\"description\":\"Number
+        of updates steps to accumulate before performing a backward/update pass.\"},\"per_device_train_batch_size\":{\"type\":\"integer\",\"title\":\"Train
+        batch size per device\",\"default\":16,\"maximum\":32,\"minimum\":1,\"nullable\":true,\"defaultUi\":16,\"description\":\"Batch
+        size per GPU/TPU/MPS/NPU core/CPU for training.\"}}},\"tuning_type\":{\"enum\":[\"fine_tuning\"],\"type\":\"string\",\"title\":\"Tuning
+        type\",\"nullable\":false,\"description\":\"Type of tuning to be used.\"},\"training_file_ids\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"maxItems\":1,\"minItems\":1,\"nullable\":false},\"validation_file_ids\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"nullable\":true}}},\"model_ids\":[\"ibm/granite-13b-base-v2\",\"meta-llama/llama-3-8b-instruct\",\"mistralai/mistral-7b-v0-1\"]},{\"id\":\"prompt_tuning\",\"name\":\"Prompt
+        Tuning\",\"schema\":{\"type\":\"object\",\"required\":[\"name\",\"model_id\",\"training_file_ids\",\"task_id\",\"tuning_type\"],\"properties\":{\"name\":{\"type\":\"string\",\"nullable\":false},\"task_id\":{\"type\":\"string\",\"nullable\":true},\"model_id\":{\"type\":\"string\",\"title\":\"Model
         ID\",\"nullable\":false,\"description\":\"Base model ID used for underlying
         generation.\"},\"parameters\":{\"type\":\"object\",\"properties\":{\"batch_size\":{\"type\":\"integer\",\"title\":\"Batch
         size\",\"default\":16,\"maximum\":16,\"minimum\":1,\"nullable\":true,\"defaultUi\":16,\"description\":\"The
@@ -53,7 +77,7 @@ interactions:
         for zero-shot prompting.\"},\"init_method\":{\"enum\":[\"random\",\"text\"],\"type\":\"string\",\"title\":\"Initialization
         method\",\"default\":\"random\",\"nullable\":true,\"defaultUi\":\"random\",\"description\":\"Initialization
         method to be used\"}},\"additionalProperties\":true},\"tuning_type\":{\"enum\":[\"prompt_tuning\",\"multitask_prompt_tuning\"],\"type\":\"string\",\"title\":\"Tuning
-        type\",\"nullable\":false,\"description\":\"Type of tuning to be used.\"},\"training_file_ids\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"minItems\":1,\"nullable\":false},\"validation_file_ids\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"nullable\":true}},\"additionalProperties\":false},\"model_ids\":[\"google/flan-t5-xl\",\"ibm/granite-13b-chat-v2\",\"ibm/granite-13b-instruct-v2\"]},{\"id\":\"multitask_prompt_tuning\",\"name\":\"Multitask
+        type\",\"nullable\":false,\"description\":\"Type of tuning to be used.\"},\"training_file_ids\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"minItems\":1,\"nullable\":false},\"validation_file_ids\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"nullable\":true}},\"additionalProperties\":false},\"model_ids\":[\"google/flan-t5-xxl\",\"google/flan-ul2\",\"google/flan-t5-xl\",\"ibm/granite-13b-chat-v2\",\"ibm/granite-13b-instruct-v2\",\"ibm/granite-20b-code-instruct-v1\"]},{\"id\":\"multitask_prompt_tuning\",\"name\":\"Multitask
         Prompt Tuning\",\"schema\":{\"type\":\"object\",\"required\":[\"name\",\"model_id\",\"training_file_ids\",\"task_id\",\"tuning_type\"],\"properties\":{\"name\":{\"type\":\"string\",\"nullable\":false},\"task_id\":{\"type\":\"string\",\"nullable\":true},\"model_id\":{\"type\":\"string\",\"title\":\"Model
         ID\",\"nullable\":false,\"description\":\"Base model ID used for underlying
         generation.\"},\"parameters\":{\"type\":\"object\",\"properties\":{\"batch_size\":{\"type\":\"integer\",\"title\":\"Batch
@@ -94,17 +118,17 @@ interactions:
       cache-control:
       - private
       content-length:
-      - '8113'
+      - '10931'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2024-01-30'
       date:
-      - Tue, 30 Jan 2024 11:14:28 GMT
+      - Tue, 21 May 2024 10:22:07 GMT
       keep-alive:
       - timeout=72
       set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=fe62af85768e0a9b84c0d2758f11b4b1; path=/;
+      - 2eef5f4c257f6bca76e8da5586743beb=4973959897699d2d03598da2e7a1d7a3; path=/;
         HttpOnly; Secure; SameSite=None
       transfer-encoding:
       - chunked

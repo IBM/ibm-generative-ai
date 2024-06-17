@@ -1,0 +1,190 @@
+interactions:
+- request:
+    body: '{"name": "My test folder"}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '26'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/folders?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"id":"8qN32z1HZHuGDmsy","name":"My test folder","created_at":"2024-02-24T21:12:28.000Z","prompt_ids":[]}}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:12:28 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '116'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/folders/8qN32z1HZHuGDmsy?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"id":"8qN32z1HZHuGDmsy","name":"My test folder","created_at":"2024-02-24T21:12:28.000Z","prompt_ids":[]}}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:12:29 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '116'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '23'
+      x-ratelimit-reset:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/folders?version=2023-11-22
+  response:
+    body:
+      string: '{"results":[{"id":"8qN32z1HZHuGDmsy","name":"My test folder","created_at":"2024-02-24T21:12:28.000Z","prompt_ids":[]}],"total_count":1}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:12:29 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '135'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: DELETE
+    uri: https://api.com/v2/folders/8qN32z1HZHuGDmsy?version=2023-11-22
+  response:
+    body:
+      string: ''
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:12:30 GMT
+      Keep-Alive:
+      - timeout=72
+      content-version:
+      - '2023-11-22'
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '23'
+      x-ratelimit-reset:
+      - '0'
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/folders?version=2023-11-22
+  response:
+    body:
+      string: '{"results":[],"total_count":0}'
+    headers:
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:12:31 GMT
+      Keep-Alive:
+      - timeout=72
+      content-length:
+      - '30'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      vary:
+      - accept-encoding
+      x-ratelimit-limit:
+      - '25'
+      x-ratelimit-remaining:
+      - '24'
+      x-ratelimit-reset:
+      - '1'
+    status:
+      code: 200
+      message: OK
+version: 1

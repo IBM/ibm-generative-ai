@@ -2,7 +2,7 @@
 
 import logging
 from pathlib import Path
-from typing import Any, Dict, Iterator, Optional, Union
+from typing import Any, Iterator, Optional, Union
 
 from pydantic import ConfigDict
 from pydantic.v1 import validator
@@ -28,7 +28,6 @@ try:
     from langchain_core.callbacks.manager import CallbackManagerForLLMRun
     from langchain_core.language_models.chat_models import BaseChatModel
     from langchain_core.messages import AIMessage as LCAIMessage
-    from langchain_core.messages import AIMessageChunk as LCAIMessageChunk
     from langchain_core.messages import BaseMessage as LCBaseMessage
     from langchain_core.messages import ChatMessage as LCChatMessage
     from langchain_core.messages import HumanMessage as LCHumanMessage
@@ -37,6 +36,7 @@ try:
     from langchain_core.outputs import ChatGeneration, ChatResult
 
     from genai.extensions.langchain.utils import (
+        CustomAIMessageChunk,
         CustomChatGenerationChunk,
         create_llm_output,
         dump_optional_model,
@@ -93,7 +93,7 @@ class LangChainChatInterface(BaseChatModel):
         client = Client(credentials=Credentials.from_env())
         llm = LangChainChatInterface(
             client=client,
-            model_id="meta-llama/llama-2-70b-chat",
+            model_id="meta-llama/llama-3-70b-instruct",
             parameters=TextGenerationParameters(
                 max_new_tokens=250,
             )
@@ -137,7 +137,7 @@ class LangChainChatInterface(BaseChatModel):
         return cls(**config, client=client)
 
     @property
-    def _identifying_params(self) -> Dict[str, Any]:
+    def _identifying_params(self) -> dict[str, Any]:
         return {
             "model_id": self.model_id,
             "prompt_id": self.prompt_id,
@@ -174,7 +174,7 @@ class LangChainChatInterface(BaseChatModel):
             def send_chunk(*, text: str = "", generation_info: dict):
                 logger.info("Chunk received: {}".format(text))
                 chunk = CustomChatGenerationChunk(
-                    message=LCAIMessageChunk(content=text, generation_info=generation_info),
+                    message=CustomAIMessageChunk(content=text, generation_info=generation_info),
                     generation_info=generation_info,
                 )
                 yield chunk
@@ -182,8 +182,8 @@ class LangChainChatInterface(BaseChatModel):
                     run_manager.on_llm_new_token(token=text, chunk=chunk, response=response)  # noqa: B023
                     # Function definition does not bind loop variable `response`: linter is probably just confused here
 
-            if response.moderation:
-                generation_info = create_generation_info_from_response(response, result=response.moderation)
+            if response.moderations:
+                generation_info = create_generation_info_from_response(response, result=response.moderations)
                 yield from send_chunk(generation_info=generation_info)
 
             for result in response.results or []:

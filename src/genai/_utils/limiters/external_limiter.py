@@ -13,7 +13,7 @@ __all__ = ["ExternalLimiter", "ExternalLimiterHandler", "ConcurrencyResponse"]
 
 class ConcurrencyResponse(BaseModel):
     limit: int = Field(..., ge=1, description="Maximum number of concurrent requests")
-    remaining: int = Field(..., ge=0, description="Number of remaining requests before reaching the limit")
+    remaining: int = Field(..., description="Number of remaining requests before reaching the limit")
 
 
 ExternalLimiterHandler = Callable[[], Awaitable[ConcurrencyResponse]]

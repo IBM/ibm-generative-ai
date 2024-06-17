@@ -1,6 +1,7 @@
 {% for decorator in decorators -%}
 {{ decorator }}
 {% endfor -%}
+{% set base_class = custom_base_class or base_class %}
 class {{ class_name }}({{ base_class }}):{% if comment is defined %}  # {{ comment }}{% endif %}
 {%- if description %}
     """
@@ -17,6 +18,7 @@ class {{ class_name }}({{ base_class }}):{% if comment is defined %}  # {{ comme
 {%- endfilter %}
 {%- endif %}
 {%- for field in fields -%}
+    {%- set overrides = fields_overrides[field.name] if fields_overrides and field.name in fields_overrides else {} -%}
     {%- if not field.annotated and field.field %}
     {{ field.name }}: {{ field.type_hint }} = {{ field.field }}
     {%- else %}
@@ -25,8 +27,9 @@ class {{ class_name }}({{ base_class }}):{% if comment is defined %}  # {{ comme
     {%- else %}
     {{ field.name }}: {{ field.type_hint }}
     {%- endif %}
-    {%- if (not field.required or field.data_type.is_optional or field.nullable) and not field.annotated
-            %} = {{ field.represented_default }}
+    {%- set has_custom_default = overrides.default is defined -%}
+    {%- if (has_custom_default or not field.required or field.data_type.is_optional or field.nullable) and not field.annotated
+            %} = {% if has_custom_default %}{{ overrides.default }}{% else %}{{ field.represented_default }}{% endif %}
     {%- endif -%}
     {%- endif %}
     {%- if field.docstring %}
@@ -37,4 +40,15 @@ class {{ class_name }}({{ base_class }}):{% if comment is defined %}  # {{ comme
 {%- for method in methods -%}
     {{ method }}
 {%- endfor -%}
+{%- endfor -%}
+{%- if custom_body %}
+    {{ custom_body | indent(4) }}
+{%- endif -%}
+{%- for field in dynamic_fields %}
+    @computed_field
+    {%- if field.deprecated %}
+    @deprecated.deprecated(reason="{{ field.deprecated }}")
+    {%- endif %}
+    def {{ field.name }}(self) -> {{ field.return_type }}:
+        {{ field.body }}
 {%- endfor -%}

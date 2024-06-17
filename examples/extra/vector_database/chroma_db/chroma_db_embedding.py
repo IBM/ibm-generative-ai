@@ -1,6 +1,7 @@
 """
 Create ChromaDB Embedding Function
 """
+
 from typing import Optional
 
 from chromadb.api.types import Documents, EmbeddingFunction, Embeddings
@@ -26,7 +27,8 @@ class ChromaEmbeddingFunction(EmbeddingFunction):
         for response in self._client.text.embedding.create(
             model_id=self._model_id, inputs=inputs, parameters=self._parameters
         ):
-            embeddings.extend(response.results)
+            embedding_list = [result.embedding for result in response.results]
+            embeddings.extend(embedding_list)
 
         return embeddings
 

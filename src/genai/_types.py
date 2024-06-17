@@ -8,6 +8,7 @@ from typing_extensions import Literal
 class ApiBaseModel(BaseModel):
     model_config = ConfigDict(
         extra="allow",
+        # TODO: change to False in next major release and use 'model_dump(mode="json")' for correct enum serialization
         use_enum_values=True,
         protected_namespaces=(),
         validate_assignment=True,

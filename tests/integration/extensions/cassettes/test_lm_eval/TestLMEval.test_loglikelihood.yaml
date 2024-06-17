@@ -1,0 +1,230 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/text/generation/limits?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"concurrency":{"limit":10,"remaining":9}}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '53'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Mon, 17 Jun 2024 07:42:26 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=f94477c93d7e7954e5f4e4d7bcdc18d7; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": "The best ice cream flavor is:", "model_id": "mistralai/mixtral-8x7b-instruct-v01",
+      "parameters": {"max_new_tokens": 1, "return_options": {"generated_tokens": false,
+      "input_text": false, "input_tokens": true, "token_logprobs": true, "token_ranks":
+      true}}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '265'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation?version=2024-03-19
+  response:
+    body:
+      string: "{\"id\":\"ede9ae12-f562-4908-bafb-defe22e2648c\",\"model_id\":\"mistralai/mixtral-8x7b-instruct-v01\",\"created_at\":\"2024-06-17T07:42:26.985Z\",\"results\":[{\"generated_text\":\"\\n\",\"generated_token_count\":1,\"input_token_count\":8,\"stop_reason\":\"max_tokens\",\"input_tokens\":[{\"text\":\"<s>\",\"logprob\":0},{\"text\":\"\u2581The\",\"logprob\":-8.631309509277344,\"rank\":19},{\"text\":\"\u2581best\",\"logprob\":-5.444472789764404,\"rank\":18},{\"text\":\"\u2581ice\",\"logprob\":-7.289632797241211,\"rank\":120},{\"text\":\"\u2581cream\",\"logprob\":-0.7056899666786194,\"rank\":1},{\"text\":\"\u2581flavor\",\"logprob\":-5.03354024887085,\"rank\":31},{\"text\":\"\u2581is\",\"logprob\":-0.901153028011322,\"rank\":1},{\"text\":\":\",\"logprob\":-4.739533424377441,\"rank\":18}]}]}"
+    headers:
+      content-length:
+      - '687'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-03-19'
+      date:
+      - Mon, 17 Jun 2024 07:42:26 GMT
+      keep-alive:
+      - timeout=72
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": ["Classify the following tweet: ''No this is my first job'' into
+      ''complaint'' or ''no complaint'':", "Classify the following tweet: ''Please
+      just give me my money back.'' into ''complaint'' or ''no complaint'':"], "model_id":
+      "mistralai/mixtral-8x7b-instruct-v01", "parameters": {"return_options": {"tokens":
+      true}}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '315'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/tokenization?version=2024-01-10
+  response:
+    body:
+      string: "{\"model_id\":\"mistralai/mixtral-8x7b-instruct-v01\",\"created_at\":\"2024-06-17T07:42:27.413Z\",\"results\":[{\"token_count\":27,\"tokens\":[\"<s>\",\"\u2581Class\",\"ify\",\"\u2581the\",\"\u2581following\",\"\u2581twe\",\"et\",\":\",\"\u2581'\",\"No\",\"\u2581this\",\"\u2581is\",\"\u2581my\",\"\u2581first\",\"\u2581job\",\"'\",\"\u2581into\",\"\u2581'\",\"com\",\"pl\",\"aint\",\"'\",\"\u2581or\",\"\u2581'\",\"no\",\"\u2581complaint\",\"':\"]},{\"token_count\":28,\"tokens\":[\"<s>\",\"\u2581Class\",\"ify\",\"\u2581the\",\"\u2581following\",\"\u2581twe\",\"et\",\":\",\"\u2581'\",\"Please\",\"\u2581just\",\"\u2581give\",\"\u2581me\",\"\u2581my\",\"\u2581money\",\"\u2581back\",\".'\",\"\u2581into\",\"\u2581'\",\"com\",\"pl\",\"aint\",\"'\",\"\u2581or\",\"\u2581'\",\"no\",\"\u2581complaint\",\"':\"]}]}"
+    headers:
+      content-length:
+      - '590'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-01-10'
+      date:
+      - Mon, 17 Jun 2024 07:42:27 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=b0af0f5e1c03092d9fafd4244b94d146; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+    method: GET
+    uri: https://api.com/v2/text/generation/limits?version=2023-11-22
+  response:
+    body:
+      string: '{"result":{"concurrency":{"limit":10,"remaining":9}}}'
+    headers:
+      cache-control:
+      - private
+      content-length:
+      - '53'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2023-11-22'
+      date:
+      - Mon, 17 Jun 2024 07:42:27 GMT
+      keep-alive:
+      - timeout=72
+      set-cookie:
+      - 2eef5f4c257f6bca76e8da5586743beb=7db5985d881384cdbd63030fb254fd5c; path=/;
+        HttpOnly; Secure; SameSite=None
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": "Classify the following tweet: ''No this is my first job'' into
+      ''complaint'' or ''no complaint'':no complaint", "model_id": "mistralai/mixtral-8x7b-instruct-v01",
+      "parameters": {"max_new_tokens": 1, "return_options": {"generated_tokens": false,
+      "input_text": false, "input_tokens": true, "token_logprobs": true, "token_ranks":
+      true}}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '339'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation?version=2024-03-19
+  response:
+    body:
+      string: "{\"id\":\"82d757a2-c4b2-46a0-83c3-17a71bf2792a\",\"model_id\":\"mistralai/mixtral-8x7b-instruct-v01\",\"created_at\":\"2024-06-17T07:42:28.049Z\",\"results\":[{\"generated_text\":\"\\n\",\"generated_token_count\":1,\"input_token_count\":29,\"stop_reason\":\"max_tokens\",\"input_tokens\":[{\"text\":\"<s>\",\"logprob\":0},{\"text\":\"\u2581Class\",\"logprob\":-12.232860565185547,\"rank\":243},{\"text\":\"ify\",\"logprob\":-8.069998741149902,\"rank\":41},{\"text\":\"\u2581the\",\"logprob\":-0.6797476410865784,\"rank\":1},{\"text\":\"\u2581following\",\"logprob\":-0.5858480930328369,\"rank\":1},{\"text\":\"\u2581twe\",\"logprob\":-13.486648559570312,\"rank\":5637},{\"text\":\"et\",\"logprob\":-1.2101095914840698,\"rank\":2},{\"text\":\":\",\"logprob\":-1.8070908784866333,\"rank\":2},{\"text\":\"\u2581'\",\"logprob\":-8.086895942687988,\"rank\":33},{\"text\":\"No\",\"logprob\":-6.114876747131348,\"rank\":79},{\"text\":\"\u2581this\",\"logprob\":-6.781964302062988,\"rank\":87},{\"text\":\"\u2581is\",\"logprob\":-0.7007368803024292,\"rank\":1},{\"text\":\"\u2581my\",\"logprob\":-5.060629367828369,\"rank\":9},{\"text\":\"\u2581first\",\"logprob\":-3.4052863121032715,\"rank\":1},{\"text\":\"\u2581job\",\"logprob\":-4.392806053161621,\"rank\":7},{\"text\":\"'\",\"logprob\":-3.3889503479003906,\"rank\":7},{\"text\":\"\u2581into\",\"logprob\":-5.2353715896606445,\"rank\":18},{\"text\":\"\u2581'\",\"logprob\":-3.9423909187316895,\"rank\":7},{\"text\":\"com\",\"logprob\":-7.255597114562988,\"rank\":195},{\"text\":\"pl\",\"logprob\":-0.1537357121706009,\"rank\":1},{\"text\":\"aint\",\"logprob\":-0.6207472085952759,\"rank\":1},{\"text\":\"'\",\"logprob\":-0.7734110951423645,\"rank\":1},{\"text\":\"\u2581or\",\"logprob\":-0.1370922178030014,\"rank\":1},{\"text\":\"\u2581'\",\"logprob\":-0.025224296376109123,\"rank\":1},{\"text\":\"no\",\"logprob\":-3.358358860015869,\"rank\":6},{\"text\":\"\u2581complaint\",\"logprob\":-0.17051352560520172,\"rank\":1},{\"text\":\"':\",\"logprob\":-4.647732734680176,\"rank\":4},{\"text\":\"no\",\"logprob\":-8.013542175292969,\"rank\":34},{\"text\":\"\u2581complaint\",\"logprob\":-4.513038635253906,\"rank\":5}]}]}"
+    headers:
+      content-length:
+      - '1859'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-03-19'
+      date:
+      - Mon, 17 Jun 2024 07:42:28 GMT
+      keep-alive:
+      - timeout=72
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": "Classify the following tweet: ''Please just give me my money
+      back.'' into ''complaint'' or ''no complaint'':complaint", "model_id": "mistralai/mixtral-8x7b-instruct-v01",
+      "parameters": {"max_new_tokens": 1, "return_options": {"generated_tokens": false,
+      "input_text": false, "input_tokens": true, "token_logprobs": true, "token_ranks":
+      true}}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '347'
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.com/v2/text/generation?version=2024-03-19
+  response:
+    body:
+      string: "{\"id\":\"150055c3-ae6e-47af-a98f-726ae42f6b29\",\"model_id\":\"mistralai/mixtral-8x7b-instruct-v01\",\"created_at\":\"2024-06-17T07:42:28.322Z\",\"results\":[{\"generated_text\":\"\\n\",\"generated_token_count\":1,\"input_token_count\":31,\"stop_reason\":\"max_tokens\",\"input_tokens\":[{\"text\":\"<s>\",\"logprob\":0},{\"text\":\"\u2581Class\",\"logprob\":-12.234380722045898,\"rank\":243},{\"text\":\"ify\",\"logprob\":-8.068703651428223,\"rank\":41},{\"text\":\"\u2581the\",\"logprob\":-0.6752889752388,\"rank\":1},{\"text\":\"\u2581following\",\"logprob\":-0.5843348503112793,\"rank\":1},{\"text\":\"\u2581twe\",\"logprob\":-13.488566398620605,\"rank\":5643},{\"text\":\"et\",\"logprob\":-1.210113286972046,\"rank\":2},{\"text\":\":\",\"logprob\":-1.8078830242156982,\"rank\":2},{\"text\":\"\u2581'\",\"logprob\":-8.079191207885742,\"rank\":33},{\"text\":\"Please\",\"logprob\":-7.171189785003662,\"rank\":188},{\"text\":\"\u2581just\",\"logprob\":-6.0900163650512695,\"rank\":55},{\"text\":\"\u2581give\",\"logprob\":-3.1654915809631348,\"rank\":3},{\"text\":\"\u2581me\",\"logprob\":-0.43167486786842346,\"rank\":1},{\"text\":\"\u2581my\",\"logprob\":-2.937462091445923,\"rank\":4},{\"text\":\"\u2581money\",\"logprob\":-1.699266791343689,\"rank\":1},{\"text\":\"\u2581back\",\"logprob\":-0.8213161826133728,\"rank\":1},{\"text\":\".'\",\"logprob\":-3.3644320964813232,\"rank\":7},{\"text\":\"\u2581into\",\"logprob\":-7.224091529846191,\"rank\":31},{\"text\":\"\u2581'\",\"logprob\":-5.451478481292725,\"rank\":19},{\"text\":\"com\",\"logprob\":-3.065009117126465,\"rank\":3},{\"text\":\"pl\",\"logprob\":-0.05239802971482277,\"rank\":1},{\"text\":\"aint\",\"logprob\":-0.1547703742980957,\"rank\":1},{\"text\":\"'\",\"logprob\":-0.4247952997684479,\"rank\":1},{\"text\":\"\u2581or\",\"logprob\":-0.6357755661010742,\"rank\":1},{\"text\":\"\u2581'\",\"logprob\":-0.06127896532416344,\"rank\":1},{\"text\":\"no\",\"logprob\":-4.430005073547363,\"rank\":17},{\"text\":\"\u2581complaint\",\"logprob\":-0.226424902677536,\"rank\":1},{\"text\":\"':\",\"logprob\":-4.686440467834473,\"rank\":5},{\"text\":\"com\",\"logprob\":-10.50821590423584,\"rank\":143},{\"text\":\"pl\",\"logprob\":-0.0005034133209846914,\"rank\":1},{\"text\":\"aint\",\"logprob\":-0.0003778220561798662,\"rank\":1}]}]}"
+    headers:
+      content-length:
+      - '1972'
+      content-type:
+      - application/json; charset=utf-8
+      content-version:
+      - '2024-03-19'
+      date:
+      - Mon, 17 Jun 2024 07:42:28 GMT
+      keep-alive:
+      - timeout=72
+      transfer-encoding:
+      - chunked
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: OK
+version: 1

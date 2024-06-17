@@ -14,21 +14,18 @@ interactions:
     body:
       string: '{"result":{"concurrency":{"limit":10,"remaining":10}}}'
     headers:
-      cache-control:
-      - private
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 24 Feb 2024 21:35:45 GMT
+      Keep-Alive:
+      - timeout=72
       content-length:
       - '54'
       content-type:
       - application/json; charset=utf-8
       content-version:
       - '2023-11-22'
-      date:
-      - Thu, 25 Jan 2024 15:50:46 GMT
-      keep-alive:
-      - timeout=72
-      set-cookie:
-      - 2eef5f4c257f6bca76e8da5586743beb=538060a726cc3a9c230fa5d1269356eb; path=/;
-        HttpOnly; Secure; SameSite=None
       vary:
       - accept-encoding
     status:

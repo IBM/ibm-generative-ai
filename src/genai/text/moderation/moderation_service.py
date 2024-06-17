@@ -2,11 +2,7 @@ from typing import Generator, Optional, Union
 
 from genai._types import ModelLike
 from genai._utils.async_executor import execute_async
-from genai._utils.general import (
-    prompts_to_strings,
-    to_model_instance,
-    to_model_optional,
-)
+from genai._utils.general import cast_list, to_model_instance, to_model_optional
 from genai._utils.http_client.httpx_client import AsyncHttpxClient
 from genai._utils.service import (
     BaseService,
@@ -18,8 +14,7 @@ from genai._utils.service import (
 )
 from genai.schema import (
     HAPOptions,
-    ImplicitHateOptions,
-    StigmaOptions,
+    SocialBiasOptions,
     TextModerationCreateEndpoint,
     TextModerationCreateResponse,
 )
@@ -49,16 +44,14 @@ class ModerationService(BaseService[BaseConfig, BaseServiceServices]):
         inputs: Union[str, list[str]],
         *,
         hap: Optional[ModelLike[HAPOptions]] = None,
-        implicit_hate: Optional[ModelLike[ImplicitHateOptions]] = None,
-        stigma: Optional[ModelLike[StigmaOptions]] = None,
+        social_bias: Optional[ModelLike[SocialBiasOptions]] = None,
         execution_options: Optional[ModelLike[CreateExecutionOptions]] = None,
     ) -> Generator[TextModerationCreateResponse, None, None]:
         """
         Args:
             inputs: Prompt/Prompts for text moderation.
             hap: HAP configuration (hate, abuse, profanity).
-            implicit_hate: Implicit Hate configuration.
-            stigma: Stigma configuration.
+            social_bias: Social Bias configuration.
             execution_options: Configuration processing.
 
         Example:
@@ -80,6 +73,7 @@ class ModerationService(BaseService[BaseConfig, BaseServiceServices]):
             ApiNetworkException: In case of unhandled network error.
             ValidationError: In case of provided parameters are invalid.
         """
+
         metadata = get_service_action_metadata(self.create)
         execution_options_formatted = to_model_instance(
             [self.config.create_execution_options, execution_options], CreateExecutionOptions
@@ -88,8 +82,6 @@ class ModerationService(BaseService[BaseConfig, BaseServiceServices]):
             "Moderation Create",
             prompts=inputs,
             hap=hap,
-            implicit_hate=implicit_hate,
-            stigma=stigma,
             execution_options=execution_options_formatted,
         )
 
@@ -102,14 +94,13 @@ class ModerationService(BaseService[BaseConfig, BaseServiceServices]):
                 json=_TextModerationCreateRequest(
                     input=input,
                     hap=to_model_optional(hap, HAPOptions),
-                    implicit_hate=to_model_optional(hap, ImplicitHateOptions),
-                    stigma=to_model_optional(stigma, StigmaOptions),
+                    social_bias=to_model_optional(social_bias, SocialBiasOptions),
                 ).model_dump(),
             )
             return TextModerationCreateResponse(**http_response.json())
 
         yield from execute_async(
-            inputs=prompts_to_strings(inputs),
+            inputs=cast_list(inputs),
             handler=handler,
             http_client=self._get_async_http_client,
             ordered=execution_options_formatted.ordered,

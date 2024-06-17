@@ -8,7 +8,7 @@ except ImportError:
     )
 
 
-from typing import List, Optional
+from typing import Optional
 
 from genai._utils.general import to_model_instance
 from genai.client import Client
@@ -25,7 +25,7 @@ class IBMGenAIAgent(Agent):
         parameters: Optional[TextGenerationParameters] = None,
         chat_prompt_template: Optional[str] = None,
         run_prompt_template: Optional[str] = None,
-        additional_tools: Optional[List[str]] = None,
+        additional_tools: Optional[list[str]] = None,
     ):
         super().__init__(
             chat_prompt_template=chat_prompt_template,
@@ -36,14 +36,14 @@ class IBMGenAIAgent(Agent):
         self.model = model
         self.parameters = parameters
 
-    def generate_one(self, prompt, stop):
+    def generate_one(self, prompt: str, stop: Optional[list[str]] = None):
         return self._generate([prompt], stop)[0]
 
-    def generate_many(self, prompts, stop):
+    def generate_many(self, prompts: list[str], stop: Optional[list[str]] = None):
         return self._generate(prompts, stop)
 
-    def _generate(self, prompts: List[str], stop: Optional[List[str]] = None) -> List[str]:
-        final_results: List[str] = []
+    def _generate(self, prompts: list[str], stop: Optional[list[str]] = None) -> list[str]:
+        final_results: list[str] = []
         if len(prompts) == 0:
             return final_results
 

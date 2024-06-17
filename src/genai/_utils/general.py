@@ -156,6 +156,10 @@ def cast_list(input: Union[TInput, list[TInput]]) -> list[TInput]:
     return input if isinstance(input, list) else [input]
 
 
+def cast_list_optional(input: Union[TInput, list[TInput]]) -> Optional[list[TInput]]:
+    return cast_list(input) if input is not None else None
+
+
 def first_defined(*args: Optional[TInput], default: TInput) -> TInput:
     return next((v for v in args if v is not None), default)
 
@@ -165,6 +169,10 @@ E = TypeVar("E", bound=Enum)
 
 def to_enum(cls: type[E], value: EnumLike[E]) -> E:
     return cls(value)
+
+
+def enum_like_to_string(val: EnumLike[E]) -> str:
+    return val if isinstance(val, str) else val.value
 
 
 def to_enum_optional(value: Optional[EnumLike[E]], cls: type[E]) -> Optional[E]:
@@ -182,13 +190,3 @@ T = TypeVar("T", bound=Callable)
 
 def single_execution(fn: T) -> T:
     return functools.cache(fn)  # type: ignore
-
-
-def prompts_to_strings(prompts: Union[list[str], str, None]) -> list[str]:
-    if prompts is None:
-        return []
-
-    if not isinstance(prompts, list):
-        return [prompts]
-
-    return prompts

@@ -1,7 +1,7 @@
 """
-Moderate text data
+Text Moderations
 
-Uncover HAP (hateful, abusive, profane language), Implicit hate or Stigma in text
+Uncover HAP (hateful, abusive, profane language) or Social Bias in the provided text.
 """
 
 from pprint import pprint
@@ -12,8 +12,7 @@ from genai.client import Client
 from genai.credentials import Credentials
 from genai.schema import (
     HAPOptions,
-    ImplicitHateOptions,
-    StigmaOptions,
+    SocialBiasOptions,
 )
 from genai.text.moderation import CreateExecutionOptions
 
@@ -30,7 +29,7 @@ def heading(text: str) -> str:
 
 client = Client(credentials=Credentials.from_env())
 
-inputs = ["Ice cream sucks!", "It tastes like poop."]
+inputs = ["Ice cream sucks!", "I want to kill them!"]
 
 print(heading("Run text moderation in parallel"))
 
@@ -39,8 +38,7 @@ for input_text, response in zip(
     client.text.moderation.create(
         inputs=inputs,
         hap=HAPOptions(threshold=0.5, send_tokens=True),
-        implicit_hate=ImplicitHateOptions(threshold=0.5, send_tokens=True),
-        stigma=StigmaOptions(threshold=0.5, send_tokens=True),
+        social_bias=SocialBiasOptions(threshold=0.5, send_tokens=True),
         execution_options=CreateExecutionOptions(ordered=True),
     ),
 ):
@@ -54,16 +52,10 @@ for input_text, response in zip(
     print("HAP:")
     pprint(hap.model_dump())
 
-    # Stigma
-    assert result.stigma
-    stigma = result.stigma[0]
-    print("Stigma:")
-    pprint(stigma.model_dump())
-
-    # Implicit Hate
-    assert result.implicit_hate
-    implicit_hate = result.implicit_hate[0]
-    print("Implicit hate:")
-    pprint(implicit_hate.model_dump())
+    # Social Bias
+    assert result.social_bias
+    social_bias = result.social_bias[0]
+    print("Social Bias:")
+    pprint(social_bias.model_dump())
 
     print()
