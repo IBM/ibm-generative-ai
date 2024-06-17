@@ -35,4 +35,4 @@ jobs:
       env:
         GENAI_API: ${{ vars.GENAI_API }}
         GENAI_KEY: ${{ secrets.GENAI_KEY }}
-      run: poetry run pytest -m 'e2e' --no-cov
+      run: poetry run pytest -m 'e2e or integration' --no-cov --record-mode rewrite
