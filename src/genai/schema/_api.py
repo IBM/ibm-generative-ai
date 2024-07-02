@@ -3,11 +3,12 @@
 
 from __future__ import annotations
 
+import warnings
 from datetime import date
 from enum import Enum
 from typing import Any, Literal, Optional, Union
 
-from pydantic import AwareDatetime, Field, RootModel
+from pydantic import AwareDatetime, Field, RootModel, field_validator
 
 from genai._types import ApiBaseModel
 
@@ -2208,6 +2209,14 @@ class TuneResultDatapointLossData(ApiBaseModel):
     step: Optional[int] = None
     value: float
 
+    @field_validator("epoch", mode="before")
+    @classmethod
+    def _validate_epoch(cls, value: Any):
+        result_value = int(value)
+        if result_value != float(value):
+            warnings.warn(f"The epoch was rounded down from {value} to {result_value}", stacklevel=4)
+        return result_value
+
 
 class TuneResultDatapointValidationLoss(ApiBaseModel):
     data: TuneResultDatapointValidationLossData
@@ -2218,6 +2227,14 @@ class TuneResultDatapointValidationLossData(ApiBaseModel):
     epoch: int
     step: Optional[int] = None
     value: float
+
+    @field_validator("epoch", mode="before")
+    @classmethod
+    def _validate_epoch(cls, value: Any):
+        result_value = int(value)
+        if result_value != float(value):
+            warnings.warn(f"The epoch was rounded down from {value} to {result_value}", stacklevel=4)
+        return result_value
 
 
 class TuneResultFiles(ApiBaseModel):

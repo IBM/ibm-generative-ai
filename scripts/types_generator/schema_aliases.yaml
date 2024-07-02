@@ -822,3 +822,23 @@ model_extensions:
 
   PromptModerationParameters:
     custom_base_class: ModerationParameters
+
+  TuneResultDatapointValidationLossData:
+    custom_body: |
+      @field_validator("epoch", mode="before")
+      @classmethod
+      def _validate_epoch(cls, value: Any):
+          result_value = int(value)
+          if result_value != float(value):
+              warnings.warn(f'The epoch was rounded down from {value} to {result_value}', stacklevel=4)
+          return result_value
+
+  TuneResultDatapointLossData:
+    custom_body: |
+      @field_validator("epoch", mode="before")
+      @classmethod
+      def _validate_epoch(cls, value: Any):
+          result_value = int(value)
+          if result_value != float(value):
+              warnings.warn(f'The epoch was rounded down from {value} to {result_value}', stacklevel=4)
+          return result_value
