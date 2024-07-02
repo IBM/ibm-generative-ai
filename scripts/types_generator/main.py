@@ -50,6 +50,7 @@ def generate_models(schema_path: Path, output: Path, extra_template_data: Option
         target_python_version=PythonVersion.PY_39,
         base_class=ExtractorConfig.base_model_class,
         additional_imports=[
+            "warnings",
             "deprecated",
             "pydantic.field_validator",
             "pydantic.computed_field",
