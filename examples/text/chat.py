@@ -31,7 +31,7 @@ parameters = TextGenerationParameters(
 )
 
 client = Client(credentials=Credentials.from_env())
-model_id = "meta-llama/llama-3-70b-instruct"
+model_id = "meta-llama/llama-3-1-70b-instruct"
 
 prompt = "What is NLP and how it has evolved over the years?"
 print(heading("Generating a chat response"))

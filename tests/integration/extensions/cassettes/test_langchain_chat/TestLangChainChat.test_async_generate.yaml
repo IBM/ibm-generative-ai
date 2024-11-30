@@ -8,7 +8,7 @@ interactions:
       explain why instead of answering something incorrectly.\n    If you don''t know
       the answer to a question, please don''t share false information.\n    ", "role":
       "system"}, {"content": "What is NLP and how it has evolved over the years?",
-      "role": "user"}], "model_id": "meta-llama/llama-3-70b-instruct", "parameters":
+      "role": "user"}], "model_id": "meta-llama/llama-3-1-70b-instruct", "parameters":
       {}}'
     headers:
       accept:
@@ -25,7 +25,7 @@ interactions:
     uri: https://api.com/v2/text/chat?version=2024-03-19
   response:
     body:
-      string: '{"id":"01f28b95-5ecd-4a01-9a2b-7803c6db824f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:28.750Z","results":[{"generated_text":"Natural
+      string: '{"id":"01f28b95-5ecd-4a01-9a2b-7803c6db824f","model_id":"meta-llama/llama-3-1-70b-instruct","created_at":"2024-05-20T14:12:28.750Z","results":[{"generated_text":"Natural
         Language Processing (NLP) is a subfield of artificial intelligence (AI) that
         deals with","generated_token_count":20,"input_token_count":134,"stop_reason":"max_tokens","seed":1025128500}],"conversation_id":"90edb70b-c4e7-45f5-81c3-fab231227b7a"}'
     headers:

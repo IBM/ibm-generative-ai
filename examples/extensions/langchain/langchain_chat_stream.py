@@ -21,7 +21,7 @@ def heading(text: str) -> str:
 print(heading("Stream chat with langchain"))
 
 llm = LangChainChatInterface(
-    model_id="meta-llama/llama-3-70b-instruct",
+    model_id="meta-llama/llama-3-1-70b-instruct",
     client=Client(credentials=Credentials.from_env()),
     parameters=TextGenerationParameters(
         decoding_method=DecodingMethod.SAMPLE,

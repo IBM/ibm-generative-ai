@@ -49,7 +49,7 @@ print(heading("Transformers Agent"))
 
 agent = IBMGenAIAgent(
     client=client,
-    model="meta-llama/llama-3-70b-instruct",
+    model="meta-llama/llama-3-1-70b-instruct",
     parameters=TextGenerationParameters(min_new_tokens=10, max_new_tokens=200, random_seed=777, temperature=0),
     additional_tools=[BitcoinPriceFetcher()],
 )

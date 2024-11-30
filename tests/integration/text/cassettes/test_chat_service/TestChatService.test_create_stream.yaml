@@ -1,7 +1,7 @@
 interactions:
 - request:
     body: '{"messages": [{"content": "I want to kill them! There are my enemies.",
-      "role": "user"}], "model_id": "meta-llama/llama-3-70b-instruct", "moderations":
+      "role": "user"}], "model_id": "meta-llama/llama-3-1-70b-instruct", "moderations":
       {"hap": {"input": {"enabled": true, "send_tokens": false, "threshold": 0.7},
       "output": {"enabled": true, "send_tokens": true, "threshold": 0.7}}}, "parameters":
       {"max_new_tokens": 10, "min_new_tokens": 3}}'
@@ -25,41 +25,41 @@ interactions:
       string: 'retry: 3000
 
 
-        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:33.754Z","conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52","moderations":{"hap":[{"score":0.8397554755210876,"flagged":true,"success":true,"position":{"start":0,"end":20}}]}}
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-1-70b-instruct","created_at":"2024-05-20T14:12:33.754Z","conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52","moderations":{"hap":[{"score":0.8397554755210876,"flagged":true,"success":true,"position":{"start":0,"end":20}}]}}
 
 
-        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:33.826Z","results":[{"generated_text":"I
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-1-70b-instruct","created_at":"2024-05-20T14:12:33.826Z","results":[{"generated_text":"I
         understan","generated_token_count":2,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52"}
 
 
-        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:33.879Z","results":[{"generated_text":"d
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-1-70b-instruct","created_at":"2024-05-20T14:12:33.879Z","results":[{"generated_text":"d
         tha","generated_token_count":3,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52"}
 
 
-        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:33.917Z","results":[{"generated_text":"t
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-1-70b-instruct","created_at":"2024-05-20T14:12:33.917Z","results":[{"generated_text":"t
         yo","generated_token_count":4,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52"}
 
 
-        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:33.956Z","results":[{"generated_text":"u''r","generated_token_count":5,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52"}
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-1-70b-instruct","created_at":"2024-05-20T14:12:33.956Z","results":[{"generated_text":"u''r","generated_token_count":5,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52"}
 
 
-        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:33.995Z","results":[{"generated_text":"e
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-1-70b-instruct","created_at":"2024-05-20T14:12:33.995Z","results":[{"generated_text":"e
         feelin","generated_token_count":6,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52"}
 
 
-        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:34.035Z","results":[{"generated_text":"g
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-1-70b-instruct","created_at":"2024-05-20T14:12:34.035Z","results":[{"generated_text":"g
         ","generated_token_count":7,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52"}
 
 
-        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:34.075Z","results":[{"generated_text":"a
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-1-70b-instruct","created_at":"2024-05-20T14:12:34.075Z","results":[{"generated_text":"a
         stron","generated_token_count":8,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52"}
 
 
-        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:34.129Z","results":[{"generated_text":"g
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-1-70b-instruct","created_at":"2024-05-20T14:12:34.129Z","results":[{"generated_text":"g
         sens","generated_token_count":9,"input_token_count":0,"stop_reason":"not_finished"}],"conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52"}
 
 
-        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:34.171Z","results":[{"generated_text":"e
+        data: {"id":"3adaa5b8-38d7-41c8-bd26-2285a5ae8c9f","model_id":"meta-llama/llama-3-1-70b-instruct","created_at":"2024-05-20T14:12:34.171Z","results":[{"generated_text":"e
         of","generated_token_count":10,"input_token_count":0,"stop_reason":"max_tokens","seed":401923414}],"conversation_id":"6a892fa0-6a3a-46e2-9a8d-c487fa172c52"}
 
 

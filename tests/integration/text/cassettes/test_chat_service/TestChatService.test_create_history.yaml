@@ -1,7 +1,7 @@
 interactions:
 - request:
     body: '{"messages": [{"content": "Do you want to destroy the world?", "role":
-      "user"}], "model_id": "meta-llama/llama-3-70b-instruct"}'
+      "user"}], "model_id": "meta-llama/llama-3-1-70b-instruct"}'
     headers:
       accept:
       - '*/*'
@@ -17,7 +17,7 @@ interactions:
     uri: https://api.com/v2/text/chat?version=2024-03-19
   response:
     body:
-      string: '{"id":"191d90ab-e7e0-4821-a66a-64dfdc0415b0","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:31.312Z","results":[{"generated_text":"No,
+      string: '{"id":"191d90ab-e7e0-4821-a66a-64dfdc0415b0","model_id":"meta-llama/llama-3-1-70b-instruct","created_at":"2024-05-20T14:12:31.312Z","results":[{"generated_text":"No,
         I do not want to destroy the world. I am designed to assist and provide helpful
         information","generated_token_count":20,"input_token_count":18,"stop_reason":"max_tokens","seed":967002347}],"conversation_id":"02593997-bb70-47dd-97d4-209aa820aa98"}'
     headers:
@@ -53,9 +53,9 @@ interactions:
   response:
     body:
       string: '{"results":[{"id":"191d90ab-e7e0-4821-a66a-64dfdc0415b0","duration":759,"request":{"messages":[{"role":"user","content":"Do
-        you want to destroy the world?"}],"model_id":"meta-llama/llama-3-70b-instruct","conversation_id":"02593997-bb70-47dd-97d4-209aa820aa98"},"status":"success","created_at":"2024-05-20T14:12:31.000Z","response":{"id":"191d90ab-e7e0-4821-a66a-64dfdc0415b0","results":[{"seed":967002347,"stop_reason":"max_tokens","generated_text":"No,
+        you want to destroy the world?"}],"model_id":"meta-llama/llama-3-1-70b-instruct","conversation_id":"02593997-bb70-47dd-97d4-209aa820aa98"},"status":"success","created_at":"2024-05-20T14:12:31.000Z","response":{"id":"191d90ab-e7e0-4821-a66a-64dfdc0415b0","results":[{"seed":967002347,"stop_reason":"max_tokens","generated_text":"No,
         I do not want to destroy the world. I am designed to assist and provide helpful
-        information","input_token_count":18,"generated_token_count":20}],"model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:31.312Z","conversation_id":"02593997-bb70-47dd-97d4-209aa820aa98"},"version":{"api":"v2","date":"2024-03-19"}}]}'
+        information","input_token_count":18,"generated_token_count":20}],"model_id":"meta-llama/llama-3-1-70b-instruct","created_at":"2024-05-20T14:12:31.312Z","conversation_id":"02593997-bb70-47dd-97d4-209aa820aa98"},"version":{"api":"v2","date":"2024-03-19"}}]}'
     headers:
       cache-control:
       - private
@@ -86,7 +86,7 @@ interactions:
 - request:
     body: '{"conversation_id": "02593997-bb70-47dd-97d4-209aa820aa98", "messages":
       [{"content": "What was my previous question?", "role": "user"}], "model_id":
-      "meta-llama/llama-3-70b-instruct"}'
+      "meta-llama/llama-3-1-70b-instruct"}'
     headers:
       accept:
       - '*/*'
@@ -102,7 +102,7 @@ interactions:
     uri: https://api.com/v2/text/chat?version=2024-03-19
   response:
     body:
-      string: '{"id":"098d2940-3e40-4b67-8239-b63e16ae53f2","model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:32.733Z","results":[{"generated_text":"Your
+      string: '{"id":"098d2940-3e40-4b67-8239-b63e16ae53f2","model_id":"meta-llama/llama-3-1-70b-instruct","created_at":"2024-05-20T14:12:32.733Z","results":[{"generated_text":"Your
         previous question was \"Do you want to destroy the world?\"","generated_token_count":14,"input_token_count":54,"stop_reason":"eos_token","seed":934152098}],"conversation_id":"02593997-bb70-47dd-97d4-209aa820aa98"}'
     headers:
       content-length:
@@ -137,11 +137,11 @@ interactions:
   response:
     body:
       string: '{"results":[{"id":"191d90ab-e7e0-4821-a66a-64dfdc0415b0","duration":759,"request":{"messages":[{"role":"user","content":"Do
-        you want to destroy the world?"}],"model_id":"meta-llama/llama-3-70b-instruct","conversation_id":"02593997-bb70-47dd-97d4-209aa820aa98"},"status":"success","created_at":"2024-05-20T14:12:31.000Z","response":{"id":"191d90ab-e7e0-4821-a66a-64dfdc0415b0","results":[{"seed":967002347,"stop_reason":"max_tokens","generated_text":"No,
+        you want to destroy the world?"}],"model_id":"meta-llama/llama-3-1-70b-instruct","conversation_id":"02593997-bb70-47dd-97d4-209aa820aa98"},"status":"success","created_at":"2024-05-20T14:12:31.000Z","response":{"id":"191d90ab-e7e0-4821-a66a-64dfdc0415b0","results":[{"seed":967002347,"stop_reason":"max_tokens","generated_text":"No,
         I do not want to destroy the world. I am designed to assist and provide helpful
-        information","input_token_count":18,"generated_token_count":20}],"model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:31.312Z","conversation_id":"02593997-bb70-47dd-97d4-209aa820aa98"},"version":{"api":"v2","date":"2024-03-19"}},{"id":"098d2940-3e40-4b67-8239-b63e16ae53f2","duration":582,"request":{"messages":[{"role":"user","content":"What
-        was my previous question?"}],"model_id":"meta-llama/llama-3-70b-instruct","parent_id":"191d90ab-e7e0-4821-a66a-64dfdc0415b0","conversation_id":"02593997-bb70-47dd-97d4-209aa820aa98"},"status":"success","created_at":"2024-05-20T14:12:33.000Z","response":{"id":"098d2940-3e40-4b67-8239-b63e16ae53f2","results":[{"seed":934152098,"stop_reason":"eos_token","generated_text":"Your
-        previous question was \"Do you want to destroy the world?\"","input_token_count":54,"generated_token_count":14}],"model_id":"meta-llama/llama-3-70b-instruct","created_at":"2024-05-20T14:12:32.733Z","conversation_id":"02593997-bb70-47dd-97d4-209aa820aa98"},"parent_id":"191d90ab-e7e0-4821-a66a-64dfdc0415b0","version":{"api":"v2","date":"2024-03-19"}}]}'
+        information","input_token_count":18,"generated_token_count":20}],"model_id":"meta-llama/llama-3-1-70b-instruct","created_at":"2024-05-20T14:12:31.312Z","conversation_id":"02593997-bb70-47dd-97d4-209aa820aa98"},"version":{"api":"v2","date":"2024-03-19"}},{"id":"098d2940-3e40-4b67-8239-b63e16ae53f2","duration":582,"request":{"messages":[{"role":"user","content":"What
+        was my previous question?"}],"model_id":"meta-llama/llama-3-1-70b-instruct","parent_id":"191d90ab-e7e0-4821-a66a-64dfdc0415b0","conversation_id":"02593997-bb70-47dd-97d4-209aa820aa98"},"status":"success","created_at":"2024-05-20T14:12:33.000Z","response":{"id":"098d2940-3e40-4b67-8239-b63e16ae53f2","results":[{"seed":934152098,"stop_reason":"eos_token","generated_text":"Your
+        previous question was \"Do you want to destroy the world?\"","input_token_count":54,"generated_token_count":14}],"model_id":"meta-llama/llama-3-1-70b-instruct","created_at":"2024-05-20T14:12:32.733Z","conversation_id":"02593997-bb70-47dd-97d4-209aa820aa98"},"parent_id":"191d90ab-e7e0-4821-a66a-64dfdc0415b0","version":{"api":"v2","date":"2024-03-19"}}]}'
     headers:
       cache-control:
       - private

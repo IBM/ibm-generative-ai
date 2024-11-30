@@ -93,7 +93,7 @@ class LangChainChatInterface(BaseChatModel):
         client = Client(credentials=Credentials.from_env())
         llm = LangChainChatInterface(
             client=client,
-            model_id="meta-llama/llama-3-70b-instruct",
+            model_id="meta-llama/llama-3-1-70b-instruct",
             parameters=TextGenerationParameters(
                 max_new_tokens=250,
             )

@@ -79,7 +79,7 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
 
             # Create a new conversation
             response = client.text.chat.create(
-                model_id="meta-llama/llama-3-70b-instruct",
+                model_id="meta-llama/llama-3-1-70b-instruct",
                 messages=[HumanMessage(content="Describe the game Chess?")],
                 parameters=TextGenerationParameters(max_token_limit=100)
             )
@@ -150,7 +150,7 @@ class ChatService(BaseService[BaseServiceConfig, BaseServices]):
 
             # Create a new conversation
             for response in client.text.chat.create_stream(
-                    model_id="meta-llama/llama-3-70b-instruct",
+                    model_id="meta-llama/llama-3-1-70b-instruct",
                     messages=[HumanMessage(content="Describe the game Chess?")],
                     parameters=TextGenerationParameters(max_token_limit=100)
                 ):

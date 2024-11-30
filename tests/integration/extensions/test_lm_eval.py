@@ -7,6 +7,7 @@ from genai.schema import DecodingMethod, TextGenerationParameters
 
 
 @pytest.mark.integration
+@pytest.mark.skip
 class TestLMEval:
     @pytest.fixture(autouse=True)
     def load_credentials(self):

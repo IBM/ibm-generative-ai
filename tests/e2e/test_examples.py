@@ -16,6 +16,9 @@ ignore_files = {
     "parallel_processing.py",
     "chroma_db_embedding.py",
     "deployment.py",
+    # no available model
+    "lm_eval_cli.py",
+    "lm_eval_model.py",
 }
 skip_for_python_3_12 = {
     # These files are skipped for python >= 3.12 because transformers library cannot be installed
