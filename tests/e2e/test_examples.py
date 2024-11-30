@@ -27,7 +27,9 @@ skip_for_python_3_12 = {
 }
 
 scripts_lt_3_12 = {script for script in all_scripts if script.name not in ignore_files | skip_for_python_3_12}
-scripts_3_12 = {script for script in all_scripts if script.name in skip_for_python_3_12}
+scripts_3_12 = {
+    script for script in all_scripts if script.name in skip_for_python_3_12 and script.name not in ignore_files
+}
 
 
 def idfn(val):
