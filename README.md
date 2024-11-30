@@ -8,7 +8,7 @@
 [![E2E Tests](https://github.com/IBM/ibm-generative-ai/actions/workflows/e2e-test.yml/badge.svg)](https://github.com/IBM/ibm-generative-ai/actions/workflows/e2e-test.yml)
 
 > [!TIP]
-> 
+>
 > Are you interested in AI Agents? Check out [bee-agent-framework](https://github.com/i-am-bee/bee-agent-framework) from IBM Research.
 
 
