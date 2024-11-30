@@ -7,6 +7,10 @@
 [![Build & Unit/Integration Tests](https://github.com/IBM/ibm-generative-ai/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/IBM/ibm-generative-ai/actions/workflows/main.yml)
 [![E2E Tests](https://github.com/IBM/ibm-generative-ai/actions/workflows/e2e-test.yml/badge.svg)](https://github.com/IBM/ibm-generative-ai/actions/workflows/e2e-test.yml)
 
+> [!TIP]
+> 
+> Are you interested in AI Agents? Check out [bee-agent-framework](https://github.com/i-am-bee/bee-agent-framework) from IBM Research.
+
 
 This is not the [watsonx.ai](https://www.ibm.com/products/watsonx-ai) Python SDK. This is the Python SDK for the Tech Preview program for IBM Foundation Models Studio. This SDK brings IBM Generative AI (GenAI) into Python programs and provides useful operations and types.
 
